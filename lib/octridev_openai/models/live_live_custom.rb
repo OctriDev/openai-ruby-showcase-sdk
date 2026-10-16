@@ -5,93 +5,93 @@
 
 # live_live_custom domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalLiveCustomToolInputParamMetadata
-  FIELDS = {
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LiveCustomToolInputParamType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for LiveCustomToolInputParam.
-# Typed representation of the `LiveCustomToolInputParam` API schema.
-class LiveCustomToolInputParam
-  include LiveResponsesDelegationSettingsInputParamToolsItem
-  include LiveResponsesDelegationSettingsUpdateInputParamToolsItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveCustomToolInputParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveCustomToolInputParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveCustomToolInputParamMetadata::DECODERS
-
-  # @return [LiveCustomToolInputParamType] Required enumerated value serialized in the `type` wire field.
-  attr_reader :type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalLiveCustomToolInputParamMetadata
+    FIELDS = {
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LiveCustomToolInputParamType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for LiveCustomToolInputParam.
+  # Typed representation of the `LiveCustomToolInputParam` API schema.
+  class LiveCustomToolInputParam
+    include LiveResponsesDelegationSettingsInputParamToolsItem
+    include LiveResponsesDelegationSettingsUpdateInputParamToolsItem
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveCustomToolInputParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveCustomToolInputParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveCustomToolInputParamMetadata::DECODERS
+
+    # @return [LiveCustomToolInputParamType] Required enumerated value serialized in the `type` wire field.
+    attr_reader :type
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the LiveCustomToolInputParamType SDK namespace.
+  module LiveCustomToolInputParamType
+    CUSTOM = 'custom'
+    VALUES = ['custom'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the LiveCustomToolInputParamType SDK namespace.
-module LiveCustomToolInputParamType
-  CUSTOM = 'custom'
-  VALUES = ['custom'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('LiveCustomToolInputParamType', 'enum', "Unknown LiveCustomToolInputParamType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalLiveCustomVoiceParamMetadata
-  FIELDS = {
-    id: "id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for LiveCustomVoiceParam.
-# Typed representation of the `LiveCustomVoiceParam` API schema.
-class LiveCustomVoiceParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveCustomVoiceParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveCustomVoiceParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveCustomVoiceParamMetadata::DECODERS
-
-  # @return [String] Required `string` value serialized in the `id` wire field.
-  attr_reader :id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('LiveCustomToolInputParamType', 'enum', "Unknown LiveCustomToolInputParamType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalLiveCustomVoiceParamMetadata
+    FIELDS = {
+      id: 'id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # API model for LiveCustomVoiceParam.
+  # Typed representation of the `LiveCustomVoiceParam` API schema.
+  class LiveCustomVoiceParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveCustomVoiceParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveCustomVoiceParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveCustomVoiceParamMetadata::DECODERS
+
+    # @return [String] Required `string` value serialized in the `id` wire field.
+    attr_reader :id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
 end

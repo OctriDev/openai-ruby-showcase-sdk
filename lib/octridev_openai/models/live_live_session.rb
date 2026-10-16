@@ -5,670 +5,678 @@
 
 # live_live_session domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalLiveSessionAudioFormatPCMAParamMetadata
-  FIELDS = {
-    type: "type",
-    rate: "rate",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    rate
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LiveSessionAudioFormatPCMAParamType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for LiveSessionAudioFormatPCMAParam.
-# Raw, mono G.711 A-law audio for a Live WebSocket connection.
-class LiveSessionAudioFormatPCMAParam
-  include LiveAudioFormat
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveSessionAudioFormatPCMAParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveSessionAudioFormatPCMAParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveSessionAudioFormatPCMAParamMetadata::DECODERS
-
-  # @return [LiveSessionAudioFormatPCMAParamType] The audio encoding. Always `audio/pcma`.
-  attr_reader :type
-  # @return [Integer] Audio sample rate in hertz. G.711 audio uses 8000 Hz.
-  attr_reader :rate
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalLiveSessionAudioFormatPCMAParamMetadata
+    FIELDS = {
+      type: 'type',
+      rate: 'rate'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      rate
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LiveSessionAudioFormatPCMAParamType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for LiveSessionAudioFormatPCMAParam.
+  # Raw, mono G.711 A-law audio for a Live WebSocket connection.
+  class LiveSessionAudioFormatPCMAParam
+    include LiveAudioFormat
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveSessionAudioFormatPCMAParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveSessionAudioFormatPCMAParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveSessionAudioFormatPCMAParamMetadata::DECODERS
+
+    # @return [LiveSessionAudioFormatPCMAParamType] The audio encoding. Always `audio/pcma`.
+    attr_reader :type
+    # @return [Integer] Audio sample rate in hertz. G.711 audio uses 8000 Hz.
+    attr_reader :rate
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the LiveSessionAudioFormatPCMAParamType SDK namespace.
+  module LiveSessionAudioFormatPCMAParamType
+    AUDIO_PCMA = 'audio/pcma'
+    VALUES = ['audio/pcma'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the LiveSessionAudioFormatPCMAParamType SDK namespace.
-module LiveSessionAudioFormatPCMAParamType
-  AUDIO_PCMA = 'audio/pcma'
-  VALUES = ['audio/pcma'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('LiveSessionAudioFormatPCMAParamType', 'enum', "Unknown LiveSessionAudioFormatPCMAParamType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalLiveSessionAudioFormatPCMParamMetadata
-  FIELDS = {
-    type: "type",
-    rate: "rate",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    rate
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LiveSessionAudioFormatPCMParamType.from_value(value)
-    end,
-    rate: lambda do |value|
-      ::OctridevOpenai::LiveSessionAudioFormatPCMParamRate.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for LiveSessionAudioFormatPCMParam.
-# Raw, mono 16-bit little-endian PCM audio for a Live WebSocket connection.
-class LiveSessionAudioFormatPCMParam
-  include LiveAudioFormat
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveSessionAudioFormatPCMParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveSessionAudioFormatPCMParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveSessionAudioFormatPCMParamMetadata::DECODERS
-
-  # @return [LiveSessionAudioFormatPCMParamType] The audio encoding. Always `audio/pcm`.
-  attr_reader :type
-  # @return [LiveSessionAudioFormatPCMParamRate] Audio sample rate in hertz. Live WebSocket PCM audio supports 16000 or 24000 Hz.
-  attr_reader :rate
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('LiveSessionAudioFormatPCMAParamType', 'enum', "Unknown LiveSessionAudioFormatPCMAParamType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalLiveSessionAudioFormatPCMParamMetadata
+    FIELDS = {
+      type: 'type',
+      rate: 'rate'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      rate
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LiveSessionAudioFormatPCMParamType.from_value(value)
+      end,
+      rate: lambda do |value|
+        ::OctridevOpenai::LiveSessionAudioFormatPCMParamRate.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for LiveSessionAudioFormatPCMParam.
+  # Raw, mono 16-bit little-endian PCM audio for a Live WebSocket connection.
+  class LiveSessionAudioFormatPCMParam
+    include LiveAudioFormat
 
-# Defines the LiveSessionAudioFormatPCMParamRate SDK namespace.
-module LiveSessionAudioFormatPCMParamRate
-  V_16000 = 16000
-  V_24000 = 24000
-  VALUES = [16000, 24000].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveSessionAudioFormatPCMParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveSessionAudioFormatPCMParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveSessionAudioFormatPCMParamMetadata::DECODERS
 
-# Defines the LiveSessionAudioFormatPCMParamType SDK namespace.
-module LiveSessionAudioFormatPCMParamType
-  AUDIO_PCM = 'audio/pcm'
-  VALUES = ['audio/pcm'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    # @return [LiveSessionAudioFormatPCMParamType] The audio encoding. Always `audio/pcm`.
+    attr_reader :type
+    # @return [LiveSessionAudioFormatPCMParamRate] Audio sample rate in hertz. Live WebSocket PCM audio supports 16000 or 24000 Hz.
+    attr_reader :rate
 
-    raise SdkValidationError.new('LiveSessionAudioFormatPCMParamType', 'enum', "Unknown LiveSessionAudioFormatPCMParamType: #{value}")
-  end
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# Internal model hydration metadata.
-class SdkInternalLiveSessionAudioFormatPCMUParamMetadata
-  FIELDS = {
-    type: "type",
-    rate: "rate",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    rate
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LiveSessionAudioFormatPCMUParamType.from_value(value)
-    end,
-  }.freeze
-end
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-# API model for LiveSessionAudioFormatPCMUParam.
-# Raw, mono G.711 μ-law audio for a Live WebSocket connection.
-class LiveSessionAudioFormatPCMUParam
-  include LiveAudioFormat
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveSessionAudioFormatPCMUParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveSessionAudioFormatPCMUParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveSessionAudioFormatPCMUParamMetadata::DECODERS
-
-  # @return [LiveSessionAudioFormatPCMUParamType] The audio encoding. Always `audio/pcmu`.
-  attr_reader :type
-  # @return [Integer] Audio sample rate in hertz. G.711 audio uses 8000 Hz.
-  attr_reader :rate
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the LiveSessionAudioFormatPCMParamRate SDK namespace.
+  module LiveSessionAudioFormatPCMParamRate
+    V_16000 = 16_000
+    V_24000 = 24_000
+    VALUES = [16_000, 24_000].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the LiveSessionAudioFormatPCMParamType SDK namespace.
+  module LiveSessionAudioFormatPCMParamType
+    AUDIO_PCM = 'audio/pcm'
+    VALUES = ['audio/pcm'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the LiveSessionAudioFormatPCMUParamType SDK namespace.
-module LiveSessionAudioFormatPCMUParamType
-  AUDIO_PCMU = 'audio/pcmu'
-  VALUES = ['audio/pcmu'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('LiveSessionAudioFormatPCMUParamType', 'enum', "Unknown LiveSessionAudioFormatPCMUParamType: #{value}")
-  end
-end
-
-# Defines the LiveSessionClosedReasonVariant0 SDK namespace.
-module LiveSessionClosedReasonVariant0
-  CLOSE_REQUESTED = 'close_requested'
-  VALUES = ['close_requested'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalLiveSessionClosedMetadata
-  FIELDS = {
-    event_id: "event_id",
-    client_event_id: "client_event_id",
-    type: "type",
-    reason: "reason",
-    session: "session",
-    usage: "usage",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    event_id
-    type
-    reason
-    session
-    usage
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LiveSessionClosedType.from_value(value)
-    end,
-    reason: lambda do |value|
-      ::OctridevOpenai::LiveSessionClosedReasonVariant0.from_value(value)
-    end,
-    session: lambda do |value|
-      ::OctridevOpenai::LiveSessionResourceParam.from_hash(value)
-    end,
-    usage: lambda do |value|
-      ::OctridevOpenai::LiveSessionUsage.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for LiveSessionClosed.
-# Returned after the Live session finishes finalizing, with the close reason, final session snapshot, and cumulative audio usage. A connection closing without this event does not confirm successful finalization.
-class LiveSessionClosed
-  include LiveSidebandServerEvent
-  include LiveServerEvent2
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveSessionClosedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveSessionClosedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveSessionClosedMetadata::DECODERS
-
-  # @return [String] The unique ID of the Live server event.
-  attr_reader :event_id
-  # @return [String] The event_id of the client command associated with this server event, when supplied.
-  attr_reader :client_event_id
-  # @return [LiveSessionClosedType] The event type, always `session.closed`.
-  attr_reader :type
-  # @return [LiveSessionClosedReasonVariant0] Why the Live session ended: `close_requested` for an application close or hangup request, `expired` for the session duration limit, `content` for a safety filter, `remote_hangup` for a graceful remote disconnect, or `connection_lost` for an unexpected primary or upstream disconnection.
-  attr_reader :reason
-  # @return [LiveSessionResourceParam] The resolved Live session configuration and server-assigned session metadata.
-  attr_reader :session
-  # @return [LiveSessionUsage] The final cumulative Live audio usage after session finalization.
-  attr_reader :usage
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('LiveSessionAudioFormatPCMParamType', 'enum', "Unknown LiveSessionAudioFormatPCMParamType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalLiveSessionAudioFormatPCMUParamMetadata
+    FIELDS = {
+      type: 'type',
+      rate: 'rate'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      rate
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LiveSessionAudioFormatPCMUParamType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for LiveSessionAudioFormatPCMUParam.
+  # Raw, mono G.711 μ-law audio for a Live WebSocket connection.
+  class LiveSessionAudioFormatPCMUParam
+    include LiveAudioFormat
 
-# Defines the LiveSessionClosedReasonVariant1 SDK namespace.
-module LiveSessionClosedReasonVariant1
-  EXPIRED = 'expired'
-  VALUES = ['expired'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveSessionAudioFormatPCMUParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveSessionAudioFormatPCMUParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveSessionAudioFormatPCMUParamMetadata::DECODERS
 
-# Defines the LiveSessionClosedReasonVariant2 SDK namespace.
-module LiveSessionClosedReasonVariant2
-  CONTENT = 'content'
-  VALUES = ['content'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    # @return [LiveSessionAudioFormatPCMUParamType] The audio encoding. Always `audio/pcmu`.
+    attr_reader :type
+    # @return [Integer] Audio sample rate in hertz. G.711 audio uses 8000 Hz.
+    attr_reader :rate
 
-# Defines the LiveSessionClosedReasonVariant3 SDK namespace.
-module LiveSessionClosedReasonVariant3
-  REMOTE_HANGUP = 'remote_hangup'
-  VALUES = ['remote_hangup'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# Defines the LiveSessionClosedReasonVariant4 SDK namespace.
-module LiveSessionClosedReasonVariant4
-  CONNECTION_LOST = 'connection_lost'
-  VALUES = ['connection_lost'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-# Defines the LiveSessionClosedType SDK namespace.
-module LiveSessionClosedType
-  SESSION_CLOSED = 'session.closed'
-  VALUES = ['session.closed'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('LiveSessionClosedType', 'enum', "Unknown LiveSessionClosedType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalLiveSessionCloseParamMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LiveSessionCloseParamType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for LiveSessionCloseParam.
-# Request that the Live session close. The terminal `session.closed` event contains the close reason and final usage.
-class LiveSessionCloseParam
-  include LiveClientEvent
-  include LiveForkClientEvent
-  include LiveSidebandClientEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveSessionCloseParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveSessionCloseParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveSessionCloseParamMetadata::DECODERS
-
-  # @return [String] Optional API value serialized in the `event_id` wire field.
-  attr_reader :event_id
-  # @return [LiveSessionCloseParamType] The Live client event type. Always `session.close`.
-  attr_reader :type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the LiveSessionAudioFormatPCMUParamType SDK namespace.
+  module LiveSessionAudioFormatPCMUParamType
+    AUDIO_PCMU = 'audio/pcmu'
+    VALUES = ['audio/pcmu'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('LiveSessionAudioFormatPCMUParamType', 'enum', "Unknown LiveSessionAudioFormatPCMUParamType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the LiveSessionCloseParamType SDK namespace.
-module LiveSessionCloseParamType
-  SESSION_CLOSE = 'session.close'
-  VALUES = ['session.close'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('LiveSessionCloseParamType', 'enum', "Unknown LiveSessionCloseParamType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalLiveSessionCreateParamsMetadata
-  FIELDS = {
-    model: "model",
-    instructions: "instructions",
-    input: "input",
-    audio: "audio",
-    delegation: "delegation",
-    triggers: "triggers",
-    store: "store",
-    client: "client",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    model
-  ].freeze
-  DECODERS = {
-    model: lambda do |value|
-      ::OctridevOpenai::ModelIdsLive.from_hash(value)
-    end,
-    input: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::LiveInitialItem.from_hash(item) }
-    end,
-    audio: lambda do |value|
-      ::OctridevOpenai::LiveInitialSessionAudioParam.from_hash(value)
-    end,
-    delegation: lambda do |value|
-      ::OctridevOpenai::LiveSessionCreateParamsDelegation.from_hash(value)
-    end,
-    triggers: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::LiveDecisionTriggerInputParam2.from_hash(item) }
-    end,
-    client: lambda do |value|
-      ::OctridevOpenai::LiveClientConfigParam.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for LiveSessionCreateParams.
-# Initial configuration for a Live session, including its model, conversation instructions, audio, and delegated task handling.
-class LiveSessionCreateParams
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveSessionCreateParamsMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveSessionCreateParamsMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveSessionCreateParamsMetadata::DECODERS
-
-  # @return [ModelIdsLive] The Live model. Required in the session configuration for every transport; do not pass it as a URL query parameter.
-  attr_reader :model
-  # @return [String] Optional `string` value serialized in the `instructions` wire field.
-  attr_reader :instructions
-  # @return [Array_of_LiveInitialItem] Ordered text-only history supplied before startup. Supports developer, user, and assistant messages with one text part each; at most 128 messages and a configured rendered-token limit (8,192 by default).
-  attr_reader :input
-  # @return [LiveInitialSessionAudioParam] Startup audio configuration. Only primary WebSockets accept audio.format; WebRTC and SIP negotiate their media format. Voice and format are immutable after startup.
-  attr_reader :audio
-  # @return [LiveSessionCreateParamsDelegation] Who handles tasks delegated by the Live model. Omitted or null selects your application; use `responses` or `decisions` to delegate to the corresponding API.
-  attr_reader :delegation
-  # @return [Array_of_LiveDecisionTriggerInputParam2] At most one Decisions trigger per transcript event type. Triggers run independently of delegation. On update, omit triggers to keep the current configuration, send a list to replace it, or send an empty list to disable triggers.
-  attr_reader :triggers
-  # @return [Boolean] Whether to store the session for later forking and recording download. Defaults to false for new sessions.
-  attr_reader :store
-  # @return [LiveClientConfigParam] Startup-only capabilities for an untrusted frontend attached to a unified WebRTC session. Trusted sideband connections are unaffected.
-  attr_reader :client
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the LiveSessionClosedReasonVariant0 SDK namespace.
+  module LiveSessionClosedReasonVariant0
+    CLOSE_REQUESTED = 'close_requested'
+    VALUES = ['close_requested'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalLiveSessionClosedMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      client_event_id: 'client_event_id',
+      type: 'type',
+      reason: 'reason',
+      session: 'session',
+      usage: 'usage'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      event_id
+      type
+      reason
+      session
+      usage
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LiveSessionClosedType.from_value(value)
+      end,
+      reason: lambda do |value|
+        ::OctridevOpenai::LiveSessionClosedReasonVariant0.from_value(value)
+      end,
+      session: lambda do |value|
+        ::OctridevOpenai::LiveSessionResourceParam.from_hash(value)
+      end,
+      usage: lambda do |value|
+        ::OctridevOpenai::LiveSessionUsage.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for LiveSessionClosed.
+  # Returned after the Live session finishes finalizing, with the close reason, final session snapshot, and cumulative audio usage. A connection closing without this event does not confirm successful finalization.
+  class LiveSessionClosed
+    include LiveSidebandServerEvent
+    include LiveServerEvent2
 
-# Defines the LiveSessionCreateParamsDelegation SDK namespace.
-module LiveSessionCreateParamsDelegation
-  DISCRIMINATOR_MAPPING = {
-    "client" => -> { LiveClientDelegationParam },
-    "responses" => -> { LiveResponsesDelegationParam },
-    "decisions" => -> { LiveDecisionsDelegationParam2 },
-  }.freeze
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveSessionClosedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveSessionClosedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveSessionClosedMetadata::DECODERS
 
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
+    # @return [String] The unique ID of the Live server event.
+    attr_reader :event_id
+    # @return [String] The event_id of the client command associated with this server event, when supplied.
+    attr_reader :client_event_id
+    # @return [LiveSessionClosedType] The event type, always `session.closed`.
+    attr_reader :type
+    # @return [LiveSessionClosedReasonVariant0] Why the Live session ended: `close_requested` for an application close or hangup request, `expired` for the session duration limit, `content` for a safety filter, `remote_hangup` for a graceful remote disconnect, or `connection_lost` for an unexpected primary or upstream disconnection.
+    attr_reader :reason
+    # @return [LiveSessionResourceParam] The resolved Live session configuration and server-assigned session metadata.
+    attr_reader :session
+    # @return [LiveSessionUsage] The final cumulative Live audio usage after session finalization.
+    attr_reader :usage
 
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-    raise SdkValidationError.new('LiveSessionCreateParamsDelegation', 'variant', "Unknown LiveSessionCreateParamsDelegation discriminator: #{hash["type"].inspect}")
-  end
-end
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-# Internal model hydration metadata.
-class SdkInternalLiveSessionCreateRequestMetadata
-  FIELDS = {
-    session: "session",
-    transport: "transport",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    session
-    transport
-  ].freeze
-  DECODERS = {
-    session: lambda do |value|
-      ::OctridevOpenai::LiveMediaSessionCreateParams.from_hash(value)
-    end,
-    transport: lambda do |value|
-      ::OctridevOpenai::LiveSessionCreateRequestTransport.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for LiveSessionCreateRequest.
-# Create a Live session with a WebRTC SDP offer or place an outbound SIP call. Follow the Live prompting guide before choosing frontend and backend instructions. The request starts the session; do not send session.start again on the data channel or sideband.
-class LiveSessionCreateRequest
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveSessionCreateRequestMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveSessionCreateRequestMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveSessionCreateRequestMetadata::DECODERS
-
-  # @return [LiveMediaSessionCreateParams] Startup configuration for the Live session.
-  attr_reader :session
-  # @return [LiveSessionCreateRequestTransport] WebRTC transport with an SDP offer, or SIP transport with a destination and per-call trunk credentials.
-  attr_reader :transport
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the LiveSessionClosedReasonVariant1 SDK namespace.
+  module LiveSessionClosedReasonVariant1
+    EXPIRED = 'expired'
+    VALUES = ['expired'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalLiveSessionCreateRequestRequestMetadata
-  FIELDS = {
-    session: "session",
-    transport: "transport",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    session
-    transport
-  ].freeze
-  DECODERS = {
-    session: lambda do |value|
-      ::OctridevOpenai::LiveMediaSessionCreateParams.from_hash(value)
-    end,
-    transport: lambda do |value|
-      ::OctridevOpenai::LiveSessionCreateRequestTransportRequest.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for LiveSessionCreateRequestRequest.
-# Create a Live session with a WebRTC SDP offer or place an outbound SIP call. Follow the Live prompting guide before choosing frontend and backend instructions. The request starts the session; do not send session.start again on the data channel or sideband.
-class LiveSessionCreateRequestRequest
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveSessionCreateRequestRequestMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveSessionCreateRequestRequestMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveSessionCreateRequestRequestMetadata::DECODERS
-
-  # @return [LiveMediaSessionCreateParams] Startup configuration for the Live session.
-  attr_reader :session
-  # @return [LiveSessionCreateRequestTransportRequest] WebRTC transport with an SDP offer, or SIP transport with a destination and per-call trunk credentials.
-  attr_reader :transport
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the LiveSessionClosedReasonVariant2 SDK namespace.
+  module LiveSessionClosedReasonVariant2
+    CONTENT = 'content'
+    VALUES = ['content'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the LiveSessionClosedReasonVariant3 SDK namespace.
+  module LiveSessionClosedReasonVariant3
+    REMOTE_HANGUP = 'remote_hangup'
+    VALUES = ['remote_hangup'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the LiveSessionCreateRequestTransport SDK namespace.
-module LiveSessionCreateRequestTransport
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    mapping = { "webrtc" => LiveWebRTCTransport, "sip" => LiveSIPTransport }
-    type = mapping[hash["type"]]
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('LiveSessionCreateRequestTransport', 'variant', "Unknown LiveSessionCreateRequestTransport discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Defines the LiveSessionCreateRequestTransportRequest SDK namespace.
-module LiveSessionCreateRequestTransportRequest
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    mapping = { "webrtc" => LiveWebRTCTransport, "sip" => LiveSIPTransport }
-    type = mapping[hash["type"]]
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('LiveSessionCreateRequestTransportRequest', 'variant', "Unknown LiveSessionCreateRequestTransportRequest discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalLiveSessionCreateResponseMetadata
-  FIELDS = {
-    session: "session",
-    transport: "transport",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    session
-    transport
-  ].freeze
-  DECODERS = {
-    session: lambda do |value|
-      ::OctridevOpenai::Session.from_hash(value)
-    end,
-    transport: lambda do |value|
-      ::OctridevOpenai::LiveSessionCreateResponseTransport.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for LiveSessionCreateResponse.
-# The created Live session and its transport. WebRTC creation returns 201 Created with an SDP answer. Outbound SIP creation returns 201 Created after initialization, before the callee necessarily answers, without SDP or trunk credentials.
-class LiveSessionCreateResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveSessionCreateResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveSessionCreateResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveSessionCreateResponseMetadata::DECODERS
-
-  # @return [Session] The newly created Live session. Use its ID for session controls and sideband connections.
-  attr_reader :session
-  # @return [LiveSessionCreateResponseTransport] WebRTC transport with an SDP answer, or SIP transport without SDP or trunk credentials. For SIP, attach a sideband using session.id to receive transport.ringing, transport.answered, and transport.failed notifications.
-  attr_reader :transport
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the LiveSessionClosedReasonVariant4 SDK namespace.
+  module LiveSessionClosedReasonVariant4
+    CONNECTION_LOST = 'connection_lost'
+    VALUES = ['connection_lost'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the LiveSessionClosedType SDK namespace.
+  module LiveSessionClosedType
+    SESSION_CLOSED = 'session.closed'
+    VALUES = ['session.closed'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('LiveSessionClosedType', 'enum', "Unknown LiveSessionClosedType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalLiveSessionCreateResponseTransportVariant1Metadata
-  FIELDS = {
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LiveSessionCreateResponseTransportVariant1Type.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for LiveSessionCreateResponseTransportVariant1.
-class LiveSessionCreateResponseTransportVariant1
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveSessionCreateResponseTransportVariant1Metadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveSessionCreateResponseTransportVariant1Metadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveSessionCreateResponseTransportVariant1Metadata::DECODERS
-
-  # @return [LiveSessionCreateResponseTransportVariant1Type] The transport used for the Live session. Always `sip`.
-  attr_reader :type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalLiveSessionCloseParamMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LiveSessionCloseParamType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for LiveSessionCloseParam.
+  # Request that the Live session close. The terminal `session.closed` event contains the close reason and final usage.
+  class LiveSessionCloseParam
+    include LiveClientEvent
+    include LiveForkClientEvent
+    include LiveSidebandClientEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveSessionCloseParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveSessionCloseParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveSessionCloseParamMetadata::DECODERS
+
+    # @return [String] Optional API value serialized in the `event_id` wire field.
+    attr_reader :event_id
+    # @return [LiveSessionCloseParamType] The Live client event type. Always `session.close`.
+    attr_reader :type
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the LiveSessionCloseParamType SDK namespace.
+  module LiveSessionCloseParamType
+    SESSION_CLOSE = 'session.close'
+    VALUES = ['session.close'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('LiveSessionCloseParamType', 'enum', "Unknown LiveSessionCloseParamType: #{value}")
+    end
   end
-end
+
+  # Internal model hydration metadata.
+  class SdkInternalLiveSessionCreateParamsMetadata
+    FIELDS = {
+      model: 'model',
+      instructions: 'instructions',
+      input: 'input',
+      audio: 'audio',
+      delegation: 'delegation',
+      triggers: 'triggers',
+      store: 'store',
+      client: 'client'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      model
+    ].freeze
+    DECODERS = {
+      model: lambda do |value|
+        ::OctridevOpenai::ModelIdsLive.from_hash(value)
+      end,
+      input: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::LiveInitialItem.from_hash(item) }
+      end,
+      audio: lambda do |value|
+        ::OctridevOpenai::LiveInitialSessionAudioParam.from_hash(value)
+      end,
+      delegation: lambda do |value|
+        ::OctridevOpenai::LiveSessionCreateParamsDelegation.from_hash(value)
+      end,
+      triggers: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::LiveDecisionTriggerInputParam2.from_hash(item) }
+      end,
+      client: lambda do |value|
+        ::OctridevOpenai::LiveClientConfigParam.from_hash(value)
+      end
+    }.freeze
+  end
+
+  # API model for LiveSessionCreateParams.
+  # Initial configuration for a Live session, including its model, conversation instructions, audio, and delegated task handling.
+  class LiveSessionCreateParams
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveSessionCreateParamsMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveSessionCreateParamsMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveSessionCreateParamsMetadata::DECODERS
+
+    # @return [ModelIdsLive] The Live model. Required in the session configuration for every transport; do not pass it as a URL query parameter.
+    attr_reader :model
+    # @return [String] Optional `string` value serialized in the `instructions` wire field.
+    attr_reader :instructions
+    # @return [Array_of_LiveInitialItem] Ordered text-only history supplied before startup. Supports developer, user, and assistant messages with one text part each; at most 128 messages and a configured rendered-token limit (8,192 by default).
+    attr_reader :input
+    # @return [LiveInitialSessionAudioParam] Startup audio configuration. Only primary WebSockets accept audio.format; WebRTC and SIP negotiate their media format. Voice and format are immutable after startup.
+    attr_reader :audio
+    # @return [LiveSessionCreateParamsDelegation] Who handles tasks delegated by the Live model. Omitted or null selects your application; use `responses` or `decisions` to delegate to the corresponding API.
+    attr_reader :delegation
+    # @return [Array_of_LiveDecisionTriggerInputParam2] At most one Decisions trigger per transcript event type. Triggers run independently of delegation. On update, omit triggers to keep the current configuration, send a list to replace it, or send an empty list to disable triggers.
+    attr_reader :triggers
+    # @return [Boolean] Whether to store the session for later forking and recording download. Defaults to false for new sessions.
+    attr_reader :store
+    # @return [LiveClientConfigParam] Startup-only capabilities for an untrusted frontend attached to a unified WebRTC session. Trusted sideband connections are unaffected.
+    attr_reader :client
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the LiveSessionCreateParamsDelegation SDK namespace.
+  module LiveSessionCreateParamsDelegation
+    DISCRIMINATOR_MAPPING = {
+      'client' => -> { LiveClientDelegationParam },
+      'responses' => -> { LiveResponsesDelegationParam },
+      'decisions' => -> { LiveDecisionsDelegationParam2 }
+    }.freeze
+
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('LiveSessionCreateParamsDelegation', 'variant', "Unknown LiveSessionCreateParamsDelegation discriminator: #{hash['type'].inspect}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalLiveSessionCreateRequestMetadata
+    FIELDS = {
+      session: 'session',
+      transport: 'transport'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      session
+      transport
+    ].freeze
+    DECODERS = {
+      session: lambda do |value|
+        ::OctridevOpenai::LiveMediaSessionCreateParams.from_hash(value)
+      end,
+      transport: lambda do |value|
+        ::OctridevOpenai::LiveSessionCreateRequestTransport.from_hash(value)
+      end
+    }.freeze
+  end
+
+  # API model for LiveSessionCreateRequest.
+  # Create a Live session with a WebRTC SDP offer or place an outbound SIP call. Follow the Live prompting guide before choosing frontend and backend instructions. The request starts the session; do not send session.start again on the data channel or sideband.
+  class LiveSessionCreateRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveSessionCreateRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveSessionCreateRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveSessionCreateRequestMetadata::DECODERS
+
+    # @return [LiveMediaSessionCreateParams] Startup configuration for the Live session.
+    attr_reader :session
+    # @return [LiveSessionCreateRequestTransport] WebRTC transport with an SDP offer, or SIP transport with a destination and per-call trunk credentials.
+    attr_reader :transport
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalLiveSessionCreateRequestRequestMetadata
+    FIELDS = {
+      session: 'session',
+      transport: 'transport'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      session
+      transport
+    ].freeze
+    DECODERS = {
+      session: lambda do |value|
+        ::OctridevOpenai::LiveMediaSessionCreateParams.from_hash(value)
+      end,
+      transport: lambda do |value|
+        ::OctridevOpenai::LiveSessionCreateRequestTransportRequest.from_hash(value)
+      end
+    }.freeze
+  end
+
+  # API model for LiveSessionCreateRequestRequest.
+  # Create a Live session with a WebRTC SDP offer or place an outbound SIP call. Follow the Live prompting guide before choosing frontend and backend instructions. The request starts the session; do not send session.start again on the data channel or sideband.
+  class LiveSessionCreateRequestRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveSessionCreateRequestRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveSessionCreateRequestRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveSessionCreateRequestRequestMetadata::DECODERS
+
+    # @return [LiveMediaSessionCreateParams] Startup configuration for the Live session.
+    attr_reader :session
+    # @return [LiveSessionCreateRequestTransportRequest] WebRTC transport with an SDP offer, or SIP transport with a destination and per-call trunk credentials.
+    attr_reader :transport
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the LiveSessionCreateRequestTransport SDK namespace.
+  module LiveSessionCreateRequestTransport
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      mapping = { 'webrtc' => LiveWebRTCTransport, 'sip' => LiveSIPTransport }
+      type = mapping[hash['type']]
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('LiveSessionCreateRequestTransport', 'variant', "Unknown LiveSessionCreateRequestTransport discriminator: #{hash['type'].inspect}")
+    end
+  end
+
+  # Defines the LiveSessionCreateRequestTransportRequest SDK namespace.
+  module LiveSessionCreateRequestTransportRequest
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      mapping = { 'webrtc' => LiveWebRTCTransport, 'sip' => LiveSIPTransport }
+      type = mapping[hash['type']]
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('LiveSessionCreateRequestTransportRequest', 'variant', "Unknown LiveSessionCreateRequestTransportRequest discriminator: #{hash['type'].inspect}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalLiveSessionCreateResponseMetadata
+    FIELDS = {
+      session: 'session',
+      transport: 'transport'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      session
+      transport
+    ].freeze
+    DECODERS = {
+      session: lambda do |value|
+        ::OctridevOpenai::Session.from_hash(value)
+      end,
+      transport: lambda do |value|
+        ::OctridevOpenai::LiveSessionCreateResponseTransport.from_hash(value)
+      end
+    }.freeze
+  end
+
+  # API model for LiveSessionCreateResponse.
+  # The created Live session and its transport. WebRTC creation returns 201 Created with an SDP answer. Outbound SIP creation returns 201 Created after initialization, before the callee necessarily answers, without SDP or trunk credentials.
+  class LiveSessionCreateResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveSessionCreateResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveSessionCreateResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveSessionCreateResponseMetadata::DECODERS
+
+    # @return [Session] The newly created Live session. Use its ID for session controls and sideband connections.
+    attr_reader :session
+    # @return [LiveSessionCreateResponseTransport] WebRTC transport with an SDP answer, or SIP transport without SDP or trunk credentials. For SIP, attach a sideband using session.id to receive transport.ringing, transport.answered, and transport.failed notifications.
+    attr_reader :transport
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalLiveSessionCreateResponseTransportVariant1Metadata
+    FIELDS = {
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LiveSessionCreateResponseTransportVariant1Type.from_value(value)
+      end
+    }.freeze
+  end
+
+  # API model for LiveSessionCreateResponseTransportVariant1.
+  class LiveSessionCreateResponseTransportVariant1
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveSessionCreateResponseTransportVariant1Metadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveSessionCreateResponseTransportVariant1Metadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveSessionCreateResponseTransportVariant1Metadata::DECODERS
+
+    # @return [LiveSessionCreateResponseTransportVariant1Type] The transport used for the Live session. Always `sip`.
+    attr_reader :type
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
 end

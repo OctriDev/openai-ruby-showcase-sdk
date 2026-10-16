@@ -8,939 +8,1251 @@ module OctridevOpenai
   # Defines the AgentContentResource SDK namespace.
   module AgentContentResource
   end
+
   # Defines the AgentOutputItemResource SDK namespace.
   module AgentOutputItemResource
   end
+
   # Defines the AgentToolConfigParam SDK namespace.
   module AgentToolConfigParam
   end
+
   # Defines the AgentToolResource SDK namespace.
   module AgentToolResource
   end
+
   # Defines the Annotation SDK namespace.
   module Annotation
   end
+
   # Defines the AnswerResource SDK namespace.
   module AnswerResource
   end
+
   # Defines the ApplyPatchOperationParam SDK namespace.
   module ApplyPatchOperationParam
   end
+
   # Defines the ApplyPatchToolCallOperation SDK namespace.
   module ApplyPatchToolCallOperation
   end
+
   # Defines the AssistantObjectToolsItem SDK namespace.
   module AssistantObjectToolsItem
   end
+
   # Defines the AssistantsApiResponseFormatOption SDK namespace.
   module AssistantsApiResponseFormatOption
   end
+
   # Defines the AssistantsApiToolChoiceOption SDK namespace.
   module AssistantsApiToolChoiceOption
   end
+
   # Defines the AssistantStreamEvent SDK namespace.
   module AssistantStreamEvent
   end
+
   # Defines the AutoCodeInterpreterToolParamNetworkPolicy SDK namespace.
   module AutoCodeInterpreterToolParamNetworkPolicy
   end
+
   # Defines the BetaAgentMessageContentItem SDK namespace.
   module BetaAgentMessageContentItem
   end
+
   # Defines the BetaAgentMessageItemParamContentItem SDK namespace.
   module BetaAgentMessageItemParamContentItem
   end
+
   # Defines the BetaAnnotation SDK namespace.
   module BetaAnnotation
   end
+
   # Defines the BetaApplyPatchOperationParam SDK namespace.
   module BetaApplyPatchOperationParam
   end
+
   # Defines the BetaApplyPatchToolCallOperation SDK namespace.
   module BetaApplyPatchToolCallOperation
   end
+
   # Defines the BetaAutoCodeInterpreterToolParamNetworkPolicy SDK namespace.
   module BetaAutoCodeInterpreterToolParamNetworkPolicy
   end
+
   # Defines the BetaCodeInterpreterToolCallOutputsItem SDK namespace.
   module BetaCodeInterpreterToolCallOutputsItem
   end
+
   # Defines the BetaCompoundFilterFiltersItem SDK namespace.
   module BetaCompoundFilterFiltersItem
   end
+
   # Defines the BetaComputerAction SDK namespace.
   module BetaComputerAction
   end
+
   # Defines the BetaContainerAutoParamNetworkPolicy SDK namespace.
   module BetaContainerAutoParamNetworkPolicy
   end
+
   # Defines the BetaContainerAutoParamSkillsItem SDK namespace.
   module BetaContainerAutoParamSkillsItem
   end
+
   # Defines the BetaContent SDK namespace.
   module BetaContent
   end
+
   # Defines the BetaConversationParam SDK namespace.
   module BetaConversationParam
   end
+
   # Defines the BetaCustomToolParamFormat SDK namespace.
   module BetaCustomToolParamFormat
   end
+
   # Defines the BetaFilters SDK namespace.
   module BetaFilters
   end
+
   # Defines the BetaFunctionAndCustomToolCallOutput SDK namespace.
   module BetaFunctionAndCustomToolCallOutput
   end
+
   # Defines the BetaFunctionCallOutputItemParamOutputItem SDK namespace.
   module BetaFunctionCallOutputItemParamOutputItem
   end
+
   # Defines the BetaFunctionShellCallEnvironment SDK namespace.
   module BetaFunctionShellCallEnvironment
   end
+
   # Defines the BetaFunctionShellCallItemParamEnvironment SDK namespace.
   module BetaFunctionShellCallItemParamEnvironment
   end
+
   # Defines the BetaFunctionShellCallOutputContentOutcome SDK namespace.
   module BetaFunctionShellCallOutputContentOutcome
   end
+
   # Defines the BetaFunctionShellCallOutputOutcomeParam SDK namespace.
   module BetaFunctionShellCallOutputOutcomeParam
   end
+
   # Defines the BetaFunctionShellToolParamEnvironment SDK namespace.
   module BetaFunctionShellToolParamEnvironment
   end
+
   # Defines the BetaInputContent SDK namespace.
   module BetaInputContent
   end
+
   # Defines the BetaInputItem SDK namespace.
   module BetaInputItem
   end
+
   # Defines the BetaInputParam SDK namespace.
   module BetaInputParam
   end
+
   # Defines the BetaItem SDK namespace.
   module BetaItem
   end
+
   # Defines the BetaItemField SDK namespace.
   module BetaItemField
   end
+
   # Defines the BetaItemResource SDK namespace.
   module BetaItemResource
   end
+
   # Defines the BetaMCPToolCallError SDK namespace.
   module BetaMCPToolCallError
   end
+
   # Defines the BetaMessageContentItem SDK namespace.
   module BetaMessageContentItem
   end
+
   # Defines the BetaModelIdsCompaction SDK namespace.
   module BetaModelIdsCompaction
   end
+
   # Defines the BetaModelIdsResponses SDK namespace.
   module BetaModelIdsResponses
   end
+
   # Defines the BetaModerationInput SDK namespace.
   module BetaModerationInput
   end
+
   # Defines the BetaModerationOutput SDK namespace.
   module BetaModerationOutput
   end
+
   # Defines the BetaNamespaceToolParamToolsItem SDK namespace.
   module BetaNamespaceToolParamToolsItem
   end
+
   # Defines the BetaOutputContent SDK namespace.
   module BetaOutputContent
   end
+
   # Defines the BetaOutputItem SDK namespace.
   module BetaOutputItem
   end
+
   # Defines the BetaOutputMessageContent SDK namespace.
   module BetaOutputMessageContent
   end
+
   # Defines the BetaOutputTextContentParamAnnotationsItem SDK namespace.
   module BetaOutputTextContentParamAnnotationsItem
   end
+
   # Defines the BetaPromptCacheDiagnostics SDK namespace.
   module BetaPromptCacheDiagnostics
   end
+
   # Defines the BetaReasoningEffort SDK namespace.
   module BetaReasoningEffort
   end
+
   # Defines the BetaResponsesClientEvent SDK namespace.
   module BetaResponsesClientEvent
   end
+
   # Defines the BetaResponsesServerEvent SDK namespace.
   module BetaResponsesServerEvent
   end
+
   # Defines the BetaResponseSteerInput SDK namespace.
   module BetaResponseSteerInput
   end
+
   # Defines the BetaResponseSteerInputItem SDK namespace.
   module BetaResponseSteerInputItem
   end
+
   # Defines the BetaResponseSteerRequiredInput SDK namespace.
   module BetaResponseSteerRequiredInput
   end
+
   # Defines the BetaResponseStreamEvent SDK namespace.
   module BetaResponseStreamEvent
   end
+
   # Defines the BetaServiceTierResponses SDK namespace.
   module BetaServiceTierResponses
   end
+
   # Defines the BetaTextResponseFormatConfiguration SDK namespace.
   module BetaTextResponseFormatConfiguration
   end
+
   # Defines the BetaTool SDK namespace.
   module BetaTool
   end
+
   # Defines the BetaToolCallCaller SDK namespace.
   module BetaToolCallCaller
   end
+
   # Defines the BetaToolCallCallerParam SDK namespace.
   module BetaToolCallCallerParam
   end
+
   # Defines the BetaToolChoiceParam SDK namespace.
   module BetaToolChoiceParam
   end
+
   # Defines the BetaToolSearchOutputNamespaceToolParamToolsItem SDK namespace.
   module BetaToolSearchOutputNamespaceToolParamToolsItem
   end
+
   # Defines the BetaToolSearchOutputTool SDK namespace.
   module BetaToolSearchOutputTool
   end
+
   # Defines the BetaUserMessageItemParamContentItem SDK namespace.
   module BetaUserMessageItemParamContentItem
   end
+
   # Defines the BetaVerbosity SDK namespace.
   module BetaVerbosity
   end
+
   # Defines the BetaWebSearchToolCallAction SDK namespace.
   module BetaWebSearchToolCallAction
   end
+
   # Defines the BrowserAuthenticationHistoryRequestKindResource SDK namespace.
   module BrowserAuthenticationHistoryRequestKindResource
   end
+
   # Defines the ChatCompletionMessageToolCallsItem SDK namespace.
   module ChatCompletionMessageToolCallsItem
   end
+
   # Defines the ChatCompletionModerationInput SDK namespace.
   module ChatCompletionModerationInput
   end
+
   # Defines the ChatCompletionModerationOutput SDK namespace.
   module ChatCompletionModerationOutput
   end
+
   # Defines the ChatCompletionRequestAssistantMessageContentPart SDK namespace.
   module ChatCompletionRequestAssistantMessageContentPart
   end
+
   # Defines the ChatCompletionRequestMessage SDK namespace.
   module ChatCompletionRequestMessage
   end
+
   # Defines the ChatCompletionRequestSystemMessageContentPart SDK namespace.
   module ChatCompletionRequestSystemMessageContentPart
   end
+
   # Defines the ChatCompletionRequestToolMessageContentPart SDK namespace.
   module ChatCompletionRequestToolMessageContentPart
   end
+
   # Defines the ChatCompletionRequestUserMessageContentPart SDK namespace.
   module ChatCompletionRequestUserMessageContentPart
   end
+
   # Defines the ChatCompletionToolChoiceOption SDK namespace.
   module ChatCompletionToolChoiceOption
   end
+
   # Defines the ChoiceValueParam SDK namespace.
   module ChoiceValueParam
   end
+
   # Defines the ChoiceValueResource SDK namespace.
   module ChoiceValueResource
   end
+
   # Defines the ChunkingStrategyRequestParam SDK namespace.
   module ChunkingStrategyRequestParam
   end
+
   # Defines the CodeInterpreterToolCallOutputsItem SDK namespace.
   module CodeInterpreterToolCallOutputsItem
   end
+
   # Defines the CompoundFilterFiltersItem SDK namespace.
   module CompoundFilterFiltersItem
   end
+
   # Defines the ComputerAction SDK namespace.
   module ComputerAction
   end
+
   # Defines the ComputerUseApprovalRequestKindResource SDK namespace.
   module ComputerUseApprovalRequestKindResource
   end
+
   # Defines the ComputerUseApprovalResponseKindResource SDK namespace.
   module ComputerUseApprovalResponseKindResource
   end
+
   # Defines the ComputerUseApprovalResponseParam SDK namespace.
   module ComputerUseApprovalResponseParam
   end
+
   # Defines the ComputerUseApprovalResponseParamBrowserAuthentication SDK namespace.
   module ComputerUseApprovalResponseParamBrowserAuthentication
   end
+
   # Defines the ContainerAutoParamNetworkPolicy SDK namespace.
   module ContainerAutoParamNetworkPolicy
   end
+
   # Defines the ContainerAutoParamSkillsItem SDK namespace.
   module ContainerAutoParamSkillsItem
   end
+
   # Defines the Content SDK namespace.
   module Content
   end
+
   # Defines the ConversationItem SDK namespace.
   module ConversationItem
   end
+
   # Defines the ConversationParam SDK namespace.
   module ConversationParam
   end
+
   # Defines the CreateAssistantRequestToolResourcesFileSearchVectorStoresItemXba30eed7a0 SDK namespace.
   module CreateAssistantRequestToolResourcesFileSearchVectorStoresItemXba30eed7a0
   end
+
   # Defines the CreateAssistantRequestToolsItem SDK namespace.
   module CreateAssistantRequestToolsItem
   end
+
   # Defines the CreateContainerBodyNetworkPolicy SDK namespace.
   module CreateContainerBodyNetworkPolicy
   end
+
   # Defines the CreateContainerBodySkillsItem SDK namespace.
   module CreateContainerBodySkillsItem
   end
+
   # Defines the CreateEnvironmentParam SDK namespace.
   module CreateEnvironmentParam
   end
+
   # Defines the CreateEvalCompletionsRunDataSourceInputMessages SDK namespace.
   module CreateEvalCompletionsRunDataSourceInputMessages
   end
+
   # Defines the CreateEvalCompletionsRunDataSourceSamplingParamsResponseFormat SDK namespace.
   module CreateEvalCompletionsRunDataSourceSamplingParamsResponseFormat
   end
+
   # Defines the CreateEvalCompletionsRunDataSourceSource SDK namespace.
   module CreateEvalCompletionsRunDataSourceSource
   end
+
   # Defines the CreateEvalItem SDK namespace.
   module CreateEvalItem
   end
+
   # Defines the CreateEvalJsonlRunDataSourceSource SDK namespace.
   module CreateEvalJsonlRunDataSourceSource
   end
+
   # Defines the CreateEvalRequestDataSourceConfig SDK namespace.
   module CreateEvalRequestDataSourceConfig
   end
+
   # Defines the CreateEvalRequestTestingCriteriaItem SDK namespace.
   module CreateEvalRequestTestingCriteriaItem
   end
+
   # Defines the CreateEvalResponsesRunDataSourceInputMessages SDK namespace.
   module CreateEvalResponsesRunDataSourceInputMessages
   end
+
   # Defines the CreateEvalResponsesRunDataSourceSource SDK namespace.
   module CreateEvalResponsesRunDataSourceSource
   end
+
   # Defines the CreateEvalRunRequestDataSource SDK namespace.
   module CreateEvalRunRequestDataSource
   end
+
   # Defines the CreateExternalStorageBodyProvider SDK namespace.
   module CreateExternalStorageBodyProvider
   end
+
   # Defines the CreateMcpOauthTokenEndpointAuthParam SDK namespace.
   module CreateMcpOauthTokenEndpointAuthParam
   end
+
   # Defines the CreateMessageRequestAttachmentsItemToolsItem SDK namespace.
   module CreateMessageRequestAttachmentsItemToolsItem
   end
+
   # Defines the CreateMessageRequestContentItem SDK namespace.
   module CreateMessageRequestContentItem
   end
+
   # Defines the CreateModerationRequestInputItem SDK namespace.
   module CreateModerationRequestInputItem
   end
+
   # Defines the CreateRunRequestToolsItem SDK namespace.
   module CreateRunRequestToolsItem
   end
+
   # Defines the CreateSessionInputParam SDK namespace.
   module CreateSessionInputParam
   end
+
   # Defines the CreateSpeechResponseStreamEvent SDK namespace.
   module CreateSpeechResponseStreamEvent
   end
+
   # Defines the CreateThreadAndRunRequestToolsItem SDK namespace.
   module CreateThreadAndRunRequestToolsItem
   end
+
   # Defines the CreateThreadRequestToolResourcesFileSearchVectorStoresItemChuX7aa7dff179 SDK namespace.
   module CreateThreadRequestToolResourcesFileSearchVectorStoresItemChuX7aa7dff179
   end
+
   # Defines the CreateTranscriptionResponseDiarizedJsonUsage SDK namespace.
   module CreateTranscriptionResponseDiarizedJsonUsage
   end
+
   # Defines the CreateTranscriptionResponseJsonUsage SDK namespace.
   module CreateTranscriptionResponseJsonUsage
   end
+
   # Defines the CreateTranscriptionResponseStreamEvent SDK namespace.
   module CreateTranscriptionResponseStreamEvent
   end
+
   # Defines the CreateVaultCredentialAuthParam SDK namespace.
   module CreateVaultCredentialAuthParam
   end
+
   # Defines the CreateVectorStoreFileBatchRequest SDK namespace.
   module CreateVectorStoreFileBatchRequest
   end
+
   # Defines the CreateVectorStoreRequestChunkingStrategy SDK namespace.
   module CreateVectorStoreRequestChunkingStrategy
   end
+
   # Defines the CreateVoiceRequest SDK namespace.
   module CreateVoiceRequest
   end
+
   # Defines the CustomToolChatCompletionsCustomFormat SDK namespace.
   module CustomToolChatCompletionsCustomFormat
   end
+
   # Defines the CustomToolParamFormat SDK namespace.
   module CustomToolParamFormat
   end
+
   # Defines the DecisionInput SDK namespace.
   module DecisionInput
   end
+
   # Defines the DecisionInputContent SDK namespace.
   module DecisionInputContent
   end
+
   # Defines the DecisionInputContentPartsItem SDK namespace.
   module DecisionInputContentPartsItem
   end
+
   # Defines the DecisionInputItem SDK namespace.
   module DecisionInputItem
   end
+
   # Defines the DecisionInputToolOutputContent SDK namespace.
   module DecisionInputToolOutputContent
   end
+
   # Defines the DecisionInputToolOutputContentPartsItem SDK namespace.
   module DecisionInputToolOutputContentPartsItem
   end
+
   # Defines the Delegation SDK namespace.
   module Delegation
   end
+
   # Defines the EnvironmentParam SDK namespace.
   module EnvironmentParam
   end
+
   # Defines the EnvironmentResource SDK namespace.
   module EnvironmentResource
   end
+
   # Defines the EvalDataSourceConfig SDK namespace.
   module EvalDataSourceConfig
   end
+
   # Defines the EvalItemContent SDK namespace.
   module EvalItemContent
   end
+
   # Defines the EvalItemContentItem SDK namespace.
   module EvalItemContentItem
   end
+
   # Defines the EvalRunDataSource SDK namespace.
   module EvalRunDataSource
   end
+
   # Defines the EvalTestingCriteriaItem SDK namespace.
   module EvalTestingCriteriaItem
   end
+
   # Defines the ExternalStorageResponseProvider SDK namespace.
   module ExternalStorageResponseProvider
   end
+
   # Defines the Filters SDK namespace.
   module Filters
   end
+
   # Defines the FineTuneReinforcementMethodGrader SDK namespace.
   module FineTuneReinforcementMethodGrader
   end
+
   # Defines the FunctionAndCustomToolCallOutput SDK namespace.
   module FunctionAndCustomToolCallOutput
   end
+
   # Defines the FunctionCallOutputItemParamOutputItem SDK namespace.
   module FunctionCallOutputItemParamOutputItem
   end
+
   # Defines the FunctionCallOutputParam SDK namespace.
   module FunctionCallOutputParam
   end
+
   # Defines the FunctionCallOutputResource SDK namespace.
   module FunctionCallOutputResource
   end
+
   # Defines the FunctionShellCallEnvironment SDK namespace.
   module FunctionShellCallEnvironment
   end
+
   # Defines the FunctionShellCallItemParamEnvironment SDK namespace.
   module FunctionShellCallItemParamEnvironment
   end
+
   # Defines the FunctionShellCallOutputContentOutcome SDK namespace.
   module FunctionShellCallOutputContentOutcome
   end
+
   # Defines the FunctionShellCallOutputOutcomeParam SDK namespace.
   module FunctionShellCallOutputOutcomeParam
   end
+
   # Defines the FunctionShellToolParamEnvironment SDK namespace.
   module FunctionShellToolParamEnvironment
   end
+
   # Defines the HostedEnvironmentFileParam SDK namespace.
   module HostedEnvironmentFileParam
   end
+
   # Defines the HostedEnvironmentFileResource SDK namespace.
   module HostedEnvironmentFileResource
   end
+
   # Defines the HostedPluginParam SDK namespace.
   module HostedPluginParam
   end
+
   # Defines the HostedPluginResource SDK namespace.
   module HostedPluginResource
   end
+
   # Defines the HostedSkillParam SDK namespace.
   module HostedSkillParam
   end
+
   # Defines the HostedSkillResource SDK namespace.
   module HostedSkillResource
   end
+
   # Defines the HostedTemplateFileResource SDK namespace.
   module HostedTemplateFileResource
   end
+
   # Defines the HostedTemplateSkillResource SDK namespace.
   module HostedTemplateSkillResource
   end
+
   # Defines the ImageEditStreamEvent SDK namespace.
   module ImageEditStreamEvent
   end
+
   # Defines the ImageGenStreamEvent SDK namespace.
   module ImageGenStreamEvent
   end
+
   # Defines the ImageRefParam SDK namespace.
   module ImageRefParam
   end
+
   # Defines the InlineCapabilitySourceParam SDK namespace.
   module InlineCapabilitySourceParam
   end
+
   # Defines the InputContent SDK namespace.
   module InputContent
   end
+
   # Defines the InputContentParam SDK namespace.
   module InputContentParam
   end
+
   # Defines the InputContentResource SDK namespace.
   module InputContentResource
   end
+
   # Defines the InputItem SDK namespace.
   module InputItem
   end
+
   # Defines the InputParam SDK namespace.
   module InputParam
   end
+
   # Defines the Item SDK namespace.
   module Item
   end
+
   # Defines the ItemField SDK namespace.
   module ItemField
   end
+
   # Defines the ItemResource SDK namespace.
   module ItemResource
   end
+
   # Defines the LiveAllowedToolsChoiceParamToolsItem SDK namespace.
   module LiveAllowedToolsChoiceParamToolsItem
   end
+
   # Defines the LiveAudioFormat SDK namespace.
   module LiveAudioFormat
   end
+
   # Defines the LiveClientEvent SDK namespace.
   module LiveClientEvent
   end
+
   # Defines the LiveDecisionInputItemParamContentItem SDK namespace.
   module LiveDecisionInputItemParamContentItem
   end
+
   # Defines the LiveDecisionQuestion SDK namespace.
   module LiveDecisionQuestion
   end
+
   # Defines the LiveDecisionStoredInputItemParamContentItem SDK namespace.
   module LiveDecisionStoredInputItemParamContentItem
   end
+
   # Defines the LiveForkClientEvent SDK namespace.
   module LiveForkClientEvent
   end
+
   # Defines the LiveHostedShellContainerAutoParamNetworkPolicy SDK namespace.
   module LiveHostedShellContainerAutoParamNetworkPolicy
   end
+
   # Defines the LiveHostedShellContainerAutoParamSkillsItem SDK namespace.
   module LiveHostedShellContainerAutoParamSkillsItem
   end
+
   # Defines the LiveHostedShellToolInputParamEnvironment SDK namespace.
   module LiveHostedShellToolInputParamEnvironment
   end
+
   # Defines the LiveInitialAssistantMessageItemParamContentItem SDK namespace.
   module LiveInitialAssistantMessageItemParamContentItem
   end
+
   # Defines the LiveInitialItem SDK namespace.
   module LiveInitialItem
   end
+
   # Defines the LiveResponsesDelegationSettingsInputParamToolsItem SDK namespace.
   module LiveResponsesDelegationSettingsInputParamToolsItem
   end
+
   # Defines the LiveResponsesDelegationSettingsUpdateInputParamToolsItem SDK namespace.
   module LiveResponsesDelegationSettingsUpdateInputParamToolsItem
   end
+
   # Defines the LiveServerEvent2 SDK namespace.
   module LiveServerEvent2
   end
+
   # Defines the LiveSessionCreateParamsDelegation SDK namespace.
   module LiveSessionCreateParamsDelegation
   end
+
   # Defines the LiveSessionCreateRequestTransport SDK namespace.
   module LiveSessionCreateRequestTransport
   end
+
   # Defines the LiveSessionCreateRequestTransportRequest SDK namespace.
   module LiveSessionCreateRequestTransportRequest
   end
+
   # Defines the LiveSessionCreateResponseTransport SDK namespace.
   module LiveSessionCreateResponseTransport
   end
+
   # Defines the LiveSessionResourceParamDelegation SDK namespace.
   module LiveSessionResourceParamDelegation
   end
+
   # Defines the LiveSessionUpdateParamsDelegation SDK namespace.
   module LiveSessionUpdateParamsDelegation
   end
+
   # Defines the LiveSidebandClientEvent SDK namespace.
   module LiveSidebandClientEvent
   end
+
   # Defines the LiveSidebandServerEvent SDK namespace.
   module LiveSidebandServerEvent
   end
+
   # Defines the McpOauthTokenEndpointAuthResource SDK namespace.
   module McpOauthTokenEndpointAuthResource
   end
+
   # Defines the MCPToolCallError SDK namespace.
   module MCPToolCallError
   end
+
   # Defines the McpTransportConfigParam SDK namespace.
   module McpTransportConfigParam
   end
+
   # Defines the McpTransportResource SDK namespace.
   module McpTransportResource
   end
+
   # Defines the MessageContentItem SDK namespace.
   module MessageContentItem
   end
+
   # Defines the MessageContentResource SDK namespace.
   module MessageContentResource
   end
+
   # Defines the MessageContentTextObjectTextAnnotationsItem SDK namespace.
   module MessageContentTextObjectTextAnnotationsItem
   end
+
   # Defines the MessageDeltaContentTextObjectTextAnnotationsItem SDK namespace.
   module MessageDeltaContentTextObjectTextAnnotationsItem
   end
+
   # Defines the MessageDeltaObjectDeltaContentItem SDK namespace.
   module MessageDeltaObjectDeltaContentItem
   end
+
   # Defines the MessageObjectAttachmentsItemToolsItem SDK namespace.
   module MessageObjectAttachmentsItemToolsItem
   end
+
   # Defines the MessageObjectContentItem SDK namespace.
   module MessageObjectContentItem
   end
+
   # Defines the MessageStreamEvent SDK namespace.
   module MessageStreamEvent
   end
+
   # Defines the ModelIds SDK namespace.
   module ModelIds
   end
+
   # Defines the ModelIdsCompaction SDK namespace.
   module ModelIdsCompaction
   end
+
   # Defines the ModelIdsLive SDK namespace.
   module ModelIdsLive
   end
+
   # Defines the ModelIdsResponses SDK namespace.
   module ModelIdsResponses
   end
+
   # Defines the ModerationInput SDK namespace.
   module ModerationInput
   end
+
   # Defines the ModerationOutput SDK namespace.
   module ModerationOutput
   end
+
   # Defines the ModifyAssistantRequestToolsItem SDK namespace.
   module ModifyAssistantRequestToolsItem
   end
+
   # Defines the NamespaceToolParamToolsItem SDK namespace.
   module NamespaceToolParamToolsItem
   end
+
   # Defines the OutputContent SDK namespace.
   module OutputContent
   end
+
   # Defines the OutputItem SDK namespace.
   module OutputItem
   end
+
   # Defines the OutputMessageContent SDK namespace.
   module OutputMessageContent
   end
+
   # Defines the PartialImages SDK namespace.
   module PartialImages
   end
+
   # Defines the PersistedAgentToolConfigParam SDK namespace.
   module PersistedAgentToolConfigParam
   end
+
   # Defines the PersistedAgentToolResource SDK namespace.
   module PersistedAgentToolResource
   end
+
   # Defines the PersistedMcpTransportConfigParam SDK namespace.
   module PersistedMcpTransportConfigParam
   end
+
   # Defines the PersistedMcpTransportResource SDK namespace.
   module PersistedMcpTransportResource
   end
+
   # Defines the PromptCacheDiagnostics SDK namespace.
   module PromptCacheDiagnostics
   end
+
   # Defines the ProvenanceResourceResultsItem SDK namespace.
   module ProvenanceResourceResultsItem
   end
+
   # Defines the Provider SDK namespace.
   module Provider
   end
+
   # Defines the QuestionParam SDK namespace.
   module QuestionParam
   end
+
   # Defines the RealtimeAudioFormats SDK namespace.
   module RealtimeAudioFormats
   end
+
   # Defines the RealtimeBetaResponseCreateParamsToolChoice SDK namespace.
   module RealtimeBetaResponseCreateParamsToolChoice
   end
+
   # Defines the RealtimeBetaServerEventConversationItemInputAudioTranscriptioX6aec14c56b SDK namespace.
   module RealtimeBetaServerEventConversationItemInputAudioTranscriptioX6aec14c56b
   end
+
   # Defines the RealtimeClientEvent SDK namespace.
   module RealtimeClientEvent
   end
+
   # Defines the RealtimeClientEventSessionUpdateSession SDK namespace.
   module RealtimeClientEventSessionUpdateSession
   end
+
   # Defines the RealtimeConversationItem SDK namespace.
   module RealtimeConversationItem
   end
+
   # Defines the RealtimeCreateClientSecretRequestSession SDK namespace.
   module RealtimeCreateClientSecretRequestSession
   end
+
   # Defines the RealtimeCreateClientSecretResponseSession SDK namespace.
   module RealtimeCreateClientSecretResponseSession
   end
+
   # Defines the RealtimeMCPToolCallError SDK namespace.
   module RealtimeMCPToolCallError
   end
+
   # Defines the RealtimeResponseCreateParamsToolChoice SDK namespace.
   module RealtimeResponseCreateParamsToolChoice
   end
+
   # Defines the RealtimeResponseCreateParamsToolsItem SDK namespace.
   module RealtimeResponseCreateParamsToolsItem
   end
+
   # Defines the RealtimeServerEvent SDK namespace.
   module RealtimeServerEvent
   end
+
   # Defines the RealtimeServerEventConversationItemInputAudioTranscriptionCompletedUsage SDK namespace.
   module RealtimeServerEventConversationItemInputAudioTranscriptionCompletedUsage
   end
+
   # Defines the RealtimeServerEventSessionCreatedSession SDK namespace.
   module RealtimeServerEventSessionCreatedSession
   end
+
   # Defines the RealtimeServerEventSessionUpdatedSession SDK namespace.
   module RealtimeServerEventSessionUpdatedSession
   end
+
   # Defines the RealtimeSessionCreateRequestGAToolChoice SDK namespace.
   module RealtimeSessionCreateRequestGAToolChoice
   end
+
   # Defines the RealtimeSessionCreateRequestGAToolsItem SDK namespace.
   module RealtimeSessionCreateRequestGAToolsItem
   end
+
   # Defines the RealtimeSessionCreateResponseGAToolChoice SDK namespace.
   module RealtimeSessionCreateResponseGAToolChoice
   end
+
   # Defines the RealtimeSessionCreateResponseGAToolsItem SDK namespace.
   module RealtimeSessionCreateResponseGAToolsItem
   end
+
   # Defines the RealtimeTranslationClientEvent SDK namespace.
   module RealtimeTranslationClientEvent
   end
+
   # Defines the RealtimeTranslationServerEvent SDK namespace.
   module RealtimeTranslationServerEvent
   end
+
   # Defines the RealtimeTruncation SDK namespace.
   module RealtimeTruncation
   end
+
   # Defines the RealtimeTurnDetection SDK namespace.
   module RealtimeTurnDetection
   end
+
   # Defines the ReasoningEffort SDK namespace.
   module ReasoningEffort
   end
+
   # Defines the ResponseFormat SDK namespace.
   module ResponseFormat
   end
+
   # Defines the ResponseOutputTextAnnotationsItem SDK namespace.
   module ResponseOutputTextAnnotationsItem
   end
+
   # Defines the ResponsesClientEvent SDK namespace.
   module ResponsesClientEvent
   end
+
   # Defines the ResponsesServerEvent SDK namespace.
   module ResponsesServerEvent
   end
+
   # Defines the ResponseSteerInput SDK namespace.
   module ResponseSteerInput
   end
+
   # Defines the ResponseSteerInputItem SDK namespace.
   module ResponseSteerInputItem
   end
+
   # Defines the ResponseSteerRequiredInput SDK namespace.
   module ResponseSteerRequiredInput
   end
+
   # Defines the ResponseStreamEvent SDK namespace.
   module ResponseStreamEvent
   end
+
   # Defines the RotateMcpOauthTokenEndpointAuthParam SDK namespace.
   module RotateMcpOauthTokenEndpointAuthParam
   end
+
   # Defines the RotateVaultCredentialAuthParam SDK namespace.
   module RotateVaultCredentialAuthParam
   end
+
   # Defines the RunGraderRequestGrader SDK namespace.
   module RunGraderRequestGrader
   end
+
   # Defines the RunObjectToolsItem SDK namespace.
   module RunObjectToolsItem
   end
+
   # Defines the RunStepDeltaObjectDeltaStepDetails SDK namespace.
   module RunStepDeltaObjectDeltaStepDetails
   end
+
   # Defines the RunStepDeltaStepDetailsToolCallsCodeObjectCodeInterpreterOutputsItem SDK namespace.
   module RunStepDeltaStepDetailsToolCallsCodeObjectCodeInterpreterOutputsItem
   end
+
   # Defines the RunStepDeltaStepDetailsToolCallsObjectToolCallsItem SDK namespace.
   module RunStepDeltaStepDetailsToolCallsObjectToolCallsItem
   end
+
   # Defines the RunStepDetailsToolCallsCodeObjectCodeInterpreterOutputsItem SDK namespace.
   module RunStepDetailsToolCallsCodeObjectCodeInterpreterOutputsItem
   end
+
   # Defines the RunStepDetailsToolCallsObjectToolCallsItem SDK namespace.
   module RunStepDetailsToolCallsObjectToolCallsItem
   end
+
   # Defines the RunStepObjectStepDetails SDK namespace.
   module RunStepObjectStepDetails
   end
+
   # Defines the RunStepStreamEvent SDK namespace.
   module RunStepStreamEvent
   end
+
   # Defines the RunStreamEvent SDK namespace.
   module RunStreamEvent
   end
+
   # Defines the ServiceTier SDK namespace.
   module ServiceTier
   end
+
   # Defines the ServiceTierResponses SDK namespace.
   module ServiceTierResponses
   end
+
   # Defines the SessionEvent SDK namespace.
   module SessionEvent
   end
+
   # Defines the SessionInputParam SDK namespace.
   module SessionInputParam
   end
+
   # Defines the SessionRequiredActionResource SDK namespace.
   module SessionRequiredActionResource
   end
+
   # Defines the SessionTurnItemResource SDK namespace.
   module SessionTurnItemResource
   end
+
   # Defines the StopConfiguration SDK namespace.
   module StopConfiguration
   end
+
   # Defines the TemplateItem SDK namespace.
   module TemplateItem
   end
+
   # Defines the TemplateItem2 SDK namespace.
   module TemplateItem2
   end
+
   # Defines the TextFormatParam SDK namespace.
   module TextFormatParam
   end
+
   # Defines the TextFormatResource SDK namespace.
   module TextFormatResource
   end
+
   # Defines the TextResponseFormatConfiguration SDK namespace.
   module TextResponseFormatConfiguration
   end
+
   # Defines the ThreadItem SDK namespace.
   module ThreadItem
   end
+
   # Defines the ThreadResourceStatus SDK namespace.
   module ThreadResourceStatus
   end
+
   # Defines the ThreadStreamEvent SDK namespace.
   module ThreadStreamEvent
   end
+
   # Defines the Tool SDK namespace.
   module Tool
   end
+
   # Defines the ToolCallCaller SDK namespace.
   module ToolCallCaller
   end
+
   # Defines the ToolCallCallerParam SDK namespace.
   module ToolCallCallerParam
   end
+
   # Defines the ToolChoiceParam SDK namespace.
   module ToolChoiceParam
   end
+
   # Defines the ToolSearchOutputNamespaceToolParamToolsItem SDK namespace.
   module ToolSearchOutputNamespaceToolParamToolsItem
   end
+
   # Defines the ToolSearchOutputTool SDK namespace.
   module ToolSearchOutputTool
   end
+
   # Defines the ToolsItem SDK namespace.
   module ToolsItem
   end
+
   # Defines the TranscriptionChunkingStrategy SDK namespace.
   module TranscriptionChunkingStrategy
   end
+
   # Defines the UsageTimeBucketResultsItem SDK namespace.
   module UsageTimeBucketResultsItem
   end
+
   # Defines the UserMessageItemContentItem SDK namespace.
   module UserMessageItemContentItem
   end
+
   # Defines the UserMessageItemParamContentItem SDK namespace.
   module UserMessageItemParamContentItem
   end
+
   # Defines the ValidateGraderRequestGrader SDK namespace.
   module ValidateGraderRequestGrader
   end
+
   # Defines the ValidateGraderResponseGrader SDK namespace.
   module ValidateGraderResponseGrader
   end
+
   # Defines the VaultCredentialAuthResource SDK namespace.
   module VaultCredentialAuthResource
   end
+
   # Defines the VaultCredentialNetworkingParam SDK namespace.
   module VaultCredentialNetworkingParam
   end
+
   # Defines the VaultCredentialNetworkingResource SDK namespace.
   module VaultCredentialNetworkingResource
   end
+
   # Defines the VaultStatusFilterParam SDK namespace.
   module VaultStatusFilterParam
   end
+
   # Defines the VectorStoreFileObjectChunkingStrategy SDK namespace.
   module VectorStoreFileObjectChunkingStrategy
   end
+
   # Defines the VectorStoreSearchRequestFilters SDK namespace.
   module VectorStoreSearchRequestFilters
   end
+
   # Defines the Verbosity SDK namespace.
   module Verbosity
   end
+
   # Defines the VoiceIdsOrCustomVoice SDK namespace.
   module VoiceIdsOrCustomVoice
   end
+
   # Defines the WebSearchActionResource SDK namespace.
   module WebSearchActionResource
   end
+
   # Defines the WebSearchToolCallAction SDK namespace.
   module WebSearchToolCallAction
   end

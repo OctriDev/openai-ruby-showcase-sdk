@@ -5,171 +5,169 @@
 
 # users domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalUserDeleteResponseMetadata
-  FIELDS = {
-    object: "object",
-    id: "id",
-    deleted: "deleted",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    object
-    id
-    deleted
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::UserDeleteResponseObject.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for UserDeleteResponse.
-# Typed representation of the `UserDeleteResponse` API schema.
-class UserDeleteResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalUserDeleteResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalUserDeleteResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalUserDeleteResponseMetadata::DECODERS
-
-  # @return [UserDeleteResponseObject] Required enumerated value serialized in the `object` wire field.
-  attr_reader :object
-  # @return [String] Required `string` value serialized in the `id` wire field.
-  attr_reader :id
-  # @return [Boolean] Required `boolean` value serialized in the `deleted` wire field.
-  attr_reader :deleted
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalUserDeleteResponseMetadata
+    FIELDS = {
+      object: 'object',
+      id: 'id',
+      deleted: 'deleted'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      object
+      id
+      deleted
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::UserDeleteResponseObject.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for UserDeleteResponse.
+  # Typed representation of the `UserDeleteResponse` API schema.
+  class UserDeleteResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalUserDeleteResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalUserDeleteResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalUserDeleteResponseMetadata::DECODERS
+
+    # @return [UserDeleteResponseObject] Required enumerated value serialized in the `object` wire field.
+    attr_reader :object
+    # @return [String] Required `string` value serialized in the `id` wire field.
+    attr_reader :id
+    # @return [Boolean] Required `boolean` value serialized in the `deleted` wire field.
+    attr_reader :deleted
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the UserDeleteResponseObject SDK namespace.
-module UserDeleteResponseObject
-  ORGANIZATION_USER_DELETED = 'organization.user.deleted'
-  VALUES = ['organization.user.deleted'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalUserListResponseMetadata
-  FIELDS = {
-    object: "object",
-    data: "data",
-    first_id: "first_id",
-    last_id: "last_id",
-    has_more: "has_more",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    object
-    data
-    has_more
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::UserListResponseObject.from_value(value)
-    end,
-    data: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::User.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for UserListResponse.
-# Typed representation of the `UserListResponse` API schema.
-class UserListResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalUserListResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalUserListResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalUserListResponseMetadata::DECODERS
-
-  # @return [UserListResponseObject] Required enumerated value serialized in the `object` wire field.
-  attr_reader :object
-  # @return [Array_of_User] Required array value serialized in the `data` wire field.
-  attr_reader :data
-  # @return [String] Optional `string` value serialized in the `first_id` wire field.
-  attr_reader :first_id
-  # @return [String] Optional `string` value serialized in the `last_id` wire field.
-  attr_reader :last_id
-  # @return [Boolean] Required `boolean` value serialized in the `has_more` wire field.
-  attr_reader :has_more
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the UserDeleteResponseObject SDK namespace.
+  module UserDeleteResponseObject
+    ORGANIZATION_USER_DELETED = 'organization.user.deleted'
+    VALUES = ['organization.user.deleted'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalUserListResponseMetadata
+    FIELDS = {
+      object: 'object',
+      data: 'data',
+      first_id: 'first_id',
+      last_id: 'last_id',
+      has_more: 'has_more'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      object
+      data
+      has_more
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::UserListResponseObject.from_value(value)
+      end,
+      data: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::User.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for UserListResponse.
+  # Typed representation of the `UserListResponse` API schema.
+  class UserListResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalUserListResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalUserListResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalUserListResponseMetadata::DECODERS
 
-# Defines the UserListResponseObject SDK namespace.
-module UserListResponseObject
-  LIST = 'list'
-  VALUES = ['list'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    # @return [UserListResponseObject] Required enumerated value serialized in the `object` wire field.
+    attr_reader :object
+    # @return [Array_of_User] Required array value serialized in the `data` wire field.
+    attr_reader :data
+    # @return [String] Optional `string` value serialized in the `first_id` wire field.
+    attr_reader :first_id
+    # @return [String] Optional `string` value serialized in the `last_id` wire field.
+    attr_reader :last_id
+    # @return [Boolean] Required `boolean` value serialized in the `has_more` wire field.
+    attr_reader :has_more
 
-# Internal model hydration metadata.
-class SdkInternalUserRoleUpdateRequestMetadata
-  FIELDS = {
-    role: "role",
-    role_id: "role_id",
-    technical_level: "technical_level",
-    developer_persona: "developer_persona",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for UserRoleUpdateRequest.
-# Typed representation of the `UserRoleUpdateRequest` API schema.
-class UserRoleUpdateRequest
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalUserRoleUpdateRequestMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalUserRoleUpdateRequestMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalUserRoleUpdateRequestMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [String] `owner` or `reader`
-  attr_reader :role
-  # @return [String] Role ID to assign to the user.
-  attr_reader :role_id
-  # @return [String] Technical level metadata.
-  attr_reader :technical_level
-  # @return [String] Developer persona metadata.
-  attr_reader :developer_persona
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the UserListResponseObject SDK namespace.
+  module UserListResponseObject
+    LIST = 'list'
+    VALUES = ['list'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalUserRoleUpdateRequestMetadata
+    FIELDS = {
+      role: 'role',
+      role_id: 'role_id',
+      technical_level: 'technical_level',
+      developer_persona: 'developer_persona'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
   end
-end
+
+  # API model for UserRoleUpdateRequest.
+  # Typed representation of the `UserRoleUpdateRequest` API schema.
+  class UserRoleUpdateRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalUserRoleUpdateRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalUserRoleUpdateRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalUserRoleUpdateRequestMetadata::DECODERS
+
+    # @return [String] `owner` or `reader`
+    attr_reader :role
+    # @return [String] Role ID to assign to the user.
+    attr_reader :role_id
+    # @return [String] Technical level metadata.
+    attr_reader :technical_level
+    # @return [String] Developer persona metadata.
+    attr_reader :developer_persona
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
 end

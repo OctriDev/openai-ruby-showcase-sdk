@@ -5,339 +5,342 @@
 
 # live_live_responses domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalLiveResponsesDelegationParamMetadata
-  FIELDS = {
-    type: "type",
-    responses: "responses",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    responses
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LiveResponsesDelegationParamType.from_value(value)
-    end,
-    responses: lambda do |value|
-      ::OctridevOpenai::LiveResponsesDelegationSettingsInputParam.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for LiveResponsesDelegationParam.
-# Delegate tasks to a Responses model managed by the Live session.
-class LiveResponsesDelegationParam
-  include Delegation
-  include LiveSessionCreateParamsDelegation
-  include LiveSessionResourceParamDelegation
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveResponsesDelegationParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveResponsesDelegationParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveResponsesDelegationParamMetadata::DECODERS
-
-  # @return [LiveResponsesDelegationParamType] The delegation owner. Always `responses` for tasks handled by the Responses API.
-  attr_reader :type
-  # @return [LiveResponsesDelegationSettingsInputParam] Backend model, prompt, and tools used when the Live session delegates a task to Responses.
-  attr_reader :responses
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalLiveResponsesDelegationParamMetadata
+    FIELDS = {
+      type: 'type',
+      responses: 'responses'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      responses
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LiveResponsesDelegationParamType.from_value(value)
+      end,
+      responses: lambda do |value|
+        ::OctridevOpenai::LiveResponsesDelegationSettingsInputParam.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for LiveResponsesDelegationParam.
+  # Delegate tasks to a Responses model managed by the Live session.
+  class LiveResponsesDelegationParam
+    include Delegation
+    include LiveSessionCreateParamsDelegation
+    include LiveSessionResourceParamDelegation
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveResponsesDelegationParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveResponsesDelegationParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveResponsesDelegationParamMetadata::DECODERS
+
+    # @return [LiveResponsesDelegationParamType] The delegation owner. Always `responses` for tasks handled by the Responses API.
+    attr_reader :type
+    # @return [LiveResponsesDelegationSettingsInputParam] Backend model, prompt, and tools used when the Live session delegates a task to Responses.
+    attr_reader :responses
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the LiveResponsesDelegationParamType SDK namespace.
+  module LiveResponsesDelegationParamType
+    RESPONSES = 'responses'
+    VALUES = ['responses'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the LiveResponsesDelegationParamType SDK namespace.
-module LiveResponsesDelegationParamType
-  RESPONSES = 'responses'
-  VALUES = ['responses'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('LiveResponsesDelegationParamType', 'enum', "Unknown LiveResponsesDelegationParamType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalLiveResponsesDelegationSettingsInputParamMetadata
-  FIELDS = {
-    model: "model",
-    instructions: "instructions",
-    max_output_tokens: "max_output_tokens",
-    service_tier: "service_tier",
-    reasoning: "reasoning",
-    text: "text",
-    tools: "tools",
-    tool_choice: "tool_choice",
-    parallel_tool_calls: "parallel_tool_calls",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    model
-  ].freeze
-  DECODERS = {
-    service_tier: lambda do |value|
-      ::OctridevOpenai::LiveResponsesServiceTier.from_value(value)
-    end,
-    reasoning: lambda do |value|
-      ::OctridevOpenai::LiveDelegationReasoningInputParam.from_hash(value)
-    end,
-    text: lambda do |value|
-      ::OctridevOpenai::LiveDelegationTextInputParam.from_hash(value)
-    end,
-    tools: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::LiveResponsesDelegationSettingsInputParamToolsItem.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for LiveResponsesDelegationSettingsInputParam.
-# Model, prompt, and tool settings for tasks delegated by the Live session to a Responses backend.
-class LiveResponsesDelegationSettingsInputParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveResponsesDelegationSettingsInputParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveResponsesDelegationSettingsInputParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveResponsesDelegationSettingsInputParamMetadata::DECODERS
-
-  # @return [String] The model used for server-owned Responses delegations.
-  attr_reader :model
-  # @return [String] Optional `string` value serialized in the `instructions` wire field.
-  attr_reader :instructions
-  # @return [Integer] Optional API value serialized in the `max_output_tokens` wire field.
-  attr_reader :max_output_tokens
-  # @return [LiveResponsesServiceTier] Optional API value serialized in the `service_tier` wire field.
-  attr_reader :service_tier
-  # @return [LiveDelegationReasoningInputParam] Optional API value serialized in the `reasoning` wire field.
-  attr_reader :reasoning
-  # @return [LiveDelegationTextInputParam] Optional API value serialized in the `text` wire field.
-  attr_reader :text
-  # @return [Array_of_LiveResponsesDelegationSettingsInputParamToolsItem] Tools available to the Responses backend while it handles tasks delegated by the Live model.
-  attr_reader :tools
-  # @return [Object] Controls which tool the Responses backend uses when handling a task delegated by the Live model.
-  attr_reader :tool_choice
-  # @return [Boolean] Optional `boolean` value serialized in the `parallel_tool_calls` wire field.
-  attr_reader :parallel_tool_calls
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('LiveResponsesDelegationParamType', 'enum', "Unknown LiveResponsesDelegationParamType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalLiveResponsesDelegationSettingsInputParamMetadata
+    FIELDS = {
+      model: 'model',
+      instructions: 'instructions',
+      max_output_tokens: 'max_output_tokens',
+      service_tier: 'service_tier',
+      reasoning: 'reasoning',
+      text: 'text',
+      tools: 'tools',
+      tool_choice: 'tool_choice',
+      parallel_tool_calls: 'parallel_tool_calls'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      model
+    ].freeze
+    DECODERS = {
+      service_tier: lambda do |value|
+        ::OctridevOpenai::LiveResponsesServiceTier.from_value(value)
+      end,
+      reasoning: lambda do |value|
+        ::OctridevOpenai::LiveDelegationReasoningInputParam.from_hash(value)
+      end,
+      text: lambda do |value|
+        ::OctridevOpenai::LiveDelegationTextInputParam.from_hash(value)
+      end,
+      tools: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::LiveResponsesDelegationSettingsInputParamToolsItem.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for LiveResponsesDelegationSettingsInputParam.
+  # Model, prompt, and tool settings for tasks delegated by the Live session to a Responses backend.
+  class LiveResponsesDelegationSettingsInputParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveResponsesDelegationSettingsInputParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveResponsesDelegationSettingsInputParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveResponsesDelegationSettingsInputParamMetadata::DECODERS
 
-# Defines the LiveResponsesDelegationSettingsInputParamToolsItem SDK namespace.
-module LiveResponsesDelegationSettingsInputParamToolsItem
-  DISCRIMINATOR_MAPPING = {
-    "function" => -> { LiveFunctionToolInputParam },
-    "web_search" => -> { LiveWebSearchToolInputParam },
-    "file_search" => -> { LiveFileSearchToolInputParam },
-    "code_interpreter" => -> { LiveCodeInterpreterToolInputParam },
-    "shell" => -> { LiveHostedShellToolInputParam },
-    "image_generation" => -> { LiveImageGenerationToolInputParam },
-    "mcp" => -> { LiveMCPToolInputParam },
-    "custom" => -> { LiveCustomToolInputParam },
-    "namespace" => -> { LiveNamespaceToolInputParam },
-    "tool_search" => -> { LiveToolSearchToolInputParam },
-    "programmatic_tool_calling" => -> { LiveProgrammaticToolInputParam },
-    "computer" => -> { LiveComputerToolInputParam },
-    "apply_patch" => -> { LiveApplyPatchToolInputParam },
-  }.freeze
+    # @return [String] The model used for server-owned Responses delegations.
+    attr_reader :model
+    # @return [String] Optional `string` value serialized in the `instructions` wire field.
+    attr_reader :instructions
+    # @return [Integer] Optional API value serialized in the `max_output_tokens` wire field.
+    attr_reader :max_output_tokens
+    # @return [LiveResponsesServiceTier] Optional API value serialized in the `service_tier` wire field.
+    attr_reader :service_tier
+    # @return [LiveDelegationReasoningInputParam] Optional API value serialized in the `reasoning` wire field.
+    attr_reader :reasoning
+    # @return [LiveDelegationTextInputParam] Optional API value serialized in the `text` wire field.
+    attr_reader :text
+    # @return [Array_of_LiveResponsesDelegationSettingsInputParamToolsItem] Tools available to the Responses backend while it handles tasks delegated by the Live model.
+    attr_reader :tools
+    # @return [Object] Controls which tool the Responses backend uses when handling a task delegated by the Live model.
+    attr_reader :tool_choice
+    # @return [Boolean] Optional `boolean` value serialized in the `parallel_tool_calls` wire field.
+    attr_reader :parallel_tool_calls
 
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-    raise SdkValidationError.new('LiveResponsesDelegationSettingsInputParamToolsItem', 'variant', "Unknown LiveResponsesDelegationSettingsInputParamToolsItem discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalLiveResponsesDelegationSettingsUpdateInputParamMetadata
-  FIELDS = {
-    model: "model",
-    instructions: "instructions",
-    max_output_tokens: "max_output_tokens",
-    service_tier: "service_tier",
-    reasoning: "reasoning",
-    text: "text",
-    tools: "tools",
-    tool_choice: "tool_choice",
-    parallel_tool_calls: "parallel_tool_calls",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    service_tier: lambda do |value|
-      ::OctridevOpenai::LiveResponsesServiceTier.from_value(value)
-    end,
-    reasoning: lambda do |value|
-      ::OctridevOpenai::LiveDelegationReasoningInputParam.from_hash(value)
-    end,
-    text: lambda do |value|
-      ::OctridevOpenai::LiveDelegationTextInputParam.from_hash(value)
-    end,
-    tools: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::LiveResponsesDelegationSettingsUpdateInputParamToolsItem.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for LiveResponsesDelegationSettingsUpdateInputParam.
-# Updates to the Responses backend of an existing Live session. Omitted settings retain their current values.
-class LiveResponsesDelegationSettingsUpdateInputParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveResponsesDelegationSettingsUpdateInputParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveResponsesDelegationSettingsUpdateInputParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveResponsesDelegationSettingsUpdateInputParamMetadata::DECODERS
-
-  # @return [String] The Responses backend model to use for subsequent delegated requests. Omit to keep the current backend model.
-  attr_reader :model
-  # @return [String] Optional `string` value serialized in the `instructions` wire field.
-  attr_reader :instructions
-  # @return [Integer] Optional API value serialized in the `max_output_tokens` wire field.
-  attr_reader :max_output_tokens
-  # @return [LiveResponsesServiceTier] Optional API value serialized in the `service_tier` wire field.
-  attr_reader :service_tier
-  # @return [LiveDelegationReasoningInputParam] Optional API value serialized in the `reasoning` wire field.
-  attr_reader :reasoning
-  # @return [LiveDelegationTextInputParam] Optional API value serialized in the `text` wire field.
-  attr_reader :text
-  # @return [Array_of_LiveResponsesDelegationSettingsUpdateInputParamToolsItem] Tools available to the Responses backend while it handles tasks delegated by the Live model.
-  attr_reader :tools
-  # @return [Object] Controls which tool the Responses backend uses when handling a task delegated by the Live model.
-  attr_reader :tool_choice
-  # @return [Boolean] Optional `boolean` value serialized in the `parallel_tool_calls` wire field.
-  attr_reader :parallel_tool_calls
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the LiveResponsesDelegationSettingsInputParamToolsItem SDK namespace.
+  module LiveResponsesDelegationSettingsInputParamToolsItem
+    DISCRIMINATOR_MAPPING = {
+      'function' => -> { LiveFunctionToolInputParam },
+      'web_search' => -> { LiveWebSearchToolInputParam },
+      'file_search' => -> { LiveFileSearchToolInputParam },
+      'code_interpreter' => -> { LiveCodeInterpreterToolInputParam },
+      'shell' => -> { LiveHostedShellToolInputParam },
+      'image_generation' => -> { LiveImageGenerationToolInputParam },
+      'mcp' => -> { LiveMCPToolInputParam },
+      'custom' => -> { LiveCustomToolInputParam },
+      'namespace' => -> { LiveNamespaceToolInputParam },
+      'tool_search' => -> { LiveToolSearchToolInputParam },
+      'programmatic_tool_calling' => -> { LiveProgrammaticToolInputParam },
+      'computer' => -> { LiveComputerToolInputParam },
+      'apply_patch' => -> { LiveApplyPatchToolInputParam }
+    }.freeze
+
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('LiveResponsesDelegationSettingsInputParamToolsItem', 'variant', "Unknown LiveResponsesDelegationSettingsInputParamToolsItem discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the LiveResponsesDelegationSettingsUpdateInputParamToolsItem SDK namespace.
-module LiveResponsesDelegationSettingsUpdateInputParamToolsItem
-  DISCRIMINATOR_MAPPING = {
-    "function" => -> { LiveFunctionToolInputParam },
-    "web_search" => -> { LiveWebSearchToolInputParam },
-    "file_search" => -> { LiveFileSearchToolInputParam },
-    "code_interpreter" => -> { LiveCodeInterpreterToolInputParam },
-    "shell" => -> { LiveHostedShellToolInputParam },
-    "image_generation" => -> { LiveImageGenerationToolInputParam },
-    "mcp" => -> { LiveMCPToolInputParam },
-    "custom" => -> { LiveCustomToolInputParam },
-    "namespace" => -> { LiveNamespaceToolInputParam },
-    "tool_search" => -> { LiveToolSearchToolInputParam },
-    "programmatic_tool_calling" => -> { LiveProgrammaticToolInputParam },
-    "computer" => -> { LiveComputerToolInputParam },
-    "apply_patch" => -> { LiveApplyPatchToolInputParam },
-  }.freeze
-
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('LiveResponsesDelegationSettingsUpdateInputParamToolsItem', 'variant', "Unknown LiveResponsesDelegationSettingsUpdateInputParamToolsItem discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalLiveResponsesDelegationUpdateParamMetadata
-  FIELDS = {
-    type: "type",
-    responses: "responses",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LiveResponsesDelegationUpdateParamType.from_value(value)
-    end,
-    responses: lambda do |value|
-      ::OctridevOpenai::LiveResponsesDelegationSettingsUpdateInputParam.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for LiveResponsesDelegationUpdateParam.
-# Update the Responses backend for an existing Live session without changing delegation ownership.
-class LiveResponsesDelegationUpdateParam
-  include LiveSessionUpdateParamsDelegation
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveResponsesDelegationUpdateParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveResponsesDelegationUpdateParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveResponsesDelegationUpdateParamMetadata::DECODERS
-
-  # @return [LiveResponsesDelegationUpdateParamType] The delegation owner. Always `responses` for tasks handled by the Responses API.
-  attr_reader :type
-  # @return [LiveResponsesDelegationSettingsUpdateInputParam] Responses backend settings to update. Omitted settings keep their existing values.
-  attr_reader :responses
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalLiveResponsesDelegationSettingsUpdateInputParamMetadata
+    FIELDS = {
+      model: 'model',
+      instructions: 'instructions',
+      max_output_tokens: 'max_output_tokens',
+      service_tier: 'service_tier',
+      reasoning: 'reasoning',
+      text: 'text',
+      tools: 'tools',
+      tool_choice: 'tool_choice',
+      parallel_tool_calls: 'parallel_tool_calls'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      service_tier: lambda do |value|
+        ::OctridevOpenai::LiveResponsesServiceTier.from_value(value)
+      end,
+      reasoning: lambda do |value|
+        ::OctridevOpenai::LiveDelegationReasoningInputParam.from_hash(value)
+      end,
+      text: lambda do |value|
+        ::OctridevOpenai::LiveDelegationTextInputParam.from_hash(value)
+      end,
+      tools: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::LiveResponsesDelegationSettingsUpdateInputParamToolsItem.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for LiveResponsesDelegationSettingsUpdateInputParam.
+  # Updates to the Responses backend of an existing Live session. Omitted settings retain their current values.
+  class LiveResponsesDelegationSettingsUpdateInputParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveResponsesDelegationSettingsUpdateInputParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveResponsesDelegationSettingsUpdateInputParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveResponsesDelegationSettingsUpdateInputParamMetadata::DECODERS
+
+    # @return [String] The Responses backend model to use for subsequent delegated requests. Omit to keep the current backend model.
+    attr_reader :model
+    # @return [String] Optional `string` value serialized in the `instructions` wire field.
+    attr_reader :instructions
+    # @return [Integer] Optional API value serialized in the `max_output_tokens` wire field.
+    attr_reader :max_output_tokens
+    # @return [LiveResponsesServiceTier] Optional API value serialized in the `service_tier` wire field.
+    attr_reader :service_tier
+    # @return [LiveDelegationReasoningInputParam] Optional API value serialized in the `reasoning` wire field.
+    attr_reader :reasoning
+    # @return [LiveDelegationTextInputParam] Optional API value serialized in the `text` wire field.
+    attr_reader :text
+    # @return [Array_of_LiveResponsesDelegationSettingsUpdateInputParamToolsItem] Tools available to the Responses backend while it handles tasks delegated by the Live model.
+    attr_reader :tools
+    # @return [Object] Controls which tool the Responses backend uses when handling a task delegated by the Live model.
+    attr_reader :tool_choice
+    # @return [Boolean] Optional `boolean` value serialized in the `parallel_tool_calls` wire field.
+    attr_reader :parallel_tool_calls
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the LiveResponsesDelegationSettingsUpdateInputParamToolsItem SDK namespace.
+  module LiveResponsesDelegationSettingsUpdateInputParamToolsItem
+    DISCRIMINATOR_MAPPING = {
+      'function' => -> { LiveFunctionToolInputParam },
+      'web_search' => -> { LiveWebSearchToolInputParam },
+      'file_search' => -> { LiveFileSearchToolInputParam },
+      'code_interpreter' => -> { LiveCodeInterpreterToolInputParam },
+      'shell' => -> { LiveHostedShellToolInputParam },
+      'image_generation' => -> { LiveImageGenerationToolInputParam },
+      'mcp' => -> { LiveMCPToolInputParam },
+      'custom' => -> { LiveCustomToolInputParam },
+      'namespace' => -> { LiveNamespaceToolInputParam },
+      'tool_search' => -> { LiveToolSearchToolInputParam },
+      'programmatic_tool_calling' => -> { LiveProgrammaticToolInputParam },
+      'computer' => -> { LiveComputerToolInputParam },
+      'apply_patch' => -> { LiveApplyPatchToolInputParam }
+    }.freeze
 
-# Defines the LiveResponsesDelegationUpdateParamType SDK namespace.
-module LiveResponsesDelegationUpdateParamType
-  RESPONSES = 'responses'
-  VALUES = ['responses'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
 
-    raise SdkValidationError.new('LiveResponsesDelegationUpdateParamType', 'enum', "Unknown LiveResponsesDelegationUpdateParamType: #{value}")
-  end
-end
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
 
-# Defines the LiveResponsesServiceTier SDK namespace.
-module LiveResponsesServiceTier
-  AUTO = 'auto'
-  DEFAULT = 'default'
-  FAST_TIER_TEMP_PILOT = 'fast_tier_temp_pilot'
-  FLEX = 'flex'
-  PRIORITY = 'priority'
-  ULTRAFAST = 'ultrafast'
-  VALUES = ['auto', 'default', 'fast_tier_temp_pilot', 'flex', 'priority', 'ultrafast'].freeze
-  def self.from_value(value)
-    value
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('LiveResponsesDelegationSettingsUpdateInputParamToolsItem', 'variant', "Unknown LiveResponsesDelegationSettingsUpdateInputParamToolsItem discriminator: #{hash['type'].inspect}")
+    end
   end
-end
+
+  # Internal model hydration metadata.
+  class SdkInternalLiveResponsesDelegationUpdateParamMetadata
+    FIELDS = {
+      type: 'type',
+      responses: 'responses'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LiveResponsesDelegationUpdateParamType.from_value(value)
+      end,
+      responses: lambda do |value|
+        ::OctridevOpenai::LiveResponsesDelegationSettingsUpdateInputParam.from_hash(value)
+      end
+    }.freeze
+  end
+
+  # API model for LiveResponsesDelegationUpdateParam.
+  # Update the Responses backend for an existing Live session without changing delegation ownership.
+  class LiveResponsesDelegationUpdateParam
+    include LiveSessionUpdateParamsDelegation
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveResponsesDelegationUpdateParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveResponsesDelegationUpdateParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveResponsesDelegationUpdateParamMetadata::DECODERS
+
+    # @return [LiveResponsesDelegationUpdateParamType] The delegation owner. Always `responses` for tasks handled by the Responses API.
+    attr_reader :type
+    # @return [LiveResponsesDelegationSettingsUpdateInputParam] Responses backend settings to update. Omitted settings keep their existing values.
+    attr_reader :responses
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the LiveResponsesDelegationUpdateParamType SDK namespace.
+  module LiveResponsesDelegationUpdateParamType
+    RESPONSES = 'responses'
+    VALUES = ['responses'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('LiveResponsesDelegationUpdateParamType', 'enum', "Unknown LiveResponsesDelegationUpdateParamType: #{value}")
+    end
+  end
+
+  # Defines the LiveResponsesServiceTier SDK namespace.
+  module LiveResponsesServiceTier
+    AUTO = 'auto'
+    DEFAULT = 'default'
+    FAST_TIER_TEMP_PILOT = 'fast_tier_temp_pilot'
+    FLEX = 'flex'
+    PRIORITY = 'priority'
+    ULTRAFAST = 'ultrafast'
+    VALUES = %w[auto default fast_tier_temp_pilot flex priority ultrafast].freeze
+    def self.from_value(value)
+      value
+    end
+  end
 end

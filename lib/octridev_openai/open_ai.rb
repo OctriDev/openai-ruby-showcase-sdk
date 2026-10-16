@@ -331,10 +331,7 @@ module OctridevOpenai
     # Retrieves a thread and its associated details. Use the thread's identifier to fetch its creation timestamp, tool resources, and metadata.
     #
     # Retrieves a thread.
-    define_method(:get_thread) do |
-      thread_id:,
-      request_options: nil
-    |
+    define_method(:get_thread) do |thread_id:, request_options: nil|
       ::OctridevOpenai::Methods::Assistants.get_thread(
         config: @config,
         thread_id: thread_id,
@@ -423,11 +420,7 @@ module OctridevOpenai
     # Retrieves a message from a thread. Provide both identifiers to select the thread and the message whose role, content, status, and associated details you need.
     #
     # Retrieve a message.
-    define_method(:get_message) do |
-      thread_id:,
-      message_id:,
-      request_options: nil
-    |
+    define_method(:get_message) do |thread_id:, message_id:, request_options: nil|
       ::OctridevOpenai::Methods::Assistants.get_message(
         config: @config,
         thread_id: thread_id,
@@ -612,11 +605,7 @@ module OctridevOpenai
     # Retrieves a run associated with a thread. Use the thread and run IDs to inspect the run’s current status, timestamps, and any required action or error.
     #
     # Retrieves a run.
-    define_method(:get_run) do |
-      thread_id:,
-      run_id:,
-      request_options: nil
-    |
+    define_method(:get_run) do |thread_id:, run_id:, request_options: nil|
       ::OctridevOpenai::Methods::Assistants.get_run(
         config: @config,
         thread_id: thread_id,
@@ -688,13 +677,7 @@ module OctridevOpenai
     # Retrieves a specific step from a run on a thread. Use `include[]` to request file search result content when the step contains file search tool calls.
     #
     # Retrieves a run step.
-    define_method(:get_run_step) do |
-      thread_id:,
-      run_id:,
-      step_id:,
-      include: NOT_GIVEN,
-      request_options: nil
-    |
+    define_method(:get_run_step) do |thread_id:, run_id:, step_id:, include: NOT_GIVEN, request_options: nil|
       ::OctridevOpenai::Methods::Assistants.get_run_step(
         config: @config,
         thread_id: thread_id,
@@ -746,7 +729,6 @@ module OctridevOpenai
         &block
       )
     end
-
   end
 
   # Defines the AudioNamespace SDK type.
@@ -962,10 +944,7 @@ module OctridevOpenai
     # Retrieves a voice consent recording by its identifier. Use `consent_id` to select the recording whose metadata you need.
     #
     # Retrieves a voice consent recording.
-    define_method(:get_voice_consent) do |
-      consent_id:,
-      request_options: nil
-    |
+    define_method(:get_voice_consent) do |consent_id:, request_options: nil|
       ::OctridevOpenai::Methods::Audio.get_voice_consent(
         config: @config,
         consent_id: consent_id,
@@ -1012,7 +991,6 @@ module OctridevOpenai
     )
       ::OctridevOpenai::Methods::Audio.create_voice(config: @config, body: body, request_options: request_options)
     end
-
   end
 
   # Defines the BatchNamespace SDK type.
@@ -1088,7 +1066,6 @@ module OctridevOpenai
     )
       ::OctridevOpenai::Methods::Batch.cancel_batch(config: @config, batch_id: batch_id, request_options: request_options)
     end
-
   end
 
   # Defines the ChatNamespace SDK type.
@@ -1157,10 +1134,7 @@ module OctridevOpenai
     end
 
     # Get a stored chat completion. Only Chat Completions that have been created with the `store` parameter set to `true` will be returned.
-    define_method(:get_completion) do |
-      completion_id:,
-      request_options: nil
-    |
+    define_method(:get_completion) do |completion_id:, request_options: nil|
       ::OctridevOpenai::Methods::Chat.get_chat_completion(
         config: @config,
         completion_id: completion_id,
@@ -1197,13 +1171,7 @@ module OctridevOpenai
     end
 
     # Get the messages in a stored chat completion. Only Chat Completions that have been created with the `store` parameter set to `true` will be returned.
-    define_method(:get_completion_messages) do |
-      completion_id:,
-      after: NOT_GIVEN,
-      limit: NOT_GIVEN,
-      order: NOT_GIVEN,
-      request_options: nil
-    |
+    define_method(:get_completion_messages) do |completion_id:, after: NOT_GIVEN, limit: NOT_GIVEN, order: NOT_GIVEN, request_options: nil|
       ::OctridevOpenai::Methods::Chat.get_chat_completion_messages(
         config: @config,
         completion_id: completion_id,
@@ -1225,7 +1193,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the CompletionsNamespace SDK type.
@@ -1331,7 +1298,6 @@ module OctridevOpenai
         &block
       )
     end
-
   end
 
   # Defines the ContainersNamespace SDK type.
@@ -1527,7 +1493,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the ConversationsNamespace SDK type.
@@ -1594,12 +1559,7 @@ module OctridevOpenai
     # Retrieves a single item from a conversation. Use `conversation_id` and `item_id` to identify the conversation and the item you want to inspect.
     #
     # Get a single item from a conversation with the given IDs.
-    define_method(:get_item) do |
-      conversation_id:,
-      item_id:,
-      include: NOT_GIVEN,
-      request_options: nil
-    |
+    define_method(:get_item) do |conversation_id:, item_id:, include: NOT_GIVEN, request_options: nil|
       ::OctridevOpenai::Methods::Conversations.get_conversation_item(
         config: @config,
         conversation_id: conversation_id,
@@ -1682,7 +1642,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the EmbeddingsNamespace SDK type.
@@ -1712,7 +1671,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the EvalsNamespace SDK type.
@@ -1816,14 +1774,7 @@ module OctridevOpenai
     # Lists runs for a specified evaluation, with optional cursor pagination, ordering, and status filtering. Use `after` to continue from a run in a previous response, and use `status` to limit results to runs in a particular state.
     #
     # Get a list of runs for an evaluation.
-    define_method(:get_runs) do |
-      eval_id:,
-      after: NOT_GIVEN,
-      limit: NOT_GIVEN,
-      order: NOT_GIVEN,
-      status: NOT_GIVEN,
-      request_options: nil
-    |
+    define_method(:get_runs) do |eval_id:, after: NOT_GIVEN, limit: NOT_GIVEN, order: NOT_GIVEN, status: NOT_GIVEN, request_options: nil|
       ::OctridevOpenai::Methods::Evals.get_eval_runs(
         config: @config,
         eval_id: eval_id,
@@ -1873,11 +1824,7 @@ module OctridevOpenai
     # Retrieves a specific run for an evaluation. Use this endpoint to inspect the run's status, results, report URL, and usage details after creating or canceling a run.
     #
     # Get an evaluation run by ID.
-    define_method(:get_run) do |
-      eval_id:,
-      run_id:,
-      request_options: nil
-    |
+    define_method(:get_run) do |eval_id:, run_id:, request_options: nil|
       ::OctridevOpenai::Methods::Evals.get_eval_run(
         config: @config,
         eval_id: eval_id,
@@ -1921,15 +1868,7 @@ module OctridevOpenai
     # Lists output items for a specific evaluation run, with optional cursor pagination, status filtering, and timestamp ordering. Use `after` to continue from a previous response and `status` to view only passing or failing output items.
     #
     # Get a list of output items for an evaluation run.
-    define_method(:get_run_output_items) do |
-      eval_id:,
-      run_id:,
-      after: NOT_GIVEN,
-      limit: NOT_GIVEN,
-      status: NOT_GIVEN,
-      order: NOT_GIVEN,
-      request_options: nil
-    |
+    define_method(:get_run_output_items) do |eval_id:, run_id:, after: NOT_GIVEN, limit: NOT_GIVEN, status: NOT_GIVEN, order: NOT_GIVEN, request_options: nil|
       ::OctridevOpenai::Methods::Evals.get_eval_run_output_items(
         config: @config,
         eval_id: eval_id,
@@ -1961,12 +1900,7 @@ module OctridevOpenai
     # Retrieves a specific output item from an evaluation run. Use `eval_id`, `run_id`, and `output_item_id` to identify the evaluation, run, and item whose grader results and sample you need.
     #
     # Get an evaluation run output item by ID.
-    define_method(:get_run_output_item) do |
-      eval_id:,
-      run_id:,
-      output_item_id:,
-      request_options: nil
-    |
+    define_method(:get_run_output_item) do |eval_id:, run_id:, output_item_id:, request_options: nil|
       ::OctridevOpenai::Methods::Evals.get_eval_run_output_item(
         config: @config,
         eval_id: eval_id,
@@ -1975,7 +1909,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the FilesNamespace SDK type.
@@ -2065,7 +1998,6 @@ module OctridevOpenai
     )
       ::OctridevOpenai::Methods::Files.download_file(config: @config, file_id: file_id, request_options: request_options)
     end
-
   end
 
   # Defines the FineTuningNamespace SDK type.
@@ -2323,7 +2255,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the ImagesNamespace SDK type.
@@ -2477,7 +2408,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the LiveNamespace SDK type.
@@ -2585,7 +2515,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the ModelsNamespace SDK type.
@@ -2620,7 +2549,6 @@ module OctridevOpenai
     )
       ::OctridevOpenai::Methods::Models.delete_model(config: @config, model: model, request_options: request_options)
     end
-
   end
 
   # Defines the ModerationsNamespace SDK type.
@@ -2644,7 +2572,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the AdminApiKeysNamespace SDK type.
@@ -2727,7 +2654,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the AuditLogsNamespace SDK type.
@@ -2783,7 +2709,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the CertificatesNamespace SDK type.
@@ -2970,7 +2895,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the UsageNamespace SDK type.
@@ -3556,7 +3480,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the DataRetentionNamespace SDK type.
@@ -3618,7 +3541,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the GroupsNamespace SDK type.
@@ -3703,7 +3625,6 @@ module OctridevOpenai
     )
       ::OctridevOpenai::Methods::Groups.delete_group(config: @config, group_id: group_id, request_options: request_options)
     end
-
   end
 
   # Defines the GroupOrganizationRoleAssignmentsNamespace SDK type.
@@ -3783,7 +3704,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the GroupUsersNamespace SDK type.
@@ -3873,7 +3793,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the InvitesNamespace SDK type.
@@ -3951,7 +3870,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the ProjectsNamespace SDK type.
@@ -4460,7 +4378,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the ProjectGroupsNamespace SDK type.
@@ -4554,7 +4471,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the HostedToolsNamespace SDK type.
@@ -4600,7 +4516,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the SpendAlertsNamespace SDK type.
@@ -4827,7 +4742,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the RolesNamespace SDK type.
@@ -5032,7 +4946,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the UsersNamespace SDK type.
@@ -5113,7 +5026,6 @@ module OctridevOpenai
     )
       ::OctridevOpenai::Methods::Users.delete_user(config: @config, user_id: user_id, request_options: request_options)
     end
-
   end
 
   # Defines the UserOrganizationRoleAssignmentsNamespace SDK type.
@@ -5193,7 +5105,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the ProjectGroupRoleAssignmentsNamespace SDK type.
@@ -5284,7 +5195,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the ProjectUserRoleAssignmentsNamespace SDK type.
@@ -5375,7 +5285,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the RealtimeNamespace SDK type.
@@ -5565,7 +5474,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the ResponsesNamespace SDK type.
@@ -5625,15 +5533,7 @@ module OctridevOpenai
     # Retrieves a model response by its identifier. Use `include` to request additional response data, or set `stream` to receive server-sent events. When streaming, use `starting_after` to resume from an event sequence number.
     #
     # Retrieves a model response with the given ID.
-    define_method(:get_stream) do |
-      response_id:,
-      include: NOT_GIVEN,
-      stream: NOT_GIVEN,
-      starting_after: NOT_GIVEN,
-      include_obfuscation: NOT_GIVEN,
-      request_options: nil,
-      &block
-    |
+    define_method(:get_stream) do |response_id:, include: NOT_GIVEN, stream: NOT_GIVEN, starting_after: NOT_GIVEN, include_obfuscation: NOT_GIVEN, request_options: nil, &block|
       ::OctridevOpenai::Methods::Responses.get_response_stream(
         config: @config,
         response_id: response_id,
@@ -5998,7 +5898,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the UploadsNamespace SDK type.
@@ -6076,7 +5975,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the VectorStoresNamespace SDK type.
@@ -6202,11 +6100,7 @@ module OctridevOpenai
     # Retrieves a file batch associated with a vector store. Use the batch status and file counts to check the progress and outcome of file processing.
     #
     # Retrieves a vector store file batch.
-    define_method(:get_file_batch) do |
-      vector_store_id:,
-      batch_id:,
-      request_options: nil
-    |
+    define_method(:get_file_batch) do |vector_store_id:, batch_id:, request_options: nil|
       ::OctridevOpenai::Methods::VectorStores.get_vector_store_file_batch(
         config: @config,
         vector_store_id: vector_store_id,
@@ -6304,11 +6198,7 @@ module OctridevOpenai
     # Retrieves a file attachment and its processing details from a vector store. Use `vector_store_id` and `file_id` to identify the attachment whose status and configuration you need.
     #
     # Retrieves a vector store file.
-    define_method(:get_file) do |
-      vector_store_id:,
-      file_id:,
-      request_options: nil
-    |
+    define_method(:get_file) do |vector_store_id:, file_id:, request_options: nil|
       ::OctridevOpenai::Methods::VectorStores.get_vector_store_file(
         config: @config,
         vector_store_id: vector_store_id,
@@ -6390,7 +6280,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the SafetyNamespace SDK type.
@@ -6416,7 +6305,6 @@ module OctridevOpenai
     )
       ::OctridevOpenai::Methods::Safety.retrieve_safety_alert(config: @config, id: id, request_options: request_options)
     end
-
   end
 
   # Defines the ExternalStorageNamespace SDK type.
@@ -6516,7 +6404,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the SpendLimitsNamespace SDK type.
@@ -6608,7 +6495,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the ContentProvenanceChecksNamespace SDK type.
@@ -6628,7 +6514,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the VideosNamespace SDK type.
@@ -6707,10 +6592,7 @@ module OctridevOpenai
     # Fetch a character.
     #
     # @deprecated This operation is deprecated and may be removed in a future release.
-    define_method(:get_character) do |
-      character_id:,
-      request_options: nil
-    |
+    define_method(:get_character) do |character_id:, request_options: nil|
       ::OctridevOpenai::Methods::Videos.get_video_character(
         config: @config,
         character_id: character_id,
@@ -6807,7 +6689,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the SkillsNamespace SDK type.
@@ -6902,10 +6783,7 @@ module OctridevOpenai
     # Retrieves the ZIP bundle for a skill. Use `skill_id` to select the skill whose files you want to download.
     #
     # Download a skill zip bundle by its ID.
-    define_method(:get_content) do |
-      skill_id:,
-      request_options: nil
-    |
+    define_method(:get_content) do |skill_id:, request_options: nil|
       ::OctridevOpenai::Methods::Skills.get_skill_content(
         config: @config,
         skill_id: skill_id,
@@ -6970,11 +6848,7 @@ module OctridevOpenai
     # Retrieves a specific version of a skill. Provide `skill_id` to identify the skill and `version` to select the version to retrieve.
     #
     # Get a specific skill version.
-    define_method(:get_version) do |
-      skill_id:,
-      version:,
-      request_options: nil
-    |
+    define_method(:get_version) do |skill_id:, version:, request_options: nil|
       ::OctridevOpenai::Methods::Skills.get_skill_version(
         config: @config,
         skill_id: skill_id,
@@ -7002,11 +6876,7 @@ module OctridevOpenai
     # Retrieves the ZIP bundle for a specific skill version. Use `skill_id` and `version` to identify the skill and version whose content you need. The response provides the bundle as a downloadable binary file.
     #
     # Download a skill version zip bundle.
-    define_method(:get_version_content) do |
-      skill_id:,
-      version:,
-      request_options: nil
-    |
+    define_method(:get_version_content) do |skill_id:, version:, request_options: nil|
       ::OctridevOpenai::Methods::Skills.get_skill_version_content(
         config: @config,
         skill_id: skill_id,
@@ -7014,7 +6884,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the ChatkitNamespace SDK type.
@@ -7152,7 +7021,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the DecisionsNamespace SDK type.
@@ -7182,7 +7050,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the AgentsNamespace SDK type.
@@ -8028,7 +7895,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the VaultsNamespace SDK type.
@@ -8215,7 +8081,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the WebhookEndpointsNamespace SDK type.
@@ -8333,7 +8198,6 @@ module OctridevOpenai
         request_options: request_options
       )
     end
-
   end
 
   # Defines the WebhookEventTypesNamespace SDK type.
@@ -8346,7 +8210,6 @@ module OctridevOpenai
     def list(request_options: nil)
       ::OctridevOpenai::Methods::WebhookEventTypes.list_webhook_event_types(config: @config, request_options: request_options)
     end
-
   end
 
   # Defines the OpenAI SDK type.
@@ -8411,7 +8274,7 @@ module OctridevOpenai
       agents: AgentsNamespace,
       vaults: VaultsNamespace,
       webhook_endpoints: WebhookEndpointsNamespace,
-      webhook_event_types: WebhookEventTypesNamespace,
+      webhook_event_types: WebhookEventTypesNamespace
     }.freeze
     private_constant :SUB_NAMESPACES
 
@@ -8440,6 +8303,5 @@ module OctridevOpenai
       end
       logging
     end
-
   end
 end

@@ -5,658 +5,647 @@
 
 # realtime_realtime_session domain models (part 2)
 module OctridevOpenai
-# API model for RealtimeSessionCreateRequestGAAudioOutput.
-# Optional object value serialized in the `output` wire field.
-class RealtimeSessionCreateRequestGAAudioOutput
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeSessionCreateRequestGAAudioOutputMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeSessionCreateRequestGAAudioOutputMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeSessionCreateRequestGAAudioOutputMetadata::DECODERS
+  # API model for RealtimeSessionCreateRequestGAAudioOutput.
+  # Optional object value serialized in the `output` wire field.
+  class RealtimeSessionCreateRequestGAAudioOutput
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeSessionCreateRequestGAAudioOutputMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeSessionCreateRequestGAAudioOutputMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeSessionCreateRequestGAAudioOutputMetadata::DECODERS
 
-  # @return [RealtimeAudioFormats] The format of the output audio.
-  attr_reader :format
-  # @return [VoiceIdsOrCustomVoice] The voice the model uses to respond. Supported built-in voices are `alloy`, `ash`, `ballad`, `coral`, `echo`, `sage`, `shimmer`, `verse`, `marin`, and `cedar`. You may also provide a custom voice object with an `id`, for example `{ "id": "voice_1234" }`. Voice cannot be changed during the session once the model has responded with audio at least once. Custom voices must be created from audio samples. We recommend `marin` and `cedar` for best quality.
-  attr_reader :voice
-  # @return [Float] The speed of the model's spoken response as a multiple of the original speed. 1.0 is the default speed. 0.25 is the minimum speed. 1.5 is the maximum speed. This value can only be changed in between model turns, not while a response is in progress. This parameter is a post-processing adjustment to the audio after it is generated, it's also possible to prompt the model to speak faster or slower.
-  attr_reader :speed
+    # @return [RealtimeAudioFormats] The format of the output audio.
+    attr_reader :format
+    # @return [VoiceIdsOrCustomVoice] The voice the model uses to respond. Supported built-in voices are `alloy`, `ash`, `ballad`, `coral`, `echo`, `sage`, `shimmer`, `verse`, `marin`, and `cedar`. You may also provide a custom voice object with an `id`, for example `{ "id": "voice_1234" }`. Voice cannot be changed during the session once the model has responded with audio at least once. Custom voices must be created from audio samples. We recommend `marin` and `cedar` for best quality.
+    attr_reader :voice
+    # @return [Float] The speed of the model's spoken response as a multiple of the original speed. 1.0 is the default speed. 0.25 is the minimum speed. 1.5 is the maximum speed. This value can only be changed in between model turns, not while a response is in progress. This parameter is a post-processing adjustment to the audio after it is generated, it's also possible to prompt the model to speak faster or slower.
+    attr_reader :speed
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeSessionCreateRequestGAAudioMetadata
+    FIELDS = {
+      input: 'input',
+      output: 'output'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      input: lambda do |value|
+        ::OctridevOpenai::RealtimeSessionCreateRequestGAAudioInput.from_hash(value)
+      end,
+      output: lambda do |value|
+        ::OctridevOpenai::RealtimeSessionCreateRequestGAAudioOutput.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for RealtimeSessionCreateRequestGAAudio.
+  # Configuration for input and output audio.
+  class RealtimeSessionCreateRequestGAAudio
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeSessionCreateRequestGAAudioMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeSessionCreateRequestGAAudioMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeSessionCreateRequestGAAudioMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalRealtimeSessionCreateRequestGAAudioMetadata
-  FIELDS = {
-    input: "input",
-    output: "output",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    input: lambda do |value|
-      ::OctridevOpenai::RealtimeSessionCreateRequestGAAudioInput.from_hash(value)
-    end,
-    output: lambda do |value|
-      ::OctridevOpenai::RealtimeSessionCreateRequestGAAudioOutput.from_hash(value)
-    end,
-  }.freeze
-end
+    # @return [RealtimeSessionCreateRequestGAAudioInput] Optional object value serialized in the `input` wire field.
+    attr_reader :input
+    # @return [RealtimeSessionCreateRequestGAAudioOutput] Optional object value serialized in the `output` wire field.
+    attr_reader :output
 
-# API model for RealtimeSessionCreateRequestGAAudio.
-# Configuration for input and output audio.
-class RealtimeSessionCreateRequestGAAudio
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeSessionCreateRequestGAAudioMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeSessionCreateRequestGAAudioMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeSessionCreateRequestGAAudioMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [RealtimeSessionCreateRequestGAAudioInput] Optional object value serialized in the `input` wire field.
-  attr_reader :input
-  # @return [RealtimeSessionCreateRequestGAAudioOutput] Optional object value serialized in the `output` wire field.
-  attr_reader :output
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeSessionCreateRequestGATracingVariant1Metadata
+    FIELDS = {
+      workflow_name: 'workflow_name',
+      group_id: 'group_id',
+      metadata: 'metadata'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for RealtimeSessionCreateRequestGATracingVariant1.
+  # Granular configuration for tracing.
+  class RealtimeSessionCreateRequestGATracingVariant1
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeSessionCreateRequestGATracingVariant1Metadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeSessionCreateRequestGATracingVariant1Metadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeSessionCreateRequestGATracingVariant1Metadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalRealtimeSessionCreateRequestGATracingVariant1Metadata
-  FIELDS = {
-    workflow_name: "workflow_name",
-    group_id: "group_id",
-    metadata: "metadata",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
+    # @return [String] The name of the workflow to attach to this trace. This is used to name the trace in the Traces Dashboard.
+    attr_reader :workflow_name
+    # @return [String] The group id to attach to this trace to enable filtering and grouping in the Traces Dashboard.
+    attr_reader :group_id
+    # @return [Hash] The arbitrary metadata to attach to this trace to enable filtering in the Traces Dashboard.
+    attr_reader :metadata
 
-# API model for RealtimeSessionCreateRequestGATracingVariant1.
-# Granular configuration for tracing.
-class RealtimeSessionCreateRequestGATracingVariant1
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeSessionCreateRequestGATracingVariant1Metadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeSessionCreateRequestGATracingVariant1Metadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeSessionCreateRequestGATracingVariant1Metadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [String] The name of the workflow to attach to this trace. This is used to name the trace in the Traces Dashboard.
-  attr_reader :workflow_name
-  # @return [String] The group id to attach to this trace to enable filtering and grouping in the Traces Dashboard.
-  attr_reader :group_id
-  # @return [Hash] The arbitrary metadata to attach to this trace to enable filtering in the Traces Dashboard.
-  attr_reader :metadata
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeSessionCreateRequestGAMetadata
+    FIELDS = {
+      type: 'type',
+      output_modalities: 'output_modalities',
+      model: 'model',
+      instructions: 'instructions',
+      audio: 'audio',
+      include: 'include',
+      tracing: 'tracing',
+      tools: 'tools',
+      tool_choice: 'tool_choice',
+      parallel_tool_calls: 'parallel_tool_calls',
+      reasoning: 'reasoning',
+      max_output_tokens: 'max_output_tokens',
+      truncation: 'truncation',
+      prompt: 'prompt'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeSessionCreateRequestGAType.from_value(value)
+      end,
+      output_modalities: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::RealtimeSessionCreateRequestGAOutputModalitiesItem.from_value(item) }
+      end,
+      audio: lambda do |value|
+        ::OctridevOpenai::RealtimeSessionCreateRequestGAAudio.from_hash(value)
+      end,
+      include: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::RealtimeSessionCreateRequestGAIncludeItem.from_value(item) }
+      end,
+      tools: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::RealtimeSessionCreateRequestGAToolsItem.from_hash(item) }
+      end,
+      tool_choice: lambda do |value|
+        ::OctridevOpenai::RealtimeSessionCreateRequestGAToolChoice.from_hash(value)
+      end,
+      reasoning: lambda do |value|
+        ::OctridevOpenai::RealtimeReasoning.from_hash(value)
+      end,
+      truncation: lambda do |value|
+        ::OctridevOpenai::RealtimeTruncation.from_hash(value)
+      end,
+      prompt: lambda do |value|
+        ::OctridevOpenai::Prompt.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for RealtimeSessionCreateRequestGA.
+  # Realtime session object configuration.
+  class RealtimeSessionCreateRequestGA
+    include RealtimeClientEventSessionUpdateSession
+    include RealtimeCreateClientSecretRequestSession
 
-# Internal model hydration metadata.
-class SdkInternalRealtimeSessionCreateRequestGAMetadata
-  FIELDS = {
-    type: "type",
-    output_modalities: "output_modalities",
-    model: "model",
-    instructions: "instructions",
-    audio: "audio",
-    include: "include",
-    tracing: "tracing",
-    tools: "tools",
-    tool_choice: "tool_choice",
-    parallel_tool_calls: "parallel_tool_calls",
-    reasoning: "reasoning",
-    max_output_tokens: "max_output_tokens",
-    truncation: "truncation",
-    prompt: "prompt",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeSessionCreateRequestGAType.from_value(value)
-    end,
-    output_modalities: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::RealtimeSessionCreateRequestGAOutputModalitiesItem.from_value(item) }
-    end,
-    audio: lambda do |value|
-      ::OctridevOpenai::RealtimeSessionCreateRequestGAAudio.from_hash(value)
-    end,
-    include: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::RealtimeSessionCreateRequestGAIncludeItem.from_value(item) }
-    end,
-    tools: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::RealtimeSessionCreateRequestGAToolsItem.from_hash(item) }
-    end,
-    tool_choice: lambda do |value|
-      ::OctridevOpenai::RealtimeSessionCreateRequestGAToolChoice.from_hash(value)
-    end,
-    reasoning: lambda do |value|
-      ::OctridevOpenai::RealtimeReasoning.from_hash(value)
-    end,
-    truncation: lambda do |value|
-      ::OctridevOpenai::RealtimeTruncation.from_hash(value)
-    end,
-    prompt: lambda do |value|
-      ::OctridevOpenai::Prompt.from_hash(value)
-    end,
-  }.freeze
-end
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeSessionCreateRequestGAMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeSessionCreateRequestGAMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeSessionCreateRequestGAMetadata::DECODERS
 
-# API model for RealtimeSessionCreateRequestGA.
-# Realtime session object configuration.
-class RealtimeSessionCreateRequestGA
-  include RealtimeClientEventSessionUpdateSession
-  include RealtimeCreateClientSecretRequestSession
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeSessionCreateRequestGAMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeSessionCreateRequestGAMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeSessionCreateRequestGAMetadata::DECODERS
+    # @return [RealtimeSessionCreateRequestGAType] The type of session to create. Always `realtime` for the Realtime API.
+    attr_reader :type
+    # @return [Array_of_RealtimeSessionCreateRequestGAOutputModalitiesItem] The set of modalities the model can respond with. It defaults to `["audio"]`, indicating that the model will respond with audio plus a transcript. `["text"]` can be used to make the model respond with text only. It is not possible to request both `text` and `audio` at the same time.
+    attr_reader :output_modalities
+    # @return [String] The Realtime model used for this session.
+    attr_reader :model
+    # @return [String] The default system instructions (i.e. system message) prepended to model calls. This field allows the client to guide the model on desired responses. The model can be instructed on response content and format, (e.g. "be extremely succinct", "act friendly", "here are examples of good responses") and on audio behavior (e.g. "talk quickly", "inject emotion into your voice", "laugh frequently"). The instructions are not guaranteed to be followed by the model, but they provide…
+    attr_reader :instructions
+    # @return [RealtimeSessionCreateRequestGAAudio] Configuration for input and output audio.
+    attr_reader :audio
+    # @return [Array_of_RealtimeSessionCreateRequestGAIncludeItem] Additional fields to include in server outputs. `item.input_audio_transcription.logprobs`: Include logprobs for input audio transcription.
+    attr_reader :include
+    # @return [Object] Realtime API can write session traces to the Traces Dashboard. Set to null to disable tracing. Once tracing is enabled for a session, the configuration cannot be modified. `auto` will create a trace for the session with default values for the workflow name, group id, and metadata.
+    attr_reader :tracing
+    # @return [Array_of_RealtimeSessionCreateRequestGAToolsItem] Tools available to the model.
+    attr_reader :tools
+    # @return [RealtimeSessionCreateRequestGAToolChoice] How the model chooses tools. Provide one of the string modes or force a specific function/MCP tool.
+    attr_reader :tool_choice
+    # @return [Boolean] Whether the model may call multiple tools in parallel. Only supported by reasoning Realtime models such as `gpt-realtime-2`.
+    attr_reader :parallel_tool_calls
+    # @return [RealtimeReasoning] Configuration for reasoning-capable Realtime models such as `gpt-realtime-2`.
+    attr_reader :reasoning
+    # @return [Object] Maximum number of output tokens for a single assistant response, inclusive of tool calls. Provide an integer between 1 and 4096 to limit output tokens, or `inf` for the maximum available tokens for a given model. Defaults to `inf`.
+    attr_reader :max_output_tokens
+    # @return [RealtimeTruncation] When the number of tokens in a conversation exceeds the model's input token limit, the conversation be truncated, meaning messages (starting from the oldest) will not be included in the model's context. A 32k context model with 4,096 max output tokens can only include 28,224 tokens in the context before truncation occurs. Clients can configure truncation behavior to truncate with a lower max token limit, which is an effective way to control token usage and cost. Truncation…
+    attr_reader :truncation
+    # @return [Prompt] Reference to a prompt template and its variables. Learn more.
+    attr_reader :prompt
 
-  # @return [RealtimeSessionCreateRequestGAType] The type of session to create. Always `realtime` for the Realtime API.
-  attr_reader :type
-  # @return [Array_of_RealtimeSessionCreateRequestGAOutputModalitiesItem] The set of modalities the model can respond with. It defaults to `["audio"]`, indicating that the model will respond with audio plus a transcript. `["text"]` can be used to make the model respond with text only. It is not possible to request both `text` and `audio` at the same time.
-  attr_reader :output_modalities
-  # @return [String] The Realtime model used for this session.
-  attr_reader :model
-  # @return [String] The default system instructions (i.e. system message) prepended to model calls. This field allows the client to guide the model on desired responses. The model can be instructed on response content and format, (e.g. "be extremely succinct", "act friendly", "here are examples of good responses") and on audio behavior (e.g. "talk quickly", "inject emotion into your voice", "laugh frequently"). The instructions are not guaranteed to be followed by the model, but they provide…
-  attr_reader :instructions
-  # @return [RealtimeSessionCreateRequestGAAudio] Configuration for input and output audio.
-  attr_reader :audio
-  # @return [Array_of_RealtimeSessionCreateRequestGAIncludeItem] Additional fields to include in server outputs. `item.input_audio_transcription.logprobs`: Include logprobs for input audio transcription.
-  attr_reader :include
-  # @return [Object] Realtime API can write session traces to the Traces Dashboard. Set to null to disable tracing. Once tracing is enabled for a session, the configuration cannot be modified. `auto` will create a trace for the session with default values for the workflow name, group id, and metadata.
-  attr_reader :tracing
-  # @return [Array_of_RealtimeSessionCreateRequestGAToolsItem] Tools available to the model.
-  attr_reader :tools
-  # @return [RealtimeSessionCreateRequestGAToolChoice] How the model chooses tools. Provide one of the string modes or force a specific function/MCP tool.
-  attr_reader :tool_choice
-  # @return [Boolean] Whether the model may call multiple tools in parallel. Only supported by reasoning Realtime models such as `gpt-realtime-2`.
-  attr_reader :parallel_tool_calls
-  # @return [RealtimeReasoning] Configuration for reasoning-capable Realtime models such as `gpt-realtime-2`.
-  attr_reader :reasoning
-  # @return [Object] Maximum number of output tokens for a single assistant response, inclusive of tool calls. Provide an integer between 1 and 4096 to limit output tokens, or `inf` for the maximum available tokens for a given model. Defaults to `inf`.
-  attr_reader :max_output_tokens
-  # @return [RealtimeTruncation] When the number of tokens in a conversation exceeds the model's input token limit, the conversation be truncated, meaning messages (starting from the oldest) will not be included in the model's context. A 32k context model with 4,096 max output tokens can only include 28,224 tokens in the context before truncation occurs. Clients can configure truncation behavior to truncate with a lower max token limit, which is an effective way to control token usage and cost. Truncation…
-  attr_reader :truncation
-  # @return [Prompt] Reference to a prompt template and its variables. Learn more.
-  attr_reader :prompt
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the RealtimeSessionCreateRequestGAIncludeItem SDK namespace.
+  module RealtimeSessionCreateRequestGAIncludeItem
+    ITEM_INPUT_AUDIO_TRANSCRIPTION_LOGPROBS = 'item.input_audio_transcription.logprobs'
+    VALUES = ['item.input_audio_transcription.logprobs'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the RealtimeSessionCreateRequestGAIncludeItem SDK namespace.
-module RealtimeSessionCreateRequestGAIncludeItem
-  ITEM_INPUT_AUDIO_TRANSCRIPTION_LOGPROBS = 'item.input_audio_transcription.logprobs'
-  VALUES = ['item.input_audio_transcription.logprobs'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the RealtimeSessionCreateRequestGAMaxOutputTokensVariant1 SDK namespace.
-module RealtimeSessionCreateRequestGAMaxOutputTokensVariant1
-  INF = 'inf'
-  VALUES = ['inf'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the RealtimeSessionCreateRequestGAOutputModalitiesItem SDK namespace.
-module RealtimeSessionCreateRequestGAOutputModalitiesItem
-  TEXT = 'text'
-  AUDIO = 'audio'
-  VALUES = ['text', 'audio'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the RealtimeSessionCreateRequestGATracingVariant0 SDK namespace.
-module RealtimeSessionCreateRequestGATracingVariant0
-  AUTO = 'auto'
-  VALUES = ['auto'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the RealtimeSessionCreateRequestGAType SDK namespace.
-module RealtimeSessionCreateRequestGAType
-  REALTIME = 'realtime'
-  VALUES = ['realtime'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('RealtimeSessionCreateRequestGAType', 'enum', "Unknown RealtimeSessionCreateRequestGAType: #{value}")
-  end
-end
-
-# Defines the RealtimeSessionCreateRequestGAToolChoice SDK namespace.
-module RealtimeSessionCreateRequestGAToolChoice
-  def self.from_hash(hash)
-    return ToolChoiceOptions.from_value(hash) if hash.is_a?(::String)
-    return hash unless hash.is_a?(::Hash)
-    mapping = { "function" => ToolChoiceFunction, "mcp" => ToolChoiceMCP }
-    type = mapping[hash["type"]]
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('RealtimeSessionCreateRequestGAToolChoice', 'variant', "Unknown RealtimeSessionCreateRequestGAToolChoice discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Defines the RealtimeSessionCreateRequestGAToolsItem SDK namespace.
-module RealtimeSessionCreateRequestGAToolsItem
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    mapping = { "function" => RealtimeFunctionTool, "mcp" => MCPTool }
-    type = mapping[hash["type"]]
-    return type.from_hash(hash) if type
-
-    raise SdkValidationError.new('RealtimeSessionCreateRequestGAToolsItem', 'variant', "Unknown RealtimeSessionCreateRequestGAToolsItem discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeSessionCreateResponseAudioInputNoiseReductionMetadata
-  FIELDS = {
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::NoiseReductionType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for RealtimeSessionCreateResponseAudioInputNoiseReduction.
-# Configuration for input audio noise reduction.
-class RealtimeSessionCreateResponseAudioInputNoiseReduction
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeSessionCreateResponseAudioInputNoiseReductionMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeSessionCreateResponseAudioInputNoiseReductionMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeSessionCreateResponseAudioInputNoiseReductionMetadata::DECODERS
-
-  # @return [NoiseReductionType] Type of noise reduction. `near_field` is for close-talking microphones such as headphones, `far_field` is for far-field microphones such as laptop or conference room microphones.
-  attr_reader :type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the RealtimeSessionCreateRequestGAMaxOutputTokensVariant1 SDK namespace.
+  module RealtimeSessionCreateRequestGAMaxOutputTokensVariant1
+    INF = 'inf'
+    VALUES = ['inf'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the RealtimeSessionCreateRequestGAOutputModalitiesItem SDK namespace.
+  module RealtimeSessionCreateRequestGAOutputModalitiesItem
+    TEXT = 'text'
+    AUDIO = 'audio'
+    VALUES = %w[text audio].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeSessionCreateResponseAudioInputTurnDetectionMetadata
-  FIELDS = {
-    type: "type",
-    threshold: "threshold",
-    prefix_padding_ms: "prefix_padding_ms",
-    silence_duration_ms: "silence_duration_ms",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for RealtimeSessionCreateResponseAudioInputTurnDetection.
-# Configuration for turn detection.
-class RealtimeSessionCreateResponseAudioInputTurnDetection
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeSessionCreateResponseAudioInputTurnDetectionMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeSessionCreateResponseAudioInputTurnDetectionMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeSessionCreateResponseAudioInputTurnDetectionMetadata::DECODERS
-
-  # @return [String] Type of turn detection, only `server_vad` is currently supported.
-  attr_reader :type
-  # @return [Float] Optional `number` value serialized in the `threshold` wire field.
-  attr_reader :threshold
-  # @return [Integer] Optional `integer` value serialized in the `prefix_padding_ms` wire field.
-  attr_reader :prefix_padding_ms
-  # @return [Integer] Optional `integer` value serialized in the `silence_duration_ms` wire field.
-  attr_reader :silence_duration_ms
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the RealtimeSessionCreateRequestGATracingVariant0 SDK namespace.
+  module RealtimeSessionCreateRequestGATracingVariant0
+    AUTO = 'auto'
+    VALUES = ['auto'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the RealtimeSessionCreateRequestGAType SDK namespace.
+  module RealtimeSessionCreateRequestGAType
+    REALTIME = 'realtime'
+    VALUES = ['realtime'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('RealtimeSessionCreateRequestGAType', 'enum', "Unknown RealtimeSessionCreateRequestGAType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the RealtimeSessionCreateRequestGAToolChoice SDK namespace.
+  module RealtimeSessionCreateRequestGAToolChoice
+    def self.from_hash(hash)
+      return ToolChoiceOptions.from_value(hash) if hash.is_a?(::String)
+      return hash unless hash.is_a?(::Hash)
 
-# Internal model hydration metadata.
-class SdkInternalRealtimeSessionCreateResponseAudioInputMetadata
-  FIELDS = {
-    format: "format",
-    transcription: "transcription",
-    noise_reduction: "noise_reduction",
-    turn_detection: "turn_detection",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    format: lambda do |value|
-      ::OctridevOpenai::RealtimeAudioFormats.from_hash(value)
-    end,
-    transcription: lambda do |value|
-      ::OctridevOpenai::AudioTranscriptionResponse.from_hash(value)
-    end,
-    noise_reduction: lambda do |value|
-      ::OctridevOpenai::RealtimeSessionCreateResponseAudioInputNoiseReduction.from_hash(value)
-    end,
-    turn_detection: lambda do |value|
-      ::OctridevOpenai::RealtimeSessionCreateResponseAudioInputTurnDetection.from_hash(value)
-    end,
-  }.freeze
-end
+      mapping = { 'function' => ToolChoiceFunction, 'mcp' => ToolChoiceMCP }
+      type = mapping[hash['type']]
+      return type.from_hash(hash) if type
 
-# API model for RealtimeSessionCreateResponseAudioInput.
-# Optional object value serialized in the `input` wire field.
-class RealtimeSessionCreateResponseAudioInput
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeSessionCreateResponseAudioInputMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeSessionCreateResponseAudioInputMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeSessionCreateResponseAudioInputMetadata::DECODERS
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
 
-  # @return [RealtimeAudioFormats] Optional API value serialized in the `format` wire field.
-  attr_reader :format
-  # @return [AudioTranscriptionResponse] Configuration for input audio transcription.
-  attr_reader :transcription
-  # @return [RealtimeSessionCreateResponseAudioInputNoiseReduction] Configuration for input audio noise reduction.
-  attr_reader :noise_reduction
-  # @return [RealtimeSessionCreateResponseAudioInputTurnDetection] Configuration for turn detection.
-  attr_reader :turn_detection
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('RealtimeSessionCreateRequestGAToolChoice', 'variant', "Unknown RealtimeSessionCreateRequestGAToolChoice discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the RealtimeSessionCreateRequestGAToolsItem SDK namespace.
+  module RealtimeSessionCreateRequestGAToolsItem
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      mapping = { 'function' => RealtimeFunctionTool, 'mcp' => MCPTool }
+      type = mapping[hash['type']]
+      return type.from_hash(hash) if type
+
+      raise SdkValidationError.new('RealtimeSessionCreateRequestGAToolsItem', 'variant', "Unknown RealtimeSessionCreateRequestGAToolsItem discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeSessionCreateResponseAudioOutputMetadata
-  FIELDS = {
-    format: "format",
-    voice: "voice",
-    speed: "speed",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    format: lambda do |value|
-      ::OctridevOpenai::RealtimeAudioFormats.from_hash(value)
-    end,
-    voice: lambda do |value|
-      ::OctridevOpenai::VoiceIdsShared.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for RealtimeSessionCreateResponseAudioOutput.
-# Optional object value serialized in the `output` wire field.
-class RealtimeSessionCreateResponseAudioOutput
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeSessionCreateResponseAudioOutputMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeSessionCreateResponseAudioOutputMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeSessionCreateResponseAudioOutputMetadata::DECODERS
-
-  # @return [RealtimeAudioFormats] Optional API value serialized in the `format` wire field.
-  attr_reader :format
-  # @return [VoiceIdsShared] Optional `string` value serialized in the `voice` wire field.
-  attr_reader :voice
-  # @return [Float] Optional `number` value serialized in the `speed` wire field.
-  attr_reader :speed
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeSessionCreateResponseAudioInputNoiseReductionMetadata
+    FIELDS = {
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::NoiseReductionType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for RealtimeSessionCreateResponseAudioInputNoiseReduction.
+  # Configuration for input audio noise reduction.
+  class RealtimeSessionCreateResponseAudioInputNoiseReduction
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeSessionCreateResponseAudioInputNoiseReductionMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeSessionCreateResponseAudioInputNoiseReductionMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeSessionCreateResponseAudioInputNoiseReductionMetadata::DECODERS
+
+    # @return [NoiseReductionType] Type of noise reduction. `near_field` is for close-talking microphones such as headphones, `far_field` is for far-field microphones such as laptop or conference room microphones.
+    attr_reader :type
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeSessionCreateResponseAudioMetadata
-  FIELDS = {
-    input: "input",
-    output: "output",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    input: lambda do |value|
-      ::OctridevOpenai::RealtimeSessionCreateResponseAudioInput.from_hash(value)
-    end,
-    output: lambda do |value|
-      ::OctridevOpenai::RealtimeSessionCreateResponseAudioOutput.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for RealtimeSessionCreateResponseAudio.
-# Configuration for input and output audio for the session.
-class RealtimeSessionCreateResponseAudio
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeSessionCreateResponseAudioMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeSessionCreateResponseAudioMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeSessionCreateResponseAudioMetadata::DECODERS
-
-  # @return [RealtimeSessionCreateResponseAudioInput] Optional object value serialized in the `input` wire field.
-  attr_reader :input
-  # @return [RealtimeSessionCreateResponseAudioOutput] Optional object value serialized in the `output` wire field.
-  attr_reader :output
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeSessionCreateResponseAudioInputTurnDetectionMetadata
+    FIELDS = {
+      type: 'type',
+      threshold: 'threshold',
+      prefix_padding_ms: 'prefix_padding_ms',
+      silence_duration_ms: 'silence_duration_ms'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for RealtimeSessionCreateResponseAudioInputTurnDetection.
+  # Configuration for turn detection.
+  class RealtimeSessionCreateResponseAudioInputTurnDetection
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeSessionCreateResponseAudioInputTurnDetectionMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeSessionCreateResponseAudioInputTurnDetectionMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeSessionCreateResponseAudioInputTurnDetectionMetadata::DECODERS
+
+    # @return [String] Type of turn detection, only `server_vad` is currently supported.
+    attr_reader :type
+    # @return [Float] Optional `number` value serialized in the `threshold` wire field.
+    attr_reader :threshold
+    # @return [Integer] Optional `integer` value serialized in the `prefix_padding_ms` wire field.
+    attr_reader :prefix_padding_ms
+    # @return [Integer] Optional `integer` value serialized in the `silence_duration_ms` wire field.
+    attr_reader :silence_duration_ms
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeSessionCreateResponseTracingVariant1Metadata
-  FIELDS = {
-    workflow_name: "workflow_name",
-    group_id: "group_id",
-    metadata: "metadata",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for RealtimeSessionCreateResponseTracingVariant1.
-# Granular configuration for tracing.
-class RealtimeSessionCreateResponseTracingVariant1
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeSessionCreateResponseTracingVariant1Metadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeSessionCreateResponseTracingVariant1Metadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeSessionCreateResponseTracingVariant1Metadata::DECODERS
-
-  # @return [String] The name of the workflow to attach to this trace. This is used to name the trace in the traces dashboard.
-  attr_reader :workflow_name
-  # @return [String] The group id to attach to this trace to enable filtering and grouping in the traces dashboard.
-  attr_reader :group_id
-  # @return [Hash] The arbitrary metadata to attach to this trace to enable filtering in the traces dashboard.
-  attr_reader :metadata
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeSessionCreateResponseAudioInputMetadata
+    FIELDS = {
+      format: 'format',
+      transcription: 'transcription',
+      noise_reduction: 'noise_reduction',
+      turn_detection: 'turn_detection'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      format: lambda do |value|
+        ::OctridevOpenai::RealtimeAudioFormats.from_hash(value)
+      end,
+      transcription: lambda do |value|
+        ::OctridevOpenai::AudioTranscriptionResponse.from_hash(value)
+      end,
+      noise_reduction: lambda do |value|
+        ::OctridevOpenai::RealtimeSessionCreateResponseAudioInputNoiseReduction.from_hash(value)
+      end,
+      turn_detection: lambda do |value|
+        ::OctridevOpenai::RealtimeSessionCreateResponseAudioInputTurnDetection.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for RealtimeSessionCreateResponseAudioInput.
+  # Optional object value serialized in the `input` wire field.
+  class RealtimeSessionCreateResponseAudioInput
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeSessionCreateResponseAudioInputMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeSessionCreateResponseAudioInputMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeSessionCreateResponseAudioInputMetadata::DECODERS
+
+    # @return [RealtimeAudioFormats] Optional API value serialized in the `format` wire field.
+    attr_reader :format
+    # @return [AudioTranscriptionResponse] Configuration for input audio transcription.
+    attr_reader :transcription
+    # @return [RealtimeSessionCreateResponseAudioInputNoiseReduction] Configuration for input audio noise reduction.
+    attr_reader :noise_reduction
+    # @return [RealtimeSessionCreateResponseAudioInputTurnDetection] Configuration for turn detection.
+    attr_reader :turn_detection
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeSessionCreateResponseTurnDetectionMetadata
-  FIELDS = {
-    type: "type",
-    threshold: "threshold",
-    prefix_padding_ms: "prefix_padding_ms",
-    silence_duration_ms: "silence_duration_ms",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for RealtimeSessionCreateResponseTurnDetection.
-# Configuration for turn detection. Can be set to `null` to turn off. Server VAD means that the model will detect the start and end of speech based on audio volume and respond at the end of user speech.
-class RealtimeSessionCreateResponseTurnDetection
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeSessionCreateResponseTurnDetectionMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeSessionCreateResponseTurnDetectionMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeSessionCreateResponseTurnDetectionMetadata::DECODERS
-
-  # @return [String] Type of turn detection, only `server_vad` is currently supported.
-  attr_reader :type
-  # @return [Float] Activation threshold for VAD (0.0 to 1.0), this defaults to 0.5. A higher threshold will require louder audio to activate the model, and thus might perform better in noisy environments.
-  attr_reader :threshold
-  # @return [Integer] Amount of audio to include before the VAD detected speech (in milliseconds). Defaults to 300ms.
-  attr_reader :prefix_padding_ms
-  # @return [Integer] Duration of silence to detect speech stop (in milliseconds). Defaults to 500ms. With shorter values the model will respond more quickly, but may jump in on short pauses from the user.
-  attr_reader :silence_duration_ms
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeSessionCreateResponseAudioOutputMetadata
+    FIELDS = {
+      format: 'format',
+      voice: 'voice',
+      speed: 'speed'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      format: lambda do |value|
+        ::OctridevOpenai::RealtimeAudioFormats.from_hash(value)
+      end,
+      voice: lambda do |value|
+        ::OctridevOpenai::VoiceIdsShared.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for RealtimeSessionCreateResponseAudioOutput.
+  # Optional object value serialized in the `output` wire field.
+  class RealtimeSessionCreateResponseAudioOutput
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeSessionCreateResponseAudioOutputMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeSessionCreateResponseAudioOutputMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeSessionCreateResponseAudioOutputMetadata::DECODERS
+
+    # @return [RealtimeAudioFormats] Optional API value serialized in the `format` wire field.
+    attr_reader :format
+    # @return [VoiceIdsShared] Optional `string` value serialized in the `voice` wire field.
+    attr_reader :voice
+    # @return [Float] Optional `number` value serialized in the `speed` wire field.
+    attr_reader :speed
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeSessionCreateResponseAudioMetadata
+    FIELDS = {
+      input: 'input',
+      output: 'output'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      input: lambda do |value|
+        ::OctridevOpenai::RealtimeSessionCreateResponseAudioInput.from_hash(value)
+      end,
+      output: lambda do |value|
+        ::OctridevOpenai::RealtimeSessionCreateResponseAudioOutput.from_hash(value)
+      end
+    }.freeze
   end
-end
 
-# Internal model hydration metadata.
-class SdkInternalRealtimeSessionCreateResponseMetadata
-  FIELDS = {
-    id: "id",
-    object: "object",
-    expires_at: "expires_at",
-    include: "include",
-    model: "model",
-    output_modalities: "output_modalities",
-    instructions: "instructions",
-    audio: "audio",
-    tracing: "tracing",
-    turn_detection: "turn_detection",
-    tools: "tools",
-    tool_choice: "tool_choice",
-    max_output_tokens: "max_output_tokens",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    include: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::RealtimeSessionCreateResponseIncludeItem.from_value(item) }
-    end,
-    output_modalities: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::RealtimeSessionCreateResponseOutputModalitiesItem.from_value(item) }
-    end,
-    audio: lambda do |value|
-      ::OctridevOpenai::RealtimeSessionCreateResponseAudio.from_hash(value)
-    end,
-    turn_detection: lambda do |value|
-      ::OctridevOpenai::RealtimeSessionCreateResponseTurnDetection.from_hash(value)
-    end,
-    tools: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::RealtimeFunctionTool.from_hash(item) }
-    end,
-  }.freeze
-end
+  # API model for RealtimeSessionCreateResponseAudio.
+  # Configuration for input and output audio for the session.
+  class RealtimeSessionCreateResponseAudio
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeSessionCreateResponseAudioMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeSessionCreateResponseAudioMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeSessionCreateResponseAudioMetadata::DECODERS
+
+    # @return [RealtimeSessionCreateResponseAudioInput] Optional object value serialized in the `input` wire field.
+    attr_reader :input
+    # @return [RealtimeSessionCreateResponseAudioOutput] Optional object value serialized in the `output` wire field.
+    attr_reader :output
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeSessionCreateResponseTracingVariant1Metadata
+    FIELDS = {
+      workflow_name: 'workflow_name',
+      group_id: 'group_id',
+      metadata: 'metadata'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
+  end
+
+  # API model for RealtimeSessionCreateResponseTracingVariant1.
+  # Granular configuration for tracing.
+  class RealtimeSessionCreateResponseTracingVariant1
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeSessionCreateResponseTracingVariant1Metadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeSessionCreateResponseTracingVariant1Metadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeSessionCreateResponseTracingVariant1Metadata::DECODERS
+
+    # @return [String] The name of the workflow to attach to this trace. This is used to name the trace in the traces dashboard.
+    attr_reader :workflow_name
+    # @return [String] The group id to attach to this trace to enable filtering and grouping in the traces dashboard.
+    attr_reader :group_id
+    # @return [Hash] The arbitrary metadata to attach to this trace to enable filtering in the traces dashboard.
+    attr_reader :metadata
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeSessionCreateResponseTurnDetectionMetadata
+    FIELDS = {
+      type: 'type',
+      threshold: 'threshold',
+      prefix_padding_ms: 'prefix_padding_ms',
+      silence_duration_ms: 'silence_duration_ms'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
+  end
+
+  # API model for RealtimeSessionCreateResponseTurnDetection.
+  # Configuration for turn detection. Can be set to `null` to turn off. Server VAD means that the model will detect the start and end of speech based on audio volume and respond at the end of user speech.
+  class RealtimeSessionCreateResponseTurnDetection
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeSessionCreateResponseTurnDetectionMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeSessionCreateResponseTurnDetectionMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeSessionCreateResponseTurnDetectionMetadata::DECODERS
+
+    # @return [String] Type of turn detection, only `server_vad` is currently supported.
+    attr_reader :type
+    # @return [Float] Activation threshold for VAD (0.0 to 1.0), this defaults to 0.5. A higher threshold will require louder audio to activate the model, and thus might perform better in noisy environments.
+    attr_reader :threshold
+    # @return [Integer] Amount of audio to include before the VAD detected speech (in milliseconds). Defaults to 300ms.
+    attr_reader :prefix_padding_ms
+    # @return [Integer] Duration of silence to detect speech stop (in milliseconds). Defaults to 500ms. With shorter values the model will respond more quickly, but may jump in on short pauses from the user.
+    attr_reader :silence_duration_ms
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeSessionCreateResponseMetadata
+    FIELDS = {
+      id: 'id',
+      object: 'object',
+      expires_at: 'expires_at',
+      include: 'include',
+      model: 'model',
+      output_modalities: 'output_modalities',
+      instructions: 'instructions',
+      audio: 'audio',
+      tracing: 'tracing',
+      turn_detection: 'turn_detection',
+      tools: 'tools',
+      tool_choice: 'tool_choice',
+      max_output_tokens: 'max_output_tokens'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      include: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::RealtimeSessionCreateResponseIncludeItem.from_value(item) }
+      end,
+      output_modalities: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::RealtimeSessionCreateResponseOutputModalitiesItem.from_value(item) }
+      end,
+      audio: lambda do |value|
+        ::OctridevOpenai::RealtimeSessionCreateResponseAudio.from_hash(value)
+      end,
+      turn_detection: lambda do |value|
+        ::OctridevOpenai::RealtimeSessionCreateResponseTurnDetection.from_hash(value)
+      end,
+      tools: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::RealtimeFunctionTool.from_hash(item) }
+      end
+    }.freeze
+  end
 end

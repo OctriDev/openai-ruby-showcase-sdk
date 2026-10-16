@@ -5,677 +5,684 @@
 
 # evals_create domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalCreateEvalCompletionsRunDataSourceSamplingParamsMetadata
-  FIELDS = {
-    reasoning_effort: "reasoning_effort",
-    temperature: "temperature",
-    max_completion_tokens: "max_completion_tokens",
-    top_p: "top_p",
-    seed: "seed",
-    response_format: "response_format",
-    tools: "tools",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    reasoning_effort: lambda do |value|
-      ::OctridevOpenai::ReasoningEffort.from_hash(value)
-    end,
-    response_format: lambda do |value|
-      ::OctridevOpenai::CreateEvalCompletionsRunDataSourceSamplingParamsResponseFormat.from_hash(value)
-    end,
-    tools: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::ChatCompletionTool.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for CreateEvalCompletionsRunDataSourceSamplingParams.
-# Optional object value serialized in the `sampling_params` wire field.
-class CreateEvalCompletionsRunDataSourceSamplingParams
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCreateEvalCompletionsRunDataSourceSamplingParamsMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCreateEvalCompletionsRunDataSourceSamplingParamsMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCreateEvalCompletionsRunDataSourceSamplingParamsMetadata::DECODERS
-
-  # @return [ReasoningEffort] Optional API value serialized in the `reasoning_effort` wire field.
-  attr_reader :reasoning_effort
-  # @return [Float] A higher temperature increases randomness in the outputs.
-  attr_reader :temperature
-  # @return [Integer] The maximum number of tokens in the generated output.
-  attr_reader :max_completion_tokens
-  # @return [Float] An alternative to temperature for nucleus sampling; 1.0 includes all tokens.
-  attr_reader :top_p
-  # @return [Integer] A seed value to initialize the randomness, during sampling.
-  attr_reader :seed
-  # @return [CreateEvalCompletionsRunDataSourceSamplingParamsResponseFormat] An object specifying the format that the model must output. Setting to `{ "type": "json_schema", "json_schema": {...} }` enables Structured Outputs which ensures the model will match your supplied JSON schema. Learn more in the [Structured Outputs guide](developers.openai.com). Setting to `{ "type": "json_object" }` enables the older JSON mode, which ensures the message the model generates is valid JSON. Using `json_schema` is preferred for models that support it.
-  attr_reader :response_format
-  # @return [Array_of_ChatCompletionTool] A list of tools the model may call. Currently, only functions are supported as a tool. Use this to provide a list of functions the model may generate JSON inputs for. A max of 128 functions are supported.
-  attr_reader :tools
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalCreateEvalCompletionsRunDataSourceSamplingParamsMetadata
+    FIELDS = {
+      reasoning_effort: 'reasoning_effort',
+      temperature: 'temperature',
+      max_completion_tokens: 'max_completion_tokens',
+      top_p: 'top_p',
+      seed: 'seed',
+      response_format: 'response_format',
+      tools: 'tools'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      reasoning_effort: lambda do |value|
+        ::OctridevOpenai::ReasoningEffort.from_hash(value)
+      end,
+      response_format: lambda do |value|
+        ::OctridevOpenai::CreateEvalCompletionsRunDataSourceSamplingParamsResponseFormat.from_hash(value)
+      end,
+      tools: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::ChatCompletionTool.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
+  # API model for CreateEvalCompletionsRunDataSourceSamplingParams.
+  # Optional object value serialized in the `sampling_params` wire field.
+  class CreateEvalCompletionsRunDataSourceSamplingParams
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCreateEvalCompletionsRunDataSourceSamplingParamsMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCreateEvalCompletionsRunDataSourceSamplingParamsMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCreateEvalCompletionsRunDataSourceSamplingParamsMetadata::DECODERS
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+    # @return [ReasoningEffort] Optional API value serialized in the `reasoning_effort` wire field.
+    attr_reader :reasoning_effort
+    # @return [Float] A higher temperature increases randomness in the outputs.
+    attr_reader :temperature
+    # @return [Integer] The maximum number of tokens in the generated output.
+    attr_reader :max_completion_tokens
+    # @return [Float] An alternative to temperature for nucleus sampling; 1.0 includes all tokens.
+    attr_reader :top_p
+    # @return [Integer] A seed value to initialize the randomness, during sampling.
+    attr_reader :seed
+    # @return [CreateEvalCompletionsRunDataSourceSamplingParamsResponseFormat] An object specifying the format that the model must output. Setting to `{ "type": "json_schema", "json_schema": {...} }` enables Structured Outputs which ensures the model will match your supplied JSON schema. Learn more in the [Structured Outputs guide](developers.openai.com). Setting to `{ "type": "json_object" }` enables the older JSON mode, which ensures the message the model generates is valid JSON. Using `json_schema` is preferred for models that support it.
+    attr_reader :response_format
+    # @return [Array_of_ChatCompletionTool] A list of tools the model may call. Currently, only functions are supported as a tool. Use this to provide a list of functions the model may generate JSON inputs for. A max of 128 functions are supported.
+    attr_reader :tools
 
-# Internal model hydration metadata.
-class SdkInternalCreateEvalCompletionsRunDataSourceMetadata
-  FIELDS = {
-    type: "type",
-    input_messages: "input_messages",
-    sampling_params: "sampling_params",
-    model: "model",
-    source: "source",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    source
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::CreateEvalCompletionsRunDataSourceType.from_value(value)
-    end,
-    input_messages: lambda do |value|
-      ::OctridevOpenai::CreateEvalCompletionsRunDataSourceInputMessages.from_hash(value)
-    end,
-    sampling_params: lambda do |value|
-      ::OctridevOpenai::CreateEvalCompletionsRunDataSourceSamplingParams.from_hash(value)
-    end,
-    source: lambda do |value|
-      ::OctridevOpenai::CreateEvalCompletionsRunDataSourceSource.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for CreateEvalCompletionsRunDataSource.
-# A CompletionsRunDataSource object describing a model sampling configuration.
-class CreateEvalCompletionsRunDataSource
-  include CreateEvalRunRequestDataSource
-  include EvalRunDataSource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCreateEvalCompletionsRunDataSourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCreateEvalCompletionsRunDataSourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCreateEvalCompletionsRunDataSourceMetadata::DECODERS
-
-  # @return [CreateEvalCompletionsRunDataSourceType] The type of run data source. Always `completions`.
-  attr_reader :type
-  # @return [CreateEvalCompletionsRunDataSourceInputMessages] Used when sampling from a model. Dictates the structure of the messages passed into the model. Can either be a reference to a prebuilt trajectory (ie, `item.input_trajectory`), or a template with variable references to the `item` namespace.
-  attr_reader :input_messages
-  # @return [CreateEvalCompletionsRunDataSourceSamplingParams] Optional object value serialized in the `sampling_params` wire field.
-  attr_reader :sampling_params
-  # @return [String] The name of the model to use for generating completions (e.g. "o3-mini").
-  attr_reader :model
-  # @return [CreateEvalCompletionsRunDataSourceSource] Determines what populates the `item` namespace in this run's data source.
-  attr_reader :source
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the CreateEvalCompletionsRunDataSourceType SDK namespace.
-module CreateEvalCompletionsRunDataSourceType
-  COMPLETIONS = 'completions'
-  VALUES = ['completions'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('CreateEvalCompletionsRunDataSourceType', 'enum', "Unknown CreateEvalCompletionsRunDataSourceType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalCreateEvalCompletionsRunDataSourceInputMessagesVariant0Metadata
-  FIELDS = {
-    type: "type",
-    template: "template",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    template
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::CreateEvalCompletionsRunDataSourceInputMessagesVariant0Type.from_value(value)
-    end,
-    template: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::TemplateItem.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for CreateEvalCompletionsRunDataSourceInputMessagesVariant0.
-class CreateEvalCompletionsRunDataSourceInputMessagesVariant0
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCreateEvalCompletionsRunDataSourceInputMessagesVariant0Metadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCreateEvalCompletionsRunDataSourceInputMessagesVariant0Metadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCreateEvalCompletionsRunDataSourceInputMessagesVariant0Metadata::DECODERS
-
-  # @return [CreateEvalCompletionsRunDataSourceInputMessagesVariant0Type] The type of input messages. Always `template`.
-  attr_reader :type
-  # @return [Array_of_TemplateItem] A list of chat messages forming the prompt or context. May include variable references to the `item` namespace, ie {{item.name}}.
-  attr_reader :template
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalCreateEvalCompletionsRunDataSourceInputMessagesVariant1Metadata
-  FIELDS = {
-    type: "type",
-    item_reference: "item_reference",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    item_reference
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::CreateEvalCompletionsRunDataSourceInputMessagesVariant1Type.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for CreateEvalCompletionsRunDataSourceInputMessagesVariant1.
-class CreateEvalCompletionsRunDataSourceInputMessagesVariant1
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCreateEvalCompletionsRunDataSourceInputMessagesVariant1Metadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCreateEvalCompletionsRunDataSourceInputMessagesVariant1Metadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCreateEvalCompletionsRunDataSourceInputMessagesVariant1Metadata::DECODERS
-
-  # @return [CreateEvalCompletionsRunDataSourceInputMessagesVariant1Type] The type of input messages. Always `item_reference`.
-  attr_reader :type
-  # @return [String] A reference to a variable in the `item` namespace. Ie, "item.input_trajectory"
-  attr_reader :item_reference
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the CreateEvalCompletionsRunDataSourceInputMessages SDK namespace.
-module CreateEvalCompletionsRunDataSourceInputMessages
-  DISCRIMINATOR_MAPPING = {
-    "template" => -> { CreateEvalCompletionsRunDataSourceInputMessagesVariant0 },
-    "item_reference" => -> { CreateEvalCompletionsRunDataSourceInputMessagesVariant1 },
-  }.freeze
-
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
-
-    raise SdkValidationError.new('CreateEvalCompletionsRunDataSourceInputMessages', 'variant', "Unknown CreateEvalCompletionsRunDataSourceInputMessages discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Defines the CreateEvalCompletionsRunDataSourceInputMessagesVariant0Type SDK namespace.
-module CreateEvalCompletionsRunDataSourceInputMessagesVariant0Type
-  TEMPLATE = 'template'
-  VALUES = ['template'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('CreateEvalCompletionsRunDataSourceInputMessagesVariant0Type', 'enum', "Unknown CreateEvalCompletionsRunDataSourceInputMessagesVariant0Type: #{value}")
-  end
-end
-
-# Defines the CreateEvalCompletionsRunDataSourceInputMessagesVariant1Type SDK namespace.
-module CreateEvalCompletionsRunDataSourceInputMessagesVariant1Type
-  ITEM_REFERENCE = 'item_reference'
-  VALUES = ['item_reference'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('CreateEvalCompletionsRunDataSourceInputMessagesVariant1Type', 'enum', "Unknown CreateEvalCompletionsRunDataSourceInputMessagesVariant1Type: #{value}")
-  end
-end
-
-# Defines the CreateEvalCompletionsRunDataSourceSamplingParamsResponseFormat SDK namespace.
-module CreateEvalCompletionsRunDataSourceSamplingParamsResponseFormat
-  DISCRIMINATOR_MAPPING = {
-    "text" => -> { ResponseFormatText },
-    "json_schema" => -> { ResponseFormatJsonSchema },
-    "json_object" => -> { ResponseFormatJsonObject },
-  }.freeze
-
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('CreateEvalCompletionsRunDataSourceSamplingParamsResponseFormat', 'variant', "Unknown CreateEvalCompletionsRunDataSourceSamplingParamsResponseFormat discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Defines the CreateEvalCompletionsRunDataSourceSource SDK namespace.
-module CreateEvalCompletionsRunDataSourceSource
-  DISCRIMINATOR_MAPPING = {
-    "file_content" => -> { EvalJsonlFileContentSource },
-    "file_id" => -> { EvalJsonlFileIdSource },
-    "stored_completions" => -> { EvalStoredCompletionsSource },
-  }.freeze
-
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('CreateEvalCompletionsRunDataSourceSource', 'variant', "Unknown CreateEvalCompletionsRunDataSourceSource discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalCreateEvalCustomDataSourceConfigMetadata
-  FIELDS = {
-    type: "type",
-    item_schema: "item_schema",
-    include_sample_schema: "include_sample_schema",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    item_schema
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::CreateEvalCustomDataSourceConfigType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for CreateEvalCustomDataSourceConfig.
-# A CustomDataSourceConfig object that defines the schema for the data source used for the evaluation runs. This schema is used to define the shape of the data that will be: - Used to define your testing criteria and - What data is required when creating a run
-class CreateEvalCustomDataSourceConfig
-  include CreateEvalRequestDataSourceConfig
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCreateEvalCustomDataSourceConfigMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCreateEvalCustomDataSourceConfigMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCreateEvalCustomDataSourceConfigMetadata::DECODERS
-
-  # @return [CreateEvalCustomDataSourceConfigType] The type of data source. Always `custom`.
-  attr_reader :type
-  # @return [Hash] The json schema for each row in the data source.
-  attr_reader :item_schema
-  # @return [Boolean] Whether the eval should expect you to populate the sample namespace (ie, by generating responses off of your data source)
-  attr_reader :include_sample_schema
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the CreateEvalCustomDataSourceConfigType SDK namespace.
-module CreateEvalCustomDataSourceConfigType
-  CUSTOM = 'custom'
-  VALUES = ['custom'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('CreateEvalCustomDataSourceConfigType', 'enum', "Unknown CreateEvalCustomDataSourceConfigType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalCreateEvalItemVariant0Metadata
-  FIELDS = {
-    role: "role",
-    content: "content",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    role
-    content
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for CreateEvalItemVariant0.
-class CreateEvalItemVariant0
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCreateEvalItemVariant0Metadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCreateEvalItemVariant0Metadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCreateEvalItemVariant0Metadata::DECODERS
-
-  # @return [String] The role of the message (e.g. "system", "assistant", "user").
-  attr_reader :role
-  # @return [String] The content of the message.
-  attr_reader :content
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the CreateEvalItem SDK namespace.
-module CreateEvalItem
-  def self.from_hash(hash)
-    [CreateEvalItemVariant0, EvalItem].each do |type|
-      return type.from_hash(hash)
-    rescue ::StandardError
-      next
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
     end
-    raise SdkValidationError.new('CreateEvalItem', 'variant', "Cannot select CreateEvalItem variant without a discriminator")
-  end
-end
 
-# Internal model hydration metadata.
-class SdkInternalCreateEvalJsonlRunDataSourceMetadata
-  FIELDS = {
-    type: "type",
-    source: "source",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    source
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::CreateEvalJsonlRunDataSourceType.from_value(value)
-    end,
-    source: lambda do |value|
-      ::OctridevOpenai::CreateEvalJsonlRunDataSourceSource.from_hash(value)
-    end,
-  }.freeze
-end
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-# API model for CreateEvalJsonlRunDataSource.
-# A JsonlRunDataSource object with that specifies a JSONL file that matches the eval
-class CreateEvalJsonlRunDataSource
-  include CreateEvalRunRequestDataSource
-  include EvalRunDataSource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCreateEvalJsonlRunDataSourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCreateEvalJsonlRunDataSourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCreateEvalJsonlRunDataSourceMetadata::DECODERS
-
-  # @return [CreateEvalJsonlRunDataSourceType] The type of data source. Always `jsonl`.
-  attr_reader :type
-  # @return [CreateEvalJsonlRunDataSourceSource] Determines what populates the `item` namespace in the data source.
-  attr_reader :source
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalCreateEvalCompletionsRunDataSourceMetadata
+    FIELDS = {
+      type: 'type',
+      input_messages: 'input_messages',
+      sampling_params: 'sampling_params',
+      model: 'model',
+      source: 'source'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      source
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::CreateEvalCompletionsRunDataSourceType.from_value(value)
+      end,
+      input_messages: lambda do |value|
+        ::OctridevOpenai::CreateEvalCompletionsRunDataSourceInputMessages.from_hash(value)
+      end,
+      sampling_params: lambda do |value|
+        ::OctridevOpenai::CreateEvalCompletionsRunDataSourceSamplingParams.from_hash(value)
+      end,
+      source: lambda do |value|
+        ::OctridevOpenai::CreateEvalCompletionsRunDataSourceSource.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for CreateEvalCompletionsRunDataSource.
+  # A CompletionsRunDataSource object describing a model sampling configuration.
+  class CreateEvalCompletionsRunDataSource
+    include CreateEvalRunRequestDataSource
+    include EvalRunDataSource
 
-# Defines the CreateEvalJsonlRunDataSourceType SDK namespace.
-module CreateEvalJsonlRunDataSourceType
-  JSONL = 'jsonl'
-  VALUES = ['jsonl'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCreateEvalCompletionsRunDataSourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCreateEvalCompletionsRunDataSourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCreateEvalCompletionsRunDataSourceMetadata::DECODERS
 
-    raise SdkValidationError.new('CreateEvalJsonlRunDataSourceType', 'enum', "Unknown CreateEvalJsonlRunDataSourceType: #{value}")
-  end
-end
+    # @return [CreateEvalCompletionsRunDataSourceType] The type of run data source. Always `completions`.
+    attr_reader :type
+    # @return [CreateEvalCompletionsRunDataSourceInputMessages] Used when sampling from a model. Dictates the structure of the messages passed into the model. Can either be a reference to a prebuilt trajectory (ie, `item.input_trajectory`), or a template with variable references to the `item` namespace.
+    attr_reader :input_messages
+    # @return [CreateEvalCompletionsRunDataSourceSamplingParams] Optional object value serialized in the `sampling_params` wire field.
+    attr_reader :sampling_params
+    # @return [String] The name of the model to use for generating completions (e.g. "o3-mini").
+    attr_reader :model
+    # @return [CreateEvalCompletionsRunDataSourceSource] Determines what populates the `item` namespace in this run's data source.
+    attr_reader :source
 
-# Defines the CreateEvalJsonlRunDataSourceSource SDK namespace.
-module CreateEvalJsonlRunDataSourceSource
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    mapping = { "file_content" => EvalJsonlFileContentSource, "file_id" => EvalJsonlFileIdSource }
-    type = mapping[hash["type"]]
-    return type.from_hash(hash) if type
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-    raise SdkValidationError.new('CreateEvalJsonlRunDataSourceSource', 'variant', "Unknown CreateEvalJsonlRunDataSourceSource discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalCreateEvalLabelModelGraderMetadata
-  FIELDS = {
-    type: "type",
-    name: "name",
-    model: "model",
-    input: "input",
-    labels: "labels",
-    passing_labels: "passing_labels",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    name
-    model
-    input
-    labels
-    passing_labels
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::CreateEvalLabelModelGraderType.from_value(value)
-    end,
-    input: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::CreateEvalItem.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for CreateEvalLabelModelGrader.
-# A LabelModelGrader object which uses a model to assign labels to each item in the evaluation.
-class CreateEvalLabelModelGrader
-  include CreateEvalRequestTestingCriteriaItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCreateEvalLabelModelGraderMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCreateEvalLabelModelGraderMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCreateEvalLabelModelGraderMetadata::DECODERS
-
-  # @return [CreateEvalLabelModelGraderType] The object type, which is always `label_model`.
-  attr_reader :type
-  # @return [String] The name of the grader.
-  attr_reader :name
-  # @return [String] The model to use for the evaluation. Must support structured outputs.
-  attr_reader :model
-  # @return [Array_of_CreateEvalItem] A list of chat messages forming the prompt or context. May include variable references to the `item` namespace, ie {{item.name}}.
-  attr_reader :input
-  # @return [Array_of_String] The labels to classify to each item in the evaluation.
-  attr_reader :labels
-  # @return [Array_of_String] The labels that indicate a passing result. Must be a subset of labels.
-  attr_reader :passing_labels
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the CreateEvalCompletionsRunDataSourceType SDK namespace.
+  module CreateEvalCompletionsRunDataSourceType
+    COMPLETIONS = 'completions'
+    VALUES = ['completions'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('CreateEvalCompletionsRunDataSourceType', 'enum', "Unknown CreateEvalCompletionsRunDataSourceType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the CreateEvalLabelModelGraderType SDK namespace.
-module CreateEvalLabelModelGraderType
-  LABEL_MODEL = 'label_model'
-  VALUES = ['label_model'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('CreateEvalLabelModelGraderType', 'enum', "Unknown CreateEvalLabelModelGraderType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalCreateEvalLogsDataSourceConfigMetadata
-  FIELDS = {
-    type: "type",
-    metadata: "metadata",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::CreateEvalLogsDataSourceConfigType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for CreateEvalLogsDataSourceConfig.
-# A data source config which specifies the metadata property of your logs query. This is usually metadata like `usecase=chatbot` or `prompt-version=v2`, etc.
-class CreateEvalLogsDataSourceConfig
-  include CreateEvalRequestDataSourceConfig
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCreateEvalLogsDataSourceConfigMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCreateEvalLogsDataSourceConfigMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCreateEvalLogsDataSourceConfigMetadata::DECODERS
-
-  # @return [CreateEvalLogsDataSourceConfigType] The type of data source. Always `logs`.
-  attr_reader :type
-  # @return [Hash] Metadata filters for the logs data source.
-  attr_reader :metadata
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalCreateEvalCompletionsRunDataSourceInputMessagesVariant0Metadata
+    FIELDS = {
+      type: 'type',
+      template: 'template'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      template
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::CreateEvalCompletionsRunDataSourceInputMessagesVariant0Type.from_value(value)
+      end,
+      template: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::TemplateItem.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for CreateEvalCompletionsRunDataSourceInputMessagesVariant0.
+  class CreateEvalCompletionsRunDataSourceInputMessagesVariant0
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCreateEvalCompletionsRunDataSourceInputMessagesVariant0Metadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCreateEvalCompletionsRunDataSourceInputMessagesVariant0Metadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCreateEvalCompletionsRunDataSourceInputMessagesVariant0Metadata::DECODERS
+
+    # @return [CreateEvalCompletionsRunDataSourceInputMessagesVariant0Type] The type of input messages. Always `template`.
+    attr_reader :type
+    # @return [Array_of_TemplateItem] A list of chat messages forming the prompt or context. May include variable references to the `item` namespace, ie {{item.name}}.
+    attr_reader :template
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the CreateEvalLogsDataSourceConfigType SDK namespace.
-module CreateEvalLogsDataSourceConfigType
-  LOGS = 'logs'
-  VALUES = ['logs'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('CreateEvalLogsDataSourceConfigType', 'enum', "Unknown CreateEvalLogsDataSourceConfigType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalCreateEvalRequestMetadata
-  FIELDS = {
-    name: "name",
-    metadata: "metadata",
-    data_source_config: "data_source_config",
-    testing_criteria: "testing_criteria",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    data_source_config
-    testing_criteria
-  ].freeze
-  DECODERS = {
-    metadata: lambda do |value|
-      ::OctridevOpenai::Metadata.from_hash(value)
-    end,
-    data_source_config: lambda do |value|
-      ::OctridevOpenai::CreateEvalRequestDataSourceConfig.from_hash(value)
-    end,
-    testing_criteria: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::CreateEvalRequestTestingCriteriaItem.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for CreateEvalRequest.
-# Typed representation of the `CreateEvalRequest` API schema.
-class CreateEvalRequest
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCreateEvalRequestMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCreateEvalRequestMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCreateEvalRequestMetadata::DECODERS
-
-  # @return [String] The name of the evaluation.
-  attr_reader :name
-  # @return [Metadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
-  attr_reader :metadata
-  # @return [CreateEvalRequestDataSourceConfig] The configuration for the data source used for the evaluation runs. Dictates the schema of the data used in the evaluation.
-  attr_reader :data_source_config
-  # @return [Array_of_CreateEvalRequestTestingCriteriaItem] A list of graders for all eval runs in this group. Graders can reference variables in the data source using double curly braces notation, like `{{item.variable_name}}`. To reference the model's output, use the `sample` namespace (ie, `{{sample.output_text}}`).
-  attr_reader :testing_criteria
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalCreateEvalCompletionsRunDataSourceInputMessagesVariant1Metadata
+    FIELDS = {
+      type: 'type',
+      item_reference: 'item_reference'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      item_reference
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::CreateEvalCompletionsRunDataSourceInputMessagesVariant1Type.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for CreateEvalCompletionsRunDataSourceInputMessagesVariant1.
+  class CreateEvalCompletionsRunDataSourceInputMessagesVariant1
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCreateEvalCompletionsRunDataSourceInputMessagesVariant1Metadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCreateEvalCompletionsRunDataSourceInputMessagesVariant1Metadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCreateEvalCompletionsRunDataSourceInputMessagesVariant1Metadata::DECODERS
+
+    # @return [CreateEvalCompletionsRunDataSourceInputMessagesVariant1Type] The type of input messages. Always `item_reference`.
+    attr_reader :type
+    # @return [String] A reference to a variable in the `item` namespace. Ie, "item.input_trajectory"
+    attr_reader :item_reference
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the CreateEvalCompletionsRunDataSourceInputMessages SDK namespace.
+  module CreateEvalCompletionsRunDataSourceInputMessages
+    DISCRIMINATOR_MAPPING = {
+      'template' => -> { CreateEvalCompletionsRunDataSourceInputMessagesVariant0 },
+      'item_reference' => -> { CreateEvalCompletionsRunDataSourceInputMessagesVariant1 }
+    }.freeze
+
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
+
+      raise SdkValidationError.new('CreateEvalCompletionsRunDataSourceInputMessages', 'variant', "Unknown CreateEvalCompletionsRunDataSourceInputMessages discriminator: #{hash['type'].inspect}")
+    end
   end
-end
+
+  # Defines the CreateEvalCompletionsRunDataSourceInputMessagesVariant0Type SDK namespace.
+  module CreateEvalCompletionsRunDataSourceInputMessagesVariant0Type
+    TEMPLATE = 'template'
+    VALUES = ['template'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('CreateEvalCompletionsRunDataSourceInputMessagesVariant0Type', 'enum', "Unknown CreateEvalCompletionsRunDataSourceInputMessagesVariant0Type: #{value}")
+    end
+  end
+
+  # Defines the CreateEvalCompletionsRunDataSourceInputMessagesVariant1Type SDK namespace.
+  module CreateEvalCompletionsRunDataSourceInputMessagesVariant1Type
+    ITEM_REFERENCE = 'item_reference'
+    VALUES = ['item_reference'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('CreateEvalCompletionsRunDataSourceInputMessagesVariant1Type', 'enum', "Unknown CreateEvalCompletionsRunDataSourceInputMessagesVariant1Type: #{value}")
+    end
+  end
+
+  # Defines the CreateEvalCompletionsRunDataSourceSamplingParamsResponseFormat SDK namespace.
+  module CreateEvalCompletionsRunDataSourceSamplingParamsResponseFormat
+    DISCRIMINATOR_MAPPING = {
+      'text' => -> { ResponseFormatText },
+      'json_schema' => -> { ResponseFormatJsonSchema },
+      'json_object' => -> { ResponseFormatJsonObject }
+    }.freeze
+
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('CreateEvalCompletionsRunDataSourceSamplingParamsResponseFormat', 'variant', "Unknown CreateEvalCompletionsRunDataSourceSamplingParamsResponseFormat discriminator: #{hash['type'].inspect}")
+    end
+  end
+
+  # Defines the CreateEvalCompletionsRunDataSourceSource SDK namespace.
+  module CreateEvalCompletionsRunDataSourceSource
+    DISCRIMINATOR_MAPPING = {
+      'file_content' => -> { EvalJsonlFileContentSource },
+      'file_id' => -> { EvalJsonlFileIdSource },
+      'stored_completions' => -> { EvalStoredCompletionsSource }
+    }.freeze
+
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('CreateEvalCompletionsRunDataSourceSource', 'variant', "Unknown CreateEvalCompletionsRunDataSourceSource discriminator: #{hash['type'].inspect}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalCreateEvalCustomDataSourceConfigMetadata
+    FIELDS = {
+      type: 'type',
+      item_schema: 'item_schema',
+      include_sample_schema: 'include_sample_schema'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      item_schema
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::CreateEvalCustomDataSourceConfigType.from_value(value)
+      end
+    }.freeze
+  end
+
+  # API model for CreateEvalCustomDataSourceConfig.
+  # A CustomDataSourceConfig object that defines the schema for the data source used for the evaluation runs. This schema is used to define the shape of the data that will be: - Used to define your testing criteria and - What data is required when creating a run
+  class CreateEvalCustomDataSourceConfig
+    include CreateEvalRequestDataSourceConfig
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCreateEvalCustomDataSourceConfigMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCreateEvalCustomDataSourceConfigMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCreateEvalCustomDataSourceConfigMetadata::DECODERS
+
+    # @return [CreateEvalCustomDataSourceConfigType] The type of data source. Always `custom`.
+    attr_reader :type
+    # @return [Hash] The json schema for each row in the data source.
+    attr_reader :item_schema
+    # @return [Boolean] Whether the eval should expect you to populate the sample namespace (ie, by generating responses off of your data source)
+    attr_reader :include_sample_schema
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the CreateEvalCustomDataSourceConfigType SDK namespace.
+  module CreateEvalCustomDataSourceConfigType
+    CUSTOM = 'custom'
+    VALUES = ['custom'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('CreateEvalCustomDataSourceConfigType', 'enum', "Unknown CreateEvalCustomDataSourceConfigType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalCreateEvalItemVariant0Metadata
+    FIELDS = {
+      role: 'role',
+      content: 'content'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      role
+      content
+    ].freeze
+    DECODERS = {}.freeze
+  end
+
+  # API model for CreateEvalItemVariant0.
+  class CreateEvalItemVariant0
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCreateEvalItemVariant0Metadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCreateEvalItemVariant0Metadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCreateEvalItemVariant0Metadata::DECODERS
+
+    # @return [String] The role of the message (e.g. "system", "assistant", "user").
+    attr_reader :role
+    # @return [String] The content of the message.
+    attr_reader :content
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the CreateEvalItem SDK namespace.
+  module CreateEvalItem
+    def self.from_hash(hash)
+      [CreateEvalItemVariant0, EvalItem].each do |type|
+        return type.from_hash(hash)
+      rescue ::StandardError
+        next
+      end
+      raise SdkValidationError.new('CreateEvalItem', 'variant', 'Cannot select CreateEvalItem variant without a discriminator')
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalCreateEvalJsonlRunDataSourceMetadata
+    FIELDS = {
+      type: 'type',
+      source: 'source'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      source
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::CreateEvalJsonlRunDataSourceType.from_value(value)
+      end,
+      source: lambda do |value|
+        ::OctridevOpenai::CreateEvalJsonlRunDataSourceSource.from_hash(value)
+      end
+    }.freeze
+  end
+
+  # API model for CreateEvalJsonlRunDataSource.
+  # A JsonlRunDataSource object with that specifies a JSONL file that matches the eval
+  class CreateEvalJsonlRunDataSource
+    include CreateEvalRunRequestDataSource
+    include EvalRunDataSource
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCreateEvalJsonlRunDataSourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCreateEvalJsonlRunDataSourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCreateEvalJsonlRunDataSourceMetadata::DECODERS
+
+    # @return [CreateEvalJsonlRunDataSourceType] The type of data source. Always `jsonl`.
+    attr_reader :type
+    # @return [CreateEvalJsonlRunDataSourceSource] Determines what populates the `item` namespace in the data source.
+    attr_reader :source
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the CreateEvalJsonlRunDataSourceType SDK namespace.
+  module CreateEvalJsonlRunDataSourceType
+    JSONL = 'jsonl'
+    VALUES = ['jsonl'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('CreateEvalJsonlRunDataSourceType', 'enum', "Unknown CreateEvalJsonlRunDataSourceType: #{value}")
+    end
+  end
+
+  # Defines the CreateEvalJsonlRunDataSourceSource SDK namespace.
+  module CreateEvalJsonlRunDataSourceSource
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      mapping = { 'file_content' => EvalJsonlFileContentSource, 'file_id' => EvalJsonlFileIdSource }
+      type = mapping[hash['type']]
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('CreateEvalJsonlRunDataSourceSource', 'variant', "Unknown CreateEvalJsonlRunDataSourceSource discriminator: #{hash['type'].inspect}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalCreateEvalLabelModelGraderMetadata
+    FIELDS = {
+      type: 'type',
+      name: 'name',
+      model: 'model',
+      input: 'input',
+      labels: 'labels',
+      passing_labels: 'passing_labels'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      name
+      model
+      input
+      labels
+      passing_labels
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::CreateEvalLabelModelGraderType.from_value(value)
+      end,
+      input: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::CreateEvalItem.from_hash(item) }
+      end
+    }.freeze
+  end
+
+  # API model for CreateEvalLabelModelGrader.
+  # A LabelModelGrader object which uses a model to assign labels to each item in the evaluation.
+  class CreateEvalLabelModelGrader
+    include CreateEvalRequestTestingCriteriaItem
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCreateEvalLabelModelGraderMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCreateEvalLabelModelGraderMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCreateEvalLabelModelGraderMetadata::DECODERS
+
+    # @return [CreateEvalLabelModelGraderType] The object type, which is always `label_model`.
+    attr_reader :type
+    # @return [String] The name of the grader.
+    attr_reader :name
+    # @return [String] The model to use for the evaluation. Must support structured outputs.
+    attr_reader :model
+    # @return [Array_of_CreateEvalItem] A list of chat messages forming the prompt or context. May include variable references to the `item` namespace, ie {{item.name}}.
+    attr_reader :input
+    # @return [Array_of_String] The labels to classify to each item in the evaluation.
+    attr_reader :labels
+    # @return [Array_of_String] The labels that indicate a passing result. Must be a subset of labels.
+    attr_reader :passing_labels
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the CreateEvalLabelModelGraderType SDK namespace.
+  module CreateEvalLabelModelGraderType
+    LABEL_MODEL = 'label_model'
+    VALUES = ['label_model'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('CreateEvalLabelModelGraderType', 'enum', "Unknown CreateEvalLabelModelGraderType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalCreateEvalLogsDataSourceConfigMetadata
+    FIELDS = {
+      type: 'type',
+      metadata: 'metadata'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::CreateEvalLogsDataSourceConfigType.from_value(value)
+      end
+    }.freeze
+  end
+
+  # API model for CreateEvalLogsDataSourceConfig.
+  # A data source config which specifies the metadata property of your logs query. This is usually metadata like `usecase=chatbot` or `prompt-version=v2`, etc.
+  class CreateEvalLogsDataSourceConfig
+    include CreateEvalRequestDataSourceConfig
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCreateEvalLogsDataSourceConfigMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCreateEvalLogsDataSourceConfigMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCreateEvalLogsDataSourceConfigMetadata::DECODERS
+
+    # @return [CreateEvalLogsDataSourceConfigType] The type of data source. Always `logs`.
+    attr_reader :type
+    # @return [Hash] Metadata filters for the logs data source.
+    attr_reader :metadata
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the CreateEvalLogsDataSourceConfigType SDK namespace.
+  module CreateEvalLogsDataSourceConfigType
+    LOGS = 'logs'
+    VALUES = ['logs'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('CreateEvalLogsDataSourceConfigType', 'enum', "Unknown CreateEvalLogsDataSourceConfigType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalCreateEvalRequestMetadata
+    FIELDS = {
+      name: 'name',
+      metadata: 'metadata',
+      data_source_config: 'data_source_config',
+      testing_criteria: 'testing_criteria'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      data_source_config
+      testing_criteria
+    ].freeze
+    DECODERS = {
+      metadata: lambda do |value|
+        ::OctridevOpenai::Metadata.from_hash(value)
+      end,
+      data_source_config: lambda do |value|
+        ::OctridevOpenai::CreateEvalRequestDataSourceConfig.from_hash(value)
+      end,
+      testing_criteria: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::CreateEvalRequestTestingCriteriaItem.from_hash(item) }
+      end
+    }.freeze
+  end
+
+  # API model for CreateEvalRequest.
+  # Typed representation of the `CreateEvalRequest` API schema.
+  class CreateEvalRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCreateEvalRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCreateEvalRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCreateEvalRequestMetadata::DECODERS
+
+    # @return [String] The name of the evaluation.
+    attr_reader :name
+    # @return [Metadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
+    attr_reader :metadata
+    # @return [CreateEvalRequestDataSourceConfig] The configuration for the data source used for the evaluation runs. Dictates the schema of the data used in the evaluation.
+    attr_reader :data_source_config
+    # @return [Array_of_CreateEvalRequestTestingCriteriaItem] A list of graders for all eval runs in this group. Graders can reference variables in the data source using double curly braces notation, like `{{item.variable_name}}`. To reference the model's output, use the `sample` namespace (ie, `{{sample.output_text}}`).
+    attr_reader :testing_criteria
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
 end

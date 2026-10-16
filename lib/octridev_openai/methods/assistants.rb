@@ -23,7 +23,7 @@ module OctridevOpenai
       module ListRunStepsParameter
         ASC = 'asc'
         DESC = 'desc'
-        VALUES = ['asc', 'desc'].freeze
+        VALUES = %w[asc desc].freeze
         def self.from_value(value)
           value
         end
@@ -33,7 +33,7 @@ module OctridevOpenai
       module ListAssistantsParameter
         ASC = 'asc'
         DESC = 'desc'
-        VALUES = ['asc', 'desc'].freeze
+        VALUES = %w[asc desc].freeze
         def self.from_value(value)
           value
         end
@@ -43,7 +43,7 @@ module OctridevOpenai
       module ListMessagesParameter
         ASC = 'asc'
         DESC = 'desc'
-        VALUES = ['asc', 'desc'].freeze
+        VALUES = %w[asc desc].freeze
         def self.from_value(value)
           value
         end
@@ -53,7 +53,7 @@ module OctridevOpenai
       module ListRunsParameter
         ASC = 'asc'
         DESC = 'desc'
-        VALUES = ['asc', 'desc'].freeze
+        VALUES = %w[asc desc].freeze
         def self.from_value(value)
           value
         end
@@ -106,26 +106,25 @@ module OctridevOpenai
         before: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
-          "/assistants",
+          '/assistants',
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'order' => QueryValue.new(order, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
-            'before' => QueryValue.new(before, style: 'form', explode: true),
+            'before' => QueryValue.new(before, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::ListAssistantsResponse,
           decoder: :json,
           operation_id: 'list_assistants',
           request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
-    ListAssistantsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      ListAssistantsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists assistant configurations available to the authenticated user. Use `after` or `before` to navigate the list, and `limit` and `order` to control page size and sorting. This operation is closing down and will be removed on a date not specified here.
       #
@@ -167,10 +166,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.last_id
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -197,10 +199,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListAssistantsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end
@@ -257,12 +261,11 @@ module OctridevOpenai
         response_format: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.if_given(tools) { Validation.validate_items('tools', tools, max: 128) }
 
         SdkClient.request(
           'POST',
-          "/assistants",
+          '/assistants',
           config: config,
           body: {
             'model' => model,
@@ -275,13 +278,13 @@ module OctridevOpenai
             'metadata' => metadata,
             'temperature' => temperature,
             'top_p' => top_p,
-            'response_format' => response_format,
+            'response_format' => response_format
           },
           return_type: ::OctridevOpenai::AssistantObject,
           decoder: :json,
           operation_id: 'create_assistant',
           request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -292,16 +295,11 @@ module OctridevOpenai
       # @param assistant_id [String] The ID of the assistant to retrieve.
       #
       # @deprecated This operation is deprecated and may be removed in a future release.
-      singleton_class.define_method(:get_assistant) do |
-        config:,
-        assistant_id:,
-        request_options: nil
-      |
-
+      singleton_class.define_method(:get_assistant) do |config:, assistant_id:, request_options: nil|
         SdkClient.request(
           'GET',
           [
-            "/assistants/",
+            '/assistants/',
             SdkClient.encode_path_segment(assistant_id)
           ].join,
           config: config,
@@ -309,7 +307,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'get_assistant',
           request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -366,13 +364,12 @@ module OctridevOpenai
         response_format: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.if_given(tools) { Validation.validate_items('tools', tools, max: 128) }
 
         SdkClient.request(
           'POST',
           [
-            "/assistants/",
+            '/assistants/',
             SdkClient.encode_path_segment(assistant_id)
           ].join,
           config: config,
@@ -387,13 +384,13 @@ module OctridevOpenai
             'metadata' => metadata,
             'temperature' => temperature,
             'top_p' => top_p,
-            'response_format' => response_format,
+            'response_format' => response_format
           },
           return_type: ::OctridevOpenai::AssistantObject,
           decoder: :json,
           operation_id: 'modify_assistant',
           request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -409,11 +406,10 @@ module OctridevOpenai
         assistant_id:,
         request_options: nil
       )
-
         SdkClient.request(
           'DELETE',
           [
-            "/assistants/",
+            '/assistants/',
             SdkClient.encode_path_segment(assistant_id)
           ].join,
           config: config,
@@ -421,7 +417,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_assistant',
           request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -448,21 +444,20 @@ module OctridevOpenai
         metadata: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
-          "/threads",
+          '/threads',
           config: config,
           body: {
             'messages' => messages,
             'tool_resources' => tool_resources,
-            'metadata' => metadata,
+            'metadata' => metadata
           },
           return_type: ::OctridevOpenai::ThreadObject,
           decoder: :json,
           operation_id: 'create_thread',
           request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
     end

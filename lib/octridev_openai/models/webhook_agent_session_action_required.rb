@@ -5,73 +5,73 @@
 
 # webhook_agent_session_action_required domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalWebhookAgentSessionActionRequiredMetadata
-  FIELDS = {
-    id: "id",
-    object: "object",
-    created_at: "created_at",
-    type: "type",
-    data: "data",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    object
-    created_at
-    type
-    data
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::WebhookAgentSessionEnvelopeObject.from_value(value)
-    end,
-    type: lambda do |value|
-      ::OctridevOpenai::WebhookAgentSessionActionRequiredVariant1Type.from_value(value)
-    end,
-    data: lambda do |value|
-      ::OctridevOpenai::AgentSessionActionRequiredPayloadResource.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for WebhookAgentSessionActionRequired.
-# Sent when an agent session requires an action. Retrieve the session for action details.
-class WebhookAgentSessionActionRequired
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalWebhookAgentSessionActionRequiredMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalWebhookAgentSessionActionRequiredMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalWebhookAgentSessionActionRequiredMetadata::DECODERS
-
-  attr_reader :data
-  # @return [String] The unique ID of the event.
-  attr_reader :id
-  # @return [WebhookAgentSessionEnvelopeObject] The object type. Always `event`.
-  attr_reader :object
-  # @return [Integer] The Unix timestamp, in seconds, when the event was created.
-  attr_reader :created_at
-  # @return [WebhookAgentSessionActionRequiredVariant1Type] The event type. Always `agent.session.action_required`.
-  attr_reader :type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalWebhookAgentSessionActionRequiredMetadata
+    FIELDS = {
+      id: 'id',
+      object: 'object',
+      created_at: 'created_at',
+      type: 'type',
+      data: 'data'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      object
+      created_at
+      type
+      data
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::WebhookAgentSessionEnvelopeObject.from_value(value)
+      end,
+      type: lambda do |value|
+        ::OctridevOpenai::WebhookAgentSessionActionRequiredVariant1Type.from_value(value)
+      end,
+      data: lambda do |value|
+        ::OctridevOpenai::AgentSessionActionRequiredPayloadResource.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for WebhookAgentSessionActionRequired.
+  # Sent when an agent session requires an action. Retrieve the session for action details.
+  class WebhookAgentSessionActionRequired
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalWebhookAgentSessionActionRequiredMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalWebhookAgentSessionActionRequiredMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalWebhookAgentSessionActionRequiredMetadata::DECODERS
+
+    attr_reader :data
+    # @return [String] The unique ID of the event.
+    attr_reader :id
+    # @return [WebhookAgentSessionEnvelopeObject] The object type. Always `event`.
+    attr_reader :object
+    # @return [Integer] The Unix timestamp, in seconds, when the event was created.
+    attr_reader :created_at
+    # @return [WebhookAgentSessionActionRequiredVariant1Type] The event type. Always `agent.session.action_required`.
+    attr_reader :type
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the WebhookAgentSessionActionRequiredVariant1Type SDK namespace.
+  module WebhookAgentSessionActionRequiredVariant1Type
+    AGENT_SESSION_ACTION_REQUIRED = 'agent.session.action_required'
+    VALUES = ['agent.session.action_required'].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
-
-# Defines the WebhookAgentSessionActionRequiredVariant1Type SDK namespace.
-module WebhookAgentSessionActionRequiredVariant1Type
-  AGENT_SESSION_ACTION_REQUIRED = 'agent.session.action_required'
-  VALUES = ['agent.session.action_required'].freeze
-  def self.from_value(value)
-    value
-  end
-end
 end

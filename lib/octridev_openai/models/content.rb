@@ -5,15 +5,15 @@
 
 # content domain models
 module OctridevOpenai
-# Defines the Content SDK namespace.
-module Content
-  def self.from_hash(hash)
-    [InputContent, OutputContent].each do |type|
-      return type.from_hash(hash)
-    rescue ::StandardError
-      next
+  # Defines the Content SDK namespace.
+  module Content
+    def self.from_hash(hash)
+      [InputContent, OutputContent].each do |type|
+        return type.from_hash(hash)
+      rescue ::StandardError
+        next
+      end
+      raise SdkValidationError.new('Content', 'variant', 'Cannot select Content variant without a discriminator')
     end
-    raise SdkValidationError.new('Content', 'variant', "Cannot select Content variant without a discriminator")
   end
-end
 end

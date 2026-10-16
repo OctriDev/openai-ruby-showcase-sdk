@@ -5,248 +5,247 @@
 
 # live_live_delegation domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalLiveDelegationCreatedMetadata
-  FIELDS = {
-    event_id: "event_id",
-    client_event_id: "client_event_id",
-    type: "type",
-    offset_ms: "offset_ms",
-    delegation: "delegation",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    event_id
-    type
-    offset_ms
-    delegation
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LiveDelegationCreatedType.from_value(value)
-    end,
-    delegation: lambda do |value|
-      ::OctridevOpenai::LiveDelegationItem.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for LiveDelegationCreated.
-# Returned when the Live model delegates work to your application, Responses, or Decisions. Contains delegation metadata and the position on the session timeline where the work was delegated.
-class LiveDelegationCreated
-  include LiveSidebandServerEvent
-  include LiveServerEvent2
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveDelegationCreatedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveDelegationCreatedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveDelegationCreatedMetadata::DECODERS
-
-  # @return [String] The unique ID of the Live server event.
-  attr_reader :event_id
-  # @return [String] The event_id of the client command associated with this server event, when supplied.
-  attr_reader :client_event_id
-  # @return [LiveDelegationCreatedType] The event type, always `session.delegation.created`.
-  attr_reader :type
-  # @return [Integer] The position on the Live session timeline where the delegation was created, in milliseconds from the beginning of the session.
-  attr_reader :offset_ms
-  # @return [LiveDelegationItem] The delegated work identifier and destination. This object contains metadata, not the task text.
-  attr_reader :delegation
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalLiveDelegationCreatedMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      client_event_id: 'client_event_id',
+      type: 'type',
+      offset_ms: 'offset_ms',
+      delegation: 'delegation'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      event_id
+      type
+      offset_ms
+      delegation
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LiveDelegationCreatedType.from_value(value)
+      end,
+      delegation: lambda do |value|
+        ::OctridevOpenai::LiveDelegationItem.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for LiveDelegationCreated.
+  # Returned when the Live model delegates work to your application, Responses, or Decisions. Contains delegation metadata and the position on the session timeline where the work was delegated.
+  class LiveDelegationCreated
+    include LiveSidebandServerEvent
+    include LiveServerEvent2
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveDelegationCreatedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveDelegationCreatedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveDelegationCreatedMetadata::DECODERS
+
+    # @return [String] The unique ID of the Live server event.
+    attr_reader :event_id
+    # @return [String] The event_id of the client command associated with this server event, when supplied.
+    attr_reader :client_event_id
+    # @return [LiveDelegationCreatedType] The event type, always `session.delegation.created`.
+    attr_reader :type
+    # @return [Integer] The position on the Live session timeline where the delegation was created, in milliseconds from the beginning of the session.
+    attr_reader :offset_ms
+    # @return [LiveDelegationItem] The delegated work identifier and destination. This object contains metadata, not the task text.
+    attr_reader :delegation
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the LiveDelegationCreatedType SDK namespace.
+  module LiveDelegationCreatedType
+    SESSION_DELEGATION_CREATED = 'session.delegation.created'
+    VALUES = ['session.delegation.created'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the LiveDelegationCreatedType SDK namespace.
-module LiveDelegationCreatedType
-  SESSION_DELEGATION_CREATED = 'session.delegation.created'
-  VALUES = ['session.delegation.created'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('LiveDelegationCreatedType', 'enum', "Unknown LiveDelegationCreatedType: #{value}")
-  end
-end
-
-# Defines the LiveDelegationItemTargetVariant0 SDK namespace.
-module LiveDelegationItemTargetVariant0
-  CLIENT = 'client'
-  VALUES = ['client'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalLiveDelegationItemMetadata
-  FIELDS = {
-    id: "id",
-    type: "type",
-    target: "target",
-    response_id: "response_id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    type
-    target
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LiveDelegationItemType.from_value(value)
-    end,
-    target: lambda do |value|
-      ::OctridevOpenai::LiveDelegationItemTargetVariant0.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for LiveDelegationItem.
-# Metadata for work delegated by the Live model to your application, Responses, or Decisions.
-class LiveDelegationItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveDelegationItemMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveDelegationItemMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveDelegationItemMetadata::DECODERS
-
-  # @return [String] The unique ID of the delegation. Use this as delegation_id when replying to client-owned work or correlating backend events.
-  attr_reader :id
-  # @return [LiveDelegationItemType] The object type, always `delegation`.
-  attr_reader :type
-  # @return [LiveDelegationItemTargetVariant0] Where the Live model delegated the work: `client`, `responses`, or `decisions`.
-  attr_reader :target
-  # @return [String] The ID of the Responses API response associated with a Responses delegation. Omitted for client delegations.
-  attr_reader :response_id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('LiveDelegationCreatedType', 'enum', "Unknown LiveDelegationCreatedType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the LiveDelegationItemTargetVariant0 SDK namespace.
+  module LiveDelegationItemTargetVariant0
+    CLIENT = 'client'
+    VALUES = ['client'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the LiveDelegationItemTargetVariant1 SDK namespace.
-module LiveDelegationItemTargetVariant1
-  RESPONSES = 'responses'
-  VALUES = ['responses'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the LiveDelegationItemTargetVariant2 SDK namespace.
-module LiveDelegationItemTargetVariant2
-  DECISIONS = 'decisions'
-  VALUES = ['decisions'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the LiveDelegationItemType SDK namespace.
-module LiveDelegationItemType
-  DELEGATION = 'delegation'
-  VALUES = ['delegation'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalLiveDelegationReasoningInputParamMetadata
-  FIELDS = {
-    effort: "effort",
-    summary: "summary",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    effort: lambda do |value|
-      ::OctridevOpenai::LiveReasoningEffort.from_value(value)
-    end,
-    summary: lambda do |value|
-      ::OctridevOpenai::LiveReasoningSummary.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for LiveDelegationReasoningInputParam.
-# Reasoning options for Responses requests made on behalf of the Live session.
-class LiveDelegationReasoningInputParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveDelegationReasoningInputParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveDelegationReasoningInputParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveDelegationReasoningInputParamMetadata::DECODERS
-
-  # @return [LiveReasoningEffort] Optional API value serialized in the `effort` wire field.
-  attr_reader :effort
-  # @return [LiveReasoningSummary] Optional API value serialized in the `summary` wire field.
-  attr_reader :summary
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalLiveDelegationItemMetadata
+    FIELDS = {
+      id: 'id',
+      type: 'type',
+      target: 'target',
+      response_id: 'response_id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      type
+      target
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LiveDelegationItemType.from_value(value)
+      end,
+      target: lambda do |value|
+        ::OctridevOpenai::LiveDelegationItemTargetVariant0.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for LiveDelegationItem.
+  # Metadata for work delegated by the Live model to your application, Responses, or Decisions.
+  class LiveDelegationItem
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveDelegationItemMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveDelegationItemMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveDelegationItemMetadata::DECODERS
+
+    # @return [String] The unique ID of the delegation. Use this as delegation_id when replying to client-owned work or correlating backend events.
+    attr_reader :id
+    # @return [LiveDelegationItemType] The object type, always `delegation`.
+    attr_reader :type
+    # @return [LiveDelegationItemTargetVariant0] Where the Live model delegated the work: `client`, `responses`, or `decisions`.
+    attr_reader :target
+    # @return [String] The ID of the Responses API response associated with a Responses delegation. Omitted for client delegations.
+    attr_reader :response_id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalLiveDelegationTextInputParamMetadata
-  FIELDS = {
-    verbosity: "verbosity",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    verbosity: lambda do |value|
-      ::OctridevOpenai::LiveTextVerbosity.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for LiveDelegationTextInputParam.
-# Text generation options for the Live session’s Responses backend.
-class LiveDelegationTextInputParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveDelegationTextInputParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveDelegationTextInputParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveDelegationTextInputParamMetadata::DECODERS
-
-  # @return [LiveTextVerbosity] Optional API value serialized in the `verbosity` wire field.
-  attr_reader :verbosity
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the LiveDelegationItemTargetVariant1 SDK namespace.
+  module LiveDelegationItemTargetVariant1
+    RESPONSES = 'responses'
+    VALUES = ['responses'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the LiveDelegationItemTargetVariant2 SDK namespace.
+  module LiveDelegationItemTargetVariant2
+    DECISIONS = 'decisions'
+    VALUES = ['decisions'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the LiveDelegationItemType SDK namespace.
+  module LiveDelegationItemType
+    DELEGATION = 'delegation'
+    VALUES = ['delegation'].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
+
+  # Internal model hydration metadata.
+  class SdkInternalLiveDelegationReasoningInputParamMetadata
+    FIELDS = {
+      effort: 'effort',
+      summary: 'summary'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      effort: lambda do |value|
+        ::OctridevOpenai::LiveReasoningEffort.from_value(value)
+      end,
+      summary: lambda do |value|
+        ::OctridevOpenai::LiveReasoningSummary.from_value(value)
+      end
+    }.freeze
+  end
+
+  # API model for LiveDelegationReasoningInputParam.
+  # Reasoning options for Responses requests made on behalf of the Live session.
+  class LiveDelegationReasoningInputParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveDelegationReasoningInputParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveDelegationReasoningInputParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveDelegationReasoningInputParamMetadata::DECODERS
+
+    # @return [LiveReasoningEffort] Optional API value serialized in the `effort` wire field.
+    attr_reader :effort
+    # @return [LiveReasoningSummary] Optional API value serialized in the `summary` wire field.
+    attr_reader :summary
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalLiveDelegationTextInputParamMetadata
+    FIELDS = {
+      verbosity: 'verbosity'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      verbosity: lambda do |value|
+        ::OctridevOpenai::LiveTextVerbosity.from_value(value)
+      end
+    }.freeze
+  end
+
+  # API model for LiveDelegationTextInputParam.
+  # Text generation options for the Live session’s Responses backend.
+  class LiveDelegationTextInputParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveDelegationTextInputParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveDelegationTextInputParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveDelegationTextInputParamMetadata::DECODERS
+
+    # @return [LiveTextVerbosity] Optional API value serialized in the `verbosity` wire field.
+    attr_reader :verbosity
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
 end

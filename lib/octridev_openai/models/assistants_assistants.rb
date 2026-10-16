@@ -5,146 +5,148 @@
 
 # assistants_assistants domain models
 module OctridevOpenai
-# Defines the AssistantsApiResponseFormatOption SDK namespace.
-module AssistantsApiResponseFormatOption
-  DISCRIMINATOR_MAPPING = {
-    "text" => -> { ResponseFormatText },
-    "json_object" => -> { ResponseFormatJsonObject },
-    "json_schema" => -> { ResponseFormatJsonSchema },
-  }.freeze
+  # Defines the AssistantsApiResponseFormatOption SDK namespace.
+  module AssistantsApiResponseFormatOption
+    DISCRIMINATOR_MAPPING = {
+      'text' => -> { ResponseFormatText },
+      'json_object' => -> { ResponseFormatJsonObject },
+      'json_schema' => -> { ResponseFormatJsonSchema }
+    }.freeze
 
-  def self.from_hash(hash)
-    return AssistantsApiResponseFormatOptionVariant0.from_value(hash) if hash.is_a?(::String)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
+    def self.from_hash(hash)
+      return AssistantsApiResponseFormatOptionVariant0.from_value(hash) if hash.is_a?(::String)
+      return hash unless hash.is_a?(::Hash)
 
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
 
-    raise SdkValidationError.new('AssistantsApiResponseFormatOption', 'variant', "Unknown AssistantsApiResponseFormatOption discriminator: #{hash["type"].inspect}")
-  end
-end
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
 
-# Defines the AssistantsApiResponseFormatOptionVariant0 SDK namespace.
-module AssistantsApiResponseFormatOptionVariant0
-  AUTO = 'auto'
-  VALUES = ['auto'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the AssistantsApiToolChoiceOption SDK namespace.
-module AssistantsApiToolChoiceOption
-  def self.from_hash(hash)
-    return AssistantsApiToolChoiceOptionVariant0.from_value(hash) if hash.is_a?(::String)
-    return AssistantsNamedToolChoice.from_hash(hash)
-  end
-end
-
-# Defines the AssistantsApiToolChoiceOptionVariant0 SDK namespace.
-module AssistantsApiToolChoiceOptionVariant0
-  NONE = 'none'
-  AUTO = 'auto'
-  REQUIRED = 'required'
-  VALUES = ['none', 'auto', 'required'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAssistantsNamedToolChoiceFunctionMetadata
-  FIELDS = {
-    name: "name",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    name
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for AssistantsNamedToolChoiceFunction.
-# Optional object value serialized in the `function` wire field.
-class AssistantsNamedToolChoiceFunction
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAssistantsNamedToolChoiceFunctionMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAssistantsNamedToolChoiceFunctionMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAssistantsNamedToolChoiceFunctionMetadata::DECODERS
-
-  # @return [String] The name of the function to call.
-  attr_reader :name
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('AssistantsApiResponseFormatOption', 'variant', "Unknown AssistantsApiResponseFormatOption discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the AssistantsApiResponseFormatOptionVariant0 SDK namespace.
+  module AssistantsApiResponseFormatOptionVariant0
+    AUTO = 'auto'
+    VALUES = ['auto'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the AssistantsApiToolChoiceOption SDK namespace.
+  module AssistantsApiToolChoiceOption
+    def self.from_hash(hash)
+      return AssistantsApiToolChoiceOptionVariant0.from_value(hash) if hash.is_a?(::String)
 
-# Internal model hydration metadata.
-class SdkInternalAssistantsNamedToolChoiceMetadata
-  FIELDS = {
-    type: "type",
-    function: "function",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::AssistantsNamedToolChoiceType.from_value(value)
-    end,
-    function: lambda do |value|
-      ::OctridevOpenai::AssistantsNamedToolChoiceFunction.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for AssistantsNamedToolChoice.
-# Specifies a tool the model should use. Use to force the model to call a specific tool.
-class AssistantsNamedToolChoice
-  include AssistantsApiToolChoiceOption
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAssistantsNamedToolChoiceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAssistantsNamedToolChoiceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAssistantsNamedToolChoiceMetadata::DECODERS
-
-  # @return [AssistantsNamedToolChoiceType] The type of the tool. If type is `function`, the function name must be set
-  attr_reader :type
-  # @return [AssistantsNamedToolChoiceFunction] Optional object value serialized in the `function` wire field.
-  attr_reader :function
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      AssistantsNamedToolChoice.from_hash(hash)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the AssistantsApiToolChoiceOptionVariant0 SDK namespace.
+  module AssistantsApiToolChoiceOptionVariant0
+    NONE = 'none'
+    AUTO = 'auto'
+    REQUIRED = 'required'
+    VALUES = %w[none auto required].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalAssistantsNamedToolChoiceFunctionMetadata
+    FIELDS = {
+      name: 'name'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      name
+    ].freeze
+    DECODERS = {}.freeze
   end
-end
 
-# Defines the AssistantsNamedToolChoiceType SDK namespace.
-module AssistantsNamedToolChoiceType
-  FUNCTION = 'function'
-  CODE_INTERPRETER = 'code_interpreter'
-  FILE_SEARCH = 'file_search'
-  VALUES = ['function', 'code_interpreter', 'file_search'].freeze
-  def self.from_value(value)
-    value
+  # API model for AssistantsNamedToolChoiceFunction.
+  # Optional object value serialized in the `function` wire field.
+  class AssistantsNamedToolChoiceFunction
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAssistantsNamedToolChoiceFunctionMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAssistantsNamedToolChoiceFunctionMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAssistantsNamedToolChoiceFunctionMetadata::DECODERS
+
+    # @return [String] The name of the function to call.
+    attr_reader :name
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
+
+  # Internal model hydration metadata.
+  class SdkInternalAssistantsNamedToolChoiceMetadata
+    FIELDS = {
+      type: 'type',
+      function: 'function'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::AssistantsNamedToolChoiceType.from_value(value)
+      end,
+      function: lambda do |value|
+        ::OctridevOpenai::AssistantsNamedToolChoiceFunction.from_hash(value)
+      end
+    }.freeze
+  end
+
+  # API model for AssistantsNamedToolChoice.
+  # Specifies a tool the model should use. Use to force the model to call a specific tool.
+  class AssistantsNamedToolChoice
+    include AssistantsApiToolChoiceOption
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAssistantsNamedToolChoiceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAssistantsNamedToolChoiceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAssistantsNamedToolChoiceMetadata::DECODERS
+
+    # @return [AssistantsNamedToolChoiceType] The type of the tool. If type is `function`, the function name must be set
+    attr_reader :type
+    # @return [AssistantsNamedToolChoiceFunction] Optional object value serialized in the `function` wire field.
+    attr_reader :function
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the AssistantsNamedToolChoiceType SDK namespace.
+  module AssistantsNamedToolChoiceType
+    FUNCTION = 'function'
+    CODE_INTERPRETER = 'code_interpreter'
+    FILE_SEARCH = 'file_search'
+    VALUES = %w[function code_interpreter file_search].freeze
+    def self.from_value(value)
+      value
+    end
+  end
 end

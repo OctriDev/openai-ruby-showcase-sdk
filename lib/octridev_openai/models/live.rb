@@ -5,121 +5,124 @@
 
 # live domain models
 module OctridevOpenai
-# Defines the Delegation SDK namespace.
-module Delegation
-  DISCRIMINATOR_MAPPING = {
-    "client" => -> { LiveClientDelegationParam },
-    "responses" => -> { LiveResponsesDelegationParam },
-    "decisions" => -> { LiveDecisionsDelegationParam },
-  }.freeze
+  # Defines the Delegation SDK namespace.
+  module Delegation
+    DISCRIMINATOR_MAPPING = {
+      'client' => -> { LiveClientDelegationParam },
+      'responses' => -> { LiveResponsesDelegationParam },
+      'decisions' => -> { LiveDecisionsDelegationParam }
+    }.freeze
 
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
 
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
 
-    raise SdkValidationError.new('Delegation', 'variant', "Unknown Delegation discriminator: #{hash["type"].inspect}")
-  end
-end
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
 
-# Defines the Input SDK value decoder.
-module Input
-  def self.from_hash(value)
-    return nil if value.nil?
-    value&.map { |item| ::OctridevOpenai::LiveInitialItem.from_hash(item) }
-  end
-end
-
-# Defines the Instructions SDK value decoder.
-module Instructions
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the ModelIdsLive SDK namespace.
-module ModelIdsLive
-  def self.from_hash(hash)
-    return hash if hash.is_a?(::String)
-    return ModelIdsLiveVariant1.from_value(hash) if hash.is_a?(::String)
-    raise "Could not deserialize ModelIdsLive from #{hash.inspect}"
-  end
-end
-
-# Defines the ModelIdsLiveVariant1 SDK namespace.
-module ModelIdsLiveVariant1
-  GPT_LIVE_1 = 'gpt-live-1'
-  VALUES = ['gpt-live-1'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the PropertiesStore SDK value decoder.
-module PropertiesStore
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalSessionMetadata
-  FIELDS = {
-    id: "id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for Session.
-# The newly created Live session. Use its ID for session controls and sideband connections.
-class Session
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalSessionMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalSessionMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalSessionMetadata::DECODERS
-
-  # @return [String] Opaque session identifier. Preserve the returned value unchanged, including its prefix.
-  attr_reader :id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('Delegation', 'variant', "Unknown Delegation discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the Input SDK value decoder.
+  module Input
+    def self.from_hash(value)
+      return nil if value.nil?
+
+      value&.map { |item| ::OctridevOpenai::LiveInitialItem.from_hash(item) }
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the Instructions SDK value decoder.
+  module Instructions
+    def self.from_value(value)
+      value
+    end
   end
-end
 
-# Defines the Store SDK value decoder.
-module Store
-  def self.from_value(value)
-    value
-  end
-end
+  # Defines the ModelIdsLive SDK namespace.
+  module ModelIdsLive
+    def self.from_hash(hash)
+      return hash if hash.is_a?(::String)
+      return ModelIdsLiveVariant1.from_value(hash) if hash.is_a?(::String)
 
-# Defines the TargetUri SDK value decoder.
-module TargetUri
-  def self.from_value(value)
-    value
+      raise "Could not deserialize ModelIdsLive from #{hash.inspect}"
+    end
   end
-end
 
-# Defines the Triggers SDK value decoder.
-module Triggers
-  def self.from_hash(value)
-    return nil if value.nil?
-    value&.map { |item| ::OctridevOpenai::LiveDecisionTriggerInputParam.from_hash(item) }
+  # Defines the ModelIdsLiveVariant1 SDK namespace.
+  module ModelIdsLiveVariant1
+    GPT_LIVE_1 = 'gpt-live-1'
+    VALUES = ['gpt-live-1'].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
+
+  # Defines the PropertiesStore SDK value decoder.
+  module PropertiesStore
+    def self.from_value(value)
+      value
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalSessionMetadata
+    FIELDS = {
+      id: 'id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+    ].freeze
+    DECODERS = {}.freeze
+  end
+
+  # API model for Session.
+  # The newly created Live session. Use its ID for session controls and sideband connections.
+  class Session
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalSessionMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalSessionMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalSessionMetadata::DECODERS
+
+    # @return [String] Opaque session identifier. Preserve the returned value unchanged, including its prefix.
+    attr_reader :id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the Store SDK value decoder.
+  module Store
+    def self.from_value(value)
+      value
+    end
+  end
+
+  # Defines the TargetUri SDK value decoder.
+  module TargetUri
+    def self.from_value(value)
+      value
+    end
+  end
+
+  # Defines the Triggers SDK value decoder.
+  module Triggers
+    def self.from_hash(value)
+      return nil if value.nil?
+
+      value&.map { |item| ::OctridevOpenai::LiveDecisionTriggerInputParam.from_hash(item) }
+    end
+  end
 end

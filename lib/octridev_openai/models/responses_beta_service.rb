@@ -5,40 +5,41 @@
 
 # responses_beta_service domain models
 module OctridevOpenai
-# Defines the BetaServiceTierEnum SDK namespace.
-module BetaServiceTierEnum
-  AUTO = 'auto'
-  DEFAULT = 'default'
-  FAST = 'fast'
-  FLEX = 'flex'
-  PRIORITY = 'priority'
-  VALUES = ['auto', 'default', 'fast', 'flex', 'priority'].freeze
-  def self.from_value(value)
-    value
+  # Defines the BetaServiceTierEnum SDK namespace.
+  module BetaServiceTierEnum
+    AUTO = 'auto'
+    DEFAULT = 'default'
+    FAST = 'fast'
+    FLEX = 'flex'
+    PRIORITY = 'priority'
+    VALUES = %w[auto default fast flex priority].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
 
-# Defines the BetaServiceTierResponses SDK namespace.
-module BetaServiceTierResponses
-  def self.from_hash(hash)
-    return hash if hash.is_a?(::Object)
-    return BetaServiceTierResponsesVariant0.from_value(hash) if hash.is_a?(::String)
-    raise "Could not deserialize BetaServiceTierResponses from #{hash.inspect}"
-  end
-end
+  # Defines the BetaServiceTierResponses SDK namespace.
+  module BetaServiceTierResponses
+    def self.from_hash(hash)
+      return hash if hash.is_a?(::Object)
+      return BetaServiceTierResponsesVariant0.from_value(hash) if hash.is_a?(::String)
 
-# Defines the BetaServiceTierResponsesVariant0 SDK namespace.
-module BetaServiceTierResponsesVariant0
-  AUTO = 'auto'
-  DEFAULT = 'default'
-  FLEX = 'flex'
-  SCALE = 'scale'
-  PRIORITY = 'priority'
-  FAST = 'fast'
-  ULTRAFAST = 'ultrafast'
-  VALUES = ['auto', 'default', 'flex', 'scale', 'priority', 'fast', 'ultrafast'].freeze
-  def self.from_value(value)
-    value
+      raise "Could not deserialize BetaServiceTierResponses from #{hash.inspect}"
+    end
   end
-end
+
+  # Defines the BetaServiceTierResponsesVariant0 SDK namespace.
+  module BetaServiceTierResponsesVariant0
+    AUTO = 'auto'
+    DEFAULT = 'default'
+    FLEX = 'flex'
+    SCALE = 'scale'
+    PRIORITY = 'priority'
+    FAST = 'fast'
+    ULTRAFAST = 'ultrafast'
+    VALUES = %w[auto default flex scale priority fast ultrafast].freeze
+    def self.from_value(value)
+      value
+    end
+  end
 end

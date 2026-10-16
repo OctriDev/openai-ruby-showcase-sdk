@@ -5,274 +5,279 @@
 
 # realtime_realtime_server_event domain models (part 6)
 module OctridevOpenai
-# API model for RealtimeServerEventResponseTextDone.
-# Returned when the text value of an "output_text" content part is done streaming. Also emitted when a Response is interrupted, incomplete, or cancelled.
-class RealtimeServerEventResponseTextDone
-  include RealtimeServerEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeServerEventResponseTextDoneMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeServerEventResponseTextDoneMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeServerEventResponseTextDoneMetadata::DECODERS
+  # API model for RealtimeServerEventResponseTextDone.
+  # Returned when the text value of an "output_text" content part is done streaming. Also emitted when a Response is interrupted, incomplete, or cancelled.
+  class RealtimeServerEventResponseTextDone
+    include RealtimeServerEvent
 
-  # @return [String] The unique ID of the server event.
-  attr_reader :event_id
-  # @return [RealtimeServerEventResponseTextDoneType] The event type, must be `response.output_text.done`.
-  attr_reader :type
-  # @return [String] The ID of the response.
-  attr_reader :response_id
-  # @return [String] The ID of the item.
-  attr_reader :item_id
-  # @return [Integer] The index of the output item in the response.
-  attr_reader :output_index
-  # @return [Integer] The index of the content part in the item's content array.
-  attr_reader :content_index
-  # @return [String] The final text content.
-  attr_reader :text
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeServerEventResponseTextDoneMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeServerEventResponseTextDoneMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeServerEventResponseTextDoneMetadata::DECODERS
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    # @return [String] The unique ID of the server event.
+    attr_reader :event_id
+    # @return [RealtimeServerEventResponseTextDoneType] The event type, must be `response.output_text.done`.
+    attr_reader :type
+    # @return [String] The ID of the response.
+    attr_reader :response_id
+    # @return [String] The ID of the item.
+    attr_reader :item_id
+    # @return [Integer] The index of the output item in the response.
+    attr_reader :output_index
+    # @return [Integer] The index of the content part in the item's content array.
+    attr_reader :content_index
+    # @return [String] The final text content.
+    attr_reader :text
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the RealtimeServerEventResponseTextDoneType SDK namespace.
+  module RealtimeServerEventResponseTextDoneType
+    RESPONSE_OUTPUT_TEXT_DONE = 'response.output_text.done'
+    VALUES = ['response.output_text.done'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('RealtimeServerEventResponseTextDoneType', 'enum', "Unknown RealtimeServerEventResponseTextDoneType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the RealtimeServerEventResponseTextDoneType SDK namespace.
-module RealtimeServerEventResponseTextDoneType
-  RESPONSE_OUTPUT_TEXT_DONE = 'response.output_text.done'
-  VALUES = ['response.output_text.done'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('RealtimeServerEventResponseTextDoneType', 'enum', "Unknown RealtimeServerEventResponseTextDoneType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeServerEventSessionCreatedMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    session: "session",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    event_id
-    type
-    session
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeServerEventSessionCreatedType.from_value(value)
-    end,
-    session: lambda do |value|
-      ::OctridevOpenai::RealtimeServerEventSessionCreatedSession.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for RealtimeServerEventSessionCreated.
-# Returned when a Session is created. Emitted automatically when a new connection is established as the first server event. This event will contain the default Session configuration.
-class RealtimeServerEventSessionCreated
-  include RealtimeServerEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeServerEventSessionCreatedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeServerEventSessionCreatedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeServerEventSessionCreatedMetadata::DECODERS
-
-  # @return [String] The unique ID of the server event.
-  attr_reader :event_id
-  # @return [RealtimeServerEventSessionCreatedType] The event type, must be `session.created`.
-  attr_reader :type
-  # @return [RealtimeServerEventSessionCreatedSession] The session configuration.
-  attr_reader :session
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeServerEventSessionCreatedMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      session: 'session'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      event_id
+      type
+      session
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeServerEventSessionCreatedType.from_value(value)
+      end,
+      session: lambda do |value|
+        ::OctridevOpenai::RealtimeServerEventSessionCreatedSession.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for RealtimeServerEventSessionCreated.
+  # Returned when a Session is created. Emitted automatically when a new connection is established as the first server event. This event will contain the default Session configuration.
+  class RealtimeServerEventSessionCreated
+    include RealtimeServerEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeServerEventSessionCreatedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeServerEventSessionCreatedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeServerEventSessionCreatedMetadata::DECODERS
+
+    # @return [String] The unique ID of the server event.
+    attr_reader :event_id
+    # @return [RealtimeServerEventSessionCreatedType] The event type, must be `session.created`.
+    attr_reader :type
+    # @return [RealtimeServerEventSessionCreatedSession] The session configuration.
+    attr_reader :session
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the RealtimeServerEventSessionCreatedType SDK namespace.
+  module RealtimeServerEventSessionCreatedType
+    SESSION_CREATED = 'session.created'
+    VALUES = ['session.created'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the RealtimeServerEventSessionCreatedType SDK namespace.
-module RealtimeServerEventSessionCreatedType
-  SESSION_CREATED = 'session.created'
-  VALUES = ['session.created'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('RealtimeServerEventSessionCreatedType', 'enum', "Unknown RealtimeServerEventSessionCreatedType: #{value}")
-  end
-end
-
-# Defines the RealtimeServerEventSessionCreatedSession SDK namespace.
-module RealtimeServerEventSessionCreatedSession
-  DISCRIMINATOR_MAPPING = {
-    "realtime" => -> { RealtimeSessionCreateResponseGA },
-    "transcription" => -> { RealtimeTranscriptionSessionCreateResponseGA },
-  }.freeze
-
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('RealtimeServerEventSessionCreatedSession', 'variant', "Unknown RealtimeServerEventSessionCreatedSession discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeServerEventSessionUpdatedMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    session: "session",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    event_id
-    type
-    session
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeServerEventSessionUpdatedType.from_value(value)
-    end,
-    session: lambda do |value|
-      ::OctridevOpenai::RealtimeServerEventSessionUpdatedSession.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for RealtimeServerEventSessionUpdated.
-# Returned when a session is updated with a `session.update` event, unless there is an error.
-class RealtimeServerEventSessionUpdated
-  include RealtimeServerEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeServerEventSessionUpdatedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeServerEventSessionUpdatedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeServerEventSessionUpdatedMetadata::DECODERS
-
-  # @return [String] The unique ID of the server event.
-  attr_reader :event_id
-  # @return [RealtimeServerEventSessionUpdatedType] The event type, must be `session.updated`.
-  attr_reader :type
-  # @return [RealtimeServerEventSessionUpdatedSession] The session configuration.
-  attr_reader :session
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('RealtimeServerEventSessionCreatedType', 'enum', "Unknown RealtimeServerEventSessionCreatedType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the RealtimeServerEventSessionCreatedSession SDK namespace.
+  module RealtimeServerEventSessionCreatedSession
+    DISCRIMINATOR_MAPPING = {
+      'realtime' => -> { RealtimeSessionCreateResponseGA },
+      'transcription' => -> { RealtimeTranscriptionSessionCreateResponseGA }
+    }.freeze
+
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('RealtimeServerEventSessionCreatedSession', 'variant', "Unknown RealtimeServerEventSessionCreatedSession discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the RealtimeServerEventSessionUpdatedType SDK namespace.
-module RealtimeServerEventSessionUpdatedType
-  SESSION_UPDATED = 'session.updated'
-  VALUES = ['session.updated'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('RealtimeServerEventSessionUpdatedType', 'enum', "Unknown RealtimeServerEventSessionUpdatedType: #{value}")
-  end
-end
-
-# Defines the RealtimeServerEventSessionUpdatedSession SDK namespace.
-module RealtimeServerEventSessionUpdatedSession
-  DISCRIMINATOR_MAPPING = {
-    "realtime" => -> { RealtimeSessionCreateResponseGA },
-    "transcription" => -> { RealtimeTranscriptionSessionCreateResponseGA },
-  }.freeze
-
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('RealtimeServerEventSessionUpdatedSession', 'variant', "Unknown RealtimeServerEventSessionUpdatedSession discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeServerEventTranscriptionSessionUpdatedMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    session: "session",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    event_id
-    type
-    session
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeServerEventTranscriptionSessionUpdatedType.from_value(value)
-    end,
-    session: lambda do |value|
-      ::OctridevOpenai::RealtimeTranscriptionSessionCreateResponse.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for RealtimeServerEventTranscriptionSessionUpdated.
-# Returned when a transcription session is updated with a `transcription_session.update` event, unless there is an error.
-class RealtimeServerEventTranscriptionSessionUpdated
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeServerEventTranscriptionSessionUpdatedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeServerEventTranscriptionSessionUpdatedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeServerEventTranscriptionSessionUpdatedMetadata::DECODERS
-
-  # @return [String] The unique ID of the server event.
-  attr_reader :event_id
-  # @return [RealtimeServerEventTranscriptionSessionUpdatedType] The event type, must be `transcription_session.updated`.
-  attr_reader :type
-  # @return [RealtimeTranscriptionSessionCreateResponse] A new Realtime transcription session configuration. When a session is created on the server via REST API, the session object also contains an ephemeral key. Default TTL for keys is 10 minutes. This property is not present when a session is updated via the WebSocket API.
-  attr_reader :session
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeServerEventSessionUpdatedMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      session: 'session'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      event_id
+      type
+      session
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeServerEventSessionUpdatedType.from_value(value)
+      end,
+      session: lambda do |value|
+        ::OctridevOpenai::RealtimeServerEventSessionUpdatedSession.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for RealtimeServerEventSessionUpdated.
+  # Returned when a session is updated with a `session.update` event, unless there is an error.
+  class RealtimeServerEventSessionUpdated
+    include RealtimeServerEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeServerEventSessionUpdatedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeServerEventSessionUpdatedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeServerEventSessionUpdatedMetadata::DECODERS
+
+    # @return [String] The unique ID of the server event.
+    attr_reader :event_id
+    # @return [RealtimeServerEventSessionUpdatedType] The event type, must be `session.updated`.
+    attr_reader :type
+    # @return [RealtimeServerEventSessionUpdatedSession] The session configuration.
+    attr_reader :session
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the RealtimeServerEventSessionUpdatedType SDK namespace.
+  module RealtimeServerEventSessionUpdatedType
+    SESSION_UPDATED = 'session.updated'
+    VALUES = ['session.updated'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the RealtimeServerEventTranscriptionSessionUpdatedType SDK namespace.
-module RealtimeServerEventTranscriptionSessionUpdatedType
-  TRANSCRIPTION_SESSION_UPDATED = 'transcription_session.updated'
-  VALUES = ['transcription_session.updated'].freeze
-  def self.from_value(value)
-    value
+      raise SdkValidationError.new('RealtimeServerEventSessionUpdatedType', 'enum', "Unknown RealtimeServerEventSessionUpdatedType: #{value}")
+    end
   end
-end
+
+  # Defines the RealtimeServerEventSessionUpdatedSession SDK namespace.
+  module RealtimeServerEventSessionUpdatedSession
+    DISCRIMINATOR_MAPPING = {
+      'realtime' => -> { RealtimeSessionCreateResponseGA },
+      'transcription' => -> { RealtimeTranscriptionSessionCreateResponseGA }
+    }.freeze
+
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('RealtimeServerEventSessionUpdatedSession', 'variant', "Unknown RealtimeServerEventSessionUpdatedSession discriminator: #{hash['type'].inspect}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeServerEventTranscriptionSessionUpdatedMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      session: 'session'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      event_id
+      type
+      session
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeServerEventTranscriptionSessionUpdatedType.from_value(value)
+      end,
+      session: lambda do |value|
+        ::OctridevOpenai::RealtimeTranscriptionSessionCreateResponse.from_hash(value)
+      end
+    }.freeze
+  end
+
+  # API model for RealtimeServerEventTranscriptionSessionUpdated.
+  # Returned when a transcription session is updated with a `transcription_session.update` event, unless there is an error.
+  class RealtimeServerEventTranscriptionSessionUpdated
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeServerEventTranscriptionSessionUpdatedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeServerEventTranscriptionSessionUpdatedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeServerEventTranscriptionSessionUpdatedMetadata::DECODERS
+
+    # @return [String] The unique ID of the server event.
+    attr_reader :event_id
+    # @return [RealtimeServerEventTranscriptionSessionUpdatedType] The event type, must be `transcription_session.updated`.
+    attr_reader :type
+    # @return [RealtimeTranscriptionSessionCreateResponse] A new Realtime transcription session configuration. When a session is created on the server via REST API, the session object also contains an ephemeral key. Default TTL for keys is 10 minutes. This property is not present when a session is updated via the WebSocket API.
+    attr_reader :session
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the RealtimeServerEventTranscriptionSessionUpdatedType SDK namespace.
+  module RealtimeServerEventTranscriptionSessionUpdatedType
+    TRANSCRIPTION_SESSION_UPDATED = 'transcription_session.updated'
+    VALUES = ['transcription_session.updated'].freeze
+    def self.from_value(value)
+      value
+    end
+  end
 end

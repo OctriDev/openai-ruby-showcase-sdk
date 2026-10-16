@@ -27,32 +27,31 @@ module OctridevOpenai
         agent_id: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 1, max: 100) }
 
-        Validation.if_given(after) { Validation.validate_length('after', after, min: 0, max: 1048576) }
+        Validation.if_given(after) { Validation.validate_length('after', after, min: 0, max: 1_048_576) }
 
-        Validation.if_given(agent_id) { Validation.validate_length('agent_id', agent_id, min: 0, max: 1048576) }
+        Validation.if_given(agent_id) { Validation.validate_length('agent_id', agent_id, min: 0, max: 1_048_576) }
 
         SdkClient.request(
           'GET',
-          "/agents/sessions",
+          '/agents/sessions',
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'order' => QueryValue.new(order, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
-            'agent_id' => QueryValue.new(agent_id, style: 'form', explode: true),
+            'agent_id' => QueryValue.new(agent_id, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::SessionListResource,
           decoder: :json,
           operation_id: 'list_agent_sessions',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).data
       end
 
-    ListAgentSessionsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      ListAgentSessionsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists managed agent sessions using ID-based pagination and the requested sort order. See managing sessions.
       #
@@ -85,10 +84,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.last_id
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -115,10 +117,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListAgentSessionsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end
@@ -158,14 +162,13 @@ module OctridevOpenai
         stream: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.if_given(agent_id) { Validation.validate_length('agent_id', agent_id, min: 0, max: 64) }
 
-        Validation.if_given(vault_ids) { Validation.validate_items('vault_ids', vault_ids, min: 0, max: 16384) }
+        Validation.if_given(vault_ids) { Validation.validate_items('vault_ids', vault_ids, min: 0, max: 16_384) }
 
         SdkClient.request(
           'POST',
-          "/agents/sessions",
+          '/agents/sessions',
           config: config,
           body: {
             'environment' => environment,
@@ -175,13 +178,13 @@ module OctridevOpenai
             'agent_id' => agent_id,
             'vault_ids' => vault_ids,
             'input' => input,
-            'stream' => stream,
+            'stream' => stream
           },
           return_type: ::OctridevOpenai::SessionResource,
           decoder: :json,
           operation_id: 'create_agent_session',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '429' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '429' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).data
       end
 
@@ -220,21 +223,23 @@ module OctridevOpenai
         request_options: nil,
         &block
       )
-        return enum_for(
-          __method__,
-          config: config,
-          environment: environment,
-          stream: stream,
-          spend_control: spend_control,
-          metadata: metadata,
-          agent: agent,
-          agent_id: agent_id,
-          vault_ids: vault_ids,
-          input: input,
-          request_options: request_options,
-        ) unless block_given?
+        unless block_given?
+          return enum_for(
+            __method__,
+            config: config,
+            environment: environment,
+            stream: stream,
+            spend_control: spend_control,
+            metadata: metadata,
+            agent: agent,
+            agent_id: agent_id,
+            vault_ids: vault_ids,
+            input: input,
+            request_options: request_options
+          )
+        end
         SdkClient.stream(
-          'POST', "/agents/sessions",
+          'POST', '/agents/sessions',
           config: config,
           body: {
             'environment' => environment,
@@ -244,16 +249,17 @@ module OctridevOpenai
             'agent' => agent,
             'agent_id' => agent_id,
             'vault_ids' => vault_ids,
-            'input' => input,
+            'input' => input
           },
           content_type: 'application/json',
           operation_id: 'create_agent_session_stream',
           stream_format: :sse,
-          stream_media_type: "text/event-stream",
+          stream_media_type: 'text/event-stream',
           request_options: request_options,
           errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '429' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).each do |ev|
           break if ev.data == '[DONE]'
+
           decoded = JSON.parse(ev.data)
           block.call(SdkClient.decode_event(decoded, ::OctridevOpenai::SessionEvent))
         end
@@ -267,13 +273,12 @@ module OctridevOpenai
         session_id:,
         request_options: nil
       )
-
-        Validation.validate_length('session_id', session_id, min: 0, max: 1048576)
+        Validation.validate_length('session_id', session_id, min: 0, max: 1_048_576)
 
         SdkClient.request(
           'GET',
           [
-            "/agents/sessions/",
+            '/agents/sessions/',
             SdkClient.encode_path_segment(session_id)
           ].join,
           config: config,
@@ -281,7 +286,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'retrieve_agent_session',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).data
       end
 
@@ -303,26 +308,25 @@ module OctridevOpenai
         metadata: NOT_GIVEN,
         request_options: nil
       )
-
-        Validation.validate_length('session_id', session_id, min: 0, max: 1048576)
+        Validation.validate_length('session_id', session_id, min: 0, max: 1_048_576)
 
         SdkClient.request(
           'POST',
           [
-            "/agents/sessions/",
+            '/agents/sessions/',
             SdkClient.encode_path_segment(session_id)
           ].join,
           config: config,
           body: {
             'spend_control' => spend_control,
             'agent' => agent,
-            'metadata' => metadata,
+            'metadata' => metadata
           },
           return_type: ::OctridevOpenai::SessionResource,
           decoder: :json,
           operation_id: 'update_agent_session',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).data
       end
 
@@ -334,13 +338,12 @@ module OctridevOpenai
         session_id:,
         request_options: nil
       )
-
-        Validation.validate_length('session_id', session_id, min: 0, max: 1048576)
+        Validation.validate_length('session_id', session_id, min: 0, max: 1_048_576)
 
         SdkClient.request(
           'DELETE',
           [
-            "/agents/sessions/",
+            '/agents/sessions/',
             SdkClient.encode_path_segment(session_id)
           ].join,
           config: config,
@@ -348,7 +351,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_agent_session',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).data
       end
 
@@ -372,40 +375,39 @@ module OctridevOpenai
         environment_id: NOT_GIVEN,
         request_options: nil
       )
-
-        Validation.validate_length('session_id', session_id, min: 0, max: 1048576)
+        Validation.validate_length('session_id', session_id, min: 0, max: 1_048_576)
 
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 1, max: 100) }
 
-        Validation.if_given(after) { Validation.validate_length('after', after, min: 0, max: 1048576) }
+        Validation.if_given(after) { Validation.validate_length('after', after, min: 0, max: 1_048_576) }
 
         Validation.if_given(environment_id) do
-          Validation.validate_length('environment_id', environment_id, min: 0, max: 1048576)
+          Validation.validate_length('environment_id', environment_id, min: 0, max: 1_048_576)
         end
 
         SdkClient.request(
           'GET',
           [
-            "/agents/sessions/",
+            '/agents/sessions/',
             SdkClient.encode_path_segment(session_id),
-            "/artifacts"
+            '/artifacts'
           ].join,
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'order' => QueryValue.new(order, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
-            'environment_id' => QueryValue.new(environment_id, style: 'form', explode: true),
+            'environment_id' => QueryValue.new(environment_id, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::SessionArtifactListResource,
           decoder: :json,
           operation_id: 'list_agent_session_artifacts',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).data
       end
 
-    ListAgentSessionArtifactsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      ListAgentSessionArtifactsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists immutable artifacts published by completed hosted session turns. See session artifacts.
       #
@@ -441,10 +443,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.last_id
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -473,10 +478,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListAgentSessionArtifactsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end
@@ -492,17 +499,16 @@ module OctridevOpenai
         artifact_id:,
         request_options: nil
       )
+        Validation.validate_length('session_id', session_id, min: 0, max: 1_048_576)
 
-        Validation.validate_length('session_id', session_id, min: 0, max: 1048576)
-
-        Validation.validate_length('artifact_id', artifact_id, min: 0, max: 1048576)
+        Validation.validate_length('artifact_id', artifact_id, min: 0, max: 1_048_576)
 
         SdkClient.request(
           'GET',
           [
-            "/agents/sessions/",
+            '/agents/sessions/',
             SdkClient.encode_path_segment(session_id),
-            "/artifacts/",
+            '/artifacts/',
             SdkClient.encode_path_segment(artifact_id)
           ].join,
           config: config,
@@ -510,7 +516,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'retrieve_agent_session_artifact',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).data
       end
 
@@ -524,17 +530,16 @@ module OctridevOpenai
         artifact_id:,
         request_options: nil
       )
+        Validation.validate_length('session_id', session_id, min: 0, max: 1_048_576)
 
-        Validation.validate_length('session_id', session_id, min: 0, max: 1048576)
-
-        Validation.validate_length('artifact_id', artifact_id, min: 0, max: 1048576)
+        Validation.validate_length('artifact_id', artifact_id, min: 0, max: 1_048_576)
 
         SdkClient.request(
           'DELETE',
           [
-            "/agents/sessions/",
+            '/agents/sessions/',
             SdkClient.encode_path_segment(session_id),
-            "/artifacts/",
+            '/artifacts/',
             SdkClient.encode_path_segment(artifact_id)
           ].join,
           config: config,
@@ -542,7 +547,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_agent_session_artifact',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).data
       end
     end

@@ -19,20 +19,19 @@ module OctridevOpenai
         project_id:,
         request_options: nil
       )
-
         SdkClient.request(
           'DELETE',
           [
-            "/organization/projects/",
+            '/organization/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/model_permissions"
+            '/model_permissions'
           ].join,
           config: config,
           return_type: ::OctridevOpenai::ProjectModelPermissionsDeleteResponse,
           decoder: :json,
           operation_id: 'delete_project_model_permissions',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -60,29 +59,28 @@ module OctridevOpenai
         before: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
           [
-            "/organization/projects/",
+            '/organization/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/rate_limits"
+            '/rate_limits'
           ].join,
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
-            'before' => QueryValue.new(before, style: 'form', explode: true),
+            'before' => QueryValue.new(before, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::ProjectRateLimitListResponse,
           decoder: :json,
           operation_id: 'list_project_rate_limits',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
-    ListProjectRateLimitsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      ListProjectRateLimitsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists the rate limits configured for a project, with each result describing limits for a model. Use `limit` to set the number of results and `after` or `before` to navigate the list using cursors.
       #
@@ -121,10 +119,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.last_id
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -151,10 +152,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListProjectRateLimitsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end
@@ -188,13 +191,12 @@ module OctridevOpenai
         batch1_day_max_input_tokens: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
           [
-            "/organization/projects/",
+            '/organization/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/rate_limits/",
+            '/rate_limits/',
             SdkClient.encode_path_segment(rate_limit_id)
           ].join,
           config: config,
@@ -204,13 +206,13 @@ module OctridevOpenai
             'max_images_per_1_minute' => max_images_per1_minute,
             'max_audio_megabytes_per_1_minute' => max_audio_megabytes_per1_minute,
             'max_requests_per_1_day' => max_requests_per1_day,
-            'batch_1_day_max_input_tokens' => batch1_day_max_input_tokens,
+            'batch_1_day_max_input_tokens' => batch1_day_max_input_tokens
           },
           return_type: ::OctridevOpenai::ProjectRateLimit,
           decoder: :json,
           operation_id: 'update_project_rate_limits',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -230,28 +232,27 @@ module OctridevOpenai
         after: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
           [
-            "/organization/projects/",
+            '/organization/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/service_accounts"
+            '/service_accounts'
           ].join,
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
-            'after' => QueryValue.new(after, style: 'form', explode: true),
+            'after' => QueryValue.new(after, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::ProjectServiceAccountListResponse,
           decoder: :json,
           operation_id: 'list_project_service_accounts',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
-    ListProjectServiceAccountsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      ListProjectServiceAccountsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Returns a list of service accounts in the project.
       #
@@ -281,10 +282,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.last_id
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -309,10 +313,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListProjectServiceAccountsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end
@@ -341,25 +347,24 @@ module OctridevOpenai
         expires_in_seconds: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
           [
-            "/organization/projects/",
+            '/organization/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/service_accounts"
+            '/service_accounts'
           ].join,
           config: config,
           body: {
             'name' => name,
             'create_service_account_only' => create_service_account_only,
-            'expires_in_seconds' => expires_in_seconds,
+            'expires_in_seconds' => expires_in_seconds
           },
           return_type: ::OctridevOpenai::ProjectServiceAccountCreateResponse,
           decoder: :json,
           operation_id: 'create_project_service_account',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -375,13 +380,12 @@ module OctridevOpenai
         service_account_id:,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
           [
-            "/organization/projects/",
+            '/organization/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/service_accounts/",
+            '/service_accounts/',
             SdkClient.encode_path_segment(service_account_id)
           ].join,
           config: config,
@@ -389,7 +393,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'retrieve_project_service_account',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -410,25 +414,24 @@ module OctridevOpenai
         role: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
           [
-            "/organization/projects/",
+            '/organization/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/service_accounts/",
+            '/service_accounts/',
             SdkClient.encode_path_segment(service_account_id)
           ].join,
           config: config,
           body: {
             'name' => name,
-            'role' => role,
+            'role' => role
           },
           return_type: ::OctridevOpenai::ProjectServiceAccount,
           decoder: :json,
           operation_id: 'update_project_service_account',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -442,13 +445,12 @@ module OctridevOpenai
         service_account_id:,
         request_options: nil
       )
-
         SdkClient.request(
           'DELETE',
           [
-            "/organization/projects/",
+            '/organization/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/service_accounts/",
+            '/service_accounts/',
             SdkClient.encode_path_segment(service_account_id)
           ].join,
           config: config,
@@ -456,7 +458,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_project_service_account',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -478,28 +480,27 @@ module OctridevOpenai
         after: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
           [
-            "/organization/projects/",
+            '/organization/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/users"
+            '/users'
           ].join,
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
-            'after' => QueryValue.new(after, style: 'form', explode: true),
+            'after' => QueryValue.new(after, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::ProjectUserListResponse,
           decoder: :json,
           operation_id: 'list_project_users',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
-    ListProjectUsersPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      ListProjectUsersPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists users in a project using cursor-based pagination. Set `limit` to control the number of results and pass an `after` cursor from a previous response to continue through the list.
       #
@@ -531,10 +532,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.last_id
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -559,10 +563,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListProjectUsersPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end

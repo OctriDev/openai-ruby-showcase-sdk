@@ -5,86 +5,87 @@
 
 # shared_click domain models
 module OctridevOpenai
-# Defines the ClickButtonType SDK namespace.
-module ClickButtonType
-  LEFT = 'left'
-  RIGHT = 'right'
-  WHEEL = 'wheel'
-  BACK = 'back'
-  FORWARD = 'forward'
-  VALUES = ['left', 'right', 'wheel', 'back', 'forward'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalClickParamMetadata
-  FIELDS = {
-    type: "type",
-    button: "button",
-    x_coordinate: "x",
-    y_coordinate: "y",
-    keys: "keys",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    button
-    x_coordinate
-    y_coordinate
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ClickParamType.from_value(value)
-    end,
-    button: lambda do |value|
-      ::OctridevOpenai::ClickButtonType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for ClickParam.
-# A click action.
-class ClickParam
-  include ComputerAction
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalClickParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalClickParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalClickParamMetadata::DECODERS
-
-  # @return [ClickParamType] Specifies the event type. For a click action, this property is always `click`.
-  attr_reader :type
-  # @return [ClickButtonType] Indicates which mouse button was pressed during the click. One of `left`, `right`, `wheel`, `back`, or `forward`.
-  attr_reader :button
-  # @return [Integer] The x-coordinate where the click occurred.
-  attr_reader :x_coordinate
-  # @return [Integer] The y-coordinate where the click occurred.
-  attr_reader :y_coordinate
-  # @return [Array_of_String] The keys being held while clicking.
-  attr_reader :keys
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the ClickButtonType SDK namespace.
+  module ClickButtonType
+    LEFT = 'left'
+    RIGHT = 'right'
+    WHEEL = 'wheel'
+    BACK = 'back'
+    FORWARD = 'forward'
+    VALUES = %w[left right wheel back forward].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalClickParamMetadata
+    FIELDS = {
+      type: 'type',
+      button: 'button',
+      x_coordinate: 'x',
+      y_coordinate: 'y',
+      keys: 'keys'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      button
+      x_coordinate
+      y_coordinate
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ClickParamType.from_value(value)
+      end,
+      button: lambda do |value|
+        ::OctridevOpenai::ClickButtonType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for ClickParam.
+  # A click action.
+  class ClickParam
+    include ComputerAction
 
-# Defines the ClickParamType SDK namespace.
-module ClickParamType
-  CLICK = 'click'
-  VALUES = ['click'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalClickParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalClickParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalClickParamMetadata::DECODERS
 
-    raise SdkValidationError.new('ClickParamType', 'enum', "Unknown ClickParamType: #{value}")
+    # @return [ClickParamType] Specifies the event type. For a click action, this property is always `click`.
+    attr_reader :type
+    # @return [ClickButtonType] Indicates which mouse button was pressed during the click. One of `left`, `right`, `wheel`, `back`, or `forward`.
+    attr_reader :button
+    # @return [Integer] The x-coordinate where the click occurred.
+    attr_reader :x_coordinate
+    # @return [Integer] The y-coordinate where the click occurred.
+    attr_reader :y_coordinate
+    # @return [Array_of_String] The keys being held while clicking.
+    attr_reader :keys
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
+
+  # Defines the ClickParamType SDK namespace.
+  module ClickParamType
+    CLICK = 'click'
+    VALUES = ['click'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('ClickParamType', 'enum', "Unknown ClickParamType: #{value}")
+    end
+  end
 end

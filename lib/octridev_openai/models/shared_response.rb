@@ -5,441 +5,446 @@
 
 # shared_response domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalResponseConfigurationUpdateReasoningMetadata
-  FIELDS = {
-    effort: "effort",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    effort: lambda do |value|
-      ::OctridevOpenai::ReasoningEffort.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for ResponseConfigurationUpdateReasoning.
-# The reasoning configuration applied by this update.
-class ResponseConfigurationUpdateReasoning
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalResponseConfigurationUpdateReasoningMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalResponseConfigurationUpdateReasoningMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalResponseConfigurationUpdateReasoningMetadata::DECODERS
-
-  # @return [ReasoningEffort] The reasoning effort used for subsequent responses until another configuration update replaces it.
-  attr_reader :effort
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalResponseConfigurationUpdateReasoningMetadata
+    FIELDS = {
+      effort: 'effort'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      effort: lambda do |value|
+        ::OctridevOpenai::ReasoningEffort.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ResponseConfigurationUpdateReasoning.
+  # The reasoning configuration applied by this update.
+  class ResponseConfigurationUpdateReasoning
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalResponseConfigurationUpdateReasoningMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalResponseConfigurationUpdateReasoningMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalResponseConfigurationUpdateReasoningMetadata::DECODERS
+
+    # @return [ReasoningEffort] The reasoning effort used for subsequent responses until another configuration update replaces it.
+    attr_reader :effort
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalResponseConfigurationUpdateMetadata
-  FIELDS = {
-    id: "id",
-    type: "type",
-    reasoning: "reasoning",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ResponseConfigurationUpdateType.from_value(value)
-    end,
-    reasoning: lambda do |value|
-      ::OctridevOpenai::ResponseConfigurationUpdateReasoning.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for ResponseConfigurationUpdate.
-# A configuration update that applies to subsequent responses until it is replaced by another configuration update.
-class ResponseConfigurationUpdate
-  include ConversationItem
-  include ItemResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalResponseConfigurationUpdateMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalResponseConfigurationUpdateMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalResponseConfigurationUpdateMetadata::DECODERS
-
-  # @return [String] The unique ID of the configuration update item.
-  attr_reader :id
-  # @return [ResponseConfigurationUpdateType] The item type. Always `configuration_update`.
-  attr_reader :type
-  # @return [ResponseConfigurationUpdateReasoning] The reasoning configuration applied by this update.
-  attr_reader :reasoning
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalResponseConfigurationUpdateMetadata
+    FIELDS = {
+      id: 'id',
+      type: 'type',
+      reasoning: 'reasoning'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ResponseConfigurationUpdateType.from_value(value)
+      end,
+      reasoning: lambda do |value|
+        ::OctridevOpenai::ResponseConfigurationUpdateReasoning.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ResponseConfigurationUpdate.
+  # A configuration update that applies to subsequent responses until it is replaced by another configuration update.
+  class ResponseConfigurationUpdate
+    include ConversationItem
+    include ItemResource
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalResponseConfigurationUpdateMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalResponseConfigurationUpdateMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalResponseConfigurationUpdateMetadata::DECODERS
+
+    # @return [String] The unique ID of the configuration update item.
+    attr_reader :id
+    # @return [ResponseConfigurationUpdateType] The item type. Always `configuration_update`.
+    attr_reader :type
+    # @return [ResponseConfigurationUpdateReasoning] The reasoning configuration applied by this update.
+    attr_reader :reasoning
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the ResponseConfigurationUpdateType SDK namespace.
+  module ResponseConfigurationUpdateType
+    CONFIGURATION_UPDATE = 'configuration_update'
+    VALUES = ['configuration_update'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the ResponseConfigurationUpdateType SDK namespace.
-module ResponseConfigurationUpdateType
-  CONFIGURATION_UPDATE = 'configuration_update'
-  VALUES = ['configuration_update'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('ResponseConfigurationUpdateType', 'enum', "Unknown ResponseConfigurationUpdateType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalResponseConfigurationUpdateItemParamReasoningMetadata
-  FIELDS = {
-    effort: "effort",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    effort: lambda do |value|
-      ::OctridevOpenai::ReasoningEffort.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for ResponseConfigurationUpdateItemParamReasoning.
-# Updates to reasoning configuration. Only effort is supported.
-class ResponseConfigurationUpdateItemParamReasoning
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalResponseConfigurationUpdateItemParamReasoningMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalResponseConfigurationUpdateItemParamReasoningMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalResponseConfigurationUpdateItemParamReasoningMetadata::DECODERS
-
-  # @return [ReasoningEffort] The reasoning effort to use for subsequent responses until another configuration update replaces it.
-  attr_reader :effort
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('ResponseConfigurationUpdateType', 'enum', "Unknown ResponseConfigurationUpdateType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalResponseConfigurationUpdateItemParamReasoningMetadata
+    FIELDS = {
+      effort: 'effort'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      effort: lambda do |value|
+        ::OctridevOpenai::ReasoningEffort.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for ResponseConfigurationUpdateItemParamReasoning.
+  # Updates to reasoning configuration. Only effort is supported.
+  class ResponseConfigurationUpdateItemParamReasoning
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalResponseConfigurationUpdateItemParamReasoningMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalResponseConfigurationUpdateItemParamReasoningMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalResponseConfigurationUpdateItemParamReasoningMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalResponseConfigurationUpdateItemParamMetadata
-  FIELDS = {
-    id: "id",
-    type: "type",
-    reasoning: "reasoning",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ResponseConfigurationUpdateItemParamType.from_value(value)
-    end,
-    reasoning: lambda do |value|
-      ::OctridevOpenai::ResponseConfigurationUpdateItemParamReasoning.from_hash(value)
-    end,
-  }.freeze
-end
+    # @return [ReasoningEffort] The reasoning effort to use for subsequent responses until another configuration update replaces it.
+    attr_reader :effort
 
-# API model for ResponseConfigurationUpdateItemParam.
-# An update to the conversation's response configuration. The configuration remains in effect for subsequent responses until it is replaced by another configuration update.
-class ResponseConfigurationUpdateItemParam
-  include Item
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalResponseConfigurationUpdateItemParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalResponseConfigurationUpdateItemParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalResponseConfigurationUpdateItemParamMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [String] Optional `string` value serialized in the `id` wire field.
-  attr_reader :id
-  # @return [ResponseConfigurationUpdateItemParamType] The item type. Always `configuration_update`.
-  attr_reader :type
-  # @return [ResponseConfigurationUpdateItemParamReasoning] Updates to reasoning configuration. Only effort is supported.
-  attr_reader :reasoning
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalResponseConfigurationUpdateItemParamMetadata
+    FIELDS = {
+      id: 'id',
+      type: 'type',
+      reasoning: 'reasoning'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ResponseConfigurationUpdateItemParamType.from_value(value)
+      end,
+      reasoning: lambda do |value|
+        ::OctridevOpenai::ResponseConfigurationUpdateItemParamReasoning.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for ResponseConfigurationUpdateItemParam.
+  # An update to the conversation's response configuration. The configuration remains in effect for subsequent responses until it is replaced by another configuration update.
+  class ResponseConfigurationUpdateItemParam
+    include Item
 
-# Defines the ResponseConfigurationUpdateItemParamType SDK namespace.
-module ResponseConfigurationUpdateItemParamType
-  CONFIGURATION_UPDATE = 'configuration_update'
-  VALUES = ['configuration_update'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalResponseConfigurationUpdateItemParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalResponseConfigurationUpdateItemParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalResponseConfigurationUpdateItemParamMetadata::DECODERS
 
-    raise SdkValidationError.new('ResponseConfigurationUpdateItemParamType', 'enum', "Unknown ResponseConfigurationUpdateItemParamType: #{value}")
-  end
-end
+    # @return [String] Optional `string` value serialized in the `id` wire field.
+    attr_reader :id
+    # @return [ResponseConfigurationUpdateItemParamType] The item type. Always `configuration_update`.
+    attr_reader :type
+    # @return [ResponseConfigurationUpdateItemParamReasoning] Updates to reasoning configuration. Only effort is supported.
+    attr_reader :reasoning
 
-# Internal model hydration metadata.
-class SdkInternalResponseFormatJsonObjectMetadata
-  FIELDS = {
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ResponseFormatJsonObjectType.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for ResponseFormatJsonObject.
-# JSON object response format. An older method of generating JSON responses. Using `json_schema` is recommended for models that support it. Note that the model will not generate JSON without a system or user message instructing it to do so.
-class ResponseFormatJsonObject
-  include AssistantsApiResponseFormatOption
-  include TextResponseFormatConfiguration
-  include ResponseFormat
-  include CreateEvalCompletionsRunDataSourceSamplingParamsResponseFormat
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalResponseFormatJsonObjectMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalResponseFormatJsonObjectMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalResponseFormatJsonObjectMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [ResponseFormatJsonObjectType] The type of response format being defined. Always `json_object`.
-  attr_reader :type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the ResponseConfigurationUpdateItemParamType SDK namespace.
+  module ResponseConfigurationUpdateItemParamType
+    CONFIGURATION_UPDATE = 'configuration_update'
+    VALUES = ['configuration_update'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('ResponseConfigurationUpdateItemParamType', 'enum', "Unknown ResponseConfigurationUpdateItemParamType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the ResponseFormatJsonObjectType SDK namespace.
-module ResponseFormatJsonObjectType
-  JSON_OBJECT = 'json_object'
-  VALUES = ['json_object'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('ResponseFormatJsonObjectType', 'enum', "Unknown ResponseFormatJsonObjectType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalResponseFormatJsonSchemaJsonSchemaMetadata
-  FIELDS = {
-    description: "description",
-    name: "name",
-    schema: "schema",
-    strict: "strict",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    name
-  ].freeze
-  DECODERS = {
-    schema: lambda do |value|
-      ::OctridevOpenai::ResponseFormatJsonSchemaSchema.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for ResponseFormatJsonSchemaJsonSchema.
-# Structured Outputs configuration options, including a JSON Schema.
-class ResponseFormatJsonSchemaJsonSchema
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalResponseFormatJsonSchemaJsonSchemaMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalResponseFormatJsonSchemaJsonSchemaMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalResponseFormatJsonSchemaJsonSchemaMetadata::DECODERS
-
-  # @return [String] A description of what the response format is for, used by the model to determine how to respond in the format.
-  attr_reader :description
-  # @return [String] The name of the response format. Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64.
-  attr_reader :name
-  # @return [ResponseFormatJsonSchemaSchema] The schema for the response format, described as a JSON Schema object. Learn how to build JSON schemas here.
-  attr_reader :schema
-  # @return [Boolean] Optional `boolean` value serialized in the `strict` wire field.
-  attr_reader :strict
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalResponseFormatJsonObjectMetadata
+    FIELDS = {
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ResponseFormatJsonObjectType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ResponseFormatJsonObject.
+  # JSON object response format. An older method of generating JSON responses. Using `json_schema` is recommended for models that support it. Note that the model will not generate JSON without a system or user message instructing it to do so.
+  class ResponseFormatJsonObject
+    include AssistantsApiResponseFormatOption
+    include TextResponseFormatConfiguration
+    include ResponseFormat
+    include CreateEvalCompletionsRunDataSourceSamplingParamsResponseFormat
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalResponseFormatJsonObjectMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalResponseFormatJsonObjectMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalResponseFormatJsonObjectMetadata::DECODERS
+
+    # @return [ResponseFormatJsonObjectType] The type of response format being defined. Always `json_object`.
+    attr_reader :type
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the ResponseFormatJsonObjectType SDK namespace.
+  module ResponseFormatJsonObjectType
+    JSON_OBJECT = 'json_object'
+    VALUES = ['json_object'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Internal model hydration metadata.
-class SdkInternalResponseFormatJsonSchemaMetadata
-  FIELDS = {
-    type: "type",
-    json_schema: "json_schema",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    json_schema
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ResponseFormatJsonSchemaType.from_value(value)
-    end,
-    json_schema: lambda do |value|
-      ::OctridevOpenai::ResponseFormatJsonSchemaJsonSchema.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for ResponseFormatJsonSchema.
-# JSON Schema response format. Used to generate structured JSON responses. Learn more about Structured Outputs.
-class ResponseFormatJsonSchema
-  include AssistantsApiResponseFormatOption
-  include ResponseFormat
-  include CreateEvalCompletionsRunDataSourceSamplingParamsResponseFormat
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalResponseFormatJsonSchemaMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalResponseFormatJsonSchemaMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalResponseFormatJsonSchemaMetadata::DECODERS
-
-  # @return [ResponseFormatJsonSchemaType] The type of response format being defined. Always `json_schema`.
-  attr_reader :type
-  # @return [ResponseFormatJsonSchemaJsonSchema] Structured Outputs configuration options, including a JSON Schema.
-  attr_reader :json_schema
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('ResponseFormatJsonObjectType', 'enum', "Unknown ResponseFormatJsonObjectType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalResponseFormatJsonSchemaJsonSchemaMetadata
+    FIELDS = {
+      description: 'description',
+      name: 'name',
+      schema: 'schema',
+      strict: 'strict'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      name
+    ].freeze
+    DECODERS = {
+      schema: lambda do |value|
+        ::OctridevOpenai::ResponseFormatJsonSchemaSchema.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for ResponseFormatJsonSchemaJsonSchema.
+  # Structured Outputs configuration options, including a JSON Schema.
+  class ResponseFormatJsonSchemaJsonSchema
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalResponseFormatJsonSchemaJsonSchemaMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalResponseFormatJsonSchemaJsonSchemaMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalResponseFormatJsonSchemaJsonSchemaMetadata::DECODERS
 
-# Defines the ResponseFormatJsonSchemaType SDK namespace.
-module ResponseFormatJsonSchemaType
-  JSON_SCHEMA = 'json_schema'
-  VALUES = ['json_schema'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    # @return [String] A description of what the response format is for, used by the model to determine how to respond in the format.
+    attr_reader :description
+    # @return [String] The name of the response format. Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64.
+    attr_reader :name
+    # @return [ResponseFormatJsonSchemaSchema] The schema for the response format, described as a JSON Schema object. Learn how to build JSON schemas here.
+    attr_reader :schema
+    # @return [Boolean] Optional `boolean` value serialized in the `strict` wire field.
+    attr_reader :strict
 
-    raise SdkValidationError.new('ResponseFormatJsonSchemaType', 'enum', "Unknown ResponseFormatJsonSchemaType: #{value}")
-  end
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# Defines the ResponseFormatJsonSchemaSchema SDK value decoder.
-module ResponseFormatJsonSchemaSchema
-  def self.from_hash(value)
-    return nil if value.nil?
-    value
-  end
-end
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-# Internal model hydration metadata.
-class SdkInternalResponseFormatTextMetadata
-  FIELDS = {
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ResponseFormatTextType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for ResponseFormatText.
-# Default response format. Used to generate text responses.
-class ResponseFormatText
-  include AssistantsApiResponseFormatOption
-  include TextResponseFormatConfiguration
-  include ResponseFormat
-  include CreateEvalCompletionsRunDataSourceSamplingParamsResponseFormat
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalResponseFormatTextMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalResponseFormatTextMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalResponseFormatTextMetadata::DECODERS
-
-  # @return [ResponseFormatTextType] The type of response format being defined. Always `text`.
-  attr_reader :type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalResponseFormatJsonSchemaMetadata
+    FIELDS = {
+      type: 'type',
+      json_schema: 'json_schema'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      json_schema
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ResponseFormatJsonSchemaType.from_value(value)
+      end,
+      json_schema: lambda do |value|
+        ::OctridevOpenai::ResponseFormatJsonSchemaJsonSchema.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for ResponseFormatJsonSchema.
+  # JSON Schema response format. Used to generate structured JSON responses. Learn more about Structured Outputs.
+  class ResponseFormatJsonSchema
+    include AssistantsApiResponseFormatOption
+    include ResponseFormat
+    include CreateEvalCompletionsRunDataSourceSamplingParamsResponseFormat
 
-# Defines the ResponseFormatTextType SDK namespace.
-module ResponseFormatTextType
-  TEXT = 'text'
-  VALUES = ['text'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalResponseFormatJsonSchemaMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalResponseFormatJsonSchemaMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalResponseFormatJsonSchemaMetadata::DECODERS
 
-    raise SdkValidationError.new('ResponseFormatTextType', 'enum', "Unknown ResponseFormatTextType: #{value}")
-  end
-end
+    # @return [ResponseFormatJsonSchemaType] The type of response format being defined. Always `json_schema`.
+    attr_reader :type
+    # @return [ResponseFormatJsonSchemaJsonSchema] Structured Outputs configuration options, including a JSON Schema.
+    attr_reader :json_schema
 
-# Defines the ResponsePromptVariables SDK value decoder.
-module ResponsePromptVariables
-  def self.from_hash(value)
-    return nil if value.nil?
-    value&.transform_values { |item| item }
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
+
+  # Defines the ResponseFormatJsonSchemaType SDK namespace.
+  module ResponseFormatJsonSchemaType
+    JSON_SCHEMA = 'json_schema'
+    VALUES = ['json_schema'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('ResponseFormatJsonSchemaType', 'enum', "Unknown ResponseFormatJsonSchemaType: #{value}")
+    end
+  end
+
+  # Defines the ResponseFormatJsonSchemaSchema SDK value decoder.
+  module ResponseFormatJsonSchemaSchema
+    def self.from_hash(value)
+      return nil if value.nil?
+
+      value
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalResponseFormatTextMetadata
+    FIELDS = {
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ResponseFormatTextType.from_value(value)
+      end
+    }.freeze
+  end
+
+  # API model for ResponseFormatText.
+  # Default response format. Used to generate text responses.
+  class ResponseFormatText
+    include AssistantsApiResponseFormatOption
+    include TextResponseFormatConfiguration
+    include ResponseFormat
+    include CreateEvalCompletionsRunDataSourceSamplingParamsResponseFormat
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalResponseFormatTextMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalResponseFormatTextMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalResponseFormatTextMetadata::DECODERS
+
+    # @return [ResponseFormatTextType] The type of response format being defined. Always `text`.
+    attr_reader :type
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the ResponseFormatTextType SDK namespace.
+  module ResponseFormatTextType
+    TEXT = 'text'
+    VALUES = ['text'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('ResponseFormatTextType', 'enum', "Unknown ResponseFormatTextType: #{value}")
+    end
+  end
+
+  # Defines the ResponsePromptVariables SDK value decoder.
+  module ResponsePromptVariables
+    def self.from_hash(value)
+      return nil if value.nil?
+
+      value&.transform_values { |item| item }
+    end
+  end
 end

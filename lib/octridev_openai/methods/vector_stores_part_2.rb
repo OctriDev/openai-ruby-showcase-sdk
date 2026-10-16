@@ -22,13 +22,12 @@ module OctridevOpenai
         file_id:,
         request_options: nil
       )
-
         SdkClient.request(
           'DELETE',
           [
-            "/vector_stores/",
+            '/vector_stores/',
             SdkClient.encode_path_segment(vector_store_id),
-            "/files/",
+            '/files/',
             SdkClient.encode_path_segment(file_id)
           ].join,
           config: config,
@@ -36,7 +35,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_vector_store_file',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '409' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '409' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -60,24 +59,23 @@ module OctridevOpenai
         attributes:,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
           [
-            "/vector_stores/",
+            '/vector_stores/',
             SdkClient.encode_path_segment(vector_store_id),
-            "/files/",
+            '/files/',
             SdkClient.encode_path_segment(file_id)
           ].join,
           config: config,
           body: {
-            'attributes' => attributes,
+            'attributes' => attributes
           },
           return_type: ::OctridevOpenai::VectorStoreFileObject,
           decoder: :json,
           operation_id: 'update_vector_store_file_attributes',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '409' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '409' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -93,22 +91,21 @@ module OctridevOpenai
         file_id:,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
           [
-            "/vector_stores/",
+            '/vector_stores/',
             SdkClient.encode_path_segment(vector_store_id),
-            "/files/",
+            '/files/',
             SdkClient.encode_path_segment(file_id),
-            "/content"
+            '/content'
           ].join,
           config: config,
           return_type: ::OctridevOpenai::VectorStoreFileContentResponse,
           decoder: :json,
           operation_id: 'retrieve_vector_store_file_content',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -136,7 +133,6 @@ module OctridevOpenai
         ranking_options: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.if_given(max_num_results) do
           Validation.validate_range('max_num_results', max_num_results, min: 1, max: 50)
         end
@@ -144,9 +140,9 @@ module OctridevOpenai
         SdkClient.request(
           'POST',
           [
-            "/vector_stores/",
+            '/vector_stores/',
             SdkClient.encode_path_segment(vector_store_id),
-            "/search"
+            '/search'
           ].join,
           config: config,
           body: {
@@ -154,13 +150,13 @@ module OctridevOpenai
             'rewrite_query' => rewrite_query,
             'max_num_results' => max_num_results,
             'filters' => filters,
-            'ranking_options' => ranking_options,
+            'ranking_options' => ranking_options
           },
           return_type: ::OctridevOpenai::VectorStoreSearchResultsPage,
           decoder: :json,
           operation_id: 'search_vector_store',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
     end

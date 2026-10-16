@@ -5,106 +5,105 @@
 
 # responses_reasoning domain models
 module OctridevOpenai
-# Defines the ReasoningSummaryVariant0 SDK namespace.
-module ReasoningSummaryVariant0
-  AUTO = 'auto'
-  CONCISE = 'concise'
-  DETAILED = 'detailed'
-  VALUES = ['auto', 'concise', 'detailed'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the ReasoningContextVariant0 SDK namespace.
-module ReasoningContextVariant0
-  AUTO = 'auto'
-  CURRENT_TURN = 'current_turn'
-  ALL_TURNS = 'all_turns'
-  VALUES = ['auto', 'current_turn', 'all_turns'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the ReasoningGenerateSummaryVariant0 SDK namespace.
-module ReasoningGenerateSummaryVariant0
-  AUTO = 'auto'
-  CONCISE = 'concise'
-  DETAILED = 'detailed'
-  VALUES = ['auto', 'concise', 'detailed'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalReasoningMetadata
-  FIELDS = {
-    mode: "mode",
-    effort: "effort",
-    summary: "summary",
-    context: "context",
-    generate_summary: "generate_summary",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    mode: lambda do |value|
-      ::OctridevOpenai::ReasoningModeEnum.from_value(value)
-    end,
-    effort: lambda do |value|
-      ::OctridevOpenai::ReasoningEffort.from_hash(value)
-    end,
-    summary: lambda do |value|
-      ::OctridevOpenai::ReasoningSummaryVariant0.from_value(value)
-    end,
-    context: lambda do |value|
-      ::OctridevOpenai::ReasoningContextVariant0.from_value(value)
-    end,
-    generate_summary: lambda do |value|
-      ::OctridevOpenai::ReasoningGenerateSummaryVariant0.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for Reasoning.
-# Configuration options for reasoning models.
-class Reasoning
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalReasoningMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalReasoningMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalReasoningMetadata::DECODERS
-
-  # @return [ReasoningModeEnum] Controls the reasoning execution mode for the request. When returned on a response, this is the effective execution mode.
-  attr_reader :mode
-  # @return [ReasoningEffort] Optional API value serialized in the `effort` wire field.
-  attr_reader :effort
-  # @return [ReasoningSummaryVariant0] Optional API value serialized in the `summary` wire field.
-  attr_reader :summary
-  # @return [ReasoningContextVariant0] Optional API value serialized in the `context` wire field.
-  attr_reader :context
-  # @return [ReasoningGenerateSummaryVariant0] Optional API value serialized in the `generate_summary` wire field.
-  attr_reader :generate_summary
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the ReasoningSummaryVariant0 SDK namespace.
+  module ReasoningSummaryVariant0
+    AUTO = 'auto'
+    CONCISE = 'concise'
+    DETAILED = 'detailed'
+    VALUES = %w[auto concise detailed].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the ReasoningContextVariant0 SDK namespace.
+  module ReasoningContextVariant0
+    AUTO = 'auto'
+    CURRENT_TURN = 'current_turn'
+    ALL_TURNS = 'all_turns'
+    VALUES = %w[auto current_turn all_turns].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the ReasoningGenerateSummaryVariant0 SDK namespace.
+  module ReasoningGenerateSummaryVariant0
+    AUTO = 'auto'
+    CONCISE = 'concise'
+    DETAILED = 'detailed'
+    VALUES = %w[auto concise detailed].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
 
-# Defines the ReasoningModeEnum SDK value decoder.
-module ReasoningModeEnum
-  def self.from_value(value)
-    value
+  # Internal model hydration metadata.
+  class SdkInternalReasoningMetadata
+    FIELDS = {
+      mode: 'mode',
+      effort: 'effort',
+      summary: 'summary',
+      context: 'context',
+      generate_summary: 'generate_summary'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      mode: lambda do |value|
+        ::OctridevOpenai::ReasoningModeEnum.from_value(value)
+      end,
+      effort: lambda do |value|
+        ::OctridevOpenai::ReasoningEffort.from_hash(value)
+      end,
+      summary: lambda do |value|
+        ::OctridevOpenai::ReasoningSummaryVariant0.from_value(value)
+      end,
+      context: lambda do |value|
+        ::OctridevOpenai::ReasoningContextVariant0.from_value(value)
+      end,
+      generate_summary: lambda do |value|
+        ::OctridevOpenai::ReasoningGenerateSummaryVariant0.from_value(value)
+      end
+    }.freeze
   end
-end
+
+  # API model for Reasoning.
+  # Configuration options for reasoning models.
+  class Reasoning
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalReasoningMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalReasoningMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalReasoningMetadata::DECODERS
+
+    # @return [ReasoningModeEnum] Controls the reasoning execution mode for the request. When returned on a response, this is the effective execution mode.
+    attr_reader :mode
+    # @return [ReasoningEffort] Optional API value serialized in the `effort` wire field.
+    attr_reader :effort
+    # @return [ReasoningSummaryVariant0] Optional API value serialized in the `summary` wire field.
+    attr_reader :summary
+    # @return [ReasoningContextVariant0] Optional API value serialized in the `context` wire field.
+    attr_reader :context
+    # @return [ReasoningGenerateSummaryVariant0] Optional API value serialized in the `generate_summary` wire field.
+    attr_reader :generate_summary
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the ReasoningModeEnum SDK value decoder.
+  module ReasoningModeEnum
+    def self.from_value(value)
+      value
+    end
+  end
 end

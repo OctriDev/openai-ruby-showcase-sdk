@@ -5,397 +5,398 @@
 
 # shared_mcptool domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalMCPToolRequireApprovalVariant0Metadata
-  FIELDS = {
-    always: "always",
-    never: "never",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    always: lambda do |value|
-      ::OctridevOpenai::MCPToolFilter.from_hash(value)
-    end,
-    never: lambda do |value|
-      ::OctridevOpenai::MCPToolFilter.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for MCPToolRequireApprovalVariant0.
-# Specify which of the MCP server's tools require approval. Can be `always`, `never`, or a filter object associated with tools that require approval.
-class MCPToolRequireApprovalVariant0
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalMCPToolRequireApprovalVariant0Metadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalMCPToolRequireApprovalVariant0Metadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalMCPToolRequireApprovalVariant0Metadata::DECODERS
-
-  # @return [MCPToolFilter] A filter object to specify which tools are allowed.
-  attr_reader :always
-  # @return [MCPToolFilter] A filter object to specify which tools are allowed.
-  attr_reader :never
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalMCPToolRequireApprovalVariant0Metadata
+    FIELDS = {
+      always: 'always',
+      never: 'never'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      always: lambda do |value|
+        ::OctridevOpenai::MCPToolFilter.from_hash(value)
+      end,
+      never: lambda do |value|
+        ::OctridevOpenai::MCPToolFilter.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for MCPToolRequireApprovalVariant0.
+  # Specify which of the MCP server's tools require approval. Can be `always`, `never`, or a filter object associated with tools that require approval.
+  class MCPToolRequireApprovalVariant0
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalMCPToolRequireApprovalVariant0Metadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalMCPToolRequireApprovalVariant0Metadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalMCPToolRequireApprovalVariant0Metadata::DECODERS
+
+    # @return [MCPToolFilter] A filter object to specify which tools are allowed.
+    attr_reader :always
+    # @return [MCPToolFilter] A filter object to specify which tools are allowed.
+    attr_reader :never
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalMCPToolMetadata
-  FIELDS = {
-    type: "type",
-    server_label: "server_label",
-    server_url: "server_url",
-    connector_id: "connector_id",
-    tunnel_id: "tunnel_id",
-    authorization: "authorization",
-    server_description: "server_description",
-    headers: "headers",
-    allowed_tools: "allowed_tools",
-    allowed_callers: "allowed_callers",
-    require_approval: "require_approval",
-    defer_loading: "defer_loading",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    server_label
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::MCPToolType.from_value(value)
-    end,
-    connector_id: lambda do |value|
-      ::OctridevOpenai::MCPToolConnectorId.from_value(value)
-    end,
-    allowed_tools: lambda do |value|
-      SdkModel.union_branch(value, [::OctridevOpenai::MCPToolFilter])
-    end,
-    allowed_callers: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::CallableToolAllowedCaller.from_value(item) }
-    end,
-  }.freeze
-end
-
-# API model for MCPTool.
-# Give the model access to additional tools via remote Model Context Protocol (MCP) servers. Learn more about MCP.
-class MCPTool
-  include Tool
-  include ToolSearchOutputTool
-  include RealtimeSessionCreateRequestGAToolsItem
-  include RealtimeResponseCreateParamsToolsItem
-  include RealtimeSessionCreateResponseGAToolsItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalMCPToolMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalMCPToolMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalMCPToolMetadata::DECODERS
-
-  # @return [MCPToolType] The type of the MCP tool. Always `mcp`.
-  attr_reader :type
-  # @return [String] A label for this MCP server, used to identify it in tool calls.
-  attr_reader :server_label
-  # @return [String] The URL for the MCP server. One of `server_url`, `connector_id`, or `tunnel_id` must be provided.
-  attr_reader :server_url
-  # @return [MCPToolConnectorId] Identifier for service connectors, like those available in ChatGPT. One of `server_url`, `connector_id`, or `tunnel_id` must be provided. Learn more about service connectors here. This field is deprecated for models released after September 1, 2026. Use `server_url` to connect to a remote MCP server, or `tunnel_id` to connect through a Secure MCP Tunnel. Currently supported `connector_id` values are: - Dropbox: `connector_dropbox` - Gmail: `connector_gmail` - Google…
-  attr_reader :connector_id
-  # @return [String] The Secure MCP Tunnel ID to use instead of a direct server URL. One of `server_url`, `connector_id`, or `tunnel_id` must be provided.
-  attr_reader :tunnel_id
-  # @return [String] An OAuth access token that can be used with a remote MCP server, either with a custom MCP server URL or a service connector. Your application must handle the OAuth authorization flow and provide the token here.
-  attr_reader :authorization
-  # @return [String] Optional description of the MCP server, used to provide more context.
-  attr_reader :server_description
-  # @return [Hash] Optional HTTP headers to send to the MCP server. Use for authentication or other purposes.
-  attr_reader :headers
-  # @return [Object] List of allowed tool names or a filter object.
-  attr_reader :allowed_tools
-  # @return [Array_of_CallableToolAllowedCaller] The tool invocation context(s).
-  attr_reader :allowed_callers
-  # @return [Object] Specify which of the MCP server's tools require approval.
-  attr_reader :require_approval
-  # @return [Boolean] Whether this MCP tool is deferred and discovered via tool search.
-  attr_reader :defer_loading
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalMCPToolMetadata
+    FIELDS = {
+      type: 'type',
+      server_label: 'server_label',
+      server_url: 'server_url',
+      connector_id: 'connector_id',
+      tunnel_id: 'tunnel_id',
+      authorization: 'authorization',
+      server_description: 'server_description',
+      headers: 'headers',
+      allowed_tools: 'allowed_tools',
+      allowed_callers: 'allowed_callers',
+      require_approval: 'require_approval',
+      defer_loading: 'defer_loading'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      server_label
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::MCPToolType.from_value(value)
+      end,
+      connector_id: lambda do |value|
+        ::OctridevOpenai::MCPToolConnectorId.from_value(value)
+      end,
+      allowed_tools: lambda do |value|
+        SdkModel.union_branch(value, [::OctridevOpenai::MCPToolFilter])
+      end,
+      allowed_callers: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::CallableToolAllowedCaller.from_value(item) }
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for MCPTool.
+  # Give the model access to additional tools via remote Model Context Protocol (MCP) servers. Learn more about MCP.
+  class MCPTool
+    include Tool
+    include ToolSearchOutputTool
+    include RealtimeSessionCreateRequestGAToolsItem
+    include RealtimeResponseCreateParamsToolsItem
+    include RealtimeSessionCreateResponseGAToolsItem
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalMCPToolMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalMCPToolMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalMCPToolMetadata::DECODERS
+
+    # @return [MCPToolType] The type of the MCP tool. Always `mcp`.
+    attr_reader :type
+    # @return [String] A label for this MCP server, used to identify it in tool calls.
+    attr_reader :server_label
+    # @return [String] The URL for the MCP server. One of `server_url`, `connector_id`, or `tunnel_id` must be provided.
+    attr_reader :server_url
+    # @return [MCPToolConnectorId] Identifier for service connectors, like those available in ChatGPT. One of `server_url`, `connector_id`, or `tunnel_id` must be provided. Learn more about service connectors here. This field is deprecated for models released after September 1, 2026. Use `server_url` to connect to a remote MCP server, or `tunnel_id` to connect through a Secure MCP Tunnel. Currently supported `connector_id` values are: - Dropbox: `connector_dropbox` - Gmail: `connector_gmail` - Google…
+    attr_reader :connector_id
+    # @return [String] The Secure MCP Tunnel ID to use instead of a direct server URL. One of `server_url`, `connector_id`, or `tunnel_id` must be provided.
+    attr_reader :tunnel_id
+    # @return [String] An OAuth access token that can be used with a remote MCP server, either with a custom MCP server URL or a service connector. Your application must handle the OAuth authorization flow and provide the token here.
+    attr_reader :authorization
+    # @return [String] Optional description of the MCP server, used to provide more context.
+    attr_reader :server_description
+    # @return [Hash] Optional HTTP headers to send to the MCP server. Use for authentication or other purposes.
+    attr_reader :headers
+    # @return [Object] List of allowed tool names or a filter object.
+    attr_reader :allowed_tools
+    # @return [Array_of_CallableToolAllowedCaller] The tool invocation context(s).
+    attr_reader :allowed_callers
+    # @return [Object] Specify which of the MCP server's tools require approval.
+    attr_reader :require_approval
+    # @return [Boolean] Whether this MCP tool is deferred and discovered via tool search.
+    attr_reader :defer_loading
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the MCPToolConnectorId SDK namespace.
-module MCPToolConnectorId
-  CONNECTOR_DROPBOX = 'connector_dropbox'
-  CONNECTOR_GMAIL = 'connector_gmail'
-  CONNECTOR_GOOGLECALENDAR = 'connector_googlecalendar'
-  CONNECTOR_GOOGLEDRIVE = 'connector_googledrive'
-  CONNECTOR_MICROSOFTTEAMS = 'connector_microsoftteams'
-  CONNECTOR_OUTLOOKCALENDAR = 'connector_outlookcalendar'
-  CONNECTOR_OUTLOOKEMAIL = 'connector_outlookemail'
-  CONNECTOR_SHAREPOINT = 'connector_sharepoint'
-  VALUES = [
-    'connector_dropbox', 'connector_gmail', 'connector_googlecalendar', 'connector_googledrive',
-    'connector_microsoftteams', 'connector_outlookcalendar', 'connector_outlookemail',
-    'connector_sharepoint'
-  ].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the MCPToolRequireApprovalVariant1 SDK namespace.
-module MCPToolRequireApprovalVariant1
-  ALWAYS = 'always'
-  NEVER = 'never'
-  VALUES = ['always', 'never'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the MCPToolType SDK namespace.
-module MCPToolType
-  MCP = 'mcp'
-  VALUES = ['mcp'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('MCPToolType', 'enum', "Unknown MCPToolType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalMCPToolCallMetadata
-  FIELDS = {
-    type: "type",
-    id: "id",
-    server_label: "server_label",
-    name: "name",
-    arguments: "arguments",
-    output: "output",
-    error: "error",
-    status: "status",
-    approval_request_id: "approval_request_id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    id
-    server_label
-    name
-    arguments
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::MCPToolCallType.from_value(value)
-    end,
-    error: lambda do |value|
-      ::OctridevOpenai::MCPToolCallError.from_hash(value)
-    end,
-    status: lambda do |value|
-      ::OctridevOpenai::MCPToolCallStatus.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for MCPToolCall.
-# An invocation of a tool on an MCP server.
-class MCPToolCall
-  include ConversationItem
-  include Item
-  include ItemResource
-  include OutputItem
-  include ItemField
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalMCPToolCallMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalMCPToolCallMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalMCPToolCallMetadata::DECODERS
-
-  # @return [MCPToolCallType] The type of the item. Always `mcp_call`.
-  attr_reader :type
-  # @return [String] The unique ID of the tool call.
-  attr_reader :id
-  # @return [String] The label of the MCP server running the tool.
-  attr_reader :server_label
-  # @return [String] The name of the tool that was run.
-  attr_reader :name
-  # @return [String] A JSON string of the arguments passed to the tool.
-  attr_reader :arguments
-  # @return [String] Optional `string` value serialized in the `output` wire field.
-  attr_reader :output
-  # @return [MCPToolCallError] The error from the tool call, if any.
-  attr_reader :error
-  # @return [MCPToolCallStatus] The status of the tool call. One of `in_progress`, `completed`, `incomplete`, `calling`, or `failed`.
-  attr_reader :status
-  # @return [String] Optional `string` value serialized in the `approval_request_id` wire field.
-  attr_reader :approval_request_id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the MCPToolConnectorId SDK namespace.
+  module MCPToolConnectorId
+    CONNECTOR_DROPBOX = 'connector_dropbox'
+    CONNECTOR_GMAIL = 'connector_gmail'
+    CONNECTOR_GOOGLECALENDAR = 'connector_googlecalendar'
+    CONNECTOR_GOOGLEDRIVE = 'connector_googledrive'
+    CONNECTOR_MICROSOFTTEAMS = 'connector_microsoftteams'
+    CONNECTOR_OUTLOOKCALENDAR = 'connector_outlookcalendar'
+    CONNECTOR_OUTLOOKEMAIL = 'connector_outlookemail'
+    CONNECTOR_SHAREPOINT = 'connector_sharepoint'
+    VALUES = %w[
+      connector_dropbox connector_gmail connector_googlecalendar connector_googledrive
+      connector_microsoftteams connector_outlookcalendar connector_outlookemail
+      connector_sharepoint
+    ].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the MCPToolRequireApprovalVariant1 SDK namespace.
+  module MCPToolRequireApprovalVariant1
+    ALWAYS = 'always'
+    NEVER = 'never'
+    VALUES = %w[always never].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the MCPToolType SDK namespace.
+  module MCPToolType
+    MCP = 'mcp'
+    VALUES = ['mcp'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the MCPToolCallType SDK namespace.
-module MCPToolCallType
-  MCP_CALL = 'mcp_call'
-  VALUES = ['mcp_call'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('MCPToolCallType', 'enum', "Unknown MCPToolCallType: #{value}")
-  end
-end
-
-# Defines the MCPToolCallError SDK namespace.
-module MCPToolCallError
-  DISCRIMINATOR_MAPPING = {
-    "mcp_protocol_error" => -> { MCPProtocolError },
-    "mcp_tool_execution_error" => -> { MCPToolExecutionError },
-    "http_error" => -> { HTTPError },
-  }.freeze
-
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('MCPToolCallError', 'variant', "Unknown MCPToolCallError discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Defines the MCPToolCallStatus SDK namespace.
-module MCPToolCallStatus
-  IN_PROGRESS = 'in_progress'
-  COMPLETED = 'completed'
-  INCOMPLETE = 'incomplete'
-  CALLING = 'calling'
-  FAILED = 'failed'
-  VALUES = ['in_progress', 'completed', 'incomplete', 'calling', 'failed'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalMCPToolExecutionErrorMetadata
-  FIELDS = {
-    type: "type",
-    content: "content",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    content
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::MCPToolExecutionErrorType.from_value(value)
-    end,
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    content
-  ].freeze
-end
-
-# API model for MCPToolExecutionError.
-# Typed representation of the `MCPToolExecutionError` API schema.
-class MCPToolExecutionError
-  include MCPToolCallError
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalMCPToolExecutionErrorMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalMCPToolExecutionErrorMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalMCPToolExecutionErrorMetadata::DECODERS
-
-  # @return [MCPToolExecutionErrorType] Required enumerated value serialized in the `type` wire field.
-  attr_reader :type
-  # @return [Object] Required API value serialized in the `content` wire field.
-  attr_reader :content
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('MCPToolType', 'enum', "Unknown MCPToolType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalMCPToolExecutionErrorMetadata::NULLABLE_FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalMCPToolCallMetadata
+    FIELDS = {
+      type: 'type',
+      id: 'id',
+      server_label: 'server_label',
+      name: 'name',
+      arguments: 'arguments',
+      output: 'output',
+      error: 'error',
+      status: 'status',
+      approval_request_id: 'approval_request_id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      id
+      server_label
+      name
+      arguments
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::MCPToolCallType.from_value(value)
+      end,
+      error: lambda do |value|
+        ::OctridevOpenai::MCPToolCallError.from_hash(value)
+      end,
+      status: lambda do |value|
+        ::OctridevOpenai::MCPToolCallStatus.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for MCPToolCall.
+  # An invocation of a tool on an MCP server.
+  class MCPToolCall
+    include ConversationItem
+    include Item
+    include ItemResource
+    include OutputItem
+    include ItemField
 
-# Defines the MCPToolExecutionErrorType SDK namespace.
-module MCPToolExecutionErrorType
-  MCP_TOOL_EXECUTION_ERROR = 'mcp_tool_execution_error'
-  VALUES = ['mcp_tool_execution_error'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalMCPToolCallMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalMCPToolCallMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalMCPToolCallMetadata::DECODERS
 
-    raise SdkValidationError.new('MCPToolExecutionErrorType', 'enum', "Unknown MCPToolExecutionErrorType: #{value}")
-  end
-end
+    # @return [MCPToolCallType] The type of the item. Always `mcp_call`.
+    attr_reader :type
+    # @return [String] The unique ID of the tool call.
+    attr_reader :id
+    # @return [String] The label of the MCP server running the tool.
+    attr_reader :server_label
+    # @return [String] The name of the tool that was run.
+    attr_reader :name
+    # @return [String] A JSON string of the arguments passed to the tool.
+    attr_reader :arguments
+    # @return [String] Optional `string` value serialized in the `output` wire field.
+    attr_reader :output
+    # @return [MCPToolCallError] The error from the tool call, if any.
+    attr_reader :error
+    # @return [MCPToolCallStatus] The status of the tool call. One of `in_progress`, `completed`, `incomplete`, `calling`, or `failed`.
+    attr_reader :status
+    # @return [String] Optional `string` value serialized in the `approval_request_id` wire field.
+    attr_reader :approval_request_id
 
-# Internal model hydration metadata.
-class SdkInternalMCPToolFilterMetadata
-  FIELDS = {
-    tool_names: "tool_names",
-    read_only: "read_only",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for MCPToolFilter.
-# A filter object to specify which tools are allowed.
-class MCPToolFilter
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalMCPToolFilterMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalMCPToolFilterMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalMCPToolFilterMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [Array_of_String] List of allowed tool names.
-  attr_reader :tool_names
-  # @return [Boolean] Indicates whether or not a tool modifies data or is read-only. If an MCP server is annotated with `readOnlyHint`, it will match this filter.
-  attr_reader :read_only
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the MCPToolCallType SDK namespace.
+  module MCPToolCallType
+    MCP_CALL = 'mcp_call'
+    VALUES = ['mcp_call'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('MCPToolCallType', 'enum', "Unknown MCPToolCallType: #{value}")
+    end
   end
-end
+
+  # Defines the MCPToolCallError SDK namespace.
+  module MCPToolCallError
+    DISCRIMINATOR_MAPPING = {
+      'mcp_protocol_error' => -> { MCPProtocolError },
+      'mcp_tool_execution_error' => -> { MCPToolExecutionError },
+      'http_error' => -> { HTTPError }
+    }.freeze
+
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('MCPToolCallError', 'variant', "Unknown MCPToolCallError discriminator: #{hash['type'].inspect}")
+    end
+  end
+
+  # Defines the MCPToolCallStatus SDK namespace.
+  module MCPToolCallStatus
+    IN_PROGRESS = 'in_progress'
+    COMPLETED = 'completed'
+    INCOMPLETE = 'incomplete'
+    CALLING = 'calling'
+    FAILED = 'failed'
+    VALUES = %w[in_progress completed incomplete calling failed].freeze
+    def self.from_value(value)
+      value
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalMCPToolExecutionErrorMetadata
+    FIELDS = {
+      type: 'type',
+      content: 'content'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      content
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::MCPToolExecutionErrorType.from_value(value)
+      end
+    }.freeze
+    NULLABLE_FIELDS = %i[
+      content
+    ].freeze
+  end
+
+  # API model for MCPToolExecutionError.
+  # Typed representation of the `MCPToolExecutionError` API schema.
+  class MCPToolExecutionError
+    include MCPToolCallError
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalMCPToolExecutionErrorMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalMCPToolExecutionErrorMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalMCPToolExecutionErrorMetadata::DECODERS
+
+    # @return [MCPToolExecutionErrorType] Required enumerated value serialized in the `type` wire field.
+    attr_reader :type
+    # @return [Object] Required API value serialized in the `content` wire field.
+    attr_reader :content
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalMCPToolExecutionErrorMetadata::NULLABLE_FIELDS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the MCPToolExecutionErrorType SDK namespace.
+  module MCPToolExecutionErrorType
+    MCP_TOOL_EXECUTION_ERROR = 'mcp_tool_execution_error'
+    VALUES = ['mcp_tool_execution_error'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('MCPToolExecutionErrorType', 'enum', "Unknown MCPToolExecutionErrorType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalMCPToolFilterMetadata
+    FIELDS = {
+      tool_names: 'tool_names',
+      read_only: 'read_only'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
+  end
+
+  # API model for MCPToolFilter.
+  # A filter object to specify which tools are allowed.
+  class MCPToolFilter
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalMCPToolFilterMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalMCPToolFilterMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalMCPToolFilterMetadata::DECODERS
+
+    # @return [Array_of_String] List of allowed tool names.
+    attr_reader :tool_names
+    # @return [Boolean] Indicates whether or not a tool modifies data or is read-only. If an MCP server is annotated with `readOnlyHint`, it will match this filter.
+    attr_reader :read_only
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
 end

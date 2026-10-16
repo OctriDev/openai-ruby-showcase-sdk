@@ -45,8 +45,7 @@ module OctridevOpenai
         prompt_cache_options: NOT_GIVEN,
         request_options: nil
       )
-
-        Validation.validate_length('model', model, min: 0, max: 1048576)
+        Validation.validate_length('model', model, min: 0, max: 1_048_576)
 
         Validation.validate_items('questions', questions, min: 1, max: 200)
 
@@ -60,7 +59,7 @@ module OctridevOpenai
 
         SdkClient.request(
           'POST',
-          "/decisions",
+          '/decisions',
           config: config,
           body: {
             'model' => model,
@@ -68,12 +67,12 @@ module OctridevOpenai
             'questions' => questions,
             'safety_identifier' => safety_identifier,
             'prompt_cache_key' => prompt_cache_key,
-            'prompt_cache_options' => prompt_cache_options,
+            'prompt_cache_options' => prompt_cache_options
           },
           return_type: ::OctridevOpenai::DecisionResponse,
           decoder: :json,
           operation_id: 'create_decision',
-          request_options: request_options,
+          request_options: request_options
         ).data
       end
     end

@@ -56,7 +56,7 @@ module OctridevOpenai
 
     def initialize
       @enabled = true
-      @header_name = "Idempotency-Key"
+      @header_name = 'Idempotency-Key'
       @methods = %w[POST PATCH]
     end
   end
@@ -75,7 +75,7 @@ module OctridevOpenai
   class SdkRequest
     attr_accessor :method, :url, :headers, :body, :content_type, :operation_id, :attempt, :meta
 
-    def initialize(method:, url:, headers: {}, body: nil, content_type: "application/json", operation_id: "", attempt: 1)
+    def initialize(method:, url:, headers: {}, body: nil, content_type: 'application/json', operation_id: '', attempt: 1)
       @method = method
       @url = url
       @headers = headers

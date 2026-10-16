@@ -5,61 +5,62 @@
 
 # responses_model domain models
 module OctridevOpenai
-# Defines the ModelIdsCompaction SDK namespace.
-module ModelIdsCompaction
-  def self.from_hash(hash)
-    return hash if hash.is_a?(::String)
-    return hash if hash.is_a?(::Object)
-    return ModelIdsResponses.from_hash(hash)
-  end
-end
+  # Defines the ModelIdsCompaction SDK namespace.
+  module ModelIdsCompaction
+    def self.from_hash(hash)
+      return hash if hash.is_a?(::String)
+      return hash if hash.is_a?(::Object)
 
-# Defines the ModelIdsResponses SDK namespace.
-module ModelIdsResponses
-  def self.from_hash(hash)
-    if hash.is_a?(::String)
-      [ModelIdsShared, ModelIdsResponsesVariant1].each do |type|
-        return type.from_value(hash)
-      rescue ::StandardError
-        next
-      end
+      ModelIdsResponses.from_hash(hash)
     end
-    raise "Could not deserialize ModelIdsResponses from #{hash.inspect}"
   end
-end
 
-# Defines the ModelIdsResponsesVariant1 SDK namespace.
-module ModelIdsResponsesVariant1
-  O1_PRO = 'o1-pro'
-  O1_PRO_2025_03_19 = 'o1-pro-2025-03-19'
-  O3_PRO = 'o3-pro'
-  O3_PRO_2025_06_10 = 'o3-pro-2025-06-10'
-  O3_DEEP_RESEARCH = 'o3-deep-research'
-  O3_DEEP_RESEARCH_2025_06_26 = 'o3-deep-research-2025-06-26'
-  O4_MINI_DEEP_RESEARCH = 'o4-mini-deep-research'
-  O4_MINI_DEEP_RESEARCH_2025_06_26 = 'o4-mini-deep-research-2025-06-26'
-  COMPUTER_USE_PREVIEW = 'computer-use-preview'
-  COMPUTER_USE_PREVIEW_2025_03_11 = 'computer-use-preview-2025-03-11'
-  GPT_5_5_PRO = 'gpt-5.5-pro'
-  GPT_5_5_PRO_2026_04_23 = 'gpt-5.5-pro-2026-04-23'
-  GPT_5_CODEX = 'gpt-5-codex'
-  GPT_5_PRO = 'gpt-5-pro'
-  GPT_5_PRO_2025_10_06 = 'gpt-5-pro-2025-10-06'
-  GPT_5_1_CODEX_MAX = 'gpt-5.1-codex-max'
-  GPT_DAYBREAK_BLUE_LATEST = 'gpt-daybreak-blue-latest'
-  GPT_DAYBREAK_RED_LATEST = 'gpt-daybreak-red-latest'
-  GPT_5_6_CYBER = 'gpt-5.6-cyber'
-  GPT_ROSALIND_RESEARCH = 'gpt-rosalind-research'
-  VALUES = [
-    'o1-pro', 'o1-pro-2025-03-19', 'o3-pro', 'o3-pro-2025-06-10', 'o3-deep-research',
-    'o3-deep-research-2025-06-26', 'o4-mini-deep-research', 'o4-mini-deep-research-2025-06-26',
-    'computer-use-preview', 'computer-use-preview-2025-03-11', 'gpt-5.5-pro',
-    'gpt-5.5-pro-2026-04-23', 'gpt-5-codex', 'gpt-5-pro', 'gpt-5-pro-2025-10-06',
-    'gpt-5.1-codex-max', 'gpt-daybreak-blue-latest', 'gpt-daybreak-red-latest', 'gpt-5.6-cyber',
-    'gpt-rosalind-research'
-  ].freeze
-  def self.from_value(value)
-    value
+  # Defines the ModelIdsResponses SDK namespace.
+  module ModelIdsResponses
+    def self.from_hash(hash)
+      if hash.is_a?(::String)
+        [ModelIdsShared, ModelIdsResponsesVariant1].each do |type|
+          return type.from_value(hash)
+        rescue ::StandardError
+          next
+        end
+      end
+      raise "Could not deserialize ModelIdsResponses from #{hash.inspect}"
+    end
   end
-end
+
+  # Defines the ModelIdsResponsesVariant1 SDK namespace.
+  module ModelIdsResponsesVariant1
+    O1_PRO = 'o1-pro'
+    O1_PRO_2025_03_19 = 'o1-pro-2025-03-19'
+    O3_PRO = 'o3-pro'
+    O3_PRO_2025_06_10 = 'o3-pro-2025-06-10'
+    O3_DEEP_RESEARCH = 'o3-deep-research'
+    O3_DEEP_RESEARCH_2025_06_26 = 'o3-deep-research-2025-06-26'
+    O4_MINI_DEEP_RESEARCH = 'o4-mini-deep-research'
+    O4_MINI_DEEP_RESEARCH_2025_06_26 = 'o4-mini-deep-research-2025-06-26'
+    COMPUTER_USE_PREVIEW = 'computer-use-preview'
+    COMPUTER_USE_PREVIEW_2025_03_11 = 'computer-use-preview-2025-03-11'
+    GPT_5_5_PRO = 'gpt-5.5-pro'
+    GPT_5_5_PRO_2026_04_23 = 'gpt-5.5-pro-2026-04-23'
+    GPT_5_CODEX = 'gpt-5-codex'
+    GPT_5_PRO = 'gpt-5-pro'
+    GPT_5_PRO_2025_10_06 = 'gpt-5-pro-2025-10-06'
+    GPT_5_1_CODEX_MAX = 'gpt-5.1-codex-max'
+    GPT_DAYBREAK_BLUE_LATEST = 'gpt-daybreak-blue-latest'
+    GPT_DAYBREAK_RED_LATEST = 'gpt-daybreak-red-latest'
+    GPT_5_6_CYBER = 'gpt-5.6-cyber'
+    GPT_ROSALIND_RESEARCH = 'gpt-rosalind-research'
+    VALUES = [
+      'o1-pro', 'o1-pro-2025-03-19', 'o3-pro', 'o3-pro-2025-06-10', 'o3-deep-research',
+      'o3-deep-research-2025-06-26', 'o4-mini-deep-research', 'o4-mini-deep-research-2025-06-26',
+      'computer-use-preview', 'computer-use-preview-2025-03-11', 'gpt-5.5-pro',
+      'gpt-5.5-pro-2026-04-23', 'gpt-5-codex', 'gpt-5-pro', 'gpt-5-pro-2025-10-06',
+      'gpt-5.1-codex-max', 'gpt-daybreak-blue-latest', 'gpt-daybreak-red-latest', 'gpt-5.6-cyber',
+      'gpt-rosalind-research'
+    ].freeze
+    def self.from_value(value)
+      value
+    end
+  end
 end

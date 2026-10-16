@@ -5,666 +5,671 @@
 
 # vector_stores domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalAutoChunkingStrategyRequestParamMetadata
-  FIELDS = {
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::AutoChunkingStrategyRequestParamType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for AutoChunkingStrategyRequestParam.
-# The default strategy. This strategy currently uses a `max_chunk_size_tokens` of `800` and `chunk_overlap_tokens` of `400`.
-class AutoChunkingStrategyRequestParam
-  include ChunkingStrategyRequestParam
-  include CreateVectorStoreRequestChunkingStrategy
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAutoChunkingStrategyRequestParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAutoChunkingStrategyRequestParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAutoChunkingStrategyRequestParamMetadata::DECODERS
-
-  # @return [AutoChunkingStrategyRequestParamType] Always `auto`.
-  attr_reader :type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalAutoChunkingStrategyRequestParamMetadata
+    FIELDS = {
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::AutoChunkingStrategyRequestParamType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for AutoChunkingStrategyRequestParam.
+  # The default strategy. This strategy currently uses a `max_chunk_size_tokens` of `800` and `chunk_overlap_tokens` of `400`.
+  class AutoChunkingStrategyRequestParam
+    include ChunkingStrategyRequestParam
+    include CreateVectorStoreRequestChunkingStrategy
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAutoChunkingStrategyRequestParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAutoChunkingStrategyRequestParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAutoChunkingStrategyRequestParamMetadata::DECODERS
+
+    # @return [AutoChunkingStrategyRequestParamType] Always `auto`.
+    attr_reader :type
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the AutoChunkingStrategyRequestParamType SDK namespace.
+  module AutoChunkingStrategyRequestParamType
+    AUTO = 'auto'
+    VALUES = ['auto'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the AutoChunkingStrategyRequestParamType SDK namespace.
-module AutoChunkingStrategyRequestParamType
-  AUTO = 'auto'
-  VALUES = ['auto'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('AutoChunkingStrategyRequestParamType', 'enum', "Unknown AutoChunkingStrategyRequestParamType: #{value}")
-  end
-end
-
-# Defines the ChunkingStrategyRequestParam SDK namespace.
-module ChunkingStrategyRequestParam
-  DISCRIMINATOR_MAPPING = {
-    "auto" => -> { AutoChunkingStrategyRequestParam },
-    "static" => -> { StaticChunkingStrategyRequestParam },
-  }.freeze
-
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('ChunkingStrategyRequestParam', 'variant', "Unknown ChunkingStrategyRequestParam discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Defines the CreateVectorStoreFileBatchRequest SDK namespace.
-module CreateVectorStoreFileBatchRequest
-  def self.from_hash(hash)
-    return hash if hash.is_a?(::Object)
-    return hash if hash.is_a?(::Object)
-    raise "Could not deserialize CreateVectorStoreFileBatchRequest from #{hash.inspect}"
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalCreateVectorStoreFileRequestMetadata
-  FIELDS = {
-    file_id: "file_id",
-    chunking_strategy: "chunking_strategy",
-    attributes: "attributes",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    file_id
-  ].freeze
-  DECODERS = {
-    chunking_strategy: lambda do |value|
-      ::OctridevOpenai::ChunkingStrategyRequestParam.from_hash(value)
-    end,
-    attributes: lambda do |value|
-      ::OctridevOpenai::VectorStoreFileAttributes.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for CreateVectorStoreFileRequest.
-# Typed representation of the `CreateVectorStoreFileRequest` API schema.
-class CreateVectorStoreFileRequest
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCreateVectorStoreFileRequestMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCreateVectorStoreFileRequestMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCreateVectorStoreFileRequestMetadata::DECODERS
-
-  # @return [String] A File ID that the vector store should use. Useful for tools like `file_search` that can access files. For multi-file ingestion, we recommend `file_batches` to minimize per-vector-store write requests.
-  attr_reader :file_id
-  # @return [ChunkingStrategyRequestParam] The chunking strategy used to chunk the file(s). If not set, will use the `auto` strategy.
-  attr_reader :chunking_strategy
-  # @return [VectorStoreFileAttributes] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters, booleans, or numbers.
-  attr_reader :attributes
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('AutoChunkingStrategyRequestParamType', 'enum', "Unknown AutoChunkingStrategyRequestParamType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the ChunkingStrategyRequestParam SDK namespace.
+  module ChunkingStrategyRequestParam
+    DISCRIMINATOR_MAPPING = {
+      'auto' => -> { AutoChunkingStrategyRequestParam },
+      'static' => -> { StaticChunkingStrategyRequestParam }
+    }.freeze
+
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('ChunkingStrategyRequestParam', 'variant', "Unknown ChunkingStrategyRequestParam discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the CreateVectorStoreFileBatchRequest SDK namespace.
+  module CreateVectorStoreFileBatchRequest
+    def self.from_hash(hash)
+      return hash if hash.is_a?(::Object)
+      return hash if hash.is_a?(::Object)
 
-# Internal model hydration metadata.
-class SdkInternalCreateVectorStoreRequestMetadata
-  FIELDS = {
-    file_ids: "file_ids",
-    name: "name",
-    description: "description",
-    expires_after: "expires_after",
-    chunking_strategy: "chunking_strategy",
-    metadata: "metadata",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    expires_after: lambda do |value|
-      ::OctridevOpenai::VectorStoreExpirationAfter.from_hash(value)
-    end,
-    chunking_strategy: lambda do |value|
-      ::OctridevOpenai::CreateVectorStoreRequestChunkingStrategy.from_hash(value)
-    end,
-    metadata: lambda do |value|
-      ::OctridevOpenai::Metadata.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for CreateVectorStoreRequest.
-# Typed representation of the `CreateVectorStoreRequest` API schema.
-class CreateVectorStoreRequest
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCreateVectorStoreRequestMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCreateVectorStoreRequestMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCreateVectorStoreRequestMetadata::DECODERS
-
-  # @return [Array_of_String] A list of File IDs that the vector store should use. Useful for tools like `file_search` that can access files.
-  attr_reader :file_ids
-  # @return [String] The name of the vector store.
-  attr_reader :name
-  # @return [String] A description for the vector store. Can be used to describe the vector store's purpose.
-  attr_reader :description
-  # @return [VectorStoreExpirationAfter] The expiration policy for a vector store.
-  attr_reader :expires_after
-  # @return [CreateVectorStoreRequestChunkingStrategy] The chunking strategy used to chunk the file(s). If not set, will use the `auto` strategy. Only applicable if `file_ids` is non-empty.
-  attr_reader :chunking_strategy
-  # @return [Metadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
-  attr_reader :metadata
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise "Could not deserialize CreateVectorStoreFileBatchRequest from #{hash.inspect}"
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalCreateVectorStoreFileRequestMetadata
+    FIELDS = {
+      file_id: 'file_id',
+      chunking_strategy: 'chunking_strategy',
+      attributes: 'attributes'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      file_id
+    ].freeze
+    DECODERS = {
+      chunking_strategy: lambda do |value|
+        ::OctridevOpenai::ChunkingStrategyRequestParam.from_hash(value)
+      end,
+      attributes: lambda do |value|
+        ::OctridevOpenai::VectorStoreFileAttributes.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for CreateVectorStoreFileRequest.
+  # Typed representation of the `CreateVectorStoreFileRequest` API schema.
+  class CreateVectorStoreFileRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCreateVectorStoreFileRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCreateVectorStoreFileRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCreateVectorStoreFileRequestMetadata::DECODERS
 
-# Defines the CreateVectorStoreRequestChunkingStrategy SDK namespace.
-module CreateVectorStoreRequestChunkingStrategy
-  DISCRIMINATOR_MAPPING = {
-    "auto" => -> { AutoChunkingStrategyRequestParam },
-    "static" => -> { StaticChunkingStrategyRequestParam },
-  }.freeze
+    # @return [String] A File ID that the vector store should use. Useful for tools like `file_search` that can access files. For multi-file ingestion, we recommend `file_batches` to minimize per-vector-store write requests.
+    attr_reader :file_id
+    # @return [ChunkingStrategyRequestParam] The chunking strategy used to chunk the file(s). If not set, will use the `auto` strategy.
+    attr_reader :chunking_strategy
+    # @return [VectorStoreFileAttributes] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters, booleans, or numbers.
+    attr_reader :attributes
 
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-    raise SdkValidationError.new('CreateVectorStoreRequestChunkingStrategy', 'variant', "Unknown CreateVectorStoreRequestChunkingStrategy discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalDeleteVectorStoreFileResponseMetadata
-  FIELDS = {
-    id: "id",
-    deleted: "deleted",
-    object: "object",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    deleted
-    object
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::DeleteVectorStoreFileResponseObject.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for DeleteVectorStoreFileResponse.
-# Typed representation of the `DeleteVectorStoreFileResponse` API schema.
-class DeleteVectorStoreFileResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalDeleteVectorStoreFileResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalDeleteVectorStoreFileResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalDeleteVectorStoreFileResponseMetadata::DECODERS
-
-  # @return [String] Required `string` value serialized in the `id` wire field.
-  attr_reader :id
-  # @return [Boolean] Required `boolean` value serialized in the `deleted` wire field.
-  attr_reader :deleted
-  # @return [DeleteVectorStoreFileResponseObject] Required enumerated value serialized in the `object` wire field.
-  attr_reader :object
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalCreateVectorStoreRequestMetadata
+    FIELDS = {
+      file_ids: 'file_ids',
+      name: 'name',
+      description: 'description',
+      expires_after: 'expires_after',
+      chunking_strategy: 'chunking_strategy',
+      metadata: 'metadata'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      expires_after: lambda do |value|
+        ::OctridevOpenai::VectorStoreExpirationAfter.from_hash(value)
+      end,
+      chunking_strategy: lambda do |value|
+        ::OctridevOpenai::CreateVectorStoreRequestChunkingStrategy.from_hash(value)
+      end,
+      metadata: lambda do |value|
+        ::OctridevOpenai::Metadata.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for CreateVectorStoreRequest.
+  # Typed representation of the `CreateVectorStoreRequest` API schema.
+  class CreateVectorStoreRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCreateVectorStoreRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCreateVectorStoreRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCreateVectorStoreRequestMetadata::DECODERS
 
-# Defines the DeleteVectorStoreFileResponseObject SDK namespace.
-module DeleteVectorStoreFileResponseObject
-  VECTOR_STORE_FILE_DELETED = 'vector_store.file.deleted'
-  VALUES = ['vector_store.file.deleted'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    # @return [Array_of_String] A list of File IDs that the vector store should use. Useful for tools like `file_search` that can access files.
+    attr_reader :file_ids
+    # @return [String] The name of the vector store.
+    attr_reader :name
+    # @return [String] A description for the vector store. Can be used to describe the vector store's purpose.
+    attr_reader :description
+    # @return [VectorStoreExpirationAfter] The expiration policy for a vector store.
+    attr_reader :expires_after
+    # @return [CreateVectorStoreRequestChunkingStrategy] The chunking strategy used to chunk the file(s). If not set, will use the `auto` strategy. Only applicable if `file_ids` is non-empty.
+    attr_reader :chunking_strategy
+    # @return [Metadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
+    attr_reader :metadata
 
-# Internal model hydration metadata.
-class SdkInternalDeleteVectorStoreResponseMetadata
-  FIELDS = {
-    id: "id",
-    deleted: "deleted",
-    object: "object",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    deleted
-    object
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::DeleteVectorStoreResponseObject.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for DeleteVectorStoreResponse.
-# Typed representation of the `DeleteVectorStoreResponse` API schema.
-class DeleteVectorStoreResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalDeleteVectorStoreResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalDeleteVectorStoreResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalDeleteVectorStoreResponseMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [String] Required `string` value serialized in the `id` wire field.
-  attr_reader :id
-  # @return [Boolean] Required `boolean` value serialized in the `deleted` wire field.
-  attr_reader :deleted
-  # @return [DeleteVectorStoreResponseObject] Required enumerated value serialized in the `object` wire field.
-  attr_reader :object
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the CreateVectorStoreRequestChunkingStrategy SDK namespace.
+  module CreateVectorStoreRequestChunkingStrategy
+    DISCRIMINATOR_MAPPING = {
+      'auto' => -> { AutoChunkingStrategyRequestParam },
+      'static' => -> { StaticChunkingStrategyRequestParam }
+    }.freeze
+
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('CreateVectorStoreRequestChunkingStrategy', 'variant', "Unknown CreateVectorStoreRequestChunkingStrategy discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the DeleteVectorStoreResponseObject SDK namespace.
-module DeleteVectorStoreResponseObject
-  VECTOR_STORE_DELETED = 'vector_store.deleted'
-  VALUES = ['vector_store.deleted'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalListVectorStoreFilesResponseMetadata
-  FIELDS = {
-    object: "object",
-    data: "data",
-    first_id: "first_id",
-    last_id: "last_id",
-    has_more: "has_more",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    object
-    data
-    first_id
-    last_id
-    has_more
-  ].freeze
-  DECODERS = {
-    data: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::VectorStoreFileObject.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for ListVectorStoreFilesResponse.
-# Typed representation of the `ListVectorStoreFilesResponse` API schema.
-class ListVectorStoreFilesResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalListVectorStoreFilesResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalListVectorStoreFilesResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalListVectorStoreFilesResponseMetadata::DECODERS
-
-  # @return [String] Required `string` value serialized in the `object` wire field.
-  attr_reader :object
-  # @return [Array_of_VectorStoreFileObject] Required array value serialized in the `data` wire field.
-  attr_reader :data
-  # @return [String] Required `string` value serialized in the `first_id` wire field.
-  attr_reader :first_id
-  # @return [String] Required `string` value serialized in the `last_id` wire field.
-  attr_reader :last_id
-  # @return [Boolean] Required `boolean` value serialized in the `has_more` wire field.
-  attr_reader :has_more
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalDeleteVectorStoreFileResponseMetadata
+    FIELDS = {
+      id: 'id',
+      deleted: 'deleted',
+      object: 'object'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      deleted
+      object
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::DeleteVectorStoreFileResponseObject.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for DeleteVectorStoreFileResponse.
+  # Typed representation of the `DeleteVectorStoreFileResponse` API schema.
+  class DeleteVectorStoreFileResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalDeleteVectorStoreFileResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalDeleteVectorStoreFileResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalDeleteVectorStoreFileResponseMetadata::DECODERS
+
+    # @return [String] Required `string` value serialized in the `id` wire field.
+    attr_reader :id
+    # @return [Boolean] Required `boolean` value serialized in the `deleted` wire field.
+    attr_reader :deleted
+    # @return [DeleteVectorStoreFileResponseObject] Required enumerated value serialized in the `object` wire field.
+    attr_reader :object
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalListVectorStoresResponseMetadata
-  FIELDS = {
-    object: "object",
-    data: "data",
-    first_id: "first_id",
-    last_id: "last_id",
-    has_more: "has_more",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    object
-    data
-    first_id
-    last_id
-    has_more
-  ].freeze
-  DECODERS = {
-    data: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::VectorStoreObject.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for ListVectorStoresResponse.
-# Typed representation of the `ListVectorStoresResponse` API schema.
-class ListVectorStoresResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalListVectorStoresResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalListVectorStoresResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalListVectorStoresResponseMetadata::DECODERS
-
-  # @return [String] Required `string` value serialized in the `object` wire field.
-  attr_reader :object
-  # @return [Array_of_VectorStoreObject] Required array value serialized in the `data` wire field.
-  attr_reader :data
-  # @return [String] Required `string` value serialized in the `first_id` wire field.
-  attr_reader :first_id
-  # @return [String] Required `string` value serialized in the `last_id` wire field.
-  attr_reader :last_id
-  # @return [Boolean] Required `boolean` value serialized in the `has_more` wire field.
-  attr_reader :has_more
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the DeleteVectorStoreFileResponseObject SDK namespace.
+  module DeleteVectorStoreFileResponseObject
+    VECTOR_STORE_FILE_DELETED = 'vector_store.file.deleted'
+    VALUES = ['vector_store.file.deleted'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalDeleteVectorStoreResponseMetadata
+    FIELDS = {
+      id: 'id',
+      deleted: 'deleted',
+      object: 'object'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      deleted
+      object
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::DeleteVectorStoreResponseObject.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for DeleteVectorStoreResponse.
+  # Typed representation of the `DeleteVectorStoreResponse` API schema.
+  class DeleteVectorStoreResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalDeleteVectorStoreResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalDeleteVectorStoreResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalDeleteVectorStoreResponseMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalOtherChunkingStrategyResponseParamMetadata
-  FIELDS = {
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::OtherChunkingStrategyResponseParamType.from_value(value)
-    end,
-  }.freeze
-end
+    # @return [String] Required `string` value serialized in the `id` wire field.
+    attr_reader :id
+    # @return [Boolean] Required `boolean` value serialized in the `deleted` wire field.
+    attr_reader :deleted
+    # @return [DeleteVectorStoreResponseObject] Required enumerated value serialized in the `object` wire field.
+    attr_reader :object
 
-# API model for OtherChunkingStrategyResponseParam.
-# This is returned when the chunking strategy is unknown. Typically, this is because the file was indexed before the `chunking_strategy` concept was introduced in the API.
-class OtherChunkingStrategyResponseParam
-  include VectorStoreFileObjectChunkingStrategy
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalOtherChunkingStrategyResponseParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalOtherChunkingStrategyResponseParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalOtherChunkingStrategyResponseParamMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [OtherChunkingStrategyResponseParamType] Always `other`.
-  attr_reader :type
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the DeleteVectorStoreResponseObject SDK namespace.
+  module DeleteVectorStoreResponseObject
+    VECTOR_STORE_DELETED = 'vector_store.deleted'
+    VALUES = ['vector_store.deleted'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the OtherChunkingStrategyResponseParamType SDK namespace.
-module OtherChunkingStrategyResponseParamType
-  OTHER = 'other'
-  VALUES = ['other'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('OtherChunkingStrategyResponseParamType', 'enum', "Unknown OtherChunkingStrategyResponseParamType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalStaticChunkingStrategyMetadata
-  FIELDS = {
-    max_chunk_size_tokens: "max_chunk_size_tokens",
-    chunk_overlap_tokens: "chunk_overlap_tokens",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    max_chunk_size_tokens
-    chunk_overlap_tokens
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for StaticChunkingStrategy.
-# Typed representation of the `StaticChunkingStrategy` API schema.
-class StaticChunkingStrategy
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalStaticChunkingStrategyMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalStaticChunkingStrategyMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalStaticChunkingStrategyMetadata::DECODERS
-
-  # @return [Integer] The maximum number of tokens in each chunk. The default value is `800`. The minimum value is `100` and the maximum value is `4096`.
-  attr_reader :max_chunk_size_tokens
-  # @return [Integer] The number of tokens that overlap between chunks. The default value is `400`. Note that the overlap must not exceed half of `max_chunk_size_tokens`.
-  attr_reader :chunk_overlap_tokens
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalListVectorStoreFilesResponseMetadata
+    FIELDS = {
+      object: 'object',
+      data: 'data',
+      first_id: 'first_id',
+      last_id: 'last_id',
+      has_more: 'has_more'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      object
+      data
+      first_id
+      last_id
+      has_more
+    ].freeze
+    DECODERS = {
+      data: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::VectorStoreFileObject.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ListVectorStoreFilesResponse.
+  # Typed representation of the `ListVectorStoreFilesResponse` API schema.
+  class ListVectorStoreFilesResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalListVectorStoreFilesResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalListVectorStoreFilesResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalListVectorStoreFilesResponseMetadata::DECODERS
+
+    # @return [String] Required `string` value serialized in the `object` wire field.
+    attr_reader :object
+    # @return [Array_of_VectorStoreFileObject] Required array value serialized in the `data` wire field.
+    attr_reader :data
+    # @return [String] Required `string` value serialized in the `first_id` wire field.
+    attr_reader :first_id
+    # @return [String] Required `string` value serialized in the `last_id` wire field.
+    attr_reader :last_id
+    # @return [Boolean] Required `boolean` value serialized in the `has_more` wire field.
+    attr_reader :has_more
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalStaticChunkingStrategyRequestParamMetadata
-  FIELDS = {
-    type: "type",
-    static: "static",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    static
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::StaticChunkingStrategyRequestParamType.from_value(value)
-    end,
-    static: lambda do |value|
-      ::OctridevOpenai::StaticChunkingStrategy.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for StaticChunkingStrategyRequestParam.
-# Customize your own chunking strategy by setting chunk size and chunk overlap.
-class StaticChunkingStrategyRequestParam
-  include ChunkingStrategyRequestParam
-  include CreateVectorStoreRequestChunkingStrategy
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalStaticChunkingStrategyRequestParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalStaticChunkingStrategyRequestParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalStaticChunkingStrategyRequestParamMetadata::DECODERS
-
-  # @return [StaticChunkingStrategyRequestParamType] Always `static`.
-  attr_reader :type
-  # @return [StaticChunkingStrategy] Required object value serialized in the `static` wire field.
-  attr_reader :static
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalListVectorStoresResponseMetadata
+    FIELDS = {
+      object: 'object',
+      data: 'data',
+      first_id: 'first_id',
+      last_id: 'last_id',
+      has_more: 'has_more'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      object
+      data
+      first_id
+      last_id
+      has_more
+    ].freeze
+    DECODERS = {
+      data: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::VectorStoreObject.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ListVectorStoresResponse.
+  # Typed representation of the `ListVectorStoresResponse` API schema.
+  class ListVectorStoresResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalListVectorStoresResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalListVectorStoresResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalListVectorStoresResponseMetadata::DECODERS
+
+    # @return [String] Required `string` value serialized in the `object` wire field.
+    attr_reader :object
+    # @return [Array_of_VectorStoreObject] Required array value serialized in the `data` wire field.
+    attr_reader :data
+    # @return [String] Required `string` value serialized in the `first_id` wire field.
+    attr_reader :first_id
+    # @return [String] Required `string` value serialized in the `last_id` wire field.
+    attr_reader :last_id
+    # @return [Boolean] Required `boolean` value serialized in the `has_more` wire field.
+    attr_reader :has_more
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the StaticChunkingStrategyRequestParamType SDK namespace.
-module StaticChunkingStrategyRequestParamType
-  STATIC = 'static'
-  VALUES = ['static'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('StaticChunkingStrategyRequestParamType', 'enum', "Unknown StaticChunkingStrategyRequestParamType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalStaticChunkingStrategyResponseParamMetadata
-  FIELDS = {
-    type: "type",
-    static: "static",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    static
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::StaticChunkingStrategyResponseParamType.from_value(value)
-    end,
-    static: lambda do |value|
-      ::OctridevOpenai::StaticChunkingStrategy.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for StaticChunkingStrategyResponseParam.
-# Typed representation of the `StaticChunkingStrategyResponseParam` API schema.
-class StaticChunkingStrategyResponseParam
-  include VectorStoreFileObjectChunkingStrategy
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalStaticChunkingStrategyResponseParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalStaticChunkingStrategyResponseParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalStaticChunkingStrategyResponseParamMetadata::DECODERS
-
-  # @return [StaticChunkingStrategyResponseParamType] Always `static`.
-  attr_reader :type
-  # @return [StaticChunkingStrategy] Required object value serialized in the `static` wire field.
-  attr_reader :static
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalOtherChunkingStrategyResponseParamMetadata
+    FIELDS = {
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::OtherChunkingStrategyResponseParamType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for OtherChunkingStrategyResponseParam.
+  # This is returned when the chunking strategy is unknown. Typically, this is because the file was indexed before the `chunking_strategy` concept was introduced in the API.
+  class OtherChunkingStrategyResponseParam
+    include VectorStoreFileObjectChunkingStrategy
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalOtherChunkingStrategyResponseParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalOtherChunkingStrategyResponseParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalOtherChunkingStrategyResponseParamMetadata::DECODERS
+
+    # @return [OtherChunkingStrategyResponseParamType] Always `other`.
+    attr_reader :type
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the OtherChunkingStrategyResponseParamType SDK namespace.
+  module OtherChunkingStrategyResponseParamType
+    OTHER = 'other'
+    VALUES = ['other'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('OtherChunkingStrategyResponseParamType', 'enum', "Unknown OtherChunkingStrategyResponseParamType: #{value}")
+    end
   end
-end
 
-# Defines the StaticChunkingStrategyResponseParamType SDK namespace.
-module StaticChunkingStrategyResponseParamType
-  STATIC = 'static'
-  VALUES = ['static'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('StaticChunkingStrategyResponseParamType', 'enum', "Unknown StaticChunkingStrategyResponseParamType: #{value}")
+  # Internal model hydration metadata.
+  class SdkInternalStaticChunkingStrategyMetadata
+    FIELDS = {
+      max_chunk_size_tokens: 'max_chunk_size_tokens',
+      chunk_overlap_tokens: 'chunk_overlap_tokens'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      max_chunk_size_tokens
+      chunk_overlap_tokens
+    ].freeze
+    DECODERS = {}.freeze
   end
-end
 
-# Internal model hydration metadata.
-class SdkInternalUpdateVectorStoreFileAttributesRequestMetadata
-  FIELDS = {
-    attributes: "attributes",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    attributes
-  ].freeze
-  DECODERS = {
-    attributes: lambda do |value|
-      ::OctridevOpenai::VectorStoreFileAttributes.from_hash(value)
-    end,
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    attributes
-  ].freeze
-end
+  # API model for StaticChunkingStrategy.
+  # Typed representation of the `StaticChunkingStrategy` API schema.
+  class StaticChunkingStrategy
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalStaticChunkingStrategyMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalStaticChunkingStrategyMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalStaticChunkingStrategyMetadata::DECODERS
+
+    # @return [Integer] The maximum number of tokens in each chunk. The default value is `800`. The minimum value is `100` and the maximum value is `4096`.
+    attr_reader :max_chunk_size_tokens
+    # @return [Integer] The number of tokens that overlap between chunks. The default value is `400`. Note that the overlap must not exceed half of `max_chunk_size_tokens`.
+    attr_reader :chunk_overlap_tokens
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalStaticChunkingStrategyRequestParamMetadata
+    FIELDS = {
+      type: 'type',
+      static: 'static'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      static
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::StaticChunkingStrategyRequestParamType.from_value(value)
+      end,
+      static: lambda do |value|
+        ::OctridevOpenai::StaticChunkingStrategy.from_hash(value)
+      end
+    }.freeze
+  end
+
+  # API model for StaticChunkingStrategyRequestParam.
+  # Customize your own chunking strategy by setting chunk size and chunk overlap.
+  class StaticChunkingStrategyRequestParam
+    include ChunkingStrategyRequestParam
+    include CreateVectorStoreRequestChunkingStrategy
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalStaticChunkingStrategyRequestParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalStaticChunkingStrategyRequestParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalStaticChunkingStrategyRequestParamMetadata::DECODERS
+
+    # @return [StaticChunkingStrategyRequestParamType] Always `static`.
+    attr_reader :type
+    # @return [StaticChunkingStrategy] Required object value serialized in the `static` wire field.
+    attr_reader :static
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the StaticChunkingStrategyRequestParamType SDK namespace.
+  module StaticChunkingStrategyRequestParamType
+    STATIC = 'static'
+    VALUES = ['static'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('StaticChunkingStrategyRequestParamType', 'enum', "Unknown StaticChunkingStrategyRequestParamType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalStaticChunkingStrategyResponseParamMetadata
+    FIELDS = {
+      type: 'type',
+      static: 'static'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      static
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::StaticChunkingStrategyResponseParamType.from_value(value)
+      end,
+      static: lambda do |value|
+        ::OctridevOpenai::StaticChunkingStrategy.from_hash(value)
+      end
+    }.freeze
+  end
+
+  # API model for StaticChunkingStrategyResponseParam.
+  # Typed representation of the `StaticChunkingStrategyResponseParam` API schema.
+  class StaticChunkingStrategyResponseParam
+    include VectorStoreFileObjectChunkingStrategy
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalStaticChunkingStrategyResponseParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalStaticChunkingStrategyResponseParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalStaticChunkingStrategyResponseParamMetadata::DECODERS
+
+    # @return [StaticChunkingStrategyResponseParamType] Always `static`.
+    attr_reader :type
+    # @return [StaticChunkingStrategy] Required object value serialized in the `static` wire field.
+    attr_reader :static
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the StaticChunkingStrategyResponseParamType SDK namespace.
+  module StaticChunkingStrategyResponseParamType
+    STATIC = 'static'
+    VALUES = ['static'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('StaticChunkingStrategyResponseParamType', 'enum', "Unknown StaticChunkingStrategyResponseParamType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalUpdateVectorStoreFileAttributesRequestMetadata
+    FIELDS = {
+      attributes: 'attributes'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      attributes
+    ].freeze
+    DECODERS = {
+      attributes: lambda do |value|
+        ::OctridevOpenai::VectorStoreFileAttributes.from_hash(value)
+      end
+    }.freeze
+    NULLABLE_FIELDS = %i[
+      attributes
+    ].freeze
+  end
 end

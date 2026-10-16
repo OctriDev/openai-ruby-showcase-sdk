@@ -5,458 +5,462 @@
 
 # responses_beta_local domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalBetaLocalEnvironmentParamMetadata
-  FIELDS = {
-    type: "type",
-    skills: "skills",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaLocalEnvironmentParamType.from_value(value)
-    end,
-    skills: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::BetaLocalSkillParam.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for BetaLocalEnvironmentParam.
-# Typed representation of the `BetaLocalEnvironmentParam` API schema.
-class BetaLocalEnvironmentParam
-  include BetaFunctionShellToolParamEnvironment
-  include BetaFunctionShellCallItemParamEnvironment
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaLocalEnvironmentParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaLocalEnvironmentParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaLocalEnvironmentParamMetadata::DECODERS
-
-  # @return [BetaLocalEnvironmentParamType] Use a local computer environment.
-  attr_reader :type
-  # @return [Array_of_BetaLocalSkillParam] An optional list of skills.
-  attr_reader :skills
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalBetaLocalEnvironmentParamMetadata
+    FIELDS = {
+      type: 'type',
+      skills: 'skills'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaLocalEnvironmentParamType.from_value(value)
+      end,
+      skills: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::BetaLocalSkillParam.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for BetaLocalEnvironmentParam.
+  # Typed representation of the `BetaLocalEnvironmentParam` API schema.
+  class BetaLocalEnvironmentParam
+    include BetaFunctionShellToolParamEnvironment
+    include BetaFunctionShellCallItemParamEnvironment
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaLocalEnvironmentParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaLocalEnvironmentParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaLocalEnvironmentParamMetadata::DECODERS
+
+    # @return [BetaLocalEnvironmentParamType] Use a local computer environment.
+    attr_reader :type
+    # @return [Array_of_BetaLocalSkillParam] An optional list of skills.
+    attr_reader :skills
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the BetaLocalEnvironmentParamType SDK namespace.
+  module BetaLocalEnvironmentParamType
+    LOCAL = 'local'
+    VALUES = ['local'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the BetaLocalEnvironmentParamType SDK namespace.
-module BetaLocalEnvironmentParamType
-  LOCAL = 'local'
-  VALUES = ['local'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('BetaLocalEnvironmentParamType', 'enum', "Unknown BetaLocalEnvironmentParamType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaLocalEnvironmentResourceMetadata
-  FIELDS = {
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaLocalEnvironmentResourceType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaLocalEnvironmentResource.
-# Represents the use of a local environment to perform shell actions.
-class BetaLocalEnvironmentResource
-  include BetaFunctionShellCallEnvironment
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaLocalEnvironmentResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaLocalEnvironmentResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaLocalEnvironmentResourceMetadata::DECODERS
-
-  # @return [BetaLocalEnvironmentResourceType] The environment type. Always `local`.
-  attr_reader :type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('BetaLocalEnvironmentParamType', 'enum', "Unknown BetaLocalEnvironmentParamType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalBetaLocalEnvironmentResourceMetadata
+    FIELDS = {
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaLocalEnvironmentResourceType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for BetaLocalEnvironmentResource.
+  # Represents the use of a local environment to perform shell actions.
+  class BetaLocalEnvironmentResource
+    include BetaFunctionShellCallEnvironment
 
-# Defines the BetaLocalEnvironmentResourceType SDK namespace.
-module BetaLocalEnvironmentResourceType
-  LOCAL = 'local'
-  VALUES = ['local'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaLocalEnvironmentResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaLocalEnvironmentResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaLocalEnvironmentResourceMetadata::DECODERS
 
-    raise SdkValidationError.new('BetaLocalEnvironmentResourceType', 'enum', "Unknown BetaLocalEnvironmentResourceType: #{value}")
-  end
-end
+    # @return [BetaLocalEnvironmentResourceType] The environment type. Always `local`.
+    attr_reader :type
 
-# Internal model hydration metadata.
-class SdkInternalBetaLocalShellExecActionMetadata
-  FIELDS = {
-    type: "type",
-    command: "command",
-    timeout_ms: "timeout_ms",
-    working_directory: "working_directory",
-    env: "env",
-    user: "user",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    command
-    env
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaLocalShellExecActionType.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for BetaLocalShellExecAction.
-# Execute a shell command on the server.
-class BetaLocalShellExecAction
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaLocalShellExecActionMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaLocalShellExecActionMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaLocalShellExecActionMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [BetaLocalShellExecActionType] The type of the local shell action. Always `exec`.
-  attr_reader :type
-  # @return [Array_of_String] The command to run.
-  attr_reader :command
-  # @return [Integer] Optional `integer` value serialized in the `timeout_ms` wire field.
-  attr_reader :timeout_ms
-  # @return [String] Optional `string` value serialized in the `working_directory` wire field.
-  attr_reader :working_directory
-  # @return [Hash] Environment variables to set for the command.
-  attr_reader :env
-  # @return [String] Optional `string` value serialized in the `user` wire field.
-  attr_reader :user
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the BetaLocalEnvironmentResourceType SDK namespace.
+  module BetaLocalEnvironmentResourceType
+    LOCAL = 'local'
+    VALUES = ['local'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaLocalEnvironmentResourceType', 'enum', "Unknown BetaLocalEnvironmentResourceType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the BetaLocalShellExecActionType SDK namespace.
-module BetaLocalShellExecActionType
-  EXEC = 'exec'
-  VALUES = ['exec'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaLocalShellToolCallMetadata
-  FIELDS = {
-    agent: "agent",
-    type: "type",
-    id: "id",
-    call_id: "call_id",
-    action: "action",
-    status: "status",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    id
-    call_id
-    action
-    status
-  ].freeze
-  DECODERS = {
-    agent: lambda do |value|
-      ::OctridevOpenai::BetaAgentTag.from_hash(value)
-    end,
-    type: lambda do |value|
-      ::OctridevOpenai::BetaLocalShellToolCallType.from_value(value)
-    end,
-    action: lambda do |value|
-      ::OctridevOpenai::BetaLocalShellExecAction.from_hash(value)
-    end,
-    status: lambda do |value|
-      ::OctridevOpenai::BetaLocalShellToolCallStatus.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaLocalShellToolCall.
-# A tool call to run a command on the local shell.
-class BetaLocalShellToolCall
-  include BetaItem
-  include BetaItemResource
-  include BetaItemField
-  include BetaOutputItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaLocalShellToolCallMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaLocalShellToolCallMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaLocalShellToolCallMetadata::DECODERS
-
-  # @return [BetaAgentTag] The agent that produced this item.
-  attr_reader :agent
-  # @return [BetaLocalShellToolCallType] The type of the local shell call. Always `local_shell_call`.
-  attr_reader :type
-  # @return [String] The unique ID of the local shell call.
-  attr_reader :id
-  # @return [String] The unique ID of the local shell tool call generated by the model.
-  attr_reader :call_id
-  # @return [BetaLocalShellExecAction] Execute a shell command on the server.
-  attr_reader :action
-  # @return [BetaLocalShellToolCallStatus] The status of the local shell call.
-  attr_reader :status
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalBetaLocalShellExecActionMetadata
+    FIELDS = {
+      type: 'type',
+      command: 'command',
+      timeout_ms: 'timeout_ms',
+      working_directory: 'working_directory',
+      env: 'env',
+      user: 'user'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      command
+      env
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaLocalShellExecActionType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for BetaLocalShellExecAction.
+  # Execute a shell command on the server.
+  class BetaLocalShellExecAction
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaLocalShellExecActionMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaLocalShellExecActionMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaLocalShellExecActionMetadata::DECODERS
+
+    # @return [BetaLocalShellExecActionType] The type of the local shell action. Always `exec`.
+    attr_reader :type
+    # @return [Array_of_String] The command to run.
+    attr_reader :command
+    # @return [Integer] Optional `integer` value serialized in the `timeout_ms` wire field.
+    attr_reader :timeout_ms
+    # @return [String] Optional `string` value serialized in the `working_directory` wire field.
+    attr_reader :working_directory
+    # @return [Hash] Environment variables to set for the command.
+    attr_reader :env
+    # @return [String] Optional `string` value serialized in the `user` wire field.
+    attr_reader :user
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the BetaLocalShellToolCallStatus SDK namespace.
-module BetaLocalShellToolCallStatus
-  IN_PROGRESS = 'in_progress'
-  COMPLETED = 'completed'
-  INCOMPLETE = 'incomplete'
-  VALUES = ['in_progress', 'completed', 'incomplete'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the BetaLocalShellToolCallType SDK namespace.
-module BetaLocalShellToolCallType
-  LOCAL_SHELL_CALL = 'local_shell_call'
-  VALUES = ['local_shell_call'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('BetaLocalShellToolCallType', 'enum', "Unknown BetaLocalShellToolCallType: #{value}")
-  end
-end
-
-# Defines the BetaLocalShellToolCallOutputStatusVariant0 SDK namespace.
-module BetaLocalShellToolCallOutputStatusVariant0
-  IN_PROGRESS = 'in_progress'
-  COMPLETED = 'completed'
-  INCOMPLETE = 'incomplete'
-  VALUES = ['in_progress', 'completed', 'incomplete'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaLocalShellToolCallOutputMetadata
-  FIELDS = {
-    agent: "agent",
-    type: "type",
-    id: "id",
-    output: "output",
-    status: "status",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    id
-    output
-  ].freeze
-  DECODERS = {
-    agent: lambda do |value|
-      ::OctridevOpenai::BetaAgentTag.from_hash(value)
-    end,
-    type: lambda do |value|
-      ::OctridevOpenai::BetaLocalShellToolCallOutputType.from_value(value)
-    end,
-    status: lambda do |value|
-      ::OctridevOpenai::BetaLocalShellToolCallOutputStatusVariant0.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaLocalShellToolCallOutput.
-# The output of a local shell tool call.
-class BetaLocalShellToolCallOutput
-  include BetaItem
-  include BetaItemResource
-  include BetaItemField
-  include BetaOutputItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaLocalShellToolCallOutputMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaLocalShellToolCallOutputMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaLocalShellToolCallOutputMetadata::DECODERS
-
-  # @return [BetaAgentTag] The agent that produced this item.
-  attr_reader :agent
-  # @return [BetaLocalShellToolCallOutputType] The type of the local shell tool call output. Always `local_shell_call_output`.
-  attr_reader :type
-  # @return [String] The unique ID of the local shell tool call generated by the model.
-  attr_reader :id
-  # @return [String] A JSON string of the output of the local shell tool call.
-  attr_reader :output
-  # @return [BetaLocalShellToolCallOutputStatusVariant0] Optional API value serialized in the `status` wire field.
-  attr_reader :status
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the BetaLocalShellExecActionType SDK namespace.
+  module BetaLocalShellExecActionType
+    EXEC = 'exec'
+    VALUES = ['exec'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalBetaLocalShellToolCallMetadata
+    FIELDS = {
+      agent: 'agent',
+      type: 'type',
+      id: 'id',
+      call_id: 'call_id',
+      action: 'action',
+      status: 'status'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      id
+      call_id
+      action
+      status
+    ].freeze
+    DECODERS = {
+      agent: lambda do |value|
+        ::OctridevOpenai::BetaAgentTag.from_hash(value)
+      end,
+      type: lambda do |value|
+        ::OctridevOpenai::BetaLocalShellToolCallType.from_value(value)
+      end,
+      action: lambda do |value|
+        ::OctridevOpenai::BetaLocalShellExecAction.from_hash(value)
+      end,
+      status: lambda do |value|
+        ::OctridevOpenai::BetaLocalShellToolCallStatus.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for BetaLocalShellToolCall.
+  # A tool call to run a command on the local shell.
+  class BetaLocalShellToolCall
+    include BetaItem
+    include BetaItemResource
+    include BetaItemField
+    include BetaOutputItem
 
-# Defines the BetaLocalShellToolCallOutputType SDK namespace.
-module BetaLocalShellToolCallOutputType
-  LOCAL_SHELL_CALL_OUTPUT = 'local_shell_call_output'
-  VALUES = ['local_shell_call_output'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaLocalShellToolCallMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaLocalShellToolCallMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaLocalShellToolCallMetadata::DECODERS
 
-    raise SdkValidationError.new('BetaLocalShellToolCallOutputType', 'enum', "Unknown BetaLocalShellToolCallOutputType: #{value}")
-  end
-end
+    # @return [BetaAgentTag] The agent that produced this item.
+    attr_reader :agent
+    # @return [BetaLocalShellToolCallType] The type of the local shell call. Always `local_shell_call`.
+    attr_reader :type
+    # @return [String] The unique ID of the local shell call.
+    attr_reader :id
+    # @return [String] The unique ID of the local shell tool call generated by the model.
+    attr_reader :call_id
+    # @return [BetaLocalShellExecAction] Execute a shell command on the server.
+    attr_reader :action
+    # @return [BetaLocalShellToolCallStatus] The status of the local shell call.
+    attr_reader :status
 
-# Internal model hydration metadata.
-class SdkInternalBetaLocalShellToolParamMetadata
-  FIELDS = {
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaLocalShellToolParamType.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for BetaLocalShellToolParam.
-# A tool that allows the model to execute shell commands in a local environment.
-class BetaLocalShellToolParam
-  include BetaTool
-  include BetaToolSearchOutputTool
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaLocalShellToolParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaLocalShellToolParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaLocalShellToolParamMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [BetaLocalShellToolParamType] The type of the local shell tool. Always `local_shell`.
-  attr_reader :type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the BetaLocalShellToolCallStatus SDK namespace.
+  module BetaLocalShellToolCallStatus
+    IN_PROGRESS = 'in_progress'
+    COMPLETED = 'completed'
+    INCOMPLETE = 'incomplete'
+    VALUES = %w[in_progress completed incomplete].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the BetaLocalShellToolCallType SDK namespace.
+  module BetaLocalShellToolCallType
+    LOCAL_SHELL_CALL = 'local_shell_call'
+    VALUES = ['local_shell_call'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the BetaLocalShellToolParamType SDK namespace.
-module BetaLocalShellToolParamType
-  LOCAL_SHELL = 'local_shell'
-  VALUES = ['local_shell'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('BetaLocalShellToolParamType', 'enum', "Unknown BetaLocalShellToolParamType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaLocalSkillParamMetadata
-  FIELDS = {
-    name: "name",
-    description: "description",
-    path: "path",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    name
-    description
-    path
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for BetaLocalSkillParam.
-# Typed representation of the `BetaLocalSkillParam` API schema.
-class BetaLocalSkillParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaLocalSkillParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaLocalSkillParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaLocalSkillParamMetadata::DECODERS
-
-  # @return [String] The name of the skill.
-  attr_reader :name
-  # @return [String] The description of the skill.
-  attr_reader :description
-  # @return [String] The path to the directory containing the skill.
-  attr_reader :path
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('BetaLocalShellToolCallType', 'enum', "Unknown BetaLocalShellToolCallType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the BetaLocalShellToolCallOutputStatusVariant0 SDK namespace.
+  module BetaLocalShellToolCallOutputStatusVariant0
+    IN_PROGRESS = 'in_progress'
+    COMPLETED = 'completed'
+    INCOMPLETE = 'incomplete'
+    VALUES = %w[in_progress completed incomplete].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalBetaLocalShellToolCallOutputMetadata
+    FIELDS = {
+      agent: 'agent',
+      type: 'type',
+      id: 'id',
+      output: 'output',
+      status: 'status'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      id
+      output
+    ].freeze
+    DECODERS = {
+      agent: lambda do |value|
+        ::OctridevOpenai::BetaAgentTag.from_hash(value)
+      end,
+      type: lambda do |value|
+        ::OctridevOpenai::BetaLocalShellToolCallOutputType.from_value(value)
+      end,
+      status: lambda do |value|
+        ::OctridevOpenai::BetaLocalShellToolCallOutputStatusVariant0.from_value(value)
+      end
+    }.freeze
   end
-end
+
+  # API model for BetaLocalShellToolCallOutput.
+  # The output of a local shell tool call.
+  class BetaLocalShellToolCallOutput
+    include BetaItem
+    include BetaItemResource
+    include BetaItemField
+    include BetaOutputItem
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaLocalShellToolCallOutputMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaLocalShellToolCallOutputMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaLocalShellToolCallOutputMetadata::DECODERS
+
+    # @return [BetaAgentTag] The agent that produced this item.
+    attr_reader :agent
+    # @return [BetaLocalShellToolCallOutputType] The type of the local shell tool call output. Always `local_shell_call_output`.
+    attr_reader :type
+    # @return [String] The unique ID of the local shell tool call generated by the model.
+    attr_reader :id
+    # @return [String] A JSON string of the output of the local shell tool call.
+    attr_reader :output
+    # @return [BetaLocalShellToolCallOutputStatusVariant0] Optional API value serialized in the `status` wire field.
+    attr_reader :status
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the BetaLocalShellToolCallOutputType SDK namespace.
+  module BetaLocalShellToolCallOutputType
+    LOCAL_SHELL_CALL_OUTPUT = 'local_shell_call_output'
+    VALUES = ['local_shell_call_output'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaLocalShellToolCallOutputType', 'enum', "Unknown BetaLocalShellToolCallOutputType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalBetaLocalShellToolParamMetadata
+    FIELDS = {
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaLocalShellToolParamType.from_value(value)
+      end
+    }.freeze
+  end
+
+  # API model for BetaLocalShellToolParam.
+  # A tool that allows the model to execute shell commands in a local environment.
+  class BetaLocalShellToolParam
+    include BetaTool
+    include BetaToolSearchOutputTool
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaLocalShellToolParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaLocalShellToolParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaLocalShellToolParamMetadata::DECODERS
+
+    # @return [BetaLocalShellToolParamType] The type of the local shell tool. Always `local_shell`.
+    attr_reader :type
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the BetaLocalShellToolParamType SDK namespace.
+  module BetaLocalShellToolParamType
+    LOCAL_SHELL = 'local_shell'
+    VALUES = ['local_shell'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaLocalShellToolParamType', 'enum', "Unknown BetaLocalShellToolParamType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalBetaLocalSkillParamMetadata
+    FIELDS = {
+      name: 'name',
+      description: 'description',
+      path: 'path'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      name
+      description
+      path
+    ].freeze
+    DECODERS = {}.freeze
+  end
+
+  # API model for BetaLocalSkillParam.
+  # Typed representation of the `BetaLocalSkillParam` API schema.
+  class BetaLocalSkillParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaLocalSkillParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaLocalSkillParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaLocalSkillParamMetadata::DECODERS
+
+    # @return [String] The name of the skill.
+    attr_reader :name
+    # @return [String] The description of the skill.
+    attr_reader :description
+    # @return [String] The path to the directory containing the skill.
+    attr_reader :path
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
 end

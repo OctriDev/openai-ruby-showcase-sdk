@@ -12,9 +12,9 @@ module OctridevOpenai
       # Internal model hydration metadata.
       class SdkInternalDeleteResponseResponseMetadata
         FIELDS = {
-          object: "object",
-          deleted: "deleted",
-          id: "id",
+          object: 'object',
+          deleted: 'deleted',
+          id: 'id'
         }.freeze
         REQUIRED_FIELDS = %i[
           object
@@ -24,7 +24,7 @@ module OctridevOpenai
         DECODERS = {
           object: lambda do |value|
             ::OctridevOpenai::Methods::Responses::DeleteResponseResponseObject.from_value(value)
-          end,
+          end
         }.freeze
       end
 
@@ -54,9 +54,9 @@ module OctridevOpenai
       # Internal model hydration metadata.
       class SdkInternalBetaDeleteResponseResponseMetadata
         FIELDS = {
-          object: "object",
-          deleted: "deleted",
-          id: "id",
+          object: 'object',
+          deleted: 'deleted',
+          id: 'id'
         }.freeze
         REQUIRED_FIELDS = %i[
           object
@@ -66,7 +66,7 @@ module OctridevOpenai
         DECODERS = {
           object: lambda do |value|
             ::OctridevOpenai::Methods::Responses::BetaDeleteResponseResponseObject.from_value(value)
-          end,
+          end
         }.freeze
       end
 
@@ -97,7 +97,7 @@ module OctridevOpenai
       module BetaListInputItemsParameter
         ASC = 'asc'
         DESC = 'desc'
-        VALUES = ['asc', 'desc'].freeze
+        VALUES = %w[asc desc].freeze
         def self.from_value(value)
           value
         end
@@ -170,7 +170,7 @@ module OctridevOpenai
       module ListInputItemsParameter
         ASC = 'asc'
         DESC = 'desc'
-        VALUES = ['asc', 'desc'].freeze
+        VALUES = %w[asc desc].freeze
         def self.from_value(value)
           value
         end
@@ -202,17 +202,16 @@ module OctridevOpenai
         body:,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
-          "/responses",
+          '/responses',
           config: config,
           body: body,
           return_type: ::OctridevOpenai::Response,
           decoder: :json,
           operation_id: 'create_response',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -225,24 +224,27 @@ module OctridevOpenai
         request_options: nil,
         &block
       )
-        return enum_for(
-          __method__,
-          config: config,
-          body: body,
-          request_options: request_options,
-        ) unless block_given?
+        unless block_given?
+          return enum_for(
+            __method__,
+            config: config,
+            body: body,
+            request_options: request_options
+          )
+        end
         SdkClient.stream(
-          'POST', "/responses",
+          'POST', '/responses',
           config: config,
           body: body,
           content_type: 'application/json',
           operation_id: 'create_response_stream',
           stream_format: :sse,
-          stream_media_type: "text/event-stream",
+          stream_media_type: 'text/event-stream',
           request_options: request_options,
           errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
         ).each do |ev|
           break if ev.data == '[DONE]'
+
           decoded = JSON.parse(ev.data)
           block.call(SdkClient.decode_event(decoded, ::OctridevOpenai::ResponseStreamEvent))
         end
@@ -268,20 +270,11 @@ module OctridevOpenai
       #   default, but add a small amount of overhead to the data stream. You can set
       #   `include_obfuscation` to false to optimize for bandwidth if you trust the
       #   network links between your application and the OpenAI API.
-      singleton_class.define_method(:get_response) do |
-        config:,
-        response_id:,
-        include: NOT_GIVEN,
-        stream: NOT_GIVEN,
-        starting_after: NOT_GIVEN,
-        include_obfuscation: NOT_GIVEN,
-        request_options: nil
-      |
-
+      singleton_class.define_method(:get_response) do |config:, response_id:, include: NOT_GIVEN, stream: NOT_GIVEN, starting_after: NOT_GIVEN, include_obfuscation: NOT_GIVEN, request_options: nil|
         SdkClient.request(
           'GET',
           [
-            "/responses/",
+            '/responses/',
             SdkClient.encode_path_segment(response_id)
           ].join,
           config: config,
@@ -289,13 +282,13 @@ module OctridevOpenai
             'include' => QueryValue.new(include, style: 'form', explode: true),
             'stream' => QueryValue.new(stream, style: 'form', explode: true),
             'starting_after' => QueryValue.new(starting_after, style: 'form', explode: true),
-            'include_obfuscation' => QueryValue.new(include_obfuscation, style: 'form', explode: true),
+            'include_obfuscation' => QueryValue.new(include_obfuscation, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::Response,
           decoder: :json,
           operation_id: 'get_response',
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -319,45 +312,39 @@ module OctridevOpenai
       #   default, but add a small amount of overhead to the data stream. You can set
       #   `include_obfuscation` to false to optimize for bandwidth if you trust the
       #   network links between your application and the OpenAI API.
-      singleton_class.define_method(:get_response_stream) do |
-        config:,
-        response_id:,
-        include: NOT_GIVEN,
-        stream: NOT_GIVEN,
-        starting_after: NOT_GIVEN,
-        include_obfuscation: NOT_GIVEN,
-        request_options: nil,
-        &block
-      |
-        return enum_for(
-          __method__,
-          config: config,
-          response_id: response_id,
-          include: include,
-          stream: stream,
-          starting_after: starting_after,
-          include_obfuscation: include_obfuscation,
-          request_options: request_options,
-        ) unless block_given?
+      singleton_class.define_method(:get_response_stream) do |config:, response_id:, include: NOT_GIVEN, stream: NOT_GIVEN, starting_after: NOT_GIVEN, include_obfuscation: NOT_GIVEN, request_options: nil, &block|
+        unless block_given?
+          return enum_for(
+            __method__,
+            config: config,
+            response_id: response_id,
+            include: include,
+            stream: stream,
+            starting_after: starting_after,
+            include_obfuscation: include_obfuscation,
+            request_options: request_options
+          )
+        end
         SdkClient.stream(
           'GET', [
-            "/responses/",
+            '/responses/',
             SdkClient.encode_path_segment(response_id)
           ].join,
           config: config,
           query: {
-          'include' => QueryValue.new(include, style: 'form', explode: true),
-          'stream' => QueryValue.new(stream, style: 'form', explode: true),
-          'starting_after' => QueryValue.new(starting_after, style: 'form', explode: true),
-          'include_obfuscation' => QueryValue.new(include_obfuscation, style: 'form', explode: true),
-        },
+            'include' => QueryValue.new(include, style: 'form', explode: true),
+            'stream' => QueryValue.new(stream, style: 'form', explode: true),
+            'starting_after' => QueryValue.new(starting_after, style: 'form', explode: true),
+            'include_obfuscation' => QueryValue.new(include_obfuscation, style: 'form', explode: true)
+          },
           operation_id: 'get_response_stream',
           stream_format: :sse,
-          stream_media_type: "text/event-stream",
+          stream_media_type: 'text/event-stream',
           request_options: request_options,
           errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).each do |ev|
           break if ev.data == '[DONE]'
+
           decoded = JSON.parse(ev.data)
           block.call(SdkClient.decode_event(decoded, ::OctridevOpenai::ResponseStreamEvent))
         end
@@ -373,11 +360,10 @@ module OctridevOpenai
         response_id:,
         request_options: nil
       )
-
         SdkClient.request(
           'DELETE',
           [
-            "/responses/",
+            '/responses/',
             SdkClient.encode_path_segment(response_id)
           ].join,
           config: config,
@@ -385,7 +371,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_response',
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -399,20 +385,19 @@ module OctridevOpenai
         response_id:,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
           [
-            "/responses/",
+            '/responses/',
             SdkClient.encode_path_segment(response_id),
-            "/cancel"
+            '/cancel'
           ].join,
           config: config,
           return_type: ::OctridevOpenai::Response,
           decoder: :json,
           operation_id: 'cancel_response',
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -440,30 +425,29 @@ module OctridevOpenai
         include: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
           [
-            "/responses/",
+            '/responses/',
             SdkClient.encode_path_segment(response_id),
-            "/input_items"
+            '/input_items'
           ].join,
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'order' => QueryValue.new(order, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
-            'include' => QueryValue.new(include, style: 'form', explode: true),
+            'include' => QueryValue.new(include, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::ResponseItemList,
           decoder: :json,
           operation_id: 'list_input_items',
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
-    ListInputItemsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      ListInputItemsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists the input items used to generate a model response. Use `limit` to set the page size and `order` to choose the item order. Use `after` with an item identifier to continue through the results; check `has_more` to determine whether additional items are available.
       #
@@ -503,10 +487,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.last_id
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -535,10 +522,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListInputItemsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end

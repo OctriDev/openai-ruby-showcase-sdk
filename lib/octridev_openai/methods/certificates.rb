@@ -13,7 +13,7 @@ module OctridevOpenai
       module ListCertificatesForProjectParameter
         ASC = 'asc'
         DESC = 'desc'
-        VALUES = ['asc', 'desc'].freeze
+        VALUES = %w[asc desc].freeze
         def self.from_value(value)
           value
         end
@@ -23,7 +23,7 @@ module OctridevOpenai
       module ListCertificatesForOrganizationParameter
         ASC = 'asc'
         DESC = 'desc'
-        VALUES = ['asc', 'desc'].freeze
+        VALUES = %w[asc desc].freeze
         def self.from_value(value)
           value
         end
@@ -58,25 +58,24 @@ module OctridevOpenai
         order: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
-          "/organization/certificates",
+          '/organization/certificates',
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
-            'order' => QueryValue.new(order, style: 'form', explode: true),
+            'order' => QueryValue.new(order, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::ListCertificatesResponse,
           decoder: :json,
           operation_id: 'list_certificates_for_organization',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
-    ListCertificatesForOrganizationPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      ListCertificatesForOrganizationPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists certificates uploaded for the organization. Use `after` to continue from a certificate ID, and set `order` to sort by creation time. The response includes pagination metadata and whether more certificates are available.
       #
@@ -110,10 +109,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.last_id
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -138,10 +140,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListCertificatesForOrganizationPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end
@@ -157,20 +161,19 @@ module OctridevOpenai
         name: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
-          "/organization/certificates",
+          '/organization/certificates',
           config: config,
           body: {
             'certificate' => certificate,
-            'name' => name,
+            'name' => name
           },
           return_type: ::OctridevOpenai::Certificate,
           decoder: :json,
           operation_id: 'upload_certificate',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -185,21 +188,20 @@ module OctridevOpenai
         certificate_ids:,
         request_options: nil
       )
-
         Validation.validate_items('certificate_ids', certificate_ids, min: 1, max: 10)
 
         SdkClient.request(
           'POST',
-          "/organization/certificates/activate",
+          '/organization/certificates/activate',
           config: config,
           body: {
-            'certificate_ids' => certificate_ids,
+            'certificate_ids' => certificate_ids
           },
           return_type: ::OctridevOpenai::OrganizationCertificateActivationResponse,
           decoder: :json,
           operation_id: 'activate_certificates_for_organization',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -214,21 +216,20 @@ module OctridevOpenai
         certificate_ids:,
         request_options: nil
       )
-
         Validation.validate_items('certificate_ids', certificate_ids, min: 1, max: 10)
 
         SdkClient.request(
           'POST',
-          "/organization/certificates/deactivate",
+          '/organization/certificates/deactivate',
           config: config,
           body: {
-            'certificate_ids' => certificate_ids,
+            'certificate_ids' => certificate_ids
           },
           return_type: ::OctridevOpenai::OrganizationCertificateDeactivationResponse,
           decoder: :json,
           operation_id: 'deactivate_certificates_for_organization',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -238,28 +239,22 @@ module OctridevOpenai
       # @param include [Array_of_GetCertificateParameterItem] A list of additional
       #   fields to include in the response. Currently the only supported value is
       #   `content` to fetch the PEM content of the certificate.
-      singleton_class.define_method(:get_certificate) do |
-        config:,
-        certificate_id:,
-        include: NOT_GIVEN,
-        request_options: nil
-      |
-
+      singleton_class.define_method(:get_certificate) do |config:, certificate_id:, include: NOT_GIVEN, request_options: nil|
         SdkClient.request(
           'GET',
           [
-            "/organization/certificates/",
+            '/organization/certificates/',
             SdkClient.encode_path_segment(certificate_id)
           ].join,
           config: config,
           query: {
-            'include' => QueryValue.new(include, style: 'form', explode: true),
+            'include' => QueryValue.new(include, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::Certificate,
           decoder: :json,
           operation_id: 'get_certificate',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -273,22 +268,21 @@ module OctridevOpenai
         name: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
           [
-            "/organization/certificates/",
+            '/organization/certificates/',
             SdkClient.encode_path_segment(certificate_id)
           ].join,
           config: config,
           body: {
-            'name' => name,
+            'name' => name
           },
           return_type: ::OctridevOpenai::Certificate,
           decoder: :json,
           operation_id: 'modify_certificate',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -300,11 +294,10 @@ module OctridevOpenai
         certificate_id:,
         request_options: nil
       )
-
         SdkClient.request(
           'DELETE',
           [
-            "/organization/certificates/",
+            '/organization/certificates/',
             SdkClient.encode_path_segment(certificate_id)
           ].join,
           config: config,
@@ -312,7 +305,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_certificate',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -338,29 +331,28 @@ module OctridevOpenai
         order: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
           [
-            "/organization/projects/",
+            '/organization/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/certificates"
+            '/certificates'
           ].join,
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
-            'order' => QueryValue.new(order, style: 'form', explode: true),
+            'order' => QueryValue.new(order, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::ListProjectCertificatesResponse,
           decoder: :json,
           operation_id: 'list_certificates_for_project',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
-    ListCertificatesForProjectPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      ListCertificatesForProjectPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists certificates configured for a project. Use `after` to continue from a certificate ID in a previous response, and set `limit` and `order` to control the page size and sort direction.
       #
@@ -397,10 +389,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.last_id
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -427,10 +422,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListCertificatesForProjectPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end
@@ -449,25 +446,24 @@ module OctridevOpenai
         certificate_ids:,
         request_options: nil
       )
-
         Validation.validate_items('certificate_ids', certificate_ids, min: 1, max: 10)
 
         SdkClient.request(
           'POST',
           [
-            "/organization/projects/",
+            '/organization/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/certificates/activate"
+            '/certificates/activate'
           ].join,
           config: config,
           body: {
-            'certificate_ids' => certificate_ids,
+            'certificate_ids' => certificate_ids
           },
           return_type: ::OctridevOpenai::OrganizationProjectCertificateActivationResponse,
           decoder: :json,
           operation_id: 'activate_certificates_for_project',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -484,25 +480,24 @@ module OctridevOpenai
         certificate_ids:,
         request_options: nil
       )
-
         Validation.validate_items('certificate_ids', certificate_ids, min: 1, max: 10)
 
         SdkClient.request(
           'POST',
           [
-            "/organization/projects/",
+            '/organization/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/certificates/deactivate"
+            '/certificates/deactivate'
           ].join,
           config: config,
           body: {
-            'certificate_ids' => certificate_ids,
+            'certificate_ids' => certificate_ids
           },
           return_type: ::OctridevOpenai::OrganizationProjectCertificateDeactivationResponse,
           decoder: :json,
           operation_id: 'deactivate_certificates_for_project',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
     end

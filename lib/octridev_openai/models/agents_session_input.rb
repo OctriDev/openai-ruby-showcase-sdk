@@ -5,271 +5,276 @@
 
 # agents_session_input domain models
 module OctridevOpenai
-# Defines the SessionInputParam SDK namespace.
-module SessionInputParam
-  DISCRIMINATOR_MAPPING = {
-    "agent.session.input.computer_use_approval_request_result" => -> { SessionInputParamAgentSessionInputComputerUseApprovalRequestResult },
-    "agent.session.input.message" => -> { SessionInputParamAgentSessionInputMessage },
-    "agent.session.input.cancel" => -> { SessionInputParamAgentSessionInputCancel },
-    "agent.session.input.tool_result" => -> { SessionInputParamAgentSessionInputToolResult },
-  }.freeze
+  # Defines the SessionInputParam SDK namespace.
+  module SessionInputParam
+    DISCRIMINATOR_MAPPING = {
+      'agent.session.input.computer_use_approval_request_result' => -> { SessionInputParamAgentSessionInputComputerUseApprovalRequestResult },
+      'agent.session.input.message' => -> { SessionInputParamAgentSessionInputMessage },
+      'agent.session.input.cancel' => -> { SessionInputParamAgentSessionInputCancel },
+      'agent.session.input.tool_result' => -> { SessionInputParamAgentSessionInputToolResult }
+    }.freeze
 
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
 
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
 
-    raise SdkValidationError.new('SessionInputParam', 'variant', "Unknown SessionInputParam discriminator: #{hash["type"].inspect}")
-  end
-end
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
 
-# Internal model hydration metadata.
-class SdkInternalSessionInputParamAgentSessionInputCancelMetadata
-  FIELDS = {
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::SessionInputParamAgentSessionInputCancelType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for SessionInputParamAgentSessionInputCancel.
-# Cancels the session's active turn.
-class SessionInputParamAgentSessionInputCancel
-  include SessionInputParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalSessionInputParamAgentSessionInputCancelMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalSessionInputParamAgentSessionInputCancelMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalSessionInputParamAgentSessionInputCancelMetadata::DECODERS
-
-  # @return [SessionInputParamAgentSessionInputCancelType] The type of the object. Always `agent.session.input.cancel`.
-  attr_reader :type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('SessionInputParam', 'variant', "Unknown SessionInputParam discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalSessionInputParamAgentSessionInputCancelMetadata
+    FIELDS = {
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::SessionInputParamAgentSessionInputCancelType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for SessionInputParamAgentSessionInputCancel.
+  # Cancels the session's active turn.
+  class SessionInputParamAgentSessionInputCancel
+    include SessionInputParam
 
-# Defines the SessionInputParamAgentSessionInputCancelType SDK namespace.
-module SessionInputParamAgentSessionInputCancelType
-  AGENT_SESSION_INPUT_CANCEL = 'agent.session.input.cancel'
-  VALUES = ['agent.session.input.cancel'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalSessionInputParamAgentSessionInputCancelMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalSessionInputParamAgentSessionInputCancelMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalSessionInputParamAgentSessionInputCancelMetadata::DECODERS
 
-    raise SdkValidationError.new('SessionInputParamAgentSessionInputCancelType', 'enum', "Unknown SessionInputParamAgentSessionInputCancelType: #{value}")
-  end
-end
+    # @return [SessionInputParamAgentSessionInputCancelType] The type of the object. Always `agent.session.input.cancel`.
+    attr_reader :type
 
-# Internal model hydration metadata.
-class SdkInternalSessionInputParamAgentSessionInputComputerUseApprovalRequestResultMetadata
-  FIELDS = {
-    type: "type",
-    request_id: "request_id",
-    response: "response",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    request_id
-    response
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::SessionInputParamAgentSessionInputComputerUseApprovalRequestResultType.from_value(value)
-    end,
-    response: lambda do |value|
-      ::OctridevOpenai::ComputerUseApprovalResponseParam.from_hash(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for SessionInputParamAgentSessionInputComputerUseApprovalRequestResult.
-# Responds to a pending Computer Use approval request.
-class SessionInputParamAgentSessionInputComputerUseApprovalRequestResult
-  include SessionInputParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalSessionInputParamAgentSessionInputComputerUseApprovalRequestResultMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalSessionInputParamAgentSessionInputComputerUseApprovalRequestResultMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalSessionInputParamAgentSessionInputComputerUseApprovalRequestResultMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [SessionInputParamAgentSessionInputComputerUseApprovalRequestResultType] The type of the object. Always `agent.session.input.computer_use_approval_request_result`.
-  attr_reader :type
-  # @return [String] The registered request ID from the required action.
-  attr_reader :request_id
-  # @return [ComputerUseApprovalResponseParam] The response for this request type.
-  attr_reader :response
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the SessionInputParamAgentSessionInputCancelType SDK namespace.
+  module SessionInputParamAgentSessionInputCancelType
+    AGENT_SESSION_INPUT_CANCEL = 'agent.session.input.cancel'
+    VALUES = ['agent.session.input.cancel'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('SessionInputParamAgentSessionInputCancelType', 'enum', "Unknown SessionInputParamAgentSessionInputCancelType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the SessionInputParamAgentSessionInputComputerUseApprovalRequestResultType SDK namespace.
-module SessionInputParamAgentSessionInputComputerUseApprovalRequestResultType
-  AGENT_SESSION_INPUT_COMPUTER_USE_APPROVAL_REQUEST_RESULT =
-    'agent.session.input.computer_use_approval_request_result'
-  VALUES = ['agent.session.input.computer_use_approval_request_result'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('SessionInputParamAgentSessionInputComputerUseApprovalRequestResultType', 'enum', "Unknown SessionInputParamAgentSessionInputComputerUseApprovalRequestResultType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalSessionInputParamAgentSessionInputMessageMetadata
-  FIELDS = {
-    type: "type",
-    input: "input",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    input
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::SessionInputParamAgentSessionInputMessageType.from_value(value)
-    end,
-    input: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::InputMessageParam.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for SessionInputParamAgentSessionInputMessage.
-# Adds one or more user messages and starts a turn.
-class SessionInputParamAgentSessionInputMessage
-  include SessionInputParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalSessionInputParamAgentSessionInputMessageMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalSessionInputParamAgentSessionInputMessageMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalSessionInputParamAgentSessionInputMessageMetadata::DECODERS
-
-  # @return [SessionInputParamAgentSessionInputMessageType] The type of the object. Always `agent.session.input.message`.
-  attr_reader :type
-  # @return [Array_of_InputMessageParam] The user messages to add to the session.
-  attr_reader :input
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalSessionInputParamAgentSessionInputComputerUseApprovalRequestResultMetadata
+    FIELDS = {
+      type: 'type',
+      request_id: 'request_id',
+      response: 'response'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      request_id
+      response
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::SessionInputParamAgentSessionInputComputerUseApprovalRequestResultType.from_value(value)
+      end,
+      response: lambda do |value|
+        ::OctridevOpenai::ComputerUseApprovalResponseParam.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for SessionInputParamAgentSessionInputComputerUseApprovalRequestResult.
+  # Responds to a pending Computer Use approval request.
+  class SessionInputParamAgentSessionInputComputerUseApprovalRequestResult
+    include SessionInputParam
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalSessionInputParamAgentSessionInputComputerUseApprovalRequestResultMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalSessionInputParamAgentSessionInputComputerUseApprovalRequestResultMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalSessionInputParamAgentSessionInputComputerUseApprovalRequestResultMetadata::DECODERS
+
+    # @return [SessionInputParamAgentSessionInputComputerUseApprovalRequestResultType] The type of the object. Always `agent.session.input.computer_use_approval_request_result`.
+    attr_reader :type
+    # @return [String] The registered request ID from the required action.
+    attr_reader :request_id
+    # @return [ComputerUseApprovalResponseParam] The response for this request type.
+    attr_reader :response
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the SessionInputParamAgentSessionInputComputerUseApprovalRequestResultType SDK namespace.
+  module SessionInputParamAgentSessionInputComputerUseApprovalRequestResultType
+    AGENT_SESSION_INPUT_COMPUTER_USE_APPROVAL_REQUEST_RESULT =
+      'agent.session.input.computer_use_approval_request_result'
+    VALUES = ['agent.session.input.computer_use_approval_request_result'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the SessionInputParamAgentSessionInputMessageType SDK namespace.
-module SessionInputParamAgentSessionInputMessageType
-  AGENT_SESSION_INPUT_MESSAGE = 'agent.session.input.message'
-  VALUES = ['agent.session.input.message'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('SessionInputParamAgentSessionInputMessageType', 'enum', "Unknown SessionInputParamAgentSessionInputMessageType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalSessionInputParamAgentSessionInputToolResultMetadata
-  FIELDS = {
-    type: "type",
-    turn_id: "turn_id",
-    call_id: "call_id",
-    success: "success",
-    output: "output",
-    error: "error",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    turn_id
-    call_id
-    success
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::SessionInputParamAgentSessionInputToolResultType.from_value(value)
-    end,
-    output: lambda do |value|
-      ::OctridevOpenai::FunctionCallOutputParam.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for SessionInputParamAgentSessionInputToolResult.
-# Submits the result of a function call.
-class SessionInputParamAgentSessionInputToolResult
-  include SessionInputParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalSessionInputParamAgentSessionInputToolResultMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalSessionInputParamAgentSessionInputToolResultMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalSessionInputParamAgentSessionInputToolResultMetadata::DECODERS
-
-  # @return [SessionInputParamAgentSessionInputToolResultType] The type of the object. Always `agent.session.input.tool_result`.
-  attr_reader :type
-  # @return [String] The ID of the turn that requested the function call.
-  attr_reader :turn_id
-  # @return [String] The ID of the function call.
-  attr_reader :call_id
-  # @return [Boolean] Whether the function call succeeded.
-  attr_reader :success
-  # @return [FunctionCallOutputParam] The function result when the call succeeded.
-  attr_reader :output
-  # @return [String] The error message when the call failed.
-  attr_reader :error
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('SessionInputParamAgentSessionInputComputerUseApprovalRequestResultType', 'enum', "Unknown SessionInputParamAgentSessionInputComputerUseApprovalRequestResultType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalSessionInputParamAgentSessionInputMessageMetadata
+    FIELDS = {
+      type: 'type',
+      input: 'input'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      input
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::SessionInputParamAgentSessionInputMessageType.from_value(value)
+      end,
+      input: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::InputMessageParam.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for SessionInputParamAgentSessionInputMessage.
+  # Adds one or more user messages and starts a turn.
+  class SessionInputParamAgentSessionInputMessage
+    include SessionInputParam
 
-# Defines the SessionInputParamAgentSessionInputToolResultType SDK namespace.
-module SessionInputParamAgentSessionInputToolResultType
-  AGENT_SESSION_INPUT_TOOL_RESULT = 'agent.session.input.tool_result'
-  VALUES = ['agent.session.input.tool_result'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalSessionInputParamAgentSessionInputMessageMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalSessionInputParamAgentSessionInputMessageMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalSessionInputParamAgentSessionInputMessageMetadata::DECODERS
 
-    raise SdkValidationError.new('SessionInputParamAgentSessionInputToolResultType', 'enum', "Unknown SessionInputParamAgentSessionInputToolResultType: #{value}")
+    # @return [SessionInputParamAgentSessionInputMessageType] The type of the object. Always `agent.session.input.message`.
+    attr_reader :type
+    # @return [Array_of_InputMessageParam] The user messages to add to the session.
+    attr_reader :input
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
+
+  # Defines the SessionInputParamAgentSessionInputMessageType SDK namespace.
+  module SessionInputParamAgentSessionInputMessageType
+    AGENT_SESSION_INPUT_MESSAGE = 'agent.session.input.message'
+    VALUES = ['agent.session.input.message'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('SessionInputParamAgentSessionInputMessageType', 'enum', "Unknown SessionInputParamAgentSessionInputMessageType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalSessionInputParamAgentSessionInputToolResultMetadata
+    FIELDS = {
+      type: 'type',
+      turn_id: 'turn_id',
+      call_id: 'call_id',
+      success: 'success',
+      output: 'output',
+      error: 'error'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      turn_id
+      call_id
+      success
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::SessionInputParamAgentSessionInputToolResultType.from_value(value)
+      end,
+      output: lambda do |value|
+        ::OctridevOpenai::FunctionCallOutputParam.from_hash(value)
+      end
+    }.freeze
+  end
+
+  # API model for SessionInputParamAgentSessionInputToolResult.
+  # Submits the result of a function call.
+  class SessionInputParamAgentSessionInputToolResult
+    include SessionInputParam
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalSessionInputParamAgentSessionInputToolResultMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalSessionInputParamAgentSessionInputToolResultMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalSessionInputParamAgentSessionInputToolResultMetadata::DECODERS
+
+    # @return [SessionInputParamAgentSessionInputToolResultType] The type of the object. Always `agent.session.input.tool_result`.
+    attr_reader :type
+    # @return [String] The ID of the turn that requested the function call.
+    attr_reader :turn_id
+    # @return [String] The ID of the function call.
+    attr_reader :call_id
+    # @return [Boolean] Whether the function call succeeded.
+    attr_reader :success
+    # @return [FunctionCallOutputParam] The function result when the call succeeded.
+    attr_reader :output
+    # @return [String] The error message when the call failed.
+    attr_reader :error
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the SessionInputParamAgentSessionInputToolResultType SDK namespace.
+  module SessionInputParamAgentSessionInputToolResultType
+    AGENT_SESSION_INPUT_TOOL_RESULT = 'agent.session.input.tool_result'
+    VALUES = ['agent.session.input.tool_result'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('SessionInputParamAgentSessionInputToolResultType', 'enum', "Unknown SessionInputParamAgentSessionInputToolResultType: #{value}")
+    end
+  end
 end

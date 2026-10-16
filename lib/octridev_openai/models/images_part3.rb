@@ -5,139 +5,139 @@
 
 # images domain models (part 3)
 module OctridevOpenai
-# Defines the ImagesResponseBackground SDK namespace.
-module ImagesResponseBackground
-  TRANSPARENT = 'transparent'
-  OPAQUE = 'opaque'
-  VALUES = ['transparent', 'opaque'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the ImagesResponseOutputFormat SDK namespace.
-module ImagesResponseOutputFormat
-  PNG = 'png'
-  WEBP = 'webp'
-  JPEG = 'jpeg'
-  VALUES = ['png', 'webp', 'jpeg'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the ImagesResponseQuality SDK namespace.
-module ImagesResponseQuality
-  LOW = 'low'
-  MEDIUM = 'medium'
-  HIGH = 'high'
-  XHIGH = 'xhigh'
-  MAX = 'max'
-  VALUES = ['low', 'medium', 'high', 'xhigh', 'max'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalImagesUsageInputTokensDetailsMetadata
-  FIELDS = {
-    text_tokens: "text_tokens",
-    image_tokens: "image_tokens",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    text_tokens
-    image_tokens
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for ImagesUsageInputTokensDetails.
-# The input tokens detailed information for the image generation.
-class ImagesUsageInputTokensDetails
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalImagesUsageInputTokensDetailsMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalImagesUsageInputTokensDetailsMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalImagesUsageInputTokensDetailsMetadata::DECODERS
-
-  # @return [Integer] The number of text tokens in the input prompt.
-  attr_reader :text_tokens
-  # @return [Integer] The number of image tokens in the input prompt.
-  attr_reader :image_tokens
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the ImagesResponseBackground SDK namespace.
+  module ImagesResponseBackground
+    TRANSPARENT = 'transparent'
+    OPAQUE = 'opaque'
+    VALUES = %w[transparent opaque].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the ImagesResponseOutputFormat SDK namespace.
+  module ImagesResponseOutputFormat
+    PNG = 'png'
+    WEBP = 'webp'
+    JPEG = 'jpeg'
+    VALUES = %w[png webp jpeg].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalImagesUsageMetadata
-  FIELDS = {
-    total_tokens: "total_tokens",
-    input_tokens: "input_tokens",
-    output_tokens: "output_tokens",
-    input_tokens_details: "input_tokens_details",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    total_tokens
-    input_tokens
-    output_tokens
-    input_tokens_details
-  ].freeze
-  DECODERS = {
-    input_tokens_details: lambda do |value|
-      ::OctridevOpenai::ImagesUsageInputTokensDetails.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for ImagesUsage.
-# For the GPT image models only, the token usage information for the image generation.
-class ImagesUsage
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalImagesUsageMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalImagesUsageMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalImagesUsageMetadata::DECODERS
-
-  # @return [Integer] The total number of tokens (images and text) used for the image generation.
-  attr_reader :total_tokens
-  # @return [Integer] The number of tokens (images and text) in the input prompt.
-  attr_reader :input_tokens
-  # @return [Integer] The number of image tokens in the output image.
-  attr_reader :output_tokens
-  # @return [ImagesUsageInputTokensDetails] The input tokens detailed information for the image generation.
-  attr_reader :input_tokens_details
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the ImagesResponseQuality SDK namespace.
+  module ImagesResponseQuality
+    LOW = 'low'
+    MEDIUM = 'medium'
+    HIGH = 'high'
+    XHIGH = 'xhigh'
+    MAX = 'max'
+    VALUES = %w[low medium high xhigh max].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalImagesUsageInputTokensDetailsMetadata
+    FIELDS = {
+      text_tokens: 'text_tokens',
+      image_tokens: 'image_tokens'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      text_tokens
+      image_tokens
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for ImagesUsageInputTokensDetails.
+  # The input tokens detailed information for the image generation.
+  class ImagesUsageInputTokensDetails
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalImagesUsageInputTokensDetailsMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalImagesUsageInputTokensDetailsMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalImagesUsageInputTokensDetailsMetadata::DECODERS
 
-# Defines the PartialImages SDK namespace.
-module PartialImages
-  def self.from_hash(hash)
-    return hash if hash.is_a?(::Integer)
-    return hash if hash.is_a?(::Object)
-    raise "Could not deserialize PartialImages from #{hash.inspect}"
+    # @return [Integer] The number of text tokens in the input prompt.
+    attr_reader :text_tokens
+    # @return [Integer] The number of image tokens in the input prompt.
+    attr_reader :image_tokens
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
+
+  # Internal model hydration metadata.
+  class SdkInternalImagesUsageMetadata
+    FIELDS = {
+      total_tokens: 'total_tokens',
+      input_tokens: 'input_tokens',
+      output_tokens: 'output_tokens',
+      input_tokens_details: 'input_tokens_details'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      total_tokens
+      input_tokens
+      output_tokens
+      input_tokens_details
+    ].freeze
+    DECODERS = {
+      input_tokens_details: lambda do |value|
+        ::OctridevOpenai::ImagesUsageInputTokensDetails.from_hash(value)
+      end
+    }.freeze
+  end
+
+  # API model for ImagesUsage.
+  # For the GPT image models only, the token usage information for the image generation.
+  class ImagesUsage
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalImagesUsageMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalImagesUsageMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalImagesUsageMetadata::DECODERS
+
+    # @return [Integer] The total number of tokens (images and text) used for the image generation.
+    attr_reader :total_tokens
+    # @return [Integer] The number of tokens (images and text) in the input prompt.
+    attr_reader :input_tokens
+    # @return [Integer] The number of image tokens in the output image.
+    attr_reader :output_tokens
+    # @return [ImagesUsageInputTokensDetails] The input tokens detailed information for the image generation.
+    attr_reader :input_tokens_details
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the PartialImages SDK namespace.
+  module PartialImages
+    def self.from_hash(hash)
+      return hash if hash.is_a?(::Integer)
+      return hash if hash.is_a?(::Object)
+
+      raise "Could not deserialize PartialImages from #{hash.inspect}"
+    end
+  end
 end

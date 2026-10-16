@@ -5,682 +5,693 @@
 
 # shared_input domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalInputAudioInputAudioMetadata
-  FIELDS = {
-    data: "data",
-    format: "format",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    data
-    format
-  ].freeze
-  DECODERS = {
-    format: lambda do |value|
-      ::OctridevOpenai::InputAudioInputAudioFormat.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for InputAudioInputAudio.
-# Required object value serialized in the `input_audio` wire field.
-class InputAudioInputAudio
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalInputAudioInputAudioMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalInputAudioInputAudioMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalInputAudioInputAudioMetadata::DECODERS
-
-  # @return [String] Base64-encoded audio data.
-  attr_reader :data
-  # @return [InputAudioInputAudioFormat] The format of the audio data. Currently supported formats are `mp3` and `wav`.
-  attr_reader :format
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalInputAudioInputAudioMetadata
+    FIELDS = {
+      data: 'data',
+      format: 'format'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      data
+      format
+    ].freeze
+    DECODERS = {
+      format: lambda do |value|
+        ::OctridevOpenai::InputAudioInputAudioFormat.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
+  # API model for InputAudioInputAudio.
+  # Required object value serialized in the `input_audio` wire field.
+  class InputAudioInputAudio
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalInputAudioInputAudioMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalInputAudioInputAudioMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalInputAudioInputAudioMetadata::DECODERS
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+    # @return [String] Base64-encoded audio data.
+    attr_reader :data
+    # @return [InputAudioInputAudioFormat] The format of the audio data. Currently supported formats are `mp3` and `wav`.
+    attr_reader :format
 
-# Internal model hydration metadata.
-class SdkInternalInputAudioMetadata
-  FIELDS = {
-    type: "type",
-    input_audio: "input_audio",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    input_audio
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::InputAudioType.from_value(value)
-    end,
-    input_audio: lambda do |value|
-      ::OctridevOpenai::InputAudioInputAudio.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for InputAudio.
-# An audio input to the model.
-class InputAudio
-  include EvalItemContentItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalInputAudioMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalInputAudioMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalInputAudioMetadata::DECODERS
-
-  # @return [InputAudioType] The type of the input item. Always `input_audio`.
-  attr_reader :type
-  # @return [InputAudioInputAudio] Required object value serialized in the `input_audio` wire field.
-  attr_reader :input_audio
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the InputAudioInputAudioFormat SDK namespace.
-module InputAudioInputAudioFormat
-  MP3 = 'mp3'
-  WAV = 'wav'
-  VALUES = ['mp3', 'wav'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the InputAudioType SDK namespace.
-module InputAudioType
-  INPUT_AUDIO = 'input_audio'
-  VALUES = ['input_audio'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('InputAudioType', 'enum', "Unknown InputAudioType: #{value}")
-  end
-end
-
-# Defines the InputContent SDK namespace.
-module InputContent
-  DISCRIMINATOR_MAPPING = {
-    "input_text" => -> { InputTextContent },
-    "input_image" => -> { InputImageContent },
-    "input_file" => -> { InputFileContent },
-  }.freeze
-
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('InputContent', 'variant', "Unknown InputContent discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Defines the InputFidelity SDK namespace.
-module InputFidelity
-  HIGH = 'high'
-  LOW = 'low'
-  VALUES = ['high', 'low'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalInputFileContentMetadata
-  FIELDS = {
-    type: "type",
-    file_id: "file_id",
-    filename: "filename",
-    file_data: "file_data",
-    prompt_cache_breakpoint: "prompt_cache_breakpoint",
-    file_url: "file_url",
-    detail: "detail",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::InputFileContentType.from_value(value)
-    end,
-    prompt_cache_breakpoint: lambda do |value|
-      ::OctridevOpenai::PromptCacheBreakpointConfig.from_hash(value)
-    end,
-    detail: lambda do |value|
-      ::OctridevOpenai::FileInputDetail.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for InputFileContent.
-# A file input to the model.
-class InputFileContent
-  include FunctionAndCustomToolCallOutput
-  include InputContent
-  include MessageContentItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalInputFileContentMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalInputFileContentMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalInputFileContentMetadata::DECODERS
-
-  # @return [InputFileContentType] The type of the input item. Always `input_file`.
-  attr_reader :type
-  # @return [String] Optional `string` value serialized in the `file_id` wire field.
-  attr_reader :file_id
-  # @return [String] The name of the file to be sent to the model.
-  attr_reader :filename
-  # @return [String] The content of the file to be sent to the model.
-  attr_reader :file_data
-  # @return [PromptCacheBreakpointConfig] Marks the exact end of a reusable prompt prefix. The breakpoint inherits its TTL from the request's `prompt_cache_options.ttl`; the boundary is not rounded to a token block.
-  attr_reader :prompt_cache_breakpoint
-  # @return [String] The URL of the file to be sent to the model.
-  attr_reader :file_url
-  # @return [FileInputDetail] The detail level of the file to be sent to the model. Use `auto` to let the system select the detail level; for GPT-5.6 and later models, `auto` uses high-quality rendering, which may increase input token usage. Use `low` for lower-cost rendering, or `high` to render the file at higher quality. Defaults to `auto`.
-  attr_reader :detail
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the InputFileContentType SDK namespace.
-module InputFileContentType
-  INPUT_FILE = 'input_file'
-  VALUES = ['input_file'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('InputFileContentType', 'enum', "Unknown InputFileContentType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalInputFileContentParamMetadata
-  FIELDS = {
-    type: "type",
-    file_id: "file_id",
-    filename: "filename",
-    file_data: "file_data",
-    file_url: "file_url",
-    detail: "detail",
-    prompt_cache_breakpoint: "prompt_cache_breakpoint",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::InputFileContentParamType.from_value(value)
-    end,
-    detail: lambda do |value|
-      ::OctridevOpenai::FileDetailEnum.from_value(value)
-    end,
-    prompt_cache_breakpoint: lambda do |value|
-      ::OctridevOpenai::PromptCacheBreakpointParam.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for InputFileContentParam.
-# A file input to the model.
-class InputFileContentParam
-  include FunctionCallOutputItemParamOutputItem
-  include UserMessageItemParamContentItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalInputFileContentParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalInputFileContentParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalInputFileContentParamMetadata::DECODERS
-
-  # @return [InputFileContentParamType] The type of the input item. Always `input_file`.
-  attr_reader :type
-  # @return [String] Optional `string` value serialized in the `file_id` wire field.
-  attr_reader :file_id
-  # @return [String] Optional `string` value serialized in the `filename` wire field.
-  attr_reader :filename
-  # @return [String] Optional API value serialized in the `file_data` wire field.
-  attr_reader :file_data
-  # @return [String] Optional API value serialized in the `file_url` wire field.
-  attr_reader :file_url
-  # @return [FileDetailEnum] The detail level of the file to be sent to the model. Use `auto` to let the system select the detail level; for GPT-5.6 and later models, `auto` uses high-quality rendering, which may increase input token usage. Use `low` for lower-cost rendering, or `high` to render the file at higher quality. Defaults to `auto`.
-  attr_reader :detail
-  # @return [PromptCacheBreakpointParam] Optional API value serialized in the `prompt_cache_breakpoint` wire field.
-  attr_reader :prompt_cache_breakpoint
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the InputFileContentParamType SDK namespace.
-module InputFileContentParamType
-  INPUT_FILE = 'input_file'
-  VALUES = ['input_file'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('InputFileContentParamType', 'enum', "Unknown InputFileContentParamType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalInputImageContentMetadata
-  FIELDS = {
-    type: "type",
-    image_url: "image_url",
-    file_id: "file_id",
-    detail: "detail",
-    prompt_cache_breakpoint: "prompt_cache_breakpoint",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    detail
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::InputImageContentType.from_value(value)
-    end,
-    detail: lambda do |value|
-      ::OctridevOpenai::ImageDetail.from_value(value)
-    end,
-    prompt_cache_breakpoint: lambda do |value|
-      ::OctridevOpenai::PromptCacheBreakpointConfig.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for InputImageContent.
-# An image input to the model. Learn about image inputs.
-class InputImageContent
-  include FunctionAndCustomToolCallOutput
-  include InputContent
-  include MessageContentItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalInputImageContentMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalInputImageContentMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalInputImageContentMetadata::DECODERS
-
-  # @return [InputImageContentType] The type of the input item. Always `input_image`.
-  attr_reader :type
-  # @return [String] Optional API value serialized in the `image_url` wire field.
-  attr_reader :image_url
-  # @return [String] Optional `string` value serialized in the `file_id` wire field.
-  attr_reader :file_id
-  # @return [ImageDetail] The detail level of the image to be sent to the model. One of `high`, `low`, `auto`, or `original`. Defaults to `auto`.
-  attr_reader :detail
-  # @return [PromptCacheBreakpointConfig] Marks the exact end of a reusable prompt prefix. The breakpoint inherits its TTL from the request's `prompt_cache_options.ttl`; the boundary is not rounded to a token block.
-  attr_reader :prompt_cache_breakpoint
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the InputImageContentType SDK namespace.
-module InputImageContentType
-  INPUT_IMAGE = 'input_image'
-  VALUES = ['input_image'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('InputImageContentType', 'enum', "Unknown InputImageContentType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalInputImageContentParamAutoParamMetadata
-  FIELDS = {
-    type: "type",
-    image_url: "image_url",
-    file_id: "file_id",
-    detail: "detail",
-    prompt_cache_breakpoint: "prompt_cache_breakpoint",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::InputImageContentParamAutoParamType.from_value(value)
-    end,
-    detail: lambda do |value|
-      ::OctridevOpenai::DetailEnum.from_value(value)
-    end,
-    prompt_cache_breakpoint: lambda do |value|
-      ::OctridevOpenai::PromptCacheBreakpointParam.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for InputImageContentParamAutoParam.
-# An image input to the model. Learn about image inputs
-class InputImageContentParamAutoParam
-  include FunctionCallOutputItemParamOutputItem
-  include UserMessageItemParamContentItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalInputImageContentParamAutoParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalInputImageContentParamAutoParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalInputImageContentParamAutoParamMetadata::DECODERS
-
-  # @return [InputImageContentParamAutoParamType] The type of the input item. Always `input_image`.
-  attr_reader :type
-  # @return [String] Optional API value serialized in the `image_url` wire field.
-  attr_reader :image_url
-  # @return [String] Optional `string` value serialized in the `file_id` wire field.
-  attr_reader :file_id
-  # @return [DetailEnum] Optional API value serialized in the `detail` wire field.
-  attr_reader :detail
-  # @return [PromptCacheBreakpointParam] Optional API value serialized in the `prompt_cache_breakpoint` wire field.
-  attr_reader :prompt_cache_breakpoint
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the InputImageContentParamAutoParamType SDK namespace.
-module InputImageContentParamAutoParamType
-  INPUT_IMAGE = 'input_image'
-  VALUES = ['input_image'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('InputImageContentParamAutoParamType', 'enum', "Unknown InputImageContentParamAutoParamType: #{value}")
-  end
-end
-
-# Defines the InputItem SDK namespace.
-module InputItem
-  def self.from_hash(hash)
-    shape_mapping = {
-      "role" => EasyInputMessage,
-      "code" => ProgramItemParam,
-      "result" => ProgramOutputItemParam,
-    }
-    type = shape_mapping.find { |required, _type| hash.is_a?(::Hash) && hash.key?(required) }&.last
-    decoded = type&.from_hash(hash)
-    return decoded unless type.nil?
-    [Item, CompactionTriggerItemParam, ItemReferenceParam].each do |type|
-      return type.from_hash(hash)
-    rescue ::StandardError
-      next
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
     end
-    raise SdkValidationError.new('InputItem', 'variant', "Cannot select InputItem variant without a discriminator")
-  end
-end
 
-# Internal model hydration metadata.
-class SdkInternalInputMessageMetadata
-  FIELDS = {
-    type: "type",
-    role: "role",
-    status: "status",
-    content: "content",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    role
-    content
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::InputMessageType.from_value(value)
-    end,
-    role: lambda do |value|
-      ::OctridevOpenai::InputMessageRole.from_value(value)
-    end,
-    status: lambda do |value|
-      ::OctridevOpenai::InputMessageStatus.from_value(value)
-    end,
-    content: lambda do |value|
-      ::OctridevOpenai::InputMessageContentList.from_hash(value)
-    end,
-  }.freeze
-end
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-# API model for InputMessage.
-# A message input to the model with a role indicating instruction following hierarchy. Instructions given with the `developer` or `system` role take precedence over instructions given with the `user` role.
-class InputMessage
-  include Item
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalInputMessageMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalInputMessageMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalInputMessageMetadata::DECODERS
-
-  # @return [InputMessageType] The type of the message input. Always set to `message`.
-  attr_reader :type
-  # @return [InputMessageRole] The role of the message input. One of `user`, `system`, or `developer`.
-  attr_reader :role
-  # @return [InputMessageStatus] The status of item. One of `in_progress`, `completed`, or `incomplete`. Populated when items are returned via API.
-  attr_reader :status
-  # @return [InputMessageContentList] A list of one or many input items to the model, containing different content types.
-  attr_reader :content
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalInputAudioMetadata
+    FIELDS = {
+      type: 'type',
+      input_audio: 'input_audio'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      input_audio
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::InputAudioType.from_value(value)
+      end,
+      input_audio: lambda do |value|
+        ::OctridevOpenai::InputAudioInputAudio.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for InputAudio.
+  # An audio input to the model.
+  class InputAudio
+    include EvalItemContentItem
 
-# Defines the InputMessageRole SDK namespace.
-module InputMessageRole
-  USER = 'user'
-  SYSTEM = 'system'
-  DEVELOPER = 'developer'
-  VALUES = ['user', 'system', 'developer'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalInputAudioMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalInputAudioMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalInputAudioMetadata::DECODERS
 
-# Defines the InputMessageStatus SDK namespace.
-module InputMessageStatus
-  IN_PROGRESS = 'in_progress'
-  COMPLETED = 'completed'
-  INCOMPLETE = 'incomplete'
-  VALUES = ['in_progress', 'completed', 'incomplete'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    # @return [InputAudioType] The type of the input item. Always `input_audio`.
+    attr_reader :type
+    # @return [InputAudioInputAudio] Required object value serialized in the `input_audio` wire field.
+    attr_reader :input_audio
 
-# Defines the InputMessageType SDK namespace.
-module InputMessageType
-  MESSAGE = 'message'
-  VALUES = ['message'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-    raise SdkValidationError.new('InputMessageType', 'enum', "Unknown InputMessageType: #{value}")
-  end
-end
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-# Defines the InputMessageContentList SDK value decoder.
-module InputMessageContentList
-  def self.from_hash(value)
-    return nil if value.nil?
-    value&.map { |item| ::OctridevOpenai::InputContent.from_hash(item) }
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalInputTextContentMetadata
-  FIELDS = {
-    type: "type",
-    text: "text",
-    prompt_cache_breakpoint: "prompt_cache_breakpoint",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    text
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::InputTextContentType.from_value(value)
-    end,
-    prompt_cache_breakpoint: lambda do |value|
-      ::OctridevOpenai::PromptCacheBreakpointConfig.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for InputTextContent.
-# A text input to the model.
-class InputTextContent
-  include EvalItemContentItem
-  include FunctionAndCustomToolCallOutput
-  include InputContent
-  include MessageContentItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalInputTextContentMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalInputTextContentMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalInputTextContentMetadata::DECODERS
-
-  # @return [InputTextContentType] The type of the input item. Always `input_text`.
-  attr_reader :type
-  # @return [String] The text input to the model.
-  attr_reader :text
-  # @return [PromptCacheBreakpointConfig] Marks the exact end of a reusable prompt prefix. The breakpoint inherits its TTL from the request's `prompt_cache_options.ttl`; the boundary is not rounded to a token block.
-  attr_reader :prompt_cache_breakpoint
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the InputAudioInputAudioFormat SDK namespace.
+  module InputAudioInputAudioFormat
+    MP3 = 'mp3'
+    WAV = 'wav'
+    VALUES = %w[mp3 wav].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the InputAudioType SDK namespace.
+  module InputAudioType
+    INPUT_AUDIO = 'input_audio'
+    VALUES = ['input_audio'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the InputTextContentType SDK namespace.
-module InputTextContentType
-  INPUT_TEXT = 'input_text'
-  VALUES = ['input_text'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('InputTextContentType', 'enum', "Unknown InputTextContentType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalInputTextContentParamMetadata
-  FIELDS = {
-    type: "type",
-    text: "text",
-    prompt_cache_breakpoint: "prompt_cache_breakpoint",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    text
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::InputTextContentParamType.from_value(value)
-    end,
-    prompt_cache_breakpoint: lambda do |value|
-      ::OctridevOpenai::PromptCacheBreakpointParam.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for InputTextContentParam.
-# A text input to the model.
-class InputTextContentParam
-  include FunctionCallOutputItemParamOutputItem
-  include UserMessageItemParamContentItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalInputTextContentParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalInputTextContentParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalInputTextContentParamMetadata::DECODERS
-
-  # @return [InputTextContentParamType] The type of the input item. Always `input_text`.
-  attr_reader :type
-  # @return [String] The text input to the model.
-  attr_reader :text
-  # @return [PromptCacheBreakpointParam] Optional API value serialized in the `prompt_cache_breakpoint` wire field.
-  attr_reader :prompt_cache_breakpoint
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('InputAudioType', 'enum', "Unknown InputAudioType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the InputContent SDK namespace.
+  module InputContent
+    DISCRIMINATOR_MAPPING = {
+      'input_text' => -> { InputTextContent },
+      'input_image' => -> { InputImageContent },
+      'input_file' => -> { InputFileContent }
+    }.freeze
+
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('InputContent', 'variant', "Unknown InputContent discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the InputFidelity SDK namespace.
+  module InputFidelity
+    HIGH = 'high'
+    LOW = 'low'
+    VALUES = %w[high low].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
+
+  # Internal model hydration metadata.
+  class SdkInternalInputFileContentMetadata
+    FIELDS = {
+      type: 'type',
+      file_id: 'file_id',
+      filename: 'filename',
+      file_data: 'file_data',
+      prompt_cache_breakpoint: 'prompt_cache_breakpoint',
+      file_url: 'file_url',
+      detail: 'detail'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::InputFileContentType.from_value(value)
+      end,
+      prompt_cache_breakpoint: lambda do |value|
+        ::OctridevOpenai::PromptCacheBreakpointConfig.from_hash(value)
+      end,
+      detail: lambda do |value|
+        ::OctridevOpenai::FileInputDetail.from_value(value)
+      end
+    }.freeze
+  end
+
+  # API model for InputFileContent.
+  # A file input to the model.
+  class InputFileContent
+    include FunctionAndCustomToolCallOutput
+    include InputContent
+    include MessageContentItem
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalInputFileContentMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalInputFileContentMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalInputFileContentMetadata::DECODERS
+
+    # @return [InputFileContentType] The type of the input item. Always `input_file`.
+    attr_reader :type
+    # @return [String] Optional `string` value serialized in the `file_id` wire field.
+    attr_reader :file_id
+    # @return [String] The name of the file to be sent to the model.
+    attr_reader :filename
+    # @return [String] The content of the file to be sent to the model.
+    attr_reader :file_data
+    # @return [PromptCacheBreakpointConfig] Marks the exact end of a reusable prompt prefix. The breakpoint inherits its TTL from the request's `prompt_cache_options.ttl`; the boundary is not rounded to a token block.
+    attr_reader :prompt_cache_breakpoint
+    # @return [String] The URL of the file to be sent to the model.
+    attr_reader :file_url
+    # @return [FileInputDetail] The detail level of the file to be sent to the model. Use `auto` to let the system select the detail level; for GPT-5.6 and later models, `auto` uses high-quality rendering, which may increase input token usage. Use `low` for lower-cost rendering, or `high` to render the file at higher quality. Defaults to `auto`.
+    attr_reader :detail
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the InputFileContentType SDK namespace.
+  module InputFileContentType
+    INPUT_FILE = 'input_file'
+    VALUES = ['input_file'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('InputFileContentType', 'enum', "Unknown InputFileContentType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalInputFileContentParamMetadata
+    FIELDS = {
+      type: 'type',
+      file_id: 'file_id',
+      filename: 'filename',
+      file_data: 'file_data',
+      file_url: 'file_url',
+      detail: 'detail',
+      prompt_cache_breakpoint: 'prompt_cache_breakpoint'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::InputFileContentParamType.from_value(value)
+      end,
+      detail: lambda do |value|
+        ::OctridevOpenai::FileDetailEnum.from_value(value)
+      end,
+      prompt_cache_breakpoint: lambda do |value|
+        ::OctridevOpenai::PromptCacheBreakpointParam.from_hash(value)
+      end
+    }.freeze
+  end
+
+  # API model for InputFileContentParam.
+  # A file input to the model.
+  class InputFileContentParam
+    include FunctionCallOutputItemParamOutputItem
+    include UserMessageItemParamContentItem
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalInputFileContentParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalInputFileContentParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalInputFileContentParamMetadata::DECODERS
+
+    # @return [InputFileContentParamType] The type of the input item. Always `input_file`.
+    attr_reader :type
+    # @return [String] Optional `string` value serialized in the `file_id` wire field.
+    attr_reader :file_id
+    # @return [String] Optional `string` value serialized in the `filename` wire field.
+    attr_reader :filename
+    # @return [String] Optional API value serialized in the `file_data` wire field.
+    attr_reader :file_data
+    # @return [String] Optional API value serialized in the `file_url` wire field.
+    attr_reader :file_url
+    # @return [FileDetailEnum] The detail level of the file to be sent to the model. Use `auto` to let the system select the detail level; for GPT-5.6 and later models, `auto` uses high-quality rendering, which may increase input token usage. Use `low` for lower-cost rendering, or `high` to render the file at higher quality. Defaults to `auto`.
+    attr_reader :detail
+    # @return [PromptCacheBreakpointParam] Optional API value serialized in the `prompt_cache_breakpoint` wire field.
+    attr_reader :prompt_cache_breakpoint
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the InputFileContentParamType SDK namespace.
+  module InputFileContentParamType
+    INPUT_FILE = 'input_file'
+    VALUES = ['input_file'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('InputFileContentParamType', 'enum', "Unknown InputFileContentParamType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalInputImageContentMetadata
+    FIELDS = {
+      type: 'type',
+      image_url: 'image_url',
+      file_id: 'file_id',
+      detail: 'detail',
+      prompt_cache_breakpoint: 'prompt_cache_breakpoint'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      detail
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::InputImageContentType.from_value(value)
+      end,
+      detail: lambda do |value|
+        ::OctridevOpenai::ImageDetail.from_value(value)
+      end,
+      prompt_cache_breakpoint: lambda do |value|
+        ::OctridevOpenai::PromptCacheBreakpointConfig.from_hash(value)
+      end
+    }.freeze
+  end
+
+  # API model for InputImageContent.
+  # An image input to the model. Learn about image inputs.
+  class InputImageContent
+    include FunctionAndCustomToolCallOutput
+    include InputContent
+    include MessageContentItem
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalInputImageContentMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalInputImageContentMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalInputImageContentMetadata::DECODERS
+
+    # @return [InputImageContentType] The type of the input item. Always `input_image`.
+    attr_reader :type
+    # @return [String] Optional API value serialized in the `image_url` wire field.
+    attr_reader :image_url
+    # @return [String] Optional `string` value serialized in the `file_id` wire field.
+    attr_reader :file_id
+    # @return [ImageDetail] The detail level of the image to be sent to the model. One of `high`, `low`, `auto`, or `original`. Defaults to `auto`.
+    attr_reader :detail
+    # @return [PromptCacheBreakpointConfig] Marks the exact end of a reusable prompt prefix. The breakpoint inherits its TTL from the request's `prompt_cache_options.ttl`; the boundary is not rounded to a token block.
+    attr_reader :prompt_cache_breakpoint
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the InputImageContentType SDK namespace.
+  module InputImageContentType
+    INPUT_IMAGE = 'input_image'
+    VALUES = ['input_image'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('InputImageContentType', 'enum', "Unknown InputImageContentType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalInputImageContentParamAutoParamMetadata
+    FIELDS = {
+      type: 'type',
+      image_url: 'image_url',
+      file_id: 'file_id',
+      detail: 'detail',
+      prompt_cache_breakpoint: 'prompt_cache_breakpoint'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::InputImageContentParamAutoParamType.from_value(value)
+      end,
+      detail: lambda do |value|
+        ::OctridevOpenai::DetailEnum.from_value(value)
+      end,
+      prompt_cache_breakpoint: lambda do |value|
+        ::OctridevOpenai::PromptCacheBreakpointParam.from_hash(value)
+      end
+    }.freeze
+  end
+
+  # API model for InputImageContentParamAutoParam.
+  # An image input to the model. Learn about image inputs
+  class InputImageContentParamAutoParam
+    include FunctionCallOutputItemParamOutputItem
+    include UserMessageItemParamContentItem
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalInputImageContentParamAutoParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalInputImageContentParamAutoParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalInputImageContentParamAutoParamMetadata::DECODERS
+
+    # @return [InputImageContentParamAutoParamType] The type of the input item. Always `input_image`.
+    attr_reader :type
+    # @return [String] Optional API value serialized in the `image_url` wire field.
+    attr_reader :image_url
+    # @return [String] Optional `string` value serialized in the `file_id` wire field.
+    attr_reader :file_id
+    # @return [DetailEnum] Optional API value serialized in the `detail` wire field.
+    attr_reader :detail
+    # @return [PromptCacheBreakpointParam] Optional API value serialized in the `prompt_cache_breakpoint` wire field.
+    attr_reader :prompt_cache_breakpoint
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the InputImageContentParamAutoParamType SDK namespace.
+  module InputImageContentParamAutoParamType
+    INPUT_IMAGE = 'input_image'
+    VALUES = ['input_image'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('InputImageContentParamAutoParamType', 'enum', "Unknown InputImageContentParamAutoParamType: #{value}")
+    end
+  end
+
+  # Defines the InputItem SDK namespace.
+  module InputItem
+    def self.from_hash(hash)
+      shape_mapping = {
+        'role' => EasyInputMessage,
+        'code' => ProgramItemParam,
+        'result' => ProgramOutputItemParam
+      }
+      type = shape_mapping.find { |required, _type| hash.is_a?(::Hash) && hash.key?(required) }&.last
+      decoded = type&.from_hash(hash)
+      return decoded unless type.nil?
+
+      [Item, CompactionTriggerItemParam, ItemReferenceParam].each do |type|
+        return type.from_hash(hash)
+      rescue ::StandardError
+        next
+      end
+      raise SdkValidationError.new('InputItem', 'variant', 'Cannot select InputItem variant without a discriminator')
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalInputMessageMetadata
+    FIELDS = {
+      type: 'type',
+      role: 'role',
+      status: 'status',
+      content: 'content'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      role
+      content
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::InputMessageType.from_value(value)
+      end,
+      role: lambda do |value|
+        ::OctridevOpenai::InputMessageRole.from_value(value)
+      end,
+      status: lambda do |value|
+        ::OctridevOpenai::InputMessageStatus.from_value(value)
+      end,
+      content: lambda do |value|
+        ::OctridevOpenai::InputMessageContentList.from_hash(value)
+      end
+    }.freeze
+  end
+
+  # API model for InputMessage.
+  # A message input to the model with a role indicating instruction following hierarchy. Instructions given with the `developer` or `system` role take precedence over instructions given with the `user` role.
+  class InputMessage
+    include Item
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalInputMessageMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalInputMessageMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalInputMessageMetadata::DECODERS
+
+    # @return [InputMessageType] The type of the message input. Always set to `message`.
+    attr_reader :type
+    # @return [InputMessageRole] The role of the message input. One of `user`, `system`, or `developer`.
+    attr_reader :role
+    # @return [InputMessageStatus] The status of item. One of `in_progress`, `completed`, or `incomplete`. Populated when items are returned via API.
+    attr_reader :status
+    # @return [InputMessageContentList] A list of one or many input items to the model, containing different content types.
+    attr_reader :content
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the InputMessageRole SDK namespace.
+  module InputMessageRole
+    USER = 'user'
+    SYSTEM = 'system'
+    DEVELOPER = 'developer'
+    VALUES = %w[user system developer].freeze
+    def self.from_value(value)
+      value
+    end
+  end
+
+  # Defines the InputMessageStatus SDK namespace.
+  module InputMessageStatus
+    IN_PROGRESS = 'in_progress'
+    COMPLETED = 'completed'
+    INCOMPLETE = 'incomplete'
+    VALUES = %w[in_progress completed incomplete].freeze
+    def self.from_value(value)
+      value
+    end
+  end
+
+  # Defines the InputMessageType SDK namespace.
+  module InputMessageType
+    MESSAGE = 'message'
+    VALUES = ['message'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('InputMessageType', 'enum', "Unknown InputMessageType: #{value}")
+    end
+  end
+
+  # Defines the InputMessageContentList SDK value decoder.
+  module InputMessageContentList
+    def self.from_hash(value)
+      return nil if value.nil?
+
+      value&.map { |item| ::OctridevOpenai::InputContent.from_hash(item) }
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalInputTextContentMetadata
+    FIELDS = {
+      type: 'type',
+      text: 'text',
+      prompt_cache_breakpoint: 'prompt_cache_breakpoint'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      text
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::InputTextContentType.from_value(value)
+      end,
+      prompt_cache_breakpoint: lambda do |value|
+        ::OctridevOpenai::PromptCacheBreakpointConfig.from_hash(value)
+      end
+    }.freeze
+  end
+
+  # API model for InputTextContent.
+  # A text input to the model.
+  class InputTextContent
+    include EvalItemContentItem
+    include FunctionAndCustomToolCallOutput
+    include InputContent
+    include MessageContentItem
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalInputTextContentMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalInputTextContentMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalInputTextContentMetadata::DECODERS
+
+    # @return [InputTextContentType] The type of the input item. Always `input_text`.
+    attr_reader :type
+    # @return [String] The text input to the model.
+    attr_reader :text
+    # @return [PromptCacheBreakpointConfig] Marks the exact end of a reusable prompt prefix. The breakpoint inherits its TTL from the request's `prompt_cache_options.ttl`; the boundary is not rounded to a token block.
+    attr_reader :prompt_cache_breakpoint
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the InputTextContentType SDK namespace.
+  module InputTextContentType
+    INPUT_TEXT = 'input_text'
+    VALUES = ['input_text'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('InputTextContentType', 'enum', "Unknown InputTextContentType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalInputTextContentParamMetadata
+    FIELDS = {
+      type: 'type',
+      text: 'text',
+      prompt_cache_breakpoint: 'prompt_cache_breakpoint'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      text
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::InputTextContentParamType.from_value(value)
+      end,
+      prompt_cache_breakpoint: lambda do |value|
+        ::OctridevOpenai::PromptCacheBreakpointParam.from_hash(value)
+      end
+    }.freeze
+  end
+
+  # API model for InputTextContentParam.
+  # A text input to the model.
+  class InputTextContentParam
+    include FunctionCallOutputItemParamOutputItem
+    include UserMessageItemParamContentItem
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalInputTextContentParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalInputTextContentParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalInputTextContentParamMetadata::DECODERS
+
+    # @return [InputTextContentParamType] The type of the input item. Always `input_text`.
+    attr_reader :type
+    # @return [String] The text input to the model.
+    attr_reader :text
+    # @return [PromptCacheBreakpointParam] Optional API value serialized in the `prompt_cache_breakpoint` wire field.
+    attr_reader :prompt_cache_breakpoint
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
 end
