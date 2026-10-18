@@ -5,123 +5,124 @@
 
 # response domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalResponseCompactionCompactingEventMetadata
-  FIELDS = {
-    type: "type",
-    sequence_number: "sequence_number",
-    output_index: "output_index",
-    item_id: "item_id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    sequence_number
-    output_index
-    item_id
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ResponseCompactionCompactingStreamingEventType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for ResponseCompactionCompactingEvent.
-# Typed representation of the `ResponseCompactionCompactingEvent` API schema.
-class ResponseCompactionCompactingEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalResponseCompactionCompactingEventMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalResponseCompactionCompactingEventMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalResponseCompactionCompactingEventMetadata::DECODERS
-
-  # @return [ResponseCompactionCompactingStreamingEventType] The type of the event, always `response.compaction.compacting`.
-  attr_reader :type
-  # @return [Integer] The sequence number of the event that was emitted.
-  attr_reader :sequence_number
-  # @return [Integer] The index of the compaction output item.
-  attr_reader :output_index
-  # @return [String] The ID of the compaction output item.
-  attr_reader :item_id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalResponseCompactionCompactingEventMetadata
+    FIELDS = {
+      type: 'type',
+      sequence_number: 'sequence_number',
+      output_index: 'output_index',
+      item_id: 'item_id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      sequence_number
+      output_index
+      item_id
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ResponseCompactionCompactingStreamingEventType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ResponseCompactionCompactingEvent.
+  # Typed representation of the `ResponseCompactionCompactingEvent` API schema.
+  class ResponseCompactionCompactingEvent
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalResponseCompactionCompactingEventMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalResponseCompactionCompactingEventMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalResponseCompactionCompactingEventMetadata::DECODERS
+
+    # @return [ResponseCompactionCompactingStreamingEventType] The type of the event, always `response.compaction.compacting`.
+    attr_reader :type
+    # @return [Integer] The sequence number of the event that was emitted.
+    attr_reader :sequence_number
+    # @return [Integer] The index of the compaction output item.
+    attr_reader :output_index
+    # @return [String] The ID of the compaction output item.
+    attr_reader :item_id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalResponseWsErrorMetadata
-  FIELDS = {
-    type: "type",
-    status: "status",
-    sequence_number: "sequence_number",
-    error: "error",
-    stream_id: "stream_id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    error
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ResponseWsErrorType.from_value(value)
-    end,
-    error: lambda do |value|
-      ::OctridevOpenai::ErrorPayload.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for ResponseWsError.
-# Emitted when an error occurs while processing a Responses WebSocket request.
-class ResponseWsError
-  include ResponsesServerEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalResponseWsErrorMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalResponseWsErrorMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalResponseWsErrorMetadata::DECODERS
-
-  # @return [ResponseWsErrorType] The type of the event. Always `error`.
-  attr_reader :type
-  # @return [Integer] The HTTP status code associated with a WebSocket protocol error.
-  attr_reader :status
-  # @return [Integer] The sequence number of an error emitted by the response stream.
-  attr_reader :sequence_number
-  # @return [ErrorPayload] Details about the error.
-  attr_reader :error
-  # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
-  attr_reader :stream_id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalResponseWsErrorMetadata
+    FIELDS = {
+      type: 'type',
+      status: 'status',
+      sequence_number: 'sequence_number',
+      error: 'error',
+      stream_id: 'stream_id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      error
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ResponseWsErrorType.from_value(value)
+      end,
+      error: lambda do |value|
+        ::OctridevOpenai::ErrorPayload.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ResponseWsError.
+  # Emitted when an error occurs while processing a Responses WebSocket request.
+  class ResponseWsError
+    include ResponsesServerEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalResponseWsErrorMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalResponseWsErrorMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalResponseWsErrorMetadata::DECODERS
+
+    # @return [ResponseWsErrorType] The type of the event. Always `error`.
+    attr_reader :type
+    # @return [Integer] The HTTP status code associated with a WebSocket protocol error.
+    attr_reader :status
+    # @return [Integer] The sequence number of an error emitted by the response stream.
+    attr_reader :sequence_number
+    # @return [ErrorPayload] Details about the error.
+    attr_reader :error
+    # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
+    attr_reader :stream_id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the ResponseWsErrorType SDK namespace.
+  module ResponseWsErrorType
+    ERROR = 'error'
+    VALUES = ['error'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the ResponseWsErrorType SDK namespace.
-module ResponseWsErrorType
-  ERROR = 'error'
-  VALUES = ['error'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('ResponseWsErrorType', 'enum', "Unknown ResponseWsErrorType: #{value}")
+      raise SdkValidationError.new('ResponseWsErrorType', 'enum', "Unknown ResponseWsErrorType: #{value}")
+    end
   end
-end
 end

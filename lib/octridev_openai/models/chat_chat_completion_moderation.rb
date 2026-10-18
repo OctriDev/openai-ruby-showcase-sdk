@@ -5,211 +5,215 @@
 
 # chat_chat_completion_moderation domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalChatCompletionModerationMetadata
-  FIELDS = {
-    input: "input",
-    output: "output",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    input
-    output
-  ].freeze
-  DECODERS = {
-    input: lambda do |value|
-      ::OctridevOpenai::ChatCompletionModerationInput.from_hash(value)
-    end,
-    output: lambda do |value|
-      ::OctridevOpenai::ChatCompletionModerationOutput.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for ChatCompletionModeration.
-# Moderation results or errors for the request input and generated output.
-class ChatCompletionModeration
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalChatCompletionModerationMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalChatCompletionModerationMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalChatCompletionModerationMetadata::DECODERS
-
-  # @return [ChatCompletionModerationInput] Moderation for the request input.
-  attr_reader :input
-  # @return [ChatCompletionModerationOutput] Moderation for the generated output.
-  attr_reader :output
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalChatCompletionModerationMetadata
+    FIELDS = {
+      input: 'input',
+      output: 'output'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      input
+      output
+    ].freeze
+    DECODERS = {
+      input: lambda do |value|
+        ::OctridevOpenai::ChatCompletionModerationInput.from_hash(value)
+      end,
+      output: lambda do |value|
+        ::OctridevOpenai::ChatCompletionModerationOutput.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ChatCompletionModeration.
+  # Moderation results or errors for the request input and generated output.
+  class ChatCompletionModeration
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalChatCompletionModerationMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalChatCompletionModerationMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalChatCompletionModerationMetadata::DECODERS
+
+    # @return [ChatCompletionModerationInput] Moderation for the request input.
+    attr_reader :input
+    # @return [ChatCompletionModerationOutput] Moderation for the generated output.
+    attr_reader :output
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalChatCompletionModerationErrorMetadata
-  FIELDS = {
-    type: "type",
-    code: "code",
-    message: "message",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    code
-    message
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ChatCompletionModerationErrorType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for ChatCompletionModerationError.
-# An error produced while attempting moderation.
-class ChatCompletionModerationError
-  include ChatCompletionModerationInput
-  include ChatCompletionModerationOutput
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalChatCompletionModerationErrorMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalChatCompletionModerationErrorMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalChatCompletionModerationErrorMetadata::DECODERS
-
-  # @return [ChatCompletionModerationErrorType] The object type, which is always `error`.
-  attr_reader :type
-  # @return [String] The error code.
-  attr_reader :code
-  # @return [String] The error message.
-  attr_reader :message
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalChatCompletionModerationErrorMetadata
+    FIELDS = {
+      type: 'type',
+      code: 'code',
+      message: 'message'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      code
+      message
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ChatCompletionModerationErrorType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ChatCompletionModerationError.
+  # An error produced while attempting moderation.
+  class ChatCompletionModerationError
+    include ChatCompletionModerationInput
+    include ChatCompletionModerationOutput
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalChatCompletionModerationErrorMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalChatCompletionModerationErrorMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalChatCompletionModerationErrorMetadata::DECODERS
+
+    # @return [ChatCompletionModerationErrorType] The object type, which is always `error`.
+    attr_reader :type
+    # @return [String] The error code.
+    attr_reader :code
+    # @return [String] The error message.
+    attr_reader :message
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the ChatCompletionModerationErrorType SDK namespace.
+  module ChatCompletionModerationErrorType
+    ERROR = 'error'
+    VALUES = ['error'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the ChatCompletionModerationErrorType SDK namespace.
-module ChatCompletionModerationErrorType
-  ERROR = 'error'
-  VALUES = ['error'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('ChatCompletionModerationErrorType', 'enum', "Unknown ChatCompletionModerationErrorType: #{value}")
-  end
-end
-
-# Defines the ChatCompletionModerationInput SDK namespace.
-module ChatCompletionModerationInput
-  DISCRIMINATOR_MAPPING = {
-    "moderation_results" => -> { ChatCompletionModerationResults },
-    "error" => -> { ChatCompletionModerationError },
-  }.freeze
-
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('ChatCompletionModerationInput', 'variant', "Unknown ChatCompletionModerationInput discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Defines the ChatCompletionModerationOutput SDK namespace.
-module ChatCompletionModerationOutput
-  DISCRIMINATOR_MAPPING = {
-    "moderation_results" => -> { ChatCompletionModerationResults },
-    "error" => -> { ChatCompletionModerationError },
-  }.freeze
-
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('ChatCompletionModerationOutput', 'variant', "Unknown ChatCompletionModerationOutput discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalChatCompletionModerationResultsMetadata
-  FIELDS = {
-    type: "type",
-    model: "model",
-    results: "results",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    model
-    results
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ChatCompletionModerationResultsType.from_value(value)
-    end,
-    results: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::ModerationResultBody.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for ChatCompletionModerationResults.
-# Successful moderation results for the request input or generated output.
-class ChatCompletionModerationResults
-  include ChatCompletionModerationInput
-  include ChatCompletionModerationOutput
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalChatCompletionModerationResultsMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalChatCompletionModerationResultsMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalChatCompletionModerationResultsMetadata::DECODERS
-
-  # @return [ChatCompletionModerationResultsType] The object type, which is always `moderation_results`.
-  attr_reader :type
-  # @return [String] The moderation model used to generate the results.
-  attr_reader :model
-  # @return [Array_of_ModerationResultBody] A list of moderation results.
-  attr_reader :results
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('ChatCompletionModerationErrorType', 'enum', "Unknown ChatCompletionModerationErrorType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the ChatCompletionModerationInput SDK namespace.
+  module ChatCompletionModerationInput
+    DISCRIMINATOR_MAPPING = {
+      'moderation_results' => -> { ChatCompletionModerationResults },
+      'error' => -> { ChatCompletionModerationError }
+    }.freeze
+
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('ChatCompletionModerationInput', 'variant', "Unknown ChatCompletionModerationInput discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the ChatCompletionModerationOutput SDK namespace.
+  module ChatCompletionModerationOutput
+    DISCRIMINATOR_MAPPING = {
+      'moderation_results' => -> { ChatCompletionModerationResults },
+      'error' => -> { ChatCompletionModerationError }
+    }.freeze
 
-# Defines the ChatCompletionModerationResultsType SDK namespace.
-module ChatCompletionModerationResultsType
-  MODERATION_RESULTS = 'moderation_results'
-  VALUES = ['moderation_results'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
 
-    raise SdkValidationError.new('ChatCompletionModerationResultsType', 'enum', "Unknown ChatCompletionModerationResultsType: #{value}")
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('ChatCompletionModerationOutput', 'variant', "Unknown ChatCompletionModerationOutput discriminator: #{hash['type'].inspect}")
+    end
   end
-end
+
+  # Internal model hydration metadata.
+  class SdkInternalChatCompletionModerationResultsMetadata
+    FIELDS = {
+      type: 'type',
+      model: 'model',
+      results: 'results'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      model
+      results
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ChatCompletionModerationResultsType.from_value(value)
+      end,
+      results: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::ModerationResultBody.from_hash(item) }
+      end
+    }.freeze
+  end
+
+  # API model for ChatCompletionModerationResults.
+  # Successful moderation results for the request input or generated output.
+  class ChatCompletionModerationResults
+    include ChatCompletionModerationInput
+    include ChatCompletionModerationOutput
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalChatCompletionModerationResultsMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalChatCompletionModerationResultsMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalChatCompletionModerationResultsMetadata::DECODERS
+
+    # @return [ChatCompletionModerationResultsType] The object type, which is always `moderation_results`.
+    attr_reader :type
+    # @return [String] The moderation model used to generate the results.
+    attr_reader :model
+    # @return [Array_of_ModerationResultBody] A list of moderation results.
+    attr_reader :results
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the ChatCompletionModerationResultsType SDK namespace.
+  module ChatCompletionModerationResultsType
+    MODERATION_RESULTS = 'moderation_results'
+    VALUES = ['moderation_results'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('ChatCompletionModerationResultsType', 'enum', "Unknown ChatCompletionModerationResultsType: #{value}")
+    end
+  end
 end

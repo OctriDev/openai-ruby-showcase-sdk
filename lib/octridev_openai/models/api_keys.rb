@@ -5,113 +5,111 @@
 
 # api_keys domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalCreateProjectServiceAccountApiKeyBodyMetadata
-  FIELDS = {
-    name: "name",
-    scopes: "scopes",
-    expires_in_seconds: "expires_in_seconds",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for CreateProjectServiceAccountApiKeyBody.
-# The service account API key create request payload.
-class CreateProjectServiceAccountApiKeyBody
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCreateProjectServiceAccountApiKeyBodyMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCreateProjectServiceAccountApiKeyBodyMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCreateProjectServiceAccountApiKeyBodyMetadata::DECODERS
-
-  # @return [String] API key name.
-  attr_reader :name
-  # @return [Array_of_String] API key scopes.
-  attr_reader :scopes
-  # @return [Integer] Optional API value serialized in the `expires_in_seconds` wire field.
-  attr_reader :expires_in_seconds
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalCreateProjectServiceAccountApiKeyBodyMetadata
+    FIELDS = {
+      name: 'name',
+      scopes: 'scopes',
+      expires_in_seconds: 'expires_in_seconds'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for CreateProjectServiceAccountApiKeyBody.
+  # The service account API key create request payload.
+  class CreateProjectServiceAccountApiKeyBody
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCreateProjectServiceAccountApiKeyBodyMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCreateProjectServiceAccountApiKeyBodyMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCreateProjectServiceAccountApiKeyBodyMetadata::DECODERS
+
+    # @return [String] API key name.
+    attr_reader :name
+    # @return [Array_of_String] API key scopes.
+    attr_reader :scopes
+    # @return [Integer] Optional API value serialized in the `expires_in_seconds` wire field.
+    attr_reader :expires_in_seconds
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalServiceAccountApiKeyBodyMetadata
-  FIELDS = {
-    object: "object",
-    value: "value",
-    name: "name",
-    created_at: "created_at",
-    expires_at: "expires_at",
-    id: "id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    object
-    value
-    name
-    created_at
-    id
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::ServiceAccountApiKeyBodyObject.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for ServiceAccountApiKeyBody.
-# Typed representation of the `ServiceAccountApiKeyBody` API schema.
-class ServiceAccountApiKeyBody
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalServiceAccountApiKeyBodyMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalServiceAccountApiKeyBodyMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalServiceAccountApiKeyBodyMetadata::DECODERS
-
-  # @return [ServiceAccountApiKeyBodyObject] The object type, which is always `organization.project.service_account.api_key`
-  attr_reader :object
-  # @return [String] The unredacted API key value.
-  attr_reader :value
-  # @return [String] The name of the API key.
-  attr_reader :name
-  # @return [Integer] The Unix timestamp (in seconds) when the API key was created.
-  attr_reader :created_at
-  # @return [Integer] Optional API value serialized in the `expires_at` wire field.
-  attr_reader :expires_at
-  # @return [String] The identifier of the API key.
-  attr_reader :id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalServiceAccountApiKeyBodyMetadata
+    FIELDS = {
+      object: 'object',
+      value: 'value',
+      name: 'name',
+      created_at: 'created_at',
+      expires_at: 'expires_at',
+      id: 'id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      object
+      value
+      name
+      created_at
+      id
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::ServiceAccountApiKeyBodyObject.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ServiceAccountApiKeyBody.
+  # Typed representation of the `ServiceAccountApiKeyBody` API schema.
+  class ServiceAccountApiKeyBody
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalServiceAccountApiKeyBodyMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalServiceAccountApiKeyBodyMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalServiceAccountApiKeyBodyMetadata::DECODERS
+
+    # @return [ServiceAccountApiKeyBodyObject] The object type, which is always `organization.project.service_account.api_key`
+    attr_reader :object
+    # @return [String] The unredacted API key value.
+    attr_reader :value
+    # @return [String] The name of the API key.
+    attr_reader :name
+    # @return [Integer] The Unix timestamp (in seconds) when the API key was created.
+    attr_reader :created_at
+    # @return [Integer] Optional API value serialized in the `expires_at` wire field.
+    attr_reader :expires_at
+    # @return [String] The identifier of the API key.
+    attr_reader :id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the ServiceAccountApiKeyBodyObject SDK namespace.
+  module ServiceAccountApiKeyBodyObject
+    ORGANIZATION_PROJECT_SERVICE_ACCOUNT_API_KEY = 'organization.project.service_account.api_key'
+    VALUES = ['organization.project.service_account.api_key'].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
-
-# Defines the ServiceAccountApiKeyBodyObject SDK namespace.
-module ServiceAccountApiKeyBodyObject
-  ORGANIZATION_PROJECT_SERVICE_ACCOUNT_API_KEY = 'organization.project.service_account.api_key'
-  VALUES = ['organization.project.service_account.api_key'].freeze
-  def self.from_value(value)
-    value
-  end
-end
 end

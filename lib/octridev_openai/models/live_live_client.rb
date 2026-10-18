@@ -5,129 +5,131 @@
 
 # live_live_client domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalLiveClientConfigParamMetadata
-  FIELDS = {
-    data_channel: "data_channel",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    data_channel
-  ].freeze
-  DECODERS = {
-    data_channel: lambda do |value|
-      ::OctridevOpenai::LiveDataChannelConfigParam.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for LiveClientConfigParam.
-# Startup-only capabilities for an untrusted frontend attached to a unified WebRTC session. Trusted sideband connections are unaffected.
-class LiveClientConfigParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveClientConfigParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveClientConfigParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveClientConfigParamMetadata::DECODERS
-
-  # @return [LiveDataChannelConfigParam] Client and server event permissions for the WebRTC frontend data channel.
-  attr_reader :data_channel
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalLiveClientConfigParamMetadata
+    FIELDS = {
+      data_channel: 'data_channel'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      data_channel
+    ].freeze
+    DECODERS = {
+      data_channel: lambda do |value|
+        ::OctridevOpenai::LiveDataChannelConfigParam.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for LiveClientConfigParam.
+  # Startup-only capabilities for an untrusted frontend attached to a unified WebRTC session. Trusted sideband connections are unaffected.
+  class LiveClientConfigParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveClientConfigParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveClientConfigParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveClientConfigParamMetadata::DECODERS
+
+    # @return [LiveDataChannelConfigParam] Client and server event permissions for the WebRTC frontend data channel.
+    attr_reader :data_channel
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalLiveClientDelegationParamMetadata
-  FIELDS = {
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LiveClientDelegationParamType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for LiveClientDelegationParam.
-# Delegate tasks to your application. The Live session emits delegation events that your backend handles.
-class LiveClientDelegationParam
-  include Delegation
-  include LiveSessionCreateParamsDelegation
-  include LiveSessionUpdateParamsDelegation
-  include LiveSessionResourceParamDelegation
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveClientDelegationParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveClientDelegationParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveClientDelegationParamMetadata::DECODERS
-
-  # @return [LiveClientDelegationParamType] The delegation owner. Always `client` for tasks handled by your application.
-  attr_reader :type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalLiveClientDelegationParamMetadata
+    FIELDS = {
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LiveClientDelegationParamType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for LiveClientDelegationParam.
+  # Delegate tasks to your application. The Live session emits delegation events that your backend handles.
+  class LiveClientDelegationParam
+    include Delegation
+    include LiveSessionCreateParamsDelegation
+    include LiveSessionUpdateParamsDelegation
+    include LiveSessionResourceParamDelegation
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveClientDelegationParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveClientDelegationParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveClientDelegationParamMetadata::DECODERS
+
+    # @return [LiveClientDelegationParamType] The delegation owner. Always `client` for tasks handled by your application.
+    attr_reader :type
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the LiveClientDelegationParamType SDK namespace.
+  module LiveClientDelegationParamType
+    CLIENT = 'client'
+    VALUES = ['client'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('LiveClientDelegationParamType', 'enum', "Unknown LiveClientDelegationParamType: #{value}")
+    end
   end
-end
 
-# Defines the LiveClientDelegationParamType SDK namespace.
-module LiveClientDelegationParamType
-  CLIENT = 'client'
-  VALUES = ['client'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+  # Defines the LiveClientEvent SDK namespace.
+  module LiveClientEvent
+    DISCRIMINATOR_MAPPING = {
+      'session.start' => -> { LiveSessionStartEvent },
+      'session.update' => -> { LiveSessionUpdateParam },
+      'session.input_audio.append' => -> { LiveInputAudioAppendEvent },
+      'session.input_audio.mute' => -> { LiveInputAudioMuteParam },
+      'session.input_audio.unmute' => -> { LiveInputAudioUnmuteParam },
+      'session.output_audio.fixture.play' => -> { LiveOutputAudioFixturePlayParam },
+      'session.instructions.append' => -> { LiveInstructionsAppendParam },
+      'session.thinking.append' => -> { LiveThinkingAppendParam },
+      'session.commentary.append' => -> { LiveCommentaryAppendParam },
+      'decision.create' => -> { LiveDecisionCreateParam },
+      'decision.item.create' => -> { LiveDecisionItemCreateParam },
+      'decision.item.delete' => -> { LiveDecisionItemDeleteParam },
+      'response.item.create' => -> { LiveResponseItemCreateParam },
+      'response.create' => -> { LiveResponseCreateParam },
+      'session.close' => -> { LiveSessionCloseParam }
+    }.freeze
 
-    raise SdkValidationError.new('LiveClientDelegationParamType', 'enum', "Unknown LiveClientDelegationParamType: #{value}")
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('LiveClientEvent', 'variant', "Unknown LiveClientEvent discriminator: #{hash['type'].inspect}")
+    end
   end
-end
-
-# Defines the LiveClientEvent SDK namespace.
-module LiveClientEvent
-  DISCRIMINATOR_MAPPING = {
-    "session.start" => -> { LiveSessionStartEvent },
-    "session.update" => -> { LiveSessionUpdateParam },
-    "session.input_audio.append" => -> { LiveInputAudioAppendEvent },
-    "session.input_audio.mute" => -> { LiveInputAudioMuteParam },
-    "session.input_audio.unmute" => -> { LiveInputAudioUnmuteParam },
-    "session.output_audio.fixture.play" => -> { LiveOutputAudioFixturePlayParam },
-    "session.instructions.append" => -> { LiveInstructionsAppendParam },
-    "session.thinking.append" => -> { LiveThinkingAppendParam },
-    "session.commentary.append" => -> { LiveCommentaryAppendParam },
-    "decision.create" => -> { LiveDecisionCreateParam },
-    "decision.item.create" => -> { LiveDecisionItemCreateParam },
-    "decision.item.delete" => -> { LiveDecisionItemDeleteParam },
-    "response.item.create" => -> { LiveResponseItemCreateParam },
-    "response.create" => -> { LiveResponseCreateParam },
-    "session.close" => -> { LiveSessionCloseParam },
-  }.freeze
-
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('LiveClientEvent', 'variant', "Unknown LiveClientEvent discriminator: #{hash["type"].inspect}")
-  end
-end
 end

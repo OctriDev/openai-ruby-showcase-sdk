@@ -5,39 +5,37 @@
 
 # rotate_secret domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalPublicRotateSecretBodyMetadata
-  FIELDS = {
-    keep_old_secret_active_for24_hours: "keep_old_secret_active_for_24_hours",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for PublicRotateSecretBody.
-# Typed representation of the `PublicRotateSecretBody` API schema.
-class PublicRotateSecretBody
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalPublicRotateSecretBodyMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalPublicRotateSecretBodyMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalPublicRotateSecretBodyMetadata::DECODERS
-
-  # @return [Boolean] Whether to keep the previous signing secret valid for 24 hours after rotation. Defaults to false, which invalidates the previous secret immediately.
-  attr_reader :keep_old_secret_active_for24_hours
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalPublicRotateSecretBodyMetadata
+    FIELDS = {
+      keep_old_secret_active_for24_hours: 'keep_old_secret_active_for_24_hours'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
+  # API model for PublicRotateSecretBody.
+  # Typed representation of the `PublicRotateSecretBody` API schema.
+  class PublicRotateSecretBody
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalPublicRotateSecretBodyMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalPublicRotateSecretBodyMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalPublicRotateSecretBodyMetadata::DECODERS
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+    # @return [Boolean] Whether to keep the previous signing secret valid for 24 hours after rotation. Defaults to false, which invalidates the previous secret immediately.
+    attr_reader :keep_old_secret_active_for24_hours
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
 end

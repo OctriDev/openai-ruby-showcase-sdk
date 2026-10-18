@@ -5,139 +5,141 @@
 
 # responses_beta_url domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalBetaUrlCitationBodyMetadata
-  FIELDS = {
-    type: "type",
-    url: "url",
-    start_index: "start_index",
-    end_index: "end_index",
-    title: "title",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    url
-    start_index
-    end_index
-    title
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaUrlCitationBodyType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaUrlCitationBody.
-# A citation for a web resource used to generate a model response.
-class BetaUrlCitationBody
-  include BetaAnnotation
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaUrlCitationBodyMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaUrlCitationBodyMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaUrlCitationBodyMetadata::DECODERS
-
-  # @return [BetaUrlCitationBodyType] The type of the URL citation. Always `url_citation`.
-  attr_reader :type
-  # @return [String] The URL of the web resource.
-  attr_reader :url
-  # @return [Integer] The index of the first character of the URL citation in the message.
-  attr_reader :start_index
-  # @return [Integer] The index of the last character of the URL citation in the message.
-  attr_reader :end_index
-  # @return [String] The title of the web resource.
-  attr_reader :title
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalBetaUrlCitationBodyMetadata
+    FIELDS = {
+      type: 'type',
+      url: 'url',
+      start_index: 'start_index',
+      end_index: 'end_index',
+      title: 'title'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      url
+      start_index
+      end_index
+      title
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaUrlCitationBodyType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for BetaUrlCitationBody.
+  # A citation for a web resource used to generate a model response.
+  class BetaUrlCitationBody
+    include BetaAnnotation
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaUrlCitationBodyMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaUrlCitationBodyMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaUrlCitationBodyMetadata::DECODERS
+
+    # @return [BetaUrlCitationBodyType] The type of the URL citation. Always `url_citation`.
+    attr_reader :type
+    # @return [String] The URL of the web resource.
+    attr_reader :url
+    # @return [Integer] The index of the first character of the URL citation in the message.
+    attr_reader :start_index
+    # @return [Integer] The index of the last character of the URL citation in the message.
+    attr_reader :end_index
+    # @return [String] The title of the web resource.
+    attr_reader :title
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the BetaUrlCitationBodyType SDK namespace.
+  module BetaUrlCitationBodyType
+    URL_CITATION = 'url_citation'
+    VALUES = ['url_citation'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the BetaUrlCitationBodyType SDK namespace.
-module BetaUrlCitationBodyType
-  URL_CITATION = 'url_citation'
-  VALUES = ['url_citation'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('BetaUrlCitationBodyType', 'enum', "Unknown BetaUrlCitationBodyType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaUrlCitationParamMetadata
-  FIELDS = {
-    type: "type",
-    start_index: "start_index",
-    end_index: "end_index",
-    url: "url",
-    title: "title",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    start_index
-    end_index
-    url
-    title
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaUrlCitationParamType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaUrlCitationParam.
-# Typed representation of the `BetaUrlCitationParam` API schema.
-class BetaUrlCitationParam
-  include BetaOutputTextContentParamAnnotationsItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaUrlCitationParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaUrlCitationParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaUrlCitationParamMetadata::DECODERS
-
-  # @return [BetaUrlCitationParamType] The citation type. Always `url_citation`.
-  attr_reader :type
-  # @return [Integer] The index of the first character of the citation in the message.
-  attr_reader :start_index
-  # @return [Integer] The index of the last character of the citation in the message.
-  attr_reader :end_index
-  # @return [String] The URL of the cited resource.
-  attr_reader :url
-  # @return [String] The title of the cited resource.
-  attr_reader :title
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('BetaUrlCitationBodyType', 'enum', "Unknown BetaUrlCitationBodyType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalBetaUrlCitationParamMetadata
+    FIELDS = {
+      type: 'type',
+      start_index: 'start_index',
+      end_index: 'end_index',
+      url: 'url',
+      title: 'title'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      start_index
+      end_index
+      url
+      title
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaUrlCitationParamType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for BetaUrlCitationParam.
+  # Typed representation of the `BetaUrlCitationParam` API schema.
+  class BetaUrlCitationParam
+    include BetaOutputTextContentParamAnnotationsItem
 
-# Defines the BetaUrlCitationParamType SDK namespace.
-module BetaUrlCitationParamType
-  URL_CITATION = 'url_citation'
-  VALUES = ['url_citation'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaUrlCitationParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaUrlCitationParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaUrlCitationParamMetadata::DECODERS
 
-    raise SdkValidationError.new('BetaUrlCitationParamType', 'enum', "Unknown BetaUrlCitationParamType: #{value}")
+    # @return [BetaUrlCitationParamType] The citation type. Always `url_citation`.
+    attr_reader :type
+    # @return [Integer] The index of the first character of the citation in the message.
+    attr_reader :start_index
+    # @return [Integer] The index of the last character of the citation in the message.
+    attr_reader :end_index
+    # @return [String] The URL of the cited resource.
+    attr_reader :url
+    # @return [String] The title of the cited resource.
+    attr_reader :title
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
+
+  # Defines the BetaUrlCitationParamType SDK namespace.
+  module BetaUrlCitationParamType
+    URL_CITATION = 'url_citation'
+    VALUES = ['url_citation'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaUrlCitationParamType', 'enum', "Unknown BetaUrlCitationParamType: #{value}")
+    end
+  end
 end

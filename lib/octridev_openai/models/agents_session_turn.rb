@@ -5,256 +5,257 @@
 
 # agents_session_turn domain models
 module OctridevOpenai
-# Defines the SessionTurnErrorCodeResource SDK namespace.
-module SessionTurnErrorCodeResource
-  CONTEXT_LENGTH_EXCEEDED = 'context_length_exceeded'
-  SESSION_BUDGET_EXCEEDED = 'session_budget_exceeded'
-  USAGE_LIMIT_EXCEEDED = 'usage_limit_exceeded'
-  PROJECT_SPEND_LIMIT_EXCEEDED = 'project_spend_limit_exceeded'
-  ORGANIZATION_SPEND_LIMIT_EXCEEDED = 'organization_spend_limit_exceeded'
-  ORGANIZATION_USAGE_LIMIT_EXCEEDED = 'organization_usage_limit_exceeded'
-  BILLING_NOT_ACTIVE = 'billing_not_active'
-  CREDIT_BALANCE_EXHAUSTED = 'credit_balance_exhausted'
-  RATE_LIMIT_EXCEEDED = 'rate_limit_exceeded'
-  FLEX_UNAVAILABLE = 'flex_unavailable'
-  SERVER_OVERLOADED = 'server_overloaded'
-  CYBER_POLICY = 'cyber_policy'
-  MISALIGNMENT_POLICY_VIOLATION = 'misalignment_policy_violation'
-  CONNECTION_FAILED = 'connection_failed'
-  SERVER_ERROR = 'server_error'
-  AUTHENTICATION_ERROR = 'authentication_error'
-  INVALID_REQUEST = 'invalid_request'
-  RESOURCE_NOT_FOUND = 'resource_not_found'
-  SANDBOX_ERROR = 'sandbox_error'
-  EXECUTOR_VERSION_INCOMPATIBLE = 'executor_version_incompatible'
-  ACTIVE_TURN_NOT_STEERABLE = 'active_turn_not_steerable'
-  REQUEST_TIMEOUT = 'request_timeout'
-  INTERNAL_ERROR = 'internal_error'
-  VALUES = [
-    'context_length_exceeded', 'session_budget_exceeded', 'usage_limit_exceeded',
-    'project_spend_limit_exceeded', 'organization_spend_limit_exceeded',
-    'organization_usage_limit_exceeded', 'billing_not_active', 'credit_balance_exhausted',
-    'rate_limit_exceeded', 'flex_unavailable', 'server_overloaded', 'cyber_policy',
-    'misalignment_policy_violation', 'connection_failed', 'server_error', 'authentication_error',
-    'invalid_request', 'resource_not_found', 'sandbox_error', 'executor_version_incompatible',
-    'active_turn_not_steerable', 'request_timeout', 'internal_error'
-  ].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalSessionTurnErrorResourceMetadata
-  FIELDS = {
-    code: "code",
-    message: "message",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    code
-    message
-  ].freeze
-  DECODERS = {
-    code: lambda do |value|
-      ::OctridevOpenai::SessionTurnErrorCodeResource.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for SessionTurnErrorResource.
-# A customer-safe error describing why a session request failed.
-class SessionTurnErrorResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalSessionTurnErrorResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalSessionTurnErrorResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalSessionTurnErrorResourceMetadata::DECODERS
-
-  # @return [SessionTurnErrorCodeResource] A stable, machine-readable failure category.
-  attr_reader :code
-  # @return [String] A customer-safe explanation of the failure.
-  attr_reader :message
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the SessionTurnErrorCodeResource SDK namespace.
+  module SessionTurnErrorCodeResource
+    CONTEXT_LENGTH_EXCEEDED = 'context_length_exceeded'
+    SESSION_BUDGET_EXCEEDED = 'session_budget_exceeded'
+    USAGE_LIMIT_EXCEEDED = 'usage_limit_exceeded'
+    PROJECT_SPEND_LIMIT_EXCEEDED = 'project_spend_limit_exceeded'
+    ORGANIZATION_SPEND_LIMIT_EXCEEDED = 'organization_spend_limit_exceeded'
+    ORGANIZATION_USAGE_LIMIT_EXCEEDED = 'organization_usage_limit_exceeded'
+    BILLING_NOT_ACTIVE = 'billing_not_active'
+    CREDIT_BALANCE_EXHAUSTED = 'credit_balance_exhausted'
+    RATE_LIMIT_EXCEEDED = 'rate_limit_exceeded'
+    FLEX_UNAVAILABLE = 'flex_unavailable'
+    SERVER_OVERLOADED = 'server_overloaded'
+    CYBER_POLICY = 'cyber_policy'
+    MISALIGNMENT_POLICY_VIOLATION = 'misalignment_policy_violation'
+    CONNECTION_FAILED = 'connection_failed'
+    SERVER_ERROR = 'server_error'
+    AUTHENTICATION_ERROR = 'authentication_error'
+    INVALID_REQUEST = 'invalid_request'
+    RESOURCE_NOT_FOUND = 'resource_not_found'
+    SANDBOX_ERROR = 'sandbox_error'
+    EXECUTOR_VERSION_INCOMPATIBLE = 'executor_version_incompatible'
+    ACTIVE_TURN_NOT_STEERABLE = 'active_turn_not_steerable'
+    REQUEST_TIMEOUT = 'request_timeout'
+    INTERNAL_ERROR = 'internal_error'
+    VALUES = %w[
+      context_length_exceeded session_budget_exceeded usage_limit_exceeded
+      project_spend_limit_exceeded organization_spend_limit_exceeded
+      organization_usage_limit_exceeded billing_not_active credit_balance_exhausted
+      rate_limit_exceeded flex_unavailable server_overloaded cyber_policy
+      misalignment_policy_violation connection_failed server_error authentication_error
+      invalid_request resource_not_found sandbox_error executor_version_incompatible
+      active_turn_not_steerable request_timeout internal_error
+    ].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalSessionTurnErrorResourceMetadata
+    FIELDS = {
+      code: 'code',
+      message: 'message'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      code
+      message
+    ].freeze
+    DECODERS = {
+      code: lambda do |value|
+        ::OctridevOpenai::SessionTurnErrorCodeResource.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for SessionTurnErrorResource.
+  # A customer-safe error describing why a session request failed.
+  class SessionTurnErrorResource
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalSessionTurnErrorResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalSessionTurnErrorResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalSessionTurnErrorResourceMetadata::DECODERS
 
-# Defines the SessionTurnItemResource SDK namespace.
-module SessionTurnItemResource
-  DISCRIMINATOR_MAPPING = {
-    "message" => -> { MessageItemResource },
-    "reasoning" => -> { ReasoningItemResource },
-    "function_call" => -> { FunctionCallItemResource },
-    "function_call_output" => -> { FunctionCallOutputItemResource },
-    "agent_message" => -> { AgentMessageItemResource },
-    "mcp_call" => -> { McpCallItemResource },
-    "computer_use_call" => -> { ComputerUseCallItemResource },
-    "computer_use_approval_request" => -> { BrowserAuthenticationRequestItemResource },
-    "computer_use_approval_request_result" => -> { ComputerUseApprovalRequestResultItemResource },
-    "web_search_call" => -> { WebSearchCallItemResource },
-    "command_execution" => -> { CommandExecutionItemResource },
-    "interrupt_subagent_call" => -> { InterruptSubagentCallItemResource },
-    "create_subagent_call" => -> { CreateSubagentCallItemResource },
-    "send_subagent_input_call" => -> { SendSubagentInputCallItemResource },
-    "resume_subagent_call" => -> { ResumeSubagentCallItemResource },
-    "wait_for_subagents_call" => -> { WaitForSubagentsCallItemResource },
-    "close_subagent_call" => -> { CloseSubagentCallItemResource },
-  }.freeze
+    # @return [SessionTurnErrorCodeResource] A stable, machine-readable failure category.
+    attr_reader :code
+    # @return [String] A customer-safe explanation of the failure.
+    attr_reader :message
 
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-    raise SdkValidationError.new('SessionTurnItemResource', 'variant', "Unknown SessionTurnItemResource discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalSessionTurnListResourceMetadata
-  FIELDS = {
-    object: "object",
-    data: "data",
-    first_id: "first_id",
-    last_id: "last_id",
-    has_more: "has_more",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    object
-    data
-    first_id
-    last_id
-    has_more
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::SessionTurnListResourceObject.from_value(value)
-    end,
-    data: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::TurnResource.from_hash(item) }
-    end,
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    first_id
-    last_id
-  ].freeze
-end
-
-# API model for SessionTurnListResource.
-# A page of Agents API resources, with IDs for retrieving additional pages.
-class SessionTurnListResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalSessionTurnListResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalSessionTurnListResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalSessionTurnListResourceMetadata::DECODERS
-
-  # @return [SessionTurnListResourceObject] The object type, which is always `list`.
-  attr_reader :object
-  # @return [Array_of_TurnResource] The resources returned in this page, in the requested sort order.
-  attr_reader :data
-  # @return [String] The ID of the first resource in `data`, or `null` if the page is empty.
-  attr_reader :first_id
-  # @return [String] The ID of the last resource in `data`, or `null` if the page is empty. Pass this as `after` with the same order and filters.
-  attr_reader :last_id
-  # @return [Boolean] Whether there are more resources to retrieve after this page.
-  attr_reader :has_more
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalSessionTurnListResourceMetadata::NULLABLE_FIELDS)
+  # Defines the SessionTurnItemResource SDK namespace.
+  module SessionTurnItemResource
+    DISCRIMINATOR_MAPPING = {
+      'message' => -> { MessageItemResource },
+      'reasoning' => -> { ReasoningItemResource },
+      'function_call' => -> { FunctionCallItemResource },
+      'function_call_output' => -> { FunctionCallOutputItemResource },
+      'agent_message' => -> { AgentMessageItemResource },
+      'mcp_call' => -> { McpCallItemResource },
+      'computer_use_call' => -> { ComputerUseCallItemResource },
+      'computer_use_approval_request' => -> { BrowserAuthenticationRequestItemResource },
+      'computer_use_approval_request_result' => -> { ComputerUseApprovalRequestResultItemResource },
+      'web_search_call' => -> { WebSearchCallItemResource },
+      'command_execution' => -> { CommandExecutionItemResource },
+      'interrupt_subagent_call' => -> { InterruptSubagentCallItemResource },
+      'create_subagent_call' => -> { CreateSubagentCallItemResource },
+      'send_subagent_input_call' => -> { SendSubagentInputCallItemResource },
+      'resume_subagent_call' => -> { ResumeSubagentCallItemResource },
+      'wait_for_subagents_call' => -> { WaitForSubagentsCallItemResource },
+      'close_subagent_call' => -> { CloseSubagentCallItemResource }
+    }.freeze
+
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('SessionTurnItemResource', 'variant', "Unknown SessionTurnItemResource discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the SessionTurnListResourceObject SDK namespace.
-module SessionTurnListResourceObject
-  LIST = 'list'
-  VALUES = ['list'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalSessionTurnTraceResourceMetadata
-  FIELDS = {
-    id: "id",
-    object: "object",
-    session_id: "session_id",
-    created_at: "created_at",
-    otlp: "otlp",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    object
-    session_id
-    created_at
-    otlp
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::SessionTurnTraceResourceObject.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for SessionTurnTraceResource.
-# Typed representation of the `SessionTurnTraceResource` API schema.
-class SessionTurnTraceResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalSessionTurnTraceResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalSessionTurnTraceResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalSessionTurnTraceResourceMetadata::DECODERS
-
-  # @return [String] The root turn ID. Use this ID as the pagination anchor.
-  attr_reader :id
-  # @return [SessionTurnTraceResourceObject] The object type, which is always `agent.session.trace`.
-  attr_reader :object
-  # @return [String] The session that owns this trace.
-  attr_reader :session_id
-  # @return [Integer] The Unix timestamp in seconds when the root turn was created.
-  attr_reader :created_at
-  # @return [Hash] An OTLP JSON ExportTraceServiceRequest containing resourceSpans. Only currently published data is returned; later trace updates are not awaited.
-  attr_reader :otlp
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalSessionTurnListResourceMetadata
+    FIELDS = {
+      object: 'object',
+      data: 'data',
+      first_id: 'first_id',
+      last_id: 'last_id',
+      has_more: 'has_more'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      object
+      data
+      first_id
+      last_id
+      has_more
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::SessionTurnListResourceObject.from_value(value)
+      end,
+      data: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::TurnResource.from_hash(item) }
+      end
+    }.freeze
+    NULLABLE_FIELDS = %i[
+      first_id
+      last_id
+    ].freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for SessionTurnListResource.
+  # A page of Agents API resources, with IDs for retrieving additional pages.
+  class SessionTurnListResource
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalSessionTurnListResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalSessionTurnListResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalSessionTurnListResourceMetadata::DECODERS
+
+    # @return [SessionTurnListResourceObject] The object type, which is always `list`.
+    attr_reader :object
+    # @return [Array_of_TurnResource] The resources returned in this page, in the requested sort order.
+    attr_reader :data
+    # @return [String] The ID of the first resource in `data`, or `null` if the page is empty.
+    attr_reader :first_id
+    # @return [String] The ID of the last resource in `data`, or `null` if the page is empty. Pass this as `after` with the same order and filters.
+    attr_reader :last_id
+    # @return [Boolean] Whether there are more resources to retrieve after this page.
+    attr_reader :has_more
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalSessionTurnListResourceMetadata::NULLABLE_FIELDS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the SessionTurnListResourceObject SDK namespace.
+  module SessionTurnListResourceObject
+    LIST = 'list'
+    VALUES = ['list'].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
 
-# Defines the SessionTurnTraceResourceObject SDK namespace.
-module SessionTurnTraceResourceObject
-  AGENT_SESSION_TRACE = 'agent.session.trace'
-  VALUES = ['agent.session.trace'].freeze
-  def self.from_value(value)
-    value
+  # Internal model hydration metadata.
+  class SdkInternalSessionTurnTraceResourceMetadata
+    FIELDS = {
+      id: 'id',
+      object: 'object',
+      session_id: 'session_id',
+      created_at: 'created_at',
+      otlp: 'otlp'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      object
+      session_id
+      created_at
+      otlp
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::SessionTurnTraceResourceObject.from_value(value)
+      end
+    }.freeze
   end
-end
+
+  # API model for SessionTurnTraceResource.
+  # Typed representation of the `SessionTurnTraceResource` API schema.
+  class SessionTurnTraceResource
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalSessionTurnTraceResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalSessionTurnTraceResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalSessionTurnTraceResourceMetadata::DECODERS
+
+    # @return [String] The root turn ID. Use this ID as the pagination anchor.
+    attr_reader :id
+    # @return [SessionTurnTraceResourceObject] The object type, which is always `agent.session.trace`.
+    attr_reader :object
+    # @return [String] The session that owns this trace.
+    attr_reader :session_id
+    # @return [Integer] The Unix timestamp in seconds when the root turn was created.
+    attr_reader :created_at
+    # @return [Hash] An OTLP JSON ExportTraceServiceRequest containing resourceSpans. Only currently published data is returned; later trace updates are not awaited.
+    attr_reader :otlp
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the SessionTurnTraceResourceObject SDK namespace.
+  module SessionTurnTraceResourceObject
+    AGENT_SESSION_TRACE = 'agent.session.trace'
+    VALUES = ['agent.session.trace'].freeze
+    def self.from_value(value)
+      value
+    end
+  end
 end

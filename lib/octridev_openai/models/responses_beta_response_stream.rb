@@ -5,71 +5,70 @@
 
 # responses_beta_response_stream domain models
 module OctridevOpenai
-# Defines the BetaResponseStreamEvent SDK namespace.
-module BetaResponseStreamEvent
-  DISCRIMINATOR_MAPPING = {
-    "response.audio.delta" => -> { BetaResponseAudioDeltaEvent },
-    "response.audio.done" => -> { BetaResponseAudioDoneEvent },
-    "response.audio.transcript.delta" => -> { BetaResponseAudioTranscriptDeltaEvent },
-    "response.audio.transcript.done" => -> { BetaResponseAudioTranscriptDoneEvent },
-    "response.code_interpreter_call_code.delta" => -> { BetaResponseCodeInterpreterCallCodeDeltaEvent },
-    "response.code_interpreter_call_code.done" => -> { BetaResponseCodeInterpreterCallCodeDoneEvent },
-    "response.code_interpreter_call.completed" => -> { BetaResponseCodeInterpreterCallCompletedEvent },
-    "response.code_interpreter_call.in_progress" => -> { BetaResponseCodeInterpreterCallInProgressEvent },
-    "response.code_interpreter_call.interpreting" => -> { BetaResponseCodeInterpreterCallInterpretingEvent },
-    "response.compaction.compacting" => -> { BetaResponseCompactionCompactingStreamingEvent },
-    "response.completed" => -> { BetaResponseCompletedEvent },
-    "response.content_part.added" => -> { BetaResponseContentPartAddedEvent },
-    "response.content_part.done" => -> { BetaResponseContentPartDoneEvent },
-    "response.created" => -> { BetaResponseCreatedEvent },
-    "error" => -> { BetaResponseErrorEvent },
-    "response.file_search_call.completed" => -> { BetaResponseFileSearchCallCompletedEvent },
-    "response.file_search_call.in_progress" => -> { BetaResponseFileSearchCallInProgressEvent },
-    "response.file_search_call.searching" => -> { BetaResponseFileSearchCallSearchingEvent },
-    "response.function_call_arguments.delta" => -> { BetaResponseFunctionCallArgumentsDeltaEvent },
-    "response.function_call_arguments.done" => -> { BetaResponseFunctionCallArgumentsDoneEvent },
-    "response.shell_call_command.added" => -> { BetaResponseShellCallCommandAddedStreamingEvent },
-    "response.shell_call_command.delta" => -> { BetaResponseShellCallCommandDeltaStreamingEvent },
-    "response.shell_call_command.done" => -> { BetaResponseShellCallCommandDoneStreamingEvent },
-    "response.shell_call_output_content.delta" => -> { BetaResponseShellCallOutputContentDeltaStreamingEvent },
-    "response.shell_call_output_content.done" => -> { BetaResponseShellCallOutputContentDoneStreamingEvent },
-    "response.in_progress" => -> { BetaResponseInProgressEvent },
-    "response.failed" => -> { BetaResponseFailedEvent },
-    "response.incomplete" => -> { BetaResponseIncompleteEvent },
-    "response.output_item.added" => -> { BetaResponseOutputItemAddedEvent },
-    "response.output_item.done" => -> { BetaResponseOutputItemDoneEvent },
-    "response.reasoning_summary_part.added" => -> { BetaResponseReasoningSummaryPartAddedEvent },
-    "response.reasoning_summary_part.done" => -> { BetaResponseReasoningSummaryPartDoneEvent },
-    "response.reasoning_summary_text.delta" => -> { BetaResponseReasoningSummaryTextDeltaEvent },
-    "response.reasoning_summary_text.done" => -> { BetaResponseReasoningSummaryTextDoneEvent },
-    "response.reasoning_text.delta" => -> { BetaResponseReasoningTextDeltaEvent },
-    "response.reasoning_text.done" => -> { BetaResponseReasoningTextDoneEvent },
-    "response.refusal.delta" => -> { BetaResponseRefusalDeltaEvent },
-    "response.refusal.done" => -> { BetaResponseRefusalDoneEvent },
-    "response.output_text.delta" => -> { BetaResponseTextDeltaEvent },
-    "response.output_text.done" => -> { BetaResponseTextDoneEvent },
-    "response.web_search_call.completed" => -> { BetaResponseWebSearchCallCompletedEvent },
-    "response.web_search_call.in_progress" => -> { BetaResponseWebSearchCallInProgressEvent },
-    "response.web_search_call.searching" => -> { BetaResponseWebSearchCallSearchingEvent },
-    "response.image_generation_call.completed" => -> { BetaResponseImageGenCallCompletedEvent },
-    "response.image_generation_call.generating" => -> { BetaResponseImageGenCallGeneratingEvent },
-    "response.image_generation_call.in_progress" => -> { BetaResponseImageGenCallInProgressEvent },
-    "response.image_generation_call.partial_image" => -> { BetaResponseImageGenCallPartialImageEvent },
-    "response.mcp_call_arguments.delta" => -> { BetaResponseMCPCallArgumentsDeltaEvent },
-    "response.mcp_call_arguments.done" => -> { BetaResponseMCPCallArgumentsDoneEvent },
-    "response.mcp_call.completed" => -> { BetaResponseMCPCallCompletedEvent },
-    "response.mcp_call.failed" => -> { BetaResponseMCPCallFailedEvent },
-    "response.mcp_call.in_progress" => -> { BetaResponseMCPCallInProgressEvent },
-    "response.mcp_list_tools.completed" => -> { BetaResponseMCPListToolsCompletedEvent },
-    "response.mcp_list_tools.failed" => -> { BetaResponseMCPListToolsFailedEvent },
-    "response.mcp_list_tools.in_progress" => -> { BetaResponseMCPListToolsInProgressEvent },
-    "response.output_text.annotation.added" => -> { BetaResponseOutputTextAnnotationAddedEvent },
-    "response.queued" => -> { BetaResponseQueuedEvent },
-    "response.custom_tool_call_input.delta" => -> { BetaResponseCustomToolCallInputDeltaEvent },
-    "response.custom_tool_call_input.done" => -> { BetaResponseCustomToolCallInputDoneEvent },
-  }.freeze
-  UNDECIDED_VARIANTS = (
-    [
+  # Defines the BetaResponseStreamEvent SDK namespace.
+  module BetaResponseStreamEvent
+    DISCRIMINATOR_MAPPING = {
+      'response.audio.delta' => -> { BetaResponseAudioDeltaEvent },
+      'response.audio.done' => -> { BetaResponseAudioDoneEvent },
+      'response.audio.transcript.delta' => -> { BetaResponseAudioTranscriptDeltaEvent },
+      'response.audio.transcript.done' => -> { BetaResponseAudioTranscriptDoneEvent },
+      'response.code_interpreter_call_code.delta' => -> { BetaResponseCodeInterpreterCallCodeDeltaEvent },
+      'response.code_interpreter_call_code.done' => -> { BetaResponseCodeInterpreterCallCodeDoneEvent },
+      'response.code_interpreter_call.completed' => -> { BetaResponseCodeInterpreterCallCompletedEvent },
+      'response.code_interpreter_call.in_progress' => -> { BetaResponseCodeInterpreterCallInProgressEvent },
+      'response.code_interpreter_call.interpreting' => -> { BetaResponseCodeInterpreterCallInterpretingEvent },
+      'response.compaction.compacting' => -> { BetaResponseCompactionCompactingStreamingEvent },
+      'response.completed' => -> { BetaResponseCompletedEvent },
+      'response.content_part.added' => -> { BetaResponseContentPartAddedEvent },
+      'response.content_part.done' => -> { BetaResponseContentPartDoneEvent },
+      'response.created' => -> { BetaResponseCreatedEvent },
+      'error' => -> { BetaResponseErrorEvent },
+      'response.file_search_call.completed' => -> { BetaResponseFileSearchCallCompletedEvent },
+      'response.file_search_call.in_progress' => -> { BetaResponseFileSearchCallInProgressEvent },
+      'response.file_search_call.searching' => -> { BetaResponseFileSearchCallSearchingEvent },
+      'response.function_call_arguments.delta' => -> { BetaResponseFunctionCallArgumentsDeltaEvent },
+      'response.function_call_arguments.done' => -> { BetaResponseFunctionCallArgumentsDoneEvent },
+      'response.shell_call_command.added' => -> { BetaResponseShellCallCommandAddedStreamingEvent },
+      'response.shell_call_command.delta' => -> { BetaResponseShellCallCommandDeltaStreamingEvent },
+      'response.shell_call_command.done' => -> { BetaResponseShellCallCommandDoneStreamingEvent },
+      'response.shell_call_output_content.delta' => -> { BetaResponseShellCallOutputContentDeltaStreamingEvent },
+      'response.shell_call_output_content.done' => -> { BetaResponseShellCallOutputContentDoneStreamingEvent },
+      'response.in_progress' => -> { BetaResponseInProgressEvent },
+      'response.failed' => -> { BetaResponseFailedEvent },
+      'response.incomplete' => -> { BetaResponseIncompleteEvent },
+      'response.output_item.added' => -> { BetaResponseOutputItemAddedEvent },
+      'response.output_item.done' => -> { BetaResponseOutputItemDoneEvent },
+      'response.reasoning_summary_part.added' => -> { BetaResponseReasoningSummaryPartAddedEvent },
+      'response.reasoning_summary_part.done' => -> { BetaResponseReasoningSummaryPartDoneEvent },
+      'response.reasoning_summary_text.delta' => -> { BetaResponseReasoningSummaryTextDeltaEvent },
+      'response.reasoning_summary_text.done' => -> { BetaResponseReasoningSummaryTextDoneEvent },
+      'response.reasoning_text.delta' => -> { BetaResponseReasoningTextDeltaEvent },
+      'response.reasoning_text.done' => -> { BetaResponseReasoningTextDoneEvent },
+      'response.refusal.delta' => -> { BetaResponseRefusalDeltaEvent },
+      'response.refusal.done' => -> { BetaResponseRefusalDoneEvent },
+      'response.output_text.delta' => -> { BetaResponseTextDeltaEvent },
+      'response.output_text.done' => -> { BetaResponseTextDoneEvent },
+      'response.web_search_call.completed' => -> { BetaResponseWebSearchCallCompletedEvent },
+      'response.web_search_call.in_progress' => -> { BetaResponseWebSearchCallInProgressEvent },
+      'response.web_search_call.searching' => -> { BetaResponseWebSearchCallSearchingEvent },
+      'response.image_generation_call.completed' => -> { BetaResponseImageGenCallCompletedEvent },
+      'response.image_generation_call.generating' => -> { BetaResponseImageGenCallGeneratingEvent },
+      'response.image_generation_call.in_progress' => -> { BetaResponseImageGenCallInProgressEvent },
+      'response.image_generation_call.partial_image' => -> { BetaResponseImageGenCallPartialImageEvent },
+      'response.mcp_call_arguments.delta' => -> { BetaResponseMCPCallArgumentsDeltaEvent },
+      'response.mcp_call_arguments.done' => -> { BetaResponseMCPCallArgumentsDoneEvent },
+      'response.mcp_call.completed' => -> { BetaResponseMCPCallCompletedEvent },
+      'response.mcp_call.failed' => -> { BetaResponseMCPCallFailedEvent },
+      'response.mcp_call.in_progress' => -> { BetaResponseMCPCallInProgressEvent },
+      'response.mcp_list_tools.completed' => -> { BetaResponseMCPListToolsCompletedEvent },
+      'response.mcp_list_tools.failed' => -> { BetaResponseMCPListToolsFailedEvent },
+      'response.mcp_list_tools.in_progress' => -> { BetaResponseMCPListToolsInProgressEvent },
+      'response.output_text.annotation.added' => -> { BetaResponseOutputTextAnnotationAddedEvent },
+      'response.queued' => -> { BetaResponseQueuedEvent },
+      'response.custom_tool_call_input.delta' => -> { BetaResponseCustomToolCallInputDeltaEvent },
+      'response.custom_tool_call_input.done' => -> { BetaResponseCustomToolCallInputDoneEvent }
+    }.freeze
+    UNDECIDED_VARIANTS = [
       -> { BetaResponseAudioDeltaEvent },
       -> { BetaResponseAudioDoneEvent },
       -> { BetaResponseAudioTranscriptDeltaEvent },
@@ -122,54 +121,52 @@ module BetaResponseStreamEvent
       -> { BetaResponseMCPListToolsFailedEvent },
       -> { BetaResponseMCPListToolsInProgressEvent },
       -> { BetaResponseQueuedEvent },
-      -> { BetaResponseCustomToolCallInputDeltaEvent },
-    ]
-  ).freeze
+      -> { BetaResponseCustomToolCallInputDeltaEvent }
+    ].freeze
 
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
 
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
 
-    raise SdkValidationError.new('BetaResponseStreamEvent', 'variant', "Unknown BetaResponseStreamEvent discriminator: #{hash["type"].inspect}")
-  end
-end
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
 
-# Internal model hydration metadata.
-class SdkInternalBetaResponseStreamOptionsMetadata
-  FIELDS = {
-    include_obfuscation: "include_obfuscation",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for BetaResponseStreamOptions.
-# Options for streaming responses. Only set this when you set `stream: true`.
-class BetaResponseStreamOptions
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaResponseStreamOptionsMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaResponseStreamOptionsMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaResponseStreamOptionsMetadata::DECODERS
-
-  # @return [Boolean] When true, stream obfuscation will be enabled. Stream obfuscation adds random characters to an `obfuscation` field on streaming delta events to normalize payload sizes as a mitigation to certain side-channel attacks. These obfuscation fields are included by default, but add a small amount of overhead to the data stream. You can set `include_obfuscation` to false to optimize for bandwidth if you trust the network links between your application and the OpenAI API.
-  attr_reader :include_obfuscation
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('BetaResponseStreamEvent', 'variant', "Unknown BetaResponseStreamEvent discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalBetaResponseStreamOptionsMetadata
+    FIELDS = {
+      include_obfuscation: 'include_obfuscation'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # API model for BetaResponseStreamOptions.
+  # Options for streaming responses. Only set this when you set `stream: true`.
+  class BetaResponseStreamOptions
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaResponseStreamOptionsMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaResponseStreamOptionsMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaResponseStreamOptionsMetadata::DECODERS
+
+    # @return [Boolean] When true, stream obfuscation will be enabled. Stream obfuscation adds random characters to an `obfuscation` field on streaming delta events to normalize payload sizes as a mitigation to certain side-channel attacks. These obfuscation fields are included by default, but add a small amount of overhead to the data stream. You can set `include_obfuscation` to false to optimize for bandwidth if you trust the network links between your application and the OpenAI API.
+    attr_reader :include_obfuscation
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
 end

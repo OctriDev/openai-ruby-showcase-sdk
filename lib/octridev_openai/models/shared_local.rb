@@ -5,448 +5,452 @@
 
 # shared_local domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalLocalEnvironmentParamMetadata
-  FIELDS = {
-    type: "type",
-    skills: "skills",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LocalEnvironmentParamType.from_value(value)
-    end,
-    skills: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::LocalSkillParam.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for LocalEnvironmentParam.
-# Typed representation of the `LocalEnvironmentParam` API schema.
-class LocalEnvironmentParam
-  include FunctionShellToolParamEnvironment
-  include FunctionShellCallItemParamEnvironment
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLocalEnvironmentParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLocalEnvironmentParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLocalEnvironmentParamMetadata::DECODERS
-
-  # @return [LocalEnvironmentParamType] Use a local computer environment.
-  attr_reader :type
-  # @return [Array_of_LocalSkillParam] An optional list of skills.
-  attr_reader :skills
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalLocalEnvironmentParamMetadata
+    FIELDS = {
+      type: 'type',
+      skills: 'skills'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LocalEnvironmentParamType.from_value(value)
+      end,
+      skills: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::LocalSkillParam.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for LocalEnvironmentParam.
+  # Typed representation of the `LocalEnvironmentParam` API schema.
+  class LocalEnvironmentParam
+    include FunctionShellToolParamEnvironment
+    include FunctionShellCallItemParamEnvironment
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLocalEnvironmentParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLocalEnvironmentParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLocalEnvironmentParamMetadata::DECODERS
+
+    # @return [LocalEnvironmentParamType] Use a local computer environment.
+    attr_reader :type
+    # @return [Array_of_LocalSkillParam] An optional list of skills.
+    attr_reader :skills
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the LocalEnvironmentParamType SDK namespace.
+  module LocalEnvironmentParamType
+    LOCAL = 'local'
+    VALUES = ['local'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the LocalEnvironmentParamType SDK namespace.
-module LocalEnvironmentParamType
-  LOCAL = 'local'
-  VALUES = ['local'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('LocalEnvironmentParamType', 'enum', "Unknown LocalEnvironmentParamType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalLocalEnvironmentResourceMetadata
-  FIELDS = {
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LocalEnvironmentResourceType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for LocalEnvironmentResource.
-# Represents the use of a local environment to perform shell actions.
-class LocalEnvironmentResource
-  include FunctionShellCallEnvironment
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLocalEnvironmentResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLocalEnvironmentResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLocalEnvironmentResourceMetadata::DECODERS
-
-  # @return [LocalEnvironmentResourceType] The environment type. Always `local`.
-  attr_reader :type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('LocalEnvironmentParamType', 'enum', "Unknown LocalEnvironmentParamType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalLocalEnvironmentResourceMetadata
+    FIELDS = {
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LocalEnvironmentResourceType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for LocalEnvironmentResource.
+  # Represents the use of a local environment to perform shell actions.
+  class LocalEnvironmentResource
+    include FunctionShellCallEnvironment
 
-# Defines the LocalEnvironmentResourceType SDK namespace.
-module LocalEnvironmentResourceType
-  LOCAL = 'local'
-  VALUES = ['local'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLocalEnvironmentResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLocalEnvironmentResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLocalEnvironmentResourceMetadata::DECODERS
 
-    raise SdkValidationError.new('LocalEnvironmentResourceType', 'enum', "Unknown LocalEnvironmentResourceType: #{value}")
-  end
-end
+    # @return [LocalEnvironmentResourceType] The environment type. Always `local`.
+    attr_reader :type
 
-# Internal model hydration metadata.
-class SdkInternalLocalShellExecActionMetadata
-  FIELDS = {
-    type: "type",
-    command: "command",
-    timeout_ms: "timeout_ms",
-    working_directory: "working_directory",
-    env: "env",
-    user: "user",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    command
-    env
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LocalShellExecActionType.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for LocalShellExecAction.
-# Execute a shell command on the server.
-class LocalShellExecAction
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLocalShellExecActionMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLocalShellExecActionMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLocalShellExecActionMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [LocalShellExecActionType] The type of the local shell action. Always `exec`.
-  attr_reader :type
-  # @return [Array_of_String] The command to run.
-  attr_reader :command
-  # @return [Integer] Optional `integer` value serialized in the `timeout_ms` wire field.
-  attr_reader :timeout_ms
-  # @return [String] Optional `string` value serialized in the `working_directory` wire field.
-  attr_reader :working_directory
-  # @return [Hash] Environment variables to set for the command.
-  attr_reader :env
-  # @return [String] Optional `string` value serialized in the `user` wire field.
-  attr_reader :user
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the LocalEnvironmentResourceType SDK namespace.
+  module LocalEnvironmentResourceType
+    LOCAL = 'local'
+    VALUES = ['local'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('LocalEnvironmentResourceType', 'enum', "Unknown LocalEnvironmentResourceType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the LocalShellExecActionType SDK namespace.
-module LocalShellExecActionType
-  EXEC = 'exec'
-  VALUES = ['exec'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalLocalShellToolCallMetadata
-  FIELDS = {
-    type: "type",
-    id: "id",
-    call_id: "call_id",
-    action: "action",
-    status: "status",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    id
-    call_id
-    action
-    status
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LocalShellToolCallType.from_value(value)
-    end,
-    action: lambda do |value|
-      ::OctridevOpenai::LocalShellExecAction.from_hash(value)
-    end,
-    status: lambda do |value|
-      ::OctridevOpenai::LocalShellToolCallStatus.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for LocalShellToolCall.
-# A tool call to run a command on the local shell.
-class LocalShellToolCall
-  include ConversationItem
-  include Item
-  include ItemResource
-  include OutputItem
-  include ItemField
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLocalShellToolCallMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLocalShellToolCallMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLocalShellToolCallMetadata::DECODERS
-
-  # @return [LocalShellToolCallType] The type of the local shell call. Always `local_shell_call`.
-  attr_reader :type
-  # @return [String] The unique ID of the local shell call.
-  attr_reader :id
-  # @return [String] The unique ID of the local shell tool call generated by the model.
-  attr_reader :call_id
-  # @return [LocalShellExecAction] Execute a shell command on the server.
-  attr_reader :action
-  # @return [LocalShellToolCallStatus] The status of the local shell call.
-  attr_reader :status
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalLocalShellExecActionMetadata
+    FIELDS = {
+      type: 'type',
+      command: 'command',
+      timeout_ms: 'timeout_ms',
+      working_directory: 'working_directory',
+      env: 'env',
+      user: 'user'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      command
+      env
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LocalShellExecActionType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for LocalShellExecAction.
+  # Execute a shell command on the server.
+  class LocalShellExecAction
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLocalShellExecActionMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLocalShellExecActionMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLocalShellExecActionMetadata::DECODERS
+
+    # @return [LocalShellExecActionType] The type of the local shell action. Always `exec`.
+    attr_reader :type
+    # @return [Array_of_String] The command to run.
+    attr_reader :command
+    # @return [Integer] Optional `integer` value serialized in the `timeout_ms` wire field.
+    attr_reader :timeout_ms
+    # @return [String] Optional `string` value serialized in the `working_directory` wire field.
+    attr_reader :working_directory
+    # @return [Hash] Environment variables to set for the command.
+    attr_reader :env
+    # @return [String] Optional `string` value serialized in the `user` wire field.
+    attr_reader :user
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the LocalShellToolCallStatus SDK namespace.
-module LocalShellToolCallStatus
-  IN_PROGRESS = 'in_progress'
-  COMPLETED = 'completed'
-  INCOMPLETE = 'incomplete'
-  VALUES = ['in_progress', 'completed', 'incomplete'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the LocalShellToolCallType SDK namespace.
-module LocalShellToolCallType
-  LOCAL_SHELL_CALL = 'local_shell_call'
-  VALUES = ['local_shell_call'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('LocalShellToolCallType', 'enum', "Unknown LocalShellToolCallType: #{value}")
-  end
-end
-
-# Defines the LocalShellToolCallOutputStatusVariant0 SDK namespace.
-module LocalShellToolCallOutputStatusVariant0
-  IN_PROGRESS = 'in_progress'
-  COMPLETED = 'completed'
-  INCOMPLETE = 'incomplete'
-  VALUES = ['in_progress', 'completed', 'incomplete'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalLocalShellToolCallOutputMetadata
-  FIELDS = {
-    type: "type",
-    id: "id",
-    output: "output",
-    status: "status",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    id
-    output
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LocalShellToolCallOutputType.from_value(value)
-    end,
-    status: lambda do |value|
-      ::OctridevOpenai::LocalShellToolCallOutputStatusVariant0.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for LocalShellToolCallOutput.
-# The output of a local shell tool call.
-class LocalShellToolCallOutput
-  include ConversationItem
-  include Item
-  include ItemResource
-  include OutputItem
-  include ItemField
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLocalShellToolCallOutputMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLocalShellToolCallOutputMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLocalShellToolCallOutputMetadata::DECODERS
-
-  # @return [LocalShellToolCallOutputType] The type of the local shell tool call output. Always `local_shell_call_output`.
-  attr_reader :type
-  # @return [String] The unique ID of the local shell tool call generated by the model.
-  attr_reader :id
-  # @return [String] A JSON string of the output of the local shell tool call.
-  attr_reader :output
-  # @return [LocalShellToolCallOutputStatusVariant0] Optional API value serialized in the `status` wire field.
-  attr_reader :status
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the LocalShellExecActionType SDK namespace.
+  module LocalShellExecActionType
+    EXEC = 'exec'
+    VALUES = ['exec'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalLocalShellToolCallMetadata
+    FIELDS = {
+      type: 'type',
+      id: 'id',
+      call_id: 'call_id',
+      action: 'action',
+      status: 'status'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      id
+      call_id
+      action
+      status
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LocalShellToolCallType.from_value(value)
+      end,
+      action: lambda do |value|
+        ::OctridevOpenai::LocalShellExecAction.from_hash(value)
+      end,
+      status: lambda do |value|
+        ::OctridevOpenai::LocalShellToolCallStatus.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for LocalShellToolCall.
+  # A tool call to run a command on the local shell.
+  class LocalShellToolCall
+    include ConversationItem
+    include Item
+    include ItemResource
+    include OutputItem
+    include ItemField
 
-# Defines the LocalShellToolCallOutputType SDK namespace.
-module LocalShellToolCallOutputType
-  LOCAL_SHELL_CALL_OUTPUT = 'local_shell_call_output'
-  VALUES = ['local_shell_call_output'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLocalShellToolCallMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLocalShellToolCallMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLocalShellToolCallMetadata::DECODERS
 
-    raise SdkValidationError.new('LocalShellToolCallOutputType', 'enum', "Unknown LocalShellToolCallOutputType: #{value}")
-  end
-end
+    # @return [LocalShellToolCallType] The type of the local shell call. Always `local_shell_call`.
+    attr_reader :type
+    # @return [String] The unique ID of the local shell call.
+    attr_reader :id
+    # @return [String] The unique ID of the local shell tool call generated by the model.
+    attr_reader :call_id
+    # @return [LocalShellExecAction] Execute a shell command on the server.
+    attr_reader :action
+    # @return [LocalShellToolCallStatus] The status of the local shell call.
+    attr_reader :status
 
-# Internal model hydration metadata.
-class SdkInternalLocalShellToolParamMetadata
-  FIELDS = {
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LocalShellToolParamType.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for LocalShellToolParam.
-# A tool that allows the model to execute shell commands in a local environment.
-class LocalShellToolParam
-  include Tool
-  include ToolSearchOutputTool
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLocalShellToolParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLocalShellToolParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLocalShellToolParamMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [LocalShellToolParamType] The type of the local shell tool. Always `local_shell`.
-  attr_reader :type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the LocalShellToolCallStatus SDK namespace.
+  module LocalShellToolCallStatus
+    IN_PROGRESS = 'in_progress'
+    COMPLETED = 'completed'
+    INCOMPLETE = 'incomplete'
+    VALUES = %w[in_progress completed incomplete].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the LocalShellToolCallType SDK namespace.
+  module LocalShellToolCallType
+    LOCAL_SHELL_CALL = 'local_shell_call'
+    VALUES = ['local_shell_call'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the LocalShellToolParamType SDK namespace.
-module LocalShellToolParamType
-  LOCAL_SHELL = 'local_shell'
-  VALUES = ['local_shell'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('LocalShellToolParamType', 'enum', "Unknown LocalShellToolParamType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalLocalSkillParamMetadata
-  FIELDS = {
-    name: "name",
-    description: "description",
-    path: "path",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    name
-    description
-    path
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for LocalSkillParam.
-# Typed representation of the `LocalSkillParam` API schema.
-class LocalSkillParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLocalSkillParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLocalSkillParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLocalSkillParamMetadata::DECODERS
-
-  # @return [String] The name of the skill.
-  attr_reader :name
-  # @return [String] The description of the skill.
-  attr_reader :description
-  # @return [String] The path to the directory containing the skill.
-  attr_reader :path
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('LocalShellToolCallType', 'enum', "Unknown LocalShellToolCallType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the LocalShellToolCallOutputStatusVariant0 SDK namespace.
+  module LocalShellToolCallOutputStatusVariant0
+    IN_PROGRESS = 'in_progress'
+    COMPLETED = 'completed'
+    INCOMPLETE = 'incomplete'
+    VALUES = %w[in_progress completed incomplete].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalLocalShellToolCallOutputMetadata
+    FIELDS = {
+      type: 'type',
+      id: 'id',
+      output: 'output',
+      status: 'status'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      id
+      output
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LocalShellToolCallOutputType.from_value(value)
+      end,
+      status: lambda do |value|
+        ::OctridevOpenai::LocalShellToolCallOutputStatusVariant0.from_value(value)
+      end
+    }.freeze
   end
-end
+
+  # API model for LocalShellToolCallOutput.
+  # The output of a local shell tool call.
+  class LocalShellToolCallOutput
+    include ConversationItem
+    include Item
+    include ItemResource
+    include OutputItem
+    include ItemField
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLocalShellToolCallOutputMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLocalShellToolCallOutputMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLocalShellToolCallOutputMetadata::DECODERS
+
+    # @return [LocalShellToolCallOutputType] The type of the local shell tool call output. Always `local_shell_call_output`.
+    attr_reader :type
+    # @return [String] The unique ID of the local shell tool call generated by the model.
+    attr_reader :id
+    # @return [String] A JSON string of the output of the local shell tool call.
+    attr_reader :output
+    # @return [LocalShellToolCallOutputStatusVariant0] Optional API value serialized in the `status` wire field.
+    attr_reader :status
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the LocalShellToolCallOutputType SDK namespace.
+  module LocalShellToolCallOutputType
+    LOCAL_SHELL_CALL_OUTPUT = 'local_shell_call_output'
+    VALUES = ['local_shell_call_output'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('LocalShellToolCallOutputType', 'enum', "Unknown LocalShellToolCallOutputType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalLocalShellToolParamMetadata
+    FIELDS = {
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LocalShellToolParamType.from_value(value)
+      end
+    }.freeze
+  end
+
+  # API model for LocalShellToolParam.
+  # A tool that allows the model to execute shell commands in a local environment.
+  class LocalShellToolParam
+    include Tool
+    include ToolSearchOutputTool
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLocalShellToolParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLocalShellToolParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLocalShellToolParamMetadata::DECODERS
+
+    # @return [LocalShellToolParamType] The type of the local shell tool. Always `local_shell`.
+    attr_reader :type
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the LocalShellToolParamType SDK namespace.
+  module LocalShellToolParamType
+    LOCAL_SHELL = 'local_shell'
+    VALUES = ['local_shell'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('LocalShellToolParamType', 'enum', "Unknown LocalShellToolParamType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalLocalSkillParamMetadata
+    FIELDS = {
+      name: 'name',
+      description: 'description',
+      path: 'path'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      name
+      description
+      path
+    ].freeze
+    DECODERS = {}.freeze
+  end
+
+  # API model for LocalSkillParam.
+  # Typed representation of the `LocalSkillParam` API schema.
+  class LocalSkillParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLocalSkillParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLocalSkillParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLocalSkillParamMetadata::DECODERS
+
+    # @return [String] The name of the skill.
+    attr_reader :name
+    # @return [String] The description of the skill.
+    attr_reader :description
+    # @return [String] The path to the directory containing the skill.
+    attr_reader :path
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
 end

@@ -5,229 +5,229 @@
 
 # agents_reasoning domain models
 module OctridevOpenai
-# Defines the ReasoningEffortParam SDK namespace.
-module ReasoningEffortParam
-  NONE = 'none'
-  MINIMAL = 'minimal'
-  LOW = 'low'
-  MEDIUM = 'medium'
-  HIGH = 'high'
-  XHIGH = 'xhigh'
-  MAX = 'max'
-  VALUES = ['none', 'minimal', 'low', 'medium', 'high', 'xhigh', 'max'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the ReasoningEffortResource SDK namespace.
-module ReasoningEffortResource
-  NONE = 'none'
-  MINIMAL = 'minimal'
-  LOW = 'low'
-  MEDIUM = 'medium'
-  HIGH = 'high'
-  XHIGH = 'xhigh'
-  MAX = 'max'
-  VALUES = ['none', 'minimal', 'low', 'medium', 'high', 'xhigh', 'max'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalReasoningItemResourceMetadata
-  FIELDS = {
-    type: "type",
-    id: "id",
-    turn_id: "turn_id",
-    summary: "summary",
-    status: "status",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    id
-    turn_id
-    summary
-    status
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ReasoningItemResourceType.from_value(value)
-    end,
-    summary: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::SummaryTextResource.from_hash(item) }
-    end,
-    status: lambda do |value|
-      ::OctridevOpenai::OutputItemStatusResource.from_value(value)
-    end,
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    status
-  ].freeze
-end
-
-# API model for ReasoningItemResource.
-# A reasoning item produced by the agent.
-class ReasoningItemResource
-  include SessionTurnItemResource
-  include AgentOutputItemResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalReasoningItemResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalReasoningItemResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalReasoningItemResourceMetadata::DECODERS
-
-  # @return [ReasoningItemResourceType] The item type. Always `reasoning`.
-  attr_reader :type
-  # @return [String] The ID of the reasoning item.
-  attr_reader :id
-  # @return [String] The ID of the turn that contains this item.
-  attr_reader :turn_id
-  # @return [Array_of_SummaryTextResource] The reasoning summaries produced by the agent.
-  attr_reader :summary
-  # @return [OutputItemStatusResource] The status of the reasoning item.
-  attr_reader :status
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the ReasoningEffortParam SDK namespace.
+  module ReasoningEffortParam
+    NONE = 'none'
+    MINIMAL = 'minimal'
+    LOW = 'low'
+    MEDIUM = 'medium'
+    HIGH = 'high'
+    XHIGH = 'xhigh'
+    MAX = 'max'
+    VALUES = %w[none minimal low medium high xhigh max].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalReasoningItemResourceMetadata::NULLABLE_FIELDS)
+  # Defines the ReasoningEffortResource SDK namespace.
+  module ReasoningEffortResource
+    NONE = 'none'
+    MINIMAL = 'minimal'
+    LOW = 'low'
+    MEDIUM = 'medium'
+    HIGH = 'high'
+    XHIGH = 'xhigh'
+    MAX = 'max'
+    VALUES = %w[none minimal low medium high xhigh max].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the ReasoningItemResourceType SDK namespace.
-module ReasoningItemResourceType
-  REASONING = 'reasoning'
-  VALUES = ['reasoning'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('ReasoningItemResourceType', 'enum', "Unknown ReasoningItemResourceType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalReasoningParamMetadata
-  FIELDS = {
-    effort: "effort",
-    summary: "summary",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    effort: lambda do |value|
-      ::OctridevOpenai::ReasoningEffortParam.from_value(value)
-    end,
-    summary: lambda do |value|
-      ::OctridevOpenai::ReasoningSummaryParam.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for ReasoningParam.
-# Reasoning configuration for the agent.
-class ReasoningParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalReasoningParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalReasoningParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalReasoningParamMetadata::DECODERS
-
-  # @return [ReasoningEffortParam] The amount of reasoning effort the model should use. Omission lets the model select it.
-  attr_reader :effort
-  # @return [ReasoningSummaryParam] Controls whether the response includes a reasoning summary.
-  attr_reader :summary
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalReasoningItemResourceMetadata
+    FIELDS = {
+      type: 'type',
+      id: 'id',
+      turn_id: 'turn_id',
+      summary: 'summary',
+      status: 'status'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      id
+      turn_id
+      summary
+      status
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ReasoningItemResourceType.from_value(value)
+      end,
+      summary: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::SummaryTextResource.from_hash(item) }
+      end,
+      status: lambda do |value|
+        ::OctridevOpenai::OutputItemStatusResource.from_value(value)
+      end
+    }.freeze
+    NULLABLE_FIELDS = %i[
+      status
+    ].freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ReasoningItemResource.
+  # A reasoning item produced by the agent.
+  class ReasoningItemResource
+    include SessionTurnItemResource
+    include AgentOutputItemResource
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalReasoningItemResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalReasoningItemResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalReasoningItemResourceMetadata::DECODERS
+
+    # @return [ReasoningItemResourceType] The item type. Always `reasoning`.
+    attr_reader :type
+    # @return [String] The ID of the reasoning item.
+    attr_reader :id
+    # @return [String] The ID of the turn that contains this item.
+    attr_reader :turn_id
+    # @return [Array_of_SummaryTextResource] The reasoning summaries produced by the agent.
+    attr_reader :summary
+    # @return [OutputItemStatusResource] The status of the reasoning item.
+    attr_reader :status
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalReasoningItemResourceMetadata::NULLABLE_FIELDS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the ReasoningItemResourceType SDK namespace.
+  module ReasoningItemResourceType
+    REASONING = 'reasoning'
+    VALUES = ['reasoning'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Internal model hydration metadata.
-class SdkInternalReasoningResourceMetadata
-  FIELDS = {
-    effort: "effort",
-    summary: "summary",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    effort
-    summary
-  ].freeze
-  DECODERS = {
-    effort: lambda do |value|
-      ::OctridevOpenai::ReasoningEffortResource.from_value(value)
-    end,
-    summary: lambda do |value|
-      ::OctridevOpenai::ReasoningSummaryResource.from_value(value)
-    end,
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    effort
-    summary
-  ].freeze
-end
-
-# API model for ReasoningResource.
-# The reasoning configuration used by an agent.
-class ReasoningResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalReasoningResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalReasoningResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalReasoningResourceMetadata::DECODERS
-
-  # @return [ReasoningEffortResource] The requested reasoning effort, or `null` when the model selects its own default.
-  attr_reader :effort
-  # @return [ReasoningSummaryResource] The requested reasoning summary format, or `null` when summaries are disabled.
-  attr_reader :summary
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('ReasoningItemResourceType', 'enum', "Unknown ReasoningItemResourceType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalReasoningResourceMetadata::NULLABLE_FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalReasoningParamMetadata
+    FIELDS = {
+      effort: 'effort',
+      summary: 'summary'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      effort: lambda do |value|
+        ::OctridevOpenai::ReasoningEffortParam.from_value(value)
+      end,
+      summary: lambda do |value|
+        ::OctridevOpenai::ReasoningSummaryParam.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for ReasoningParam.
+  # Reasoning configuration for the agent.
+  class ReasoningParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalReasoningParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalReasoningParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalReasoningParamMetadata::DECODERS
 
-# Defines the ReasoningSummaryParam SDK namespace.
-module ReasoningSummaryParam
-  CONCISE = 'concise'
-  DETAILED = 'detailed'
-  AUTO = 'auto'
-  VALUES = ['concise', 'detailed', 'auto'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    # @return [ReasoningEffortParam] The amount of reasoning effort the model should use. Omission lets the model select it.
+    attr_reader :effort
+    # @return [ReasoningSummaryParam] Controls whether the response includes a reasoning summary.
+    attr_reader :summary
 
-# Defines the ReasoningSummaryResource SDK namespace.
-module ReasoningSummaryResource
-  CONCISE = 'concise'
-  DETAILED = 'detailed'
-  AUTO = 'auto'
-  VALUES = ['concise', 'detailed', 'auto'].freeze
-  def self.from_value(value)
-    value
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
+
+  # Internal model hydration metadata.
+  class SdkInternalReasoningResourceMetadata
+    FIELDS = {
+      effort: 'effort',
+      summary: 'summary'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      effort
+      summary
+    ].freeze
+    DECODERS = {
+      effort: lambda do |value|
+        ::OctridevOpenai::ReasoningEffortResource.from_value(value)
+      end,
+      summary: lambda do |value|
+        ::OctridevOpenai::ReasoningSummaryResource.from_value(value)
+      end
+    }.freeze
+    NULLABLE_FIELDS = %i[
+      effort
+      summary
+    ].freeze
+  end
+
+  # API model for ReasoningResource.
+  # The reasoning configuration used by an agent.
+  class ReasoningResource
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalReasoningResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalReasoningResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalReasoningResourceMetadata::DECODERS
+
+    # @return [ReasoningEffortResource] The requested reasoning effort, or `null` when the model selects its own default.
+    attr_reader :effort
+    # @return [ReasoningSummaryResource] The requested reasoning summary format, or `null` when summaries are disabled.
+    attr_reader :summary
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalReasoningResourceMetadata::NULLABLE_FIELDS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the ReasoningSummaryParam SDK namespace.
+  module ReasoningSummaryParam
+    CONCISE = 'concise'
+    DETAILED = 'detailed'
+    AUTO = 'auto'
+    VALUES = %w[concise detailed auto].freeze
+    def self.from_value(value)
+      value
+    end
+  end
+
+  # Defines the ReasoningSummaryResource SDK namespace.
+  module ReasoningSummaryResource
+    CONCISE = 'concise'
+    DETAILED = 'detailed'
+    AUTO = 'auto'
+    VALUES = %w[concise detailed auto].freeze
+    def self.from_value(value)
+      value
+    end
+  end
 end

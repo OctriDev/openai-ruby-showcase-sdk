@@ -5,310 +5,312 @@
 
 # live_live_decisions domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalLiveDecisionsDelegationParamMetadata
-  FIELDS = {
-    type: "type",
-    decisions: "decisions",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    decisions
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LiveDecisionsDelegationParamType.from_value(value)
-    end,
-    decisions: lambda do |value|
-      ::OctridevOpenai::LiveDecisionsSettingsInputParam.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for LiveDecisionsDelegationParam.
-# Typed representation of the `LiveDecisionsDelegationParam` API schema.
-class LiveDecisionsDelegationParam
-  include Delegation
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveDecisionsDelegationParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveDecisionsDelegationParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveDecisionsDelegationParamMetadata::DECODERS
-
-  # @return [LiveDecisionsDelegationParamType] Required enumerated value serialized in the `type` wire field.
-  attr_reader :type
-  # @return [LiveDecisionsSettingsInputParam] Required object value serialized in the `decisions` wire field.
-  attr_reader :decisions
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalLiveDecisionsDelegationParamMetadata
+    FIELDS = {
+      type: 'type',
+      decisions: 'decisions'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      decisions
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LiveDecisionsDelegationParamType.from_value(value)
+      end,
+      decisions: lambda do |value|
+        ::OctridevOpenai::LiveDecisionsSettingsInputParam.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for LiveDecisionsDelegationParam.
+  # Typed representation of the `LiveDecisionsDelegationParam` API schema.
+  class LiveDecisionsDelegationParam
+    include Delegation
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveDecisionsDelegationParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveDecisionsDelegationParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveDecisionsDelegationParamMetadata::DECODERS
+
+    # @return [LiveDecisionsDelegationParamType] Required enumerated value serialized in the `type` wire field.
+    attr_reader :type
+    # @return [LiveDecisionsSettingsInputParam] Required object value serialized in the `decisions` wire field.
+    attr_reader :decisions
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the LiveDecisionsDelegationParamType SDK namespace.
+  module LiveDecisionsDelegationParamType
+    DECISIONS = 'decisions'
+    VALUES = ['decisions'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the LiveDecisionsDelegationParamType SDK namespace.
-module LiveDecisionsDelegationParamType
-  DECISIONS = 'decisions'
-  VALUES = ['decisions'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('LiveDecisionsDelegationParamType', 'enum', "Unknown LiveDecisionsDelegationParamType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalLiveDecisionsDelegationParam2Metadata
-  FIELDS = {
-    type: "type",
-    decisions: "decisions",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    decisions
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LiveDecisionsDelegationParam2Type.from_value(value)
-    end,
-    decisions: lambda do |value|
-      ::OctridevOpenai::LiveDecisionsSettingsInputParam2.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for LiveDecisionsDelegationParam2.
-# Typed representation of the `LiveDecisionsDelegationParam2` API schema.
-class LiveDecisionsDelegationParam2
-  include LiveSessionCreateParamsDelegation
-  include LiveSessionResourceParamDelegation
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveDecisionsDelegationParam2Metadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveDecisionsDelegationParam2Metadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveDecisionsDelegationParam2Metadata::DECODERS
-
-  # @return [LiveDecisionsDelegationParam2Type] Required enumerated value serialized in the `type` wire field.
-  attr_reader :type
-  # @return [LiveDecisionsSettingsInputParam2] Required object value serialized in the `decisions` wire field.
-  attr_reader :decisions
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('LiveDecisionsDelegationParamType', 'enum', "Unknown LiveDecisionsDelegationParamType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalLiveDecisionsDelegationParam2Metadata
+    FIELDS = {
+      type: 'type',
+      decisions: 'decisions'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      decisions
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LiveDecisionsDelegationParam2Type.from_value(value)
+      end,
+      decisions: lambda do |value|
+        ::OctridevOpenai::LiveDecisionsSettingsInputParam2.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for LiveDecisionsDelegationParam2.
+  # Typed representation of the `LiveDecisionsDelegationParam2` API schema.
+  class LiveDecisionsDelegationParam2
+    include LiveSessionCreateParamsDelegation
+    include LiveSessionResourceParamDelegation
 
-# Defines the LiveDecisionsDelegationParam2Type SDK namespace.
-module LiveDecisionsDelegationParam2Type
-  DECISIONS = 'decisions'
-  VALUES = ['decisions'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveDecisionsDelegationParam2Metadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveDecisionsDelegationParam2Metadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveDecisionsDelegationParam2Metadata::DECODERS
 
-    raise SdkValidationError.new('LiveDecisionsDelegationParam2Type', 'enum', "Unknown LiveDecisionsDelegationParam2Type: #{value}")
-  end
-end
+    # @return [LiveDecisionsDelegationParam2Type] Required enumerated value serialized in the `type` wire field.
+    attr_reader :type
+    # @return [LiveDecisionsSettingsInputParam2] Required object value serialized in the `decisions` wire field.
+    attr_reader :decisions
 
-# Internal model hydration metadata.
-class SdkInternalLiveDecisionsDelegationUpdateParamMetadata
-  FIELDS = {
-    type: "type",
-    decisions: "decisions",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LiveDecisionsDelegationUpdateParamType.from_value(value)
-    end,
-    decisions: lambda do |value|
-      ::OctridevOpenai::LiveDecisionsSettingsUpdateParam.from_hash(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for LiveDecisionsDelegationUpdateParam.
-# Typed representation of the `LiveDecisionsDelegationUpdateParam` API schema.
-class LiveDecisionsDelegationUpdateParam
-  include LiveSessionUpdateParamsDelegation
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveDecisionsDelegationUpdateParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveDecisionsDelegationUpdateParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveDecisionsDelegationUpdateParamMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [LiveDecisionsDelegationUpdateParamType] Required enumerated value serialized in the `type` wire field.
-  attr_reader :type
-  # @return [LiveDecisionsSettingsUpdateParam] Optional object value serialized in the `decisions` wire field.
-  attr_reader :decisions
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the LiveDecisionsDelegationParam2Type SDK namespace.
+  module LiveDecisionsDelegationParam2Type
+    DECISIONS = 'decisions'
+    VALUES = ['decisions'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('LiveDecisionsDelegationParam2Type', 'enum', "Unknown LiveDecisionsDelegationParam2Type: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the LiveDecisionsDelegationUpdateParamType SDK namespace.
-module LiveDecisionsDelegationUpdateParamType
-  DECISIONS = 'decisions'
-  VALUES = ['decisions'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('LiveDecisionsDelegationUpdateParamType', 'enum', "Unknown LiveDecisionsDelegationUpdateParamType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalLiveDecisionsSettingsInputParamMetadata
-  FIELDS = {
-    questions: "questions",
-    model: "model",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    questions
-    model
-  ].freeze
-  DECODERS = {
-    questions: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::LiveDecisionQuestion.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for LiveDecisionsSettingsInputParam.
-# Typed representation of the `LiveDecisionsSettingsInputParam` API schema.
-class LiveDecisionsSettingsInputParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveDecisionsSettingsInputParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveDecisionsSettingsInputParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveDecisionsSettingsInputParamMetadata::DECODERS
-
-  # @return [Array_of_LiveDecisionQuestion] Native Decision API questions evaluated together, in order.
-  attr_reader :questions
-  # @return [String] Required `string` value serialized in the `model` wire field.
-  attr_reader :model
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalLiveDecisionsDelegationUpdateParamMetadata
+    FIELDS = {
+      type: 'type',
+      decisions: 'decisions'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LiveDecisionsDelegationUpdateParamType.from_value(value)
+      end,
+      decisions: lambda do |value|
+        ::OctridevOpenai::LiveDecisionsSettingsUpdateParam.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for LiveDecisionsDelegationUpdateParam.
+  # Typed representation of the `LiveDecisionsDelegationUpdateParam` API schema.
+  class LiveDecisionsDelegationUpdateParam
+    include LiveSessionUpdateParamsDelegation
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveDecisionsDelegationUpdateParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveDecisionsDelegationUpdateParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveDecisionsDelegationUpdateParamMetadata::DECODERS
+
+    # @return [LiveDecisionsDelegationUpdateParamType] Required enumerated value serialized in the `type` wire field.
+    attr_reader :type
+    # @return [LiveDecisionsSettingsUpdateParam] Optional object value serialized in the `decisions` wire field.
+    attr_reader :decisions
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the LiveDecisionsDelegationUpdateParamType SDK namespace.
+  module LiveDecisionsDelegationUpdateParamType
+    DECISIONS = 'decisions'
+    VALUES = ['decisions'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Internal model hydration metadata.
-class SdkInternalLiveDecisionsSettingsInputParam2Metadata
-  FIELDS = {
-    questions: "questions",
-    model: "model",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    questions
-    model
-  ].freeze
-  DECODERS = {
-    questions: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::QuestionParam.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for LiveDecisionsSettingsInputParam2.
-# Typed representation of the `LiveDecisionsSettingsInputParam2` API schema.
-class LiveDecisionsSettingsInputParam2
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveDecisionsSettingsInputParam2Metadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveDecisionsSettingsInputParam2Metadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveDecisionsSettingsInputParam2Metadata::DECODERS
-
-  # @return [Array_of_QuestionParam] Native Decision API questions evaluated together, in order.
-  attr_reader :questions
-  # @return [String] Required `string` value serialized in the `model` wire field.
-  attr_reader :model
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('LiveDecisionsDelegationUpdateParamType', 'enum', "Unknown LiveDecisionsDelegationUpdateParamType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalLiveDecisionsSettingsInputParamMetadata
+    FIELDS = {
+      questions: 'questions',
+      model: 'model'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      questions
+      model
+    ].freeze
+    DECODERS = {
+      questions: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::LiveDecisionQuestion.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for LiveDecisionsSettingsInputParam.
+  # Typed representation of the `LiveDecisionsSettingsInputParam` API schema.
+  class LiveDecisionsSettingsInputParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveDecisionsSettingsInputParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveDecisionsSettingsInputParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveDecisionsSettingsInputParamMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalLiveDecisionsSettingsUpdateParamMetadata
-  FIELDS = {
-    model: "model",
-    questions: "questions",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    questions: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::QuestionParam.from_hash(item) }
-    end,
-  }.freeze
-end
+    # @return [Array_of_LiveDecisionQuestion] Native Decision API questions evaluated together, in order.
+    attr_reader :questions
+    # @return [String] Required `string` value serialized in the `model` wire field.
+    attr_reader :model
 
-# API model for LiveDecisionsSettingsUpdateParam.
-# Typed representation of the `LiveDecisionsSettingsUpdateParam` API schema.
-class LiveDecisionsSettingsUpdateParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveDecisionsSettingsUpdateParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveDecisionsSettingsUpdateParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveDecisionsSettingsUpdateParamMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [String] Optional `string` value serialized in the `model` wire field.
-  attr_reader :model
-  # @return [Array_of_QuestionParam] Native Decision API questions evaluated together, in order.
-  attr_reader :questions
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalLiveDecisionsSettingsInputParam2Metadata
+    FIELDS = {
+      questions: 'questions',
+      model: 'model'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      questions
+      model
+    ].freeze
+    DECODERS = {
+      questions: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::QuestionParam.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # API model for LiveDecisionsSettingsInputParam2.
+  # Typed representation of the `LiveDecisionsSettingsInputParam2` API schema.
+  class LiveDecisionsSettingsInputParam2
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveDecisionsSettingsInputParam2Metadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveDecisionsSettingsInputParam2Metadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveDecisionsSettingsInputParam2Metadata::DECODERS
+
+    # @return [Array_of_QuestionParam] Native Decision API questions evaluated together, in order.
+    attr_reader :questions
+    # @return [String] Required `string` value serialized in the `model` wire field.
+    attr_reader :model
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
+
+  # Internal model hydration metadata.
+  class SdkInternalLiveDecisionsSettingsUpdateParamMetadata
+    FIELDS = {
+      model: 'model',
+      questions: 'questions'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      questions: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::QuestionParam.from_hash(item) }
+      end
+    }.freeze
+  end
+
+  # API model for LiveDecisionsSettingsUpdateParam.
+  # Typed representation of the `LiveDecisionsSettingsUpdateParam` API schema.
+  class LiveDecisionsSettingsUpdateParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveDecisionsSettingsUpdateParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveDecisionsSettingsUpdateParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveDecisionsSettingsUpdateParamMetadata::DECODERS
+
+    # @return [String] Optional `string` value serialized in the `model` wire field.
+    attr_reader :model
+    # @return [Array_of_QuestionParam] Native Decision API questions evaluated together, in order.
+    attr_reader :questions
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
 end

@@ -5,88 +5,86 @@
 
 # decisions_score domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalScoreLevelParamMetadata
-  FIELDS = {
-    label: "label",
-    description: "description",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    label
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for ScoreLevelParam.
-# Typed representation of the `ScoreLevelParam` API schema.
-class ScoreLevelParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalScoreLevelParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalScoreLevelParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalScoreLevelParamMetadata::DECODERS
-
-  # @return [String] Required `string` value serialized in the `label` wire field.
-  attr_reader :label
-  # @return [String] Optional `string` value serialized in the `description` wire field.
-  attr_reader :description
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalScoreLevelParamMetadata
+    FIELDS = {
+      label: 'label',
+      description: 'description'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      label
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ScoreLevelParam.
+  # Typed representation of the `ScoreLevelParam` API schema.
+  class ScoreLevelParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalScoreLevelParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalScoreLevelParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalScoreLevelParamMetadata::DECODERS
+
+    # @return [String] Required `string` value serialized in the `label` wire field.
+    attr_reader :label
+    # @return [String] Optional `string` value serialized in the `description` wire field.
+    attr_reader :description
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalScoreProbabilityResourceMetadata
-  FIELDS = {
-    value: "value",
-    label: "label",
-    probability: "probability",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    value
-    label
-    probability
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for ScoreProbabilityResource.
-# Typed representation of the `ScoreProbabilityResource` API schema.
-class ScoreProbabilityResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalScoreProbabilityResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalScoreProbabilityResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalScoreProbabilityResourceMetadata::DECODERS
-
-  # @return [Integer] Required `int64`-formatted value serialized in the `value` wire field.
-  attr_reader :value
-  # @return [String] Required `string` value serialized in the `label` wire field.
-  attr_reader :label
-  # @return [Float] Required `number` value serialized in the `probability` wire field.
-  attr_reader :probability
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalScoreProbabilityResourceMetadata
+    FIELDS = {
+      value: 'value',
+      label: 'label',
+      probability: 'probability'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      value
+      label
+      probability
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
+  # API model for ScoreProbabilityResource.
+  # Typed representation of the `ScoreProbabilityResource` API schema.
+  class ScoreProbabilityResource
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalScoreProbabilityResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalScoreProbabilityResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalScoreProbabilityResourceMetadata::DECODERS
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+    # @return [Integer] Required `int64`-formatted value serialized in the `value` wire field.
+    attr_reader :value
+    # @return [String] Required `string` value serialized in the `label` wire field.
+    attr_reader :label
+    # @return [Float] Required `number` value serialized in the `probability` wire field.
+    attr_reader :probability
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
 end

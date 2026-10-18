@@ -12,15 +12,13 @@ module OctridevOpenai
       # Internal model hydration metadata.
       class SdkInternalListAuditLogsParameterMetadata
         FIELDS = {
-          gt: "gt",
-          gte: "gte",
-          lt: "lt",
-          lte: "lte",
+          gt: 'gt',
+          gte: 'gte',
+          lt: 'lt',
+          lte: 'lte'
         }.freeze
-        REQUIRED_FIELDS = %i[
-        ].freeze
-        DECODERS = {
-        }.freeze
+        REQUIRED_FIELDS = %i[].freeze
+        DECODERS = {}.freeze
       end
 
       # API model for ListAuditLogsParameter.
@@ -97,10 +95,9 @@ module OctridevOpenai
         before: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
-          "/organization/audit_logs",
+          '/organization/audit_logs',
           config: config,
           query: {
             'effective_at' => QueryValue.new(effective_at, style: 'form', explode: true),
@@ -112,17 +109,17 @@ module OctridevOpenai
             'tenant_only' => QueryValue.new(tenant_only, style: 'form', explode: true),
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
-            'before' => QueryValue.new(before, style: 'form', explode: true),
+            'before' => QueryValue.new(before, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::ListAuditLogsResponse,
           decoder: :json,
           operation_id: 'list_audit_logs',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
-    ListAuditLogsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      ListAuditLogsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # List user actions and configuration changes within this organization.
       #
@@ -187,10 +184,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.last_id
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -229,10 +229,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListAuditLogsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end

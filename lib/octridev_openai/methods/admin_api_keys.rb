@@ -12,14 +12,13 @@ module OctridevOpenai
       # Internal model hydration metadata.
       class SdkInternalCreateAdminApiKeysMetadata
         FIELDS = {
-          name: "name",
-          expires_in_seconds: "expires_in_seconds",
+          name: 'name',
+          expires_in_seconds: 'expires_in_seconds'
         }.freeze
         REQUIRED_FIELDS = %i[
           name
         ].freeze
-        DECODERS = {
-        }.freeze
+        DECODERS = {}.freeze
       end
 
       # API model for CreateAdminApiKeys.
@@ -50,9 +49,9 @@ module OctridevOpenai
       # Internal model hydration metadata.
       class SdkInternalDeleteAdminApiKeysResponseMetadata
         FIELDS = {
-          id: "id",
-          object: "object",
-          deleted: "deleted",
+          id: 'id',
+          object: 'object',
+          deleted: 'deleted'
         }.freeze
         REQUIRED_FIELDS = %i[
           id
@@ -62,7 +61,7 @@ module OctridevOpenai
         DECODERS = {
           object: lambda do |value|
             ::OctridevOpenai::Methods::AdminApiKeys::DeleteAdminApiKeysResponseObject.from_value(value)
-          end,
+          end
         }.freeze
       end
 
@@ -102,7 +101,7 @@ module OctridevOpenai
       module ListAdminApiKeysParameter
         ASC = 'asc'
         DESC = 'desc'
-        VALUES = ['asc', 'desc'].freeze
+        VALUES = %w[asc desc].freeze
         def self.from_value(value)
           value
         end
@@ -118,25 +117,24 @@ module OctridevOpenai
         limit: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
-          "/organization/admin_api_keys",
+          '/organization/admin_api_keys',
           config: config,
           query: {
             'after' => QueryValue.new(after, style: 'form', explode: true),
             'order' => QueryValue.new(order, style: 'form', explode: true),
-            'limit' => QueryValue.new(limit, style: 'form', explode: true),
+            'limit' => QueryValue.new(limit, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::ApiKeyList,
           decoder: :json,
           operation_id: 'list_admin_api_keys',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse }
         ).data
       end
 
-    ListAdminApiKeysPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      ListAdminApiKeysPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists organization API keys, including keys associated with projects. Use `after` to continue from a key ID and `order` to control creation-time sorting. The response includes pagination metadata to help you determine whether more keys are available.
       #
@@ -160,10 +158,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.last_id
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -188,10 +189,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListAdminApiKeysPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end
@@ -209,24 +212,23 @@ module OctridevOpenai
         expires_in_seconds: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.if_given(expires_in_seconds) do
-          Validation.validate_range('expires_in_seconds', expires_in_seconds, min: 1, max: 31536000)
+          Validation.validate_range('expires_in_seconds', expires_in_seconds, min: 1, max: 31_536_000)
         end
 
         SdkClient.request(
           'POST',
-          "/organization/admin_api_keys",
+          '/organization/admin_api_keys',
           config: config,
           body: {
             'name' => name,
-            'expires_in_seconds' => expires_in_seconds,
+            'expires_in_seconds' => expires_in_seconds
           },
           return_type: ::OctridevOpenai::AdminApiKeyCreateResponse,
           decoder: :json,
           operation_id: 'create_admin_api_keys',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -238,11 +240,10 @@ module OctridevOpenai
         key_id:,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
           [
-            "/organization/admin_api_keys/",
+            '/organization/admin_api_keys/',
             SdkClient.encode_path_segment(key_id)
           ].join,
           config: config,
@@ -250,7 +251,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'retrieve_admin_api_keys',
           request_options: request_options,
-          errors: { '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
+          errors: { '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -262,11 +263,10 @@ module OctridevOpenai
         key_id:,
         request_options: nil
       )
-
         SdkClient.request(
           'DELETE',
           [
-            "/organization/admin_api_keys/",
+            '/organization/admin_api_keys/',
             SdkClient.encode_path_segment(key_id)
           ].join,
           config: config,
@@ -274,7 +274,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_admin_api_keys',
           request_options: request_options,
-          errors: { '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
+          errors: { '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
     end

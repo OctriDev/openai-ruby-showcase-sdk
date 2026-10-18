@@ -5,194 +5,197 @@
 
 # shared_output domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalOutputMessageMetadata
-  FIELDS = {
-    id: "id",
-    type: "type",
-    role: "role",
-    content: "content",
-    phase: "phase",
-    status: "status",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    type
-    role
-    content
-    status
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::OutputMessageType.from_value(value)
-    end,
-    role: lambda do |value|
-      ::OctridevOpenai::OutputMessageRole.from_value(value)
-    end,
-    content: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::OutputMessageContent.from_hash(item) }
-    end,
-    phase: lambda do |value|
-      ::OctridevOpenai::MessagePhase.from_value(value)
-    end,
-    status: lambda do |value|
-      ::OctridevOpenai::OutputMessageStatus.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for OutputMessage.
-# An output message from the model.
-class OutputMessage
-  include Item
-  include ItemResource
-  include OutputItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalOutputMessageMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalOutputMessageMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalOutputMessageMetadata::DECODERS
-
-  # @return [String] The unique ID of the output message.
-  attr_reader :id
-  # @return [OutputMessageType] The type of the output message. Always `message`.
-  attr_reader :type
-  # @return [OutputMessageRole] The role of the output message. Always `assistant`.
-  attr_reader :role
-  # @return [Array_of_OutputMessageContent] The content of the output message.
-  attr_reader :content
-  # @return [MessagePhase] Optional API value serialized in the `phase` wire field.
-  attr_reader :phase
-  # @return [OutputMessageStatus] The status of the message input. One of `in_progress`, `completed`, or `incomplete`. Populated when input items are returned via API.
-  attr_reader :status
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalOutputMessageMetadata
+    FIELDS = {
+      id: 'id',
+      type: 'type',
+      role: 'role',
+      content: 'content',
+      phase: 'phase',
+      status: 'status'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      type
+      role
+      content
+      status
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::OutputMessageType.from_value(value)
+      end,
+      role: lambda do |value|
+        ::OctridevOpenai::OutputMessageRole.from_value(value)
+      end,
+      content: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::OutputMessageContent.from_hash(item) }
+      end,
+      phase: lambda do |value|
+        ::OctridevOpenai::MessagePhase.from_value(value)
+      end,
+      status: lambda do |value|
+        ::OctridevOpenai::OutputMessageStatus.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for OutputMessage.
+  # An output message from the model.
+  class OutputMessage
+    include Item
+    include ItemResource
+    include OutputItem
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalOutputMessageMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalOutputMessageMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalOutputMessageMetadata::DECODERS
+
+    # @return [String] The unique ID of the output message.
+    attr_reader :id
+    # @return [OutputMessageType] The type of the output message. Always `message`.
+    attr_reader :type
+    # @return [OutputMessageRole] The role of the output message. Always `assistant`.
+    attr_reader :role
+    # @return [Array_of_OutputMessageContent] The content of the output message.
+    attr_reader :content
+    # @return [MessagePhase] Optional API value serialized in the `phase` wire field.
+    attr_reader :phase
+    # @return [OutputMessageStatus] The status of the message input. One of `in_progress`, `completed`, or `incomplete`. Populated when input items are returned via API.
+    attr_reader :status
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the OutputMessageRole SDK namespace.
-module OutputMessageRole
-  ASSISTANT = 'assistant'
-  VALUES = ['assistant'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the OutputMessageStatus SDK namespace.
-module OutputMessageStatus
-  IN_PROGRESS = 'in_progress'
-  COMPLETED = 'completed'
-  INCOMPLETE = 'incomplete'
-  VALUES = ['in_progress', 'completed', 'incomplete'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the OutputMessageType SDK namespace.
-module OutputMessageType
-  MESSAGE = 'message'
-  VALUES = ['message'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('OutputMessageType', 'enum', "Unknown OutputMessageType: #{value}")
-  end
-end
-
-# Defines the OutputMessageContent SDK namespace.
-module OutputMessageContent
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    mapping = { "output_text" => OutputTextContent, "refusal" => RefusalContent }
-    type = mapping[hash["type"]]
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('OutputMessageContent', 'variant', "Unknown OutputMessageContent discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalOutputTextContentMetadata
-  FIELDS = {
-    type: "type",
-    text: "text",
-    annotations: "annotations",
-    logprobs: "logprobs",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    text
-    annotations
-    logprobs
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::OutputTextContentType.from_value(value)
-    end,
-    annotations: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::Annotation.from_hash(item) }
-    end,
-    logprobs: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::LogProb.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for OutputTextContent.
-# A text output from the model.
-class OutputTextContent
-  include OutputContent
-  include OutputMessageContent
-  include MessageContentItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalOutputTextContentMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalOutputTextContentMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalOutputTextContentMetadata::DECODERS
-
-  # @return [OutputTextContentType] The type of the output text. Always `output_text`.
-  attr_reader :type
-  # @return [String] The text output from the model.
-  attr_reader :text
-  # @return [Array_of_Annotation] The annotations of the text output.
-  attr_reader :annotations
-  # @return [Array_of_LogProb] Required array value serialized in the `logprobs` wire field.
-  attr_reader :logprobs
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the OutputMessageRole SDK namespace.
+  module OutputMessageRole
+    ASSISTANT = 'assistant'
+    VALUES = ['assistant'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the OutputMessageStatus SDK namespace.
+  module OutputMessageStatus
+    IN_PROGRESS = 'in_progress'
+    COMPLETED = 'completed'
+    INCOMPLETE = 'incomplete'
+    VALUES = %w[in_progress completed incomplete].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the OutputMessageType SDK namespace.
+  module OutputMessageType
+    MESSAGE = 'message'
+    VALUES = ['message'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the OutputTextContentType SDK namespace.
-module OutputTextContentType
-  OUTPUT_TEXT = 'output_text'
-  VALUES = ['output_text'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('OutputTextContentType', 'enum', "Unknown OutputTextContentType: #{value}")
+      raise SdkValidationError.new('OutputMessageType', 'enum', "Unknown OutputMessageType: #{value}")
+    end
   end
-end
+
+  # Defines the OutputMessageContent SDK namespace.
+  module OutputMessageContent
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      mapping = { 'output_text' => OutputTextContent, 'refusal' => RefusalContent }
+      type = mapping[hash['type']]
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('OutputMessageContent', 'variant', "Unknown OutputMessageContent discriminator: #{hash['type'].inspect}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalOutputTextContentMetadata
+    FIELDS = {
+      type: 'type',
+      text: 'text',
+      annotations: 'annotations',
+      logprobs: 'logprobs'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      text
+      annotations
+      logprobs
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::OutputTextContentType.from_value(value)
+      end,
+      annotations: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::Annotation.from_hash(item) }
+      end,
+      logprobs: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::LogProb.from_hash(item) }
+      end
+    }.freeze
+  end
+
+  # API model for OutputTextContent.
+  # A text output from the model.
+  class OutputTextContent
+    include OutputContent
+    include OutputMessageContent
+    include MessageContentItem
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalOutputTextContentMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalOutputTextContentMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalOutputTextContentMetadata::DECODERS
+
+    # @return [OutputTextContentType] The type of the output text. Always `output_text`.
+    attr_reader :type
+    # @return [String] The text output from the model.
+    attr_reader :text
+    # @return [Array_of_Annotation] The annotations of the text output.
+    attr_reader :annotations
+    # @return [Array_of_LogProb] Required array value serialized in the `logprobs` wire field.
+    attr_reader :logprobs
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the OutputTextContentType SDK namespace.
+  module OutputTextContentType
+    OUTPUT_TEXT = 'output_text'
+    VALUES = ['output_text'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('OutputTextContentType', 'enum', "Unknown OutputTextContentType: #{value}")
+    end
+  end
 end

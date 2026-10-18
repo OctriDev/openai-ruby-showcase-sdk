@@ -33,31 +33,30 @@ module OctridevOpenai
         status: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 1, max: 100) }
 
-        Validation.if_given(after) { Validation.validate_length('after', after, min: 0, max: 1048576) }
+        Validation.if_given(after) { Validation.validate_length('after', after, min: 0, max: 1_048_576) }
 
         SdkClient.request(
           'GET',
-          "/vaults",
+          '/vaults',
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'order' => QueryValue.new(order, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
             'metadata' => QueryValue.new(metadata, style: 'deepObject', explode: true),
-            'status' => QueryValue.new(status, style: 'form', explode: true),
+            'status' => QueryValue.new(status, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::VaultListResource,
           decoder: :json,
           operation_id: 'list_vaults',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).data
       end
 
-    ListVaultsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      ListVaultsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists vaults using ID-based pagination. See vaults.
       #
@@ -97,10 +96,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.last_id
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -129,10 +131,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListVaultsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end
@@ -150,22 +154,21 @@ module OctridevOpenai
         metadata: NOT_GIVEN,
         request_options: nil
       )
-
-        Validation.if_given(name) { Validation.validate_length('name', name, min: 1, max: 1048576) }
+        Validation.if_given(name) { Validation.validate_length('name', name, min: 1, max: 1_048_576) }
 
         SdkClient.request(
           'POST',
-          "/vaults",
+          '/vaults',
           config: config,
           body: {
             'name' => name,
-            'metadata' => metadata,
+            'metadata' => metadata
           },
           return_type: ::OctridevOpenai::VaultResource,
           decoder: :json,
           operation_id: 'create_vault',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).data
       end
 
@@ -177,13 +180,12 @@ module OctridevOpenai
         vault_id:,
         request_options: nil
       )
-
-        Validation.validate_length('vault_id', vault_id, min: 0, max: 1048576)
+        Validation.validate_length('vault_id', vault_id, min: 0, max: 1_048_576)
 
         SdkClient.request(
           'GET',
           [
-            "/vaults/",
+            '/vaults/',
             SdkClient.encode_path_segment(vault_id)
           ].join,
           config: config,
@@ -191,7 +193,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'retrieve_vault',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).data
       end
 
@@ -211,27 +213,26 @@ module OctridevOpenai
         name: NOT_GIVEN,
         request_options: nil
       )
+        Validation.validate_length('vault_id', vault_id, min: 0, max: 1_048_576)
 
-        Validation.validate_length('vault_id', vault_id, min: 0, max: 1048576)
-
-        Validation.if_given(name) { Validation.validate_length('name', name, min: 1, max: 1048576) }
+        Validation.if_given(name) { Validation.validate_length('name', name, min: 1, max: 1_048_576) }
 
         SdkClient.request(
           'POST',
           [
-            "/vaults/",
+            '/vaults/',
             SdkClient.encode_path_segment(vault_id)
           ].join,
           config: config,
           body: {
             'metadata' => metadata,
-            'name' => name,
+            'name' => name
           },
           return_type: ::OctridevOpenai::VaultResource,
           decoder: :json,
           operation_id: 'update_vault',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).data
       end
 
@@ -243,13 +244,12 @@ module OctridevOpenai
         vault_id:,
         request_options: nil
       )
-
-        Validation.validate_length('vault_id', vault_id, min: 0, max: 1048576)
+        Validation.validate_length('vault_id', vault_id, min: 0, max: 1_048_576)
 
         SdkClient.request(
           'DELETE',
           [
-            "/vaults/",
+            '/vaults/',
             SdkClient.encode_path_segment(vault_id)
           ].join,
           config: config,
@@ -257,7 +257,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_vault',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).data
       end
 
@@ -287,19 +287,18 @@ module OctridevOpenai
         status: NOT_GIVEN,
         request_options: nil
       )
-
-        Validation.validate_length('vault_id', vault_id, min: 0, max: 1048576)
+        Validation.validate_length('vault_id', vault_id, min: 0, max: 1_048_576)
 
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 1, max: 100) }
 
-        Validation.if_given(after) { Validation.validate_length('after', after, min: 0, max: 1048576) }
+        Validation.if_given(after) { Validation.validate_length('after', after, min: 0, max: 1_048_576) }
 
         SdkClient.request(
           'GET',
           [
-            "/vaults/",
+            '/vaults/',
             SdkClient.encode_path_segment(vault_id),
-            "/credentials"
+            '/credentials'
           ].join,
           config: config,
           query: {
@@ -307,17 +306,17 @@ module OctridevOpenai
             'order' => QueryValue.new(order, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
             'metadata' => QueryValue.new(metadata, style: 'deepObject', explode: true),
-            'status' => QueryValue.new(status, style: 'form', explode: true),
+            'status' => QueryValue.new(status, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::VaultCredentialListResource,
           decoder: :json,
           operation_id: 'list_vault_credentials',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).data
       end
 
-    ListVaultCredentialsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      ListVaultCredentialsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists a vault's credentials using ID-based pagination without returning secret values. See vaults.
       #
@@ -360,10 +359,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.last_id
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -394,10 +396,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListVaultCredentialsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end
@@ -421,29 +425,28 @@ module OctridevOpenai
         metadata: NOT_GIVEN,
         request_options: nil
       )
+        Validation.validate_length('vault_id', vault_id, min: 0, max: 1_048_576)
 
-        Validation.validate_length('vault_id', vault_id, min: 0, max: 1048576)
-
-        Validation.validate_length('name', name, min: 1, max: 1048576)
+        Validation.validate_length('name', name, min: 1, max: 1_048_576)
 
         SdkClient.request(
           'POST',
           [
-            "/vaults/",
+            '/vaults/',
             SdkClient.encode_path_segment(vault_id),
-            "/credentials"
+            '/credentials'
           ].join,
           config: config,
           body: {
             'name' => name,
             'auth' => auth,
-            'metadata' => metadata,
+            'metadata' => metadata
           },
           return_type: ::OctridevOpenai::VaultCredentialResource,
           decoder: :json,
           operation_id: 'create_vault_credential',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).data
       end
 
@@ -457,17 +460,16 @@ module OctridevOpenai
         credential_id:,
         request_options: nil
       )
+        Validation.validate_length('vault_id', vault_id, min: 0, max: 1_048_576)
 
-        Validation.validate_length('vault_id', vault_id, min: 0, max: 1048576)
-
-        Validation.validate_length('credential_id', credential_id, min: 0, max: 1048576)
+        Validation.validate_length('credential_id', credential_id, min: 0, max: 1_048_576)
 
         SdkClient.request(
           'GET',
           [
-            "/vaults/",
+            '/vaults/',
             SdkClient.encode_path_segment(vault_id),
-            "/credentials/",
+            '/credentials/',
             SdkClient.encode_path_segment(credential_id)
           ].join,
           config: config,
@@ -475,7 +477,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'retrieve_vault_credential',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).data
       end
 
@@ -496,29 +498,28 @@ module OctridevOpenai
         metadata: NOT_GIVEN,
         request_options: nil
       )
+        Validation.validate_length('vault_id', vault_id, min: 0, max: 1_048_576)
 
-        Validation.validate_length('vault_id', vault_id, min: 0, max: 1048576)
-
-        Validation.validate_length('credential_id', credential_id, min: 0, max: 1048576)
+        Validation.validate_length('credential_id', credential_id, min: 0, max: 1_048_576)
 
         SdkClient.request(
           'POST',
           [
-            "/vaults/",
+            '/vaults/',
             SdkClient.encode_path_segment(vault_id),
-            "/credentials/",
+            '/credentials/',
             SdkClient.encode_path_segment(credential_id)
           ].join,
           config: config,
           body: {
             'auth' => auth,
-            'metadata' => metadata,
+            'metadata' => metadata
           },
           return_type: ::OctridevOpenai::VaultCredentialResource,
           decoder: :json,
           operation_id: 'rotate_vault_credential',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).data
       end
 
@@ -532,17 +533,16 @@ module OctridevOpenai
         credential_id:,
         request_options: nil
       )
+        Validation.validate_length('vault_id', vault_id, min: 0, max: 1_048_576)
 
-        Validation.validate_length('vault_id', vault_id, min: 0, max: 1048576)
-
-        Validation.validate_length('credential_id', credential_id, min: 0, max: 1048576)
+        Validation.validate_length('credential_id', credential_id, min: 0, max: 1_048_576)
 
         SdkClient.request(
           'DELETE',
           [
-            "/vaults/",
+            '/vaults/',
             SdkClient.encode_path_segment(vault_id),
-            "/credentials/",
+            '/credentials/',
             SdkClient.encode_path_segment(credential_id)
           ].join,
           config: config,
@@ -550,7 +550,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_vault_credential',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).data
       end
     end

@@ -5,431 +5,435 @@
 
 # responses_beta_file domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalBetaFileCitationBodyMetadata
-  FIELDS = {
-    type: "type",
-    file_id: "file_id",
-    index: "index",
-    filename: "filename",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    file_id
-    index
-    filename
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaFileCitationBodyType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaFileCitationBody.
-# A citation to a file.
-class BetaFileCitationBody
-  include BetaAnnotation
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaFileCitationBodyMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaFileCitationBodyMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaFileCitationBodyMetadata::DECODERS
-
-  # @return [BetaFileCitationBodyType] The type of the file citation. Always `file_citation`.
-  attr_reader :type
-  # @return [String] The ID of the file.
-  attr_reader :file_id
-  # @return [Integer] The index in the output text at which to insert the file citation.
-  attr_reader :index
-  # @return [String] The filename of the file cited.
-  attr_reader :filename
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalBetaFileCitationBodyMetadata
+    FIELDS = {
+      type: 'type',
+      file_id: 'file_id',
+      index: 'index',
+      filename: 'filename'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      file_id
+      index
+      filename
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaFileCitationBodyType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for BetaFileCitationBody.
+  # A citation to a file.
+  class BetaFileCitationBody
+    include BetaAnnotation
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaFileCitationBodyMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaFileCitationBodyMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaFileCitationBodyMetadata::DECODERS
+
+    # @return [BetaFileCitationBodyType] The type of the file citation. Always `file_citation`.
+    attr_reader :type
+    # @return [String] The ID of the file.
+    attr_reader :file_id
+    # @return [Integer] The index in the output text at which to insert the file citation.
+    attr_reader :index
+    # @return [String] The filename of the file cited.
+    attr_reader :filename
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the BetaFileCitationBodyType SDK namespace.
+  module BetaFileCitationBodyType
+    FILE_CITATION = 'file_citation'
+    VALUES = ['file_citation'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the BetaFileCitationBodyType SDK namespace.
-module BetaFileCitationBodyType
-  FILE_CITATION = 'file_citation'
-  VALUES = ['file_citation'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('BetaFileCitationBodyType', 'enum', "Unknown BetaFileCitationBodyType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaFileCitationParamMetadata
-  FIELDS = {
-    type: "type",
-    index: "index",
-    file_id: "file_id",
-    filename: "filename",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    index
-    file_id
-    filename
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaFileCitationParamType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaFileCitationParam.
-# Typed representation of the `BetaFileCitationParam` API schema.
-class BetaFileCitationParam
-  include BetaOutputTextContentParamAnnotationsItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaFileCitationParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaFileCitationParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaFileCitationParamMetadata::DECODERS
-
-  # @return [BetaFileCitationParamType] The citation type. Always `file_citation`.
-  attr_reader :type
-  # @return [Integer] The index of the file in the list of files.
-  attr_reader :index
-  # @return [String] The ID of the file.
-  attr_reader :file_id
-  # @return [String] The filename of the file cited.
-  attr_reader :filename
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('BetaFileCitationBodyType', 'enum', "Unknown BetaFileCitationBodyType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalBetaFileCitationParamMetadata
+    FIELDS = {
+      type: 'type',
+      index: 'index',
+      file_id: 'file_id',
+      filename: 'filename'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      index
+      file_id
+      filename
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaFileCitationParamType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for BetaFileCitationParam.
+  # Typed representation of the `BetaFileCitationParam` API schema.
+  class BetaFileCitationParam
+    include BetaOutputTextContentParamAnnotationsItem
 
-# Defines the BetaFileCitationParamType SDK namespace.
-module BetaFileCitationParamType
-  FILE_CITATION = 'file_citation'
-  VALUES = ['file_citation'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaFileCitationParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaFileCitationParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaFileCitationParamMetadata::DECODERS
 
-    raise SdkValidationError.new('BetaFileCitationParamType', 'enum', "Unknown BetaFileCitationParamType: #{value}")
-  end
-end
+    # @return [BetaFileCitationParamType] The citation type. Always `file_citation`.
+    attr_reader :type
+    # @return [Integer] The index of the file in the list of files.
+    attr_reader :index
+    # @return [String] The ID of the file.
+    attr_reader :file_id
+    # @return [String] The filename of the file cited.
+    attr_reader :filename
 
-# Defines the BetaFileDetailEnum SDK namespace.
-module BetaFileDetailEnum
-  AUTO = 'auto'
-  LOW = 'low'
-  HIGH = 'high'
-  VALUES = ['auto', 'low', 'high'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# Defines the BetaFileInputDetail SDK namespace.
-module BetaFileInputDetail
-  AUTO = 'auto'
-  LOW = 'low'
-  HIGH = 'high'
-  VALUES = ['auto', 'low', 'high'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-# Internal model hydration metadata.
-class SdkInternalBetaFilePathMetadata
-  FIELDS = {
-    type: "type",
-    file_id: "file_id",
-    index: "index",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    file_id
-    index
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaFilePathType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaFilePath.
-# A path to a file.
-class BetaFilePath
-  include BetaAnnotation
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaFilePathMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaFilePathMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaFilePathMetadata::DECODERS
-
-  # @return [BetaFilePathType] The type of the file path. Always `file_path`.
-  attr_reader :type
-  # @return [String] The ID of the file.
-  attr_reader :file_id
-  # @return [Integer] The index of the file in the list of files.
-  attr_reader :index
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the BetaFileCitationParamType SDK namespace.
+  module BetaFileCitationParamType
+    FILE_CITATION = 'file_citation'
+    VALUES = ['file_citation'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaFileCitationParamType', 'enum', "Unknown BetaFileCitationParamType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the BetaFilePathType SDK namespace.
-module BetaFilePathType
-  FILE_PATH = 'file_path'
-  VALUES = ['file_path'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('BetaFilePathType', 'enum', "Unknown BetaFilePathType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaFileSearchToolMetadata
-  FIELDS = {
-    type: "type",
-    vector_store_ids: "vector_store_ids",
-    max_num_results: "max_num_results",
-    ranking_options: "ranking_options",
-    filters: "filters",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    vector_store_ids
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaFileSearchToolType.from_value(value)
-    end,
-    ranking_options: lambda do |value|
-      ::OctridevOpenai::BetaRankingOptions.from_hash(value)
-    end,
-    filters: lambda do |value|
-      ::OctridevOpenai::BetaFilters.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaFileSearchTool.
-# A tool that searches for relevant content from uploaded files. Learn more about the file search tool.
-class BetaFileSearchTool
-  include BetaTool
-  include BetaToolSearchOutputTool
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaFileSearchToolMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaFileSearchToolMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaFileSearchToolMetadata::DECODERS
-
-  # @return [BetaFileSearchToolType] The type of the file search tool. Always `file_search`.
-  attr_reader :type
-  # @return [Array_of_String] The IDs of the vector stores to search.
-  attr_reader :vector_store_ids
-  # @return [Integer] The maximum number of results to return. This number should be between 1 and 50 inclusive.
-  attr_reader :max_num_results
-  # @return [BetaRankingOptions] Ranking options for search.
-  attr_reader :ranking_options
-  # @return [BetaFilters] Optional API value serialized in the `filters` wire field.
-  attr_reader :filters
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the BetaFileDetailEnum SDK namespace.
+  module BetaFileDetailEnum
+    AUTO = 'auto'
+    LOW = 'low'
+    HIGH = 'high'
+    VALUES = %w[auto low high].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the BetaFileInputDetail SDK namespace.
+  module BetaFileInputDetail
+    AUTO = 'auto'
+    LOW = 'low'
+    HIGH = 'high'
+    VALUES = %w[auto low high].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the BetaFileSearchToolType SDK namespace.
-module BetaFileSearchToolType
-  FILE_SEARCH = 'file_search'
-  VALUES = ['file_search'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('BetaFileSearchToolType', 'enum', "Unknown BetaFileSearchToolType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaFileSearchToolCallResultsItemMetadata
-  FIELDS = {
-    file_id: "file_id",
-    text: "text",
-    filename: "filename",
-    attributes: "attributes",
-    score: "score",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    attributes: lambda do |value|
-      ::OctridevOpenai::BetaVectorStoreFileAttributes.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaFileSearchToolCallResultsItem.
-# Required object value serialized in the `results[]` wire field.
-class BetaFileSearchToolCallResultsItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaFileSearchToolCallResultsItemMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaFileSearchToolCallResultsItemMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaFileSearchToolCallResultsItemMetadata::DECODERS
-
-  # @return [String] The unique ID of the file.
-  attr_reader :file_id
-  # @return [String] The text that was retrieved from the file.
-  attr_reader :text
-  # @return [String] The name of the file.
-  attr_reader :filename
-  # @return [BetaVectorStoreFileAttributes] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters, booleans, or numbers.
-  attr_reader :attributes
-  # @return [Float] The relevance score of the file - a value between 0 and 1.
-  attr_reader :score
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalBetaFilePathMetadata
+    FIELDS = {
+      type: 'type',
+      file_id: 'file_id',
+      index: 'index'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      file_id
+      index
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaFilePathType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for BetaFilePath.
+  # A path to a file.
+  class BetaFilePath
+    include BetaAnnotation
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaFilePathMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaFilePathMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaFilePathMetadata::DECODERS
+
+    # @return [BetaFilePathType] The type of the file path. Always `file_path`.
+    attr_reader :type
+    # @return [String] The ID of the file.
+    attr_reader :file_id
+    # @return [Integer] The index of the file in the list of files.
+    attr_reader :index
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the BetaFilePathType SDK namespace.
+  module BetaFilePathType
+    FILE_PATH = 'file_path'
+    VALUES = ['file_path'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Internal model hydration metadata.
-class SdkInternalBetaFileSearchToolCallMetadata
-  FIELDS = {
-    agent: "agent",
-    id: "id",
-    type: "type",
-    status: "status",
-    queries: "queries",
-    results: "results",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    type
-    status
-    queries
-  ].freeze
-  DECODERS = {
-    agent: lambda do |value|
-      ::OctridevOpenai::BetaAgentTag.from_hash(value)
-    end,
-    type: lambda do |value|
-      ::OctridevOpenai::BetaFileSearchToolCallType.from_value(value)
-    end,
-    status: lambda do |value|
-      ::OctridevOpenai::BetaFileSearchToolCallStatus.from_value(value)
-    end,
-    results: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::BetaFileSearchToolCallResultsItem.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for BetaFileSearchToolCall.
-# The results of a file search tool call. See the file search guide for more information.
-class BetaFileSearchToolCall
-  include BetaItem
-  include BetaItemResource
-  include BetaItemField
-  include BetaOutputItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaFileSearchToolCallMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaFileSearchToolCallMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaFileSearchToolCallMetadata::DECODERS
-
-  # @return [BetaAgentTag] The agent that produced this item.
-  attr_reader :agent
-  # @return [String] The unique ID of the file search tool call.
-  attr_reader :id
-  # @return [BetaFileSearchToolCallType] The type of the file search tool call. Always `file_search_call`.
-  attr_reader :type
-  # @return [BetaFileSearchToolCallStatus] The status of the file search tool call. One of `in_progress`, `searching`, `incomplete` or `failed`,
-  attr_reader :status
-  # @return [Array_of_String] The queries used to search for files.
-  attr_reader :queries
-  # @return [Array_of_BetaFileSearchToolCallResultsItem] The results of the file search tool call.
-  attr_reader :results
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('BetaFilePathType', 'enum', "Unknown BetaFilePathType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalBetaFileSearchToolMetadata
+    FIELDS = {
+      type: 'type',
+      vector_store_ids: 'vector_store_ids',
+      max_num_results: 'max_num_results',
+      ranking_options: 'ranking_options',
+      filters: 'filters'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      vector_store_ids
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaFileSearchToolType.from_value(value)
+      end,
+      ranking_options: lambda do |value|
+        ::OctridevOpenai::BetaRankingOptions.from_hash(value)
+      end,
+      filters: lambda do |value|
+        ::OctridevOpenai::BetaFilters.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for BetaFileSearchTool.
+  # A tool that searches for relevant content from uploaded files. Learn more about the file search tool.
+  class BetaFileSearchTool
+    include BetaTool
+    include BetaToolSearchOutputTool
 
-# Defines the BetaFileSearchToolCallStatus SDK namespace.
-module BetaFileSearchToolCallStatus
-  IN_PROGRESS = 'in_progress'
-  SEARCHING = 'searching'
-  COMPLETED = 'completed'
-  INCOMPLETE = 'incomplete'
-  FAILED = 'failed'
-  VALUES = ['in_progress', 'searching', 'completed', 'incomplete', 'failed'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaFileSearchToolMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaFileSearchToolMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaFileSearchToolMetadata::DECODERS
 
-# Defines the BetaFileSearchToolCallType SDK namespace.
-module BetaFileSearchToolCallType
-  FILE_SEARCH_CALL = 'file_search_call'
-  VALUES = ['file_search_call'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    # @return [BetaFileSearchToolType] The type of the file search tool. Always `file_search`.
+    attr_reader :type
+    # @return [Array_of_String] The IDs of the vector stores to search.
+    attr_reader :vector_store_ids
+    # @return [Integer] The maximum number of results to return. This number should be between 1 and 50 inclusive.
+    attr_reader :max_num_results
+    # @return [BetaRankingOptions] Ranking options for search.
+    attr_reader :ranking_options
+    # @return [BetaFilters] Optional API value serialized in the `filters` wire field.
+    attr_reader :filters
 
-    raise SdkValidationError.new('BetaFileSearchToolCallType', 'enum', "Unknown BetaFileSearchToolCallType: #{value}")
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
+
+  # Defines the BetaFileSearchToolType SDK namespace.
+  module BetaFileSearchToolType
+    FILE_SEARCH = 'file_search'
+    VALUES = ['file_search'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaFileSearchToolType', 'enum', "Unknown BetaFileSearchToolType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalBetaFileSearchToolCallResultsItemMetadata
+    FIELDS = {
+      file_id: 'file_id',
+      text: 'text',
+      filename: 'filename',
+      attributes: 'attributes',
+      score: 'score'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      attributes: lambda do |value|
+        ::OctridevOpenai::BetaVectorStoreFileAttributes.from_hash(value)
+      end
+    }.freeze
+  end
+
+  # API model for BetaFileSearchToolCallResultsItem.
+  # Required object value serialized in the `results[]` wire field.
+  class BetaFileSearchToolCallResultsItem
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaFileSearchToolCallResultsItemMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaFileSearchToolCallResultsItemMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaFileSearchToolCallResultsItemMetadata::DECODERS
+
+    # @return [String] The unique ID of the file.
+    attr_reader :file_id
+    # @return [String] The text that was retrieved from the file.
+    attr_reader :text
+    # @return [String] The name of the file.
+    attr_reader :filename
+    # @return [BetaVectorStoreFileAttributes] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters, booleans, or numbers.
+    attr_reader :attributes
+    # @return [Float] The relevance score of the file - a value between 0 and 1.
+    attr_reader :score
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalBetaFileSearchToolCallMetadata
+    FIELDS = {
+      agent: 'agent',
+      id: 'id',
+      type: 'type',
+      status: 'status',
+      queries: 'queries',
+      results: 'results'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      type
+      status
+      queries
+    ].freeze
+    DECODERS = {
+      agent: lambda do |value|
+        ::OctridevOpenai::BetaAgentTag.from_hash(value)
+      end,
+      type: lambda do |value|
+        ::OctridevOpenai::BetaFileSearchToolCallType.from_value(value)
+      end,
+      status: lambda do |value|
+        ::OctridevOpenai::BetaFileSearchToolCallStatus.from_value(value)
+      end,
+      results: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::BetaFileSearchToolCallResultsItem.from_hash(item) }
+      end
+    }.freeze
+  end
+
+  # API model for BetaFileSearchToolCall.
+  # The results of a file search tool call. See the file search guide for more information.
+  class BetaFileSearchToolCall
+    include BetaItem
+    include BetaItemResource
+    include BetaItemField
+    include BetaOutputItem
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaFileSearchToolCallMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaFileSearchToolCallMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaFileSearchToolCallMetadata::DECODERS
+
+    # @return [BetaAgentTag] The agent that produced this item.
+    attr_reader :agent
+    # @return [String] The unique ID of the file search tool call.
+    attr_reader :id
+    # @return [BetaFileSearchToolCallType] The type of the file search tool call. Always `file_search_call`.
+    attr_reader :type
+    # @return [BetaFileSearchToolCallStatus] The status of the file search tool call. One of `in_progress`, `searching`, `incomplete` or `failed`,
+    attr_reader :status
+    # @return [Array_of_String] The queries used to search for files.
+    attr_reader :queries
+    # @return [Array_of_BetaFileSearchToolCallResultsItem] The results of the file search tool call.
+    attr_reader :results
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the BetaFileSearchToolCallStatus SDK namespace.
+  module BetaFileSearchToolCallStatus
+    IN_PROGRESS = 'in_progress'
+    SEARCHING = 'searching'
+    COMPLETED = 'completed'
+    INCOMPLETE = 'incomplete'
+    FAILED = 'failed'
+    VALUES = %w[in_progress searching completed incomplete failed].freeze
+    def self.from_value(value)
+      value
+    end
+  end
+
+  # Defines the BetaFileSearchToolCallType SDK namespace.
+  module BetaFileSearchToolCallType
+    FILE_SEARCH_CALL = 'file_search_call'
+    VALUES = ['file_search_call'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaFileSearchToolCallType', 'enum', "Unknown BetaFileSearchToolCallType: #{value}")
+    end
+  end
 end

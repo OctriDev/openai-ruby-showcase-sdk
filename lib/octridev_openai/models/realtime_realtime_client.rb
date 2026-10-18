@@ -5,674 +5,686 @@
 
 # realtime_realtime_client domain models
 module OctridevOpenai
-# Defines the RealtimeClientEvent SDK namespace.
-module RealtimeClientEvent
-  DISCRIMINATOR_MAPPING = {
-    "conversation.item.create" => -> { RealtimeClientEventConversationItemCreate },
-    "conversation.item.delete" => -> { RealtimeClientEventConversationItemDelete },
-    "conversation.item.retrieve" => -> { RealtimeClientEventConversationItemRetrieve },
-    "conversation.item.truncate" => -> { RealtimeClientEventConversationItemTruncate },
-    "input_audio_buffer.append" => -> { RealtimeClientEventInputAudioBufferAppend },
-    "input_audio_buffer.clear" => -> { RealtimeClientEventInputAudioBufferClear },
-    "output_audio_buffer.clear" => -> { RealtimeClientEventOutputAudioBufferClear },
-    "input_audio_buffer.commit" => -> { RealtimeClientEventInputAudioBufferCommit },
-    "response.cancel" => -> { RealtimeClientEventResponseCancel },
-    "response.create" => -> { RealtimeClientEventResponseCreate },
-    "session.update" => -> { RealtimeClientEventSessionUpdate },
-  }.freeze
+  # Defines the RealtimeClientEvent SDK namespace.
+  module RealtimeClientEvent
+    DISCRIMINATOR_MAPPING = {
+      'conversation.item.create' => -> { RealtimeClientEventConversationItemCreate },
+      'conversation.item.delete' => -> { RealtimeClientEventConversationItemDelete },
+      'conversation.item.retrieve' => -> { RealtimeClientEventConversationItemRetrieve },
+      'conversation.item.truncate' => -> { RealtimeClientEventConversationItemTruncate },
+      'input_audio_buffer.append' => -> { RealtimeClientEventInputAudioBufferAppend },
+      'input_audio_buffer.clear' => -> { RealtimeClientEventInputAudioBufferClear },
+      'output_audio_buffer.clear' => -> { RealtimeClientEventOutputAudioBufferClear },
+      'input_audio_buffer.commit' => -> { RealtimeClientEventInputAudioBufferCommit },
+      'response.cancel' => -> { RealtimeClientEventResponseCancel },
+      'response.create' => -> { RealtimeClientEventResponseCreate },
+      'session.update' => -> { RealtimeClientEventSessionUpdate }
+    }.freeze
 
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
 
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
 
-    raise SdkValidationError.new('RealtimeClientEvent', 'variant', "Unknown RealtimeClientEvent discriminator: #{hash["type"].inspect}")
-  end
-end
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
 
-# Internal model hydration metadata.
-class SdkInternalRealtimeClientEventConversationItemCreateMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    previous_item_id: "previous_item_id",
-    item: "item",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    item
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeClientEventConversationItemCreateType.from_value(value)
-    end,
-    item: lambda do |value|
-      ::OctridevOpenai::RealtimeConversationItem.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for RealtimeClientEventConversationItemCreate.
-# Add a new Item to the Conversation's context, including messages, function calls, and function call responses. This event can be used both to populate a "history" of the conversation and to add new items mid-stream, but has the current limitation that it cannot populate assistant audio messages. If successful, the server will emit a `conversation.item.added` event and, when the item is finalized, a `conversation.item.done` event. Otherwise, an `error` event will be sent.
-class RealtimeClientEventConversationItemCreate
-  include RealtimeClientEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeClientEventConversationItemCreateMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeClientEventConversationItemCreateMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeClientEventConversationItemCreateMetadata::DECODERS
-
-  # @return [String] Optional client-generated ID used to identify this event.
-  attr_reader :event_id
-  # @return [RealtimeClientEventConversationItemCreateType] The event type, must be `conversation.item.create`.
-  attr_reader :type
-  # @return [String] The ID of the preceding item after which the new item will be inserted. If not set, the new item will be appended to the end of the conversation. If set to `root`, the new item will be added to the beginning of the conversation. If set to an existing ID, it allows an item to be inserted mid-conversation. If the ID cannot be found, an error will be returned and the item will not be added.
-  attr_reader :previous_item_id
-  # @return [RealtimeConversationItem] A single item within a Realtime conversation.
-  attr_reader :item
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('RealtimeClientEvent', 'variant', "Unknown RealtimeClientEvent discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeClientEventConversationItemCreateMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      previous_item_id: 'previous_item_id',
+      item: 'item'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      item
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeClientEventConversationItemCreateType.from_value(value)
+      end,
+      item: lambda do |value|
+        ::OctridevOpenai::RealtimeConversationItem.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for RealtimeClientEventConversationItemCreate.
+  # Add a new Item to the Conversation's context, including messages, function calls, and function call responses. This event can be used both to populate a "history" of the conversation and to add new items mid-stream, but has the current limitation that it cannot populate assistant audio messages. If successful, the server will emit a `conversation.item.added` event and, when the item is finalized, a `conversation.item.done` event. Otherwise, an `error` event will be sent.
+  class RealtimeClientEventConversationItemCreate
+    include RealtimeClientEvent
 
-# Defines the RealtimeClientEventConversationItemCreateType SDK namespace.
-module RealtimeClientEventConversationItemCreateType
-  CONVERSATION_ITEM_CREATE = 'conversation.item.create'
-  VALUES = ['conversation.item.create'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeClientEventConversationItemCreateMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeClientEventConversationItemCreateMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeClientEventConversationItemCreateMetadata::DECODERS
 
-    raise SdkValidationError.new('RealtimeClientEventConversationItemCreateType', 'enum', "Unknown RealtimeClientEventConversationItemCreateType: #{value}")
-  end
-end
+    # @return [String] Optional client-generated ID used to identify this event.
+    attr_reader :event_id
+    # @return [RealtimeClientEventConversationItemCreateType] The event type, must be `conversation.item.create`.
+    attr_reader :type
+    # @return [String] The ID of the preceding item after which the new item will be inserted. If not set, the new item will be appended to the end of the conversation. If set to `root`, the new item will be added to the beginning of the conversation. If set to an existing ID, it allows an item to be inserted mid-conversation. If the ID cannot be found, an error will be returned and the item will not be added.
+    attr_reader :previous_item_id
+    # @return [RealtimeConversationItem] A single item within a Realtime conversation.
+    attr_reader :item
 
-# Internal model hydration metadata.
-class SdkInternalRealtimeClientEventConversationItemDeleteMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    item_id: "item_id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    item_id
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeClientEventConversationItemDeleteType.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for RealtimeClientEventConversationItemDelete.
-# Send this event when you want to remove any item from the conversation history. The server will respond with a `conversation.item.deleted` event, unless the item does not exist in the conversation history, in which case the server will respond with an error.
-class RealtimeClientEventConversationItemDelete
-  include RealtimeClientEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeClientEventConversationItemDeleteMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeClientEventConversationItemDeleteMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeClientEventConversationItemDeleteMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [String] Optional client-generated ID used to identify this event.
-  attr_reader :event_id
-  # @return [RealtimeClientEventConversationItemDeleteType] The event type, must be `conversation.item.delete`.
-  attr_reader :type
-  # @return [String] The ID of the item to delete.
-  attr_reader :item_id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the RealtimeClientEventConversationItemCreateType SDK namespace.
+  module RealtimeClientEventConversationItemCreateType
+    CONVERSATION_ITEM_CREATE = 'conversation.item.create'
+    VALUES = ['conversation.item.create'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('RealtimeClientEventConversationItemCreateType', 'enum', "Unknown RealtimeClientEventConversationItemCreateType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the RealtimeClientEventConversationItemDeleteType SDK namespace.
-module RealtimeClientEventConversationItemDeleteType
-  CONVERSATION_ITEM_DELETE = 'conversation.item.delete'
-  VALUES = ['conversation.item.delete'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('RealtimeClientEventConversationItemDeleteType', 'enum', "Unknown RealtimeClientEventConversationItemDeleteType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeClientEventConversationItemRetrieveMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    item_id: "item_id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    item_id
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeClientEventConversationItemRetrieveType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for RealtimeClientEventConversationItemRetrieve.
-# Send this event when you want to retrieve the server's representation of a specific item in the conversation history. This is useful, for example, to inspect user audio after noise cancellation and VAD. The server will respond with a `conversation.item.retrieved` event, unless the item does not exist in the conversation history, in which case the server will respond with an error.
-class RealtimeClientEventConversationItemRetrieve
-  include RealtimeClientEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeClientEventConversationItemRetrieveMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeClientEventConversationItemRetrieveMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeClientEventConversationItemRetrieveMetadata::DECODERS
-
-  # @return [String] Optional client-generated ID used to identify this event.
-  attr_reader :event_id
-  # @return [RealtimeClientEventConversationItemRetrieveType] The event type, must be `conversation.item.retrieve`.
-  attr_reader :type
-  # @return [String] The ID of the item to retrieve.
-  attr_reader :item_id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeClientEventConversationItemDeleteMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      item_id: 'item_id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      item_id
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeClientEventConversationItemDeleteType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for RealtimeClientEventConversationItemDelete.
+  # Send this event when you want to remove any item from the conversation history. The server will respond with a `conversation.item.deleted` event, unless the item does not exist in the conversation history, in which case the server will respond with an error.
+  class RealtimeClientEventConversationItemDelete
+    include RealtimeClientEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeClientEventConversationItemDeleteMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeClientEventConversationItemDeleteMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeClientEventConversationItemDeleteMetadata::DECODERS
+
+    # @return [String] Optional client-generated ID used to identify this event.
+    attr_reader :event_id
+    # @return [RealtimeClientEventConversationItemDeleteType] The event type, must be `conversation.item.delete`.
+    attr_reader :type
+    # @return [String] The ID of the item to delete.
+    attr_reader :item_id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the RealtimeClientEventConversationItemDeleteType SDK namespace.
+  module RealtimeClientEventConversationItemDeleteType
+    CONVERSATION_ITEM_DELETE = 'conversation.item.delete'
+    VALUES = ['conversation.item.delete'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the RealtimeClientEventConversationItemRetrieveType SDK namespace.
-module RealtimeClientEventConversationItemRetrieveType
-  CONVERSATION_ITEM_RETRIEVE = 'conversation.item.retrieve'
-  VALUES = ['conversation.item.retrieve'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('RealtimeClientEventConversationItemRetrieveType', 'enum', "Unknown RealtimeClientEventConversationItemRetrieveType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeClientEventConversationItemTruncateMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    item_id: "item_id",
-    content_index: "content_index",
-    audio_end_ms: "audio_end_ms",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    item_id
-    content_index
-    audio_end_ms
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeClientEventConversationItemTruncateType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for RealtimeClientEventConversationItemTruncate.
-# Send this event to truncate a previous assistant message’s audio. The server will produce audio faster than realtime, so this event is useful when the user interrupts to truncate audio that has already been sent to the client but not yet played. This will synchronize the server's understanding of the audio with the client's playback. Truncating audio will delete the server-side text transcript to ensure there is not text in the context that hasn't been heard by the user. If…
-class RealtimeClientEventConversationItemTruncate
-  include RealtimeClientEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeClientEventConversationItemTruncateMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeClientEventConversationItemTruncateMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeClientEventConversationItemTruncateMetadata::DECODERS
-
-  # @return [String] Optional client-generated ID used to identify this event.
-  attr_reader :event_id
-  # @return [RealtimeClientEventConversationItemTruncateType] The event type, must be `conversation.item.truncate`.
-  attr_reader :type
-  # @return [String] The ID of the assistant message item to truncate. Only assistant message items can be truncated.
-  attr_reader :item_id
-  # @return [Integer] The index of the content part to truncate. Set this to `0`.
-  attr_reader :content_index
-  # @return [Integer] Inclusive duration up to which audio is truncated, in milliseconds. If the audio_end_ms is greater than the actual audio duration, the server will respond with an error.
-  attr_reader :audio_end_ms
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('RealtimeClientEventConversationItemDeleteType', 'enum', "Unknown RealtimeClientEventConversationItemDeleteType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeClientEventConversationItemRetrieveMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      item_id: 'item_id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      item_id
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeClientEventConversationItemRetrieveType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for RealtimeClientEventConversationItemRetrieve.
+  # Send this event when you want to retrieve the server's representation of a specific item in the conversation history. This is useful, for example, to inspect user audio after noise cancellation and VAD. The server will respond with a `conversation.item.retrieved` event, unless the item does not exist in the conversation history, in which case the server will respond with an error.
+  class RealtimeClientEventConversationItemRetrieve
+    include RealtimeClientEvent
 
-# Defines the RealtimeClientEventConversationItemTruncateType SDK namespace.
-module RealtimeClientEventConversationItemTruncateType
-  CONVERSATION_ITEM_TRUNCATE = 'conversation.item.truncate'
-  VALUES = ['conversation.item.truncate'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeClientEventConversationItemRetrieveMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeClientEventConversationItemRetrieveMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeClientEventConversationItemRetrieveMetadata::DECODERS
 
-    raise SdkValidationError.new('RealtimeClientEventConversationItemTruncateType', 'enum', "Unknown RealtimeClientEventConversationItemTruncateType: #{value}")
-  end
-end
+    # @return [String] Optional client-generated ID used to identify this event.
+    attr_reader :event_id
+    # @return [RealtimeClientEventConversationItemRetrieveType] The event type, must be `conversation.item.retrieve`.
+    attr_reader :type
+    # @return [String] The ID of the item to retrieve.
+    attr_reader :item_id
 
-# Internal model hydration metadata.
-class SdkInternalRealtimeClientEventInputAudioBufferAppendMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    audio: "audio",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    audio
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeClientEventInputAudioBufferAppendType.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for RealtimeClientEventInputAudioBufferAppend.
-# Send this event to append audio bytes to the input audio buffer. The audio buffer is temporary storage you can write to and later commit. A "commit" will create a new user message item in the conversation history from the buffer content and clear the buffer. Input audio transcription (if enabled) will be generated when the buffer is committed. If VAD is enabled the audio buffer is used to detect speech and the server will decide when to commit. When Server VAD is disabled,…
-class RealtimeClientEventInputAudioBufferAppend
-  include RealtimeClientEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeClientEventInputAudioBufferAppendMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeClientEventInputAudioBufferAppendMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeClientEventInputAudioBufferAppendMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [String] Optional client-generated ID used to identify this event.
-  attr_reader :event_id
-  # @return [RealtimeClientEventInputAudioBufferAppendType] The event type, must be `input_audio_buffer.append`.
-  attr_reader :type
-  # @return [String] Base64-encoded audio bytes. This must be in the format specified by the `input_audio_format` field in the session configuration.
-  attr_reader :audio
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the RealtimeClientEventConversationItemRetrieveType SDK namespace.
+  module RealtimeClientEventConversationItemRetrieveType
+    CONVERSATION_ITEM_RETRIEVE = 'conversation.item.retrieve'
+    VALUES = ['conversation.item.retrieve'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('RealtimeClientEventConversationItemRetrieveType', 'enum', "Unknown RealtimeClientEventConversationItemRetrieveType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the RealtimeClientEventInputAudioBufferAppendType SDK namespace.
-module RealtimeClientEventInputAudioBufferAppendType
-  INPUT_AUDIO_BUFFER_APPEND = 'input_audio_buffer.append'
-  VALUES = ['input_audio_buffer.append'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('RealtimeClientEventInputAudioBufferAppendType', 'enum', "Unknown RealtimeClientEventInputAudioBufferAppendType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeClientEventInputAudioBufferClearMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeClientEventInputAudioBufferClearType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for RealtimeClientEventInputAudioBufferClear.
-# Send this event to clear the audio bytes in the buffer. The server will respond with an `input_audio_buffer.cleared` event.
-class RealtimeClientEventInputAudioBufferClear
-  include RealtimeClientEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeClientEventInputAudioBufferClearMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeClientEventInputAudioBufferClearMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeClientEventInputAudioBufferClearMetadata::DECODERS
-
-  # @return [String] Optional client-generated ID used to identify this event.
-  attr_reader :event_id
-  # @return [RealtimeClientEventInputAudioBufferClearType] The event type, must be `input_audio_buffer.clear`.
-  attr_reader :type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeClientEventConversationItemTruncateMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      item_id: 'item_id',
+      content_index: 'content_index',
+      audio_end_ms: 'audio_end_ms'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      item_id
+      content_index
+      audio_end_ms
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeClientEventConversationItemTruncateType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for RealtimeClientEventConversationItemTruncate.
+  # Send this event to truncate a previous assistant message’s audio. The server will produce audio faster than realtime, so this event is useful when the user interrupts to truncate audio that has already been sent to the client but not yet played. This will synchronize the server's understanding of the audio with the client's playback. Truncating audio will delete the server-side text transcript to ensure there is not text in the context that hasn't been heard by the user. If…
+  class RealtimeClientEventConversationItemTruncate
+    include RealtimeClientEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeClientEventConversationItemTruncateMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeClientEventConversationItemTruncateMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeClientEventConversationItemTruncateMetadata::DECODERS
+
+    # @return [String] Optional client-generated ID used to identify this event.
+    attr_reader :event_id
+    # @return [RealtimeClientEventConversationItemTruncateType] The event type, must be `conversation.item.truncate`.
+    attr_reader :type
+    # @return [String] The ID of the assistant message item to truncate. Only assistant message items can be truncated.
+    attr_reader :item_id
+    # @return [Integer] The index of the content part to truncate. Set this to `0`.
+    attr_reader :content_index
+    # @return [Integer] Inclusive duration up to which audio is truncated, in milliseconds. If the audio_end_ms is greater than the actual audio duration, the server will respond with an error.
+    attr_reader :audio_end_ms
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the RealtimeClientEventConversationItemTruncateType SDK namespace.
+  module RealtimeClientEventConversationItemTruncateType
+    CONVERSATION_ITEM_TRUNCATE = 'conversation.item.truncate'
+    VALUES = ['conversation.item.truncate'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the RealtimeClientEventInputAudioBufferClearType SDK namespace.
-module RealtimeClientEventInputAudioBufferClearType
-  INPUT_AUDIO_BUFFER_CLEAR = 'input_audio_buffer.clear'
-  VALUES = ['input_audio_buffer.clear'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('RealtimeClientEventInputAudioBufferClearType', 'enum', "Unknown RealtimeClientEventInputAudioBufferClearType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeClientEventInputAudioBufferCommitMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeClientEventInputAudioBufferCommitType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for RealtimeClientEventInputAudioBufferCommit.
-# Send this event to commit the user input audio buffer, which will create a new user message item in the conversation. This event will produce an error if the input audio buffer is empty. When in Server VAD mode, the client does not need to send this event, the server will commit the audio buffer automatically. Committing the input audio buffer will trigger input audio transcription (if enabled in session configuration), but it will not create a response from the model. The…
-class RealtimeClientEventInputAudioBufferCommit
-  include RealtimeClientEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeClientEventInputAudioBufferCommitMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeClientEventInputAudioBufferCommitMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeClientEventInputAudioBufferCommitMetadata::DECODERS
-
-  # @return [String] Optional client-generated ID used to identify this event.
-  attr_reader :event_id
-  # @return [RealtimeClientEventInputAudioBufferCommitType] The event type, must be `input_audio_buffer.commit`.
-  attr_reader :type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('RealtimeClientEventConversationItemTruncateType', 'enum', "Unknown RealtimeClientEventConversationItemTruncateType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeClientEventInputAudioBufferAppendMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      audio: 'audio'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      audio
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeClientEventInputAudioBufferAppendType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for RealtimeClientEventInputAudioBufferAppend.
+  # Send this event to append audio bytes to the input audio buffer. The audio buffer is temporary storage you can write to and later commit. A "commit" will create a new user message item in the conversation history from the buffer content and clear the buffer. Input audio transcription (if enabled) will be generated when the buffer is committed. If VAD is enabled the audio buffer is used to detect speech and the server will decide when to commit. When Server VAD is disabled,…
+  class RealtimeClientEventInputAudioBufferAppend
+    include RealtimeClientEvent
 
-# Defines the RealtimeClientEventInputAudioBufferCommitType SDK namespace.
-module RealtimeClientEventInputAudioBufferCommitType
-  INPUT_AUDIO_BUFFER_COMMIT = 'input_audio_buffer.commit'
-  VALUES = ['input_audio_buffer.commit'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeClientEventInputAudioBufferAppendMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeClientEventInputAudioBufferAppendMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeClientEventInputAudioBufferAppendMetadata::DECODERS
 
-    raise SdkValidationError.new('RealtimeClientEventInputAudioBufferCommitType', 'enum', "Unknown RealtimeClientEventInputAudioBufferCommitType: #{value}")
-  end
-end
+    # @return [String] Optional client-generated ID used to identify this event.
+    attr_reader :event_id
+    # @return [RealtimeClientEventInputAudioBufferAppendType] The event type, must be `input_audio_buffer.append`.
+    attr_reader :type
+    # @return [String] Base64-encoded audio bytes. This must be in the format specified by the `input_audio_format` field in the session configuration.
+    attr_reader :audio
 
-# Internal model hydration metadata.
-class SdkInternalRealtimeClientEventOutputAudioBufferClearMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeClientEventOutputAudioBufferClearType.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for RealtimeClientEventOutputAudioBufferClear.
-# **WebRTC/SIP Only:** Emit to cut off the current audio response. This will trigger the server to stop generating audio and emit a `output_audio_buffer.cleared` event. This event should be preceded by a `response.cancel` client event to stop the generation of the current response. Learn more.
-class RealtimeClientEventOutputAudioBufferClear
-  include RealtimeClientEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeClientEventOutputAudioBufferClearMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeClientEventOutputAudioBufferClearMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeClientEventOutputAudioBufferClearMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [String] The unique ID of the client event used for error handling.
-  attr_reader :event_id
-  # @return [RealtimeClientEventOutputAudioBufferClearType] The event type, must be `output_audio_buffer.clear`.
-  attr_reader :type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the RealtimeClientEventInputAudioBufferAppendType SDK namespace.
+  module RealtimeClientEventInputAudioBufferAppendType
+    INPUT_AUDIO_BUFFER_APPEND = 'input_audio_buffer.append'
+    VALUES = ['input_audio_buffer.append'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('RealtimeClientEventInputAudioBufferAppendType', 'enum', "Unknown RealtimeClientEventInputAudioBufferAppendType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the RealtimeClientEventOutputAudioBufferClearType SDK namespace.
-module RealtimeClientEventOutputAudioBufferClearType
-  OUTPUT_AUDIO_BUFFER_CLEAR = 'output_audio_buffer.clear'
-  VALUES = ['output_audio_buffer.clear'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('RealtimeClientEventOutputAudioBufferClearType', 'enum', "Unknown RealtimeClientEventOutputAudioBufferClearType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeClientEventResponseCancelMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    response_id: "response_id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeClientEventResponseCancelType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for RealtimeClientEventResponseCancel.
-# Send this event to cancel an in-progress response. The server will respond with a `response.done` event with a status of `response.status=cancelled`. If there is no response to cancel, the server will respond with an error. It's safe to call `response.cancel` even if no response is in progress, an error will be returned the session will remain unaffected.
-class RealtimeClientEventResponseCancel
-  include RealtimeClientEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeClientEventResponseCancelMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeClientEventResponseCancelMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeClientEventResponseCancelMetadata::DECODERS
-
-  # @return [String] Optional client-generated ID used to identify this event.
-  attr_reader :event_id
-  # @return [RealtimeClientEventResponseCancelType] The event type, must be `response.cancel`.
-  attr_reader :type
-  # @return [String] A specific response ID to cancel - if not provided, will cancel an in-progress response in the default conversation.
-  attr_reader :response_id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeClientEventInputAudioBufferClearMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeClientEventInputAudioBufferClearType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for RealtimeClientEventInputAudioBufferClear.
+  # Send this event to clear the audio bytes in the buffer. The server will respond with an `input_audio_buffer.cleared` event.
+  class RealtimeClientEventInputAudioBufferClear
+    include RealtimeClientEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeClientEventInputAudioBufferClearMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeClientEventInputAudioBufferClearMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeClientEventInputAudioBufferClearMetadata::DECODERS
+
+    # @return [String] Optional client-generated ID used to identify this event.
+    attr_reader :event_id
+    # @return [RealtimeClientEventInputAudioBufferClearType] The event type, must be `input_audio_buffer.clear`.
+    attr_reader :type
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the RealtimeClientEventInputAudioBufferClearType SDK namespace.
+  module RealtimeClientEventInputAudioBufferClearType
+    INPUT_AUDIO_BUFFER_CLEAR = 'input_audio_buffer.clear'
+    VALUES = ['input_audio_buffer.clear'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the RealtimeClientEventResponseCancelType SDK namespace.
-module RealtimeClientEventResponseCancelType
-  RESPONSE_CANCEL = 'response.cancel'
-  VALUES = ['response.cancel'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('RealtimeClientEventResponseCancelType', 'enum', "Unknown RealtimeClientEventResponseCancelType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeClientEventResponseCreateMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    response: "response",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeClientEventResponseCreateType.from_value(value)
-    end,
-    response: lambda do |value|
-      ::OctridevOpenai::RealtimeResponseCreateParams.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for RealtimeClientEventResponseCreate.
-# This event instructs the server to create a Response, which means triggering model inference. When in Server VAD mode, the server will create Responses automatically. A Response will include at least one Item, and may have two, in which case the second will be a function call. These Items will be appended to the conversation history by default. The server will respond with a `response.created` event, events for Items and content created, and finally a `response.done` event…
-class RealtimeClientEventResponseCreate
-  include RealtimeClientEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeClientEventResponseCreateMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeClientEventResponseCreateMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeClientEventResponseCreateMetadata::DECODERS
-
-  # @return [String] Optional client-generated ID used to identify this event.
-  attr_reader :event_id
-  # @return [RealtimeClientEventResponseCreateType] The event type, must be `response.create`.
-  attr_reader :type
-  # @return [RealtimeResponseCreateParams] Create a new Realtime response with these parameters
-  attr_reader :response
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('RealtimeClientEventInputAudioBufferClearType', 'enum', "Unknown RealtimeClientEventInputAudioBufferClearType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeClientEventInputAudioBufferCommitMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeClientEventInputAudioBufferCommitType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for RealtimeClientEventInputAudioBufferCommit.
+  # Send this event to commit the user input audio buffer, which will create a new user message item in the conversation. This event will produce an error if the input audio buffer is empty. When in Server VAD mode, the client does not need to send this event, the server will commit the audio buffer automatically. Committing the input audio buffer will trigger input audio transcription (if enabled in session configuration), but it will not create a response from the model. The…
+  class RealtimeClientEventInputAudioBufferCommit
+    include RealtimeClientEvent
 
-# Defines the RealtimeClientEventResponseCreateType SDK namespace.
-module RealtimeClientEventResponseCreateType
-  RESPONSE_CREATE = 'response.create'
-  VALUES = ['response.create'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeClientEventInputAudioBufferCommitMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeClientEventInputAudioBufferCommitMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeClientEventInputAudioBufferCommitMetadata::DECODERS
 
-    raise SdkValidationError.new('RealtimeClientEventResponseCreateType', 'enum', "Unknown RealtimeClientEventResponseCreateType: #{value}")
-  end
-end
+    # @return [String] Optional client-generated ID used to identify this event.
+    attr_reader :event_id
+    # @return [RealtimeClientEventInputAudioBufferCommitType] The event type, must be `input_audio_buffer.commit`.
+    attr_reader :type
 
-# Internal model hydration metadata.
-class SdkInternalRealtimeClientEventSessionUpdateMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    session: "session",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    session
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeClientEventSessionUpdateType.from_value(value)
-    end,
-    session: lambda do |value|
-      ::OctridevOpenai::RealtimeClientEventSessionUpdateSession.from_hash(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for RealtimeClientEventSessionUpdate.
-# Send this event to update the session’s configuration. The client may send this event at any time to update any field except for `voice` and `model`. `voice` can be updated only if there have been no other audio outputs yet. When the server receives a `session.update`, it will respond with a `session.updated` event showing the full, effective configuration. Only the fields that are present in the `session.update` are updated. To clear a field like `instructions`, pass an…
-class RealtimeClientEventSessionUpdate
-  include RealtimeClientEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeClientEventSessionUpdateMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeClientEventSessionUpdateMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeClientEventSessionUpdateMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [String] Optional client-generated ID used to identify this event. This is an arbitrary string that a client may assign. It will be passed back if there is an error with the event, but the corresponding `session.updated` event will not include it.
-  attr_reader :event_id
-  # @return [RealtimeClientEventSessionUpdateType] The event type, must be `session.update`.
-  attr_reader :type
-  # @return [RealtimeClientEventSessionUpdateSession] Update the Realtime session. Choose either a realtime session or a transcription session.
-  attr_reader :session
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the RealtimeClientEventInputAudioBufferCommitType SDK namespace.
+  module RealtimeClientEventInputAudioBufferCommitType
+    INPUT_AUDIO_BUFFER_COMMIT = 'input_audio_buffer.commit'
+    VALUES = ['input_audio_buffer.commit'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('RealtimeClientEventInputAudioBufferCommitType', 'enum', "Unknown RealtimeClientEventInputAudioBufferCommitType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeClientEventOutputAudioBufferClearMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeClientEventOutputAudioBufferClearType.from_value(value)
+      end
+    }.freeze
   end
-end
+
+  # API model for RealtimeClientEventOutputAudioBufferClear.
+  # **WebRTC/SIP Only:** Emit to cut off the current audio response. This will trigger the server to stop generating audio and emit a `output_audio_buffer.cleared` event. This event should be preceded by a `response.cancel` client event to stop the generation of the current response. Learn more.
+  class RealtimeClientEventOutputAudioBufferClear
+    include RealtimeClientEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeClientEventOutputAudioBufferClearMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeClientEventOutputAudioBufferClearMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeClientEventOutputAudioBufferClearMetadata::DECODERS
+
+    # @return [String] The unique ID of the client event used for error handling.
+    attr_reader :event_id
+    # @return [RealtimeClientEventOutputAudioBufferClearType] The event type, must be `output_audio_buffer.clear`.
+    attr_reader :type
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the RealtimeClientEventOutputAudioBufferClearType SDK namespace.
+  module RealtimeClientEventOutputAudioBufferClearType
+    OUTPUT_AUDIO_BUFFER_CLEAR = 'output_audio_buffer.clear'
+    VALUES = ['output_audio_buffer.clear'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('RealtimeClientEventOutputAudioBufferClearType', 'enum', "Unknown RealtimeClientEventOutputAudioBufferClearType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeClientEventResponseCancelMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      response_id: 'response_id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeClientEventResponseCancelType.from_value(value)
+      end
+    }.freeze
+  end
+
+  # API model for RealtimeClientEventResponseCancel.
+  # Send this event to cancel an in-progress response. The server will respond with a `response.done` event with a status of `response.status=cancelled`. If there is no response to cancel, the server will respond with an error. It's safe to call `response.cancel` even if no response is in progress, an error will be returned the session will remain unaffected.
+  class RealtimeClientEventResponseCancel
+    include RealtimeClientEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeClientEventResponseCancelMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeClientEventResponseCancelMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeClientEventResponseCancelMetadata::DECODERS
+
+    # @return [String] Optional client-generated ID used to identify this event.
+    attr_reader :event_id
+    # @return [RealtimeClientEventResponseCancelType] The event type, must be `response.cancel`.
+    attr_reader :type
+    # @return [String] A specific response ID to cancel - if not provided, will cancel an in-progress response in the default conversation.
+    attr_reader :response_id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the RealtimeClientEventResponseCancelType SDK namespace.
+  module RealtimeClientEventResponseCancelType
+    RESPONSE_CANCEL = 'response.cancel'
+    VALUES = ['response.cancel'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('RealtimeClientEventResponseCancelType', 'enum', "Unknown RealtimeClientEventResponseCancelType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeClientEventResponseCreateMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      response: 'response'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeClientEventResponseCreateType.from_value(value)
+      end,
+      response: lambda do |value|
+        ::OctridevOpenai::RealtimeResponseCreateParams.from_hash(value)
+      end
+    }.freeze
+  end
+
+  # API model for RealtimeClientEventResponseCreate.
+  # This event instructs the server to create a Response, which means triggering model inference. When in Server VAD mode, the server will create Responses automatically. A Response will include at least one Item, and may have two, in which case the second will be a function call. These Items will be appended to the conversation history by default. The server will respond with a `response.created` event, events for Items and content created, and finally a `response.done` event…
+  class RealtimeClientEventResponseCreate
+    include RealtimeClientEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeClientEventResponseCreateMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeClientEventResponseCreateMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeClientEventResponseCreateMetadata::DECODERS
+
+    # @return [String] Optional client-generated ID used to identify this event.
+    attr_reader :event_id
+    # @return [RealtimeClientEventResponseCreateType] The event type, must be `response.create`.
+    attr_reader :type
+    # @return [RealtimeResponseCreateParams] Create a new Realtime response with these parameters
+    attr_reader :response
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the RealtimeClientEventResponseCreateType SDK namespace.
+  module RealtimeClientEventResponseCreateType
+    RESPONSE_CREATE = 'response.create'
+    VALUES = ['response.create'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('RealtimeClientEventResponseCreateType', 'enum', "Unknown RealtimeClientEventResponseCreateType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeClientEventSessionUpdateMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      session: 'session'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      session
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeClientEventSessionUpdateType.from_value(value)
+      end,
+      session: lambda do |value|
+        ::OctridevOpenai::RealtimeClientEventSessionUpdateSession.from_hash(value)
+      end
+    }.freeze
+  end
+
+  # API model for RealtimeClientEventSessionUpdate.
+  # Send this event to update the session’s configuration. The client may send this event at any time to update any field except for `voice` and `model`. `voice` can be updated only if there have been no other audio outputs yet. When the server receives a `session.update`, it will respond with a `session.updated` event showing the full, effective configuration. Only the fields that are present in the `session.update` are updated. To clear a field like `instructions`, pass an…
+  class RealtimeClientEventSessionUpdate
+    include RealtimeClientEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeClientEventSessionUpdateMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeClientEventSessionUpdateMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeClientEventSessionUpdateMetadata::DECODERS
+
+    # @return [String] Optional client-generated ID used to identify this event. This is an arbitrary string that a client may assign. It will be passed back if there is an error with the event, but the corresponding `session.updated` event will not include it.
+    attr_reader :event_id
+    # @return [RealtimeClientEventSessionUpdateType] The event type, must be `session.update`.
+    attr_reader :type
+    # @return [RealtimeClientEventSessionUpdateSession] Update the Realtime session. Choose either a realtime session or a transcription session.
+    attr_reader :session
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
 end
