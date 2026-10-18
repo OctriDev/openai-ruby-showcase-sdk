@@ -5,665 +5,672 @@
 
 # beta_response domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalBetaResponseInjectCreatedEventMetadata
-  FIELDS = {
-    type: "type",
-    response_id: "response_id",
-    sequence_number: "sequence_number",
-    stream_id: "stream_id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    response_id
-    sequence_number
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaResponseInjectCreatedEventType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaResponseInjectCreatedEvent.
-# Emitted when all injected input items were validated and committed to the active response.
-class BetaResponseInjectCreatedEvent
-  include BetaResponsesServerEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaResponseInjectCreatedEventMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaResponseInjectCreatedEventMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaResponseInjectCreatedEventMetadata::DECODERS
-
-  # @return [BetaResponseInjectCreatedEventType] The event discriminator. Always `response.inject.created`.
-  attr_reader :type
-  # @return [String] The ID of the response that accepted the input.
-  attr_reader :response_id
-  # @return [Integer] The sequence number for this event.
-  attr_reader :sequence_number
-  # @return [String] The multiplexed WebSocket stream that emitted the event. This field is present only when WebSocket multiplexing is enabled separately.
-  attr_reader :stream_id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalBetaResponseInjectCreatedEventMetadata
+    FIELDS = {
+      type: 'type',
+      response_id: 'response_id',
+      sequence_number: 'sequence_number',
+      stream_id: 'stream_id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      response_id
+      sequence_number
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaResponseInjectCreatedEventType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for BetaResponseInjectCreatedEvent.
+  # Emitted when all injected input items were validated and committed to the active response.
+  class BetaResponseInjectCreatedEvent
+    include BetaResponsesServerEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaResponseInjectCreatedEventMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaResponseInjectCreatedEventMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaResponseInjectCreatedEventMetadata::DECODERS
+
+    # @return [BetaResponseInjectCreatedEventType] The event discriminator. Always `response.inject.created`.
+    attr_reader :type
+    # @return [String] The ID of the response that accepted the input.
+    attr_reader :response_id
+    # @return [Integer] The sequence number for this event.
+    attr_reader :sequence_number
+    # @return [String] The multiplexed WebSocket stream that emitted the event. This field is present only when WebSocket multiplexing is enabled separately.
+    attr_reader :stream_id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the BetaResponseInjectCreatedEventType SDK namespace.
+  module BetaResponseInjectCreatedEventType
+    RESPONSE_INJECT_CREATED = 'response.inject.created'
+    VALUES = ['response.inject.created'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the BetaResponseInjectCreatedEventType SDK namespace.
-module BetaResponseInjectCreatedEventType
-  RESPONSE_INJECT_CREATED = 'response.inject.created'
-  VALUES = ['response.inject.created'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('BetaResponseInjectCreatedEventType', 'enum', "Unknown BetaResponseInjectCreatedEventType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaResponseInjectEventMetadata
-  FIELDS = {
-    type: "type",
-    response_id: "response_id",
-    input: "input",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    response_id
-    input
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaResponseInjectEventType.from_value(value)
-    end,
-    input: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::BetaInputItem.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for BetaResponseInjectEvent.
-# Injects input items into an active response over a WebSocket connection. The items are validated and committed atomically. Currently, the server accepts client-owned tool outputs that resume a waiting agent.
-class BetaResponseInjectEvent
-  include BetaResponsesClientEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaResponseInjectEventMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaResponseInjectEventMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaResponseInjectEventMetadata::DECODERS
-
-  # @return [BetaResponseInjectEventType] The event discriminator. Always `response.inject`.
-  attr_reader :type
-  # @return [String] The ID of the active response that should receive the input.
-  attr_reader :response_id
-  # @return [Array_of_BetaInputItem] Input items to inject into the active response.
-  attr_reader :input
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('BetaResponseInjectCreatedEventType', 'enum', "Unknown BetaResponseInjectCreatedEventType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalBetaResponseInjectEventMetadata
+    FIELDS = {
+      type: 'type',
+      response_id: 'response_id',
+      input: 'input'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      response_id
+      input
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaResponseInjectEventType.from_value(value)
+      end,
+      input: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::BetaInputItem.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for BetaResponseInjectEvent.
+  # Injects input items into an active response over a WebSocket connection. The items are validated and committed atomically. Currently, the server accepts client-owned tool outputs that resume a waiting agent.
+  class BetaResponseInjectEvent
+    include BetaResponsesClientEvent
 
-# Defines the BetaResponseInjectEventType SDK namespace.
-module BetaResponseInjectEventType
-  RESPONSE_INJECT = 'response.inject'
-  VALUES = ['response.inject'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaResponseInjectEventMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaResponseInjectEventMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaResponseInjectEventMetadata::DECODERS
 
-    raise SdkValidationError.new('BetaResponseInjectEventType', 'enum', "Unknown BetaResponseInjectEventType: #{value}")
-  end
-end
+    # @return [BetaResponseInjectEventType] The event discriminator. Always `response.inject`.
+    attr_reader :type
+    # @return [String] The ID of the active response that should receive the input.
+    attr_reader :response_id
+    # @return [Array_of_BetaInputItem] Input items to inject into the active response.
+    attr_reader :input
 
-# Internal model hydration metadata.
-class SdkInternalBetaResponseInjectFailedEventErrorMetadata
-  FIELDS = {
-    code: "code",
-    message: "message",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    code
-    message
-  ].freeze
-  DECODERS = {
-    code: lambda do |value|
-      ::OctridevOpenai::BetaResponseInjectFailedEventErrorCode.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for BetaResponseInjectFailedEventError.
-# Information about why the input was not committed.
-class BetaResponseInjectFailedEventError
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaResponseInjectFailedEventErrorMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaResponseInjectFailedEventErrorMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaResponseInjectFailedEventErrorMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [BetaResponseInjectFailedEventErrorCode] A machine-readable error code.
-  attr_reader :code
-  # @return [String] A human-readable description of the error.
-  attr_reader :message
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the BetaResponseInjectEventType SDK namespace.
+  module BetaResponseInjectEventType
+    RESPONSE_INJECT = 'response.inject'
+    VALUES = ['response.inject'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaResponseInjectEventType', 'enum', "Unknown BetaResponseInjectEventType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaResponseInjectFailedEventMetadata
-  FIELDS = {
-    type: "type",
-    response_id: "response_id",
-    input: "input",
-    error: "error",
-    sequence_number: "sequence_number",
-    stream_id: "stream_id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    response_id
-    input
-    error
-    sequence_number
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaResponseInjectFailedEventType.from_value(value)
-    end,
-    input: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::BetaInputItem.from_hash(item) }
-    end,
-    error: lambda do |value|
-      ::OctridevOpenai::BetaResponseInjectFailedEventError.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaResponseInjectFailedEvent.
-# Emitted when injected input could not be committed to a response. The event returns the uncommitted raw input so the client can retry it in another response when appropriate.
-class BetaResponseInjectFailedEvent
-  include BetaResponsesServerEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaResponseInjectFailedEventMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaResponseInjectFailedEventMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaResponseInjectFailedEventMetadata::DECODERS
-
-  # @return [BetaResponseInjectFailedEventType] The event discriminator. Always `response.inject.failed`.
-  attr_reader :type
-  # @return [String] The ID of the response that rejected the input.
-  attr_reader :response_id
-  # @return [Array_of_BetaInputItem] The raw input items that were not committed.
-  attr_reader :input
-  # @return [BetaResponseInjectFailedEventError] Information about why the input was not committed.
-  attr_reader :error
-  # @return [Integer] The sequence number for this event.
-  attr_reader :sequence_number
-  # @return [String] The multiplexed WebSocket stream that emitted the event. This field is present only when WebSocket multiplexing is enabled separately.
-  attr_reader :stream_id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalBetaResponseInjectFailedEventErrorMetadata
+    FIELDS = {
+      code: 'code',
+      message: 'message'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      code
+      message
+    ].freeze
+    DECODERS = {
+      code: lambda do |value|
+        ::OctridevOpenai::BetaResponseInjectFailedEventErrorCode.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for BetaResponseInjectFailedEventError.
+  # Information about why the input was not committed.
+  class BetaResponseInjectFailedEventError
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaResponseInjectFailedEventErrorMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaResponseInjectFailedEventErrorMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaResponseInjectFailedEventErrorMetadata::DECODERS
+
+    # @return [BetaResponseInjectFailedEventErrorCode] A machine-readable error code.
+    attr_reader :code
+    # @return [String] A human-readable description of the error.
+    attr_reader :message
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the BetaResponseInjectFailedEventErrorCode SDK namespace.
-module BetaResponseInjectFailedEventErrorCode
-  RESPONSE_ALREADY_COMPLETED = 'response_already_completed'
-  RESPONSE_NOT_FOUND = 'response_not_found'
-  VALUES = ['response_already_completed', 'response_not_found'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the BetaResponseInjectFailedEventType SDK namespace.
-module BetaResponseInjectFailedEventType
-  RESPONSE_INJECT_FAILED = 'response.inject.failed'
-  VALUES = ['response.inject.failed'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('BetaResponseInjectFailedEventType', 'enum', "Unknown BetaResponseInjectFailedEventType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaResponseSteerAcceptedEventSteerMetadata
-  FIELDS = {
-    id: "id",
-    previous_response_id: "previous_response_id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    previous_response_id
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for BetaResponseSteerAcceptedEventSteer.
-# The accepted steering submission.
-class BetaResponseSteerAcceptedEventSteer
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaResponseSteerAcceptedEventSteerMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaResponseSteerAcceptedEventSteerMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaResponseSteerAcceptedEventSteerMetadata::DECODERS
-
-  # @return [String] The ID assigned to the steering submission.
-  attr_reader :id
-  # @return [String] The ID of the response being steered.
-  attr_reader :previous_response_id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalBetaResponseInjectFailedEventMetadata
+    FIELDS = {
+      type: 'type',
+      response_id: 'response_id',
+      input: 'input',
+      error: 'error',
+      sequence_number: 'sequence_number',
+      stream_id: 'stream_id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      response_id
+      input
+      error
+      sequence_number
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaResponseInjectFailedEventType.from_value(value)
+      end,
+      input: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::BetaInputItem.from_hash(item) }
+      end,
+      error: lambda do |value|
+        ::OctridevOpenai::BetaResponseInjectFailedEventError.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for BetaResponseInjectFailedEvent.
+  # Emitted when injected input could not be committed to a response. The event returns the uncommitted raw input so the client can retry it in another response when appropriate.
+  class BetaResponseInjectFailedEvent
+    include BetaResponsesServerEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaResponseInjectFailedEventMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaResponseInjectFailedEventMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaResponseInjectFailedEventMetadata::DECODERS
+
+    # @return [BetaResponseInjectFailedEventType] The event discriminator. Always `response.inject.failed`.
+    attr_reader :type
+    # @return [String] The ID of the response that rejected the input.
+    attr_reader :response_id
+    # @return [Array_of_BetaInputItem] The raw input items that were not committed.
+    attr_reader :input
+    # @return [BetaResponseInjectFailedEventError] Information about why the input was not committed.
+    attr_reader :error
+    # @return [Integer] The sequence number for this event.
+    attr_reader :sequence_number
+    # @return [String] The multiplexed WebSocket stream that emitted the event. This field is present only when WebSocket multiplexing is enabled separately.
+    attr_reader :stream_id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaResponseSteerAcceptedEventMetadata
-  FIELDS = {
-    type: "type",
-    sequence_number: "sequence_number",
-    steer: "steer",
-    stream_id: "stream_id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    sequence_number
-    steer
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaResponseSteerAcceptedEventType.from_value(value)
-    end,
-    steer: lambda do |value|
-      ::OctridevOpenai::BetaResponseSteerAcceptedEventSteer.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaResponseSteerAcceptedEvent.
-# Emitted when steering input has been validated and queued. Acceptance means the server owns the input, not that it has been applied. The successor's `response.created` event is the commit point. If accepted input cannot be committed, `response.steer.failed` returns it with the same steering ID. When the response stops for client-owned tool output or approval, the input remains queued and `response.steer.pending` is emitted after `response.completed`. Fill the pending event's…
-class BetaResponseSteerAcceptedEvent
-  include BetaResponsesServerEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaResponseSteerAcceptedEventMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaResponseSteerAcceptedEventMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaResponseSteerAcceptedEventMetadata::DECODERS
-
-  # @return [BetaResponseSteerAcceptedEventType] The event discriminator. Always `response.steer.accepted`.
-  attr_reader :type
-  # @return [Integer] The sequence number for this event.
-  attr_reader :sequence_number
-  # @return [BetaResponseSteerAcceptedEventSteer] The accepted steering submission.
-  attr_reader :steer
-  # @return [String] The WebSocket lane that emitted this event. This field is present when the target response's `response.create` event supplied a `stream_id`.
-  attr_reader :stream_id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the BetaResponseInjectFailedEventErrorCode SDK namespace.
+  module BetaResponseInjectFailedEventErrorCode
+    RESPONSE_ALREADY_COMPLETED = 'response_already_completed'
+    RESPONSE_NOT_FOUND = 'response_not_found'
+    VALUES = %w[response_already_completed response_not_found].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the BetaResponseInjectFailedEventType SDK namespace.
+  module BetaResponseInjectFailedEventType
+    RESPONSE_INJECT_FAILED = 'response.inject.failed'
+    VALUES = ['response.inject.failed'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaResponseInjectFailedEventType', 'enum', "Unknown BetaResponseInjectFailedEventType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the BetaResponseSteerAcceptedEventType SDK namespace.
-module BetaResponseSteerAcceptedEventType
-  RESPONSE_STEER_ACCEPTED = 'response.steer.accepted'
-  VALUES = ['response.steer.accepted'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('BetaResponseSteerAcceptedEventType', 'enum', "Unknown BetaResponseSteerAcceptedEventType: #{value}")
-  end
-end
-
-# Defines the BetaResponseSteerErrorCode SDK value decoder.
-module BetaResponseSteerErrorCode
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaResponseSteerEventMetadata
-  FIELDS = {
-    type: "type",
-    previous_response_id: "previous_response_id",
-    input: "input",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    previous_response_id
-    input
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaResponseSteerEventType.from_value(value)
-    end,
-    input: lambda do |value|
-      ::OctridevOpenai::BetaResponseSteerInput.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaResponseSteerEvent.
-# Queues user input to steer a response on this WebSocket connection. Input can contain text, images, and files. Steering is supported only for single-agent responses on models and execution modes that support steering. Responses bound to a conversation or using automatic compaction do not support steering. A `response.steer.accepted` event acknowledges that the server owns the queued input, not that it has been applied. The successor's `response.created` event is the commit…
-class BetaResponseSteerEvent
-  include BetaResponsesClientEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaResponseSteerEventMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaResponseSteerEventMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaResponseSteerEventMetadata::DECODERS
-
-  # @return [BetaResponseSteerEventType] The event discriminator. Always `response.steer`.
-  attr_reader :type
-  # @return [String] The ID of the response to steer on this WebSocket connection.
-  attr_reader :previous_response_id
-  # @return [BetaResponseSteerInput] Input to queue for a continuation of the response. Uses the same string or input-item shape as `response.create.input`, with a non-empty array when supplying input items. Steering accepts only messages with the `user` role. Each message may contain only `type`, `role`, and `content`, with `content` as a string or an array of `input_text`, `input_image`, and `input_file` parts. The optional `type` must be `message`. Other roles, tool outputs, and item types are not supported…
-  attr_reader :input
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalBetaResponseSteerAcceptedEventSteerMetadata
+    FIELDS = {
+      id: 'id',
+      previous_response_id: 'previous_response_id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      previous_response_id
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for BetaResponseSteerAcceptedEventSteer.
+  # The accepted steering submission.
+  class BetaResponseSteerAcceptedEventSteer
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaResponseSteerAcceptedEventSteerMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaResponseSteerAcceptedEventSteerMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaResponseSteerAcceptedEventSteerMetadata::DECODERS
+
+    # @return [String] The ID assigned to the steering submission.
+    attr_reader :id
+    # @return [String] The ID of the response being steered.
+    attr_reader :previous_response_id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the BetaResponseSteerEventType SDK namespace.
-module BetaResponseSteerEventType
-  RESPONSE_STEER = 'response.steer'
-  VALUES = ['response.steer'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('BetaResponseSteerEventType', 'enum', "Unknown BetaResponseSteerEventType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaResponseSteerFailedEventSteerMetadata
-  FIELDS = {
-    id: "id",
-    previous_response_id: "previous_response_id",
-    input: "input",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    previous_response_id
-    input
-  ].freeze
-  DECODERS = {
-    input: lambda do |value|
-      ::OctridevOpenai::BetaResponseSteerInput.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaResponseSteerFailedEventSteer.
-# The steering submission that could not be committed.
-class BetaResponseSteerFailedEventSteer
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaResponseSteerFailedEventSteerMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaResponseSteerFailedEventSteerMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaResponseSteerFailedEventSteerMetadata::DECODERS
-
-  # @return [String] The ID assigned to the steering submission, if one was allocated.
-  attr_reader :id
-  # @return [String] The ID of the response that was targeted for steering.
-  attr_reader :previous_response_id
-  # @return [BetaResponseSteerInput] Input to queue for a continuation of the response. Uses the same string or input-item shape as `response.create.input`, with a non-empty array when supplying input items. Steering accepts only messages with the `user` role. Each message may contain only `type`, `role`, and `content`, with `content` as a string or an array of `input_text`, `input_image`, and `input_file` parts. The optional `type` must be `message`. Other roles, tool outputs, and item types are not supported…
-  attr_reader :input
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalBetaResponseSteerAcceptedEventMetadata
+    FIELDS = {
+      type: 'type',
+      sequence_number: 'sequence_number',
+      steer: 'steer',
+      stream_id: 'stream_id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      sequence_number
+      steer
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaResponseSteerAcceptedEventType.from_value(value)
+      end,
+      steer: lambda do |value|
+        ::OctridevOpenai::BetaResponseSteerAcceptedEventSteer.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for BetaResponseSteerAcceptedEvent.
+  # Emitted when steering input has been validated and queued. Acceptance means the server owns the input, not that it has been applied. The successor's `response.created` event is the commit point. If accepted input cannot be committed, `response.steer.failed` returns it with the same steering ID. When the response stops for client-owned tool output or approval, the input remains queued and `response.steer.pending` is emitted after `response.completed`. Fill the pending event's…
+  class BetaResponseSteerAcceptedEvent
+    include BetaResponsesServerEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaResponseSteerAcceptedEventMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaResponseSteerAcceptedEventMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaResponseSteerAcceptedEventMetadata::DECODERS
+
+    # @return [BetaResponseSteerAcceptedEventType] The event discriminator. Always `response.steer.accepted`.
+    attr_reader :type
+    # @return [Integer] The sequence number for this event.
+    attr_reader :sequence_number
+    # @return [BetaResponseSteerAcceptedEventSteer] The accepted steering submission.
+    attr_reader :steer
+    # @return [String] The WebSocket lane that emitted this event. This field is present when the target response's `response.create` event supplied a `stream_id`.
+    attr_reader :stream_id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the BetaResponseSteerAcceptedEventType SDK namespace.
+  module BetaResponseSteerAcceptedEventType
+    RESPONSE_STEER_ACCEPTED = 'response.steer.accepted'
+    VALUES = ['response.steer.accepted'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Internal model hydration metadata.
-class SdkInternalBetaResponseSteerFailedEventErrorMetadata
-  FIELDS = {
-    type: "type",
-    code: "code",
-    message: "message",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    code
-    message
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaResponseSteerFailedEventErrorType.from_value(value)
-    end,
-    code: lambda do |value|
-      ::OctridevOpenai::BetaResponseSteerErrorCode.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaResponseSteerFailedEventError.
-# Information about why the input could not be committed.
-class BetaResponseSteerFailedEventError
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaResponseSteerFailedEventErrorMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaResponseSteerFailedEventErrorMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaResponseSteerFailedEventErrorMetadata::DECODERS
-
-  # @return [BetaResponseSteerFailedEventErrorType] The error type. Always `invalid_request_error`.
-  attr_reader :type
-  # @return [BetaResponseSteerErrorCode] A machine-readable steering error code. Clients should handle unknown values because additional codes may be introduced. Known values include: - `response_not_found`: The target response is not available on this connection. - `invalid_input`: The event or input failed validation. - `steering_not_supported`: The model or response execution mode does not support steering. - `too_many_pending_steers`: Too much steering input is pending for the response. -…
-  attr_reader :code
-  # @return [String] A human-readable description of the error.
-  attr_reader :message
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('BetaResponseSteerAcceptedEventType', 'enum', "Unknown BetaResponseSteerAcceptedEventType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the BetaResponseSteerErrorCode SDK value decoder.
+  module BetaResponseSteerErrorCode
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaResponseSteerFailedEventMetadata
-  FIELDS = {
-    type: "type",
-    sequence_number: "sequence_number",
-    steer: "steer",
-    error: "error",
-    stream_id: "stream_id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    sequence_number
-    steer
-    error
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaResponseSteerFailedEventType.from_value(value)
-    end,
-    steer: lambda do |value|
-      ::OctridevOpenai::BetaResponseSteerFailedEventSteer.from_hash(value)
-    end,
-    error: lambda do |value|
-      ::OctridevOpenai::BetaResponseSteerFailedEventError.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaResponseSteerFailedEvent.
-# Emitted when steering input is rejected or cannot be committed to a successor response. Returns the original, uncommitted input so the client can carry it into `response.create` when appropriate. Invalid input must be corrected before retrying. Failures after acceptance include the same steering ID. Failures before an ID is allocated omit `steer.id`. A lost connection or missing acknowledgement leaves the outcome unknown; it is not proof that the input was rejected.
-class BetaResponseSteerFailedEvent
-  include BetaResponsesServerEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaResponseSteerFailedEventMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaResponseSteerFailedEventMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaResponseSteerFailedEventMetadata::DECODERS
-
-  # @return [BetaResponseSteerFailedEventType] The event discriminator. Always `response.steer.failed`.
-  attr_reader :type
-  # @return [Integer] The sequence number for this event.
-  attr_reader :sequence_number
-  # @return [BetaResponseSteerFailedEventSteer] The steering submission that could not be committed.
-  attr_reader :steer
-  # @return [BetaResponseSteerFailedEventError] Information about why the input could not be committed.
-  attr_reader :error
-  # @return [String] The WebSocket lane that emitted this event, when the target response is available and its `response.create` event supplied a `stream_id`.
-  attr_reader :stream_id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalBetaResponseSteerEventMetadata
+    FIELDS = {
+      type: 'type',
+      previous_response_id: 'previous_response_id',
+      input: 'input'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      previous_response_id
+      input
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaResponseSteerEventType.from_value(value)
+      end,
+      input: lambda do |value|
+        ::OctridevOpenai::BetaResponseSteerInput.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for BetaResponseSteerEvent.
+  # Queues user input to steer a response on this WebSocket connection. Input can contain text, images, and files. Steering is supported only for single-agent responses on models and execution modes that support steering. Responses bound to a conversation or using automatic compaction do not support steering. A `response.steer.accepted` event acknowledges that the server owns the queued input, not that it has been applied. The successor's `response.created` event is the commit…
+  class BetaResponseSteerEvent
+    include BetaResponsesClientEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaResponseSteerEventMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaResponseSteerEventMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaResponseSteerEventMetadata::DECODERS
+
+    # @return [BetaResponseSteerEventType] The event discriminator. Always `response.steer`.
+    attr_reader :type
+    # @return [String] The ID of the response to steer on this WebSocket connection.
+    attr_reader :previous_response_id
+    # @return [BetaResponseSteerInput] Input to queue for a continuation of the response. Uses the same string or input-item shape as `response.create.input`, with a non-empty array when supplying input items. Steering accepts only messages with the `user` role. Each message may contain only `type`, `role`, and `content`, with `content` as a string or an array of `input_text`, `input_image`, and `input_file` parts. The optional `type` must be `message`. Other roles, tool outputs, and item types are not supported…
+    attr_reader :input
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the BetaResponseSteerEventType SDK namespace.
+  module BetaResponseSteerEventType
+    RESPONSE_STEER = 'response.steer'
+    VALUES = ['response.steer'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaResponseSteerEventType', 'enum', "Unknown BetaResponseSteerEventType: #{value}")
+    end
   end
-end
 
-# Defines the BetaResponseSteerFailedEventErrorType SDK namespace.
-module BetaResponseSteerFailedEventErrorType
-  INVALID_REQUEST_ERROR = 'invalid_request_error'
-  VALUES = ['invalid_request_error'].freeze
-  def self.from_value(value)
-    value
+  # Internal model hydration metadata.
+  class SdkInternalBetaResponseSteerFailedEventSteerMetadata
+    FIELDS = {
+      id: 'id',
+      previous_response_id: 'previous_response_id',
+      input: 'input'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      previous_response_id
+      input
+    ].freeze
+    DECODERS = {
+      input: lambda do |value|
+        ::OctridevOpenai::BetaResponseSteerInput.from_hash(value)
+      end
+    }.freeze
   end
-end
 
-# Defines the BetaResponseSteerFailedEventType SDK namespace.
-module BetaResponseSteerFailedEventType
-  RESPONSE_STEER_FAILED = 'response.steer.failed'
-  VALUES = ['response.steer.failed'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+  # API model for BetaResponseSteerFailedEventSteer.
+  # The steering submission that could not be committed.
+  class BetaResponseSteerFailedEventSteer
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaResponseSteerFailedEventSteerMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaResponseSteerFailedEventSteerMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaResponseSteerFailedEventSteerMetadata::DECODERS
 
-    raise SdkValidationError.new('BetaResponseSteerFailedEventType', 'enum', "Unknown BetaResponseSteerFailedEventType: #{value}")
+    # @return [String] The ID assigned to the steering submission, if one was allocated.
+    attr_reader :id
+    # @return [String] The ID of the response that was targeted for steering.
+    attr_reader :previous_response_id
+    # @return [BetaResponseSteerInput] Input to queue for a continuation of the response. Uses the same string or input-item shape as `response.create.input`, with a non-empty array when supplying input items. Steering accepts only messages with the `user` role. Each message may contain only `type`, `role`, and `content`, with `content` as a string or an array of `input_text`, `input_image`, and `input_file` parts. The optional `type` must be `message`. Other roles, tool outputs, and item types are not supported…
+    attr_reader :input
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
 
-# Defines the BetaResponseSteerInput SDK namespace.
-module BetaResponseSteerInput
-  def self.from_hash(hash)
-    return hash if hash.is_a?(::String)
-    return BetaResponseSteerInputItemList.from_hash(hash)
+  # Internal model hydration metadata.
+  class SdkInternalBetaResponseSteerFailedEventErrorMetadata
+    FIELDS = {
+      type: 'type',
+      code: 'code',
+      message: 'message'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      code
+      message
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaResponseSteerFailedEventErrorType.from_value(value)
+      end,
+      code: lambda do |value|
+        ::OctridevOpenai::BetaResponseSteerErrorCode.from_value(value)
+      end
+    }.freeze
   end
-end
 
-# Defines the BetaResponseSteerInputItem SDK namespace.
-module BetaResponseSteerInputItem
-  DISCRIMINATOR_MAPPING = {
-    "message" => -> { BetaUserMessageItemParam },
-    "function_call_output" => -> { BetaFunctionCallOutputItemParam },
-  }.freeze
+  # API model for BetaResponseSteerFailedEventError.
+  # Information about why the input could not be committed.
+  class BetaResponseSteerFailedEventError
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaResponseSteerFailedEventErrorMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaResponseSteerFailedEventErrorMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaResponseSteerFailedEventErrorMetadata::DECODERS
 
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
+    # @return [BetaResponseSteerFailedEventErrorType] The error type. Always `invalid_request_error`.
+    attr_reader :type
+    # @return [BetaResponseSteerErrorCode] A machine-readable steering error code. Clients should handle unknown values because additional codes may be introduced. Known values include: - `response_not_found`: The target response is not available on this connection. - `invalid_input`: The event or input failed validation. - `steering_not_supported`: The model or response execution mode does not support steering. - `too_many_pending_steers`: Too much steering input is pending for the response. -…
+    attr_reader :code
+    # @return [String] A human-readable description of the error.
+    attr_reader :message
 
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-    raise SdkValidationError.new('BetaResponseSteerInputItem', 'variant', "Unknown BetaResponseSteerInputItem discriminator: #{hash["type"].inspect}")
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
 
-# Defines the BetaResponseSteerInputItemList SDK value decoder.
-module BetaResponseSteerInputItemList
-  def self.from_hash(value)
-    return nil if value.nil?
-    value&.map { |item| ::OctridevOpenai::BetaResponseSteerInputItem.from_hash(item) }
+  # Internal model hydration metadata.
+  class SdkInternalBetaResponseSteerFailedEventMetadata
+    FIELDS = {
+      type: 'type',
+      sequence_number: 'sequence_number',
+      steer: 'steer',
+      error: 'error',
+      stream_id: 'stream_id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      sequence_number
+      steer
+      error
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaResponseSteerFailedEventType.from_value(value)
+      end,
+      steer: lambda do |value|
+        ::OctridevOpenai::BetaResponseSteerFailedEventSteer.from_hash(value)
+      end,
+      error: lambda do |value|
+        ::OctridevOpenai::BetaResponseSteerFailedEventError.from_hash(value)
+      end
+    }.freeze
   end
-end
 
-# Internal model hydration metadata.
-class SdkInternalBetaResponseSteerPendingEventSteerMetadata
-  FIELDS = {
-    id: "id",
-    previous_response_id: "previous_response_id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    previous_response_id
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
+  # API model for BetaResponseSteerFailedEvent.
+  # Emitted when steering input is rejected or cannot be committed to a successor response. Returns the original, uncommitted input so the client can carry it into `response.create` when appropriate. Invalid input must be corrected before retrying. Failures after acceptance include the same steering ID. Failures before an ID is allocated omit `steer.id`. A lost connection or missing acknowledgement leaves the outcome unknown; it is not proof that the input was rejected.
+  class BetaResponseSteerFailedEvent
+    include BetaResponsesServerEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaResponseSteerFailedEventMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaResponseSteerFailedEventMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaResponseSteerFailedEventMetadata::DECODERS
+
+    # @return [BetaResponseSteerFailedEventType] The event discriminator. Always `response.steer.failed`.
+    attr_reader :type
+    # @return [Integer] The sequence number for this event.
+    attr_reader :sequence_number
+    # @return [BetaResponseSteerFailedEventSteer] The steering submission that could not be committed.
+    attr_reader :steer
+    # @return [BetaResponseSteerFailedEventError] Information about why the input could not be committed.
+    attr_reader :error
+    # @return [String] The WebSocket lane that emitted this event, when the target response is available and its `response.create` event supplied a `stream_id`.
+    attr_reader :stream_id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the BetaResponseSteerFailedEventErrorType SDK namespace.
+  module BetaResponseSteerFailedEventErrorType
+    INVALID_REQUEST_ERROR = 'invalid_request_error'
+    VALUES = ['invalid_request_error'].freeze
+    def self.from_value(value)
+      value
+    end
+  end
+
+  # Defines the BetaResponseSteerFailedEventType SDK namespace.
+  module BetaResponseSteerFailedEventType
+    RESPONSE_STEER_FAILED = 'response.steer.failed'
+    VALUES = ['response.steer.failed'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaResponseSteerFailedEventType', 'enum', "Unknown BetaResponseSteerFailedEventType: #{value}")
+    end
+  end
+
+  # Defines the BetaResponseSteerInput SDK namespace.
+  module BetaResponseSteerInput
+    def self.from_hash(hash)
+      return hash if hash.is_a?(::String)
+
+      BetaResponseSteerInputItemList.from_hash(hash)
+    end
+  end
+
+  # Defines the BetaResponseSteerInputItem SDK namespace.
+  module BetaResponseSteerInputItem
+    DISCRIMINATOR_MAPPING = {
+      'message' => -> { BetaUserMessageItemParam },
+      'function_call_output' => -> { BetaFunctionCallOutputItemParam }
+    }.freeze
+
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('BetaResponseSteerInputItem', 'variant', "Unknown BetaResponseSteerInputItem discriminator: #{hash['type'].inspect}")
+    end
+  end
+
+  # Defines the BetaResponseSteerInputItemList SDK value decoder.
+  module BetaResponseSteerInputItemList
+    def self.from_hash(value)
+      return nil if value.nil?
+
+      value&.map { |item| ::OctridevOpenai::BetaResponseSteerInputItem.from_hash(item) }
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalBetaResponseSteerPendingEventSteerMetadata
+    FIELDS = {
+      id: 'id',
+      previous_response_id: 'previous_response_id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      previous_response_id
+    ].freeze
+    DECODERS = {}.freeze
+  end
 end

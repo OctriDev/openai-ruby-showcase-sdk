@@ -21,26 +21,25 @@ module OctridevOpenai
         after: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 1, max: 100) }
 
         SdkClient.request(
           'GET',
-          "/webhook_endpoints",
+          '/webhook_endpoints',
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
-            'after' => QueryValue.new(after, style: 'form', explode: true),
+            'after' => QueryValue.new(after, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::WebhookEndpointListResource,
           decoder: :json,
           operation_id: 'list_webhook_endpoints',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
-    ListWebhookEndpointsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      ListWebhookEndpointsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Returns webhook endpoints for the authenticated project in newest-first order.
       #
@@ -65,10 +64,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.last_id
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -91,10 +93,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListWebhookEndpointsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end
@@ -113,7 +117,6 @@ module OctridevOpenai
         event_types:,
         request_options: nil
       )
-
         Validation.validate_length('name', name, min: 1, max: 256)
 
         Validation.validate_length('url', url, max: 2048)
@@ -123,18 +126,18 @@ module OctridevOpenai
 
         SdkClient.request(
           'POST',
-          "/webhook_endpoints",
+          '/webhook_endpoints',
           config: config,
           body: {
             'name' => name,
             'url' => url,
-            'event_types' => event_types,
+            'event_types' => event_types
           },
           return_type: ::OctridevOpenai::WebhookEndpointWithSecretResource,
           decoder: :json,
           operation_id: 'create_webhook_endpoint',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -147,11 +150,10 @@ module OctridevOpenai
         webhook_endpoint_id:,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
           [
-            "/webhook_endpoints/",
+            '/webhook_endpoints/',
             SdkClient.encode_path_segment(webhook_endpoint_id)
           ].join,
           config: config,
@@ -159,7 +161,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'retrieve_webhook_endpoint',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -179,7 +181,6 @@ module OctridevOpenai
         event_types: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.if_given(name) { Validation.validate_length('name', name, min: 1, max: 256) }
 
         Validation.if_given(url) do
@@ -192,20 +193,20 @@ module OctridevOpenai
         SdkClient.request(
           'POST',
           [
-            "/webhook_endpoints/",
+            '/webhook_endpoints/',
             SdkClient.encode_path_segment(webhook_endpoint_id)
           ].join,
           config: config,
           body: {
             'name' => name,
             'url' => url,
-            'event_types' => event_types,
+            'event_types' => event_types
           },
           return_type: ::OctridevOpenai::WebhookEndpointBody,
           decoder: :json,
           operation_id: 'update_webhook_endpoint',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -218,11 +219,10 @@ module OctridevOpenai
         webhook_endpoint_id:,
         request_options: nil
       )
-
         SdkClient.request(
           'DELETE',
           [
-            "/webhook_endpoints/",
+            '/webhook_endpoints/',
             SdkClient.encode_path_segment(webhook_endpoint_id)
           ].join,
           config: config,
@@ -230,7 +230,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_webhook_endpoint',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -247,23 +247,22 @@ module OctridevOpenai
         keep_old_secret_active_for24_hours: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
           [
-            "/webhook_endpoints/",
+            '/webhook_endpoints/',
             SdkClient.encode_path_segment(webhook_endpoint_id),
-            "/rotate_secret"
+            '/rotate_secret'
           ].join,
           config: config,
           body: {
-            'keep_old_secret_active_for_24_hours' => keep_old_secret_active_for24_hours,
+            'keep_old_secret_active_for_24_hours' => keep_old_secret_active_for24_hours
           },
           return_type: ::OctridevOpenai::WebhookEndpointWithSecretResource,
           decoder: :json,
           operation_id: 'rotate_webhook_endpoint_signing_secret',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -278,23 +277,22 @@ module OctridevOpenai
         event_type:,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
           [
-            "/webhook_endpoints/",
+            '/webhook_endpoints/',
             SdkClient.encode_path_segment(webhook_endpoint_id),
-            "/test"
+            '/test'
           ].join,
           config: config,
           body: {
-            'event_type' => event_type,
+            'event_type' => event_type
           },
           return_type: ::OctridevOpenai::WebhookEndpointTestResultResource,
           decoder: :json,
           operation_id: 'test_webhook_endpoint',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
     end

@@ -5,456 +5,456 @@
 
 # spend_limit domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalOrganizationSpendLimitDeletedResourceMetadata
-  FIELDS = {
-    object: "object",
-    deleted: "deleted",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    object
-    deleted
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::OrganizationSpendLimitDeletedResourceObject.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for OrganizationSpendLimitDeletedResource.
-# Confirmation payload returned after deleting an organization hard spend limit.
-class OrganizationSpendLimitDeletedResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalOrganizationSpendLimitDeletedResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalOrganizationSpendLimitDeletedResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalOrganizationSpendLimitDeletedResourceMetadata::DECODERS
-
-  # @return [OrganizationSpendLimitDeletedResourceObject] The object type, which is always `organization.spend_limit.deleted`.
-  attr_reader :object
-  # @return [Boolean] Whether the hard spend limit was deleted.
-  attr_reader :deleted
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalOrganizationSpendLimitDeletedResourceMetadata
+    FIELDS = {
+      object: 'object',
+      deleted: 'deleted'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      object
+      deleted
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::OrganizationSpendLimitDeletedResourceObject.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for OrganizationSpendLimitDeletedResource.
+  # Confirmation payload returned after deleting an organization hard spend limit.
+  class OrganizationSpendLimitDeletedResource
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalOrganizationSpendLimitDeletedResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalOrganizationSpendLimitDeletedResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalOrganizationSpendLimitDeletedResourceMetadata::DECODERS
+
+    # @return [OrganizationSpendLimitDeletedResourceObject] The object type, which is always `organization.spend_limit.deleted`.
+    attr_reader :object
+    # @return [Boolean] Whether the hard spend limit was deleted.
+    attr_reader :deleted
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the OrganizationSpendLimitDeletedResourceObject SDK namespace.
-module OrganizationSpendLimitDeletedResourceObject
-  ORGANIZATION_SPEND_LIMIT_DELETED = 'organization.spend_limit.deleted'
-  VALUES = ['organization.spend_limit.deleted'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalOrganizationSpendLimitResourceMetadata
-  FIELDS = {
-    object: "object",
-    threshold_amount: "threshold_amount",
-    currency: "currency",
-    interval: "interval",
-    enforcement: "enforcement",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    object
-    threshold_amount
-    currency
-    interval
-    enforcement
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::OrganizationSpendLimitResourceObject.from_value(value)
-    end,
-    currency: lambda do |value|
-      ::OctridevOpenai::SpendLimitCurrency.from_value(value)
-    end,
-    interval: lambda do |value|
-      ::OctridevOpenai::SpendLimitInterval.from_value(value)
-    end,
-    enforcement: lambda do |value|
-      ::OctridevOpenai::SpendLimitEnforcement.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for OrganizationSpendLimitResource.
-# Represents a hard spend limit configured at the organization level.
-class OrganizationSpendLimitResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalOrganizationSpendLimitResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalOrganizationSpendLimitResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalOrganizationSpendLimitResourceMetadata::DECODERS
-
-  # @return [OrganizationSpendLimitResourceObject] The object type, which is always `organization.spend_limit`.
-  attr_reader :object
-  # @return [Integer] The hard spend limit amount, in cents.
-  attr_reader :threshold_amount
-  # @return [SpendLimitCurrency] The currency for the threshold amount. Currently, only `USD` is supported.
-  attr_reader :currency
-  # @return [SpendLimitInterval] The time interval for evaluating spend against the threshold. Currently, only `month` is supported.
-  attr_reader :interval
-  # @return [SpendLimitEnforcement] The current enforcement state of the hard spend limit.
-  attr_reader :enforcement
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the OrganizationSpendLimitDeletedResourceObject SDK namespace.
+  module OrganizationSpendLimitDeletedResourceObject
+    ORGANIZATION_SPEND_LIMIT_DELETED = 'organization.spend_limit.deleted'
+    VALUES = ['organization.spend_limit.deleted'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalOrganizationSpendLimitResourceMetadata
+    FIELDS = {
+      object: 'object',
+      threshold_amount: 'threshold_amount',
+      currency: 'currency',
+      interval: 'interval',
+      enforcement: 'enforcement'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      object
+      threshold_amount
+      currency
+      interval
+      enforcement
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::OrganizationSpendLimitResourceObject.from_value(value)
+      end,
+      currency: lambda do |value|
+        ::OctridevOpenai::SpendLimitCurrency.from_value(value)
+      end,
+      interval: lambda do |value|
+        ::OctridevOpenai::SpendLimitInterval.from_value(value)
+      end,
+      enforcement: lambda do |value|
+        ::OctridevOpenai::SpendLimitEnforcement.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for OrganizationSpendLimitResource.
+  # Represents a hard spend limit configured at the organization level.
+  class OrganizationSpendLimitResource
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalOrganizationSpendLimitResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalOrganizationSpendLimitResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalOrganizationSpendLimitResourceMetadata::DECODERS
 
-# Defines the OrganizationSpendLimitResourceObject SDK namespace.
-module OrganizationSpendLimitResourceObject
-  ORGANIZATION_SPEND_LIMIT = 'organization.spend_limit'
-  VALUES = ['organization.spend_limit'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    # @return [OrganizationSpendLimitResourceObject] The object type, which is always `organization.spend_limit`.
+    attr_reader :object
+    # @return [Integer] The hard spend limit amount, in cents.
+    attr_reader :threshold_amount
+    # @return [SpendLimitCurrency] The currency for the threshold amount. Currently, only `USD` is supported.
+    attr_reader :currency
+    # @return [SpendLimitInterval] The time interval for evaluating spend against the threshold. Currently, only `month` is supported.
+    attr_reader :interval
+    # @return [SpendLimitEnforcement] The current enforcement state of the hard spend limit.
+    attr_reader :enforcement
 
-# Internal model hydration metadata.
-class SdkInternalProjectSpendLimitDeletedResourceMetadata
-  FIELDS = {
-    object: "object",
-    deleted: "deleted",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    object
-    deleted
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::ProjectSpendLimitDeletedResourceObject.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for ProjectSpendLimitDeletedResource.
-# Confirmation payload returned after deleting a project hard spend limit.
-class ProjectSpendLimitDeletedResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalProjectSpendLimitDeletedResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalProjectSpendLimitDeletedResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalProjectSpendLimitDeletedResourceMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [ProjectSpendLimitDeletedResourceObject] The object type, which is always `project.spend_limit.deleted`.
-  attr_reader :object
-  # @return [Boolean] Whether the hard spend limit was deleted.
-  attr_reader :deleted
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the OrganizationSpendLimitResourceObject SDK namespace.
+  module OrganizationSpendLimitResourceObject
+    ORGANIZATION_SPEND_LIMIT = 'organization.spend_limit'
+    VALUES = ['organization.spend_limit'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the ProjectSpendLimitDeletedResourceObject SDK namespace.
-module ProjectSpendLimitDeletedResourceObject
-  PROJECT_SPEND_LIMIT_DELETED = 'project.spend_limit.deleted'
-  VALUES = ['project.spend_limit.deleted'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalProjectSpendLimitResourceMetadata
-  FIELDS = {
-    object: "object",
-    threshold_amount: "threshold_amount",
-    currency: "currency",
-    interval: "interval",
-    enforcement: "enforcement",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    object
-    threshold_amount
-    currency
-    interval
-    enforcement
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::ProjectSpendLimitResourceObject.from_value(value)
-    end,
-    currency: lambda do |value|
-      ::OctridevOpenai::SpendLimitCurrency.from_value(value)
-    end,
-    interval: lambda do |value|
-      ::OctridevOpenai::SpendLimitInterval.from_value(value)
-    end,
-    enforcement: lambda do |value|
-      ::OctridevOpenai::SpendLimitEnforcement.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for ProjectSpendLimitResource.
-# Represents a hard spend limit configured at the project level.
-class ProjectSpendLimitResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalProjectSpendLimitResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalProjectSpendLimitResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalProjectSpendLimitResourceMetadata::DECODERS
-
-  # @return [ProjectSpendLimitResourceObject] The object type, which is always `project.spend_limit`.
-  attr_reader :object
-  # @return [Integer] The hard spend limit amount, in cents.
-  attr_reader :threshold_amount
-  # @return [SpendLimitCurrency] The currency for the threshold amount. Currently, only `USD` is supported.
-  attr_reader :currency
-  # @return [SpendLimitInterval] The time interval for evaluating spend against the threshold. Currently, only `month` is supported.
-  attr_reader :interval
-  # @return [SpendLimitEnforcement] The current enforcement state of the hard spend limit.
-  attr_reader :enforcement
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalProjectSpendLimitDeletedResourceMetadata
+    FIELDS = {
+      object: 'object',
+      deleted: 'deleted'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      object
+      deleted
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::ProjectSpendLimitDeletedResourceObject.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ProjectSpendLimitDeletedResource.
+  # Confirmation payload returned after deleting a project hard spend limit.
+  class ProjectSpendLimitDeletedResource
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalProjectSpendLimitDeletedResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalProjectSpendLimitDeletedResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalProjectSpendLimitDeletedResourceMetadata::DECODERS
+
+    # @return [ProjectSpendLimitDeletedResourceObject] The object type, which is always `project.spend_limit.deleted`.
+    attr_reader :object
+    # @return [Boolean] Whether the hard spend limit was deleted.
+    attr_reader :deleted
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the ProjectSpendLimitResourceObject SDK namespace.
-module ProjectSpendLimitResourceObject
-  PROJECT_SPEND_LIMIT = 'project.spend_limit'
-  VALUES = ['project.spend_limit'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the SpendLimitCurrency SDK value decoder.
-module SpendLimitCurrency
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalSpendLimitEnforcementMetadata
-  FIELDS = {
-    status: "status",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    status
-  ].freeze
-  DECODERS = {
-    status: lambda do |value|
-      ::OctridevOpenai::SpendLimitEnforcementStatus.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for SpendLimitEnforcement.
-# The current enforcement state of a hard spend limit.
-class SpendLimitEnforcement
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalSpendLimitEnforcementMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalSpendLimitEnforcementMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalSpendLimitEnforcementMetadata::DECODERS
-
-  # @return [SpendLimitEnforcementStatus] Whether the hard spend limit is currently enforcing.
-  attr_reader :status
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the ProjectSpendLimitDeletedResourceObject SDK namespace.
+  module ProjectSpendLimitDeletedResourceObject
+    PROJECT_SPEND_LIMIT_DELETED = 'project.spend_limit.deleted'
+    VALUES = ['project.spend_limit.deleted'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalProjectSpendLimitResourceMetadata
+    FIELDS = {
+      object: 'object',
+      threshold_amount: 'threshold_amount',
+      currency: 'currency',
+      interval: 'interval',
+      enforcement: 'enforcement'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      object
+      threshold_amount
+      currency
+      interval
+      enforcement
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::ProjectSpendLimitResourceObject.from_value(value)
+      end,
+      currency: lambda do |value|
+        ::OctridevOpenai::SpendLimitCurrency.from_value(value)
+      end,
+      interval: lambda do |value|
+        ::OctridevOpenai::SpendLimitInterval.from_value(value)
+      end,
+      enforcement: lambda do |value|
+        ::OctridevOpenai::SpendLimitEnforcement.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for ProjectSpendLimitResource.
+  # Represents a hard spend limit configured at the project level.
+  class ProjectSpendLimitResource
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalProjectSpendLimitResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalProjectSpendLimitResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalProjectSpendLimitResourceMetadata::DECODERS
 
-# Defines the SpendLimitEnforcementStatus SDK value decoder.
-module SpendLimitEnforcementStatus
-  def self.from_value(value)
-    value
-  end
-end
+    # @return [ProjectSpendLimitResourceObject] The object type, which is always `project.spend_limit`.
+    attr_reader :object
+    # @return [Integer] The hard spend limit amount, in cents.
+    attr_reader :threshold_amount
+    # @return [SpendLimitCurrency] The currency for the threshold amount. Currently, only `USD` is supported.
+    attr_reader :currency
+    # @return [SpendLimitInterval] The time interval for evaluating spend against the threshold. Currently, only `month` is supported.
+    attr_reader :interval
+    # @return [SpendLimitEnforcement] The current enforcement state of the hard spend limit.
+    attr_reader :enforcement
 
-# Defines the SpendLimitInterval SDK value decoder.
-module SpendLimitInterval
-  def self.from_value(value)
-    value
-  end
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# Internal model hydration metadata.
-class SdkInternalUpdateOrganizationSpendLimitBodyMetadata
-  FIELDS = {
-    threshold_amount: "threshold_amount",
-    currency: "currency",
-    interval: "interval",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    threshold_amount
-    currency
-    interval
-  ].freeze
-  DECODERS = {
-    currency: lambda do |value|
-      ::OctridevOpenai::UpdateOrganizationSpendLimitBodyCurrency.from_value(value)
-    end,
-    interval: lambda do |value|
-      ::OctridevOpenai::UpdateOrganizationSpendLimitBodyInterval.from_value(value)
-    end,
-  }.freeze
-end
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-# API model for UpdateOrganizationSpendLimitBody.
-# Parameters for the hard spend limit you want to create or replace.
-class UpdateOrganizationSpendLimitBody
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalUpdateOrganizationSpendLimitBodyMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalUpdateOrganizationSpendLimitBodyMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalUpdateOrganizationSpendLimitBodyMetadata::DECODERS
-
-  # @return [Integer] The hard spend limit amount, in cents.
-  attr_reader :threshold_amount
-  # @return [UpdateOrganizationSpendLimitBodyCurrency] The currency for the threshold amount. Currently, only `USD` is supported.
-  attr_reader :currency
-  # @return [UpdateOrganizationSpendLimitBodyInterval] The time interval for evaluating spend against the threshold. Currently, only `month` is supported.
-  attr_reader :interval
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the ProjectSpendLimitResourceObject SDK namespace.
+  module ProjectSpendLimitResourceObject
+    PROJECT_SPEND_LIMIT = 'project.spend_limit'
+    VALUES = ['project.spend_limit'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the UpdateOrganizationSpendLimitBodyCurrency SDK namespace.
-module UpdateOrganizationSpendLimitBodyCurrency
-  USD = 'USD'
-  VALUES = ['USD'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the UpdateOrganizationSpendLimitBodyInterval SDK namespace.
-module UpdateOrganizationSpendLimitBodyInterval
-  MONTH = 'month'
-  VALUES = ['month'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalUpdateProjectSpendLimitBodyMetadata
-  FIELDS = {
-    threshold_amount: "threshold_amount",
-    currency: "currency",
-    interval: "interval",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    threshold_amount
-    currency
-    interval
-  ].freeze
-  DECODERS = {
-    currency: lambda do |value|
-      ::OctridevOpenai::UpdateProjectSpendLimitBodyCurrency.from_value(value)
-    end,
-    interval: lambda do |value|
-      ::OctridevOpenai::UpdateProjectSpendLimitBodyInterval.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for UpdateProjectSpendLimitBody.
-# Parameters for the hard spend limit you want to create or replace.
-class UpdateProjectSpendLimitBody
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalUpdateProjectSpendLimitBodyMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalUpdateProjectSpendLimitBodyMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalUpdateProjectSpendLimitBodyMetadata::DECODERS
-
-  # @return [Integer] The hard spend limit amount, in cents.
-  attr_reader :threshold_amount
-  # @return [UpdateProjectSpendLimitBodyCurrency] The currency for the threshold amount. Currently, only `USD` is supported.
-  attr_reader :currency
-  # @return [UpdateProjectSpendLimitBodyInterval] The time interval for evaluating spend against the threshold. Currently, only `month` is supported.
-  attr_reader :interval
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the SpendLimitCurrency SDK value decoder.
+  module SpendLimitCurrency
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalSpendLimitEnforcementMetadata
+    FIELDS = {
+      status: 'status'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      status
+    ].freeze
+    DECODERS = {
+      status: lambda do |value|
+        ::OctridevOpenai::SpendLimitEnforcementStatus.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for SpendLimitEnforcement.
+  # The current enforcement state of a hard spend limit.
+  class SpendLimitEnforcement
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalSpendLimitEnforcementMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalSpendLimitEnforcementMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalSpendLimitEnforcementMetadata::DECODERS
 
-# Defines the UpdateProjectSpendLimitBodyCurrency SDK namespace.
-module UpdateProjectSpendLimitBodyCurrency
-  USD = 'USD'
-  VALUES = ['USD'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    # @return [SpendLimitEnforcementStatus] Whether the hard spend limit is currently enforcing.
+    attr_reader :status
 
-# Defines the UpdateProjectSpendLimitBodyInterval SDK namespace.
-module UpdateProjectSpendLimitBodyInterval
-  MONTH = 'month'
-  VALUES = ['month'].freeze
-  def self.from_value(value)
-    value
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
+
+  # Defines the SpendLimitEnforcementStatus SDK value decoder.
+  module SpendLimitEnforcementStatus
+    def self.from_value(value)
+      value
+    end
+  end
+
+  # Defines the SpendLimitInterval SDK value decoder.
+  module SpendLimitInterval
+    def self.from_value(value)
+      value
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalUpdateOrganizationSpendLimitBodyMetadata
+    FIELDS = {
+      threshold_amount: 'threshold_amount',
+      currency: 'currency',
+      interval: 'interval'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      threshold_amount
+      currency
+      interval
+    ].freeze
+    DECODERS = {
+      currency: lambda do |value|
+        ::OctridevOpenai::UpdateOrganizationSpendLimitBodyCurrency.from_value(value)
+      end,
+      interval: lambda do |value|
+        ::OctridevOpenai::UpdateOrganizationSpendLimitBodyInterval.from_value(value)
+      end
+    }.freeze
+  end
+
+  # API model for UpdateOrganizationSpendLimitBody.
+  # Parameters for the hard spend limit you want to create or replace.
+  class UpdateOrganizationSpendLimitBody
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalUpdateOrganizationSpendLimitBodyMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalUpdateOrganizationSpendLimitBodyMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalUpdateOrganizationSpendLimitBodyMetadata::DECODERS
+
+    # @return [Integer] The hard spend limit amount, in cents.
+    attr_reader :threshold_amount
+    # @return [UpdateOrganizationSpendLimitBodyCurrency] The currency for the threshold amount. Currently, only `USD` is supported.
+    attr_reader :currency
+    # @return [UpdateOrganizationSpendLimitBodyInterval] The time interval for evaluating spend against the threshold. Currently, only `month` is supported.
+    attr_reader :interval
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the UpdateOrganizationSpendLimitBodyCurrency SDK namespace.
+  module UpdateOrganizationSpendLimitBodyCurrency
+    USD = 'USD'
+    VALUES = ['USD'].freeze
+    def self.from_value(value)
+      value
+    end
+  end
+
+  # Defines the UpdateOrganizationSpendLimitBodyInterval SDK namespace.
+  module UpdateOrganizationSpendLimitBodyInterval
+    MONTH = 'month'
+    VALUES = ['month'].freeze
+    def self.from_value(value)
+      value
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalUpdateProjectSpendLimitBodyMetadata
+    FIELDS = {
+      threshold_amount: 'threshold_amount',
+      currency: 'currency',
+      interval: 'interval'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      threshold_amount
+      currency
+      interval
+    ].freeze
+    DECODERS = {
+      currency: lambda do |value|
+        ::OctridevOpenai::UpdateProjectSpendLimitBodyCurrency.from_value(value)
+      end,
+      interval: lambda do |value|
+        ::OctridevOpenai::UpdateProjectSpendLimitBodyInterval.from_value(value)
+      end
+    }.freeze
+  end
+
+  # API model for UpdateProjectSpendLimitBody.
+  # Parameters for the hard spend limit you want to create or replace.
+  class UpdateProjectSpendLimitBody
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalUpdateProjectSpendLimitBodyMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalUpdateProjectSpendLimitBodyMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalUpdateProjectSpendLimitBodyMetadata::DECODERS
+
+    # @return [Integer] The hard spend limit amount, in cents.
+    attr_reader :threshold_amount
+    # @return [UpdateProjectSpendLimitBodyCurrency] The currency for the threshold amount. Currently, only `USD` is supported.
+    attr_reader :currency
+    # @return [UpdateProjectSpendLimitBodyInterval] The time interval for evaluating spend against the threshold. Currently, only `month` is supported.
+    attr_reader :interval
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the UpdateProjectSpendLimitBodyCurrency SDK namespace.
+  module UpdateProjectSpendLimitBodyCurrency
+    USD = 'USD'
+    VALUES = ['USD'].freeze
+    def self.from_value(value)
+      value
+    end
+  end
+
+  # Defines the UpdateProjectSpendLimitBodyInterval SDK namespace.
+  module UpdateProjectSpendLimitBodyInterval
+    MONTH = 'month'
+    VALUES = ['month'].freeze
+    def self.from_value(value)
+      value
+    end
+  end
 end

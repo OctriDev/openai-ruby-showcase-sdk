@@ -5,285 +5,287 @@
 
 # responses_beta_reasoning domain models
 module OctridevOpenai
-# Defines the BetaReasoningSummaryVariant0 SDK namespace.
-module BetaReasoningSummaryVariant0
-  AUTO = 'auto'
-  CONCISE = 'concise'
-  DETAILED = 'detailed'
-  VALUES = ['auto', 'concise', 'detailed'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the BetaReasoningContextVariant0 SDK namespace.
-module BetaReasoningContextVariant0
-  AUTO = 'auto'
-  CURRENT_TURN = 'current_turn'
-  ALL_TURNS = 'all_turns'
-  VALUES = ['auto', 'current_turn', 'all_turns'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the BetaReasoningGenerateSummaryVariant0 SDK namespace.
-module BetaReasoningGenerateSummaryVariant0
-  AUTO = 'auto'
-  CONCISE = 'concise'
-  DETAILED = 'detailed'
-  VALUES = ['auto', 'concise', 'detailed'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaReasoningMetadata
-  FIELDS = {
-    mode: "mode",
-    effort: "effort",
-    summary: "summary",
-    context: "context",
-    generate_summary: "generate_summary",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    mode: lambda do |value|
-      ::OctridevOpenai::BetaReasoningModeEnum.from_value(value)
-    end,
-    effort: lambda do |value|
-      ::OctridevOpenai::BetaReasoningEffort.from_hash(value)
-    end,
-    summary: lambda do |value|
-      ::OctridevOpenai::BetaReasoningSummaryVariant0.from_value(value)
-    end,
-    context: lambda do |value|
-      ::OctridevOpenai::BetaReasoningContextVariant0.from_value(value)
-    end,
-    generate_summary: lambda do |value|
-      ::OctridevOpenai::BetaReasoningGenerateSummaryVariant0.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaReasoning.
-# Configuration options for reasoning models.
-class BetaReasoning
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaReasoningMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaReasoningMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaReasoningMetadata::DECODERS
-
-  # @return [BetaReasoningModeEnum] Controls the reasoning execution mode for the request. When returned on a response, this is the effective execution mode.
-  attr_reader :mode
-  # @return [BetaReasoningEffort] Optional API value serialized in the `effort` wire field.
-  attr_reader :effort
-  # @return [BetaReasoningSummaryVariant0] Optional API value serialized in the `summary` wire field.
-  attr_reader :summary
-  # @return [BetaReasoningContextVariant0] Optional API value serialized in the `context` wire field.
-  attr_reader :context
-  # @return [BetaReasoningGenerateSummaryVariant0] Optional API value serialized in the `generate_summary` wire field.
-  attr_reader :generate_summary
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the BetaReasoningSummaryVariant0 SDK namespace.
+  module BetaReasoningSummaryVariant0
+    AUTO = 'auto'
+    CONCISE = 'concise'
+    DETAILED = 'detailed'
+    VALUES = %w[auto concise detailed].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the BetaReasoningContextVariant0 SDK namespace.
+  module BetaReasoningContextVariant0
+    AUTO = 'auto'
+    CURRENT_TURN = 'current_turn'
+    ALL_TURNS = 'all_turns'
+    VALUES = %w[auto current_turn all_turns].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the BetaReasoningEffort SDK namespace.
-module BetaReasoningEffort
-  def self.from_hash(hash)
-    return BetaReasoningEffortVariant0.from_value(hash) if hash.is_a?(::String)
-    hash
-  end
-end
-
-# Defines the BetaReasoningEffortVariant0 SDK namespace.
-module BetaReasoningEffortVariant0
-  NONE = 'none'
-  MINIMAL = 'minimal'
-  LOW = 'low'
-  MEDIUM = 'medium'
-  HIGH = 'high'
-  XHIGH = 'xhigh'
-  MAX = 'max'
-  VALUES = ['none', 'minimal', 'low', 'medium', 'high', 'xhigh', 'max'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaReasoningItemMetadata
-  FIELDS = {
-    agent: "agent",
-    type: "type",
-    id: "id",
-    encrypted_content: "encrypted_content",
-    summary: "summary",
-    content: "content",
-    status: "status",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    id
-    summary
-  ].freeze
-  DECODERS = {
-    agent: lambda do |value|
-      ::OctridevOpenai::BetaAgentTag.from_hash(value)
-    end,
-    type: lambda do |value|
-      ::OctridevOpenai::BetaReasoningItemType.from_value(value)
-    end,
-    summary: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::BetaSummaryTextContent.from_hash(item) }
-    end,
-    content: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::BetaReasoningTextContent.from_hash(item) }
-    end,
-    status: lambda do |value|
-      ::OctridevOpenai::BetaReasoningItemStatus.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaReasoningItem.
-# A description of the chain of thought used by a reasoning model while generating a response. Be sure to include these items in your `input` to the Responses API for subsequent turns of a conversation if you are manually managing context.
-class BetaReasoningItem
-  include BetaItem
-  include BetaItemResource
-  include BetaItemField
-  include BetaOutputItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaReasoningItemMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaReasoningItemMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaReasoningItemMetadata::DECODERS
-
-  # @return [BetaAgentTag] The agent that produced this item.
-  attr_reader :agent
-  # @return [BetaReasoningItemType] The type of the object. Always `reasoning`.
-  attr_reader :type
-  # @return [String] The unique identifier of the reasoning content.
-  attr_reader :id
-  # @return [String] Optional `string` value serialized in the `encrypted_content` wire field.
-  attr_reader :encrypted_content
-  # @return [Array_of_BetaSummaryTextContent] Reasoning summary content.
-  attr_reader :summary
-  # @return [Array_of_BetaReasoningTextContent] Reasoning text content.
-  attr_reader :content
-  # @return [BetaReasoningItemStatus] The status of the item. One of `in_progress`, `completed`, or `incomplete`. Populated when items are returned via API.
-  attr_reader :status
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the BetaReasoningGenerateSummaryVariant0 SDK namespace.
+  module BetaReasoningGenerateSummaryVariant0
+    AUTO = 'auto'
+    CONCISE = 'concise'
+    DETAILED = 'detailed'
+    VALUES = %w[auto concise detailed].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalBetaReasoningMetadata
+    FIELDS = {
+      mode: 'mode',
+      effort: 'effort',
+      summary: 'summary',
+      context: 'context',
+      generate_summary: 'generate_summary'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      mode: lambda do |value|
+        ::OctridevOpenai::BetaReasoningModeEnum.from_value(value)
+      end,
+      effort: lambda do |value|
+        ::OctridevOpenai::BetaReasoningEffort.from_hash(value)
+      end,
+      summary: lambda do |value|
+        ::OctridevOpenai::BetaReasoningSummaryVariant0.from_value(value)
+      end,
+      context: lambda do |value|
+        ::OctridevOpenai::BetaReasoningContextVariant0.from_value(value)
+      end,
+      generate_summary: lambda do |value|
+        ::OctridevOpenai::BetaReasoningGenerateSummaryVariant0.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for BetaReasoning.
+  # Configuration options for reasoning models.
+  class BetaReasoning
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaReasoningMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaReasoningMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaReasoningMetadata::DECODERS
 
-# Defines the BetaReasoningItemStatus SDK namespace.
-module BetaReasoningItemStatus
-  IN_PROGRESS = 'in_progress'
-  COMPLETED = 'completed'
-  INCOMPLETE = 'incomplete'
-  VALUES = ['in_progress', 'completed', 'incomplete'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    # @return [BetaReasoningModeEnum] Controls the reasoning execution mode for the request. When returned on a response, this is the effective execution mode.
+    attr_reader :mode
+    # @return [BetaReasoningEffort] Optional API value serialized in the `effort` wire field.
+    attr_reader :effort
+    # @return [BetaReasoningSummaryVariant0] Optional API value serialized in the `summary` wire field.
+    attr_reader :summary
+    # @return [BetaReasoningContextVariant0] Optional API value serialized in the `context` wire field.
+    attr_reader :context
+    # @return [BetaReasoningGenerateSummaryVariant0] Optional API value serialized in the `generate_summary` wire field.
+    attr_reader :generate_summary
 
-# Defines the BetaReasoningItemType SDK namespace.
-module BetaReasoningItemType
-  REASONING = 'reasoning'
-  VALUES = ['reasoning'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-    raise SdkValidationError.new('BetaReasoningItemType', 'enum', "Unknown BetaReasoningItemType: #{value}")
-  end
-end
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-# Defines the BetaReasoningModeEnum SDK value decoder.
-module BetaReasoningModeEnum
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaReasoningTextContentMetadata
-  FIELDS = {
-    type: "type",
-    text: "text",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    text
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaReasoningTextContentType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaReasoningTextContent.
-# Reasoning text from the model.
-class BetaReasoningTextContent
-  include BetaOutputContent
-  include BetaAgentMessageContentItem
-  include BetaMessageContentItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaReasoningTextContentMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaReasoningTextContentMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaReasoningTextContentMetadata::DECODERS
-
-  # @return [BetaReasoningTextContentType] The type of the reasoning text. Always `reasoning_text`.
-  attr_reader :type
-  # @return [String] The reasoning text from the model.
-  attr_reader :text
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the BetaReasoningEffort SDK namespace.
+  module BetaReasoningEffort
+    def self.from_hash(hash)
+      return BetaReasoningEffortVariant0.from_value(hash) if hash.is_a?(::String)
+
+      hash
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the BetaReasoningEffortVariant0 SDK namespace.
+  module BetaReasoningEffortVariant0
+    NONE = 'none'
+    MINIMAL = 'minimal'
+    LOW = 'low'
+    MEDIUM = 'medium'
+    HIGH = 'high'
+    XHIGH = 'xhigh'
+    MAX = 'max'
+    VALUES = %w[none minimal low medium high xhigh max].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
 
-# Defines the BetaReasoningTextContentType SDK namespace.
-module BetaReasoningTextContentType
-  REASONING_TEXT = 'reasoning_text'
-  VALUES = ['reasoning_text'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('BetaReasoningTextContentType', 'enum', "Unknown BetaReasoningTextContentType: #{value}")
+  # Internal model hydration metadata.
+  class SdkInternalBetaReasoningItemMetadata
+    FIELDS = {
+      agent: 'agent',
+      type: 'type',
+      id: 'id',
+      encrypted_content: 'encrypted_content',
+      summary: 'summary',
+      content: 'content',
+      status: 'status'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      id
+      summary
+    ].freeze
+    DECODERS = {
+      agent: lambda do |value|
+        ::OctridevOpenai::BetaAgentTag.from_hash(value)
+      end,
+      type: lambda do |value|
+        ::OctridevOpenai::BetaReasoningItemType.from_value(value)
+      end,
+      summary: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::BetaSummaryTextContent.from_hash(item) }
+      end,
+      content: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::BetaReasoningTextContent.from_hash(item) }
+      end,
+      status: lambda do |value|
+        ::OctridevOpenai::BetaReasoningItemStatus.from_value(value)
+      end
+    }.freeze
   end
-end
+
+  # API model for BetaReasoningItem.
+  # A description of the chain of thought used by a reasoning model while generating a response. Be sure to include these items in your `input` to the Responses API for subsequent turns of a conversation if you are manually managing context.
+  class BetaReasoningItem
+    include BetaItem
+    include BetaItemResource
+    include BetaItemField
+    include BetaOutputItem
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaReasoningItemMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaReasoningItemMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaReasoningItemMetadata::DECODERS
+
+    # @return [BetaAgentTag] The agent that produced this item.
+    attr_reader :agent
+    # @return [BetaReasoningItemType] The type of the object. Always `reasoning`.
+    attr_reader :type
+    # @return [String] The unique identifier of the reasoning content.
+    attr_reader :id
+    # @return [String] Optional `string` value serialized in the `encrypted_content` wire field.
+    attr_reader :encrypted_content
+    # @return [Array_of_BetaSummaryTextContent] Reasoning summary content.
+    attr_reader :summary
+    # @return [Array_of_BetaReasoningTextContent] Reasoning text content.
+    attr_reader :content
+    # @return [BetaReasoningItemStatus] The status of the item. One of `in_progress`, `completed`, or `incomplete`. Populated when items are returned via API.
+    attr_reader :status
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the BetaReasoningItemStatus SDK namespace.
+  module BetaReasoningItemStatus
+    IN_PROGRESS = 'in_progress'
+    COMPLETED = 'completed'
+    INCOMPLETE = 'incomplete'
+    VALUES = %w[in_progress completed incomplete].freeze
+    def self.from_value(value)
+      value
+    end
+  end
+
+  # Defines the BetaReasoningItemType SDK namespace.
+  module BetaReasoningItemType
+    REASONING = 'reasoning'
+    VALUES = ['reasoning'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaReasoningItemType', 'enum', "Unknown BetaReasoningItemType: #{value}")
+    end
+  end
+
+  # Defines the BetaReasoningModeEnum SDK value decoder.
+  module BetaReasoningModeEnum
+    def self.from_value(value)
+      value
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalBetaReasoningTextContentMetadata
+    FIELDS = {
+      type: 'type',
+      text: 'text'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      text
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaReasoningTextContentType.from_value(value)
+      end
+    }.freeze
+  end
+
+  # API model for BetaReasoningTextContent.
+  # Reasoning text from the model.
+  class BetaReasoningTextContent
+    include BetaOutputContent
+    include BetaAgentMessageContentItem
+    include BetaMessageContentItem
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaReasoningTextContentMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaReasoningTextContentMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaReasoningTextContentMetadata::DECODERS
+
+    # @return [BetaReasoningTextContentType] The type of the reasoning text. Always `reasoning_text`.
+    attr_reader :type
+    # @return [String] The reasoning text from the model.
+    attr_reader :text
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the BetaReasoningTextContentType SDK namespace.
+  module BetaReasoningTextContentType
+    REASONING_TEXT = 'reasoning_text'
+    VALUES = ['reasoning_text'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaReasoningTextContentType', 'enum', "Unknown BetaReasoningTextContentType: #{value}")
+    end
+  end
 end

@@ -42,15 +42,14 @@ module OctridevOpenai
         filter: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
           [
-            "/vector_stores/",
+            '/vector_stores/',
             SdkClient.encode_path_segment(vector_store_id),
-            "/file_batches/",
+            '/file_batches/',
             SdkClient.encode_path_segment(batch_id),
-            "/files"
+            '/files'
           ].join,
           config: config,
           query: {
@@ -58,17 +57,17 @@ module OctridevOpenai
             'order' => QueryValue.new(order, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
             'before' => QueryValue.new(before, style: 'form', explode: true),
-            'filter' => QueryValue.new(filter, style: 'form', explode: true),
+            'filter' => QueryValue.new(filter, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::ListVectorStoreFilesResponse,
           decoder: :json,
           operation_id: 'list_files_in_vector_store_batch',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
-    ListFilesInVectorStoreBatchPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      ListFilesInVectorStoreBatchPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists the files in a vector store file batch. Use `filter` to limit results by processing status and the cursor parameters to navigate through the batch's files.
       #
@@ -119,10 +118,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.last_id
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -155,10 +157,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListFilesInVectorStoreBatchPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end
@@ -195,13 +199,12 @@ module OctridevOpenai
         filter: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
           [
-            "/vector_stores/",
+            '/vector_stores/',
             SdkClient.encode_path_segment(vector_store_id),
-            "/files"
+            '/files'
           ].join,
           config: config,
           query: {
@@ -209,17 +212,17 @@ module OctridevOpenai
             'order' => QueryValue.new(order, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
             'before' => QueryValue.new(before, style: 'form', explode: true),
-            'filter' => QueryValue.new(filter, style: 'form', explode: true),
+            'filter' => QueryValue.new(filter, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::ListVectorStoreFilesResponse,
           decoder: :json,
           operation_id: 'list_vector_store_files',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
-    ListVectorStoreFilesPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      ListVectorStoreFilesPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists files attached to a vector store, with pagination and an optional status filter. Use `after` or `before` to navigate the list, and `filter` to select files by processing status.
       #
@@ -267,10 +270,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.last_id
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -301,10 +307,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListVectorStoreFilesPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end
@@ -337,25 +345,24 @@ module OctridevOpenai
         attributes: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
           [
-            "/vector_stores/",
+            '/vector_stores/',
             SdkClient.encode_path_segment(vector_store_id),
-            "/files"
+            '/files'
           ].join,
           config: config,
           body: {
             'file_id' => file_id,
             'chunking_strategy' => chunking_strategy,
-            'attributes' => attributes,
+            'attributes' => attributes
           },
           return_type: ::OctridevOpenai::VectorStoreFileObject,
           decoder: :json,
           operation_id: 'create_vector_store_file',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '409' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '409' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -366,19 +373,13 @@ module OctridevOpenai
       # @param vector_store_id [String] The ID of the vector store that the file
       #   belongs to.
       # @param file_id [String] The ID of the file being retrieved.
-      singleton_class.define_method(:get_vector_store_file) do |
-        config:,
-        vector_store_id:,
-        file_id:,
-        request_options: nil
-      |
-
+      singleton_class.define_method(:get_vector_store_file) do |config:, vector_store_id:, file_id:, request_options: nil|
         SdkClient.request(
           'GET',
           [
-            "/vector_stores/",
+            '/vector_stores/',
             SdkClient.encode_path_segment(vector_store_id),
-            "/files/",
+            '/files/',
             SdkClient.encode_path_segment(file_id)
           ].join,
           config: config,
@@ -386,7 +387,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'get_vector_store_file',
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
+          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -403,13 +404,12 @@ module OctridevOpenai
         file_id:,
         request_options: nil
       )
-
         SdkClient.request(
           'DELETE',
           [
-            "/vector_stores/",
+            '/vector_stores/',
             SdkClient.encode_path_segment(vector_store_id),
-            "/files/",
+            '/files/',
             SdkClient.encode_path_segment(file_id)
           ].join,
           config: config,
@@ -417,7 +417,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_vector_store_file',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '409' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '409' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -441,24 +441,23 @@ module OctridevOpenai
         attributes:,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
           [
-            "/vector_stores/",
+            '/vector_stores/',
             SdkClient.encode_path_segment(vector_store_id),
-            "/files/",
+            '/files/',
             SdkClient.encode_path_segment(file_id)
           ].join,
           config: config,
           body: {
-            'attributes' => attributes,
+            'attributes' => attributes
           },
           return_type: ::OctridevOpenai::VectorStoreFileObject,
           decoder: :json,
           operation_id: 'update_vector_store_file_attributes',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '409' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '409' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -474,22 +473,21 @@ module OctridevOpenai
         file_id:,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
           [
-            "/vector_stores/",
+            '/vector_stores/',
             SdkClient.encode_path_segment(vector_store_id),
-            "/files/",
+            '/files/',
             SdkClient.encode_path_segment(file_id),
-            "/content"
+            '/content'
           ].join,
           config: config,
           return_type: ::OctridevOpenai::VectorStoreFileContentResponse,
           decoder: :json,
           operation_id: 'retrieve_vector_store_file_content',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -517,7 +515,6 @@ module OctridevOpenai
         ranking_options: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.if_given(max_num_results) do
           Validation.validate_range('max_num_results', max_num_results, min: 1, max: 50)
         end
@@ -525,9 +522,9 @@ module OctridevOpenai
         SdkClient.request(
           'POST',
           [
-            "/vector_stores/",
+            '/vector_stores/',
             SdkClient.encode_path_segment(vector_store_id),
-            "/search"
+            '/search'
           ].join,
           config: config,
           body: {
@@ -535,13 +532,13 @@ module OctridevOpenai
             'rewrite_query' => rewrite_query,
             'max_num_results' => max_num_results,
             'filters' => filters,
-            'ranking_options' => ranking_options,
+            'ranking_options' => ranking_options
           },
           return_type: ::OctridevOpenai::VectorStoreSearchResultsPage,
           decoder: :json,
           operation_id: 'search_vector_store',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
     end

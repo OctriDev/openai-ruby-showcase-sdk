@@ -5,127 +5,129 @@
 
 # live_live_function domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalLiveFunctionToolChoiceParamMetadata
-  FIELDS = {
-    type: "type",
-    name: "name",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    name
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LiveFunctionToolChoiceParamType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for LiveFunctionToolChoiceParam.
-# Typed representation of the `LiveFunctionToolChoiceParam` API schema.
-class LiveFunctionToolChoiceParam
-  include LiveResponsesDelegationSettingsInputParamToolChoice
-  include LiveAllowedToolsChoiceParamToolsItem
-  include LiveResponsesDelegationSettingsUpdateInputParamToolChoice
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveFunctionToolChoiceParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveFunctionToolChoiceParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveFunctionToolChoiceParamMetadata::DECODERS
-
-  # @return [LiveFunctionToolChoiceParamType] The tool to call. Always `function`.
-  attr_reader :type
-  # @return [String] The name of the function tool to call.
-  attr_reader :name
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalLiveFunctionToolChoiceParamMetadata
+    FIELDS = {
+      type: 'type',
+      name: 'name'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      name
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LiveFunctionToolChoiceParamType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for LiveFunctionToolChoiceParam.
+  # Typed representation of the `LiveFunctionToolChoiceParam` API schema.
+  class LiveFunctionToolChoiceParam
+    include LiveResponsesDelegationSettingsInputParamToolChoice
+    include LiveAllowedToolsChoiceParamToolsItem
+    include LiveResponsesDelegationSettingsUpdateInputParamToolChoice
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveFunctionToolChoiceParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveFunctionToolChoiceParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveFunctionToolChoiceParamMetadata::DECODERS
+
+    # @return [LiveFunctionToolChoiceParamType] The tool to call. Always `function`.
+    attr_reader :type
+    # @return [String] The name of the function tool to call.
+    attr_reader :name
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the LiveFunctionToolChoiceParamType SDK namespace.
+  module LiveFunctionToolChoiceParamType
+    FUNCTION = 'function'
+    VALUES = ['function'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the LiveFunctionToolChoiceParamType SDK namespace.
-module LiveFunctionToolChoiceParamType
-  FUNCTION = 'function'
-  VALUES = ['function'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('LiveFunctionToolChoiceParamType', 'enum', "Unknown LiveFunctionToolChoiceParamType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalLiveFunctionToolInputParamMetadata
-  FIELDS = {
-    type: "type",
-    name: "name",
-    description: "description",
-    parameters: "parameters",
-    strict: "strict",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    name
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LiveFunctionToolInputParamType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for LiveFunctionToolInputParam.
-# A function tool available to the Responses backend when the Live model delegates a task.
-class LiveFunctionToolInputParam
-  include LiveResponsesDelegationSettingsInputParamToolsItem
-  include LiveResponsesDelegationSettingsUpdateInputParamToolsItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveFunctionToolInputParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveFunctionToolInputParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveFunctionToolInputParamMetadata::DECODERS
-
-  # @return [LiveFunctionToolInputParamType] The tool type. Always `function`.
-  attr_reader :type
-  # @return [String] The name the delegated Responses model uses when calling this function.
-  attr_reader :name
-  # @return [String] Optional `string` value serialized in the `description` wire field.
-  attr_reader :description
-  # @return [Hash] A JSON Schema object describing the arguments accepted by the function.
-  attr_reader :parameters
-  # @return [Boolean] Optional `boolean` value serialized in the `strict` wire field.
-  attr_reader :strict
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('LiveFunctionToolChoiceParamType', 'enum', "Unknown LiveFunctionToolChoiceParamType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalLiveFunctionToolInputParamMetadata
+    FIELDS = {
+      type: 'type',
+      name: 'name',
+      description: 'description',
+      parameters: 'parameters',
+      strict: 'strict'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      name
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LiveFunctionToolInputParamType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for LiveFunctionToolInputParam.
+  # A function tool available to the Responses backend when the Live model delegates a task.
+  class LiveFunctionToolInputParam
+    include LiveResponsesDelegationSettingsInputParamToolsItem
+    include LiveResponsesDelegationSettingsUpdateInputParamToolsItem
 
-# Defines the LiveFunctionToolInputParamType SDK namespace.
-module LiveFunctionToolInputParamType
-  FUNCTION = 'function'
-  VALUES = ['function'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveFunctionToolInputParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveFunctionToolInputParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveFunctionToolInputParamMetadata::DECODERS
 
-    raise SdkValidationError.new('LiveFunctionToolInputParamType', 'enum', "Unknown LiveFunctionToolInputParamType: #{value}")
+    # @return [LiveFunctionToolInputParamType] The tool type. Always `function`.
+    attr_reader :type
+    # @return [String] The name the delegated Responses model uses when calling this function.
+    attr_reader :name
+    # @return [String] Optional `string` value serialized in the `description` wire field.
+    attr_reader :description
+    # @return [Hash] A JSON Schema object describing the arguments accepted by the function.
+    attr_reader :parameters
+    # @return [Boolean] Optional `boolean` value serialized in the `strict` wire field.
+    attr_reader :strict
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
+
+  # Defines the LiveFunctionToolInputParamType SDK namespace.
+  module LiveFunctionToolInputParamType
+    FUNCTION = 'function'
+    VALUES = ['function'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('LiveFunctionToolInputParamType', 'enum', "Unknown LiveFunctionToolInputParamType: #{value}")
+    end
+  end
 end

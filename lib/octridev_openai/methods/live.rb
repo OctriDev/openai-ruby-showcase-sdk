@@ -22,20 +22,19 @@ module OctridevOpenai
         transport:,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
-          "/live/sessions",
+          '/live/sessions',
           config: config,
           body: {
             'session' => session,
-            'transport' => transport,
+            'transport' => transport
           },
           return_type: ::OctridevOpenai::LiveSessionCreateResponse,
           decoder: :json,
           operation_id: 'create_live',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '413' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse, '504' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '413' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse, '504' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -52,22 +51,21 @@ module OctridevOpenai
         session:,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
           [
-            "/live/sessions/",
+            '/live/sessions/',
             SdkClient.encode_path_segment(session_id),
-            "/accept"
+            '/accept'
           ].join,
           config: config,
           body: {
-            'session' => session,
+            'session' => session
           },
           decoder: :empty,
           operation_id: 'accept_live_session',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '409' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '409' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -86,24 +84,23 @@ module OctridevOpenai
         session: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
           [
-            "/live/sessions/",
+            '/live/sessions/',
             SdkClient.encode_path_segment(session_id),
-            "/fork"
+            '/fork'
           ].join,
           config: config,
           body: {
             'transport' => transport,
-            'session' => session,
+            'session' => session
           },
           return_type: ::OctridevOpenai::LiveCreateResponse,
           decoder: :json,
           operation_id: 'fork_live_session',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '413' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '413' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -119,19 +116,18 @@ module OctridevOpenai
         session_id:,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
           [
-            "/live/sessions/",
+            '/live/sessions/',
             SdkClient.encode_path_segment(session_id),
-            "/hangup"
+            '/hangup'
           ].join,
           config: config,
           decoder: :empty,
           operation_id: 'hangup_live_session',
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::ErrorResponse },
+          errors: { '404' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -148,25 +144,24 @@ module OctridevOpenai
         target_uri:,
         request_options: nil
       )
-
         Validation.validate_length('target_uri', target_uri, min: 1)
         Validation.validate_pattern('target_uri', target_uri, '\\S')
 
         SdkClient.request(
           'POST',
           [
-            "/live/sessions/",
+            '/live/sessions/',
             SdkClient.encode_path_segment(session_id),
-            "/refer"
+            '/refer'
           ].join,
           config: config,
           body: {
-            'target_uri' => target_uri,
+            'target_uri' => target_uri
           },
           decoder: :empty,
           operation_id: 'refer_live_session',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -183,24 +178,23 @@ module OctridevOpenai
         status_code:,
         request_options: nil
       )
-
         Validation.validate_range('status_code', status_code, min: 300, max: 699)
 
         SdkClient.request(
           'POST',
           [
-            "/live/sessions/",
+            '/live/sessions/',
             SdkClient.encode_path_segment(session_id),
-            "/reject"
+            '/reject'
           ].join,
           config: config,
           body: {
-            'status_code' => status_code,
+            'status_code' => status_code
           },
           decoder: :empty,
           operation_id: 'reject_live_session',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '409' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '409' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -215,21 +209,20 @@ module OctridevOpenai
         session_id:,
         request_options: nil
       )
-
         Validation.validate_pattern('session_id', session_id, '^live_[A-Za-z0-9_-]{1,128}$')
 
         SdkClient.request(
           'GET',
           [
-            "/live/sessions/",
+            '/live/sessions/',
             SdkClient.encode_path_segment(session_id),
-            "/content"
+            '/content'
           ].join,
           config: config,
           decoder: :bytes,
           operation_id: 'download_live_recording',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
     end

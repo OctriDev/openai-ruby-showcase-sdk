@@ -5,365 +5,371 @@
 
 # shared_custom domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalCustomGrammarFormatParamMetadata
-  FIELDS = {
-    type: "type",
-    syntax: "syntax",
-    definition: "definition",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    syntax
-    definition
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::CustomGrammarFormatParamType.from_value(value)
-    end,
-    syntax: lambda do |value|
-      ::OctridevOpenai::GrammarSyntax1.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for CustomGrammarFormatParam.
-# A grammar defined by the user.
-class CustomGrammarFormatParam
-  include CustomToolParamFormat
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCustomGrammarFormatParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCustomGrammarFormatParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCustomGrammarFormatParamMetadata::DECODERS
-
-  # @return [CustomGrammarFormatParamType] Grammar format. Always `grammar`.
-  attr_reader :type
-  # @return [GrammarSyntax1] The syntax of the grammar definition. One of `lark` or `regex`.
-  attr_reader :syntax
-  # @return [String] The grammar definition.
-  attr_reader :definition
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalCustomGrammarFormatParamMetadata
+    FIELDS = {
+      type: 'type',
+      syntax: 'syntax',
+      definition: 'definition'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      syntax
+      definition
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::CustomGrammarFormatParamType.from_value(value)
+      end,
+      syntax: lambda do |value|
+        ::OctridevOpenai::GrammarSyntax1.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for CustomGrammarFormatParam.
+  # A grammar defined by the user.
+  class CustomGrammarFormatParam
+    include CustomToolParamFormat
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCustomGrammarFormatParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCustomGrammarFormatParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCustomGrammarFormatParamMetadata::DECODERS
+
+    # @return [CustomGrammarFormatParamType] Grammar format. Always `grammar`.
+    attr_reader :type
+    # @return [GrammarSyntax1] The syntax of the grammar definition. One of `lark` or `regex`.
+    attr_reader :syntax
+    # @return [String] The grammar definition.
+    attr_reader :definition
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the CustomGrammarFormatParamType SDK namespace.
+  module CustomGrammarFormatParamType
+    GRAMMAR = 'grammar'
+    VALUES = ['grammar'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the CustomGrammarFormatParamType SDK namespace.
-module CustomGrammarFormatParamType
-  GRAMMAR = 'grammar'
-  VALUES = ['grammar'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('CustomGrammarFormatParamType', 'enum', "Unknown CustomGrammarFormatParamType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalCustomTextFormatParamMetadata
-  FIELDS = {
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::CustomTextFormatParamType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for CustomTextFormatParam.
-# Unconstrained free-form text.
-class CustomTextFormatParam
-  include CustomToolParamFormat
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCustomTextFormatParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCustomTextFormatParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCustomTextFormatParamMetadata::DECODERS
-
-  # @return [CustomTextFormatParamType] Unconstrained text format. Always `text`.
-  attr_reader :type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('CustomGrammarFormatParamType', 'enum', "Unknown CustomGrammarFormatParamType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalCustomTextFormatParamMetadata
+    FIELDS = {
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::CustomTextFormatParamType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for CustomTextFormatParam.
+  # Unconstrained free-form text.
+  class CustomTextFormatParam
+    include CustomToolParamFormat
 
-# Defines the CustomTextFormatParamType SDK namespace.
-module CustomTextFormatParamType
-  TEXT = 'text'
-  VALUES = ['text'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCustomTextFormatParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCustomTextFormatParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCustomTextFormatParamMetadata::DECODERS
 
-    raise SdkValidationError.new('CustomTextFormatParamType', 'enum', "Unknown CustomTextFormatParamType: #{value}")
-  end
-end
+    # @return [CustomTextFormatParamType] Unconstrained text format. Always `text`.
+    attr_reader :type
 
-# Internal model hydration metadata.
-class SdkInternalCustomToolCallMetadata
-  FIELDS = {
-    type: "type",
-    id: "id",
-    call_id: "call_id",
-    caller: "caller",
-    namespace: "namespace",
-    name: "name",
-    input: "input",
-    async: "async",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    call_id
-    name
-    input
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::CustomToolCallType.from_value(value)
-    end,
-    caller: lambda do |value|
-      ::OctridevOpenai::ToolCallCaller.from_hash(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for CustomToolCall.
-# A call to a custom tool created by the model.
-class CustomToolCall
-  include ConversationItem
-  include Item
-  include OutputItem
-  include ItemField
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCustomToolCallMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCustomToolCallMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCustomToolCallMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [CustomToolCallType] The type of the custom tool call. Always `custom_tool_call`.
-  attr_reader :type
-  # @return [String] The unique ID of the custom tool call in the OpenAI platform.
-  attr_reader :id
-  # @return [String] An identifier used to map this custom tool call to a tool call output.
-  attr_reader :call_id
-  # @return [ToolCallCaller] Optional API value serialized in the `caller` wire field.
-  attr_reader :caller
-  # @return [String] The namespace of the custom tool being called.
-  attr_reader :namespace
-  # @return [String] The name of the custom tool being called.
-  attr_reader :name
-  # @return [String] The input for the custom tool call generated by the model.
-  attr_reader :input
-  # @return [Boolean] Whether the custom tool call runs asynchronously.
-  attr_reader :async
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the CustomTextFormatParamType SDK namespace.
+  module CustomTextFormatParamType
+    TEXT = 'text'
+    VALUES = ['text'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('CustomTextFormatParamType', 'enum', "Unknown CustomTextFormatParamType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the CustomToolCallType SDK namespace.
-module CustomToolCallType
-  CUSTOM_TOOL_CALL = 'custom_tool_call'
-  VALUES = ['custom_tool_call'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('CustomToolCallType', 'enum', "Unknown CustomToolCallType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalCustomToolCallOutputMetadata
-  FIELDS = {
-    type: "type",
-    id: "id",
-    call_id: "call_id",
-    caller: "caller",
-    output: "output",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    call_id
-    output
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::CustomToolCallOutputType.from_value(value)
-    end,
-    caller: lambda do |value|
-      ::OctridevOpenai::ToolCallCallerParam.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for CustomToolCallOutput.
-# The output of a custom tool call from your code, being sent back to the model.
-class CustomToolCallOutput
-  include ConversationItem
-  include Item
-  include ItemField
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCustomToolCallOutputMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCustomToolCallOutputMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCustomToolCallOutputMetadata::DECODERS
-
-  # @return [CustomToolCallOutputType] The type of the custom tool call output. Always `custom_tool_call_output`.
-  attr_reader :type
-  # @return [String] The unique ID of the custom tool call output in the OpenAI platform.
-  attr_reader :id
-  # @return [String] The call ID, used to map this custom tool call output to a custom tool call.
-  attr_reader :call_id
-  # @return [ToolCallCallerParam] Optional API value serialized in the `caller` wire field.
-  attr_reader :caller
-  # @return [Object] The output from the custom tool call generated by your code. Can be a string or an list of output content.
-  attr_reader :output
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalCustomToolCallMetadata
+    FIELDS = {
+      type: 'type',
+      id: 'id',
+      call_id: 'call_id',
+      caller: 'caller',
+      namespace: 'namespace',
+      name: 'name',
+      input: 'input',
+      async: 'async'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      call_id
+      name
+      input
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::CustomToolCallType.from_value(value)
+      end,
+      caller: lambda do |value|
+        ::OctridevOpenai::ToolCallCaller.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for CustomToolCall.
+  # A call to a custom tool created by the model.
+  class CustomToolCall
+    include ConversationItem
+    include Item
+    include OutputItem
+    include ItemField
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCustomToolCallMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCustomToolCallMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCustomToolCallMetadata::DECODERS
+
+    # @return [CustomToolCallType] The type of the custom tool call. Always `custom_tool_call`.
+    attr_reader :type
+    # @return [String] The unique ID of the custom tool call in the OpenAI platform.
+    attr_reader :id
+    # @return [String] An identifier used to map this custom tool call to a tool call output.
+    attr_reader :call_id
+    # @return [ToolCallCaller] Optional API value serialized in the `caller` wire field.
+    attr_reader :caller
+    # @return [String] The namespace of the custom tool being called.
+    attr_reader :namespace
+    # @return [String] The name of the custom tool being called.
+    attr_reader :name
+    # @return [String] The input for the custom tool call generated by the model.
+    attr_reader :input
+    # @return [Boolean] Whether the custom tool call runs asynchronously.
+    attr_reader :async
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the CustomToolCallType SDK namespace.
+  module CustomToolCallType
+    CUSTOM_TOOL_CALL = 'custom_tool_call'
+    VALUES = ['custom_tool_call'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the CustomToolCallOutputType SDK namespace.
-module CustomToolCallOutputType
-  CUSTOM_TOOL_CALL_OUTPUT = 'custom_tool_call_output'
-  VALUES = ['custom_tool_call_output'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('CustomToolCallOutputType', 'enum', "Unknown CustomToolCallOutputType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalCustomToolParamMetadata
-  FIELDS = {
-    type: "type",
-    name: "name",
-    async: "async",
-    description: "description",
-    format: "format",
-    defer_loading: "defer_loading",
-    allowed_callers: "allowed_callers",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    name
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::CustomToolParamType.from_value(value)
-    end,
-    format: lambda do |value|
-      ::OctridevOpenai::CustomToolParamFormat.from_hash(value)
-    end,
-    allowed_callers: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::CallableToolAllowedCaller.from_value(item) }
-    end,
-  }.freeze
-end
-
-# API model for CustomToolParam.
-# A custom tool that processes input using a specified format. Learn more about custom tools
-class CustomToolParam
-  include Tool
-  include ToolSearchOutputTool
-  include NamespaceToolParamToolsItem
-  include ToolSearchOutputNamespaceToolParamToolsItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCustomToolParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCustomToolParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCustomToolParamMetadata::DECODERS
-
-  # @return [CustomToolParamType] The type of the custom tool. Always `custom`.
-  attr_reader :type
-  # @return [String] The name of the custom tool, used to identify it in tool calls.
-  attr_reader :name
-  # @return [Boolean] Whether the tool response can be returned asynchronously versus immediately returned on next response creation.
-  attr_reader :async
-  # @return [String] Optional description of the custom tool, used to provide more context.
-  attr_reader :description
-  # @return [CustomToolParamFormat] The input format for the custom tool. Default is unconstrained text.
-  attr_reader :format
-  # @return [Boolean] Whether this tool should be deferred and discovered via tool search.
-  attr_reader :defer_loading
-  # @return [Array_of_CallableToolAllowedCaller] The tool invocation context(s).
-  attr_reader :allowed_callers
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('CustomToolCallType', 'enum', "Unknown CustomToolCallType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalCustomToolCallOutputMetadata
+    FIELDS = {
+      type: 'type',
+      id: 'id',
+      call_id: 'call_id',
+      caller: 'caller',
+      output: 'output'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      call_id
+      output
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::CustomToolCallOutputType.from_value(value)
+      end,
+      caller: lambda do |value|
+        ::OctridevOpenai::ToolCallCallerParam.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # API model for CustomToolCallOutput.
+  # The output of a custom tool call from your code, being sent back to the model.
+  class CustomToolCallOutput
+    include ConversationItem
+    include Item
+    include ItemField
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCustomToolCallOutputMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCustomToolCallOutputMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCustomToolCallOutputMetadata::DECODERS
+
+    # @return [CustomToolCallOutputType] The type of the custom tool call output. Always `custom_tool_call_output`.
+    attr_reader :type
+    # @return [String] The unique ID of the custom tool call output in the OpenAI platform.
+    attr_reader :id
+    # @return [String] The call ID, used to map this custom tool call output to a custom tool call.
+    attr_reader :call_id
+    # @return [ToolCallCallerParam] Optional API value serialized in the `caller` wire field.
+    attr_reader :caller
+    # @return [Object] The output from the custom tool call generated by your code. Can be a string or an list of output content.
+    attr_reader :output
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
 
-# Defines the CustomToolParamType SDK namespace.
-module CustomToolParamType
-  CUSTOM = 'custom'
-  VALUES = ['custom'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+  # Defines the CustomToolCallOutputType SDK namespace.
+  module CustomToolCallOutputType
+    CUSTOM_TOOL_CALL_OUTPUT = 'custom_tool_call_output'
+    VALUES = ['custom_tool_call_output'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-    raise SdkValidationError.new('CustomToolParamType', 'enum', "Unknown CustomToolParamType: #{value}")
+      raise SdkValidationError.new('CustomToolCallOutputType', 'enum', "Unknown CustomToolCallOutputType: #{value}")
+    end
   end
-end
 
-# Defines the CustomToolParamFormat SDK namespace.
-module CustomToolParamFormat
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    mapping = { "text" => CustomTextFormatParam, "grammar" => CustomGrammarFormatParam }
-    type = mapping[hash["type"]]
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('CustomToolParamFormat', 'variant', "Unknown CustomToolParamFormat discriminator: #{hash["type"].inspect}")
+  # Internal model hydration metadata.
+  class SdkInternalCustomToolParamMetadata
+    FIELDS = {
+      type: 'type',
+      name: 'name',
+      async: 'async',
+      description: 'description',
+      format: 'format',
+      defer_loading: 'defer_loading',
+      allowed_callers: 'allowed_callers'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      name
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::CustomToolParamType.from_value(value)
+      end,
+      format: lambda do |value|
+        ::OctridevOpenai::CustomToolParamFormat.from_hash(value)
+      end,
+      allowed_callers: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::CallableToolAllowedCaller.from_value(item) }
+      end
+    }.freeze
   end
-end
+
+  # API model for CustomToolParam.
+  # A custom tool that processes input using a specified format. Learn more about custom tools
+  class CustomToolParam
+    include Tool
+    include ToolSearchOutputTool
+    include NamespaceToolParamToolsItem
+    include ToolSearchOutputNamespaceToolParamToolsItem
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCustomToolParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCustomToolParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCustomToolParamMetadata::DECODERS
+
+    # @return [CustomToolParamType] The type of the custom tool. Always `custom`.
+    attr_reader :type
+    # @return [String] The name of the custom tool, used to identify it in tool calls.
+    attr_reader :name
+    # @return [Boolean] Whether the tool response can be returned asynchronously versus immediately returned on next response creation.
+    attr_reader :async
+    # @return [String] Optional description of the custom tool, used to provide more context.
+    attr_reader :description
+    # @return [CustomToolParamFormat] The input format for the custom tool. Default is unconstrained text.
+    attr_reader :format
+    # @return [Boolean] Whether this tool should be deferred and discovered via tool search.
+    attr_reader :defer_loading
+    # @return [Array_of_CallableToolAllowedCaller] The tool invocation context(s).
+    attr_reader :allowed_callers
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the CustomToolParamType SDK namespace.
+  module CustomToolParamType
+    CUSTOM = 'custom'
+    VALUES = ['custom'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('CustomToolParamType', 'enum', "Unknown CustomToolParamType: #{value}")
+    end
+  end
+
+  # Defines the CustomToolParamFormat SDK namespace.
+  module CustomToolParamFormat
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      mapping = { 'text' => CustomTextFormatParam, 'grammar' => CustomGrammarFormatParam }
+      type = mapping[hash['type']]
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('CustomToolParamFormat', 'variant', "Unknown CustomToolParamFormat discriminator: #{hash['type'].inspect}")
+    end
+  end
 end

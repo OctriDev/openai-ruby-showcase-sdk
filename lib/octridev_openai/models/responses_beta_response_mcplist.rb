@@ -5,213 +5,216 @@
 
 # responses_beta_response_mcplist domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalBetaResponseMCPListToolsCompletedEventMetadata
-  FIELDS = {
-    agent: "agent",
-    type: "type",
-    item_id: "item_id",
-    output_index: "output_index",
-    sequence_number: "sequence_number",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    item_id
-    output_index
-    sequence_number
-  ].freeze
-  DECODERS = {
-    agent: lambda do |value|
-      ::OctridevOpenai::BetaAgentTag.from_hash(value)
-    end,
-    type: lambda do |value|
-      ::OctridevOpenai::BetaResponseMCPListToolsCompletedEventType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaResponseMCPListToolsCompletedEvent.
-# Emitted when the list of available MCP tools has been successfully retrieved.
-class BetaResponseMCPListToolsCompletedEvent
-  include BetaResponseStreamEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaResponseMCPListToolsCompletedEventMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaResponseMCPListToolsCompletedEventMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaResponseMCPListToolsCompletedEventMetadata::DECODERS
-
-  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-  attr_reader :agent
-  # @return [BetaResponseMCPListToolsCompletedEventType] The type of the event. Always 'response.mcp_list_tools.completed'.
-  attr_reader :type
-  # @return [String] The ID of the MCP tool call item that produced this output.
-  attr_reader :item_id
-  # @return [Integer] The index of the output item that was processed.
-  attr_reader :output_index
-  # @return [Integer] The sequence number of this event.
-  attr_reader :sequence_number
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalBetaResponseMCPListToolsCompletedEventMetadata
+    FIELDS = {
+      agent: 'agent',
+      type: 'type',
+      item_id: 'item_id',
+      output_index: 'output_index',
+      sequence_number: 'sequence_number'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      item_id
+      output_index
+      sequence_number
+    ].freeze
+    DECODERS = {
+      agent: lambda do |value|
+        ::OctridevOpenai::BetaAgentTag.from_hash(value)
+      end,
+      type: lambda do |value|
+        ::OctridevOpenai::BetaResponseMCPListToolsCompletedEventType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for BetaResponseMCPListToolsCompletedEvent.
+  # Emitted when the list of available MCP tools has been successfully retrieved.
+  class BetaResponseMCPListToolsCompletedEvent
+    include BetaResponseStreamEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaResponseMCPListToolsCompletedEventMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaResponseMCPListToolsCompletedEventMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaResponseMCPListToolsCompletedEventMetadata::DECODERS
+
+    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+    attr_reader :agent
+    # @return [BetaResponseMCPListToolsCompletedEventType] The type of the event. Always 'response.mcp_list_tools.completed'.
+    attr_reader :type
+    # @return [String] The ID of the MCP tool call item that produced this output.
+    attr_reader :item_id
+    # @return [Integer] The index of the output item that was processed.
+    attr_reader :output_index
+    # @return [Integer] The sequence number of this event.
+    attr_reader :sequence_number
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the BetaResponseMCPListToolsCompletedEventType SDK namespace.
+  module BetaResponseMCPListToolsCompletedEventType
+    RESPONSE_MCP_LIST_TOOLS_COMPLETED = 'response.mcp_list_tools.completed'
+    VALUES = ['response.mcp_list_tools.completed'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the BetaResponseMCPListToolsCompletedEventType SDK namespace.
-module BetaResponseMCPListToolsCompletedEventType
-  RESPONSE_MCP_LIST_TOOLS_COMPLETED = 'response.mcp_list_tools.completed'
-  VALUES = ['response.mcp_list_tools.completed'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('BetaResponseMCPListToolsCompletedEventType', 'enum', "Unknown BetaResponseMCPListToolsCompletedEventType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaResponseMCPListToolsFailedEventMetadata
-  FIELDS = {
-    agent: "agent",
-    type: "type",
-    item_id: "item_id",
-    output_index: "output_index",
-    sequence_number: "sequence_number",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    item_id
-    output_index
-    sequence_number
-  ].freeze
-  DECODERS = {
-    agent: lambda do |value|
-      ::OctridevOpenai::BetaAgentTag.from_hash(value)
-    end,
-    type: lambda do |value|
-      ::OctridevOpenai::BetaResponseMCPListToolsFailedEventType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaResponseMCPListToolsFailedEvent.
-# Emitted when the attempt to list available MCP tools has failed.
-class BetaResponseMCPListToolsFailedEvent
-  include BetaResponseStreamEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaResponseMCPListToolsFailedEventMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaResponseMCPListToolsFailedEventMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaResponseMCPListToolsFailedEventMetadata::DECODERS
-
-  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-  attr_reader :agent
-  # @return [BetaResponseMCPListToolsFailedEventType] The type of the event. Always 'response.mcp_list_tools.failed'.
-  attr_reader :type
-  # @return [String] The ID of the MCP tool call item that failed.
-  attr_reader :item_id
-  # @return [Integer] The index of the output item that failed.
-  attr_reader :output_index
-  # @return [Integer] The sequence number of this event.
-  attr_reader :sequence_number
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('BetaResponseMCPListToolsCompletedEventType', 'enum', "Unknown BetaResponseMCPListToolsCompletedEventType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalBetaResponseMCPListToolsFailedEventMetadata
+    FIELDS = {
+      agent: 'agent',
+      type: 'type',
+      item_id: 'item_id',
+      output_index: 'output_index',
+      sequence_number: 'sequence_number'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      item_id
+      output_index
+      sequence_number
+    ].freeze
+    DECODERS = {
+      agent: lambda do |value|
+        ::OctridevOpenai::BetaAgentTag.from_hash(value)
+      end,
+      type: lambda do |value|
+        ::OctridevOpenai::BetaResponseMCPListToolsFailedEventType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for BetaResponseMCPListToolsFailedEvent.
+  # Emitted when the attempt to list available MCP tools has failed.
+  class BetaResponseMCPListToolsFailedEvent
+    include BetaResponseStreamEvent
 
-# Defines the BetaResponseMCPListToolsFailedEventType SDK namespace.
-module BetaResponseMCPListToolsFailedEventType
-  RESPONSE_MCP_LIST_TOOLS_FAILED = 'response.mcp_list_tools.failed'
-  VALUES = ['response.mcp_list_tools.failed'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaResponseMCPListToolsFailedEventMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaResponseMCPListToolsFailedEventMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaResponseMCPListToolsFailedEventMetadata::DECODERS
 
-    raise SdkValidationError.new('BetaResponseMCPListToolsFailedEventType', 'enum', "Unknown BetaResponseMCPListToolsFailedEventType: #{value}")
-  end
-end
+    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+    attr_reader :agent
+    # @return [BetaResponseMCPListToolsFailedEventType] The type of the event. Always 'response.mcp_list_tools.failed'.
+    attr_reader :type
+    # @return [String] The ID of the MCP tool call item that failed.
+    attr_reader :item_id
+    # @return [Integer] The index of the output item that failed.
+    attr_reader :output_index
+    # @return [Integer] The sequence number of this event.
+    attr_reader :sequence_number
 
-# Internal model hydration metadata.
-class SdkInternalBetaResponseMCPListToolsInProgressEventMetadata
-  FIELDS = {
-    agent: "agent",
-    type: "type",
-    item_id: "item_id",
-    output_index: "output_index",
-    sequence_number: "sequence_number",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    item_id
-    output_index
-    sequence_number
-  ].freeze
-  DECODERS = {
-    agent: lambda do |value|
-      ::OctridevOpenai::BetaAgentTag.from_hash(value)
-    end,
-    type: lambda do |value|
-      ::OctridevOpenai::BetaResponseMCPListToolsInProgressEventType.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for BetaResponseMCPListToolsInProgressEvent.
-# Emitted when the system is in the process of retrieving the list of available MCP tools.
-class BetaResponseMCPListToolsInProgressEvent
-  include BetaResponseStreamEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaResponseMCPListToolsInProgressEventMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaResponseMCPListToolsInProgressEventMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaResponseMCPListToolsInProgressEventMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-  attr_reader :agent
-  # @return [BetaResponseMCPListToolsInProgressEventType] The type of the event. Always 'response.mcp_list_tools.in_progress'.
-  attr_reader :type
-  # @return [String] The ID of the MCP tool call item that is being processed.
-  attr_reader :item_id
-  # @return [Integer] The index of the output item that is being processed.
-  attr_reader :output_index
-  # @return [Integer] The sequence number of this event.
-  attr_reader :sequence_number
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the BetaResponseMCPListToolsFailedEventType SDK namespace.
+  module BetaResponseMCPListToolsFailedEventType
+    RESPONSE_MCP_LIST_TOOLS_FAILED = 'response.mcp_list_tools.failed'
+    VALUES = ['response.mcp_list_tools.failed'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaResponseMCPListToolsFailedEventType', 'enum', "Unknown BetaResponseMCPListToolsFailedEventType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalBetaResponseMCPListToolsInProgressEventMetadata
+    FIELDS = {
+      agent: 'agent',
+      type: 'type',
+      item_id: 'item_id',
+      output_index: 'output_index',
+      sequence_number: 'sequence_number'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      item_id
+      output_index
+      sequence_number
+    ].freeze
+    DECODERS = {
+      agent: lambda do |value|
+        ::OctridevOpenai::BetaAgentTag.from_hash(value)
+      end,
+      type: lambda do |value|
+        ::OctridevOpenai::BetaResponseMCPListToolsInProgressEventType.from_value(value)
+      end
+    }.freeze
   end
-end
 
-# Defines the BetaResponseMCPListToolsInProgressEventType SDK namespace.
-module BetaResponseMCPListToolsInProgressEventType
-  RESPONSE_MCP_LIST_TOOLS_IN_PROGRESS = 'response.mcp_list_tools.in_progress'
-  VALUES = ['response.mcp_list_tools.in_progress'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+  # API model for BetaResponseMCPListToolsInProgressEvent.
+  # Emitted when the system is in the process of retrieving the list of available MCP tools.
+  class BetaResponseMCPListToolsInProgressEvent
+    include BetaResponseStreamEvent
 
-    raise SdkValidationError.new('BetaResponseMCPListToolsInProgressEventType', 'enum', "Unknown BetaResponseMCPListToolsInProgressEventType: #{value}")
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaResponseMCPListToolsInProgressEventMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaResponseMCPListToolsInProgressEventMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaResponseMCPListToolsInProgressEventMetadata::DECODERS
+
+    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+    attr_reader :agent
+    # @return [BetaResponseMCPListToolsInProgressEventType] The type of the event. Always 'response.mcp_list_tools.in_progress'.
+    attr_reader :type
+    # @return [String] The ID of the MCP tool call item that is being processed.
+    attr_reader :item_id
+    # @return [Integer] The index of the output item that is being processed.
+    attr_reader :output_index
+    # @return [Integer] The sequence number of this event.
+    attr_reader :sequence_number
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
+
+  # Defines the BetaResponseMCPListToolsInProgressEventType SDK namespace.
+  module BetaResponseMCPListToolsInProgressEventType
+    RESPONSE_MCP_LIST_TOOLS_IN_PROGRESS = 'response.mcp_list_tools.in_progress'
+    VALUES = ['response.mcp_list_tools.in_progress'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaResponseMCPListToolsInProgressEventType', 'enum', "Unknown BetaResponseMCPListToolsInProgressEventType: #{value}")
+    end
+  end
 end

@@ -5,159 +5,162 @@
 
 # responses_beta_specific domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalBetaSpecificApplyPatchParamMetadata
-  FIELDS = {
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaSpecificApplyPatchParamType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaSpecificApplyPatchParam.
-# Forces the model to call the apply_patch tool when executing a tool call.
-class BetaSpecificApplyPatchParam
-  include BetaToolChoiceParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaSpecificApplyPatchParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaSpecificApplyPatchParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaSpecificApplyPatchParamMetadata::DECODERS
-
-  # @return [BetaSpecificApplyPatchParamType] The tool to call. Always `apply_patch`.
-  attr_reader :type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalBetaSpecificApplyPatchParamMetadata
+    FIELDS = {
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaSpecificApplyPatchParamType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for BetaSpecificApplyPatchParam.
+  # Forces the model to call the apply_patch tool when executing a tool call.
+  class BetaSpecificApplyPatchParam
+    include BetaToolChoiceParam
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaSpecificApplyPatchParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaSpecificApplyPatchParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaSpecificApplyPatchParamMetadata::DECODERS
+
+    # @return [BetaSpecificApplyPatchParamType] The tool to call. Always `apply_patch`.
+    attr_reader :type
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the BetaSpecificApplyPatchParamType SDK namespace.
+  module BetaSpecificApplyPatchParamType
+    APPLY_PATCH = 'apply_patch'
+    VALUES = ['apply_patch'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the BetaSpecificApplyPatchParamType SDK namespace.
-module BetaSpecificApplyPatchParamType
-  APPLY_PATCH = 'apply_patch'
-  VALUES = ['apply_patch'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('BetaSpecificApplyPatchParamType', 'enum', "Unknown BetaSpecificApplyPatchParamType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaSpecificFunctionShellParamMetadata
-  FIELDS = {
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaSpecificFunctionShellParamType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaSpecificFunctionShellParam.
-# Forces the model to call the shell tool when a tool call is required.
-class BetaSpecificFunctionShellParam
-  include BetaToolChoiceParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaSpecificFunctionShellParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaSpecificFunctionShellParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaSpecificFunctionShellParamMetadata::DECODERS
-
-  # @return [BetaSpecificFunctionShellParamType] The tool to call. Always `shell`.
-  attr_reader :type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('BetaSpecificApplyPatchParamType', 'enum', "Unknown BetaSpecificApplyPatchParamType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalBetaSpecificFunctionShellParamMetadata
+    FIELDS = {
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaSpecificFunctionShellParamType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for BetaSpecificFunctionShellParam.
+  # Forces the model to call the shell tool when a tool call is required.
+  class BetaSpecificFunctionShellParam
+    include BetaToolChoiceParam
 
-# Defines the BetaSpecificFunctionShellParamType SDK namespace.
-module BetaSpecificFunctionShellParamType
-  SHELL = 'shell'
-  VALUES = ['shell'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaSpecificFunctionShellParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaSpecificFunctionShellParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaSpecificFunctionShellParamMetadata::DECODERS
 
-    raise SdkValidationError.new('BetaSpecificFunctionShellParamType', 'enum', "Unknown BetaSpecificFunctionShellParamType: #{value}")
-  end
-end
+    # @return [BetaSpecificFunctionShellParamType] The tool to call. Always `shell`.
+    attr_reader :type
 
-# Internal model hydration metadata.
-class SdkInternalBetaSpecificProgrammaticToolCallingParamMetadata
-  FIELDS = {
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaSpecificProgrammaticToolCallingParamType.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for BetaSpecificProgrammaticToolCallingParam.
-# Typed representation of the `BetaSpecificProgrammaticToolCallingParam` API schema.
-class BetaSpecificProgrammaticToolCallingParam
-  include BetaToolChoiceParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaSpecificProgrammaticToolCallingParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaSpecificProgrammaticToolCallingParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaSpecificProgrammaticToolCallingParamMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [BetaSpecificProgrammaticToolCallingParamType] The tool to call. Always `programmatic_tool_calling`.
-  attr_reader :type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the BetaSpecificFunctionShellParamType SDK namespace.
+  module BetaSpecificFunctionShellParamType
+    SHELL = 'shell'
+    VALUES = ['shell'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaSpecificFunctionShellParamType', 'enum', "Unknown BetaSpecificFunctionShellParamType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalBetaSpecificProgrammaticToolCallingParamMetadata
+    FIELDS = {
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaSpecificProgrammaticToolCallingParamType.from_value(value)
+      end
+    }.freeze
   end
-end
 
-# Defines the BetaSpecificProgrammaticToolCallingParamType SDK namespace.
-module BetaSpecificProgrammaticToolCallingParamType
-  PROGRAMMATIC_TOOL_CALLING = 'programmatic_tool_calling'
-  VALUES = ['programmatic_tool_calling'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+  # API model for BetaSpecificProgrammaticToolCallingParam.
+  # Typed representation of the `BetaSpecificProgrammaticToolCallingParam` API schema.
+  class BetaSpecificProgrammaticToolCallingParam
+    include BetaToolChoiceParam
 
-    raise SdkValidationError.new('BetaSpecificProgrammaticToolCallingParamType', 'enum', "Unknown BetaSpecificProgrammaticToolCallingParamType: #{value}")
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaSpecificProgrammaticToolCallingParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaSpecificProgrammaticToolCallingParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaSpecificProgrammaticToolCallingParamMetadata::DECODERS
+
+    # @return [BetaSpecificProgrammaticToolCallingParamType] The tool to call. Always `programmatic_tool_calling`.
+    attr_reader :type
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
+
+  # Defines the BetaSpecificProgrammaticToolCallingParamType SDK namespace.
+  module BetaSpecificProgrammaticToolCallingParamType
+    PROGRAMMATIC_TOOL_CALLING = 'programmatic_tool_calling'
+    VALUES = ['programmatic_tool_calling'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaSpecificProgrammaticToolCallingParamType', 'enum', "Unknown BetaSpecificProgrammaticToolCallingParamType: #{value}")
+    end
+  end
 end

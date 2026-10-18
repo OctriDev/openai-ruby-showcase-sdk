@@ -49,10 +49,9 @@ module OctridevOpenai
         page: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
-          "/organization/usage/completions",
+          '/organization/usage/completions',
           config: config,
           query: {
             'start_time' => QueryValue.new(start_time, style: 'form', explode: true),
@@ -65,17 +64,17 @@ module OctridevOpenai
             'batch' => QueryValue.new(batch, style: 'form', explode: true),
             'group_by' => QueryValue.new(group_by, style: 'form', explode: true),
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
-            'page' => QueryValue.new(page, style: 'form', explode: true),
+            'page' => QueryValue.new(page, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::UsageResponse,
           decoder: :json,
           operation_id: 'usage_completions',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
-    UsageCompletionsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      UsageCompletionsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Get completions usage details for the organization.
       #
@@ -137,10 +136,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.next_page
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -181,10 +183,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.next_page
             has_more = page.has_more && !next_cursor.nil?
             y << UsageCompletionsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end
@@ -224,10 +228,9 @@ module OctridevOpenai
         page: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
-          "/organization/usage/embeddings",
+          '/organization/usage/embeddings',
           config: config,
           query: {
             'start_time' => QueryValue.new(start_time, style: 'form', explode: true),
@@ -239,17 +242,17 @@ module OctridevOpenai
             'models' => QueryValue.new(models, style: 'form', explode: true),
             'group_by' => QueryValue.new(group_by, style: 'form', explode: true),
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
-            'page' => QueryValue.new(page, style: 'form', explode: true),
+            'page' => QueryValue.new(page, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::UsageResponse,
           decoder: :json,
           operation_id: 'usage_embeddings',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
-    UsageEmbeddingsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      UsageEmbeddingsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Get embeddings usage details for the organization.
       #
@@ -304,10 +307,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.next_page
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -346,10 +352,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.next_page
             has_more = page.has_more && !next_cursor.nil?
             y << UsageEmbeddingsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end
@@ -391,10 +399,9 @@ module OctridevOpenai
         page: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
-          "/organization/usage/file_search_calls",
+          '/organization/usage/file_search_calls',
           config: config,
           query: {
             'start_time' => QueryValue.new(start_time, style: 'form', explode: true),
@@ -406,17 +413,17 @@ module OctridevOpenai
             'vector_store_ids' => QueryValue.new(vector_store_ids, style: 'form', explode: true),
             'group_by' => QueryValue.new(group_by, style: 'form', explode: true),
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
-            'page' => QueryValue.new(page, style: 'form', explode: true),
+            'page' => QueryValue.new(page, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::UsageResponse,
           decoder: :json,
           operation_id: 'usage_file_search_calls',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
-    UsageFileSearchCallsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      UsageFileSearchCallsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Get file search calls usage details for the organization.
       #
@@ -473,10 +480,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.next_page
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -515,10 +525,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.next_page
             has_more = page.has_more && !next_cursor.nil?
             y << UsageFileSearchCallsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end

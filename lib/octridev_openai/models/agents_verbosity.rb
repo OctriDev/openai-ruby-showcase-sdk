@@ -5,25 +5,25 @@
 
 # agents_verbosity domain models
 module OctridevOpenai
-# Defines the VerbosityParam SDK namespace.
-module VerbosityParam
-  LOW = 'low'
-  MEDIUM = 'medium'
-  HIGH = 'high'
-  VALUES = ['low', 'medium', 'high'].freeze
-  def self.from_value(value)
-    value
+  # Defines the VerbosityParam SDK namespace.
+  module VerbosityParam
+    LOW = 'low'
+    MEDIUM = 'medium'
+    HIGH = 'high'
+    VALUES = %w[low medium high].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
 
-# Defines the VerbosityResource SDK namespace.
-module VerbosityResource
-  LOW = 'low'
-  MEDIUM = 'medium'
-  HIGH = 'high'
-  VALUES = ['low', 'medium', 'high'].freeze
-  def self.from_value(value)
-    value
+  # Defines the VerbosityResource SDK namespace.
+  module VerbosityResource
+    LOW = 'low'
+    MEDIUM = 'medium'
+    HIGH = 'high'
+    VALUES = %w[low medium high].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
 end

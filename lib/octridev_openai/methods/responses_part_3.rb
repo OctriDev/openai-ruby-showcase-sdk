@@ -36,33 +36,32 @@ module OctridevOpenai
         openai_beta: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
           [
-            "/responses/",
+            '/responses/',
             SdkClient.encode_path_segment(response_id),
-            "/input_items?beta=true"
+            '/input_items?beta=true'
           ].join,
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'order' => QueryValue.new(order, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
-            'include' => QueryValue.new(include, style: 'form', explode: true),
+            'include' => QueryValue.new(include, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::BetaResponseItemList,
           decoder: :json,
           operation_id: 'beta_list_input_items',
           extra_headers: SdkClient.serialize_headers({
-            'openai-beta' => SdkClient.header_value(openai_beta),
-          }),
+                                                       'openai-beta' => SdkClient.header_value(openai_beta)
+                                                     }),
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::BetaErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '404' => ::OctridevOpenai::BetaErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
-    BetaListInputItemsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      BetaListInputItemsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists the input items used to generate a model response. Use `limit` to control the number of returned items and `order` to choose their sequence. Pass `after` with an item ID from a previous page to continue through the list.
       #
@@ -106,10 +105,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.last_id
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -140,10 +142,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << BetaListInputItemsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end
@@ -202,10 +206,9 @@ module OctridevOpenai
         parallel_tool_calls: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
-          "/responses/input_tokens?beta=true",
+          '/responses/input_tokens?beta=true',
           config: config,
           body: {
             'model' => model,
@@ -219,16 +222,16 @@ module OctridevOpenai
             'personality' => personality,
             'conversation' => conversation,
             'tool_choice' => tool_choice,
-            'parallel_tool_calls' => parallel_tool_calls,
+            'parallel_tool_calls' => parallel_tool_calls
           },
           return_type: ::OctridevOpenai::BetaTokenCountsResource,
           decoder: :json,
           operation_id: 'beta_responses_count_input_tokens',
           extra_headers: SdkClient.serialize_headers({
-            'openai-beta' => SdkClient.header_value(openai_beta),
-          }),
+                                                       'openai-beta' => SdkClient.header_value(openai_beta)
+                                                     }),
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::BetaErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::BetaErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
     end

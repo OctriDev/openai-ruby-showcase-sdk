@@ -5,536 +5,544 @@
 
 # responses_beta_custom domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalBetaCustomGrammarFormatParamMetadata
-  FIELDS = {
-    type: "type",
-    syntax: "syntax",
-    definition: "definition",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    syntax
-    definition
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaCustomGrammarFormatParamType.from_value(value)
-    end,
-    syntax: lambda do |value|
-      ::OctridevOpenai::BetaGrammarSyntax1.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaCustomGrammarFormatParam.
-# A grammar defined by the user.
-class BetaCustomGrammarFormatParam
-  include BetaCustomToolParamFormat
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaCustomGrammarFormatParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaCustomGrammarFormatParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaCustomGrammarFormatParamMetadata::DECODERS
-
-  # @return [BetaCustomGrammarFormatParamType] Grammar format. Always `grammar`.
-  attr_reader :type
-  # @return [BetaGrammarSyntax1] The syntax of the grammar definition. One of `lark` or `regex`.
-  attr_reader :syntax
-  # @return [String] The grammar definition.
-  attr_reader :definition
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalBetaCustomGrammarFormatParamMetadata
+    FIELDS = {
+      type: 'type',
+      syntax: 'syntax',
+      definition: 'definition'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      syntax
+      definition
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaCustomGrammarFormatParamType.from_value(value)
+      end,
+      syntax: lambda do |value|
+        ::OctridevOpenai::BetaGrammarSyntax1.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for BetaCustomGrammarFormatParam.
+  # A grammar defined by the user.
+  class BetaCustomGrammarFormatParam
+    include BetaCustomToolParamFormat
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaCustomGrammarFormatParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaCustomGrammarFormatParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaCustomGrammarFormatParamMetadata::DECODERS
+
+    # @return [BetaCustomGrammarFormatParamType] Grammar format. Always `grammar`.
+    attr_reader :type
+    # @return [BetaGrammarSyntax1] The syntax of the grammar definition. One of `lark` or `regex`.
+    attr_reader :syntax
+    # @return [String] The grammar definition.
+    attr_reader :definition
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the BetaCustomGrammarFormatParamType SDK namespace.
+  module BetaCustomGrammarFormatParamType
+    GRAMMAR = 'grammar'
+    VALUES = ['grammar'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the BetaCustomGrammarFormatParamType SDK namespace.
-module BetaCustomGrammarFormatParamType
-  GRAMMAR = 'grammar'
-  VALUES = ['grammar'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('BetaCustomGrammarFormatParamType', 'enum', "Unknown BetaCustomGrammarFormatParamType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaCustomTextFormatParamMetadata
-  FIELDS = {
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaCustomTextFormatParamType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaCustomTextFormatParam.
-# Unconstrained free-form text.
-class BetaCustomTextFormatParam
-  include BetaCustomToolParamFormat
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaCustomTextFormatParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaCustomTextFormatParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaCustomTextFormatParamMetadata::DECODERS
-
-  # @return [BetaCustomTextFormatParamType] Unconstrained text format. Always `text`.
-  attr_reader :type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('BetaCustomGrammarFormatParamType', 'enum', "Unknown BetaCustomGrammarFormatParamType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalBetaCustomTextFormatParamMetadata
+    FIELDS = {
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaCustomTextFormatParamType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for BetaCustomTextFormatParam.
+  # Unconstrained free-form text.
+  class BetaCustomTextFormatParam
+    include BetaCustomToolParamFormat
 
-# Defines the BetaCustomTextFormatParamType SDK namespace.
-module BetaCustomTextFormatParamType
-  TEXT = 'text'
-  VALUES = ['text'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaCustomTextFormatParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaCustomTextFormatParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaCustomTextFormatParamMetadata::DECODERS
 
-    raise SdkValidationError.new('BetaCustomTextFormatParamType', 'enum', "Unknown BetaCustomTextFormatParamType: #{value}")
-  end
-end
+    # @return [BetaCustomTextFormatParamType] Unconstrained text format. Always `text`.
+    attr_reader :type
 
-# Internal model hydration metadata.
-class SdkInternalBetaCustomToolCallMetadata
-  FIELDS = {
-    agent: "agent",
-    type: "type",
-    id: "id",
-    call_id: "call_id",
-    caller: "caller",
-    namespace: "namespace",
-    name: "name",
-    input: "input",
-    async: "async",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    call_id
-    name
-    input
-  ].freeze
-  DECODERS = {
-    agent: lambda do |value|
-      ::OctridevOpenai::BetaAgentTag.from_hash(value)
-    end,
-    type: lambda do |value|
-      ::OctridevOpenai::BetaCustomToolCallType.from_value(value)
-    end,
-    caller: lambda do |value|
-      ::OctridevOpenai::BetaToolCallCaller.from_hash(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for BetaCustomToolCall.
-# A call to a custom tool created by the model.
-class BetaCustomToolCall
-  include BetaItem
-  include BetaItemField
-  include BetaOutputItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaCustomToolCallMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaCustomToolCallMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaCustomToolCallMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [BetaAgentTag] The agent that produced this item.
-  attr_reader :agent
-  # @return [BetaCustomToolCallType] The type of the custom tool call. Always `custom_tool_call`.
-  attr_reader :type
-  # @return [String] The unique ID of the custom tool call in the OpenAI platform.
-  attr_reader :id
-  # @return [String] An identifier used to map this custom tool call to a tool call output.
-  attr_reader :call_id
-  # @return [BetaToolCallCaller] Optional API value serialized in the `caller` wire field.
-  attr_reader :caller
-  # @return [String] The namespace of the custom tool being called.
-  attr_reader :namespace
-  # @return [String] The name of the custom tool being called.
-  attr_reader :name
-  # @return [String] The input for the custom tool call generated by the model.
-  attr_reader :input
-  # @return [Boolean] Whether the custom tool call runs asynchronously.
-  attr_reader :async
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the BetaCustomTextFormatParamType SDK namespace.
+  module BetaCustomTextFormatParamType
+    TEXT = 'text'
+    VALUES = ['text'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaCustomTextFormatParamType', 'enum', "Unknown BetaCustomTextFormatParamType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the BetaCustomToolCallType SDK namespace.
-module BetaCustomToolCallType
-  CUSTOM_TOOL_CALL = 'custom_tool_call'
-  VALUES = ['custom_tool_call'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('BetaCustomToolCallType', 'enum', "Unknown BetaCustomToolCallType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaCustomToolCallOutputMetadata
-  FIELDS = {
-    agent: "agent",
-    type: "type",
-    id: "id",
-    call_id: "call_id",
-    caller: "caller",
-    output: "output",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    call_id
-    output
-  ].freeze
-  DECODERS = {
-    agent: lambda do |value|
-      ::OctridevOpenai::BetaAgentTag.from_hash(value)
-    end,
-    type: lambda do |value|
-      ::OctridevOpenai::BetaCustomToolCallOutputType.from_value(value)
-    end,
-    caller: lambda do |value|
-      ::OctridevOpenai::BetaToolCallCallerParam.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaCustomToolCallOutput.
-# The output of a custom tool call from your code, being sent back to the model.
-class BetaCustomToolCallOutput
-  include BetaItem
-  include BetaItemField
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaCustomToolCallOutputMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaCustomToolCallOutputMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaCustomToolCallOutputMetadata::DECODERS
-
-  # @return [BetaAgentTag] The agent that produced this item.
-  attr_reader :agent
-  # @return [BetaCustomToolCallOutputType] The type of the custom tool call output. Always `custom_tool_call_output`.
-  attr_reader :type
-  # @return [String] The unique ID of the custom tool call output in the OpenAI platform.
-  attr_reader :id
-  # @return [String] The call ID, used to map this custom tool call output to a custom tool call.
-  attr_reader :call_id
-  # @return [BetaToolCallCallerParam] Optional API value serialized in the `caller` wire field.
-  attr_reader :caller
-  # @return [Object] The output from the custom tool call generated by your code. Can be a string or an list of output content.
-  attr_reader :output
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalBetaCustomToolCallMetadata
+    FIELDS = {
+      agent: 'agent',
+      type: 'type',
+      id: 'id',
+      call_id: 'call_id',
+      caller: 'caller',
+      namespace: 'namespace',
+      name: 'name',
+      input: 'input',
+      async: 'async'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      call_id
+      name
+      input
+    ].freeze
+    DECODERS = {
+      agent: lambda do |value|
+        ::OctridevOpenai::BetaAgentTag.from_hash(value)
+      end,
+      type: lambda do |value|
+        ::OctridevOpenai::BetaCustomToolCallType.from_value(value)
+      end,
+      caller: lambda do |value|
+        ::OctridevOpenai::BetaToolCallCaller.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for BetaCustomToolCall.
+  # A call to a custom tool created by the model.
+  class BetaCustomToolCall
+    include BetaItem
+    include BetaItemField
+    include BetaOutputItem
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaCustomToolCallMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaCustomToolCallMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaCustomToolCallMetadata::DECODERS
+
+    # @return [BetaAgentTag] The agent that produced this item.
+    attr_reader :agent
+    # @return [BetaCustomToolCallType] The type of the custom tool call. Always `custom_tool_call`.
+    attr_reader :type
+    # @return [String] The unique ID of the custom tool call in the OpenAI platform.
+    attr_reader :id
+    # @return [String] An identifier used to map this custom tool call to a tool call output.
+    attr_reader :call_id
+    # @return [BetaToolCallCaller] Optional API value serialized in the `caller` wire field.
+    attr_reader :caller
+    # @return [String] The namespace of the custom tool being called.
+    attr_reader :namespace
+    # @return [String] The name of the custom tool being called.
+    attr_reader :name
+    # @return [String] The input for the custom tool call generated by the model.
+    attr_reader :input
+    # @return [Boolean] Whether the custom tool call runs asynchronously.
+    attr_reader :async
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the BetaCustomToolCallType SDK namespace.
+  module BetaCustomToolCallType
+    CUSTOM_TOOL_CALL = 'custom_tool_call'
+    VALUES = ['custom_tool_call'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the BetaCustomToolCallOutputType SDK namespace.
-module BetaCustomToolCallOutputType
-  CUSTOM_TOOL_CALL_OUTPUT = 'custom_tool_call_output'
-  VALUES = ['custom_tool_call_output'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('BetaCustomToolCallOutputType', 'enum', "Unknown BetaCustomToolCallOutputType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaCustomToolCallOutputResourceMetadata
-  FIELDS = {
-    agent: "agent",
-    type: "type",
-    id: "id",
-    call_id: "call_id",
-    caller: "caller",
-    output: "output",
-    status: "status",
-    created_by: "created_by",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    id
-    call_id
-    output
-    status
-  ].freeze
-  DECODERS = {
-    agent: lambda do |value|
-      ::OctridevOpenai::BetaAgentTag.from_hash(value)
-    end,
-    type: lambda do |value|
-      ::OctridevOpenai::BetaCustomToolCallOutputType.from_value(value)
-    end,
-    caller: lambda do |value|
-      ::OctridevOpenai::BetaToolCallCallerParam.from_hash(value)
-    end,
-    status: lambda do |value|
-      ::OctridevOpenai::BetaFunctionCallOutputStatusEnum.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaCustomToolCallOutputResource.
-# Typed representation of the `BetaCustomToolCallOutputResource` API schema.
-class BetaCustomToolCallOutputResource
-  include BetaItemResource
-  include BetaOutputItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaCustomToolCallOutputResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaCustomToolCallOutputResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaCustomToolCallOutputResourceMetadata::DECODERS
-
-  # @return [BetaAgentTag] The agent that produced this item.
-  attr_reader :agent
-  # @return [BetaCustomToolCallOutputType] The type of the custom tool call output. Always `custom_tool_call_output`.
-  attr_reader :type
-  # @return [String] The unique ID of the custom tool call output item.
-  attr_reader :id
-  # @return [String] The call ID, used to map this custom tool call output to a custom tool call.
-  attr_reader :call_id
-  # @return [BetaToolCallCallerParam] Optional API value serialized in the `caller` wire field.
-  attr_reader :caller
-  # @return [Object] The output from the custom tool call generated by your code. Can be a string or an list of output content.
-  attr_reader :output
-  # @return [BetaFunctionCallOutputStatusEnum] The status of the item. One of `in_progress`, `completed`, or `incomplete`. Populated when items are returned via API.
-  attr_reader :status
-  # @return [String] The identifier of the actor that created the item.
-  attr_reader :created_by
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('BetaCustomToolCallType', 'enum', "Unknown BetaCustomToolCallType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalBetaCustomToolCallOutputMetadata
+    FIELDS = {
+      agent: 'agent',
+      type: 'type',
+      id: 'id',
+      call_id: 'call_id',
+      caller: 'caller',
+      output: 'output'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      call_id
+      output
+    ].freeze
+    DECODERS = {
+      agent: lambda do |value|
+        ::OctridevOpenai::BetaAgentTag.from_hash(value)
+      end,
+      type: lambda do |value|
+        ::OctridevOpenai::BetaCustomToolCallOutputType.from_value(value)
+      end,
+      caller: lambda do |value|
+        ::OctridevOpenai::BetaToolCallCallerParam.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for BetaCustomToolCallOutput.
+  # The output of a custom tool call from your code, being sent back to the model.
+  class BetaCustomToolCallOutput
+    include BetaItem
+    include BetaItemField
 
-# Internal model hydration metadata.
-class SdkInternalBetaCustomToolCallResourceMetadata
-  FIELDS = {
-    agent: "agent",
-    type: "type",
-    id: "id",
-    call_id: "call_id",
-    caller: "caller",
-    namespace: "namespace",
-    name: "name",
-    input: "input",
-    async: "async",
-    status: "status",
-    created_by: "created_by",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    id
-    call_id
-    name
-    input
-    status
-  ].freeze
-  DECODERS = {
-    agent: lambda do |value|
-      ::OctridevOpenai::BetaAgentTag.from_hash(value)
-    end,
-    type: lambda do |value|
-      ::OctridevOpenai::BetaCustomToolCallType.from_value(value)
-    end,
-    caller: lambda do |value|
-      ::OctridevOpenai::BetaToolCallCaller.from_hash(value)
-    end,
-    status: lambda do |value|
-      ::OctridevOpenai::BetaFunctionCallStatus.from_value(value)
-    end,
-  }.freeze
-end
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaCustomToolCallOutputMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaCustomToolCallOutputMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaCustomToolCallOutputMetadata::DECODERS
 
-# API model for BetaCustomToolCallResource.
-# Typed representation of the `BetaCustomToolCallResource` API schema.
-class BetaCustomToolCallResource
-  include BetaItemResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaCustomToolCallResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaCustomToolCallResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaCustomToolCallResourceMetadata::DECODERS
+    # @return [BetaAgentTag] The agent that produced this item.
+    attr_reader :agent
+    # @return [BetaCustomToolCallOutputType] The type of the custom tool call output. Always `custom_tool_call_output`.
+    attr_reader :type
+    # @return [String] The unique ID of the custom tool call output in the OpenAI platform.
+    attr_reader :id
+    # @return [String] The call ID, used to map this custom tool call output to a custom tool call.
+    attr_reader :call_id
+    # @return [BetaToolCallCallerParam] Optional API value serialized in the `caller` wire field.
+    attr_reader :caller
+    # @return [Object] The output from the custom tool call generated by your code. Can be a string or an list of output content.
+    attr_reader :output
 
-  # @return [BetaAgentTag] The agent that produced this item.
-  attr_reader :agent
-  # @return [BetaCustomToolCallType] The type of the custom tool call. Always `custom_tool_call`.
-  attr_reader :type
-  # @return [String] The unique ID of the custom tool call item.
-  attr_reader :id
-  # @return [String] An identifier used to map this custom tool call to a tool call output.
-  attr_reader :call_id
-  # @return [BetaToolCallCaller] Optional API value serialized in the `caller` wire field.
-  attr_reader :caller
-  # @return [String] The namespace of the custom tool being called.
-  attr_reader :namespace
-  # @return [String] The name of the custom tool being called.
-  attr_reader :name
-  # @return [String] The input for the custom tool call generated by the model.
-  attr_reader :input
-  # @return [Boolean] Whether the custom tool call runs asynchronously.
-  attr_reader :async
-  # @return [BetaFunctionCallStatus] The status of the item. One of `in_progress`, `completed`, or `incomplete`. Populated when items are returned via API.
-  attr_reader :status
-  # @return [String] The identifier of the actor that created the item.
-  attr_reader :created_by
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the BetaCustomToolCallOutputType SDK namespace.
+  module BetaCustomToolCallOutputType
+    CUSTOM_TOOL_CALL_OUTPUT = 'custom_tool_call_output'
+    VALUES = ['custom_tool_call_output'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaCustomToolCallOutputType', 'enum', "Unknown BetaCustomToolCallOutputType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaCustomToolParamMetadata
-  FIELDS = {
-    type: "type",
-    name: "name",
-    async: "async",
-    description: "description",
-    format: "format",
-    defer_loading: "defer_loading",
-    allowed_callers: "allowed_callers",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    name
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaCustomToolParamType.from_value(value)
-    end,
-    format: lambda do |value|
-      ::OctridevOpenai::BetaCustomToolParamFormat.from_hash(value)
-    end,
-    allowed_callers: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::BetaCallableToolAllowedCaller.from_value(item) }
-    end,
-  }.freeze
-end
-
-# API model for BetaCustomToolParam.
-# A custom tool that processes input using a specified format. Learn more about custom tools
-class BetaCustomToolParam
-  include BetaTool
-  include BetaToolSearchOutputTool
-  include BetaToolSearchOutputNamespaceToolParamToolsItem
-  include BetaNamespaceToolParamToolsItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaCustomToolParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaCustomToolParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaCustomToolParamMetadata::DECODERS
-
-  # @return [BetaCustomToolParamType] The type of the custom tool. Always `custom`.
-  attr_reader :type
-  # @return [String] The name of the custom tool, used to identify it in tool calls.
-  attr_reader :name
-  # @return [Boolean] Whether the tool response can be returned asynchronously versus immediately returned on next response creation.
-  attr_reader :async
-  # @return [String] Optional description of the custom tool, used to provide more context.
-  attr_reader :description
-  # @return [BetaCustomToolParamFormat] The input format for the custom tool. Default is unconstrained text.
-  attr_reader :format
-  # @return [Boolean] Whether this tool should be deferred and discovered via tool search.
-  attr_reader :defer_loading
-  # @return [Array_of_BetaCallableToolAllowedCaller] The tool invocation context(s).
-  attr_reader :allowed_callers
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalBetaCustomToolCallOutputResourceMetadata
+    FIELDS = {
+      agent: 'agent',
+      type: 'type',
+      id: 'id',
+      call_id: 'call_id',
+      caller: 'caller',
+      output: 'output',
+      status: 'status',
+      created_by: 'created_by'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      id
+      call_id
+      output
+      status
+    ].freeze
+    DECODERS = {
+      agent: lambda do |value|
+        ::OctridevOpenai::BetaAgentTag.from_hash(value)
+      end,
+      type: lambda do |value|
+        ::OctridevOpenai::BetaCustomToolCallOutputType.from_value(value)
+      end,
+      caller: lambda do |value|
+        ::OctridevOpenai::BetaToolCallCallerParam.from_hash(value)
+      end,
+      status: lambda do |value|
+        ::OctridevOpenai::BetaFunctionCallOutputStatusEnum.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for BetaCustomToolCallOutputResource.
+  # Typed representation of the `BetaCustomToolCallOutputResource` API schema.
+  class BetaCustomToolCallOutputResource
+    include BetaItemResource
+    include BetaOutputItem
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaCustomToolCallOutputResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaCustomToolCallOutputResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaCustomToolCallOutputResourceMetadata::DECODERS
+
+    # @return [BetaAgentTag] The agent that produced this item.
+    attr_reader :agent
+    # @return [BetaCustomToolCallOutputType] The type of the custom tool call output. Always `custom_tool_call_output`.
+    attr_reader :type
+    # @return [String] The unique ID of the custom tool call output item.
+    attr_reader :id
+    # @return [String] The call ID, used to map this custom tool call output to a custom tool call.
+    attr_reader :call_id
+    # @return [BetaToolCallCallerParam] Optional API value serialized in the `caller` wire field.
+    attr_reader :caller
+    # @return [Object] The output from the custom tool call generated by your code. Can be a string or an list of output content.
+    attr_reader :output
+    # @return [BetaFunctionCallOutputStatusEnum] The status of the item. One of `in_progress`, `completed`, or `incomplete`. Populated when items are returned via API.
+    attr_reader :status
+    # @return [String] The identifier of the actor that created the item.
+    attr_reader :created_by
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalBetaCustomToolCallResourceMetadata
+    FIELDS = {
+      agent: 'agent',
+      type: 'type',
+      id: 'id',
+      call_id: 'call_id',
+      caller: 'caller',
+      namespace: 'namespace',
+      name: 'name',
+      input: 'input',
+      async: 'async',
+      status: 'status',
+      created_by: 'created_by'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      id
+      call_id
+      name
+      input
+      status
+    ].freeze
+    DECODERS = {
+      agent: lambda do |value|
+        ::OctridevOpenai::BetaAgentTag.from_hash(value)
+      end,
+      type: lambda do |value|
+        ::OctridevOpenai::BetaCustomToolCallType.from_value(value)
+      end,
+      caller: lambda do |value|
+        ::OctridevOpenai::BetaToolCallCaller.from_hash(value)
+      end,
+      status: lambda do |value|
+        ::OctridevOpenai::BetaFunctionCallStatus.from_value(value)
+      end
+    }.freeze
   end
-end
 
-# Defines the BetaCustomToolParamType SDK namespace.
-module BetaCustomToolParamType
-  CUSTOM = 'custom'
-  VALUES = ['custom'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+  # API model for BetaCustomToolCallResource.
+  # Typed representation of the `BetaCustomToolCallResource` API schema.
+  class BetaCustomToolCallResource
+    include BetaItemResource
 
-    raise SdkValidationError.new('BetaCustomToolParamType', 'enum', "Unknown BetaCustomToolParamType: #{value}")
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaCustomToolCallResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaCustomToolCallResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaCustomToolCallResourceMetadata::DECODERS
+
+    # @return [BetaAgentTag] The agent that produced this item.
+    attr_reader :agent
+    # @return [BetaCustomToolCallType] The type of the custom tool call. Always `custom_tool_call`.
+    attr_reader :type
+    # @return [String] The unique ID of the custom tool call item.
+    attr_reader :id
+    # @return [String] An identifier used to map this custom tool call to a tool call output.
+    attr_reader :call_id
+    # @return [BetaToolCallCaller] Optional API value serialized in the `caller` wire field.
+    attr_reader :caller
+    # @return [String] The namespace of the custom tool being called.
+    attr_reader :namespace
+    # @return [String] The name of the custom tool being called.
+    attr_reader :name
+    # @return [String] The input for the custom tool call generated by the model.
+    attr_reader :input
+    # @return [Boolean] Whether the custom tool call runs asynchronously.
+    attr_reader :async
+    # @return [BetaFunctionCallStatus] The status of the item. One of `in_progress`, `completed`, or `incomplete`. Populated when items are returned via API.
+    attr_reader :status
+    # @return [String] The identifier of the actor that created the item.
+    attr_reader :created_by
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
 
-# Defines the BetaCustomToolParamFormat SDK namespace.
-module BetaCustomToolParamFormat
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    mapping = { "text" => BetaCustomTextFormatParam, "grammar" => BetaCustomGrammarFormatParam }
-    type = mapping[hash["type"]]
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('BetaCustomToolParamFormat', 'variant', "Unknown BetaCustomToolParamFormat discriminator: #{hash["type"].inspect}")
+  # Internal model hydration metadata.
+  class SdkInternalBetaCustomToolParamMetadata
+    FIELDS = {
+      type: 'type',
+      name: 'name',
+      async: 'async',
+      description: 'description',
+      format: 'format',
+      defer_loading: 'defer_loading',
+      allowed_callers: 'allowed_callers'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      name
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaCustomToolParamType.from_value(value)
+      end,
+      format: lambda do |value|
+        ::OctridevOpenai::BetaCustomToolParamFormat.from_hash(value)
+      end,
+      allowed_callers: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::BetaCallableToolAllowedCaller.from_value(item) }
+      end
+    }.freeze
   end
-end
+
+  # API model for BetaCustomToolParam.
+  # A custom tool that processes input using a specified format. Learn more about custom tools
+  class BetaCustomToolParam
+    include BetaTool
+    include BetaToolSearchOutputTool
+    include BetaToolSearchOutputNamespaceToolParamToolsItem
+    include BetaNamespaceToolParamToolsItem
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaCustomToolParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaCustomToolParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaCustomToolParamMetadata::DECODERS
+
+    # @return [BetaCustomToolParamType] The type of the custom tool. Always `custom`.
+    attr_reader :type
+    # @return [String] The name of the custom tool, used to identify it in tool calls.
+    attr_reader :name
+    # @return [Boolean] Whether the tool response can be returned asynchronously versus immediately returned on next response creation.
+    attr_reader :async
+    # @return [String] Optional description of the custom tool, used to provide more context.
+    attr_reader :description
+    # @return [BetaCustomToolParamFormat] The input format for the custom tool. Default is unconstrained text.
+    attr_reader :format
+    # @return [Boolean] Whether this tool should be deferred and discovered via tool search.
+    attr_reader :defer_loading
+    # @return [Array_of_BetaCallableToolAllowedCaller] The tool invocation context(s).
+    attr_reader :allowed_callers
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the BetaCustomToolParamType SDK namespace.
+  module BetaCustomToolParamType
+    CUSTOM = 'custom'
+    VALUES = ['custom'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaCustomToolParamType', 'enum', "Unknown BetaCustomToolParamType: #{value}")
+    end
+  end
+
+  # Defines the BetaCustomToolParamFormat SDK namespace.
+  module BetaCustomToolParamFormat
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      mapping = { 'text' => BetaCustomTextFormatParam, 'grammar' => BetaCustomGrammarFormatParam }
+      type = mapping[hash['type']]
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('BetaCustomToolParamFormat', 'variant', "Unknown BetaCustomToolParamFormat discriminator: #{hash['type'].inspect}")
+    end
+  end
 end

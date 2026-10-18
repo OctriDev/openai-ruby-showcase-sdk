@@ -23,10 +23,9 @@ module OctridevOpenai
         content_type: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
-          "/videos",
+          '/videos',
           config: config,
           body: SdkClient.form_value(body, { CreateVideoMultipartBody => [] }),
           content_type: SdkClient.body_content_type(content_type, body, 'application/json'),
@@ -34,7 +33,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'create_video',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -54,27 +53,26 @@ module OctridevOpenai
         after: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 0, max: 100) }
 
         SdkClient.request(
           'GET',
-          "/videos",
+          '/videos',
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'order' => QueryValue.new(order, style: 'form', explode: true),
-            'after' => QueryValue.new(after, style: 'form', explode: true),
+            'after' => QueryValue.new(after, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::VideoListResource,
           decoder: :json,
           operation_id: 'list_videos',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
-    ListVideosPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      ListVideosPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # List recently generated videos for the current project.
       #
@@ -104,10 +102,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.last_id
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -132,10 +133,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListVideosPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end
@@ -155,23 +158,22 @@ module OctridevOpenai
         name:,
         request_options: nil
       )
-
         Validation.validate_length('name', name, min: 1, max: 80)
 
         SdkClient.request(
           'POST',
-          "/videos/characters",
+          '/videos/characters',
           config: config,
           body: {
             'video' => SdkClient.upload(video, 'video'),
-            'name' => name,
+            'name' => name
           },
           content_type: 'multipart/form-data',
           return_type: ::OctridevOpenai::VideoCharacterResource,
           decoder: :json,
           operation_id: 'create_video_character',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '504' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '504' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -182,16 +184,11 @@ module OctridevOpenai
       # @param character_id [String] The identifier of the character to retrieve.
       #
       # @deprecated This operation is deprecated and may be removed in a future release.
-      singleton_class.define_method(:get_video_character) do |
-        config:,
-        character_id:,
-        request_options: nil
-      |
-
+      singleton_class.define_method(:get_video_character) do |config:, character_id:, request_options: nil|
         SdkClient.request(
           'GET',
           [
-            "/videos/characters/",
+            '/videos/characters/',
             SdkClient.encode_path_segment(character_id)
           ].join,
           config: config,
@@ -199,7 +196,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'get_video_character',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -217,10 +214,9 @@ module OctridevOpenai
         content_type: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
-          "/videos/edits",
+          '/videos/edits',
           config: config,
           body: SdkClient.form_value(body, { CreateVideoEditMultipartBody => [] }),
           content_type: SdkClient.body_content_type(content_type, body, 'application/json'),
@@ -228,7 +224,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'create_video_edit',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -248,10 +244,9 @@ module OctridevOpenai
         content_type: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
-          "/videos/extensions",
+          '/videos/extensions',
           config: config,
           body: SdkClient.form_value(body, { CreateVideoExtendMultipartBody => [] }),
           content_type: SdkClient.body_content_type(content_type, body, 'application/json'),
@@ -259,7 +254,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'create_video_extend',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -270,16 +265,11 @@ module OctridevOpenai
       # @param video_id [String] The identifier of the video to retrieve.
       #
       # @deprecated This operation is deprecated and may be removed in a future release.
-      singleton_class.define_method(:get_video) do |
-        config:,
-        video_id:,
-        request_options: nil
-      |
-
+      singleton_class.define_method(:get_video) do |config:, video_id:, request_options: nil|
         SdkClient.request(
           'GET',
           [
-            "/videos/",
+            '/videos/',
             SdkClient.encode_path_segment(video_id)
           ].join,
           config: config,
@@ -287,7 +277,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'get_video',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -301,11 +291,10 @@ module OctridevOpenai
         video_id:,
         request_options: nil
       )
-
         SdkClient.request(
           'DELETE',
           [
-            "/videos/",
+            '/videos/',
             SdkClient.encode_path_segment(video_id)
           ].join,
           config: config,
@@ -313,7 +302,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_video',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -331,22 +320,21 @@ module OctridevOpenai
         variant: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
           [
-            "/videos/",
+            '/videos/',
             SdkClient.encode_path_segment(video_id),
-            "/content"
+            '/content'
           ].join,
           config: config,
           query: {
-            'variant' => QueryValue.new(variant, style: 'form', explode: true),
+            'variant' => QueryValue.new(variant, style: 'form', explode: true)
           },
           decoder: :bytes,
           operation_id: 'retrieve_video_content',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -366,26 +354,25 @@ module OctridevOpenai
         content_type: NOT_GIVEN,
         request_options: nil
       )
-
-        Validation.validate_length('prompt', prompt, min: 1, max: 32000)
+        Validation.validate_length('prompt', prompt, min: 1, max: 32_000)
 
         SdkClient.request(
           'POST',
           [
-            "/videos/",
+            '/videos/',
             SdkClient.encode_path_segment(video_id),
-            "/remix"
+            '/remix'
           ].join,
           config: config,
           body: {
-            'prompt' => prompt,
+            'prompt' => prompt
           },
           content_type: SdkClient.body_content_type(content_type, nil, 'application/json'),
           return_type: ::OctridevOpenai::VideoResource,
           decoder: :json,
           operation_id: 'create_video_remix',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
     end

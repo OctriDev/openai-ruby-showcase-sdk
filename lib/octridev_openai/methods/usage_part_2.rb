@@ -43,10 +43,9 @@ module OctridevOpenai
         page: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
-          "/organization/usage/audio_speeches",
+          '/organization/usage/audio_speeches',
           config: config,
           query: {
             'start_time' => QueryValue.new(start_time, style: 'form', explode: true),
@@ -58,17 +57,17 @@ module OctridevOpenai
             'models' => QueryValue.new(models, style: 'form', explode: true),
             'group_by' => QueryValue.new(group_by, style: 'form', explode: true),
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
-            'page' => QueryValue.new(page, style: 'form', explode: true),
+            'page' => QueryValue.new(page, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::UsageResponse,
           decoder: :json,
           operation_id: 'usage_audio_speeches',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
-    UsageAudioSpeechesPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      UsageAudioSpeechesPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Get audio speeches usage details for the organization.
       #
@@ -123,10 +122,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.next_page
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -165,10 +167,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.next_page
             has_more = page.has_more && !next_cursor.nil?
             y << UsageAudioSpeechesPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end
@@ -209,10 +213,9 @@ module OctridevOpenai
         page: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
-          "/organization/usage/audio_transcriptions",
+          '/organization/usage/audio_transcriptions',
           config: config,
           query: {
             'start_time' => QueryValue.new(start_time, style: 'form', explode: true),
@@ -224,17 +227,17 @@ module OctridevOpenai
             'models' => QueryValue.new(models, style: 'form', explode: true),
             'group_by' => QueryValue.new(group_by, style: 'form', explode: true),
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
-            'page' => QueryValue.new(page, style: 'form', explode: true),
+            'page' => QueryValue.new(page, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::UsageResponse,
           decoder: :json,
           operation_id: 'usage_audio_transcriptions',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
-    UsageAudioTranscriptionsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      UsageAudioTranscriptionsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Get audio transcriptions usage details for the organization.
       #
@@ -290,10 +293,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.next_page
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -332,10 +338,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.next_page
             has_more = page.has_more && !next_cursor.nil?
             y << UsageAudioTranscriptionsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end
@@ -369,10 +377,9 @@ module OctridevOpenai
         page: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
-          "/organization/usage/code_interpreter_sessions",
+          '/organization/usage/code_interpreter_sessions',
           config: config,
           query: {
             'start_time' => QueryValue.new(start_time, style: 'form', explode: true),
@@ -381,17 +388,17 @@ module OctridevOpenai
             'project_ids' => QueryValue.new(project_ids, style: 'form', explode: true),
             'group_by' => QueryValue.new(group_by, style: 'form', explode: true),
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
-            'page' => QueryValue.new(page, style: 'form', explode: true),
+            'page' => QueryValue.new(page, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::UsageResponse,
           decoder: :json,
           operation_id: 'usage_code_interpreter_sessions',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
-    UsageCodeInterpreterSessionsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      UsageCodeInterpreterSessionsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Get code interpreter sessions usage details for the organization.
       #
@@ -437,10 +444,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.next_page
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -473,10 +483,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.next_page
             has_more = page.has_more && !next_cursor.nil?
             y << UsageCodeInterpreterSessionsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end

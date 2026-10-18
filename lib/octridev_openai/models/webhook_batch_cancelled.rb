@@ -5,119 +5,118 @@
 
 # webhook_batch_cancelled domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalWebhookBatchCancelledDataMetadata
-  FIELDS = {
-    id: "id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for WebhookBatchCancelledData.
-# Event data payload.
-class WebhookBatchCancelledData
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalWebhookBatchCancelledDataMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalWebhookBatchCancelledDataMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalWebhookBatchCancelledDataMetadata::DECODERS
-
-  # @return [String] The unique ID of the batch API request.
-  attr_reader :id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalWebhookBatchCancelledDataMetadata
+    FIELDS = {
+      id: 'id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for WebhookBatchCancelledData.
+  # Event data payload.
+  class WebhookBatchCancelledData
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalWebhookBatchCancelledDataMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalWebhookBatchCancelledDataMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalWebhookBatchCancelledDataMetadata::DECODERS
+
+    # @return [String] The unique ID of the batch API request.
+    attr_reader :id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalWebhookBatchCancelledMetadata
-  FIELDS = {
-    created_at: "created_at",
-    id: "id",
-    data: "data",
-    object: "object",
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    created_at
-    id
-    data
-    type
-  ].freeze
-  DECODERS = {
-    data: lambda do |value|
-      ::OctridevOpenai::WebhookBatchCancelledData.from_hash(value)
-    end,
-    object: lambda do |value|
-      ::OctridevOpenai::WebhookBatchCancelledObject.from_value(value)
-    end,
-    type: lambda do |value|
-      ::OctridevOpenai::WebhookBatchCancelledType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for WebhookBatchCancelled.
-# Sent when a batch API request has been cancelled.
-class WebhookBatchCancelled
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalWebhookBatchCancelledMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalWebhookBatchCancelledMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalWebhookBatchCancelledMetadata::DECODERS
-
-  # @return [Integer] The Unix timestamp (in seconds) of when the batch API request was cancelled.
-  attr_reader :created_at
-  # @return [String] The unique ID of the event.
-  attr_reader :id
-  # @return [WebhookBatchCancelledData] Event data payload.
-  attr_reader :data
-  # @return [WebhookBatchCancelledObject] The object of the event. Always `event`.
-  attr_reader :object
-  # @return [WebhookBatchCancelledType] The type of the event. Always `batch.cancelled`.
-  attr_reader :type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalWebhookBatchCancelledMetadata
+    FIELDS = {
+      created_at: 'created_at',
+      id: 'id',
+      data: 'data',
+      object: 'object',
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      created_at
+      id
+      data
+      type
+    ].freeze
+    DECODERS = {
+      data: lambda do |value|
+        ::OctridevOpenai::WebhookBatchCancelledData.from_hash(value)
+      end,
+      object: lambda do |value|
+        ::OctridevOpenai::WebhookBatchCancelledObject.from_value(value)
+      end,
+      type: lambda do |value|
+        ::OctridevOpenai::WebhookBatchCancelledType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for WebhookBatchCancelled.
+  # Sent when a batch API request has been cancelled.
+  class WebhookBatchCancelled
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalWebhookBatchCancelledMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalWebhookBatchCancelledMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalWebhookBatchCancelledMetadata::DECODERS
+
+    # @return [Integer] The Unix timestamp (in seconds) of when the batch API request was cancelled.
+    attr_reader :created_at
+    # @return [String] The unique ID of the event.
+    attr_reader :id
+    # @return [WebhookBatchCancelledData] Event data payload.
+    attr_reader :data
+    # @return [WebhookBatchCancelledObject] The object of the event. Always `event`.
+    attr_reader :object
+    # @return [WebhookBatchCancelledType] The type of the event. Always `batch.cancelled`.
+    attr_reader :type
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the WebhookBatchCancelledObject SDK namespace.
+  module WebhookBatchCancelledObject
+    EVENT = 'event'
+    VALUES = ['event'].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
 
-# Defines the WebhookBatchCancelledObject SDK namespace.
-module WebhookBatchCancelledObject
-  EVENT = 'event'
-  VALUES = ['event'].freeze
-  def self.from_value(value)
-    value
+  # Defines the WebhookBatchCancelledType SDK namespace.
+  module WebhookBatchCancelledType
+    BATCH_CANCELLED = 'batch.cancelled'
+    VALUES = ['batch.cancelled'].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
-
-# Defines the WebhookBatchCancelledType SDK namespace.
-module WebhookBatchCancelledType
-  BATCH_CANCELLED = 'batch.cancelled'
-  VALUES = ['batch.cancelled'].freeze
-  def self.from_value(value)
-    value
-  end
-end
 end

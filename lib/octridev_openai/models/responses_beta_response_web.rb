@@ -5,213 +5,216 @@
 
 # responses_beta_response_web domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalBetaResponseWebSearchCallCompletedEventMetadata
-  FIELDS = {
-    agent: "agent",
-    type: "type",
-    output_index: "output_index",
-    item_id: "item_id",
-    sequence_number: "sequence_number",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    output_index
-    item_id
-    sequence_number
-  ].freeze
-  DECODERS = {
-    agent: lambda do |value|
-      ::OctridevOpenai::BetaAgentTag.from_hash(value)
-    end,
-    type: lambda do |value|
-      ::OctridevOpenai::BetaResponseWebSearchCallCompletedEventType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaResponseWebSearchCallCompletedEvent.
-# Emitted when a web search call is completed.
-class BetaResponseWebSearchCallCompletedEvent
-  include BetaResponseStreamEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaResponseWebSearchCallCompletedEventMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaResponseWebSearchCallCompletedEventMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaResponseWebSearchCallCompletedEventMetadata::DECODERS
-
-  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-  attr_reader :agent
-  # @return [BetaResponseWebSearchCallCompletedEventType] The type of the event. Always `response.web_search_call.completed`.
-  attr_reader :type
-  # @return [Integer] The index of the output item that the web search call is associated with.
-  attr_reader :output_index
-  # @return [String] Unique ID for the output item associated with the web search call.
-  attr_reader :item_id
-  # @return [Integer] The sequence number of the web search call being processed.
-  attr_reader :sequence_number
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalBetaResponseWebSearchCallCompletedEventMetadata
+    FIELDS = {
+      agent: 'agent',
+      type: 'type',
+      output_index: 'output_index',
+      item_id: 'item_id',
+      sequence_number: 'sequence_number'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      output_index
+      item_id
+      sequence_number
+    ].freeze
+    DECODERS = {
+      agent: lambda do |value|
+        ::OctridevOpenai::BetaAgentTag.from_hash(value)
+      end,
+      type: lambda do |value|
+        ::OctridevOpenai::BetaResponseWebSearchCallCompletedEventType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for BetaResponseWebSearchCallCompletedEvent.
+  # Emitted when a web search call is completed.
+  class BetaResponseWebSearchCallCompletedEvent
+    include BetaResponseStreamEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaResponseWebSearchCallCompletedEventMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaResponseWebSearchCallCompletedEventMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaResponseWebSearchCallCompletedEventMetadata::DECODERS
+
+    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+    attr_reader :agent
+    # @return [BetaResponseWebSearchCallCompletedEventType] The type of the event. Always `response.web_search_call.completed`.
+    attr_reader :type
+    # @return [Integer] The index of the output item that the web search call is associated with.
+    attr_reader :output_index
+    # @return [String] Unique ID for the output item associated with the web search call.
+    attr_reader :item_id
+    # @return [Integer] The sequence number of the web search call being processed.
+    attr_reader :sequence_number
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the BetaResponseWebSearchCallCompletedEventType SDK namespace.
+  module BetaResponseWebSearchCallCompletedEventType
+    RESPONSE_WEB_SEARCH_CALL_COMPLETED = 'response.web_search_call.completed'
+    VALUES = ['response.web_search_call.completed'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the BetaResponseWebSearchCallCompletedEventType SDK namespace.
-module BetaResponseWebSearchCallCompletedEventType
-  RESPONSE_WEB_SEARCH_CALL_COMPLETED = 'response.web_search_call.completed'
-  VALUES = ['response.web_search_call.completed'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('BetaResponseWebSearchCallCompletedEventType', 'enum', "Unknown BetaResponseWebSearchCallCompletedEventType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaResponseWebSearchCallInProgressEventMetadata
-  FIELDS = {
-    agent: "agent",
-    type: "type",
-    output_index: "output_index",
-    item_id: "item_id",
-    sequence_number: "sequence_number",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    output_index
-    item_id
-    sequence_number
-  ].freeze
-  DECODERS = {
-    agent: lambda do |value|
-      ::OctridevOpenai::BetaAgentTag.from_hash(value)
-    end,
-    type: lambda do |value|
-      ::OctridevOpenai::BetaResponseWebSearchCallInProgressEventType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaResponseWebSearchCallInProgressEvent.
-# Emitted when a web search call is initiated.
-class BetaResponseWebSearchCallInProgressEvent
-  include BetaResponseStreamEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaResponseWebSearchCallInProgressEventMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaResponseWebSearchCallInProgressEventMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaResponseWebSearchCallInProgressEventMetadata::DECODERS
-
-  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-  attr_reader :agent
-  # @return [BetaResponseWebSearchCallInProgressEventType] The type of the event. Always `response.web_search_call.in_progress`.
-  attr_reader :type
-  # @return [Integer] The index of the output item that the web search call is associated with.
-  attr_reader :output_index
-  # @return [String] Unique ID for the output item associated with the web search call.
-  attr_reader :item_id
-  # @return [Integer] The sequence number of the web search call being processed.
-  attr_reader :sequence_number
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('BetaResponseWebSearchCallCompletedEventType', 'enum', "Unknown BetaResponseWebSearchCallCompletedEventType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalBetaResponseWebSearchCallInProgressEventMetadata
+    FIELDS = {
+      agent: 'agent',
+      type: 'type',
+      output_index: 'output_index',
+      item_id: 'item_id',
+      sequence_number: 'sequence_number'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      output_index
+      item_id
+      sequence_number
+    ].freeze
+    DECODERS = {
+      agent: lambda do |value|
+        ::OctridevOpenai::BetaAgentTag.from_hash(value)
+      end,
+      type: lambda do |value|
+        ::OctridevOpenai::BetaResponseWebSearchCallInProgressEventType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for BetaResponseWebSearchCallInProgressEvent.
+  # Emitted when a web search call is initiated.
+  class BetaResponseWebSearchCallInProgressEvent
+    include BetaResponseStreamEvent
 
-# Defines the BetaResponseWebSearchCallInProgressEventType SDK namespace.
-module BetaResponseWebSearchCallInProgressEventType
-  RESPONSE_WEB_SEARCH_CALL_IN_PROGRESS = 'response.web_search_call.in_progress'
-  VALUES = ['response.web_search_call.in_progress'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaResponseWebSearchCallInProgressEventMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaResponseWebSearchCallInProgressEventMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaResponseWebSearchCallInProgressEventMetadata::DECODERS
 
-    raise SdkValidationError.new('BetaResponseWebSearchCallInProgressEventType', 'enum', "Unknown BetaResponseWebSearchCallInProgressEventType: #{value}")
-  end
-end
+    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+    attr_reader :agent
+    # @return [BetaResponseWebSearchCallInProgressEventType] The type of the event. Always `response.web_search_call.in_progress`.
+    attr_reader :type
+    # @return [Integer] The index of the output item that the web search call is associated with.
+    attr_reader :output_index
+    # @return [String] Unique ID for the output item associated with the web search call.
+    attr_reader :item_id
+    # @return [Integer] The sequence number of the web search call being processed.
+    attr_reader :sequence_number
 
-# Internal model hydration metadata.
-class SdkInternalBetaResponseWebSearchCallSearchingEventMetadata
-  FIELDS = {
-    agent: "agent",
-    type: "type",
-    output_index: "output_index",
-    item_id: "item_id",
-    sequence_number: "sequence_number",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    output_index
-    item_id
-    sequence_number
-  ].freeze
-  DECODERS = {
-    agent: lambda do |value|
-      ::OctridevOpenai::BetaAgentTag.from_hash(value)
-    end,
-    type: lambda do |value|
-      ::OctridevOpenai::BetaResponseWebSearchCallSearchingEventType.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for BetaResponseWebSearchCallSearchingEvent.
-# Emitted when a web search call is executing.
-class BetaResponseWebSearchCallSearchingEvent
-  include BetaResponseStreamEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaResponseWebSearchCallSearchingEventMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaResponseWebSearchCallSearchingEventMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaResponseWebSearchCallSearchingEventMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-  attr_reader :agent
-  # @return [BetaResponseWebSearchCallSearchingEventType] The type of the event. Always `response.web_search_call.searching`.
-  attr_reader :type
-  # @return [Integer] The index of the output item that the web search call is associated with.
-  attr_reader :output_index
-  # @return [String] Unique ID for the output item associated with the web search call.
-  attr_reader :item_id
-  # @return [Integer] The sequence number of the web search call being processed.
-  attr_reader :sequence_number
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the BetaResponseWebSearchCallInProgressEventType SDK namespace.
+  module BetaResponseWebSearchCallInProgressEventType
+    RESPONSE_WEB_SEARCH_CALL_IN_PROGRESS = 'response.web_search_call.in_progress'
+    VALUES = ['response.web_search_call.in_progress'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaResponseWebSearchCallInProgressEventType', 'enum', "Unknown BetaResponseWebSearchCallInProgressEventType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalBetaResponseWebSearchCallSearchingEventMetadata
+    FIELDS = {
+      agent: 'agent',
+      type: 'type',
+      output_index: 'output_index',
+      item_id: 'item_id',
+      sequence_number: 'sequence_number'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      output_index
+      item_id
+      sequence_number
+    ].freeze
+    DECODERS = {
+      agent: lambda do |value|
+        ::OctridevOpenai::BetaAgentTag.from_hash(value)
+      end,
+      type: lambda do |value|
+        ::OctridevOpenai::BetaResponseWebSearchCallSearchingEventType.from_value(value)
+      end
+    }.freeze
   end
-end
 
-# Defines the BetaResponseWebSearchCallSearchingEventType SDK namespace.
-module BetaResponseWebSearchCallSearchingEventType
-  RESPONSE_WEB_SEARCH_CALL_SEARCHING = 'response.web_search_call.searching'
-  VALUES = ['response.web_search_call.searching'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+  # API model for BetaResponseWebSearchCallSearchingEvent.
+  # Emitted when a web search call is executing.
+  class BetaResponseWebSearchCallSearchingEvent
+    include BetaResponseStreamEvent
 
-    raise SdkValidationError.new('BetaResponseWebSearchCallSearchingEventType', 'enum', "Unknown BetaResponseWebSearchCallSearchingEventType: #{value}")
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaResponseWebSearchCallSearchingEventMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaResponseWebSearchCallSearchingEventMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaResponseWebSearchCallSearchingEventMetadata::DECODERS
+
+    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+    attr_reader :agent
+    # @return [BetaResponseWebSearchCallSearchingEventType] The type of the event. Always `response.web_search_call.searching`.
+    attr_reader :type
+    # @return [Integer] The index of the output item that the web search call is associated with.
+    attr_reader :output_index
+    # @return [String] Unique ID for the output item associated with the web search call.
+    attr_reader :item_id
+    # @return [Integer] The sequence number of the web search call being processed.
+    attr_reader :sequence_number
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
+
+  # Defines the BetaResponseWebSearchCallSearchingEventType SDK namespace.
+  module BetaResponseWebSearchCallSearchingEventType
+    RESPONSE_WEB_SEARCH_CALL_SEARCHING = 'response.web_search_call.searching'
+    VALUES = ['response.web_search_call.searching'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaResponseWebSearchCallSearchingEventType', 'enum', "Unknown BetaResponseWebSearchCallSearchingEventType: #{value}")
+    end
+  end
 end

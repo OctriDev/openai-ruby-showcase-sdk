@@ -5,680 +5,691 @@
 
 # shared_tool domain models
 module OctridevOpenai
-# Defines the Tool SDK namespace.
-module Tool
-  DISCRIMINATOR_MAPPING = {
-    "function" => -> { FunctionTool },
-    "file_search" => -> { FileSearchTool },
-    "computer" => -> { ComputerTool },
-    "computer_use_preview" => -> { ComputerUsePreviewTool },
-    "web_search" => -> { WebSearchTool },
-    "web_search_2025_08_26" => -> { WebSearchTool },
-    "mcp" => -> { MCPTool },
-    "code_interpreter" => -> { CodeInterpreterTool },
-    "programmatic_tool_calling" => -> { ProgrammaticToolCallingParam },
-    "image_generation" => -> { ImageGenTool },
-    "local_shell" => -> { LocalShellToolParam },
-    "shell" => -> { FunctionShellToolParam },
-    "custom" => -> { CustomToolParam },
-    "namespace" => -> { NamespaceToolParam },
-    "tool_search" => -> { ToolSearchToolParam },
-    "web_search_preview" => -> { WebSearchPreviewTool },
-    "web_search_preview_2025_03_11" => -> { WebSearchPreviewTool },
-    "apply_patch" => -> { ApplyPatchToolParam },
-  }.freeze
+  # Defines the Tool SDK namespace.
+  module Tool
+    DISCRIMINATOR_MAPPING = {
+      'function' => -> { FunctionTool },
+      'file_search' => -> { FileSearchTool },
+      'computer' => -> { ComputerTool },
+      'computer_use_preview' => -> { ComputerUsePreviewTool },
+      'web_search' => -> { WebSearchTool },
+      'web_search_2025_08_26' => -> { WebSearchTool },
+      'mcp' => -> { MCPTool },
+      'code_interpreter' => -> { CodeInterpreterTool },
+      'programmatic_tool_calling' => -> { ProgrammaticToolCallingParam },
+      'image_generation' => -> { ImageGenTool },
+      'local_shell' => -> { LocalShellToolParam },
+      'shell' => -> { FunctionShellToolParam },
+      'custom' => -> { CustomToolParam },
+      'namespace' => -> { NamespaceToolParam },
+      'tool_search' => -> { ToolSearchToolParam },
+      'web_search_preview' => -> { WebSearchPreviewTool },
+      'web_search_preview_2025_03_11' => -> { WebSearchPreviewTool },
+      'apply_patch' => -> { ApplyPatchToolParam }
+    }.freeze
 
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
 
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
 
-    raise SdkValidationError.new('Tool', 'variant', "Unknown Tool discriminator: #{hash["type"].inspect}")
-  end
-end
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
 
-# Defines the ToolCallCaller SDK namespace.
-module ToolCallCaller
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    mapping = { "direct" => DirectToolCallCaller, "program" => ProgramToolCallCaller }
-    type = mapping[hash["type"]]
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('ToolCallCaller', 'variant', "Unknown ToolCallCaller discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Defines the ToolCallCallerParam SDK namespace.
-module ToolCallCallerParam
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    mapping = { "direct" => DirectToolCallCallerParam, "program" => ProgramToolCallCallerParam }
-    type = mapping[hash["type"]]
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('ToolCallCallerParam', 'variant', "Unknown ToolCallCallerParam discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalToolChoiceFunctionMetadata
-  FIELDS = {
-    type: "type",
-    name: "name",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    name
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ToolChoiceFunctionType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for ToolChoiceFunction.
-# Use this option to force the model to call a specific function.
-class ToolChoiceFunction
-  include ToolChoiceParam
-  include RealtimeBetaResponseCreateParamsToolChoice
-  include RealtimeSessionCreateRequestGAToolChoice
-  include RealtimeResponseCreateParamsToolChoice
-  include RealtimeSessionCreateResponseGAToolChoice
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalToolChoiceFunctionMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalToolChoiceFunctionMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalToolChoiceFunctionMetadata::DECODERS
-
-  # @return [ToolChoiceFunctionType] For function calling, the type is always `function`.
-  attr_reader :type
-  # @return [String] The name of the function to call.
-  attr_reader :name
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('Tool', 'variant', "Unknown Tool discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the ToolCallCaller SDK namespace.
+  module ToolCallCaller
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      mapping = { 'direct' => DirectToolCallCaller, 'program' => ProgramToolCallCaller }
+      type = mapping[hash['type']]
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('ToolCallCaller', 'variant', "Unknown ToolCallCaller discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the ToolCallCallerParam SDK namespace.
+  module ToolCallCallerParam
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
 
-# Defines the ToolChoiceFunctionType SDK namespace.
-module ToolChoiceFunctionType
-  FUNCTION = 'function'
-  VALUES = ['function'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+      mapping = { 'direct' => DirectToolCallCallerParam, 'program' => ProgramToolCallCallerParam }
+      type = mapping[hash['type']]
+      return type.from_hash(hash) if type
 
-    raise SdkValidationError.new('ToolChoiceFunctionType', 'enum', "Unknown ToolChoiceFunctionType: #{value}")
-  end
-end
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
 
-# Internal model hydration metadata.
-class SdkInternalToolChoiceMCPMetadata
-  FIELDS = {
-    type: "type",
-    server_label: "server_label",
-    name: "name",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    server_label
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ToolChoiceMCPType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for ToolChoiceMCP.
-# Use this option to force the model to call a specific tool on a remote MCP server.
-class ToolChoiceMCP
-  include ToolChoiceParam
-  include RealtimeBetaResponseCreateParamsToolChoice
-  include RealtimeSessionCreateRequestGAToolChoice
-  include RealtimeResponseCreateParamsToolChoice
-  include RealtimeSessionCreateResponseGAToolChoice
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalToolChoiceMCPMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalToolChoiceMCPMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalToolChoiceMCPMetadata::DECODERS
-
-  # @return [ToolChoiceMCPType] For MCP tools, the type is always `mcp`.
-  attr_reader :type
-  # @return [String] The label of the MCP server to use.
-  attr_reader :server_label
-  # @return [String] Optional `string` value serialized in the `name` wire field.
-  attr_reader :name
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('ToolCallCallerParam', 'variant', "Unknown ToolCallCallerParam discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalToolChoiceFunctionMetadata
+    FIELDS = {
+      type: 'type',
+      name: 'name'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      name
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ToolChoiceFunctionType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for ToolChoiceFunction.
+  # Use this option to force the model to call a specific function.
+  class ToolChoiceFunction
+    include ToolChoiceParam
+    include RealtimeBetaResponseCreateParamsToolChoice
+    include RealtimeSessionCreateRequestGAToolChoice
+    include RealtimeResponseCreateParamsToolChoice
+    include RealtimeSessionCreateResponseGAToolChoice
 
-# Defines the ToolChoiceMCPType SDK namespace.
-module ToolChoiceMCPType
-  MCP = 'mcp'
-  VALUES = ['mcp'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalToolChoiceFunctionMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalToolChoiceFunctionMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalToolChoiceFunctionMetadata::DECODERS
 
-    raise SdkValidationError.new('ToolChoiceMCPType', 'enum', "Unknown ToolChoiceMCPType: #{value}")
-  end
-end
+    # @return [ToolChoiceFunctionType] For function calling, the type is always `function`.
+    attr_reader :type
+    # @return [String] The name of the function to call.
+    attr_reader :name
 
-# Defines the ToolChoiceOptions SDK namespace.
-module ToolChoiceOptions
-  NONE = 'none'
-  AUTO = 'auto'
-  REQUIRED = 'required'
-  VALUES = ['none', 'auto', 'required'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# Internal model hydration metadata.
-class SdkInternalToolSearchCallMetadata
-  FIELDS = {
-    type: "type",
-    id: "id",
-    call_id: "call_id",
-    execution: "execution",
-    arguments: "arguments",
-    status: "status",
-    created_by: "created_by",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    id
-    call_id
-    execution
-    arguments
-    status
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ToolSearchCallType.from_value(value)
-    end,
-    execution: lambda do |value|
-      ::OctridevOpenai::ToolSearchExecutionType.from_value(value)
-    end,
-    status: lambda do |value|
-      ::OctridevOpenai::FunctionCallStatus.from_value(value)
-    end,
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    call_id
-    arguments
-  ].freeze
-end
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-# API model for ToolSearchCall.
-# Typed representation of the `ToolSearchCall` API schema.
-class ToolSearchCall
-  include ConversationItem
-  include ItemResource
-  include OutputItem
-  include ItemField
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalToolSearchCallMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalToolSearchCallMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalToolSearchCallMetadata::DECODERS
-
-  # @return [ToolSearchCallType] The type of the item. Always `tool_search_call`.
-  attr_reader :type
-  # @return [String] The unique ID of the tool search call item.
-  attr_reader :id
-  # @return [String] Required `string` value serialized in the `call_id` wire field.
-  attr_reader :call_id
-  # @return [ToolSearchExecutionType] Whether tool search was executed by the server or by the client.
-  attr_reader :execution
-  # @return [Object] Arguments used for the tool search call.
-  attr_reader :arguments
-  # @return [FunctionCallStatus] The status of the tool search call item that was recorded.
-  attr_reader :status
-  # @return [String] The identifier of the actor that created the item.
-  attr_reader :created_by
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalToolSearchCallMetadata::NULLABLE_FIELDS)
+  # Defines the ToolChoiceFunctionType SDK namespace.
+  module ToolChoiceFunctionType
+    FUNCTION = 'function'
+    VALUES = ['function'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('ToolChoiceFunctionType', 'enum', "Unknown ToolChoiceFunctionType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the ToolSearchCallType SDK namespace.
-module ToolSearchCallType
-  TOOL_SEARCH_CALL = 'tool_search_call'
-  VALUES = ['tool_search_call'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('ToolSearchCallType', 'enum', "Unknown ToolSearchCallType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalToolSearchCallItemParamMetadata
-  FIELDS = {
-    id: "id",
-    call_id: "call_id",
-    type: "type",
-    execution: "execution",
-    arguments: "arguments",
-    status: "status",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    arguments
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ToolSearchCallItemParamType.from_value(value)
-    end,
-    execution: lambda do |value|
-      ::OctridevOpenai::ToolSearchExecutionType.from_value(value)
-    end,
-    arguments: lambda do |value|
-      ::OctridevOpenai::EmptyModelParam.from_hash(value)
-    end,
-    status: lambda do |value|
-      ::OctridevOpenai::FunctionCallItemStatus.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for ToolSearchCallItemParam.
-# Typed representation of the `ToolSearchCallItemParam` API schema.
-class ToolSearchCallItemParam
-  include Item
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalToolSearchCallItemParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalToolSearchCallItemParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalToolSearchCallItemParamMetadata::DECODERS
-
-  # @return [String] Optional `string` value serialized in the `id` wire field.
-  attr_reader :id
-  # @return [String] Optional API value serialized in the `call_id` wire field.
-  attr_reader :call_id
-  # @return [ToolSearchCallItemParamType] The item type. Always `tool_search_call`.
-  attr_reader :type
-  # @return [ToolSearchExecutionType] Whether tool search was executed by the server or by the client.
-  attr_reader :execution
-  # @return [EmptyModelParam] The arguments supplied to the tool search call.
-  attr_reader :arguments
-  # @return [FunctionCallItemStatus] Optional API value serialized in the `status` wire field.
-  attr_reader :status
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalToolChoiceMCPMetadata
+    FIELDS = {
+      type: 'type',
+      server_label: 'server_label',
+      name: 'name'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      server_label
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ToolChoiceMCPType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ToolChoiceMCP.
+  # Use this option to force the model to call a specific tool on a remote MCP server.
+  class ToolChoiceMCP
+    include ToolChoiceParam
+    include RealtimeBetaResponseCreateParamsToolChoice
+    include RealtimeSessionCreateRequestGAToolChoice
+    include RealtimeResponseCreateParamsToolChoice
+    include RealtimeSessionCreateResponseGAToolChoice
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalToolChoiceMCPMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalToolChoiceMCPMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalToolChoiceMCPMetadata::DECODERS
+
+    # @return [ToolChoiceMCPType] For MCP tools, the type is always `mcp`.
+    attr_reader :type
+    # @return [String] The label of the MCP server to use.
+    attr_reader :server_label
+    # @return [String] Optional `string` value serialized in the `name` wire field.
+    attr_reader :name
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the ToolChoiceMCPType SDK namespace.
+  module ToolChoiceMCPType
+    MCP = 'mcp'
+    VALUES = ['mcp'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the ToolSearchCallItemParamType SDK namespace.
-module ToolSearchCallItemParamType
-  TOOL_SEARCH_CALL = 'tool_search_call'
-  VALUES = ['tool_search_call'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('ToolSearchCallItemParamType', 'enum', "Unknown ToolSearchCallItemParamType: #{value}")
-  end
-end
-
-# Defines the ToolSearchExecutionType SDK namespace.
-module ToolSearchExecutionType
-  SERVER = 'server'
-  CLIENT = 'client'
-  VALUES = ['server', 'client'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalToolSearchOutputMetadata
-  FIELDS = {
-    type: "type",
-    id: "id",
-    call_id: "call_id",
-    execution: "execution",
-    tools: "tools",
-    status: "status",
-    created_by: "created_by",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    id
-    call_id
-    execution
-    tools
-    status
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ToolSearchOutputType.from_value(value)
-    end,
-    execution: lambda do |value|
-      ::OctridevOpenai::ToolSearchExecutionType.from_value(value)
-    end,
-    tools: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::Tool.from_hash(item) }
-    end,
-    status: lambda do |value|
-      ::OctridevOpenai::FunctionCallOutputStatusEnum.from_value(value)
-    end,
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    call_id
-  ].freeze
-end
-
-# API model for ToolSearchOutput.
-# Typed representation of the `ToolSearchOutput` API schema.
-class ToolSearchOutput
-  include ConversationItem
-  include ItemResource
-  include OutputItem
-  include ItemField
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalToolSearchOutputMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalToolSearchOutputMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalToolSearchOutputMetadata::DECODERS
-
-  # @return [ToolSearchOutputType] The type of the item. Always `tool_search_output`.
-  attr_reader :type
-  # @return [String] The unique ID of the tool search output item.
-  attr_reader :id
-  # @return [String] Required `string` value serialized in the `call_id` wire field.
-  attr_reader :call_id
-  # @return [ToolSearchExecutionType] Whether tool search was executed by the server or by the client.
-  attr_reader :execution
-  # @return [Array_of_Tool] The loaded tool definitions returned by tool search.
-  attr_reader :tools
-  # @return [FunctionCallOutputStatusEnum] The status of the tool search output item that was recorded.
-  attr_reader :status
-  # @return [String] The identifier of the actor that created the item.
-  attr_reader :created_by
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('ToolChoiceMCPType', 'enum', "Unknown ToolChoiceMCPType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalToolSearchOutputMetadata::NULLABLE_FIELDS)
+  # Defines the ToolChoiceOptions SDK namespace.
+  module ToolChoiceOptions
+    NONE = 'none'
+    AUTO = 'auto'
+    REQUIRED = 'required'
+    VALUES = %w[none auto required].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the ToolSearchOutputType SDK namespace.
-module ToolSearchOutputType
-  TOOL_SEARCH_OUTPUT = 'tool_search_output'
-  VALUES = ['tool_search_output'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('ToolSearchOutputType', 'enum', "Unknown ToolSearchOutputType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalToolSearchOutputFunctionToolParamMetadata
-  FIELDS = {
-    name: "name",
-    description: "description",
-    parameters: "parameters",
-    strict: "strict",
-    type: "type",
-    async: "async",
-    output_schema: "output_schema",
-    defer_loading: "defer_loading",
-    allowed_callers: "allowed_callers",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    name
-    type
-  ].freeze
-  DECODERS = {
-    parameters: lambda do |value|
-      ::OctridevOpenai::EmptyModelParam.from_hash(value)
-    end,
-    type: lambda do |value|
-      ::OctridevOpenai::ToolSearchOutputFunctionToolParamType.from_value(value)
-    end,
-    allowed_callers: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::CallableToolAllowedCaller.from_value(item) }
-    end,
-  }.freeze
-end
-
-# API model for ToolSearchOutputFunctionToolParam.
-# Typed representation of the `ToolSearchOutputFunctionToolParam` API schema.
-class ToolSearchOutputFunctionToolParam
-  include ToolSearchOutputNamespaceToolParamToolsItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalToolSearchOutputFunctionToolParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalToolSearchOutputFunctionToolParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalToolSearchOutputFunctionToolParamMetadata::DECODERS
-
-  # @return [String] The name of the loaded function tool.
-  attr_reader :name
-  # @return [String] Optional `string` value serialized in the `description` wire field.
-  attr_reader :description
-  # @return [EmptyModelParam] Optional API value serialized in the `parameters` wire field.
-  attr_reader :parameters
-  # @return [Boolean] Optional `boolean` value serialized in the `strict` wire field.
-  attr_reader :strict
-  # @return [ToolSearchOutputFunctionToolParamType] Required enumerated value serialized in the `type` wire field.
-  attr_reader :type
-  # @return [Boolean] Whether the tool response can be returned asynchronously versus immediately returned on next response creation.
-  attr_reader :async
-  # @return [Hash] A JSON Schema describing the JSON value encoded in string outputs for this function tool. This does not describe content-array outputs.
-  attr_reader :output_schema
-  # @return [Boolean] Whether this function should be deferred and discovered via tool search.
-  attr_reader :defer_loading
-  # @return [Array_of_CallableToolAllowedCaller] The tool invocation context(s).
-  attr_reader :allowed_callers
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalToolSearchCallMetadata
+    FIELDS = {
+      type: 'type',
+      id: 'id',
+      call_id: 'call_id',
+      execution: 'execution',
+      arguments: 'arguments',
+      status: 'status',
+      created_by: 'created_by'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      id
+      call_id
+      execution
+      arguments
+      status
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ToolSearchCallType.from_value(value)
+      end,
+      execution: lambda do |value|
+        ::OctridevOpenai::ToolSearchExecutionType.from_value(value)
+      end,
+      status: lambda do |value|
+        ::OctridevOpenai::FunctionCallStatus.from_value(value)
+      end
+    }.freeze
+    NULLABLE_FIELDS = %i[
+      call_id
+      arguments
+    ].freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ToolSearchCall.
+  # Typed representation of the `ToolSearchCall` API schema.
+  class ToolSearchCall
+    include ConversationItem
+    include ItemResource
+    include OutputItem
+    include ItemField
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalToolSearchCallMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalToolSearchCallMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalToolSearchCallMetadata::DECODERS
+
+    # @return [ToolSearchCallType] The type of the item. Always `tool_search_call`.
+    attr_reader :type
+    # @return [String] The unique ID of the tool search call item.
+    attr_reader :id
+    # @return [String] Required `string` value serialized in the `call_id` wire field.
+    attr_reader :call_id
+    # @return [ToolSearchExecutionType] Whether tool search was executed by the server or by the client.
+    attr_reader :execution
+    # @return [Object] Arguments used for the tool search call.
+    attr_reader :arguments
+    # @return [FunctionCallStatus] The status of the tool search call item that was recorded.
+    attr_reader :status
+    # @return [String] The identifier of the actor that created the item.
+    attr_reader :created_by
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalToolSearchCallMetadata::NULLABLE_FIELDS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the ToolSearchCallType SDK namespace.
+  module ToolSearchCallType
+    TOOL_SEARCH_CALL = 'tool_search_call'
+    VALUES = ['tool_search_call'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the ToolSearchOutputFunctionToolParamType SDK namespace.
-module ToolSearchOutputFunctionToolParamType
-  FUNCTION = 'function'
-  VALUES = ['function'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('ToolSearchOutputFunctionToolParamType', 'enum', "Unknown ToolSearchOutputFunctionToolParamType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalToolSearchOutputItemParamMetadata
-  FIELDS = {
-    id: "id",
-    call_id: "call_id",
-    type: "type",
-    execution: "execution",
-    tools: "tools",
-    status: "status",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    tools
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ToolSearchOutputItemParamType.from_value(value)
-    end,
-    execution: lambda do |value|
-      ::OctridevOpenai::ToolSearchExecutionType.from_value(value)
-    end,
-    tools: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::ToolSearchOutputTool.from_hash(item) }
-    end,
-    status: lambda do |value|
-      ::OctridevOpenai::FunctionCallItemStatus.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for ToolSearchOutputItemParam.
-# Typed representation of the `ToolSearchOutputItemParam` API schema.
-class ToolSearchOutputItemParam
-  include Item
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalToolSearchOutputItemParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalToolSearchOutputItemParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalToolSearchOutputItemParamMetadata::DECODERS
-
-  # @return [String] Optional `string` value serialized in the `id` wire field.
-  attr_reader :id
-  # @return [String] Optional API value serialized in the `call_id` wire field.
-  attr_reader :call_id
-  # @return [ToolSearchOutputItemParamType] The item type. Always `tool_search_output`.
-  attr_reader :type
-  # @return [ToolSearchExecutionType] Whether tool search was executed by the server or by the client.
-  attr_reader :execution
-  # @return [Array_of_ToolSearchOutputTool] The loaded tool definitions returned by the tool search output.
-  attr_reader :tools
-  # @return [FunctionCallItemStatus] Optional API value serialized in the `status` wire field.
-  attr_reader :status
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('ToolSearchCallType', 'enum', "Unknown ToolSearchCallType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalToolSearchCallItemParamMetadata
+    FIELDS = {
+      id: 'id',
+      call_id: 'call_id',
+      type: 'type',
+      execution: 'execution',
+      arguments: 'arguments',
+      status: 'status'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      arguments
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ToolSearchCallItemParamType.from_value(value)
+      end,
+      execution: lambda do |value|
+        ::OctridevOpenai::ToolSearchExecutionType.from_value(value)
+      end,
+      arguments: lambda do |value|
+        ::OctridevOpenai::EmptyModelParam.from_hash(value)
+      end,
+      status: lambda do |value|
+        ::OctridevOpenai::FunctionCallItemStatus.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for ToolSearchCallItemParam.
+  # Typed representation of the `ToolSearchCallItemParam` API schema.
+  class ToolSearchCallItemParam
+    include Item
 
-# Defines the ToolSearchOutputItemParamType SDK namespace.
-module ToolSearchOutputItemParamType
-  TOOL_SEARCH_OUTPUT = 'tool_search_output'
-  VALUES = ['tool_search_output'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalToolSearchCallItemParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalToolSearchCallItemParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalToolSearchCallItemParamMetadata::DECODERS
 
-    raise SdkValidationError.new('ToolSearchOutputItemParamType', 'enum', "Unknown ToolSearchOutputItemParamType: #{value}")
-  end
-end
+    # @return [String] Optional `string` value serialized in the `id` wire field.
+    attr_reader :id
+    # @return [String] Optional API value serialized in the `call_id` wire field.
+    attr_reader :call_id
+    # @return [ToolSearchCallItemParamType] The item type. Always `tool_search_call`.
+    attr_reader :type
+    # @return [ToolSearchExecutionType] Whether tool search was executed by the server or by the client.
+    attr_reader :execution
+    # @return [EmptyModelParam] The arguments supplied to the tool search call.
+    attr_reader :arguments
+    # @return [FunctionCallItemStatus] Optional API value serialized in the `status` wire field.
+    attr_reader :status
 
-# Internal model hydration metadata.
-class SdkInternalToolSearchOutputNamespaceToolParamMetadata
-  FIELDS = {
-    type: "type",
-    name: "name",
-    description: "description",
-    tools: "tools",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    name
-    description
-    tools
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ToolSearchOutputNamespaceToolParamType.from_value(value)
-    end,
-    tools: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::ToolSearchOutputNamespaceToolParamToolsItem.from_hash(item) }
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for ToolSearchOutputNamespaceToolParam.
-# Groups function/custom tools under a shared namespace.
-class ToolSearchOutputNamespaceToolParam
-  include ToolSearchOutputTool
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalToolSearchOutputNamespaceToolParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalToolSearchOutputNamespaceToolParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalToolSearchOutputNamespaceToolParamMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [ToolSearchOutputNamespaceToolParamType] The type of the tool. Always `namespace`.
-  attr_reader :type
-  # @return [String] The namespace name used in tool calls (for example, `crm`).
-  attr_reader :name
-  # @return [String] A description of the namespace shown to the model.
-  attr_reader :description
-  # @return [Array_of_ToolSearchOutputNamespaceToolParamToolsItem] The function/custom tools loaded inside this namespace.
-  attr_reader :tools
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the ToolSearchCallItemParamType SDK namespace.
+  module ToolSearchCallItemParamType
+    TOOL_SEARCH_CALL = 'tool_search_call'
+    VALUES = ['tool_search_call'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('ToolSearchCallItemParamType', 'enum', "Unknown ToolSearchCallItemParamType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the ToolSearchExecutionType SDK namespace.
+  module ToolSearchExecutionType
+    SERVER = 'server'
+    CLIENT = 'client'
+    VALUES = %w[server client].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
+
+  # Internal model hydration metadata.
+  class SdkInternalToolSearchOutputMetadata
+    FIELDS = {
+      type: 'type',
+      id: 'id',
+      call_id: 'call_id',
+      execution: 'execution',
+      tools: 'tools',
+      status: 'status',
+      created_by: 'created_by'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      id
+      call_id
+      execution
+      tools
+      status
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ToolSearchOutputType.from_value(value)
+      end,
+      execution: lambda do |value|
+        ::OctridevOpenai::ToolSearchExecutionType.from_value(value)
+      end,
+      tools: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::Tool.from_hash(item) }
+      end,
+      status: lambda do |value|
+        ::OctridevOpenai::FunctionCallOutputStatusEnum.from_value(value)
+      end
+    }.freeze
+    NULLABLE_FIELDS = %i[
+      call_id
+    ].freeze
+  end
+
+  # API model for ToolSearchOutput.
+  # Typed representation of the `ToolSearchOutput` API schema.
+  class ToolSearchOutput
+    include ConversationItem
+    include ItemResource
+    include OutputItem
+    include ItemField
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalToolSearchOutputMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalToolSearchOutputMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalToolSearchOutputMetadata::DECODERS
+
+    # @return [ToolSearchOutputType] The type of the item. Always `tool_search_output`.
+    attr_reader :type
+    # @return [String] The unique ID of the tool search output item.
+    attr_reader :id
+    # @return [String] Required `string` value serialized in the `call_id` wire field.
+    attr_reader :call_id
+    # @return [ToolSearchExecutionType] Whether tool search was executed by the server or by the client.
+    attr_reader :execution
+    # @return [Array_of_Tool] The loaded tool definitions returned by tool search.
+    attr_reader :tools
+    # @return [FunctionCallOutputStatusEnum] The status of the tool search output item that was recorded.
+    attr_reader :status
+    # @return [String] The identifier of the actor that created the item.
+    attr_reader :created_by
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalToolSearchOutputMetadata::NULLABLE_FIELDS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the ToolSearchOutputType SDK namespace.
+  module ToolSearchOutputType
+    TOOL_SEARCH_OUTPUT = 'tool_search_output'
+    VALUES = ['tool_search_output'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('ToolSearchOutputType', 'enum', "Unknown ToolSearchOutputType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalToolSearchOutputFunctionToolParamMetadata
+    FIELDS = {
+      name: 'name',
+      description: 'description',
+      parameters: 'parameters',
+      strict: 'strict',
+      type: 'type',
+      async: 'async',
+      output_schema: 'output_schema',
+      defer_loading: 'defer_loading',
+      allowed_callers: 'allowed_callers'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      name
+      type
+    ].freeze
+    DECODERS = {
+      parameters: lambda do |value|
+        ::OctridevOpenai::EmptyModelParam.from_hash(value)
+      end,
+      type: lambda do |value|
+        ::OctridevOpenai::ToolSearchOutputFunctionToolParamType.from_value(value)
+      end,
+      allowed_callers: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::CallableToolAllowedCaller.from_value(item) }
+      end
+    }.freeze
+  end
+
+  # API model for ToolSearchOutputFunctionToolParam.
+  # Typed representation of the `ToolSearchOutputFunctionToolParam` API schema.
+  class ToolSearchOutputFunctionToolParam
+    include ToolSearchOutputNamespaceToolParamToolsItem
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalToolSearchOutputFunctionToolParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalToolSearchOutputFunctionToolParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalToolSearchOutputFunctionToolParamMetadata::DECODERS
+
+    # @return [String] The name of the loaded function tool.
+    attr_reader :name
+    # @return [String] Optional `string` value serialized in the `description` wire field.
+    attr_reader :description
+    # @return [EmptyModelParam] Optional API value serialized in the `parameters` wire field.
+    attr_reader :parameters
+    # @return [Boolean] Optional `boolean` value serialized in the `strict` wire field.
+    attr_reader :strict
+    # @return [ToolSearchOutputFunctionToolParamType] Required enumerated value serialized in the `type` wire field.
+    attr_reader :type
+    # @return [Boolean] Whether the tool response can be returned asynchronously versus immediately returned on next response creation.
+    attr_reader :async
+    # @return [Hash] A JSON Schema describing the JSON value encoded in string outputs for this function tool. This does not describe content-array outputs.
+    attr_reader :output_schema
+    # @return [Boolean] Whether this function should be deferred and discovered via tool search.
+    attr_reader :defer_loading
+    # @return [Array_of_CallableToolAllowedCaller] The tool invocation context(s).
+    attr_reader :allowed_callers
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the ToolSearchOutputFunctionToolParamType SDK namespace.
+  module ToolSearchOutputFunctionToolParamType
+    FUNCTION = 'function'
+    VALUES = ['function'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('ToolSearchOutputFunctionToolParamType', 'enum', "Unknown ToolSearchOutputFunctionToolParamType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalToolSearchOutputItemParamMetadata
+    FIELDS = {
+      id: 'id',
+      call_id: 'call_id',
+      type: 'type',
+      execution: 'execution',
+      tools: 'tools',
+      status: 'status'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      tools
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ToolSearchOutputItemParamType.from_value(value)
+      end,
+      execution: lambda do |value|
+        ::OctridevOpenai::ToolSearchExecutionType.from_value(value)
+      end,
+      tools: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::ToolSearchOutputTool.from_hash(item) }
+      end,
+      status: lambda do |value|
+        ::OctridevOpenai::FunctionCallItemStatus.from_value(value)
+      end
+    }.freeze
+  end
+
+  # API model for ToolSearchOutputItemParam.
+  # Typed representation of the `ToolSearchOutputItemParam` API schema.
+  class ToolSearchOutputItemParam
+    include Item
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalToolSearchOutputItemParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalToolSearchOutputItemParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalToolSearchOutputItemParamMetadata::DECODERS
+
+    # @return [String] Optional `string` value serialized in the `id` wire field.
+    attr_reader :id
+    # @return [String] Optional API value serialized in the `call_id` wire field.
+    attr_reader :call_id
+    # @return [ToolSearchOutputItemParamType] The item type. Always `tool_search_output`.
+    attr_reader :type
+    # @return [ToolSearchExecutionType] Whether tool search was executed by the server or by the client.
+    attr_reader :execution
+    # @return [Array_of_ToolSearchOutputTool] The loaded tool definitions returned by the tool search output.
+    attr_reader :tools
+    # @return [FunctionCallItemStatus] Optional API value serialized in the `status` wire field.
+    attr_reader :status
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the ToolSearchOutputItemParamType SDK namespace.
+  module ToolSearchOutputItemParamType
+    TOOL_SEARCH_OUTPUT = 'tool_search_output'
+    VALUES = ['tool_search_output'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('ToolSearchOutputItemParamType', 'enum', "Unknown ToolSearchOutputItemParamType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalToolSearchOutputNamespaceToolParamMetadata
+    FIELDS = {
+      type: 'type',
+      name: 'name',
+      description: 'description',
+      tools: 'tools'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      name
+      description
+      tools
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ToolSearchOutputNamespaceToolParamType.from_value(value)
+      end,
+      tools: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::ToolSearchOutputNamespaceToolParamToolsItem.from_hash(item) }
+      end
+    }.freeze
+  end
+
+  # API model for ToolSearchOutputNamespaceToolParam.
+  # Groups function/custom tools under a shared namespace.
+  class ToolSearchOutputNamespaceToolParam
+    include ToolSearchOutputTool
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalToolSearchOutputNamespaceToolParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalToolSearchOutputNamespaceToolParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalToolSearchOutputNamespaceToolParamMetadata::DECODERS
+
+    # @return [ToolSearchOutputNamespaceToolParamType] The type of the tool. Always `namespace`.
+    attr_reader :type
+    # @return [String] The namespace name used in tool calls (for example, `crm`).
+    attr_reader :name
+    # @return [String] A description of the namespace shown to the model.
+    attr_reader :description
+    # @return [Array_of_ToolSearchOutputNamespaceToolParamToolsItem] The function/custom tools loaded inside this namespace.
+    attr_reader :tools
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
 end

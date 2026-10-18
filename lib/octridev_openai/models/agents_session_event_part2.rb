@@ -5,674 +5,684 @@
 
 # agents_session_event domain models (part 2)
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalSessionEventAgentSessionEnvironmentResetMetadata
-  FIELDS = {
-    type: "type",
-    event_id: "event_id",
-    session_id: "session_id",
-    turn_id: "turn_id",
-    environment_id: "environment_id",
-    reset_count: "reset_count",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    event_id
-    session_id
-    turn_id
-    environment_id
-    reset_count
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::SessionEventAgentSessionEnvironmentResetType.from_value(value)
-    end,
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    turn_id
-  ].freeze
-end
-
-# API model for SessionEventAgentSessionEnvironmentReset.
-# Emitted after a hosted sandbox is replaced. Conversation history survives; changes to the previous sandbox's files and processes do not.
-class SessionEventAgentSessionEnvironmentReset
-  include SessionEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalSessionEventAgentSessionEnvironmentResetMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalSessionEventAgentSessionEnvironmentResetMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalSessionEventAgentSessionEnvironmentResetMetadata::DECODERS
-
-  # @return [SessionEventAgentSessionEnvironmentResetType] The type of the object. Always `agent.session.environment.reset`.
-  attr_reader :type
-  # @return [String] The unique ID of the event.
-  attr_reader :event_id
-  # @return [String] The ID of the session associated with the event.
-  attr_reader :session_id
-  # @return [String] The associated turn, when applicable.
-  attr_reader :turn_id
-  # @return [String] The stable environment ID, retained across sandbox replacements.
-  attr_reader :environment_id
-  # @return [Integer] Monotonically increasing reset number. Repeated notifications share this number.
-  attr_reader :reset_count
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalSessionEventAgentSessionEnvironmentResetMetadata
+    FIELDS = {
+      type: 'type',
+      event_id: 'event_id',
+      session_id: 'session_id',
+      turn_id: 'turn_id',
+      environment_id: 'environment_id',
+      reset_count: 'reset_count'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      event_id
+      session_id
+      turn_id
+      environment_id
+      reset_count
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::SessionEventAgentSessionEnvironmentResetType.from_value(value)
+      end
+    }.freeze
+    NULLABLE_FIELDS = %i[
+      turn_id
+    ].freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalSessionEventAgentSessionEnvironmentResetMetadata::NULLABLE_FIELDS)
+  # API model for SessionEventAgentSessionEnvironmentReset.
+  # Emitted after a hosted sandbox is replaced. Conversation history survives; changes to the previous sandbox's files and processes do not.
+  class SessionEventAgentSessionEnvironmentReset
+    include SessionEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalSessionEventAgentSessionEnvironmentResetMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalSessionEventAgentSessionEnvironmentResetMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalSessionEventAgentSessionEnvironmentResetMetadata::DECODERS
+
+    # @return [SessionEventAgentSessionEnvironmentResetType] The type of the object. Always `agent.session.environment.reset`.
+    attr_reader :type
+    # @return [String] The unique ID of the event.
+    attr_reader :event_id
+    # @return [String] The ID of the session associated with the event.
+    attr_reader :session_id
+    # @return [String] The associated turn, when applicable.
+    attr_reader :turn_id
+    # @return [String] The stable environment ID, retained across sandbox replacements.
+    attr_reader :environment_id
+    # @return [Integer] Monotonically increasing reset number. Repeated notifications share this number.
+    attr_reader :reset_count
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalSessionEventAgentSessionEnvironmentResetMetadata::NULLABLE_FIELDS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the SessionEventAgentSessionEnvironmentResetType SDK namespace.
+  module SessionEventAgentSessionEnvironmentResetType
+    AGENT_SESSION_ENVIRONMENT_RESET = 'agent.session.environment.reset'
+    VALUES = ['agent.session.environment.reset'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the SessionEventAgentSessionEnvironmentResetType SDK namespace.
-module SessionEventAgentSessionEnvironmentResetType
-  AGENT_SESSION_ENVIRONMENT_RESET = 'agent.session.environment.reset'
-  VALUES = ['agent.session.environment.reset'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('SessionEventAgentSessionEnvironmentResetType', 'enum', "Unknown SessionEventAgentSessionEnvironmentResetType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalSessionEventAgentSessionEnvironmentSuspendedMetadata
-  FIELDS = {
-    type: "type",
-    event_id: "event_id",
-    session_id: "session_id",
-    turn_id: "turn_id",
-    environment: "environment",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    event_id
-    session_id
-    turn_id
-    environment
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::SessionEventAgentSessionEnvironmentSuspendedType.from_value(value)
-    end,
-    environment: lambda do |value|
-      ::OctridevOpenai::SessionEnvironmentStateResource.from_hash(value)
-    end,
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    turn_id
-  ].freeze
-end
-
-# API model for SessionEventAgentSessionEnvironmentSuspended.
-# Emitted after an idle hosted session environment is checkpointed and stopped.
-class SessionEventAgentSessionEnvironmentSuspended
-  include SessionEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalSessionEventAgentSessionEnvironmentSuspendedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalSessionEventAgentSessionEnvironmentSuspendedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalSessionEventAgentSessionEnvironmentSuspendedMetadata::DECODERS
-
-  # @return [SessionEventAgentSessionEnvironmentSuspendedType] The type of the object. Always `agent.session.environment.suspended`.
-  attr_reader :type
-  # @return [String] The unique ID of the event.
-  attr_reader :event_id
-  # @return [String] The ID of the session associated with the event.
-  attr_reader :session_id
-  # @return [String] The ID of the turn associated with the event, when applicable.
-  attr_reader :turn_id
-  # @return [SessionEnvironmentStateResource] The current environment state.
-  attr_reader :environment
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('SessionEventAgentSessionEnvironmentResetType', 'enum', "Unknown SessionEventAgentSessionEnvironmentResetType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalSessionEventAgentSessionEnvironmentSuspendedMetadata::NULLABLE_FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalSessionEventAgentSessionEnvironmentSuspendedMetadata
+    FIELDS = {
+      type: 'type',
+      event_id: 'event_id',
+      session_id: 'session_id',
+      turn_id: 'turn_id',
+      environment: 'environment'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      event_id
+      session_id
+      turn_id
+      environment
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::SessionEventAgentSessionEnvironmentSuspendedType.from_value(value)
+      end,
+      environment: lambda do |value|
+        ::OctridevOpenai::SessionEnvironmentStateResource.from_hash(value)
+      end
+    }.freeze
+    NULLABLE_FIELDS = %i[
+      turn_id
+    ].freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for SessionEventAgentSessionEnvironmentSuspended.
+  # Emitted after an idle hosted session environment is checkpointed and stopped.
+  class SessionEventAgentSessionEnvironmentSuspended
+    include SessionEvent
 
-# Defines the SessionEventAgentSessionEnvironmentSuspendedType SDK namespace.
-module SessionEventAgentSessionEnvironmentSuspendedType
-  AGENT_SESSION_ENVIRONMENT_SUSPENDED = 'agent.session.environment.suspended'
-  VALUES = ['agent.session.environment.suspended'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalSessionEventAgentSessionEnvironmentSuspendedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalSessionEventAgentSessionEnvironmentSuspendedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalSessionEventAgentSessionEnvironmentSuspendedMetadata::DECODERS
 
-    raise SdkValidationError.new('SessionEventAgentSessionEnvironmentSuspendedType', 'enum', "Unknown SessionEventAgentSessionEnvironmentSuspendedType: #{value}")
-  end
-end
+    # @return [SessionEventAgentSessionEnvironmentSuspendedType] The type of the object. Always `agent.session.environment.suspended`.
+    attr_reader :type
+    # @return [String] The unique ID of the event.
+    attr_reader :event_id
+    # @return [String] The ID of the session associated with the event.
+    attr_reader :session_id
+    # @return [String] The ID of the turn associated with the event, when applicable.
+    attr_reader :turn_id
+    # @return [SessionEnvironmentStateResource] The current environment state.
+    attr_reader :environment
 
-# Internal model hydration metadata.
-class SdkInternalSessionEventAgentSessionFailedMetadata
-  FIELDS = {
-    type: "type",
-    event_id: "event_id",
-    session: "session",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    event_id
-    session
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::SessionEventAgentSessionFailedType.from_value(value)
-    end,
-    session: lambda do |value|
-      ::OctridevOpenai::SessionResource.from_hash(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for SessionEventAgentSessionFailed.
-# Emitted when a session fails.
-class SessionEventAgentSessionFailed
-  include SessionEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalSessionEventAgentSessionFailedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalSessionEventAgentSessionFailedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalSessionEventAgentSessionFailedMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalSessionEventAgentSessionEnvironmentSuspendedMetadata::NULLABLE_FIELDS)
+    end
 
-  # @return [SessionEventAgentSessionFailedType] The type of the object. Always `agent.session.failed`.
-  attr_reader :type
-  # @return [String] The unique ID of the event.
-  attr_reader :event_id
-  # @return [SessionResource] The failed session.
-  attr_reader :session
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the SessionEventAgentSessionEnvironmentSuspendedType SDK namespace.
+  module SessionEventAgentSessionEnvironmentSuspendedType
+    AGENT_SESSION_ENVIRONMENT_SUSPENDED = 'agent.session.environment.suspended'
+    VALUES = ['agent.session.environment.suspended'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('SessionEventAgentSessionEnvironmentSuspendedType', 'enum', "Unknown SessionEventAgentSessionEnvironmentSuspendedType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the SessionEventAgentSessionFailedType SDK namespace.
-module SessionEventAgentSessionFailedType
-  AGENT_SESSION_FAILED = 'agent.session.failed'
-  VALUES = ['agent.session.failed'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('SessionEventAgentSessionFailedType', 'enum', "Unknown SessionEventAgentSessionFailedType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalSessionEventAgentSessionIdleMetadata
-  FIELDS = {
-    type: "type",
-    event_id: "event_id",
-    session: "session",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    event_id
-    session
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::SessionEventAgentSessionIdleType.from_value(value)
-    end,
-    session: lambda do |value|
-      ::OctridevOpenai::SessionResource.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for SessionEventAgentSessionIdle.
-# Emitted when a session becomes idle.
-class SessionEventAgentSessionIdle
-  include SessionEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalSessionEventAgentSessionIdleMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalSessionEventAgentSessionIdleMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalSessionEventAgentSessionIdleMetadata::DECODERS
-
-  # @return [SessionEventAgentSessionIdleType] The type of the object. Always `agent.session.idle`.
-  attr_reader :type
-  # @return [String] The unique ID of the event.
-  attr_reader :event_id
-  # @return [SessionResource] The session that became idle.
-  attr_reader :session
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalSessionEventAgentSessionFailedMetadata
+    FIELDS = {
+      type: 'type',
+      event_id: 'event_id',
+      session: 'session'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      event_id
+      session
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::SessionEventAgentSessionFailedType.from_value(value)
+      end,
+      session: lambda do |value|
+        ::OctridevOpenai::SessionResource.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for SessionEventAgentSessionFailed.
+  # Emitted when a session fails.
+  class SessionEventAgentSessionFailed
+    include SessionEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalSessionEventAgentSessionFailedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalSessionEventAgentSessionFailedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalSessionEventAgentSessionFailedMetadata::DECODERS
+
+    # @return [SessionEventAgentSessionFailedType] The type of the object. Always `agent.session.failed`.
+    attr_reader :type
+    # @return [String] The unique ID of the event.
+    attr_reader :event_id
+    # @return [SessionResource] The failed session.
+    attr_reader :session
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the SessionEventAgentSessionFailedType SDK namespace.
+  module SessionEventAgentSessionFailedType
+    AGENT_SESSION_FAILED = 'agent.session.failed'
+    VALUES = ['agent.session.failed'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the SessionEventAgentSessionIdleType SDK namespace.
-module SessionEventAgentSessionIdleType
-  AGENT_SESSION_IDLE = 'agent.session.idle'
-  VALUES = ['agent.session.idle'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('SessionEventAgentSessionIdleType', 'enum', "Unknown SessionEventAgentSessionIdleType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalSessionEventAgentSessionInProgressMetadata
-  FIELDS = {
-    type: "type",
-    event_id: "event_id",
-    session: "session",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    event_id
-    session
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::SessionEventAgentSessionInProgressType.from_value(value)
-    end,
-    session: lambda do |value|
-      ::OctridevOpenai::SessionResource.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for SessionEventAgentSessionInProgress.
-# Emitted when a session starts processing a turn.
-class SessionEventAgentSessionInProgress
-  include SessionEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalSessionEventAgentSessionInProgressMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalSessionEventAgentSessionInProgressMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalSessionEventAgentSessionInProgressMetadata::DECODERS
-
-  # @return [SessionEventAgentSessionInProgressType] The type of the object. Always `agent.session.in_progress`.
-  attr_reader :type
-  # @return [String] The unique ID of the event.
-  attr_reader :event_id
-  # @return [SessionResource] The session that started processing.
-  attr_reader :session
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('SessionEventAgentSessionFailedType', 'enum', "Unknown SessionEventAgentSessionFailedType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalSessionEventAgentSessionIdleMetadata
+    FIELDS = {
+      type: 'type',
+      event_id: 'event_id',
+      session: 'session'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      event_id
+      session
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::SessionEventAgentSessionIdleType.from_value(value)
+      end,
+      session: lambda do |value|
+        ::OctridevOpenai::SessionResource.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for SessionEventAgentSessionIdle.
+  # Emitted when a session becomes idle.
+  class SessionEventAgentSessionIdle
+    include SessionEvent
 
-# Defines the SessionEventAgentSessionInProgressType SDK namespace.
-module SessionEventAgentSessionInProgressType
-  AGENT_SESSION_IN_PROGRESS = 'agent.session.in_progress'
-  VALUES = ['agent.session.in_progress'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalSessionEventAgentSessionIdleMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalSessionEventAgentSessionIdleMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalSessionEventAgentSessionIdleMetadata::DECODERS
 
-    raise SdkValidationError.new('SessionEventAgentSessionInProgressType', 'enum', "Unknown SessionEventAgentSessionInProgressType: #{value}")
-  end
-end
+    # @return [SessionEventAgentSessionIdleType] The type of the object. Always `agent.session.idle`.
+    attr_reader :type
+    # @return [String] The unique ID of the event.
+    attr_reader :event_id
+    # @return [SessionResource] The session that became idle.
+    attr_reader :session
 
-# Internal model hydration metadata.
-class SdkInternalSessionEventAgentSessionRequiresActionMetadata
-  FIELDS = {
-    type: "type",
-    event_id: "event_id",
-    session: "session",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    event_id
-    session
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::SessionEventAgentSessionRequiresActionType.from_value(value)
-    end,
-    session: lambda do |value|
-      ::OctridevOpenai::SessionResource.from_hash(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for SessionEventAgentSessionRequiresAction.
-# Emitted when a session is waiting for one or more required actions.
-class SessionEventAgentSessionRequiresAction
-  include SessionEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalSessionEventAgentSessionRequiresActionMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalSessionEventAgentSessionRequiresActionMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalSessionEventAgentSessionRequiresActionMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [SessionEventAgentSessionRequiresActionType] The type of the object. Always `agent.session.requires_action`.
-  attr_reader :type
-  # @return [String] The unique ID of the event.
-  attr_reader :event_id
-  # @return [SessionResource] The session and its current required actions.
-  attr_reader :session
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the SessionEventAgentSessionIdleType SDK namespace.
+  module SessionEventAgentSessionIdleType
+    AGENT_SESSION_IDLE = 'agent.session.idle'
+    VALUES = ['agent.session.idle'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('SessionEventAgentSessionIdleType', 'enum', "Unknown SessionEventAgentSessionIdleType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the SessionEventAgentSessionRequiresActionType SDK namespace.
-module SessionEventAgentSessionRequiresActionType
-  AGENT_SESSION_REQUIRES_ACTION = 'agent.session.requires_action'
-  VALUES = ['agent.session.requires_action'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('SessionEventAgentSessionRequiresActionType', 'enum', "Unknown SessionEventAgentSessionRequiresActionType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalSessionEventAgentSessionSubagentActiveMetadata
-  FIELDS = {
-    type: "type",
-    event_id: "event_id",
-    subagent: "subagent",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    event_id
-    subagent
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::SessionEventAgentSessionSubagentActiveType.from_value(value)
-    end,
-    subagent: lambda do |value|
-      ::OctridevOpenai::SubagentResource.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for SessionEventAgentSessionSubagentActive.
-# Emitted when a closed subagent successfully resumes.
-class SessionEventAgentSessionSubagentActive
-  include SessionEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalSessionEventAgentSessionSubagentActiveMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalSessionEventAgentSessionSubagentActiveMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalSessionEventAgentSessionSubagentActiveMetadata::DECODERS
-
-  # @return [SessionEventAgentSessionSubagentActiveType] The type of the object. Always `agent.session.subagent.active`.
-  attr_reader :type
-  # @return [String] The unique ID of the event.
-  attr_reader :event_id
-  # @return [SubagentResource] The subagent that resumed.
-  attr_reader :subagent
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalSessionEventAgentSessionInProgressMetadata
+    FIELDS = {
+      type: 'type',
+      event_id: 'event_id',
+      session: 'session'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      event_id
+      session
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::SessionEventAgentSessionInProgressType.from_value(value)
+      end,
+      session: lambda do |value|
+        ::OctridevOpenai::SessionResource.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for SessionEventAgentSessionInProgress.
+  # Emitted when a session starts processing a turn.
+  class SessionEventAgentSessionInProgress
+    include SessionEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalSessionEventAgentSessionInProgressMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalSessionEventAgentSessionInProgressMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalSessionEventAgentSessionInProgressMetadata::DECODERS
+
+    # @return [SessionEventAgentSessionInProgressType] The type of the object. Always `agent.session.in_progress`.
+    attr_reader :type
+    # @return [String] The unique ID of the event.
+    attr_reader :event_id
+    # @return [SessionResource] The session that started processing.
+    attr_reader :session
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the SessionEventAgentSessionInProgressType SDK namespace.
+  module SessionEventAgentSessionInProgressType
+    AGENT_SESSION_IN_PROGRESS = 'agent.session.in_progress'
+    VALUES = ['agent.session.in_progress'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the SessionEventAgentSessionSubagentActiveType SDK namespace.
-module SessionEventAgentSessionSubagentActiveType
-  AGENT_SESSION_SUBAGENT_ACTIVE = 'agent.session.subagent.active'
-  VALUES = ['agent.session.subagent.active'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('SessionEventAgentSessionSubagentActiveType', 'enum', "Unknown SessionEventAgentSessionSubagentActiveType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalSessionEventAgentSessionSubagentClosedMetadata
-  FIELDS = {
-    type: "type",
-    event_id: "event_id",
-    subagent: "subagent",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    event_id
-    subagent
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::SessionEventAgentSessionSubagentClosedType.from_value(value)
-    end,
-    subagent: lambda do |value|
-      ::OctridevOpenai::SubagentResource.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for SessionEventAgentSessionSubagentClosed.
-# Emitted when a subagent is closed.
-class SessionEventAgentSessionSubagentClosed
-  include SessionEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalSessionEventAgentSessionSubagentClosedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalSessionEventAgentSessionSubagentClosedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalSessionEventAgentSessionSubagentClosedMetadata::DECODERS
-
-  # @return [SessionEventAgentSessionSubagentClosedType] The type of the object. Always `agent.session.subagent.closed`.
-  attr_reader :type
-  # @return [String] The unique ID of the event.
-  attr_reader :event_id
-  # @return [SubagentResource] The subagent that was closed.
-  attr_reader :subagent
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('SessionEventAgentSessionInProgressType', 'enum', "Unknown SessionEventAgentSessionInProgressType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalSessionEventAgentSessionRequiresActionMetadata
+    FIELDS = {
+      type: 'type',
+      event_id: 'event_id',
+      session: 'session'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      event_id
+      session
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::SessionEventAgentSessionRequiresActionType.from_value(value)
+      end,
+      session: lambda do |value|
+        ::OctridevOpenai::SessionResource.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for SessionEventAgentSessionRequiresAction.
+  # Emitted when a session is waiting for one or more required actions.
+  class SessionEventAgentSessionRequiresAction
+    include SessionEvent
 
-# Defines the SessionEventAgentSessionSubagentClosedType SDK namespace.
-module SessionEventAgentSessionSubagentClosedType
-  AGENT_SESSION_SUBAGENT_CLOSED = 'agent.session.subagent.closed'
-  VALUES = ['agent.session.subagent.closed'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalSessionEventAgentSessionRequiresActionMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalSessionEventAgentSessionRequiresActionMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalSessionEventAgentSessionRequiresActionMetadata::DECODERS
 
-    raise SdkValidationError.new('SessionEventAgentSessionSubagentClosedType', 'enum', "Unknown SessionEventAgentSessionSubagentClosedType: #{value}")
-  end
-end
+    # @return [SessionEventAgentSessionRequiresActionType] The type of the object. Always `agent.session.requires_action`.
+    attr_reader :type
+    # @return [String] The unique ID of the event.
+    attr_reader :event_id
+    # @return [SessionResource] The session and its current required actions.
+    attr_reader :session
 
-# Internal model hydration metadata.
-class SdkInternalSessionEventAgentSessionSubagentCreatedMetadata
-  FIELDS = {
-    type: "type",
-    event_id: "event_id",
-    subagent: "subagent",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    event_id
-    subagent
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::SessionEventAgentSessionSubagentCreatedType.from_value(value)
-    end,
-    subagent: lambda do |value|
-      ::OctridevOpenai::SubagentResource.from_hash(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for SessionEventAgentSessionSubagentCreated.
-# Emitted when a subagent is created.
-class SessionEventAgentSessionSubagentCreated
-  include SessionEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalSessionEventAgentSessionSubagentCreatedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalSessionEventAgentSessionSubagentCreatedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalSessionEventAgentSessionSubagentCreatedMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [SessionEventAgentSessionSubagentCreatedType] The type of the object. Always `agent.session.subagent.created`.
-  attr_reader :type
-  # @return [String] The unique ID of the event.
-  attr_reader :event_id
-  # @return [SubagentResource] The subagent that was created.
-  attr_reader :subagent
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the SessionEventAgentSessionRequiresActionType SDK namespace.
+  module SessionEventAgentSessionRequiresActionType
+    AGENT_SESSION_REQUIRES_ACTION = 'agent.session.requires_action'
+    VALUES = ['agent.session.requires_action'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('SessionEventAgentSessionRequiresActionType', 'enum', "Unknown SessionEventAgentSessionRequiresActionType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the SessionEventAgentSessionSubagentCreatedType SDK namespace.
-module SessionEventAgentSessionSubagentCreatedType
-  AGENT_SESSION_SUBAGENT_CREATED = 'agent.session.subagent.created'
-  VALUES = ['agent.session.subagent.created'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('SessionEventAgentSessionSubagentCreatedType', 'enum', "Unknown SessionEventAgentSessionSubagentCreatedType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalSessionEventAgentSessionTurnCancelledMetadata
-  FIELDS = {
-    type: "type",
-    event_id: "event_id",
-    session_id: "session_id",
-    turn_id: "turn_id",
-    turn: "turn",
-    usage: "usage",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    event_id
-    session_id
-    turn_id
-    turn
-    usage
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::SessionEventAgentSessionTurnCancelledType.from_value(value)
-    end,
-    turn: lambda do |value|
-      ::OctridevOpenai::TurnResource.from_hash(value)
-    end,
-    usage: lambda do |value|
-      ::OctridevOpenai::TokenUsageResource.from_hash(value)
-    end,
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    usage
-  ].freeze
-end
-
-# API model for SessionEventAgentSessionTurnCancelled.
-# Emitted when a turn is cancelled.
-class SessionEventAgentSessionTurnCancelled
-  include SessionEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalSessionEventAgentSessionTurnCancelledMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalSessionEventAgentSessionTurnCancelledMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalSessionEventAgentSessionTurnCancelledMetadata::DECODERS
-
-  # @return [SessionEventAgentSessionTurnCancelledType] The type of the object. Always `agent.session.turn.cancelled`.
-  attr_reader :type
-  # @return [String] The unique ID of the event.
-  attr_reader :event_id
-  # @return [String] The ID of the session associated with the event.
-  attr_reader :session_id
-  # @return [String] The ID of the turn associated with the event.
-  attr_reader :turn_id
-  # @return [TurnResource] The cancelled turn.
-  attr_reader :turn
-  # @return [TokenUsageResource] Token usage by the root agent during the turn, when available.
-  attr_reader :usage
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalSessionEventAgentSessionSubagentActiveMetadata
+    FIELDS = {
+      type: 'type',
+      event_id: 'event_id',
+      subagent: 'subagent'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      event_id
+      subagent
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::SessionEventAgentSessionSubagentActiveType.from_value(value)
+      end,
+      subagent: lambda do |value|
+        ::OctridevOpenai::SubagentResource.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalSessionEventAgentSessionTurnCancelledMetadata::NULLABLE_FIELDS)
+  # API model for SessionEventAgentSessionSubagentActive.
+  # Emitted when a closed subagent successfully resumes.
+  class SessionEventAgentSessionSubagentActive
+    include SessionEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalSessionEventAgentSessionSubagentActiveMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalSessionEventAgentSessionSubagentActiveMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalSessionEventAgentSessionSubagentActiveMetadata::DECODERS
+
+    # @return [SessionEventAgentSessionSubagentActiveType] The type of the object. Always `agent.session.subagent.active`.
+    attr_reader :type
+    # @return [String] The unique ID of the event.
+    attr_reader :event_id
+    # @return [SubagentResource] The subagent that resumed.
+    attr_reader :subagent
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the SessionEventAgentSessionSubagentActiveType SDK namespace.
+  module SessionEventAgentSessionSubagentActiveType
+    AGENT_SESSION_SUBAGENT_ACTIVE = 'agent.session.subagent.active'
+    VALUES = ['agent.session.subagent.active'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the SessionEventAgentSessionTurnCancelledType SDK namespace.
-module SessionEventAgentSessionTurnCancelledType
-  AGENT_SESSION_TURN_CANCELLED = 'agent.session.turn.cancelled'
-  VALUES = ['agent.session.turn.cancelled'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('SessionEventAgentSessionTurnCancelledType', 'enum', "Unknown SessionEventAgentSessionTurnCancelledType: #{value}")
+      raise SdkValidationError.new('SessionEventAgentSessionSubagentActiveType', 'enum', "Unknown SessionEventAgentSessionSubagentActiveType: #{value}")
+    end
   end
-end
+
+  # Internal model hydration metadata.
+  class SdkInternalSessionEventAgentSessionSubagentClosedMetadata
+    FIELDS = {
+      type: 'type',
+      event_id: 'event_id',
+      subagent: 'subagent'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      event_id
+      subagent
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::SessionEventAgentSessionSubagentClosedType.from_value(value)
+      end,
+      subagent: lambda do |value|
+        ::OctridevOpenai::SubagentResource.from_hash(value)
+      end
+    }.freeze
+  end
+
+  # API model for SessionEventAgentSessionSubagentClosed.
+  # Emitted when a subagent is closed.
+  class SessionEventAgentSessionSubagentClosed
+    include SessionEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalSessionEventAgentSessionSubagentClosedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalSessionEventAgentSessionSubagentClosedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalSessionEventAgentSessionSubagentClosedMetadata::DECODERS
+
+    # @return [SessionEventAgentSessionSubagentClosedType] The type of the object. Always `agent.session.subagent.closed`.
+    attr_reader :type
+    # @return [String] The unique ID of the event.
+    attr_reader :event_id
+    # @return [SubagentResource] The subagent that was closed.
+    attr_reader :subagent
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the SessionEventAgentSessionSubagentClosedType SDK namespace.
+  module SessionEventAgentSessionSubagentClosedType
+    AGENT_SESSION_SUBAGENT_CLOSED = 'agent.session.subagent.closed'
+    VALUES = ['agent.session.subagent.closed'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('SessionEventAgentSessionSubagentClosedType', 'enum', "Unknown SessionEventAgentSessionSubagentClosedType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalSessionEventAgentSessionSubagentCreatedMetadata
+    FIELDS = {
+      type: 'type',
+      event_id: 'event_id',
+      subagent: 'subagent'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      event_id
+      subagent
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::SessionEventAgentSessionSubagentCreatedType.from_value(value)
+      end,
+      subagent: lambda do |value|
+        ::OctridevOpenai::SubagentResource.from_hash(value)
+      end
+    }.freeze
+  end
+
+  # API model for SessionEventAgentSessionSubagentCreated.
+  # Emitted when a subagent is created.
+  class SessionEventAgentSessionSubagentCreated
+    include SessionEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalSessionEventAgentSessionSubagentCreatedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalSessionEventAgentSessionSubagentCreatedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalSessionEventAgentSessionSubagentCreatedMetadata::DECODERS
+
+    # @return [SessionEventAgentSessionSubagentCreatedType] The type of the object. Always `agent.session.subagent.created`.
+    attr_reader :type
+    # @return [String] The unique ID of the event.
+    attr_reader :event_id
+    # @return [SubagentResource] The subagent that was created.
+    attr_reader :subagent
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the SessionEventAgentSessionSubagentCreatedType SDK namespace.
+  module SessionEventAgentSessionSubagentCreatedType
+    AGENT_SESSION_SUBAGENT_CREATED = 'agent.session.subagent.created'
+    VALUES = ['agent.session.subagent.created'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('SessionEventAgentSessionSubagentCreatedType', 'enum', "Unknown SessionEventAgentSessionSubagentCreatedType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalSessionEventAgentSessionTurnCancelledMetadata
+    FIELDS = {
+      type: 'type',
+      event_id: 'event_id',
+      session_id: 'session_id',
+      turn_id: 'turn_id',
+      turn: 'turn',
+      usage: 'usage'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      event_id
+      session_id
+      turn_id
+      turn
+      usage
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::SessionEventAgentSessionTurnCancelledType.from_value(value)
+      end,
+      turn: lambda do |value|
+        ::OctridevOpenai::TurnResource.from_hash(value)
+      end,
+      usage: lambda do |value|
+        ::OctridevOpenai::TokenUsageResource.from_hash(value)
+      end
+    }.freeze
+    NULLABLE_FIELDS = %i[
+      usage
+    ].freeze
+  end
+
+  # API model for SessionEventAgentSessionTurnCancelled.
+  # Emitted when a turn is cancelled.
+  class SessionEventAgentSessionTurnCancelled
+    include SessionEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalSessionEventAgentSessionTurnCancelledMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalSessionEventAgentSessionTurnCancelledMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalSessionEventAgentSessionTurnCancelledMetadata::DECODERS
+
+    # @return [SessionEventAgentSessionTurnCancelledType] The type of the object. Always `agent.session.turn.cancelled`.
+    attr_reader :type
+    # @return [String] The unique ID of the event.
+    attr_reader :event_id
+    # @return [String] The ID of the session associated with the event.
+    attr_reader :session_id
+    # @return [String] The ID of the turn associated with the event.
+    attr_reader :turn_id
+    # @return [TurnResource] The cancelled turn.
+    attr_reader :turn
+    # @return [TokenUsageResource] Token usage by the root agent during the turn, when available.
+    attr_reader :usage
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalSessionEventAgentSessionTurnCancelledMetadata::NULLABLE_FIELDS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the SessionEventAgentSessionTurnCancelledType SDK namespace.
+  module SessionEventAgentSessionTurnCancelledType
+    AGENT_SESSION_TURN_CANCELLED = 'agent.session.turn.cancelled'
+    VALUES = ['agent.session.turn.cancelled'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('SessionEventAgentSessionTurnCancelledType', 'enum', "Unknown SessionEventAgentSessionTurnCancelledType: #{value}")
+    end
+  end
 end

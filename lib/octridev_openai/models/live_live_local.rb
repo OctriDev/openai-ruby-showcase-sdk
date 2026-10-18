@@ -5,106 +5,106 @@
 
 # live_live_local domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalLiveLocalEnvironmentParamMetadata
-  FIELDS = {
-    type: "type",
-    skills: "skills",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LiveLocalEnvironmentParamType.from_value(value)
-    end,
-    skills: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::LiveLocalSkillParam.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for LiveLocalEnvironmentParam.
-# Typed representation of the `LiveLocalEnvironmentParam` API schema.
-class LiveLocalEnvironmentParam
-  include LiveHostedShellToolInputParamEnvironment
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveLocalEnvironmentParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveLocalEnvironmentParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveLocalEnvironmentParamMetadata::DECODERS
-
-  # @return [LiveLocalEnvironmentParamType] Use a local computer environment.
-  attr_reader :type
-  # @return [Array_of_LiveLocalSkillParam] An optional list of skills.
-  attr_reader :skills
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalLiveLocalEnvironmentParamMetadata
+    FIELDS = {
+      type: 'type',
+      skills: 'skills'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LiveLocalEnvironmentParamType.from_value(value)
+      end,
+      skills: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::LiveLocalSkillParam.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for LiveLocalEnvironmentParam.
+  # Typed representation of the `LiveLocalEnvironmentParam` API schema.
+  class LiveLocalEnvironmentParam
+    include LiveHostedShellToolInputParamEnvironment
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveLocalEnvironmentParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveLocalEnvironmentParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveLocalEnvironmentParamMetadata::DECODERS
+
+    # @return [LiveLocalEnvironmentParamType] Use a local computer environment.
+    attr_reader :type
+    # @return [Array_of_LiveLocalSkillParam] An optional list of skills.
+    attr_reader :skills
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the LiveLocalEnvironmentParamType SDK namespace.
+  module LiveLocalEnvironmentParamType
+    LOCAL = 'local'
+    VALUES = ['local'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the LiveLocalEnvironmentParamType SDK namespace.
-module LiveLocalEnvironmentParamType
-  LOCAL = 'local'
-  VALUES = ['local'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('LiveLocalEnvironmentParamType', 'enum', "Unknown LiveLocalEnvironmentParamType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalLiveLocalSkillParamMetadata
-  FIELDS = {
-    name: "name",
-    description: "description",
-    path: "path",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    name
-    description
-    path
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for LiveLocalSkillParam.
-# Typed representation of the `LiveLocalSkillParam` API schema.
-class LiveLocalSkillParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveLocalSkillParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveLocalSkillParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveLocalSkillParamMetadata::DECODERS
-
-  # @return [String] The name of the skill.
-  attr_reader :name
-  # @return [String] The description of the skill.
-  attr_reader :description
-  # @return [String] The path to the directory containing the skill.
-  attr_reader :path
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('LiveLocalEnvironmentParamType', 'enum', "Unknown LiveLocalEnvironmentParamType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalLiveLocalSkillParamMetadata
+    FIELDS = {
+      name: 'name',
+      description: 'description',
+      path: 'path'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      name
+      description
+      path
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # API model for LiveLocalSkillParam.
+  # Typed representation of the `LiveLocalSkillParam` API schema.
+  class LiveLocalSkillParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveLocalSkillParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveLocalSkillParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveLocalSkillParamMetadata::DECODERS
+
+    # @return [String] The name of the skill.
+    attr_reader :name
+    # @return [String] The description of the skill.
+    attr_reader :description
+    # @return [String] The path to the directory containing the skill.
+    attr_reader :path
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
 end

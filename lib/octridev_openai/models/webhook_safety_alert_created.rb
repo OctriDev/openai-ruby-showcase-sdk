@@ -5,120 +5,119 @@
 
 # webhook_safety_alert_created domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalWebhookSafetyAlertCreatedDataMetadata
-  FIELDS = {
-    id: "id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for WebhookSafetyAlertCreatedData.
-# Required object value serialized in the `data` wire field.
-class WebhookSafetyAlertCreatedData
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalWebhookSafetyAlertCreatedDataMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalWebhookSafetyAlertCreatedDataMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalWebhookSafetyAlertCreatedDataMetadata::DECODERS
-
-  # @return [String] The safety alert ID to pass to `GET /v1/safety/alerts/{id}`.
-  attr_reader :id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalWebhookSafetyAlertCreatedDataMetadata
+    FIELDS = {
+      id: 'id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for WebhookSafetyAlertCreatedData.
+  # Required object value serialized in the `data` wire field.
+  class WebhookSafetyAlertCreatedData
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalWebhookSafetyAlertCreatedDataMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalWebhookSafetyAlertCreatedDataMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalWebhookSafetyAlertCreatedDataMetadata::DECODERS
+
+    # @return [String] The safety alert ID to pass to `GET /v1/safety/alerts/{id}`.
+    attr_reader :id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalWebhookSafetyAlertCreatedMetadata
-  FIELDS = {
-    id: "id",
-    object: "object",
-    created_at: "created_at",
-    type: "type",
-    data: "data",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    object
-    created_at
-    type
-    data
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::WebhookSafetyAlertCreatedObject.from_value(value)
-    end,
-    type: lambda do |value|
-      ::OctridevOpenai::WebhookSafetyAlertCreatedType.from_value(value)
-    end,
-    data: lambda do |value|
-      ::OctridevOpenai::WebhookSafetyAlertCreatedData.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for WebhookSafetyAlertCreated.
-# Sent when an approved safety alert is available for an API project.
-class WebhookSafetyAlertCreated
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalWebhookSafetyAlertCreatedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalWebhookSafetyAlertCreatedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalWebhookSafetyAlertCreatedMetadata::DECODERS
-
-  # @return [String] The unique ID of the webhook event.
-  attr_reader :id
-  # @return [WebhookSafetyAlertCreatedObject] Always `event`.
-  attr_reader :object
-  # @return [Integer] The Unix timestamp in seconds when the event was created.
-  attr_reader :created_at
-  # @return [WebhookSafetyAlertCreatedType] Always `safety.alert.created`.
-  attr_reader :type
-  # @return [WebhookSafetyAlertCreatedData] Required object value serialized in the `data` wire field.
-  attr_reader :data
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalWebhookSafetyAlertCreatedMetadata
+    FIELDS = {
+      id: 'id',
+      object: 'object',
+      created_at: 'created_at',
+      type: 'type',
+      data: 'data'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      object
+      created_at
+      type
+      data
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::WebhookSafetyAlertCreatedObject.from_value(value)
+      end,
+      type: lambda do |value|
+        ::OctridevOpenai::WebhookSafetyAlertCreatedType.from_value(value)
+      end,
+      data: lambda do |value|
+        ::OctridevOpenai::WebhookSafetyAlertCreatedData.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for WebhookSafetyAlertCreated.
+  # Sent when an approved safety alert is available for an API project.
+  class WebhookSafetyAlertCreated
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalWebhookSafetyAlertCreatedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalWebhookSafetyAlertCreatedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalWebhookSafetyAlertCreatedMetadata::DECODERS
+
+    # @return [String] The unique ID of the webhook event.
+    attr_reader :id
+    # @return [WebhookSafetyAlertCreatedObject] Always `event`.
+    attr_reader :object
+    # @return [Integer] The Unix timestamp in seconds when the event was created.
+    attr_reader :created_at
+    # @return [WebhookSafetyAlertCreatedType] Always `safety.alert.created`.
+    attr_reader :type
+    # @return [WebhookSafetyAlertCreatedData] Required object value serialized in the `data` wire field.
+    attr_reader :data
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the WebhookSafetyAlertCreatedObject SDK namespace.
+  module WebhookSafetyAlertCreatedObject
+    EVENT = 'event'
+    VALUES = ['event'].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
 
-# Defines the WebhookSafetyAlertCreatedObject SDK namespace.
-module WebhookSafetyAlertCreatedObject
-  EVENT = 'event'
-  VALUES = ['event'].freeze
-  def self.from_value(value)
-    value
+  # Defines the WebhookSafetyAlertCreatedType SDK namespace.
+  module WebhookSafetyAlertCreatedType
+    SAFETY_ALERT_CREATED = 'safety.alert.created'
+    VALUES = ['safety.alert.created'].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
-
-# Defines the WebhookSafetyAlertCreatedType SDK namespace.
-module WebhookSafetyAlertCreatedType
-  SAFETY_ALERT_CREATED = 'safety.alert.created'
-  VALUES = ['safety.alert.created'].freeze
-  def self.from_value(value)
-    value
-  end
-end
 end

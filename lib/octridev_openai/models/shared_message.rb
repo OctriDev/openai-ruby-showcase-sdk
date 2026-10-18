@@ -5,161 +5,163 @@
 
 # shared_message domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalMessageMetadata
-  FIELDS = {
-    type: "type",
-    id: "id",
-    status: "status",
-    role: "role",
-    content: "content",
-    phase: "phase",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    id
-    status
-    role
-    content
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::MessageType.from_value(value)
-    end,
-    status: lambda do |value|
-      ::OctridevOpenai::MessageStatus.from_value(value)
-    end,
-    role: lambda do |value|
-      ::OctridevOpenai::MessageRole.from_value(value)
-    end,
-    content: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::MessageContentItem.from_hash(item) }
-    end,
-    phase: lambda do |value|
-      ::OctridevOpenai::MessagePhase2.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for Message.
-# A message to or from the model.
-class Message
-  include ConversationItem
-  include ItemField
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalMessageMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalMessageMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalMessageMetadata::DECODERS
-
-  # @return [MessageType] The type of the message. Always set to `message`.
-  attr_reader :type
-  # @return [String] The unique ID of the message.
-  attr_reader :id
-  # @return [MessageStatus] The status of item. One of `in_progress`, `completed`, or `incomplete`. Populated when items are returned via API.
-  attr_reader :status
-  # @return [MessageRole] The role of the message. One of `unknown`, `user`, `assistant`, `system`, `critic`, `discriminator`, `developer`, or `tool`.
-  attr_reader :role
-  # @return [Array_of_MessageContentItem] The content of the message
-  attr_reader :content
-  # @return [MessagePhase2] Optional API value serialized in the `phase` wire field.
-  attr_reader :phase
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalMessageMetadata
+    FIELDS = {
+      type: 'type',
+      id: 'id',
+      status: 'status',
+      role: 'role',
+      content: 'content',
+      phase: 'phase'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      id
+      status
+      role
+      content
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::MessageType.from_value(value)
+      end,
+      status: lambda do |value|
+        ::OctridevOpenai::MessageStatus.from_value(value)
+      end,
+      role: lambda do |value|
+        ::OctridevOpenai::MessageRole.from_value(value)
+      end,
+      content: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::MessageContentItem.from_hash(item) }
+      end,
+      phase: lambda do |value|
+        ::OctridevOpenai::MessagePhase2.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for Message.
+  # A message to or from the model.
+  class Message
+    include ConversationItem
+    include ItemField
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalMessageMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalMessageMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalMessageMetadata::DECODERS
+
+    # @return [MessageType] The type of the message. Always set to `message`.
+    attr_reader :type
+    # @return [String] The unique ID of the message.
+    attr_reader :id
+    # @return [MessageStatus] The status of item. One of `in_progress`, `completed`, or `incomplete`. Populated when items are returned via API.
+    attr_reader :status
+    # @return [MessageRole] The role of the message. One of `unknown`, `user`, `assistant`, `system`, `critic`, `discriminator`, `developer`, or `tool`.
+    attr_reader :role
+    # @return [Array_of_MessageContentItem] The content of the message
+    attr_reader :content
+    # @return [MessagePhase2] Optional API value serialized in the `phase` wire field.
+    attr_reader :phase
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the MessageType SDK namespace.
+  module MessageType
+    MESSAGE = 'message'
+    VALUES = ['message'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('MessageType', 'enum', "Unknown MessageType: #{value}")
+    end
   end
-end
 
-# Defines the MessageType SDK namespace.
-module MessageType
-  MESSAGE = 'message'
-  VALUES = ['message'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+  # Defines the MessageContentItem SDK namespace.
+  module MessageContentItem
+    DISCRIMINATOR_MAPPING = {
+      'input_text' => -> { InputTextContent },
+      'output_text' => -> { OutputTextContent },
+      'text' => -> { TextContent },
+      'summary_text' => -> { SummaryTextContent },
+      'reasoning_text' => -> { ReasoningTextContent },
+      'refusal' => -> { RefusalContent },
+      'input_image' => -> { InputImageContent },
+      'computer_screenshot' => -> { ComputerScreenshotContent },
+      'input_file' => -> { InputFileContent }
+    }.freeze
 
-    raise SdkValidationError.new('MessageType', 'enum', "Unknown MessageType: #{value}")
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('MessageContentItem', 'variant', "Unknown MessageContentItem discriminator: #{hash['type'].inspect}")
+    end
   end
-end
 
-# Defines the MessageContentItem SDK namespace.
-module MessageContentItem
-  DISCRIMINATOR_MAPPING = {
-    "input_text" => -> { InputTextContent },
-    "output_text" => -> { OutputTextContent },
-    "text" => -> { TextContent },
-    "summary_text" => -> { SummaryTextContent },
-    "reasoning_text" => -> { ReasoningTextContent },
-    "refusal" => -> { RefusalContent },
-    "input_image" => -> { InputImageContent },
-    "computer_screenshot" => -> { ComputerScreenshotContent },
-    "input_file" => -> { InputFileContent },
-  }.freeze
-
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('MessageContentItem', 'variant', "Unknown MessageContentItem discriminator: #{hash["type"].inspect}")
+  # Defines the MessagePhase SDK namespace.
+  module MessagePhase
+    COMMENTARY = 'commentary'
+    FINAL_ANSWER = 'final_answer'
+    VALUES = %w[commentary final_answer].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
 
-# Defines the MessagePhase SDK namespace.
-module MessagePhase
-  COMMENTARY = 'commentary'
-  FINAL_ANSWER = 'final_answer'
-  VALUES = ['commentary', 'final_answer'].freeze
-  def self.from_value(value)
-    value
+  # Defines the MessagePhase2 SDK namespace.
+  module MessagePhase2
+    COMMENTARY = 'commentary'
+    FINAL_ANSWER = 'final_answer'
+    VALUES = %w[commentary final_answer].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
 
-# Defines the MessagePhase2 SDK namespace.
-module MessagePhase2
-  COMMENTARY = 'commentary'
-  FINAL_ANSWER = 'final_answer'
-  VALUES = ['commentary', 'final_answer'].freeze
-  def self.from_value(value)
-    value
+  # Defines the MessageRole SDK namespace.
+  module MessageRole
+    UNKNOWN = 'unknown'
+    USER = 'user'
+    ASSISTANT = 'assistant'
+    SYSTEM = 'system'
+    CRITIC = 'critic'
+    DISCRIMINATOR = 'discriminator'
+    DEVELOPER = 'developer'
+    TOOL = 'tool'
+    VALUES = %w[
+      unknown user assistant system critic discriminator developer tool
+    ].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
 
-# Defines the MessageRole SDK namespace.
-module MessageRole
-  UNKNOWN = 'unknown'
-  USER = 'user'
-  ASSISTANT = 'assistant'
-  SYSTEM = 'system'
-  CRITIC = 'critic'
-  DISCRIMINATOR = 'discriminator'
-  DEVELOPER = 'developer'
-  TOOL = 'tool'
-  VALUES = [
-    'unknown', 'user', 'assistant', 'system', 'critic', 'discriminator', 'developer', 'tool'
-  ].freeze
-  def self.from_value(value)
-    value
+  # Defines the MessageStatus SDK namespace.
+  module MessageStatus
+    IN_PROGRESS = 'in_progress'
+    COMPLETED = 'completed'
+    INCOMPLETE = 'incomplete'
+    VALUES = %w[in_progress completed incomplete].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
-
-# Defines the MessageStatus SDK namespace.
-module MessageStatus
-  IN_PROGRESS = 'in_progress'
-  COMPLETED = 'completed'
-  INCOMPLETE = 'incomplete'
-  VALUES = ['in_progress', 'completed', 'incomplete'].freeze
-  def self.from_value(value)
-    value
-  end
-end
 end

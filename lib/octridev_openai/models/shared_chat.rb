@@ -5,429 +5,423 @@
 
 # shared_chat domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalChatCompletionStreamOptionsMetadata
-  FIELDS = {
-    include_usage: "include_usage",
-    include_obfuscation: "include_obfuscation",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for ChatCompletionStreamOptions.
-# Options for streaming response. Only set this when you set `stream: true`.
-class ChatCompletionStreamOptions
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalChatCompletionStreamOptionsMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalChatCompletionStreamOptionsMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalChatCompletionStreamOptionsMetadata::DECODERS
-
-  # @return [Boolean] If set, an additional chunk will be streamed before the `data: [DONE]` message. The `usage` field on this chunk shows the token usage statistics for the entire request, and the `choices` field will always be an empty array. All other chunks will also include a `usage` field, but with a null value. **NOTE:** If the stream is interrupted, you may not receive the final usage chunk which contains the total token usage for the request.
-  attr_reader :include_usage
-  # @return [Boolean] When true, stream obfuscation will be enabled. Stream obfuscation adds random characters to an `obfuscation` field on streaming delta events to normalize payload sizes as a mitigation to certain side-channel attacks. These obfuscation fields are included by default, but add a small amount of overhead to the data stream. You can set `include_obfuscation` to false to optimize for bandwidth if you trust the network links between your application and the OpenAI API.
-  attr_reader :include_obfuscation
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalChatCompletionStreamOptionsMetadata
+    FIELDS = {
+      include_usage: 'include_usage',
+      include_obfuscation: 'include_obfuscation'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ChatCompletionStreamOptions.
+  # Options for streaming response. Only set this when you set `stream: true`.
+  class ChatCompletionStreamOptions
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalChatCompletionStreamOptionsMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalChatCompletionStreamOptionsMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalChatCompletionStreamOptionsMetadata::DECODERS
+
+    # @return [Boolean] If set, an additional chunk will be streamed before the `data: [DONE]` message. The `usage` field on this chunk shows the token usage statistics for the entire request, and the `choices` field will always be an empty array. All other chunks will also include a `usage` field, but with a null value. **NOTE:** If the stream is interrupted, you may not receive the final usage chunk which contains the total token usage for the request.
+    attr_reader :include_usage
+    # @return [Boolean] When true, stream obfuscation will be enabled. Stream obfuscation adds random characters to an `obfuscation` field on streaming delta events to normalize payload sizes as a mitigation to certain side-channel attacks. These obfuscation fields are included by default, but add a small amount of overhead to the data stream. You can set `include_obfuscation` to false to optimize for bandwidth if you trust the network links between your application and the OpenAI API.
+    attr_reader :include_obfuscation
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalChatCompletionToolMetadata
-  FIELDS = {
-    type: "type",
-    function: "function",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    function
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ChatCompletionToolType.from_value(value)
-    end,
-    function: lambda do |value|
-      ::OctridevOpenai::FunctionObject.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for ChatCompletionTool.
-# A function tool that can be used to generate a response.
-class ChatCompletionTool
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalChatCompletionToolMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalChatCompletionToolMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalChatCompletionToolMetadata::DECODERS
-
-  # @return [ChatCompletionToolType] The type of the tool. Currently, only `function` is supported.
-  attr_reader :type
-  # @return [FunctionObject] Required object value serialized in the `function` wire field.
-  attr_reader :function
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalChatCompletionToolMetadata
+    FIELDS = {
+      type: 'type',
+      function: 'function'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      function
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ChatCompletionToolType.from_value(value)
+      end,
+      function: lambda do |value|
+        ::OctridevOpenai::FunctionObject.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ChatCompletionTool.
+  # A function tool that can be used to generate a response.
+  class ChatCompletionTool
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalChatCompletionToolMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalChatCompletionToolMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalChatCompletionToolMetadata::DECODERS
+
+    # @return [ChatCompletionToolType] The type of the tool. Currently, only `function` is supported.
+    attr_reader :type
+    # @return [FunctionObject] Required object value serialized in the `function` wire field.
+    attr_reader :function
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the ChatCompletionToolType SDK namespace.
+  module ChatCompletionToolType
+    FUNCTION = 'function'
+    VALUES = ['function'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the ChatCompletionToolType SDK namespace.
-module ChatCompletionToolType
-  FUNCTION = 'function'
-  VALUES = ['function'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('ChatCompletionToolType', 'enum', "Unknown ChatCompletionToolType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalChatSessionAutomaticThreadTitlingMetadata
-  FIELDS = {
-    enabled: "enabled",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    enabled
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for ChatSessionAutomaticThreadTitling.
-# Automatic thread title preferences for the session.
-class ChatSessionAutomaticThreadTitling
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalChatSessionAutomaticThreadTitlingMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalChatSessionAutomaticThreadTitlingMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalChatSessionAutomaticThreadTitlingMetadata::DECODERS
-
-  # @return [Boolean] Whether automatic thread titling is enabled.
-  attr_reader :enabled
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('ChatCompletionToolType', 'enum', "Unknown ChatCompletionToolType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalChatSessionAutomaticThreadTitlingMetadata
+    FIELDS = {
+      enabled: 'enabled'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      enabled
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for ChatSessionAutomaticThreadTitling.
+  # Automatic thread title preferences for the session.
+  class ChatSessionAutomaticThreadTitling
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalChatSessionAutomaticThreadTitlingMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalChatSessionAutomaticThreadTitlingMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalChatSessionAutomaticThreadTitlingMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalChatSessionChatkitConfigurationMetadata
-  FIELDS = {
-    automatic_thread_titling: "automatic_thread_titling",
-    file_upload: "file_upload",
-    history: "history",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    automatic_thread_titling
-    file_upload
-    history
-  ].freeze
-  DECODERS = {
-    automatic_thread_titling: lambda do |value|
-      ::OctridevOpenai::ChatSessionAutomaticThreadTitling.from_hash(value)
-    end,
-    file_upload: lambda do |value|
-      ::OctridevOpenai::ChatSessionFileUpload.from_hash(value)
-    end,
-    history: lambda do |value|
-      ::OctridevOpenai::ChatSessionHistory.from_hash(value)
-    end,
-  }.freeze
-end
+    # @return [Boolean] Whether automatic thread titling is enabled.
+    attr_reader :enabled
 
-# API model for ChatSessionChatkitConfiguration.
-# ChatKit configuration for the session.
-class ChatSessionChatkitConfiguration
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalChatSessionChatkitConfigurationMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalChatSessionChatkitConfigurationMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalChatSessionChatkitConfigurationMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [ChatSessionAutomaticThreadTitling] Automatic thread titling preferences.
-  attr_reader :automatic_thread_titling
-  # @return [ChatSessionFileUpload] Upload settings for the session.
-  attr_reader :file_upload
-  # @return [ChatSessionHistory] History retention configuration.
-  attr_reader :history
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalChatSessionChatkitConfigurationMetadata
+    FIELDS = {
+      automatic_thread_titling: 'automatic_thread_titling',
+      file_upload: 'file_upload',
+      history: 'history'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      automatic_thread_titling
+      file_upload
+      history
+    ].freeze
+    DECODERS = {
+      automatic_thread_titling: lambda do |value|
+        ::OctridevOpenai::ChatSessionAutomaticThreadTitling.from_hash(value)
+      end,
+      file_upload: lambda do |value|
+        ::OctridevOpenai::ChatSessionFileUpload.from_hash(value)
+      end,
+      history: lambda do |value|
+        ::OctridevOpenai::ChatSessionHistory.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for ChatSessionChatkitConfiguration.
+  # ChatKit configuration for the session.
+  class ChatSessionChatkitConfiguration
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalChatSessionChatkitConfigurationMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalChatSessionChatkitConfigurationMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalChatSessionChatkitConfigurationMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalChatSessionFileUploadMetadata
-  FIELDS = {
-    enabled: "enabled",
-    max_file_size: "max_file_size",
-    max_files: "max_files",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    enabled
-    max_file_size
-    max_files
-  ].freeze
-  DECODERS = {
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    max_file_size
-    max_files
-  ].freeze
-end
+    # @return [ChatSessionAutomaticThreadTitling] Automatic thread titling preferences.
+    attr_reader :automatic_thread_titling
+    # @return [ChatSessionFileUpload] Upload settings for the session.
+    attr_reader :file_upload
+    # @return [ChatSessionHistory] History retention configuration.
+    attr_reader :history
 
-# API model for ChatSessionFileUpload.
-# Upload permissions and limits applied to the session.
-class ChatSessionFileUpload
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalChatSessionFileUploadMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalChatSessionFileUploadMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalChatSessionFileUploadMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [Boolean] Indicates if uploads are enabled for the session.
-  attr_reader :enabled
-  # @return [Integer] Required `integer` value serialized in the `max_file_size` wire field.
-  attr_reader :max_file_size
-  # @return [Integer] Required `integer` value serialized in the `max_files` wire field.
-  attr_reader :max_files
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalChatSessionFileUploadMetadata::NULLABLE_FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalChatSessionFileUploadMetadata
+    FIELDS = {
+      enabled: 'enabled',
+      max_file_size: 'max_file_size',
+      max_files: 'max_files'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      enabled
+      max_file_size
+      max_files
+    ].freeze
+    DECODERS = {}.freeze
+    NULLABLE_FIELDS = %i[
+      max_file_size
+      max_files
+    ].freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for ChatSessionFileUpload.
+  # Upload permissions and limits applied to the session.
+  class ChatSessionFileUpload
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalChatSessionFileUploadMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalChatSessionFileUploadMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalChatSessionFileUploadMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalChatSessionHistoryMetadata
-  FIELDS = {
-    enabled: "enabled",
-    recent_threads: "recent_threads",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    enabled
-    recent_threads
-  ].freeze
-  DECODERS = {
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    recent_threads
-  ].freeze
-end
+    # @return [Boolean] Indicates if uploads are enabled for the session.
+    attr_reader :enabled
+    # @return [Integer] Required `integer` value serialized in the `max_file_size` wire field.
+    attr_reader :max_file_size
+    # @return [Integer] Required `integer` value serialized in the `max_files` wire field.
+    attr_reader :max_files
 
-# API model for ChatSessionHistory.
-# History retention preferences returned for the session.
-class ChatSessionHistory
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalChatSessionHistoryMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalChatSessionHistoryMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalChatSessionHistoryMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [Boolean] Indicates if chat history is persisted for the session.
-  attr_reader :enabled
-  # @return [Integer] Required `integer` value serialized in the `recent_threads` wire field.
-  attr_reader :recent_threads
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalChatSessionFileUploadMetadata::NULLABLE_FIELDS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalChatSessionHistoryMetadata::NULLABLE_FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalChatSessionHistoryMetadata
+    FIELDS = {
+      enabled: 'enabled',
+      recent_threads: 'recent_threads'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      enabled
+      recent_threads
+    ].freeze
+    DECODERS = {}.freeze
+    NULLABLE_FIELDS = %i[
+      recent_threads
+    ].freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for ChatSessionHistory.
+  # History retention preferences returned for the session.
+  class ChatSessionHistory
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalChatSessionHistoryMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalChatSessionHistoryMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalChatSessionHistoryMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalChatSessionRateLimitsMetadata
-  FIELDS = {
-    max_requests_per1_minute: "max_requests_per_1_minute",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    max_requests_per1_minute
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
+    # @return [Boolean] Indicates if chat history is persisted for the session.
+    attr_reader :enabled
+    # @return [Integer] Required `integer` value serialized in the `recent_threads` wire field.
+    attr_reader :recent_threads
 
-# API model for ChatSessionRateLimits.
-# Active per-minute request limit for the session.
-class ChatSessionRateLimits
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalChatSessionRateLimitsMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalChatSessionRateLimitsMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalChatSessionRateLimitsMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [Integer] Maximum allowed requests per one-minute window.
-  attr_reader :max_requests_per1_minute
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalChatSessionHistoryMetadata::NULLABLE_FIELDS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalChatSessionRateLimitsMetadata
+    FIELDS = {
+      max_requests_per1_minute: 'max_requests_per_1_minute'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      max_requests_per1_minute
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for ChatSessionRateLimits.
+  # Active per-minute request limit for the session.
+  class ChatSessionRateLimits
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalChatSessionRateLimitsMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalChatSessionRateLimitsMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalChatSessionRateLimitsMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalChatSessionResourceMetadata
-  FIELDS = {
-    id: "id",
-    object: "object",
-    expires_at: "expires_at",
-    client_secret: "client_secret",
-    workflow: "workflow",
-    user: "user",
-    rate_limits: "rate_limits",
-    max_requests_per1_minute: "max_requests_per_1_minute",
-    status: "status",
-    chatkit_configuration: "chatkit_configuration",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    object
-    expires_at
-    client_secret
-    workflow
-    user
-    rate_limits
-    max_requests_per1_minute
-    status
-    chatkit_configuration
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::ChatSessionResourceObject.from_value(value)
-    end,
-    workflow: lambda do |value|
-      ::OctridevOpenai::ChatkitWorkflow.from_hash(value)
-    end,
-    rate_limits: lambda do |value|
-      ::OctridevOpenai::ChatSessionRateLimits.from_hash(value)
-    end,
-    status: lambda do |value|
-      ::OctridevOpenai::ChatSessionStatus.from_value(value)
-    end,
-    chatkit_configuration: lambda do |value|
-      ::OctridevOpenai::ChatSessionChatkitConfiguration.from_hash(value)
-    end,
-  }.freeze
-end
+    # @return [Integer] Maximum allowed requests per one-minute window.
+    attr_reader :max_requests_per1_minute
 
-# API model for ChatSessionResource.
-# Represents a ChatKit session and its resolved configuration.
-class ChatSessionResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalChatSessionResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalChatSessionResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalChatSessionResourceMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [String] Identifier for the ChatKit session.
-  attr_reader :id
-  # @return [ChatSessionResourceObject] Type discriminator that is always `chatkit.session`.
-  attr_reader :object
-  # @return [Integer] Unix timestamp (in seconds) for when the session expires.
-  attr_reader :expires_at
-  # @return [String] Ephemeral client secret that authenticates session requests.
-  attr_reader :client_secret
-  # @return [ChatkitWorkflow] Workflow metadata for the session.
-  attr_reader :workflow
-  # @return [String] User identifier associated with the session.
-  attr_reader :user
-  # @return [ChatSessionRateLimits] Resolved rate limit values.
-  attr_reader :rate_limits
-  # @return [Integer] Convenience copy of the per-minute request limit.
-  attr_reader :max_requests_per1_minute
-  # @return [ChatSessionStatus] Current lifecycle state of the session.
-  attr_reader :status
-  # @return [ChatSessionChatkitConfiguration] Resolved ChatKit feature configuration for the session.
-  attr_reader :chatkit_configuration
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalChatSessionResourceMetadata
+    FIELDS = {
+      id: 'id',
+      object: 'object',
+      expires_at: 'expires_at',
+      client_secret: 'client_secret',
+      workflow: 'workflow',
+      user: 'user',
+      rate_limits: 'rate_limits',
+      max_requests_per1_minute: 'max_requests_per_1_minute',
+      status: 'status',
+      chatkit_configuration: 'chatkit_configuration'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      object
+      expires_at
+      client_secret
+      workflow
+      user
+      rate_limits
+      max_requests_per1_minute
+      status
+      chatkit_configuration
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::ChatSessionResourceObject.from_value(value)
+      end,
+      workflow: lambda do |value|
+        ::OctridevOpenai::ChatkitWorkflow.from_hash(value)
+      end,
+      rate_limits: lambda do |value|
+        ::OctridevOpenai::ChatSessionRateLimits.from_hash(value)
+      end,
+      status: lambda do |value|
+        ::OctridevOpenai::ChatSessionStatus.from_value(value)
+      end,
+      chatkit_configuration: lambda do |value|
+        ::OctridevOpenai::ChatSessionChatkitConfiguration.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for ChatSessionResource.
+  # Represents a ChatKit session and its resolved configuration.
+  class ChatSessionResource
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalChatSessionResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalChatSessionResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalChatSessionResourceMetadata::DECODERS
 
-# Defines the ChatSessionResourceObject SDK namespace.
-module ChatSessionResourceObject
-  CHATKIT_SESSION = 'chatkit.session'
-  VALUES = ['chatkit.session'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    # @return [String] Identifier for the ChatKit session.
+    attr_reader :id
+    # @return [ChatSessionResourceObject] Type discriminator that is always `chatkit.session`.
+    attr_reader :object
+    # @return [Integer] Unix timestamp (in seconds) for when the session expires.
+    attr_reader :expires_at
+    # @return [String] Ephemeral client secret that authenticates session requests.
+    attr_reader :client_secret
+    # @return [ChatkitWorkflow] Workflow metadata for the session.
+    attr_reader :workflow
+    # @return [String] User identifier associated with the session.
+    attr_reader :user
+    # @return [ChatSessionRateLimits] Resolved rate limit values.
+    attr_reader :rate_limits
+    # @return [Integer] Convenience copy of the per-minute request limit.
+    attr_reader :max_requests_per1_minute
+    # @return [ChatSessionStatus] Current lifecycle state of the session.
+    attr_reader :status
+    # @return [ChatSessionChatkitConfiguration] Resolved ChatKit feature configuration for the session.
+    attr_reader :chatkit_configuration
 
-# Defines the ChatSessionStatus SDK namespace.
-module ChatSessionStatus
-  ACTIVE = 'active'
-  EXPIRED = 'expired'
-  CANCELLED = 'cancelled'
-  VALUES = ['active', 'expired', 'cancelled'].freeze
-  def self.from_value(value)
-    value
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
+
+  # Defines the ChatSessionResourceObject SDK namespace.
+  module ChatSessionResourceObject
+    CHATKIT_SESSION = 'chatkit.session'
+    VALUES = ['chatkit.session'].freeze
+    def self.from_value(value)
+      value
+    end
+  end
+
+  # Defines the ChatSessionStatus SDK namespace.
+  module ChatSessionStatus
+    ACTIVE = 'active'
+    EXPIRED = 'expired'
+    CANCELLED = 'cancelled'
+    VALUES = %w[active expired cancelled].freeze
+    def self.from_value(value)
+      value
+    end
+  end
 end

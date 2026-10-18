@@ -59,10 +59,9 @@ module OctridevOpenai
         parallel_tool_calls: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
-          "/responses/input_tokens",
+          '/responses/input_tokens',
           config: config,
           body: {
             'model' => model,
@@ -76,13 +75,13 @@ module OctridevOpenai
             'personality' => personality,
             'conversation' => conversation,
             'tool_choice' => tool_choice,
-            'parallel_tool_calls' => parallel_tool_calls,
+            'parallel_tool_calls' => parallel_tool_calls
           },
           return_type: ::OctridevOpenai::TokenCountsResource,
           decoder: :json,
           operation_id: 'count_responses_input_tokens',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -120,10 +119,9 @@ module OctridevOpenai
         service_tier: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
-          "/responses/compact",
+          '/responses/compact',
           config: config,
           body: {
             'model' => model,
@@ -133,13 +131,13 @@ module OctridevOpenai
             'prompt_cache_key' => prompt_cache_key,
             'prompt_cache_retention' => prompt_cache_retention,
             'prompt_cache_options' => prompt_cache_options,
-            'service_tier' => service_tier,
+            'service_tier' => service_tier
           },
           return_type: ::OctridevOpenai::CompactResource,
           decoder: :json,
           operation_id: 'compact_responses',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -155,20 +153,19 @@ module OctridevOpenai
         openai_beta: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
-          "/responses?beta=true",
+          '/responses?beta=true',
           config: config,
           body: body,
           return_type: ::OctridevOpenai::BetaResponse,
           decoder: :json,
           operation_id: 'beta_create_response',
           extra_headers: SdkClient.serialize_headers({
-            'openai-beta' => SdkClient.header_value(openai_beta),
-          }),
+                                                       'openai-beta' => SdkClient.header_value(openai_beta)
+                                                     }),
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::BetaErrorResponse, '404' => ::OctridevOpenai::BetaErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::BetaErrorResponse, '404' => ::OctridevOpenai::BetaErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -185,28 +182,31 @@ module OctridevOpenai
         request_options: nil,
         &block
       )
-    return enum_for(
-          __method__,
-          config: config,
-          body: body,
-          openai_beta: openai_beta,
-          request_options: request_options,
-        ) unless block
+        unless block
+          return enum_for(
+            __method__,
+            config: config,
+            body: body,
+            openai_beta: openai_beta,
+            request_options: request_options
+          )
+        end
         SdkClient.stream(
-          'POST', "/responses?beta=true",
+          'POST', '/responses?beta=true',
           config: config,
           body: body,
           content_type: 'application/json',
           operation_id: 'beta_create_response_stream',
           stream_format: :sse,
-          stream_media_type: "text/event-stream",
+          stream_media_type: 'text/event-stream',
           extra_headers: SdkClient.serialize_headers({
-            'openai-beta' => SdkClient.header_value(openai_beta),
-          }),
+                                                       'openai-beta' => SdkClient.header_value(openai_beta)
+                                                     }),
           request_options: request_options,
           errors: { '400' => ::OctridevOpenai::BetaErrorResponse, '404' => ::OctridevOpenai::BetaErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
         ).each do |ev|
           break if ev.data == '[DONE]'
+
           decoded = JSON.parse(ev.data)
           block.call(SdkClient.decode_event(decoded, ::OctridevOpenai::BetaResponseStreamEvent))
         end
@@ -244,29 +244,28 @@ module OctridevOpenai
         openai_beta: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
           [
-            "/responses/",
+            '/responses/',
             SdkClient.encode_path_segment(response_id),
-            "?beta=true"
+            '?beta=true'
           ].join,
           config: config,
           query: {
             'include' => QueryValue.new(include, style: 'form', explode: true),
             'stream' => QueryValue.new(stream, style: 'form', explode: true),
             'starting_after' => QueryValue.new(starting_after, style: 'form', explode: true),
-            'include_obfuscation' => QueryValue.new(include_obfuscation, style: 'form', explode: true),
+            'include_obfuscation' => QueryValue.new(include_obfuscation, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::BetaResponse,
           decoder: :json,
           operation_id: 'beta_get_response',
           extra_headers: SdkClient.serialize_headers({
-            'openai-beta' => SdkClient.header_value(openai_beta),
-          }),
+                                                       'openai-beta' => SdkClient.header_value(openai_beta)
+                                                     }),
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::BetaErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '404' => ::OctridevOpenai::BetaErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -303,40 +302,43 @@ module OctridevOpenai
         request_options: nil,
         &block
       )
-    return enum_for(
-          __method__,
-          config: config,
-          response_id: response_id,
-          include: include,
-          stream: stream,
-          starting_after: starting_after,
-          include_obfuscation: include_obfuscation,
-          openai_beta: openai_beta,
-          request_options: request_options,
-        ) unless block
+        unless block
+          return enum_for(
+            __method__,
+            config: config,
+            response_id: response_id,
+            include: include,
+            stream: stream,
+            starting_after: starting_after,
+            include_obfuscation: include_obfuscation,
+            openai_beta: openai_beta,
+            request_options: request_options
+          )
+        end
         SdkClient.stream(
           'GET', [
-            "/responses/",
+            '/responses/',
             SdkClient.encode_path_segment(response_id),
-            "?beta=true"
+            '?beta=true'
           ].join,
           config: config,
           query: {
-          'include' => QueryValue.new(include, style: 'form', explode: true),
-          'stream' => QueryValue.new(stream, style: 'form', explode: true),
-          'starting_after' => QueryValue.new(starting_after, style: 'form', explode: true),
-          'include_obfuscation' => QueryValue.new(include_obfuscation, style: 'form', explode: true),
-        },
+            'include' => QueryValue.new(include, style: 'form', explode: true),
+            'stream' => QueryValue.new(stream, style: 'form', explode: true),
+            'starting_after' => QueryValue.new(starting_after, style: 'form', explode: true),
+            'include_obfuscation' => QueryValue.new(include_obfuscation, style: 'form', explode: true)
+          },
           operation_id: 'beta_get_response_stream',
           stream_format: :sse,
-          stream_media_type: "text/event-stream",
+          stream_media_type: 'text/event-stream',
           extra_headers: SdkClient.serialize_headers({
-            'openai-beta' => SdkClient.header_value(openai_beta),
-          }),
+                                                       'openai-beta' => SdkClient.header_value(openai_beta)
+                                                     }),
           request_options: request_options,
           errors: { '404' => ::OctridevOpenai::BetaErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).each do |ev|
           break if ev.data == '[DONE]'
+
           decoded = JSON.parse(ev.data)
           block.call(SdkClient.decode_event(decoded, ::OctridevOpenai::BetaResponseStreamEvent))
         end
@@ -355,23 +357,22 @@ module OctridevOpenai
         openai_beta: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'DELETE',
           [
-            "/responses/",
+            '/responses/',
             SdkClient.encode_path_segment(response_id),
-            "?beta=true"
+            '?beta=true'
           ].join,
           config: config,
           return_type: ::OctridevOpenai::Methods::Responses::BetaDeleteResponseResponse,
           decoder: :json,
           operation_id: 'beta_delete_response',
           extra_headers: SdkClient.serialize_headers({
-            'openai-beta' => SdkClient.header_value(openai_beta),
-          }),
+                                                       'openai-beta' => SdkClient.header_value(openai_beta)
+                                                     }),
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::BetaErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '404' => ::OctridevOpenai::BetaErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -388,23 +389,22 @@ module OctridevOpenai
         openai_beta: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
           [
-            "/responses/",
+            '/responses/',
             SdkClient.encode_path_segment(response_id),
-            "/cancel?beta=true"
+            '/cancel?beta=true'
           ].join,
           config: config,
           return_type: ::OctridevOpenai::BetaResponse,
           decoder: :json,
           operation_id: 'beta_cancel_response',
           extra_headers: SdkClient.serialize_headers({
-            'openai-beta' => SdkClient.header_value(openai_beta),
-          }),
+                                                       'openai-beta' => SdkClient.header_value(openai_beta)
+                                                     }),
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::BetaErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '404' => ::OctridevOpenai::BetaErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -445,10 +445,9 @@ module OctridevOpenai
         service_tier: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
-          "/responses/compact?beta=true",
+          '/responses/compact?beta=true',
           config: config,
           body: {
             'model' => model,
@@ -458,16 +457,16 @@ module OctridevOpenai
             'prompt_cache_key' => prompt_cache_key,
             'prompt_cache_retention' => prompt_cache_retention,
             'prompt_cache_options' => prompt_cache_options,
-            'service_tier' => service_tier,
+            'service_tier' => service_tier
           },
           return_type: ::OctridevOpenai::BetaCompactResource,
           decoder: :json,
           operation_id: 'beta_responses_compact',
           extra_headers: SdkClient.serialize_headers({
-            'openai-beta' => SdkClient.header_value(openai_beta),
-          }),
+                                                       'openai-beta' => SdkClient.header_value(openai_beta)
+                                                     }),
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::BetaErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::BetaErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
     end
