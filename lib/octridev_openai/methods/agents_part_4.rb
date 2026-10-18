@@ -220,7 +220,7 @@ module OctridevOpenai
         request_options: nil,
         &block
       )
-        return enum_for(
+    return enum_for(
           __method__,
           config: config,
           environment: environment,
@@ -232,7 +232,7 @@ module OctridevOpenai
           vault_ids: vault_ids,
           input: input,
           request_options: request_options,
-        ) unless block_given?
+        ) unless block
         SdkClient.stream(
           'POST', "/agents/sessions",
           config: config,

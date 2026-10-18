@@ -9,6 +9,76 @@ module OctridevOpenai
   module Methods
     # Defines the Assistants SDK namespace.
     module Assistants
+      # Updates the metadata attached to a run. Send the key-value pairs you want associated with the run; the metadata object supports up to 16 pairs, with string values and keys of up to 64 characters.
+      #
+      # Modifies a run.
+      #
+      # @param thread_id [String] The ID of the thread that was run.
+      # @param run_id [String] The ID of the run to modify.
+      # @param metadata [Metadata] Set of 16 key-value pairs that can be attached to
+      #   an object. This can be useful for storing additional information about the
+      #   object in a structured format, and querying for objects via API or the
+      #   dashboard. Keys are strings with a maximum length of 64 characters. Values
+      #   are strings with a maximum length of 512 characters.
+      def self.modify_run(
+        config:,
+        thread_id:,
+        run_id:,
+        metadata: NOT_GIVEN,
+        request_options: nil
+      )
+
+        SdkClient.request(
+          'POST',
+          [
+            "/threads/",
+            SdkClient.encode_path_segment(thread_id),
+            "/runs/",
+            SdkClient.encode_path_segment(run_id)
+          ].join,
+          config: config,
+          body: {
+            'metadata' => metadata,
+          },
+          return_type: ::OctridevOpenai::RunObject,
+          decoder: :json,
+          operation_id: 'modify_run',
+          request_options: request_options,
+          errors: { '429' => ::OctridevOpenai::ErrorResponse },
+        ).data
+      end
+
+      # Cancels a run that is in progress on a thread. Use this operation when you need to stop the run before it completes; the returned run object reports its current status.
+      #
+      # Cancels a run that is `in_progress`.
+      #
+      # @param thread_id [String] The ID of the thread to which this run belongs.
+      # @param run_id [String] The ID of the run to cancel.
+      def self.cancel_run(
+        config:,
+        thread_id:,
+        run_id:,
+        request_options: nil
+      )
+
+        SdkClient.request(
+          'POST',
+          [
+            "/threads/",
+            SdkClient.encode_path_segment(thread_id),
+            "/runs/",
+            SdkClient.encode_path_segment(run_id),
+            "/cancel"
+          ].join,
+          config: config,
+          return_type: ::OctridevOpenai::RunObject,
+          decoder: :json,
+          operation_id: 'cancel_run',
+          request_options: request_options,
+          errors: { '429' => ::OctridevOpenai::ErrorResponse },
+        ).data
+      end
+
       # Lists the steps belonging to a run on a thread. Use cursor parameters to page through the steps, and set `order` to control their order by creation time.
       #
       # Returns a list of run steps belonging to a run.
@@ -69,6 +139,105 @@ module OctridevOpenai
           request_options: request_options,
           errors: { '429' => ::OctridevOpenai::ErrorResponse },
         ).data
+      end
+
+    ListRunStepsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+
+      # Lists the steps belonging to a run on a thread. Use cursor parameters to page through the steps, and set `order` to control their order by creation time.
+      #
+      # Returns a list of run steps belonging to a run.
+      #
+      # @param thread_id [String] The ID of the thread the run and run steps belong
+      #   to.
+      # @param run_id [String] The ID of the run the run steps belong to.
+      # @param limit [Integer] A limit on the number of objects to be returned.
+      #   Limit can range between 1 and 100, and the default is 20.
+      # @param order [ListRunStepsParameter] Sort order by the `created_at`
+      #   timestamp of the objects. `asc` for ascending order and `desc` for
+      #   descending order.
+      # @param after [String] A cursor for use in pagination. `after` is an object
+      #   ID that defines your place in the list. For instance, if you make a list
+      #   request and receive 100 objects, ending with obj_foo, your subsequent call
+      #   can include after=obj_foo in order to fetch the next page of the list.
+      # @param before [String] A cursor for use in pagination. `before` is an object
+      #   ID that defines your place in the list. For instance, if you make a list
+      #   request and receive 100 objects, starting with obj_foo, your subsequent call
+      #   can include before=obj_foo in order to fetch the previous page of the list.
+      # @param include [Array_of_ListRunStepsParameterItem] A list of additional
+      #   fields to include in the response. Currently the only supported value is
+      #   `step_details.tool_calls*].file_search.results[*].content` to fetch the file
+      #   search result content. See the [file search tool documentation for more
+      #   information.
+      def self.list_run_steps_paginated(
+        config:,
+        thread_id: nil,
+        run_id: nil,
+        limit: nil,
+        order: nil,
+        after: nil,
+        before: nil,
+        include: nil,
+        request_options: nil
+      )
+        Enumerator.new do |y|
+          cursor = after
+          loop do
+            page = list_run_steps(
+              config: config,
+              thread_id: thread_id,
+              run_id: run_id,
+              limit: limit,
+              order: order,
+              after: cursor,
+              before: before,
+              include: include,
+              request_options: request_options
+            )
+            items = page.data || []
+            break if items.empty?
+            items.each { |item| y << item }
+            break unless page.has_more
+            next_cursor = page.last_id
+            break if next_cursor.nil?
+            cursor = next_cursor
+          end
+        end
+      end
+
+      def self.list_run_steps_pages(
+        config:,
+        thread_id: nil,
+        run_id: nil,
+        limit: nil,
+        order: nil,
+        after: nil,
+        before: nil,
+        include: nil,
+        request_options: nil
+      )
+        Enumerator.new do |y|
+          cursor = after
+          loop do
+            page = list_run_steps(
+              config: config,
+              thread_id: thread_id,
+              run_id: run_id,
+              limit: limit,
+              order: order,
+              after: cursor,
+              before: before,
+              include: include,
+              request_options: request_options
+            )
+            items = page.data || []
+            break if items.empty?
+            next_cursor = page.last_id
+            has_more = page.has_more && !next_cursor.nil?
+            y << ListRunStepsPage.new(data: page, items: items, has_more: has_more)
+            break unless has_more
+            cursor = next_cursor
+          end
+        end
       end
 
       # Retrieves a specific step from a run on a thread. Use `include[]` to request file search result content when the step contains file search tool calls.
@@ -177,7 +346,7 @@ module OctridevOpenai
         request_options: nil,
         &block
       )
-        return enum_for(
+    return enum_for(
           __method__,
           config: config,
           thread_id: thread_id,
@@ -185,7 +354,7 @@ module OctridevOpenai
           tool_outputs: tool_outputs,
           stream: stream,
           request_options: request_options,
-        ) unless block_given?
+        ) unless block
         SdkClient.stream(
           'POST', [
             "/threads/",

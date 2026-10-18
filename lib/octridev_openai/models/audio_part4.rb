@@ -5,6 +5,41 @@
 
 # audio domain models (part 4)
 module OctridevOpenai
+# Defines the VoiceConsentResourceObject SDK namespace.
+module VoiceConsentResourceObject
+  AUDIO_VOICE_CONSENT = 'audio.voice_consent'
+  VALUES = ['audio.voice_consent'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalVoiceResourceMetadata
+  FIELDS = {
+    object: "object",
+    id: "id",
+    type: "type",
+    name: "name",
+    created_at: "created_at",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    id
+    type
+    name
+    created_at
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::VoiceResourceObject.from_value(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::VoiceResourceType.from_value(value)
+    end,
+  }.freeze
+end
+
 # API model for VoiceResource.
 # A custom voice that can be used for audio output.
 class VoiceResource

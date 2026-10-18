@@ -6,51 +6,6 @@
 # responses_beta_mcptool domain models
 module OctridevOpenai
 # Internal model hydration metadata.
-class SdkInternalBetaMCPToolRequireApprovalVariant0Metadata
-  FIELDS = {
-    always: "always",
-    never: "never",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    always: lambda do |value|
-      ::OctridevOpenai::BetaMCPToolFilter.from_hash(value)
-    end,
-    never: lambda do |value|
-      ::OctridevOpenai::BetaMCPToolFilter.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaMCPToolRequireApprovalVariant0.
-# Specify which of the MCP server's tools require approval. Can be `always`, `never`, or a filter object associated with tools that require approval.
-class BetaMCPToolRequireApprovalVariant0
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaMCPToolRequireApprovalVariant0Metadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaMCPToolRequireApprovalVariant0Metadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaMCPToolRequireApprovalVariant0Metadata::DECODERS
-
-  # @return [BetaMCPToolFilter] A filter object to specify which tools are allowed.
-  attr_reader :always
-  # @return [BetaMCPToolFilter] A filter object to specify which tools are allowed.
-  attr_reader :never
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
 class SdkInternalBetaMCPToolMetadata
   FIELDS = {
     type: "type",
@@ -82,6 +37,9 @@ class SdkInternalBetaMCPToolMetadata
     end,
     allowed_callers: lambda do |value|
       value&.map { |item| ::OctridevOpenai::BetaCallableToolAllowedCaller.from_value(item) }
+    end,
+    require_approval: lambda do |value|
+      ::OctridevOpenai::BetaMCPToolRequireApproval.from_hash(value)
     end,
   }.freeze
 end
@@ -116,7 +74,7 @@ class BetaMCPTool
   attr_reader :allowed_tools
   # @return [Array_of_BetaCallableToolAllowedCaller] The tool invocation context(s).
   attr_reader :allowed_callers
-  # @return [Object] Specify which of the MCP server's tools require approval.
+  # @return [BetaMCPToolRequireApproval] Specify which of the MCP server's tools require approval.
   attr_reader :require_approval
   # @return [Boolean] Whether this MCP tool is deferred and discovered via tool search.
   attr_reader :defer_loading
@@ -150,16 +108,6 @@ module BetaMCPToolConnectorId
     'connector_microsoftteams', 'connector_outlookcalendar', 'connector_outlookemail',
     'connector_sharepoint'
   ].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the BetaMCPToolRequireApprovalVariant1 SDK namespace.
-module BetaMCPToolRequireApprovalVariant1
-  ALWAYS = 'always'
-  NEVER = 'never'
-  VALUES = ['always', 'never'].freeze
   def self.from_value(value)
     value
   end
@@ -398,6 +346,68 @@ class BetaMCPToolFilter
 
   def to_h
     SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaMCPToolRequireApprovalVariant0Metadata
+  FIELDS = {
+    always: "always",
+    never: "never",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+    always: lambda do |value|
+      ::OctridevOpenai::BetaMCPToolFilter.from_hash(value)
+    end,
+    never: lambda do |value|
+      ::OctridevOpenai::BetaMCPToolFilter.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaMCPToolRequireApprovalVariant0.
+class BetaMCPToolRequireApprovalVariant0
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaMCPToolRequireApprovalVariant0Metadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaMCPToolRequireApprovalVariant0Metadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaMCPToolRequireApprovalVariant0Metadata::DECODERS
+
+  # @return [BetaMCPToolFilter] A filter object to specify which tools are allowed.
+  attr_reader :always
+  # @return [BetaMCPToolFilter] A filter object to specify which tools are allowed.
+  attr_reader :never
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
+  end
+
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  end
+
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the BetaMCPToolRequireApproval SDK namespace.
+module BetaMCPToolRequireApproval
+  def self.from_hash(hash)
+    return BetaMCPToolRequireApprovalVariant1.from_value(hash) if hash.is_a?(::String)
+    return BetaMCPToolRequireApprovalVariant0.from_hash(hash)
+  end
+end
+
+# Defines the BetaMCPToolRequireApprovalVariant1 SDK namespace.
+module BetaMCPToolRequireApprovalVariant1
+  ALWAYS = 'always'
+  NEVER = 'never'
+  VALUES = ['always', 'never'].freeze
+  def self.from_value(value)
+    value
   end
 end
 end

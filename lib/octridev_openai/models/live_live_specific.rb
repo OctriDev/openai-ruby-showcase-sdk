@@ -23,7 +23,9 @@ end
 # API model for LiveSpecificApplyPatchParam.
 # Forces the model to call the apply_patch tool when executing a tool call.
 class LiveSpecificApplyPatchParam
+  include LiveResponsesDelegationSettingsInputParamToolChoice
   include LiveAllowedToolsChoiceParamToolsItem
+  include LiveResponsesDelegationSettingsUpdateInputParamToolChoice
   CONSTRUCTION_SURFACE = :named
   FIELDS = SdkInternalLiveSpecificApplyPatchParamMetadata::FIELDS
   REQUIRED_FIELDS = SdkInternalLiveSpecificApplyPatchParamMetadata::REQUIRED_FIELDS
@@ -75,7 +77,9 @@ end
 # API model for LiveSpecificCodeInterpreterParam.
 # Typed representation of the `LiveSpecificCodeInterpreterParam` API schema.
 class LiveSpecificCodeInterpreterParam
+  include LiveResponsesDelegationSettingsInputParamToolChoice
   include LiveAllowedToolsChoiceParamToolsItem
+  include LiveResponsesDelegationSettingsUpdateInputParamToolChoice
   CONSTRUCTION_SURFACE = :named
   FIELDS = SdkInternalLiveSpecificCodeInterpreterParamMetadata::FIELDS
   REQUIRED_FIELDS = SdkInternalLiveSpecificCodeInterpreterParamMetadata::REQUIRED_FIELDS
@@ -127,7 +131,9 @@ end
 # API model for LiveSpecificComputerParam.
 # Typed representation of the `LiveSpecificComputerParam` API schema.
 class LiveSpecificComputerParam
+  include LiveResponsesDelegationSettingsInputParamToolChoice
   include LiveAllowedToolsChoiceParamToolsItem
+  include LiveResponsesDelegationSettingsUpdateInputParamToolChoice
   CONSTRUCTION_SURFACE = :named
   FIELDS = SdkInternalLiveSpecificComputerParamMetadata::FIELDS
   REQUIRED_FIELDS = SdkInternalLiveSpecificComputerParamMetadata::REQUIRED_FIELDS
@@ -181,7 +187,9 @@ end
 # API model for LiveSpecificCustomToolParam.
 # Typed representation of the `LiveSpecificCustomToolParam` API schema.
 class LiveSpecificCustomToolParam
+  include LiveResponsesDelegationSettingsInputParamToolChoice
   include LiveAllowedToolsChoiceParamToolsItem
+  include LiveResponsesDelegationSettingsUpdateInputParamToolChoice
   CONSTRUCTION_SURFACE = :named
   FIELDS = SdkInternalLiveSpecificCustomToolParamMetadata::FIELDS
   REQUIRED_FIELDS = SdkInternalLiveSpecificCustomToolParamMetadata::REQUIRED_FIELDS
@@ -235,7 +243,9 @@ end
 # API model for LiveSpecificFileSearchParam.
 # Typed representation of the `LiveSpecificFileSearchParam` API schema.
 class LiveSpecificFileSearchParam
+  include LiveResponsesDelegationSettingsInputParamToolChoice
   include LiveAllowedToolsChoiceParamToolsItem
+  include LiveResponsesDelegationSettingsUpdateInputParamToolChoice
   CONSTRUCTION_SURFACE = :named
   FIELDS = SdkInternalLiveSpecificFileSearchParamMetadata::FIELDS
   REQUIRED_FIELDS = SdkInternalLiveSpecificFileSearchParamMetadata::REQUIRED_FIELDS
@@ -287,7 +297,9 @@ end
 # API model for LiveSpecificFunctionShellParam.
 # Forces the model to call the shell tool when a tool call is required.
 class LiveSpecificFunctionShellParam
+  include LiveResponsesDelegationSettingsInputParamToolChoice
   include LiveAllowedToolsChoiceParamToolsItem
+  include LiveResponsesDelegationSettingsUpdateInputParamToolChoice
   CONSTRUCTION_SURFACE = :named
   FIELDS = SdkInternalLiveSpecificFunctionShellParamMetadata::FIELDS
   REQUIRED_FIELDS = SdkInternalLiveSpecificFunctionShellParamMetadata::REQUIRED_FIELDS
@@ -339,7 +351,9 @@ end
 # API model for LiveSpecificImageGenParam.
 # Typed representation of the `LiveSpecificImageGenParam` API schema.
 class LiveSpecificImageGenParam
+  include LiveResponsesDelegationSettingsInputParamToolChoice
   include LiveAllowedToolsChoiceParamToolsItem
+  include LiveResponsesDelegationSettingsUpdateInputParamToolChoice
   CONSTRUCTION_SURFACE = :named
   FIELDS = SdkInternalLiveSpecificImageGenParamMetadata::FIELDS
   REQUIRED_FIELDS = SdkInternalLiveSpecificImageGenParamMetadata::REQUIRED_FIELDS
@@ -391,7 +405,9 @@ end
 # API model for LiveSpecificProgrammaticToolCallingParam.
 # Typed representation of the `LiveSpecificProgrammaticToolCallingParam` API schema.
 class LiveSpecificProgrammaticToolCallingParam
+  include LiveResponsesDelegationSettingsInputParamToolChoice
   include LiveAllowedToolsChoiceParamToolsItem
+  include LiveResponsesDelegationSettingsUpdateInputParamToolChoice
   CONSTRUCTION_SURFACE = :named
   FIELDS = SdkInternalLiveSpecificProgrammaticToolCallingParamMetadata::FIELDS
   REQUIRED_FIELDS = SdkInternalLiveSpecificProgrammaticToolCallingParamMetadata::REQUIRED_FIELDS
@@ -443,7 +459,9 @@ end
 # API model for LiveSpecificWebSearchParam.
 # Typed representation of the `LiveSpecificWebSearchParam` API schema.
 class LiveSpecificWebSearchParam
+  include LiveResponsesDelegationSettingsInputParamToolChoice
   include LiveAllowedToolsChoiceParamToolsItem
+  include LiveResponsesDelegationSettingsUpdateInputParamToolChoice
   CONSTRUCTION_SURFACE = :named
   FIELDS = SdkInternalLiveSpecificWebSearchParamMetadata::FIELDS
   REQUIRED_FIELDS = SdkInternalLiveSpecificWebSearchParamMetadata::REQUIRED_FIELDS
@@ -495,7 +513,9 @@ end
 # API model for LiveSpecificWebSearchPreviewParam.
 # Typed representation of the `LiveSpecificWebSearchPreviewParam` API schema.
 class LiveSpecificWebSearchPreviewParam
+  include LiveResponsesDelegationSettingsInputParamToolChoice
   include LiveAllowedToolsChoiceParamToolsItem
+  include LiveResponsesDelegationSettingsUpdateInputParamToolChoice
   CONSTRUCTION_SURFACE = :named
   FIELDS = SdkInternalLiveSpecificWebSearchPreviewParamMetadata::FIELDS
   REQUIRED_FIELDS = SdkInternalLiveSpecificWebSearchPreviewParamMetadata::REQUIRED_FIELDS

@@ -25,7 +25,9 @@ end
 # API model for LiveFunctionToolChoiceParam.
 # Typed representation of the `LiveFunctionToolChoiceParam` API schema.
 class LiveFunctionToolChoiceParam
+  include LiveResponsesDelegationSettingsInputParamToolChoice
   include LiveAllowedToolsChoiceParamToolsItem
+  include LiveResponsesDelegationSettingsUpdateInputParamToolChoice
   CONSTRUCTION_SURFACE = :named
   FIELDS = SdkInternalLiveFunctionToolChoiceParamMetadata::FIELDS
   REQUIRED_FIELDS = SdkInternalLiveFunctionToolChoiceParamMetadata::REQUIRED_FIELDS

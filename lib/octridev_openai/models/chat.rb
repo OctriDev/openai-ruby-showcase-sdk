@@ -58,12 +58,29 @@ module PredictionContentType
   end
 end
 
+# Defines the ResponseModalities SDK value decoder.
+module ResponseModalities
+  def self.from_hash(value)
+    return nil if value.nil?
+    value&.map { |item| item }
+  end
+end
+
+# Defines the ResponseModalitiesItem SDK namespace.
+module ResponseModalitiesItem
+  TEXT = 'text'
+  AUDIO = 'audio'
+  VALUES = ['text', 'audio'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
 # Defines the ServiceTier SDK namespace.
 module ServiceTier
   def self.from_hash(hash)
-    return hash if hash.is_a?(::Object)
     return ServiceTierVariant0.from_value(hash) if hash.is_a?(::String)
-    raise "Could not deserialize ServiceTier from #{hash.inspect}"
+    hash
   end
 end
 
@@ -78,20 +95,6 @@ module ServiceTierVariant0
   VALUES = ['auto', 'default', 'flex', 'scale', 'priority', 'fast'].freeze
   def self.from_value(value)
     value
-  end
-end
-
-# Defines the ToolsItem SDK namespace.
-module ToolsItem
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    mapping = { "function" => ChatCompletionTool, "custom" => CustomToolChatCompletions }
-    type = mapping[hash["type"]]
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('ToolsItem', 'variant', "Unknown ToolsItem discriminator: #{hash["type"].inspect}")
   end
 end
 end

@@ -8,12 +8,16 @@ module OctridevOpenai
 # Defines the BetaContent SDK namespace.
 module BetaContent
   def self.from_hash(hash)
+    lossy = nil
     [BetaInputContent, BetaOutputContent].each do |type|
-      return type.from_hash(hash)
+      decoded = type.from_hash(hash)
+      return decoded if SdkModel.keeps_every_key?(hash, decoded)
+
+      lossy ||= decoded
     rescue ::StandardError
       next
     end
-    raise SdkValidationError.new('BetaContent', 'variant', "Cannot select BetaContent variant without a discriminator")
+    return lossy unless lossy.nil?
   end
 end
 

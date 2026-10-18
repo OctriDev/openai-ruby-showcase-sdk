@@ -5,35 +5,6 @@
 
 # realtime_realtime_session domain models (part 2)
 module OctridevOpenai
-# API model for RealtimeSessionCreateRequestGAAudioOutput.
-# Optional object value serialized in the `output` wire field.
-class RealtimeSessionCreateRequestGAAudioOutput
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeSessionCreateRequestGAAudioOutputMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeSessionCreateRequestGAAudioOutputMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeSessionCreateRequestGAAudioOutputMetadata::DECODERS
-
-  # @return [RealtimeAudioFormats] The format of the output audio.
-  attr_reader :format
-  # @return [VoiceIdsOrCustomVoice] The voice the model uses to respond. Supported built-in voices are `alloy`, `ash`, `ballad`, `coral`, `echo`, `sage`, `shimmer`, `verse`, `marin`, and `cedar`. You may also provide a custom voice object with an `id`, for example `{ "id": "voice_1234" }`. Voice cannot be changed during the session once the model has responded with audio at least once. Custom voices must be created from audio samples. We recommend `marin` and `cedar` for best quality.
-  attr_reader :voice
-  # @return [Float] The speed of the model's spoken response as a multiple of the original speed. 1.0 is the default speed. 0.25 is the minimum speed. 1.5 is the maximum speed. This value can only be changed in between model turns, not while a response is in progress. This parameter is a post-processing adjustment to the audio after it is generated, it's also possible to prompt the model to speak faster or slower.
-  attr_reader :speed
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
 # Internal model hydration metadata.
 class SdkInternalRealtimeSessionCreateRequestGAAudioMetadata
   FIELDS = {
@@ -302,6 +273,64 @@ module RealtimeSessionCreateRequestGAToolsItem
 end
 
 # Internal model hydration metadata.
+class SdkInternalRealtimeSessionCreateRequestTracingVariant1Metadata
+  FIELDS = {
+    workflow_name: "workflow_name",
+    group_id: "group_id",
+    metadata: "metadata",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for RealtimeSessionCreateRequestTracingVariant1.
+class RealtimeSessionCreateRequestTracingVariant1
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRealtimeSessionCreateRequestTracingVariant1Metadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRealtimeSessionCreateRequestTracingVariant1Metadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRealtimeSessionCreateRequestTracingVariant1Metadata::DECODERS
+
+  # @return [String] The name of the workflow to attach to this trace. This is used to name the trace in the traces dashboard.
+  attr_reader :workflow_name
+  # @return [String] The group id to attach to this trace to enable filtering and grouping in the traces dashboard.
+  attr_reader :group_id
+  # @return [Hash] The arbitrary metadata to attach to this trace to enable filtering in the traces dashboard.
+  attr_reader :metadata
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
+  end
+
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  end
+
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the RealtimeSessionCreateRequestTracing SDK namespace.
+module RealtimeSessionCreateRequestTracing
+  def self.from_hash(hash)
+    return RealtimeSessionCreateRequestTracingVariant0.from_value(hash) if hash.is_a?(::String)
+    return RealtimeSessionCreateRequestTracingVariant1.from_hash(hash)
+  end
+end
+
+# Defines the RealtimeSessionCreateRequestTracingVariant0 SDK namespace.
+module RealtimeSessionCreateRequestTracingVariant0
+  AUTO = 'auto'
+  VALUES = ['auto'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
 class SdkInternalRealtimeSessionCreateResponseAudioInputNoiseReductionMetadata
   FIELDS = {
     type: "type",
@@ -536,48 +565,6 @@ class RealtimeSessionCreateResponseAudio
 end
 
 # Internal model hydration metadata.
-class SdkInternalRealtimeSessionCreateResponseTracingVariant1Metadata
-  FIELDS = {
-    workflow_name: "workflow_name",
-    group_id: "group_id",
-    metadata: "metadata",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for RealtimeSessionCreateResponseTracingVariant1.
-# Granular configuration for tracing.
-class RealtimeSessionCreateResponseTracingVariant1
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeSessionCreateResponseTracingVariant1Metadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeSessionCreateResponseTracingVariant1Metadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeSessionCreateResponseTracingVariant1Metadata::DECODERS
-
-  # @return [String] The name of the workflow to attach to this trace. This is used to name the trace in the traces dashboard.
-  attr_reader :workflow_name
-  # @return [String] The group id to attach to this trace to enable filtering and grouping in the traces dashboard.
-  attr_reader :group_id
-  # @return [Hash] The arbitrary metadata to attach to this trace to enable filtering in the traces dashboard.
-  attr_reader :metadata
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
 class SdkInternalRealtimeSessionCreateResponseTurnDetectionMetadata
   FIELDS = {
     type: "type",
@@ -650,6 +637,9 @@ class SdkInternalRealtimeSessionCreateResponseMetadata
     end,
     audio: lambda do |value|
       ::OctridevOpenai::RealtimeSessionCreateResponseAudio.from_hash(value)
+    end,
+    tracing: lambda do |value|
+      ::OctridevOpenai::RealtimeSessionCreateResponseTracing.from_hash(value)
     end,
     turn_detection: lambda do |value|
       ::OctridevOpenai::RealtimeSessionCreateResponseTurnDetection.from_hash(value)

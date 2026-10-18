@@ -38,6 +38,32 @@ module BetaItem
     "custom_tool_call_output" => -> { BetaCustomToolCallOutput },
     "custom_tool_call" => -> { BetaCustomToolCall },
   }.freeze
+  UNDECIDED_VARIANTS = (
+    [
+      -> { BetaInputMessage },
+      -> { BetaOutputMessage },
+      -> { BetaComputerCallOutputItemParam },
+      -> { BetaWebSearchToolCall },
+      -> { BetaFunctionToolCall },
+      -> { BetaFunctionCallOutputItemParam },
+      -> { BetaMultiAgentCallItemParam },
+      -> { BetaMultiAgentCallOutputItemParam },
+      -> { BetaToolSearchCallItemParam },
+      -> { BetaToolSearchOutputItemParam },
+      -> { BetaAdditionalToolsItemParam },
+      -> { BetaResponseConfigurationUpdateItemParam },
+      -> { BetaCompactionSummaryItemParam },
+      -> { BetaLocalShellToolCall },
+      -> { BetaLocalShellToolCallOutput },
+      -> { BetaFunctionShellCallItemParam },
+      -> { BetaFunctionShellCallOutputItemParam },
+      -> { BetaApplyPatchToolCallOutputItemParam },
+      -> { BetaMCPListTools },
+      -> { BetaMCPApprovalRequest },
+      -> { BetaMCPToolCall },
+      -> { BetaCustomToolCallOutput },
+    ]
+  ).freeze
 
   def self.from_hash(hash)
     return hash unless hash.is_a?(::Hash)
@@ -203,6 +229,32 @@ module BetaItemResource
     "custom_tool_call" => -> { BetaCustomToolCallResource },
     "custom_tool_call_output" => -> { BetaCustomToolCallOutputResource },
   }.freeze
+  UNDECIDED_VARIANTS = (
+    [
+      -> { BetaInputMessageResource },
+      -> { BetaOutputMessage },
+      -> { BetaComputerToolCallOutputResource },
+      -> { BetaWebSearchToolCall },
+      -> { BetaFunctionToolCallResource },
+      -> { BetaFunctionToolCallOutputResource },
+      -> { BetaMultiAgentCall },
+      -> { BetaMultiAgentCallOutput },
+      -> { BetaToolSearchCall },
+      -> { BetaToolSearchOutput },
+      -> { BetaAdditionalTools },
+      -> { BetaResponseConfigurationUpdate },
+      -> { BetaProgramOutput },
+      -> { BetaCompactionBody },
+      -> { BetaImageGenToolCall },
+      -> { BetaLocalShellToolCall },
+      -> { BetaLocalShellToolCallOutput },
+      -> { BetaApplyPatchToolCallOutput },
+      -> { BetaMCPListTools },
+      -> { BetaMCPApprovalRequest },
+      -> { BetaMCPToolCall },
+      -> { BetaCustomToolCallOutputResource },
+    ]
+  ).freeze
 
   def self.from_hash(hash)
     return hash unless hash.is_a?(::Hash)

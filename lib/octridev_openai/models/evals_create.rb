@@ -157,9 +157,6 @@ class SdkInternalCreateEvalCompletionsRunDataSourceInputMessagesVariant0Metadata
     type: lambda do |value|
       ::OctridevOpenai::CreateEvalCompletionsRunDataSourceInputMessagesVariant0Type.from_value(value)
     end,
-    template: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::TemplateItem.from_hash(item) }
-    end,
   }.freeze
 end
 
@@ -172,7 +169,7 @@ class CreateEvalCompletionsRunDataSourceInputMessagesVariant0
 
   # @return [CreateEvalCompletionsRunDataSourceInputMessagesVariant0Type] The type of input messages. Always `template`.
   attr_reader :type
-  # @return [Array_of_TemplateItem] A list of chat messages forming the prompt or context. May include variable references to the `item` namespace, ie {{item.name}}.
+  # @return [Array_of_Object] A list of chat messages forming the prompt or context. May include variable references to the `item` namespace, ie {{item.name}}.
   attr_reader :template
 
   def initialize(**attributes)
@@ -410,12 +407,16 @@ end
 # Defines the CreateEvalItem SDK namespace.
 module CreateEvalItem
   def self.from_hash(hash)
+    lossy = nil
     [CreateEvalItemVariant0, EvalItem].each do |type|
-      return type.from_hash(hash)
+      decoded = type.from_hash(hash)
+      return decoded if SdkModel.keeps_every_key?(hash, decoded)
+
+      lossy ||= decoded
     rescue ::StandardError
       next
     end
-    raise SdkValidationError.new('CreateEvalItem', 'variant', "Cannot select CreateEvalItem variant without a discriminator")
+    return lossy unless lossy.nil?
   end
 end
 

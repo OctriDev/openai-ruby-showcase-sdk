@@ -9,6 +9,45 @@ module OctridevOpenai
   module Methods
     # Defines the Conversations SDK namespace.
     module Conversations
+      # Internal model hydration metadata.
+      class SdkInternalCreateConversationItemsMetadata
+        FIELDS = {
+          items: "items",
+        }.freeze
+        REQUIRED_FIELDS = %i[
+          items
+        ].freeze
+        DECODERS = {
+          items: lambda do |value|
+            value&.map { |item| ::OctridevOpenai::InputItem.from_hash(item) }
+          end,
+        }.freeze
+      end
+
+      # API model for CreateConversationItems.
+      class CreateConversationItems
+        CONSTRUCTION_SURFACE = :named
+        FIELDS = SdkInternalCreateConversationItemsMetadata::FIELDS
+        REQUIRED_FIELDS = SdkInternalCreateConversationItemsMetadata::REQUIRED_FIELDS
+        DECODERS = SdkInternalCreateConversationItemsMetadata::DECODERS
+
+        # @return [Array_of_InputItem] The items to add to the conversation. You may add up to 20 items at a time.
+        attr_reader :items
+
+        def initialize(**attributes)
+          SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+          freeze
+        end
+
+        def self.from_hash(data)
+          SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+        end
+
+        def to_h
+          SdkModel.to_h(self, FIELDS)
+        end
+      end
+
       # Defines the ListConversationItemsParameter SDK namespace.
       module ListConversationItemsParameter
         ASC = 'asc'

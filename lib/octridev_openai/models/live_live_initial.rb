@@ -335,7 +335,7 @@ class SdkInternalLiveInitialSessionAudioOutputParamMetadata
   ].freeze
   DECODERS = {
     voice: lambda do |value|
-      SdkModel.union_branch(value, [::OctridevOpenai::LiveCustomVoiceParam])
+      ::OctridevOpenai::LiveInitialSessionAudioOutputParamVoice.from_hash(value)
     end,
   }.freeze
 end
@@ -348,7 +348,7 @@ class LiveInitialSessionAudioOutputParam
   REQUIRED_FIELDS = SdkInternalLiveInitialSessionAudioOutputParamMetadata::REQUIRED_FIELDS
   DECODERS = SdkInternalLiveInitialSessionAudioOutputParamMetadata::DECODERS
 
-  # @return [Object] The voice used for Live speech, as a built-in voice name or a custom voice object containing its ID. Defaults to `marin` and cannot change after startup.
+  # @return [LiveInitialSessionAudioOutputParamVoice] The voice used for Live speech, as a built-in voice name or a custom voice object containing its ID. Defaults to `marin` and cannot change after startup.
   attr_reader :voice
 
   def initialize(**attributes)
@@ -362,6 +362,59 @@ class LiveInitialSessionAudioOutputParam
 
   def to_h
     SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the LiveInitialSessionAudioOutputParamVoice SDK namespace.
+module LiveInitialSessionAudioOutputParamVoice
+  def self.from_hash(hash)
+    return hash if hash.is_a?(::String)
+    return LiveInitialSessionAudioOutputParamVoiceVariant1.from_value(hash) if hash.is_a?(::String)
+    return LiveCustomVoiceParam.from_hash(hash)
+  end
+end
+
+# Defines the LiveInitialSessionAudioOutputParamVoiceVariant1 SDK namespace.
+module LiveInitialSessionAudioOutputParamVoiceVariant1
+  ALLOY = 'alloy'
+  ASH = 'ash'
+  BALLAD = 'ballad'
+  BEACON = 'beacon'
+  BOSSA = 'bossa'
+  BRISE = 'brise'
+  CEDAR = 'cedar'
+  CINDER = 'cinder'
+  CORAL = 'coral'
+  DELTA = 'delta'
+  ECHO = 'echo'
+  FLITZ = 'flitz'
+  GLEAM = 'gleam'
+  HAREMA = 'harema'
+  JUNI = 'juni'
+  MARIN = 'marin'
+  MERIDIAN = 'meridian'
+  NIRA = 'nira'
+  NOEUL = 'noeul'
+  NURI = 'nuri'
+  QUARTZ = 'quartz'
+  RIPPLE = 'ripple'
+  SAGE = 'sage'
+  SHIDA = 'shida'
+  SHIMMER = 'shimmer'
+  SILLAGE = 'sillage'
+  STONE = 'stone'
+  TEMPO = 'tempo'
+  VERSE = 'verse'
+  VESPER = 'vesper'
+  WILLOW = 'willow'
+  VALUES = [
+    'alloy', 'ash', 'ballad', 'beacon', 'bossa', 'brise', 'cedar', 'cinder', 'coral', 'delta',
+    'echo', 'flitz', 'gleam', 'harema', 'juni', 'marin', 'meridian', 'nira', 'noeul', 'nuri',
+    'quartz', 'ripple', 'sage', 'shida', 'shimmer', 'sillage', 'stone', 'tempo', 'verse', 'vesper',
+    'willow'
+  ].freeze
+  def self.from_value(value)
+    value
   end
 end
 

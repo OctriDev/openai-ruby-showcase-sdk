@@ -61,6 +61,7 @@ module OctridevOpenai
   UpdateChatCompletion = Methods::Chat::UpdateChatCompletion
   DeleteContainerResponse = Methods::Containers::DeleteContainerResponse
   DeleteContainerFileResponse = Methods::Containers::DeleteContainerFileResponse
+  CreateConversationItems = Methods::Conversations::CreateConversationItems
   UpdateEval = Methods::Evals::UpdateEval
   DeleteEvalResponse = Methods::Evals::DeleteEvalResponse
   DeleteEvalRunResponse = Methods::Evals::DeleteEvalRunResponse
@@ -398,6 +399,22 @@ module OctridevOpenai
       )
     end
 
+    # Lists messages belonging to a thread. Use `run_id` to filter by the run that generated the messages and `order` to control their creation-time order. Use `after` or `before` cursors to navigate the results.
+    #
+    # Returns a list of messages for a given thread.
+    def list_messages_paginated(thread_id: nil, limit: nil, order: nil, after: nil, before: nil, run_id: nil, request_options: nil)
+      ::OctridevOpenai::Methods::Assistants.list_messages_paginated(
+        config: @config,
+        thread_id: thread_id,
+        limit: limit,
+        order: order,
+        after: after,
+        before: before,
+        run_id: run_id,
+        request_options: request_options
+      )
+    end
+
     # Creates a message in a thread. Provide the message `role` and `content`, and optionally include file attachments or metadata. Use this operation to add a user or assistant message to an existing conversation thread.
     #
     # Create a message.
@@ -673,6 +690,23 @@ module OctridevOpenai
       request_options: nil
     )
       ::OctridevOpenai::Methods::Assistants.list_run_steps(
+        config: @config,
+        thread_id: thread_id,
+        run_id: run_id,
+        limit: limit,
+        order: order,
+        after: after,
+        before: before,
+        include: include,
+        request_options: request_options
+      )
+    end
+
+    # Lists the steps belonging to a run on a thread. Use cursor parameters to page through the steps, and set `order` to control their order by creation time.
+    #
+    # Returns a list of run steps belonging to a run.
+    def list_run_steps_paginated(thread_id: nil, run_id: nil, limit: nil, order: nil, after: nil, before: nil, include: nil, request_options: nil)
+      ::OctridevOpenai::Methods::Assistants.list_run_steps_paginated(
         config: @config,
         thread_id: thread_id,
         run_id: run_id,
@@ -6105,6 +6139,20 @@ module OctridevOpenai
       )
     end
 
+    # Lists vector stores, which are collections of processed files that you can use with the `file_search` tool. Use the cursor parameters to move forward or backward through the results, and set `order` to control sorting by creation time.
+    #
+    # Returns a list of vector stores.
+    def list_paginated(limit: nil, order: nil, after: nil, before: nil, request_options: nil)
+      ::OctridevOpenai::Methods::VectorStores.list_vector_stores_paginated(
+        config: @config,
+        limit: limit,
+        order: order,
+        after: after,
+        before: before,
+        request_options: request_options
+      )
+    end
+
     # Creates a vector store to collect processed files for use with the `file_search` tool. Supply `file_ids` to add files at creation, and optionally set a name, description, expiration policy, chunking strategy, or metadata.
     #
     # Create a vector store.
@@ -6257,6 +6305,23 @@ module OctridevOpenai
       )
     end
 
+    # Lists the files in a vector store file batch. Use `filter` to limit results by processing status and the cursor parameters to navigate through the batch's files.
+    #
+    # Returns a list of vector store files in a batch.
+    def list_files_in_batch_paginated(vector_store_id: nil, batch_id: nil, limit: nil, order: nil, after: nil, before: nil, filter: nil, request_options: nil)
+      ::OctridevOpenai::Methods::VectorStores.list_files_in_vector_store_batch_paginated(
+        config: @config,
+        vector_store_id: vector_store_id,
+        batch_id: batch_id,
+        limit: limit,
+        order: order,
+        after: after,
+        before: before,
+        filter: filter,
+        request_options: request_options
+      )
+    end
+
     # Lists files attached to a vector store, with pagination and an optional status filter. Use `after` or `before` to navigate the list, and `filter` to select files by processing status.
     #
     # Returns a list of vector store files.
@@ -6270,6 +6335,22 @@ module OctridevOpenai
       request_options: nil
     )
       ::OctridevOpenai::Methods::VectorStores.list_vector_store_files(
+        config: @config,
+        vector_store_id: vector_store_id,
+        limit: limit,
+        order: order,
+        after: after,
+        before: before,
+        filter: filter,
+        request_options: request_options
+      )
+    end
+
+    # Lists files attached to a vector store, with pagination and an optional status filter. Use `after` or `before` to navigate the list, and `filter` to select files by processing status.
+    #
+    # Returns a list of vector store files.
+    def list_files_paginated(vector_store_id: nil, limit: nil, order: nil, after: nil, before: nil, filter: nil, request_options: nil)
+      ::OctridevOpenai::Methods::VectorStores.list_vector_store_files_paginated(
         config: @config,
         vector_store_id: vector_store_id,
         limit: limit,

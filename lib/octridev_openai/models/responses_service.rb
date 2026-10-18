@@ -21,9 +21,8 @@ end
 # Defines the ServiceTierResponses SDK namespace.
 module ServiceTierResponses
   def self.from_hash(hash)
-    return hash if hash.is_a?(::Object)
     return ServiceTierResponsesVariant0.from_value(hash) if hash.is_a?(::String)
-    raise "Could not deserialize ServiceTierResponses from #{hash.inspect}"
+    hash
   end
 end
 

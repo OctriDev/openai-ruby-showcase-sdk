@@ -544,6 +544,16 @@ class FineTuningJob
   end
 end
 
+# Defines the FineTuningJobMethodType SDK namespace.
+module FineTuningJobMethodType
+  DPO = 'dpo'
+  REINFORCEMENT = 'reinforcement'
+  VALUES = ['dpo', 'reinforcement'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
 # Defines the FineTuningJobHyperparametersBatchSizeVariant0 SDK namespace.
 module FineTuningJobHyperparametersBatchSizeVariant0
   AUTO = 'auto'
@@ -650,35 +660,5 @@ class FineTuningJobCheckpointMetrics
   def to_h
     SdkModel.to_h(self, FIELDS)
   end
-end
-
-# Internal model hydration metadata.
-class SdkInternalFineTuningJobCheckpointMetadata
-  FIELDS = {
-    id: "id",
-    created_at: "created_at",
-    fine_tuned_model_checkpoint: "fine_tuned_model_checkpoint",
-    step_number: "step_number",
-    metrics: "metrics",
-    fine_tuning_job_id: "fine_tuning_job_id",
-    object: "object",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    created_at
-    fine_tuned_model_checkpoint
-    step_number
-    metrics
-    fine_tuning_job_id
-    object
-  ].freeze
-  DECODERS = {
-    metrics: lambda do |value|
-      ::OctridevOpenai::FineTuningJobCheckpointMetrics.from_hash(value)
-    end,
-    object: lambda do |value|
-      ::OctridevOpenai::FineTuningJobCheckpointObject.from_value(value)
-    end,
-  }.freeze
 end
 end

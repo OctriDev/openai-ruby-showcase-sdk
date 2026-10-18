@@ -42,6 +42,40 @@ module SessionEvent
     "agent.session.turn.reasoning_summary_part.done" => -> { SessionEventAgentSessionTurnReasoningSummaryPartDone },
     "agent.session.turn.reasoning_summary_text.delta" => -> { SessionEventAgentSessionTurnReasoningSummaryTextDelta },
   }.freeze
+  UNDECIDED_VARIANTS = (
+    [
+      -> { SessionEventAgentSessionEnvironmentReady },
+      -> { SessionEventAgentSessionEnvironmentSuspended },
+      -> { SessionEventAgentSessionEnvironmentExpired },
+      -> { SessionEventAgentOutputCommandExecutionOutputDelta },
+      -> { SessionEventAgentSessionCreated },
+      -> { SessionEventAgentSessionTurnCreated },
+      -> { SessionEventAgentSessionTurnInProgress },
+      -> { SessionEventAgentSessionTurnCompleted },
+      -> { SessionEventAgentSessionTurnFailed },
+      -> { SessionEventAgentSessionTurnCancelled },
+      -> { SessionEventAgentSessionTurnItemAdded },
+      -> { SessionEventAgentSessionIdle },
+      -> { SessionEventAgentSessionInProgress },
+      -> { SessionEventAgentSessionRequiresAction },
+      -> { SessionEventAgentSessionFailed },
+      -> { SessionEventAgentSessionEnvironmentPending },
+      -> { SessionEventAgentSessionEnvironmentConnected },
+      -> { SessionEventAgentSessionEnvironmentDisconnected },
+      -> { SessionEventAgentSessionEnvironmentFailed },
+      -> { SessionEventAgentSessionSubagentCreated },
+      -> { SessionEventAgentSessionSubagentActive },
+      -> { SessionEventAgentSessionSubagentClosed },
+      -> { SessionEventAgentSessionTurnItemDone },
+      -> { SessionEventAgentSessionTurnContentPartAdded },
+      -> { SessionEventAgentSessionTurnContentPartDone },
+      -> { SessionEventAgentSessionTurnOutputTextDelta },
+      -> { SessionEventAgentSessionTurnOutputTextDone },
+      -> { SessionEventAgentSessionTurnReasoningSummaryPartAdded },
+      -> { SessionEventAgentSessionTurnReasoningSummaryTextDelta },
+      -> { SessionEventAgentSessionTurnReasoningSummaryTextDone },
+    ]
+  ).freeze
 
   def self.from_hash(hash)
     return hash unless hash.is_a?(::Hash)
@@ -638,33 +672,5 @@ module SessionEventAgentSessionEnvironmentReadyType
 
     raise SdkValidationError.new('SessionEventAgentSessionEnvironmentReadyType', 'enum', "Unknown SessionEventAgentSessionEnvironmentReadyType: #{value}")
   end
-end
-
-# Internal model hydration metadata.
-class SdkInternalSessionEventAgentSessionEnvironmentResetMetadata
-  FIELDS = {
-    type: "type",
-    event_id: "event_id",
-    session_id: "session_id",
-    turn_id: "turn_id",
-    environment_id: "environment_id",
-    reset_count: "reset_count",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    event_id
-    session_id
-    turn_id
-    environment_id
-    reset_count
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::SessionEventAgentSessionEnvironmentResetType.from_value(value)
-    end,
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    turn_id
-  ].freeze
 end
 end

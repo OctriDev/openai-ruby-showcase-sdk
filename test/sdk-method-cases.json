@@ -217,7 +217,9 @@
               "prompt": "prompt",
               "delay": "minimal"
             },
-            "noise_reduction": null,
+            "noise_reduction": {
+              "type": "near_field"
+            },
             "turn_detection": {
               "type": "server_vad",
               "threshold": 1,
@@ -347,7 +349,9 @@
               "prompt": "prompt",
               "delay": "minimal"
             },
-            "noise_reduction": null,
+            "noise_reduction": {
+              "type": "near_field"
+            },
             "turn_detection": {
               "type": "server_vad",
               "threshold": 1,
@@ -2373,7 +2377,7 @@
               "agent": {
                 "agent_name": "Example Name"
               },
-              "type": "BetaInputMessageResource",
+              "type": "message",
               "role": "user",
               "status": "in_progress",
               "content": [
@@ -5475,6 +5479,19 @@
           "file_search": {
             "vector_store_ids": [
               "vector_store_ids"
+            ],
+            "vector_stores": [
+              {
+                "file_ids": [
+                  "file_ids"
+                ],
+                "chunking_strategy": {
+                  "type": "auto"
+                },
+                "metadata": {
+                  "key": "key"
+                }
+              }
             ]
           }
         },
@@ -10481,7 +10498,9 @@
                   "prompt": "prompt",
                   "delay": "minimal"
                 },
-                "noise_reduction": null,
+                "noise_reduction": {
+                  "type": "near_field"
+                },
                 "turn_detection": {
                   "type": "server_vad",
                   "threshold": 1,
@@ -10618,7 +10637,9 @@
                 "prompt": "prompt",
                 "delay": "minimal"
               },
-              "noise_reduction": null,
+              "noise_reduction": {
+                "type": "near_field"
+              },
               "turn_detection": {
                 "type": "server_vad",
                 "threshold": 1,
@@ -10806,7 +10827,9 @@
                 "prompt": "prompt",
                 "delay": "minimal"
               },
-              "noise_reduction": null,
+              "noise_reduction": {
+                "type": "near_field"
+              },
               "turn_detection": {
                 "type": "server_vad",
                 "threshold": 1,
@@ -11072,7 +11095,9 @@
           "prefix_padding_ms": 1,
           "silence_duration_ms": 1
         },
-        "input_audio_noise_reduction": "sample",
+        "input_audio_noise_reduction": {
+          "type": "near_field"
+        },
         "input_audio_format": "pcm16",
         "input_audio_transcription": {
           "model": "model",
@@ -12215,7 +12240,7 @@
         "kind": "sse",
         "expected": {
           "enabled": false,
-          "event": "ThreadStreamEvent",
+          "event": "thread.created",
           "data": {
             "id": "id-1",
             "object": "thread",
@@ -12697,6 +12722,19 @@
           "file_search": {
             "vector_store_ids": [
               "vector_store_ids"
+            ],
+            "vector_stores": [
+              {
+                "file_ids": [
+                  "file_ids"
+                ],
+                "chunking_strategy": {
+                  "type": "auto"
+                },
+                "metadata": {
+                  "key": "key"
+                }
+              }
             ]
           }
         },
@@ -12777,6 +12815,19 @@
             "file_search": {
               "vector_store_ids": [
                 "vector_store_ids"
+              ],
+              "vector_stores": [
+                {
+                  "file_ids": [
+                    "file_ids"
+                  ],
+                  "chunking_strategy": {
+                    "type": "auto"
+                  },
+                  "metadata": {
+                    "key": "key"
+                  }
+                }
               ]
             }
           },
@@ -12970,6 +13021,19 @@
             "file_search": {
               "vector_store_ids": [
                 "vector_store_ids"
+              ],
+              "vector_stores": [
+                {
+                  "file_ids": [
+                    "file_ids"
+                  ],
+                  "chunking_strategy": {
+                    "type": "auto"
+                  },
+                  "metadata": {
+                    "key": "key"
+                  }
+                }
               ]
             }
           },
@@ -13056,7 +13120,7 @@
         "kind": "sse",
         "expected": {
           "enabled": false,
-          "event": "ThreadStreamEvent",
+          "event": "thread.created",
           "data": {
             "id": "id-1",
             "object": "thread",
@@ -26250,7 +26314,7 @@
           "object": "list",
           "data": [
             {
-              "type": "InputMessageResource",
+              "type": "message",
               "role": "user",
               "status": "in_progress",
               "content": [
@@ -35463,9 +35527,9 @@
       "fileFieldsBase64": true
     },
     {
-      "id": "submitAssistantsToolOutputsToRun:submit_assistants_tool_outputs_to_run",
+      "id": "submitAssistantsToolOutputsToRun:submit_assistants_tool_outputs_to_run_stream",
       "operationId": "submitAssistantsToolOutputsToRun",
-      "methodName": "submit_assistants_tool_outputs_to_run",
+      "methodName": "submit_assistants_tool_outputs_to_run_stream",
       "namespace": [
         "assistants"
       ],
@@ -35498,7 +35562,7 @@
         "kind": "sse",
         "expected": {
           "enabled": false,
-          "event": "ThreadStreamEvent",
+          "event": "thread.created",
           "data": {
             "id": "id-1",
             "object": "thread",

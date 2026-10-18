@@ -104,9 +104,8 @@ end
 # Defines the BetaReasoningEffort SDK namespace.
 module BetaReasoningEffort
   def self.from_hash(hash)
-    return hash if hash.is_a?(::Object)
     return BetaReasoningEffortVariant0.from_value(hash) if hash.is_a?(::String)
-    raise "Could not deserialize BetaReasoningEffort from #{hash.inspect}"
+    hash
   end
 end
 

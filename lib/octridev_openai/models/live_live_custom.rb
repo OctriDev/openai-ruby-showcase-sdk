@@ -73,6 +73,7 @@ end
 # API model for LiveCustomVoiceParam.
 # Typed representation of the `LiveCustomVoiceParam` API schema.
 class LiveCustomVoiceParam
+  include LiveInitialSessionAudioOutputParamVoice
   CONSTRUCTION_SURFACE = :named
   FIELDS = SdkInternalLiveCustomVoiceParamMetadata::FIELDS
   REQUIRED_FIELDS = SdkInternalLiveCustomVoiceParamMetadata::REQUIRED_FIELDS

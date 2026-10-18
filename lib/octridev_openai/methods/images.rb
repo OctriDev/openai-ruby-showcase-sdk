@@ -53,13 +53,13 @@ module OctridevOpenai
         request_options: nil,
         &block
       )
-        return enum_for(
+    return enum_for(
           __method__,
           config: config,
           body: body,
           content_type: content_type,
           request_options: request_options,
-        ) unless block_given?
+        ) unless block
         SdkClient.stream(
           'POST', "/images/edits",
           config: config,
@@ -280,7 +280,7 @@ module OctridevOpenai
         request_options: nil,
         &block
       )
-        return enum_for(
+    return enum_for(
           __method__,
           config: config,
           prompt: prompt,
@@ -299,7 +299,7 @@ module OctridevOpenai
           safety_identifier: safety_identifier,
           user: user,
           request_options: request_options,
-        ) unless block_given?
+        ) unless block
         SdkClient.stream(
           'POST', "/images/generations",
           config: config,

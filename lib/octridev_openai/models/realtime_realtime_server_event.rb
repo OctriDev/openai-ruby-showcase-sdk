@@ -55,6 +55,50 @@ module RealtimeServerEvent
     "response.mcp_call.completed" => -> { RealtimeServerEventResponseMCPCallCompleted },
     "response.mcp_call.failed" => -> { RealtimeServerEventResponseMCPCallFailed },
   }.freeze
+  UNDECIDED_VARIANTS = (
+    [
+      -> { RealtimeServerEventConversationItemCreated },
+      -> { RealtimeServerEventConversationItemDeleted },
+      -> { RealtimeServerEventConversationItemInputAudioTranscriptionDelta },
+      -> { RealtimeServerEventConversationItemInputAudioTranscriptionFailed },
+      -> { RealtimeServerEventConversationItemRetrieved },
+      -> { RealtimeServerEventConversationItemTruncated },
+      -> { RealtimeServerEventError },
+      -> { RealtimeServerEventInputAudioBufferCleared },
+      -> { RealtimeServerEventInputAudioBufferCommitted },
+      -> { RealtimeServerEventInputAudioBufferSpeechStarted },
+      -> { RealtimeServerEventInputAudioBufferSpeechStopped },
+      -> { RealtimeServerEventResponseAudioDelta },
+      -> { RealtimeServerEventResponseAudioDone },
+      -> { RealtimeServerEventResponseAudioTranscriptDelta },
+      -> { RealtimeServerEventResponseAudioTranscriptDone },
+      -> { RealtimeServerEventResponseContentPartAdded },
+      -> { RealtimeServerEventResponseContentPartDone },
+      -> { RealtimeServerEventResponseCreated },
+      -> { RealtimeServerEventResponseDone },
+      -> { RealtimeServerEventResponseFunctionCallArgumentsDelta },
+      -> { RealtimeServerEventResponseOutputItemAdded },
+      -> { RealtimeServerEventResponseOutputItemDone },
+      -> { RealtimeServerEventResponseTextDelta },
+      -> { RealtimeServerEventResponseTextDone },
+      -> { RealtimeServerEventSessionCreated },
+      -> { RealtimeServerEventSessionUpdated },
+      -> { RealtimeServerEventOutputAudioBufferStarted },
+      -> { RealtimeServerEventOutputAudioBufferStopped },
+      -> { RealtimeServerEventOutputAudioBufferCleared },
+      -> { RealtimeServerEventConversationItemAdded },
+      -> { RealtimeServerEventConversationItemDone },
+      -> { RealtimeServerEventInputAudioBufferTimeoutTriggered },
+      -> { RealtimeServerEventMCPListToolsInProgress },
+      -> { RealtimeServerEventMCPListToolsCompleted },
+      -> { RealtimeServerEventMCPListToolsFailed },
+      -> { RealtimeServerEventResponseMCPCallArgumentsDelta },
+      -> { RealtimeServerEventResponseMCPCallArgumentsDone },
+      -> { RealtimeServerEventResponseMCPCallInProgress },
+      -> { RealtimeServerEventResponseMCPCallCompleted },
+      -> { RealtimeServerEventResponseMCPCallFailed },
+    ]
+  ).freeze
 
   def self.from_hash(hash)
     return hash unless hash.is_a?(::Hash)
@@ -612,63 +656,6 @@ class SdkInternalRealtimeServerEventConversationItemInputAudioTranscriptionFaile
   REQUIRED_FIELDS = %i[
   ].freeze
   DECODERS = {
-  }.freeze
-end
-
-# API model for RealtimeServerEventConversationItemInputAudioTranscriptionFailedError.
-# Details of the transcription error.
-class RealtimeServerEventConversationItemInputAudioTranscriptionFailedError
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeServerEventConversationItemInputAudioTranscriptionFailedErrorMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeServerEventConversationItemInputAudioTranscriptionFailedErrorMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeServerEventConversationItemInputAudioTranscriptionFailedErrorMetadata::DECODERS
-
-  # @return [String] The type of error.
-  attr_reader :type
-  # @return [String] Error code, if any.
-  attr_reader :code
-  # @return [String] A human-readable error message.
-  attr_reader :message
-  # @return [String] Parameter related to the error, if any.
-  attr_reader :param
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeServerEventConversationItemInputAudioTranscriptionFailedMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    item_id: "item_id",
-    content_index: "content_index",
-    error: "error",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    event_id
-    type
-    item_id
-    content_index
-    error
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeServerEventConversationItemInputAudioTranscriptionFailedType.from_value(value)
-    end,
-    error: lambda do |value|
-      ::OctridevOpenai::RealtimeServerEventConversationItemInputAudioTranscriptionFailedError.from_hash(value)
-    end,
   }.freeze
 end
 end

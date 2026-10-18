@@ -185,13 +185,13 @@ module OctridevOpenai
         request_options: nil,
         &block
       )
-        return enum_for(
+    return enum_for(
           __method__,
           config: config,
           body: body,
           openai_beta: openai_beta,
           request_options: request_options,
-        ) unless block_given?
+        ) unless block
         SdkClient.stream(
           'POST', "/responses?beta=true",
           config: config,
@@ -303,7 +303,7 @@ module OctridevOpenai
         request_options: nil,
         &block
       )
-        return enum_for(
+    return enum_for(
           __method__,
           config: config,
           response_id: response_id,
@@ -313,7 +313,7 @@ module OctridevOpenai
           include_obfuscation: include_obfuscation,
           openai_beta: openai_beta,
           request_options: request_options,
-        ) unless block_given?
+        ) unless block
         SdkClient.stream(
           'GET', [
             "/responses/",

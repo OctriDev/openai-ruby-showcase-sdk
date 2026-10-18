@@ -6,6 +6,70 @@
 # realtime_realtime_server_event domain models (part 3)
 module OctridevOpenai
 # Internal model hydration metadata.
+class SdkInternalRealtimeServerEventInputAudioBufferSpeechStoppedMetadata
+  FIELDS = {
+    event_id: "event_id",
+    type: "type",
+    audio_end_ms: "audio_end_ms",
+    item_id: "item_id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    event_id
+    type
+    audio_end_ms
+    item_id
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::RealtimeServerEventInputAudioBufferSpeechStoppedType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for RealtimeServerEventInputAudioBufferSpeechStopped.
+# Returned in `server_vad` mode when the server detects the end of speech in the audio buffer. The server will also send an `conversation.item.created` event with the user message item that is created from the audio buffer.
+class RealtimeServerEventInputAudioBufferSpeechStopped
+  include RealtimeServerEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRealtimeServerEventInputAudioBufferSpeechStoppedMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRealtimeServerEventInputAudioBufferSpeechStoppedMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRealtimeServerEventInputAudioBufferSpeechStoppedMetadata::DECODERS
+
+  # @return [String] The unique ID of the server event.
+  attr_reader :event_id
+  # @return [RealtimeServerEventInputAudioBufferSpeechStoppedType] The event type, must be `input_audio_buffer.speech_stopped`.
+  attr_reader :type
+  # @return [Integer] Milliseconds since the session started when speech stopped. This will correspond to the end of audio sent to the model, and thus includes the `min_silence_duration_ms` configured in the Session.
+  attr_reader :audio_end_ms
+  # @return [String] The ID of the user message item that will be created.
+  attr_reader :item_id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
+  end
+
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  end
+
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the RealtimeServerEventInputAudioBufferSpeechStoppedType SDK namespace.
+module RealtimeServerEventInputAudioBufferSpeechStoppedType
+  INPUT_AUDIO_BUFFER_SPEECH_STOPPED = 'input_audio_buffer.speech_stopped'
+  VALUES = ['input_audio_buffer.speech_stopped'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('RealtimeServerEventInputAudioBufferSpeechStoppedType', 'enum', "Unknown RealtimeServerEventInputAudioBufferSpeechStoppedType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
 class SdkInternalRealtimeServerEventInputAudioBufferTimeoutTriggeredMetadata
   FIELDS = {
     event_id: "event_id",
@@ -617,41 +681,5 @@ class RealtimeServerEventResponseAudioDelta
   def to_h
     SdkModel.to_h(self, FIELDS)
   end
-end
-
-# Defines the RealtimeServerEventResponseAudioDeltaType SDK namespace.
-module RealtimeServerEventResponseAudioDeltaType
-  RESPONSE_OUTPUT_AUDIO_DELTA = 'response.output_audio.delta'
-  VALUES = ['response.output_audio.delta'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('RealtimeServerEventResponseAudioDeltaType', 'enum', "Unknown RealtimeServerEventResponseAudioDeltaType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeServerEventResponseAudioDoneMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    response_id: "response_id",
-    item_id: "item_id",
-    output_index: "output_index",
-    content_index: "content_index",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    event_id
-    type
-    response_id
-    item_id
-    output_index
-    content_index
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeServerEventResponseAudioDoneType.from_value(value)
-    end,
-  }.freeze
 end
 end

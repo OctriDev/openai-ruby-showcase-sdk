@@ -560,7 +560,9 @@ module ComputerUseApprovalResponseParamBrowserAuthenticationCancelParamType
   BROWSER_AUTHENTICATION = 'browser_authentication'
   VALUES = ['browser_authentication'].freeze
   def self.from_value(value)
-    value
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('ComputerUseApprovalResponseParamBrowserAuthenticationCancelParamType', 'enum', "Unknown ComputerUseApprovalResponseParamBrowserAuthenticationCancelParamType: #{value}")
   end
 end
 
@@ -638,7 +640,9 @@ module ComputerUseApprovalResponseParamBrowserAuthenticationSubmitParamType
   BROWSER_AUTHENTICATION = 'browser_authentication'
   VALUES = ['browser_authentication'].freeze
   def self.from_value(value)
-    value
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('ComputerUseApprovalResponseParamBrowserAuthenticationSubmitParamType', 'enum', "Unknown ComputerUseApprovalResponseParamBrowserAuthenticationSubmitParamType: #{value}")
   end
 end
 

@@ -5,6 +5,63 @@
 
 # realtime_realtime_server_event domain models (part 2)
 module OctridevOpenai
+# API model for RealtimeServerEventConversationItemInputAudioTranscriptionFailedError.
+# Details of the transcription error.
+class RealtimeServerEventConversationItemInputAudioTranscriptionFailedError
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRealtimeServerEventConversationItemInputAudioTranscriptionFailedErrorMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRealtimeServerEventConversationItemInputAudioTranscriptionFailedErrorMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRealtimeServerEventConversationItemInputAudioTranscriptionFailedErrorMetadata::DECODERS
+
+  # @return [String] The type of error.
+  attr_reader :type
+  # @return [String] Error code, if any.
+  attr_reader :code
+  # @return [String] A human-readable error message.
+  attr_reader :message
+  # @return [String] Parameter related to the error, if any.
+  attr_reader :param
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
+  end
+
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  end
+
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalRealtimeServerEventConversationItemInputAudioTranscriptionFailedMetadata
+  FIELDS = {
+    event_id: "event_id",
+    type: "type",
+    item_id: "item_id",
+    content_index: "content_index",
+    error: "error",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    event_id
+    type
+    item_id
+    content_index
+    error
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::RealtimeServerEventConversationItemInputAudioTranscriptionFailedType.from_value(value)
+    end,
+    error: lambda do |value|
+      ::OctridevOpenai::RealtimeServerEventConversationItemInputAudioTranscriptionFailedError.from_hash(value)
+    end,
+  }.freeze
+end
+
 # API model for RealtimeServerEventConversationItemInputAudioTranscriptionFailed.
 # Returned when input audio transcription is configured, and a transcription request for a user message failed. These events are separate from other `error` events so that the client can identify the related Item.
 class RealtimeServerEventConversationItemInputAudioTranscriptionFailed
@@ -619,70 +676,6 @@ module RealtimeServerEventInputAudioBufferSpeechStartedType
     return value if VALUES.include?(value)
 
     raise SdkValidationError.new('RealtimeServerEventInputAudioBufferSpeechStartedType', 'enum', "Unknown RealtimeServerEventInputAudioBufferSpeechStartedType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeServerEventInputAudioBufferSpeechStoppedMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    audio_end_ms: "audio_end_ms",
-    item_id: "item_id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    event_id
-    type
-    audio_end_ms
-    item_id
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeServerEventInputAudioBufferSpeechStoppedType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for RealtimeServerEventInputAudioBufferSpeechStopped.
-# Returned in `server_vad` mode when the server detects the end of speech in the audio buffer. The server will also send an `conversation.item.created` event with the user message item that is created from the audio buffer.
-class RealtimeServerEventInputAudioBufferSpeechStopped
-  include RealtimeServerEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeServerEventInputAudioBufferSpeechStoppedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeServerEventInputAudioBufferSpeechStoppedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeServerEventInputAudioBufferSpeechStoppedMetadata::DECODERS
-
-  # @return [String] The unique ID of the server event.
-  attr_reader :event_id
-  # @return [RealtimeServerEventInputAudioBufferSpeechStoppedType] The event type, must be `input_audio_buffer.speech_stopped`.
-  attr_reader :type
-  # @return [Integer] Milliseconds since the session started when speech stopped. This will correspond to the end of audio sent to the model, and thus includes the `min_silence_duration_ms` configured in the Session.
-  attr_reader :audio_end_ms
-  # @return [String] The ID of the user message item that will be created.
-  attr_reader :item_id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the RealtimeServerEventInputAudioBufferSpeechStoppedType SDK namespace.
-module RealtimeServerEventInputAudioBufferSpeechStoppedType
-  INPUT_AUDIO_BUFFER_SPEECH_STOPPED = 'input_audio_buffer.speech_stopped'
-  VALUES = ['input_audio_buffer.speech_stopped'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('RealtimeServerEventInputAudioBufferSpeechStoppedType', 'enum', "Unknown RealtimeServerEventInputAudioBufferSpeechStoppedType: #{value}")
   end
 end
 end

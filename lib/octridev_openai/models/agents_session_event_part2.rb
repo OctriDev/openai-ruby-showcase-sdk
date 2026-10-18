@@ -5,6 +5,34 @@
 
 # agents_session_event domain models (part 2)
 module OctridevOpenai
+# Internal model hydration metadata.
+class SdkInternalSessionEventAgentSessionEnvironmentResetMetadata
+  FIELDS = {
+    type: "type",
+    event_id: "event_id",
+    session_id: "session_id",
+    turn_id: "turn_id",
+    environment_id: "environment_id",
+    reset_count: "reset_count",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    event_id
+    session_id
+    turn_id
+    environment_id
+    reset_count
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::SessionEventAgentSessionEnvironmentResetType.from_value(value)
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    turn_id
+  ].freeze
+end
+
 # API model for SessionEventAgentSessionEnvironmentReset.
 # Emitted after a hosted sandbox is replaced. Conversation history survives; changes to the previous sandbox's files and processes do not.
 class SessionEventAgentSessionEnvironmentReset
@@ -646,39 +674,5 @@ module SessionEventAgentSessionTurnCancelledType
 
     raise SdkValidationError.new('SessionEventAgentSessionTurnCancelledType', 'enum', "Unknown SessionEventAgentSessionTurnCancelledType: #{value}")
   end
-end
-
-# Internal model hydration metadata.
-class SdkInternalSessionEventAgentSessionTurnCompletedMetadata
-  FIELDS = {
-    type: "type",
-    event_id: "event_id",
-    session_id: "session_id",
-    turn_id: "turn_id",
-    turn: "turn",
-    usage: "usage",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    event_id
-    session_id
-    turn_id
-    turn
-    usage
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::SessionEventAgentSessionTurnCompletedType.from_value(value)
-    end,
-    turn: lambda do |value|
-      ::OctridevOpenai::TurnResource.from_hash(value)
-    end,
-    usage: lambda do |value|
-      ::OctridevOpenai::TokenUsageResource.from_hash(value)
-    end,
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    usage
-  ].freeze
 end
 end

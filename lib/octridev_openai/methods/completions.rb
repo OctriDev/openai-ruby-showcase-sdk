@@ -259,7 +259,7 @@ module OctridevOpenai
         request_options: nil,
         &block
       )
-        return enum_for(
+    return enum_for(
           __method__,
           config: config,
           model: model,
@@ -281,7 +281,7 @@ module OctridevOpenai
           top_p: top_p,
           user: user,
           request_options: request_options,
-        ) unless block_given?
+        ) unless block
         SdkClient.stream(
           'POST', "/completions",
           config: config,

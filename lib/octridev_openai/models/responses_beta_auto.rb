@@ -32,6 +32,7 @@ end
 # API model for BetaAutoCodeInterpreterToolParam.
 # Configuration for a code interpreter container. Optionally specify the IDs of the files to run the code on.
 class BetaAutoCodeInterpreterToolParam
+  include BetaCodeInterpreterToolContainer
   CONSTRUCTION_SURFACE = :named
   FIELDS = SdkInternalBetaAutoCodeInterpreterToolParamMetadata::FIELDS
   REQUIRED_FIELDS = SdkInternalBetaAutoCodeInterpreterToolParamMetadata::REQUIRED_FIELDS

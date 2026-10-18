@@ -26,7 +26,9 @@ end
 # API model for LiveMCPToolChoiceParam.
 # Typed representation of the `LiveMCPToolChoiceParam` API schema.
 class LiveMCPToolChoiceParam
+  include LiveResponsesDelegationSettingsInputParamToolChoice
   include LiveAllowedToolsChoiceParamToolsItem
+  include LiveResponsesDelegationSettingsUpdateInputParamToolChoice
   CONSTRUCTION_SURFACE = :named
   FIELDS = SdkInternalLiveMCPToolChoiceParamMetadata::FIELDS
   REQUIRED_FIELDS = SdkInternalLiveMCPToolChoiceParamMetadata::REQUIRED_FIELDS

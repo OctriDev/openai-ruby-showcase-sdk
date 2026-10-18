@@ -50,12 +50,12 @@ module OctridevOpenai
         request_options: nil,
         &block
       )
-        return enum_for(
+    return enum_for(
           __method__,
           config: config,
           session_id: session_id,
           request_options: request_options,
-        ) unless block_given?
+        ) unless block
         SdkClient.stream(
           'GET', [
             "/agents/sessions/",

@@ -29,7 +29,7 @@ class RealtimeSessionCreateResponse
   attr_reader :instructions
   # @return [RealtimeSessionCreateResponseAudio] Configuration for input and output audio for the session.
   attr_reader :audio
-  # @return [Object] Configuration options for tracing. Set to null to disable tracing. Once tracing is enabled for a session, the configuration cannot be modified. `auto` will create a trace for the session with default values for the workflow name, group id, and metadata.
+  # @return [RealtimeSessionCreateResponseTracing] Configuration options for tracing. Set to null to disable tracing. Once tracing is enabled for a session, the configuration cannot be modified. `auto` will create a trace for the session with default values for the workflow name, group id, and metadata.
   attr_reader :tracing
   # @return [RealtimeSessionCreateResponseTurnDetection] Configuration for turn detection. Can be set to `null` to turn off. Server VAD means that the model will detect the start and end of speech based on audio volume and respond at the end of user speech.
   attr_reader :turn_detection
@@ -77,15 +77,6 @@ module RealtimeSessionCreateResponseOutputModalitiesItem
   TEXT = 'text'
   AUDIO = 'audio'
   VALUES = ['text', 'audio'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the RealtimeSessionCreateResponseTracingVariant0 SDK namespace.
-module RealtimeSessionCreateResponseTracingVariant0
-  AUTO = 'auto'
-  VALUES = ['auto'].freeze
   def self.from_value(value)
     value
   end
@@ -281,48 +272,6 @@ class RealtimeSessionCreateResponseGAAudio
 end
 
 # Internal model hydration metadata.
-class SdkInternalRealtimeSessionCreateResponseGATracingVariant1Metadata
-  FIELDS = {
-    workflow_name: "workflow_name",
-    group_id: "group_id",
-    metadata: "metadata",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for RealtimeSessionCreateResponseGATracingVariant1.
-# Granular configuration for tracing.
-class RealtimeSessionCreateResponseGATracingVariant1
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeSessionCreateResponseGATracingVariant1Metadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeSessionCreateResponseGATracingVariant1Metadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeSessionCreateResponseGATracingVariant1Metadata::DECODERS
-
-  # @return [String] The name of the workflow to attach to this trace. This is used to name the trace in the Traces Dashboard.
-  attr_reader :workflow_name
-  # @return [String] The group id to attach to this trace to enable filtering and grouping in the Traces Dashboard.
-  attr_reader :group_id
-  # @return [Hash] The arbitrary metadata to attach to this trace to enable filtering in the Traces Dashboard.
-  attr_reader :metadata
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
 class SdkInternalRealtimeSessionCreateResponseGAMetadata
   FIELDS = {
     type: "type",
@@ -362,6 +311,9 @@ class SdkInternalRealtimeSessionCreateResponseGAMetadata
     end,
     include: lambda do |value|
       value&.map { |item| ::OctridevOpenai::RealtimeSessionCreateResponseGAIncludeItem.from_value(item) }
+    end,
+    tracing: lambda do |value|
+      ::OctridevOpenai::RealtimeSessionCreateResponseGATracing.from_hash(value)
     end,
     tools: lambda do |value|
       value&.map { |item| ::OctridevOpenai::RealtimeSessionCreateResponseGAToolsItem.from_hash(item) }
@@ -410,7 +362,7 @@ class RealtimeSessionCreateResponseGA
   attr_reader :audio
   # @return [Array_of_RealtimeSessionCreateResponseGAIncludeItem] Additional fields to include in server outputs. `item.input_audio_transcription.logprobs`: Include logprobs for input audio transcription.
   attr_reader :include
-  # @return [Object] Realtime API can write session traces to the Traces Dashboard. Set to null to disable tracing. Once tracing is enabled for a session, the configuration cannot be modified. `auto` will create a trace for the session with default values for the workflow name, group id, and metadata.
+  # @return [RealtimeSessionCreateResponseGATracing] Realtime API can write session traces to the Traces Dashboard. Set to null to disable tracing. Once tracing is enabled for a session, the configuration cannot be modified. `auto` will create a trace for the session with default values for the workflow name, group id, and metadata.
   attr_reader :tracing
   # @return [Array_of_RealtimeSessionCreateResponseGAToolsItem] Tools available to the model.
   attr_reader :tools
@@ -476,15 +428,6 @@ module RealtimeSessionCreateResponseGAOutputModalitiesItem
   end
 end
 
-# Defines the RealtimeSessionCreateResponseGATracingVariant0 SDK namespace.
-module RealtimeSessionCreateResponseGATracingVariant0
-  AUTO = 'auto'
-  VALUES = ['auto'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
 # Defines the RealtimeSessionCreateResponseGAType SDK namespace.
 module RealtimeSessionCreateResponseGAType
   REALTIME = 'realtime'
@@ -520,6 +463,180 @@ module RealtimeSessionCreateResponseGAToolsItem
     return type.from_hash(hash) if type
 
     raise SdkValidationError.new('RealtimeSessionCreateResponseGAToolsItem', 'variant', "Unknown RealtimeSessionCreateResponseGAToolsItem discriminator: #{hash["type"].inspect}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalRealtimeSessionCreateResponseGATracingVariant1Metadata
+  FIELDS = {
+    workflow_name: "workflow_name",
+    group_id: "group_id",
+    metadata: "metadata",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for RealtimeSessionCreateResponseGATracingVariant1.
+class RealtimeSessionCreateResponseGATracingVariant1
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRealtimeSessionCreateResponseGATracingVariant1Metadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRealtimeSessionCreateResponseGATracingVariant1Metadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRealtimeSessionCreateResponseGATracingVariant1Metadata::DECODERS
+
+  # @return [String] The name of the workflow to attach to this trace. This is used to name the trace in the Traces Dashboard.
+  attr_reader :workflow_name
+  # @return [String] The group id to attach to this trace to enable filtering and grouping in the Traces Dashboard.
+  attr_reader :group_id
+  # @return [Hash] The arbitrary metadata to attach to this trace to enable filtering in the Traces Dashboard.
+  attr_reader :metadata
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
+  end
+
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  end
+
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the RealtimeSessionCreateResponseGATracing SDK namespace.
+module RealtimeSessionCreateResponseGATracing
+  def self.from_hash(hash)
+    return RealtimeSessionCreateResponseGATracingVariant0.from_value(hash) if hash.is_a?(::String)
+    return RealtimeSessionCreateResponseGATracingVariant1.from_hash(hash)
+  end
+end
+
+# Defines the RealtimeSessionCreateResponseGATracingVariant0 SDK namespace.
+module RealtimeSessionCreateResponseGATracingVariant0
+  AUTO = 'auto'
+  VALUES = ['auto'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalRealtimeSessionCreateResponseTracingVariant1Metadata
+  FIELDS = {
+    workflow_name: "workflow_name",
+    group_id: "group_id",
+    metadata: "metadata",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for RealtimeSessionCreateResponseTracingVariant1.
+class RealtimeSessionCreateResponseTracingVariant1
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRealtimeSessionCreateResponseTracingVariant1Metadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRealtimeSessionCreateResponseTracingVariant1Metadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRealtimeSessionCreateResponseTracingVariant1Metadata::DECODERS
+
+  # @return [String] The name of the workflow to attach to this trace. This is used to name the trace in the traces dashboard.
+  attr_reader :workflow_name
+  # @return [String] The group id to attach to this trace to enable filtering and grouping in the traces dashboard.
+  attr_reader :group_id
+  # @return [Hash] The arbitrary metadata to attach to this trace to enable filtering in the traces dashboard.
+  attr_reader :metadata
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
+  end
+
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  end
+
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the RealtimeSessionCreateResponseTracing SDK namespace.
+module RealtimeSessionCreateResponseTracing
+  def self.from_hash(hash)
+    return RealtimeSessionCreateResponseTracingVariant0.from_value(hash) if hash.is_a?(::String)
+    return RealtimeSessionCreateResponseTracingVariant1.from_hash(hash)
+  end
+end
+
+# Defines the RealtimeSessionCreateResponseTracingVariant0 SDK namespace.
+module RealtimeSessionCreateResponseTracingVariant0
+  AUTO = 'auto'
+  VALUES = ['auto'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalRealtimeSessionTracingVariant1Metadata
+  FIELDS = {
+    workflow_name: "workflow_name",
+    group_id: "group_id",
+    metadata: "metadata",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for RealtimeSessionTracingVariant1.
+class RealtimeSessionTracingVariant1
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRealtimeSessionTracingVariant1Metadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRealtimeSessionTracingVariant1Metadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRealtimeSessionTracingVariant1Metadata::DECODERS
+
+  # @return [String] The name of the workflow to attach to this trace. This is used to name the trace in the traces dashboard.
+  attr_reader :workflow_name
+  # @return [String] The group id to attach to this trace to enable filtering and grouping in the traces dashboard.
+  attr_reader :group_id
+  # @return [Hash] The arbitrary metadata to attach to this trace to enable filtering in the traces dashboard.
+  attr_reader :metadata
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
+  end
+
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  end
+
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the RealtimeSessionTracing SDK namespace.
+module RealtimeSessionTracing
+  def self.from_hash(hash)
+    return RealtimeSessionTracingVariant0.from_value(hash) if hash.is_a?(::String)
+    return RealtimeSessionTracingVariant1.from_hash(hash)
+  end
+end
+
+# Defines the RealtimeSessionTracingVariant0 SDK namespace.
+module RealtimeSessionTracingVariant0
+  AUTO = 'auto'
+  VALUES = ['auto'].freeze
+  def self.from_value(value)
+    value
   end
 end
 end

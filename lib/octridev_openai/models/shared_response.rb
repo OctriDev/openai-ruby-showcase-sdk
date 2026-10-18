@@ -227,7 +227,6 @@ end
 class ResponseFormatJsonObject
   include AssistantsApiResponseFormatOption
   include TextResponseFormatConfiguration
-  include ResponseFormat
   include CreateEvalCompletionsRunDataSourceSamplingParamsResponseFormat
   CONSTRUCTION_SURFACE = :named
   FIELDS = SdkInternalResponseFormatJsonObjectMetadata::FIELDS
@@ -335,7 +334,6 @@ end
 # JSON Schema response format. Used to generate structured JSON responses. Learn more about Structured Outputs.
 class ResponseFormatJsonSchema
   include AssistantsApiResponseFormatOption
-  include ResponseFormat
   include CreateEvalCompletionsRunDataSourceSamplingParamsResponseFormat
   CONSTRUCTION_SURFACE = :named
   FIELDS = SdkInternalResponseFormatJsonSchemaMetadata::FIELDS
@@ -400,7 +398,6 @@ end
 class ResponseFormatText
   include AssistantsApiResponseFormatOption
   include TextResponseFormatConfiguration
-  include ResponseFormat
   include CreateEvalCompletionsRunDataSourceSamplingParamsResponseFormat
   CONSTRUCTION_SURFACE = :named
   FIELDS = SdkInternalResponseFormatTextMetadata::FIELDS

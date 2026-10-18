@@ -9,8 +9,11 @@ module OctridevOpenai
 module BetaModelIdsCompaction
   def self.from_hash(hash)
     return hash if hash.is_a?(::String)
-    return hash if hash.is_a?(::Object)
-    return BetaModelIdsResponses.from_hash(hash)
+    begin
+      return BetaModelIdsResponses.from_hash(hash)
+    rescue ::StandardError
+      hash
+    end
   end
 end
 

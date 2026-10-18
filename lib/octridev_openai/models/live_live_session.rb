@@ -386,7 +386,7 @@ class SdkInternalLiveSessionCreateParamsMetadata
   ].freeze
   DECODERS = {
     model: lambda do |value|
-      ::OctridevOpenai::ModelIdsLive.from_hash(value)
+      ::OctridevOpenai::ModelIdsLive.from_value(value)
     end,
     input: lambda do |value|
       value&.map { |item| ::OctridevOpenai::LiveInitialItem.from_hash(item) }

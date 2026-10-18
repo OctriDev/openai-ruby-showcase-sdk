@@ -107,7 +107,7 @@ module OctridevOpenai
         request_options: nil,
         &block
       )
-        return enum_for(
+    return enum_for(
           __method__,
           config: config,
           model: model,
@@ -118,7 +118,7 @@ module OctridevOpenai
           speed: speed,
           stream_format: stream_format,
           request_options: request_options,
-        ) unless block_given?
+        ) unless block
         SdkClient.stream(
           'POST', "/audio/speech",
           config: config,
@@ -261,6 +261,7 @@ module OctridevOpenai
             'known_speaker_references' => known_speaker_references,
           },
           content_type: 'multipart/form-data',
+          return_type: ::OctridevOpenai::CreateTranscriptionResponse,
           decoder: :json,
           operation_id: 'create_transcription',
           request_options: request_options,
@@ -354,7 +355,7 @@ module OctridevOpenai
         request_options: nil,
         &block
       )
-        return enum_for(
+    return enum_for(
           __method__,
           config: config,
           file: file,
@@ -372,7 +373,7 @@ module OctridevOpenai
           known_speaker_names: known_speaker_names,
           known_speaker_references: known_speaker_references,
           request_options: request_options,
-        ) unless block_given?
+        ) unless block
         SdkClient.stream(
           'POST', "/audio/transcriptions",
           config: config,
@@ -448,6 +449,7 @@ module OctridevOpenai
             'temperature' => temperature,
           },
           content_type: 'multipart/form-data',
+          return_type: ::OctridevOpenai::CreateTranslationResponse,
           decoder: :json,
           operation_id: 'create_translation',
           request_options: request_options,

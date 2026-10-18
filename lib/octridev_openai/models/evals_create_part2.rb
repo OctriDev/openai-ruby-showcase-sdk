@@ -223,6 +223,47 @@ module CreateEvalResponsesRunDataSourceType
 end
 
 # Internal model hydration metadata.
+class SdkInternalCreateEvalResponsesRunDataSourceInputMessagesVariant0TemplateX7a13727553Metadata
+  FIELDS = {
+    role: "role",
+    content: "content",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    role
+    content
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for CreateEvalResponsesRunDataSourceInputMessagesVariant0TemplateX7a13727553.
+# Required object value serialized in the `template[]` wire field.
+class CreateEvalResponsesRunDataSourceInputMessagesVariant0TemplateX7a13727553
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCreateEvalResponsesRunDataSourceInputMessagesVariant0TemplateX7a13727553Metadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCreateEvalResponsesRunDataSourceInputMessagesVariant0TemplateX7a13727553Metadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCreateEvalResponsesRunDataSourceInputMessagesVariant0TemplateX7a13727553Metadata::DECODERS
+
+  # @return [String] The role of the message (e.g. "system", "assistant", "user").
+  attr_reader :role
+  # @return [String] The content of the message.
+  attr_reader :content
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
+  end
+
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  end
+
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
 class SdkInternalCreateEvalResponsesRunDataSourceInputMessagesVariant0Metadata
   FIELDS = {
     type: "type",
@@ -236,9 +277,6 @@ class SdkInternalCreateEvalResponsesRunDataSourceInputMessagesVariant0Metadata
     type: lambda do |value|
       ::OctridevOpenai::CreateEvalResponsesRunDataSourceInputMessagesVariant0Type.from_value(value)
     end,
-    template: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::TemplateItem2.from_hash(item) }
-    end,
   }.freeze
 end
 
@@ -251,7 +289,7 @@ class CreateEvalResponsesRunDataSourceInputMessagesVariant0
 
   # @return [CreateEvalResponsesRunDataSourceInputMessagesVariant0Type] The type of input messages. Always `template`.
   attr_reader :type
-  # @return [Array_of_TemplateItem2] A list of chat messages forming the prompt or context. May include variable references to the `item` namespace, ie {{item.name}}.
+  # @return [Array_of_Object] A list of chat messages forming the prompt or context. May include variable references to the `item` namespace, ie {{item.name}}.
   attr_reader :template
 
   def initialize(**attributes)

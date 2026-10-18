@@ -580,6 +580,68 @@ module BetaResponsesServerEvent
     "response.inject.created" => -> { BetaResponseInjectCreatedEvent },
     "response.inject.failed" => -> { BetaResponseInjectFailedEvent },
   }.freeze
+  UNDECIDED_VARIANTS = (
+    [
+      -> { BetaResponsesServerEventVariant0 },
+      -> { BetaResponsesServerEventVariant1 },
+      -> { BetaResponsesServerEventVariant2 },
+      -> { BetaResponsesServerEventVariant3 },
+      -> { BetaResponsesServerEventVariant4 },
+      -> { BetaResponsesServerEventVariant6 },
+      -> { BetaResponsesServerEventVariant7 },
+      -> { BetaResponsesServerEventVariant8 },
+      -> { BetaResponsesServerEventVariant9 },
+      -> { BetaResponsesServerEventVariant10 },
+      -> { BetaResponsesServerEventVariant11 },
+      -> { BetaResponsesServerEventVariant12 },
+      -> { BetaResponsesServerEventVariant13 },
+      -> { BetaResponsesServerEventVariant14 },
+      -> { BetaResponsesServerEventVariant15 },
+      -> { BetaResponsesServerEventVariant16 },
+      -> { BetaResponsesServerEventVariant17 },
+      -> { BetaResponsesServerEventVariant18 },
+      -> { BetaResponsesServerEventVariant19 },
+      -> { BetaResponsesServerEventVariant20 },
+      -> { BetaResponsesServerEventVariant21 },
+      -> { BetaResponsesServerEventVariant22 },
+      -> { BetaResponsesServerEventVariant24 },
+      -> { BetaResponsesServerEventVariant25 },
+      -> { BetaResponsesServerEventVariant26 },
+      -> { BetaResponsesServerEventVariant27 },
+      -> { BetaResponsesServerEventVariant28 },
+      -> { BetaResponsesServerEventVariant29 },
+      -> { BetaResponsesServerEventVariant30 },
+      -> { BetaResponsesServerEventVariant31 },
+      -> { BetaResponsesServerEventVariant32 },
+      -> { BetaResponsesServerEventVariant33 },
+      -> { BetaResponsesServerEventVariant34 },
+      -> { BetaResponsesServerEventVariant35 },
+      -> { BetaResponsesServerEventVariant37 },
+      -> { BetaResponsesServerEventVariant38 },
+      -> { BetaResponsesServerEventVariant39 },
+      -> { BetaResponsesServerEventVariant40 },
+      -> { BetaResponsesServerEventVariant41 },
+      -> { BetaResponsesServerEventVariant42 },
+      -> { BetaResponsesServerEventVariant43 },
+      -> { BetaResponsesServerEventVariant44 },
+      -> { BetaResponsesServerEventVariant46 },
+      -> { BetaResponsesServerEventVariant47 },
+      -> { BetaResponsesServerEventVariant48 },
+      -> { BetaResponsesServerEventVariant49 },
+      -> { BetaResponsesServerEventVariant50 },
+      -> { BetaResponsesServerEventVariant51 },
+      -> { BetaResponsesServerEventVariant52 },
+      -> { BetaResponsesServerEventVariant53 },
+      -> { BetaResponsesServerEventVariant55 },
+      -> { BetaResponsesServerEventVariant56 },
+      -> { BetaResponsesServerEventVariant57 },
+      -> { BetaResponseWsError },
+      -> { BetaResponseSteerAcceptedEvent },
+      -> { BetaResponseSteerFailedEvent },
+      -> { BetaResponseInjectCreatedEvent },
+      -> { BetaResponseInjectFailedEvent },
+    ]
+  ).freeze
 
   def self.from_hash(hash)
     return hash unless hash.is_a?(::Hash)
@@ -601,30 +663,5 @@ class SdkInternalBetaResponsesWebSocketStreamEventMetadata
   ].freeze
   DECODERS = {
   }.freeze
-end
-
-# API model for BetaResponsesWebSocketStreamEvent.
-# Typed representation of the `BetaResponsesWebSocketStreamEvent` API schema.
-class BetaResponsesWebSocketStreamEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaResponsesWebSocketStreamEventMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaResponsesWebSocketStreamEventMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaResponsesWebSocketStreamEventMetadata::DECODERS
-
-  # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
-  attr_reader :stream_id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
 end
 end

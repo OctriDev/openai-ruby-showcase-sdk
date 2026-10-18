@@ -457,12 +457,16 @@ module InputItem
     type = shape_mapping.find { |required, _type| hash.is_a?(::Hash) && hash.key?(required) }&.last
     decoded = type&.from_hash(hash)
     return decoded unless type.nil?
+    lossy = nil
     [Item, CompactionTriggerItemParam, ItemReferenceParam].each do |type|
-      return type.from_hash(hash)
+      decoded = type.from_hash(hash)
+      return decoded if SdkModel.keeps_every_key?(hash, decoded)
+
+      lossy ||= decoded
     rescue ::StandardError
       next
     end
-    raise SdkValidationError.new('InputItem', 'variant', "Cannot select InputItem variant without a discriminator")
+    return lossy unless lossy.nil?
   end
 end
 

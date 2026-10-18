@@ -5,6 +5,104 @@
 
 # realtime_realtime_transcription domain models (part 2)
 module OctridevOpenai
+# API model for RealtimeTranscriptionSessionCreateResponseGAAudioInput.
+# Optional object value serialized in the `input` wire field.
+class RealtimeTranscriptionSessionCreateResponseGAAudioInput
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRealtimeTranscriptionSessionCreateResponseGAAudioInputMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRealtimeTranscriptionSessionCreateResponseGAAudioInputMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRealtimeTranscriptionSessionCreateResponseGAAudioInputMetadata::DECODERS
+
+  # @return [RealtimeAudioFormats] Optional API value serialized in the `format` wire field.
+  attr_reader :format
+  # @return [AudioTranscriptionResponse] Configuration of the transcription model.
+  attr_reader :transcription
+  # @return [RealtimeTranscriptionSessionCreateResponseGAAudioInputNoiseReduction] Configuration for input audio noise reduction.
+  attr_reader :noise_reduction
+  # @return [RealtimeTranscriptionSessionCreateResponseGAAudioInputTurnDetection] Configuration for turn detection. For `gpt-realtime-whisper`, this must be `null`; VAD is not supported.
+  attr_reader :turn_detection
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
+  end
+
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  end
+
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalRealtimeTranscriptionSessionCreateResponseGAAudioMetadata
+  FIELDS = {
+    input: "input",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+    input: lambda do |value|
+      ::OctridevOpenai::RealtimeTranscriptionSessionCreateResponseGAAudioInput.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for RealtimeTranscriptionSessionCreateResponseGAAudio.
+# Configuration for input audio for the session.
+class RealtimeTranscriptionSessionCreateResponseGAAudio
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRealtimeTranscriptionSessionCreateResponseGAAudioMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRealtimeTranscriptionSessionCreateResponseGAAudioMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRealtimeTranscriptionSessionCreateResponseGAAudioMetadata::DECODERS
+
+  # @return [RealtimeTranscriptionSessionCreateResponseGAAudioInput] Optional object value serialized in the `input` wire field.
+  attr_reader :input
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
+  end
+
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  end
+
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalRealtimeTranscriptionSessionCreateResponseGAMetadata
+  FIELDS = {
+    type: "type",
+    id: "id",
+    object: "object",
+    expires_at: "expires_at",
+    include: "include",
+    audio: "audio",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    id
+    object
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::RealtimeTranscriptionSessionCreateResponseGAType.from_value(value)
+    end,
+    include: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::RealtimeTranscriptionSessionCreateResponseGAIncludeItem.from_value(item) }
+    end,
+    audio: lambda do |value|
+      ::OctridevOpenai::RealtimeTranscriptionSessionCreateResponseGAAudio.from_hash(value)
+    end,
+  }.freeze
+end
+
 # API model for RealtimeTranscriptionSessionCreateResponseGA.
 # A Realtime transcription session configuration object.
 class RealtimeTranscriptionSessionCreateResponseGA

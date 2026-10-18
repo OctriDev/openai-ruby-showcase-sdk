@@ -67,7 +67,6 @@ end
 # API model for ChatCompletionTool.
 # A function tool that can be used to generate a response.
 class ChatCompletionTool
-  include ToolsItem
   CONSTRUCTION_SURFACE = :named
   FIELDS = SdkInternalChatCompletionToolMetadata::FIELDS
   REQUIRED_FIELDS = SdkInternalChatCompletionToolMetadata::REQUIRED_FIELDS

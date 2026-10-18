@@ -198,7 +198,7 @@ module ThreadObjectObject
 end
 
 # Internal model hydration metadata.
-class SdkInternalThreadStreamEventVariant0Metadata
+class SdkInternalThreadStreamEventMetadata
   FIELDS = {
     enabled: "enabled",
     event: "event",
@@ -210,7 +210,7 @@ class SdkInternalThreadStreamEventVariant0Metadata
   ].freeze
   DECODERS = {
     event: lambda do |value|
-      ::OctridevOpenai::ThreadStreamEventVariant0Event.from_value(value)
+      ::OctridevOpenai::ThreadStreamEventEvent.from_value(value)
     end,
     data: lambda do |value|
       ::OctridevOpenai::ThreadObject.from_hash(value)
@@ -218,16 +218,19 @@ class SdkInternalThreadStreamEventVariant0Metadata
   }.freeze
 end
 
-# API model for ThreadStreamEventVariant0.
-class ThreadStreamEventVariant0
+# API model for ThreadStreamEvent.
+# Occurs when a new thread is created.
+class ThreadStreamEvent
+  include AssistantStreamEvent
   CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalThreadStreamEventVariant0Metadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalThreadStreamEventVariant0Metadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalThreadStreamEventVariant0Metadata::DECODERS
+  FIELDS = SdkInternalThreadStreamEventMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalThreadStreamEventMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalThreadStreamEventMetadata::DECODERS
 
-  attr_reader :event
   # @return [Boolean] Whether to enable input audio transcription.
   attr_reader :enabled
+  # @return [ThreadStreamEventEvent] Required enumerated value serialized in the `event` wire field.
+  attr_reader :event
   # @return [ThreadObject] Represents a thread that contains messages.
   attr_reader :data
 
@@ -245,19 +248,14 @@ class ThreadStreamEventVariant0
   end
 end
 
-# Defines the ThreadStreamEvent SDK namespace.
-module ThreadStreamEvent
-  def self.from_hash(hash)
-    return ThreadStreamEventVariant0.from_hash(hash)
-  end
-end
-
-# Defines the ThreadStreamEventVariant0Event SDK namespace.
-module ThreadStreamEventVariant0Event
+# Defines the ThreadStreamEventEvent SDK namespace.
+module ThreadStreamEventEvent
   THREAD_CREATED = 'thread.created'
   VALUES = ['thread.created'].freeze
   def self.from_value(value)
-    value
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('ThreadStreamEventEvent', 'enum', "Unknown ThreadStreamEventEvent: #{value}")
   end
 end
 end

@@ -65,6 +65,9 @@ module OctridevOpenai
   # Defines the BetaCodeInterpreterToolCallOutputsItem SDK namespace.
   module BetaCodeInterpreterToolCallOutputsItem
   end
+  # Defines the BetaCodeInterpreterToolContainer SDK namespace.
+  module BetaCodeInterpreterToolContainer
+  end
   # Defines the BetaCompoundFilterFiltersItem SDK namespace.
   module BetaCompoundFilterFiltersItem
   end
@@ -130,6 +133,9 @@ module OctridevOpenai
   end
   # Defines the BetaMCPToolCallError SDK namespace.
   module BetaMCPToolCallError
+  end
+  # Defines the BetaMCPToolRequireApproval SDK namespace.
+  module BetaMCPToolRequireApproval
   end
   # Defines the BetaMessageContentItem SDK namespace.
   module BetaMessageContentItem
@@ -260,6 +266,9 @@ module OctridevOpenai
   # Defines the CodeInterpreterToolCallOutputsItem SDK namespace.
   module CodeInterpreterToolCallOutputsItem
   end
+  # Defines the CodeInterpreterToolContainer SDK namespace.
+  module CodeInterpreterToolContainer
+  end
   # Defines the CompoundFilterFiltersItem SDK namespace.
   module CompoundFilterFiltersItem
   end
@@ -359,6 +368,9 @@ module OctridevOpenai
   # Defines the CreateSessionInputParam SDK namespace.
   module CreateSessionInputParam
   end
+  # Defines the CreateSpeechRequestVoice SDK namespace.
+  module CreateSpeechRequestVoice
+  end
   # Defines the CreateSpeechResponseStreamEvent SDK namespace.
   module CreateSpeechResponseStreamEvent
   end
@@ -367,6 +379,12 @@ module OctridevOpenai
   end
   # Defines the CreateThreadRequestToolResourcesFileSearchVectorStoresItemChuX7aa7dff179 SDK namespace.
   module CreateThreadRequestToolResourcesFileSearchVectorStoresItemChuX7aa7dff179
+  end
+  # Defines the CreateTranscriptionRequestChunkingStrategy SDK namespace.
+  module CreateTranscriptionRequestChunkingStrategy
+  end
+  # Defines the CreateTranscriptionResponse SDK namespace.
+  module CreateTranscriptionResponse
   end
   # Defines the CreateTranscriptionResponseDiarizedJsonUsage SDK namespace.
   module CreateTranscriptionResponseDiarizedJsonUsage
@@ -377,11 +395,11 @@ module OctridevOpenai
   # Defines the CreateTranscriptionResponseStreamEvent SDK namespace.
   module CreateTranscriptionResponseStreamEvent
   end
+  # Defines the CreateTranslationResponse SDK namespace.
+  module CreateTranslationResponse
+  end
   # Defines the CreateVaultCredentialAuthParam SDK namespace.
   module CreateVaultCredentialAuthParam
-  end
-  # Defines the CreateVectorStoreFileBatchRequest SDK namespace.
-  module CreateVectorStoreFileBatchRequest
   end
   # Defines the CreateVectorStoreRequestChunkingStrategy SDK namespace.
   module CreateVectorStoreRequestChunkingStrategy
@@ -412,6 +430,9 @@ module OctridevOpenai
   end
   # Defines the DecisionInputToolOutputContentPartsItem SDK namespace.
   module DecisionInputToolOutputContentPartsItem
+  end
+  # Defines the DecisionsUsagePermissionErrorResponseError SDK namespace.
+  module DecisionsUsagePermissionErrorResponseError
   end
   # Defines the Delegation SDK namespace.
   module Delegation
@@ -503,9 +524,6 @@ module OctridevOpenai
   # Defines the ImageGenStreamEvent SDK namespace.
   module ImageGenStreamEvent
   end
-  # Defines the ImageRefParam SDK namespace.
-  module ImageRefParam
-  end
   # Defines the InlineCapabilitySourceParam SDK namespace.
   module InlineCapabilitySourceParam
   end
@@ -569,8 +587,17 @@ module OctridevOpenai
   # Defines the LiveInitialItem SDK namespace.
   module LiveInitialItem
   end
+  # Defines the LiveInitialSessionAudioOutputParamVoice SDK namespace.
+  module LiveInitialSessionAudioOutputParamVoice
+  end
+  # Defines the LiveResponsesDelegationSettingsInputParamToolChoice SDK namespace.
+  module LiveResponsesDelegationSettingsInputParamToolChoice
+  end
   # Defines the LiveResponsesDelegationSettingsInputParamToolsItem SDK namespace.
   module LiveResponsesDelegationSettingsInputParamToolsItem
+  end
+  # Defines the LiveResponsesDelegationSettingsUpdateInputParamToolChoice SDK namespace.
+  module LiveResponsesDelegationSettingsUpdateInputParamToolChoice
   end
   # Defines the LiveResponsesDelegationSettingsUpdateInputParamToolsItem SDK namespace.
   module LiveResponsesDelegationSettingsUpdateInputParamToolsItem
@@ -608,6 +635,9 @@ module OctridevOpenai
   # Defines the MCPToolCallError SDK namespace.
   module MCPToolCallError
   end
+  # Defines the MCPToolRequireApproval SDK namespace.
+  module MCPToolRequireApproval
+  end
   # Defines the McpTransportConfigParam SDK namespace.
   module McpTransportConfigParam
   end
@@ -644,9 +674,6 @@ module OctridevOpenai
   # Defines the ModelIdsCompaction SDK namespace.
   module ModelIdsCompaction
   end
-  # Defines the ModelIdsLive SDK namespace.
-  module ModelIdsLive
-  end
   # Defines the ModelIdsResponses SDK namespace.
   module ModelIdsResponses
   end
@@ -673,6 +700,9 @@ module OctridevOpenai
   end
   # Defines the PartialImages SDK namespace.
   module PartialImages
+  end
+  # Defines the PermissionErrorResponseError SDK namespace.
+  module PermissionErrorResponseError
   end
   # Defines the PersistedAgentToolConfigParam SDK namespace.
   module PersistedAgentToolConfigParam
@@ -749,11 +779,23 @@ module OctridevOpenai
   # Defines the RealtimeSessionCreateRequestGAToolsItem SDK namespace.
   module RealtimeSessionCreateRequestGAToolsItem
   end
+  # Defines the RealtimeSessionCreateRequestTracing SDK namespace.
+  module RealtimeSessionCreateRequestTracing
+  end
   # Defines the RealtimeSessionCreateResponseGAToolChoice SDK namespace.
   module RealtimeSessionCreateResponseGAToolChoice
   end
   # Defines the RealtimeSessionCreateResponseGAToolsItem SDK namespace.
   module RealtimeSessionCreateResponseGAToolsItem
+  end
+  # Defines the RealtimeSessionCreateResponseGATracing SDK namespace.
+  module RealtimeSessionCreateResponseGATracing
+  end
+  # Defines the RealtimeSessionCreateResponseTracing SDK namespace.
+  module RealtimeSessionCreateResponseTracing
+  end
+  # Defines the RealtimeSessionTracing SDK namespace.
+  module RealtimeSessionTracing
   end
   # Defines the RealtimeTranslationClientEvent SDK namespace.
   module RealtimeTranslationClientEvent
@@ -769,9 +811,6 @@ module OctridevOpenai
   end
   # Defines the ReasoningEffort SDK namespace.
   module ReasoningEffort
-  end
-  # Defines the ResponseFormat SDK namespace.
-  module ResponseFormat
   end
   # Defines the ResponseOutputTextAnnotationsItem SDK namespace.
   module ResponseOutputTextAnnotationsItem
@@ -851,12 +890,6 @@ module OctridevOpenai
   # Defines the StopConfiguration SDK namespace.
   module StopConfiguration
   end
-  # Defines the TemplateItem SDK namespace.
-  module TemplateItem
-  end
-  # Defines the TemplateItem2 SDK namespace.
-  module TemplateItem2
-  end
   # Defines the TextFormatParam SDK namespace.
   module TextFormatParam
   end
@@ -871,9 +904,6 @@ module OctridevOpenai
   end
   # Defines the ThreadResourceStatus SDK namespace.
   module ThreadResourceStatus
-  end
-  # Defines the ThreadStreamEvent SDK namespace.
-  module ThreadStreamEvent
   end
   # Defines the Tool SDK namespace.
   module Tool
@@ -892,9 +922,6 @@ module OctridevOpenai
   end
   # Defines the ToolSearchOutputTool SDK namespace.
   module ToolSearchOutputTool
-  end
-  # Defines the ToolsItem SDK namespace.
-  module ToolsItem
   end
   # Defines the TranscriptionChunkingStrategy SDK namespace.
   module TranscriptionChunkingStrategy
@@ -1038,6 +1065,7 @@ require_relative 'models/beta_responses_part3'
 require_relative 'models/beta_responses_part4'
 require_relative 'models/beta_responses_part5'
 require_relative 'models/beta_responses_part6'
+require_relative 'models/beta_responses_part7'
 require_relative 'models/beta_user_message'
 require_relative 'models/cases'
 require_relative 'models/certificates'
@@ -1055,7 +1083,6 @@ require_relative 'models/chat_chat_completion_request_part2'
 require_relative 'models/chat_create'
 require_relative 'models/chat_create_part2'
 require_relative 'models/chat_custom'
-require_relative 'models/chat_response'
 require_relative 'models/chat_web'
 require_relative 'models/code_interpreter'
 require_relative 'models/completions'
@@ -1078,7 +1105,6 @@ require_relative 'models/evals_create_part2'
 require_relative 'models/evals_eval'
 require_relative 'models/evals_eval_part2'
 require_relative 'models/evals_eval_part3'
-require_relative 'models/evals_template'
 require_relative 'models/external_storage'
 require_relative 'models/files'
 require_relative 'models/fine_tuning'
@@ -1345,6 +1371,7 @@ require_relative 'models/shared_model'
 require_relative 'models/shared_moderation'
 require_relative 'models/shared_namespace'
 require_relative 'models/shared_output'
+require_relative 'models/shared_permission'
 require_relative 'models/shared_program'
 require_relative 'models/shared_prompt'
 require_relative 'models/shared_reasoning'
