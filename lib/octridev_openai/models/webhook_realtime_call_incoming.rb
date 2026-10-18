@@ -5,169 +5,170 @@
 
 # webhook_realtime_call_incoming domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalWebhookRealtimeCallIncomingDataSipHeadersItemMetadata
-    FIELDS = {
-      name: 'name',
-      value: 'value'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      name
-      value
-    ].freeze
-    DECODERS = {}.freeze
+# Internal model hydration metadata.
+class SdkInternalWebhookRealtimeCallIncomingDataSipHeadersItemMetadata
+  FIELDS = {
+    name: "name",
+    value: "value",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    name
+    value
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for WebhookRealtimeCallIncomingDataSipHeadersItem.
+# A header from the SIP Invite.
+class WebhookRealtimeCallIncomingDataSipHeadersItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalWebhookRealtimeCallIncomingDataSipHeadersItemMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalWebhookRealtimeCallIncomingDataSipHeadersItemMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalWebhookRealtimeCallIncomingDataSipHeadersItemMetadata::DECODERS
+
+  # @return [String] Name of the SIP Header.
+  attr_reader :name
+  # @return [String] Value of the SIP Header.
+  attr_reader :value
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for WebhookRealtimeCallIncomingDataSipHeadersItem.
-  # A header from the SIP Invite.
-  class WebhookRealtimeCallIncomingDataSipHeadersItem
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalWebhookRealtimeCallIncomingDataSipHeadersItemMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalWebhookRealtimeCallIncomingDataSipHeadersItemMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalWebhookRealtimeCallIncomingDataSipHeadersItemMetadata::DECODERS
-
-    # @return [String] Name of the SIP Header.
-    attr_reader :name
-    # @return [String] Value of the SIP Header.
-    attr_reader :value
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalWebhookRealtimeCallIncomingDataMetadata
-    FIELDS = {
-      call_id: 'call_id',
-      sip_media_security: 'sip_media_security',
-      sip_headers: 'sip_headers'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      call_id
-      sip_headers
-    ].freeze
-    DECODERS = {
-      sip_headers: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::WebhookRealtimeCallIncomingDataSipHeadersItem.from_hash(item) }
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalWebhookRealtimeCallIncomingDataMetadata
+  FIELDS = {
+    call_id: "call_id",
+    sip_media_security: "sip_media_security",
+    sip_headers: "sip_headers",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    call_id
+    sip_headers
+  ].freeze
+  DECODERS = {
+    sip_headers: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::WebhookRealtimeCallIncomingDataSipHeadersItem.from_hash(item) }
+    end,
+  }.freeze
+end
+
+# API model for WebhookRealtimeCallIncomingData.
+# Event data payload.
+class WebhookRealtimeCallIncomingData
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalWebhookRealtimeCallIncomingDataMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalWebhookRealtimeCallIncomingDataMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalWebhookRealtimeCallIncomingDataMetadata::DECODERS
+
+  # @return [String] The ID of the pending SIP call. Pass this value unchanged when accepting or rejecting the call through the Realtime API. For the Live API, use the `session_id` from `live.transport.incoming` instead.
+  attr_reader :call_id
+  # @return [String] Media protection selected on the SIP leg during SDP negotiation. `srtp` indicates SRTP; `rtp` indicates unencrypted RTP. Omitted when unknown. This does not describe SIP signaling security or confirm that media has flowed. Clients should handle unrecognized values as unknown.
+  attr_reader :sip_media_security
+  # @return [Array_of_WebhookRealtimeCallIncomingDataSipHeadersItem] Headers from the SIP INVITE, excluding SIP authorization headers. Retained names, values, repeated entries, and order are preserved. Treat these values as untrusted call metadata.
+  attr_reader :sip_headers
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for WebhookRealtimeCallIncomingData.
-  # Event data payload.
-  class WebhookRealtimeCallIncomingData
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalWebhookRealtimeCallIncomingDataMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalWebhookRealtimeCallIncomingDataMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalWebhookRealtimeCallIncomingDataMetadata::DECODERS
-
-    # @return [String] The ID of the pending SIP call. Pass this value unchanged when accepting or rejecting the call through the Realtime API. For the Live API, use the `session_id` from `live.transport.incoming` instead.
-    attr_reader :call_id
-    # @return [String] Media protection selected on the SIP leg during SDP negotiation. `srtp` indicates SRTP; `rtp` indicates unencrypted RTP. Omitted when unknown. This does not describe SIP signaling security or confirm that media has flowed. Clients should handle unrecognized values as unknown.
-    attr_reader :sip_media_security
-    # @return [Array_of_WebhookRealtimeCallIncomingDataSipHeadersItem] Headers from the SIP INVITE, excluding SIP authorization headers. Retained names, values, repeated entries, and order are preserved. Treat these values as untrusted call metadata.
-    attr_reader :sip_headers
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalWebhookRealtimeCallIncomingMetadata
-    FIELDS = {
-      created_at: 'created_at',
-      id: 'id',
-      data: 'data',
-      object: 'object',
-      type: 'type'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      created_at
-      id
-      data
-      type
-    ].freeze
-    DECODERS = {
-      data: lambda do |value|
-        ::OctridevOpenai::WebhookRealtimeCallIncomingData.from_hash(value)
-      end,
-      object: lambda do |value|
-        ::OctridevOpenai::WebhookRealtimeCallIncomingObject.from_value(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::WebhookRealtimeCallIncomingType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalWebhookRealtimeCallIncomingMetadata
+  FIELDS = {
+    created_at: "created_at",
+    id: "id",
+    data: "data",
+    object: "object",
+    type: "type",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    created_at
+    id
+    data
+    type
+  ].freeze
+  DECODERS = {
+    data: lambda do |value|
+      ::OctridevOpenai::WebhookRealtimeCallIncomingData.from_hash(value)
+    end,
+    object: lambda do |value|
+      ::OctridevOpenai::WebhookRealtimeCallIncomingObject.from_value(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::WebhookRealtimeCallIncomingType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for WebhookRealtimeCallIncoming.
+# Sent when an incoming API SIP session is available for Realtime acceptance. The same pending session can also emit `live.transport.incoming`; the first successful Realtime or Live accept endpoint selects the runtime surface.
+class WebhookRealtimeCallIncoming
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalWebhookRealtimeCallIncomingMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalWebhookRealtimeCallIncomingMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalWebhookRealtimeCallIncomingMetadata::DECODERS
+
+  # @return [Integer] The Unix timestamp (in seconds) of when the model response was completed.
+  attr_reader :created_at
+  # @return [String] The unique ID of the event.
+  attr_reader :id
+  # @return [WebhookRealtimeCallIncomingData] Event data payload.
+  attr_reader :data
+  # @return [WebhookRealtimeCallIncomingObject] The object of the event. Always `event`.
+  attr_reader :object
+  # @return [WebhookRealtimeCallIncomingType] The type of the event. Always `realtime.call.incoming`.
+  attr_reader :type
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for WebhookRealtimeCallIncoming.
-  # Sent when an incoming API SIP session is available for Realtime acceptance. The same pending session can also emit `live.transport.incoming`; the first successful Realtime or Live accept endpoint selects the runtime surface.
-  class WebhookRealtimeCallIncoming
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalWebhookRealtimeCallIncomingMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalWebhookRealtimeCallIncomingMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalWebhookRealtimeCallIncomingMetadata::DECODERS
-
-    # @return [Integer] The Unix timestamp (in seconds) of when the model response was completed.
-    attr_reader :created_at
-    # @return [String] The unique ID of the event.
-    attr_reader :id
-    # @return [WebhookRealtimeCallIncomingData] Event data payload.
-    attr_reader :data
-    # @return [WebhookRealtimeCallIncomingObject] The object of the event. Always `event`.
-    attr_reader :object
-    # @return [WebhookRealtimeCallIncomingType] The type of the event. Always `realtime.call.incoming`.
-    attr_reader :type
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the WebhookRealtimeCallIncomingObject SDK namespace.
-  module WebhookRealtimeCallIncomingObject
-    EVENT = 'event'
-    VALUES = ['event'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the WebhookRealtimeCallIncomingType SDK namespace.
-  module WebhookRealtimeCallIncomingType
-    REALTIME_CALL_INCOMING = 'realtime.call.incoming'
-    VALUES = ['realtime.call.incoming'].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the WebhookRealtimeCallIncomingObject SDK namespace.
+module WebhookRealtimeCallIncomingObject
+  EVENT = 'event'
+  VALUES = ['event'].freeze
+  def self.from_value(value)
+    value
   end
+end
+
+# Defines the WebhookRealtimeCallIncomingType SDK namespace.
+module WebhookRealtimeCallIncomingType
+  REALTIME_CALL_INCOMING = 'realtime.call.incoming'
+  VALUES = ['realtime.call.incoming'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 end

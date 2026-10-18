@@ -5,301 +5,296 @@
 
 # decisions_answer domain models
 module OctridevOpenai
-  # Defines the AnswerResource SDK namespace.
-  module AnswerResource
-    DISCRIMINATOR_MAPPING = {
-      'predicate' => -> { AnswerResourcePredicate },
-      'choice' => -> { AnswerResourceChoice },
-      'score' => -> { AnswerResourceScore },
-      'refusal' => -> { AnswerResourceRefusal }
-    }.freeze
+# Defines the AnswerResource SDK namespace.
+module AnswerResource
+  DISCRIMINATOR_MAPPING = {
+    "predicate" => -> { AnswerResourcePredicate },
+    "choice" => -> { AnswerResourceChoice },
+    "score" => -> { AnswerResourceScore },
+    "refusal" => -> { AnswerResourceRefusal },
+  }.freeze
 
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
 
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
 
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+    raise SdkValidationError.new('AnswerResource', 'variant', "Unknown AnswerResource discriminator: #{hash["type"].inspect}")
+  end
+end
 
-      raise SdkValidationError.new('AnswerResource', 'variant', "Unknown AnswerResource discriminator: #{hash['type'].inspect}")
-    end
+# Internal model hydration metadata.
+class SdkInternalAnswerResourceChoiceMetadata
+  FIELDS = {
+    type: "type",
+    name: "name",
+    choice: "choice",
+    probabilities: "probabilities",
+    confidence: "confidence",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    name
+    choice
+    probabilities
+    confidence
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::AnswerResourceChoiceType.from_value(value)
+    end,
+    choice: lambda do |value|
+      ::OctridevOpenai::ChoiceValueResource.from_hash(value)
+    end,
+    probabilities: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::ChoiceProbabilityResource.from_hash(item) }
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    name
+  ].freeze
+end
+
+# API model for AnswerResourceChoice.
+# Typed representation of the `AnswerResourceChoice` API schema.
+class AnswerResourceChoice
+  include AnswerResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalAnswerResourceChoiceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalAnswerResourceChoiceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalAnswerResourceChoiceMetadata::DECODERS
+
+  # @return [AnswerResourceChoiceType] The type of the object. Always `choice`.
+  attr_reader :type
+  # @return [String] Required `string` value serialized in the `name` wire field.
+  attr_reader :name
+  # @return [ChoiceValueResource] Choice values are typed: a string and a boolean with the same text are distinct.
+  attr_reader :choice
+  # @return [Array_of_ChoiceProbabilityResource] Required array value serialized in the `probabilities` wire field.
+  attr_reader :probabilities
+  # @return [Float] Required `number` value serialized in the `confidence` wire field.
+  attr_reader :confidence
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalAnswerResourceChoiceMetadata
-    FIELDS = {
-      type: 'type',
-      name: 'name',
-      choice: 'choice',
-      probabilities: 'probabilities',
-      confidence: 'confidence'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      name
-      choice
-      probabilities
-      confidence
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::AnswerResourceChoiceType.from_value(value)
-      end,
-      choice: lambda do |value|
-        ::OctridevOpenai::ChoiceValueResource.from_hash(value)
-      end,
-      probabilities: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::ChoiceProbabilityResource.from_hash(item) }
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      name
-    ].freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalAnswerResourceChoiceMetadata::NULLABLE_FIELDS)
   end
 
-  # API model for AnswerResourceChoice.
-  # Typed representation of the `AnswerResourceChoice` API schema.
-  class AnswerResourceChoice
-    include AnswerResource
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalAnswerResourceChoiceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalAnswerResourceChoiceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalAnswerResourceChoiceMetadata::DECODERS
+# Defines the AnswerResourceChoiceType SDK namespace.
+module AnswerResourceChoiceType
+  CHOICE = 'choice'
+  VALUES = ['choice'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    # @return [AnswerResourceChoiceType] The type of the object. Always `choice`.
-    attr_reader :type
-    # @return [String] Required `string` value serialized in the `name` wire field.
-    attr_reader :name
-    # @return [ChoiceValueResource] Choice values are typed: a string and a boolean with the same text are distinct.
-    attr_reader :choice
-    # @return [Array_of_ChoiceProbabilityResource] Required array value serialized in the `probabilities` wire field.
-    attr_reader :probabilities
-    # @return [Float] Required `number` value serialized in the `confidence` wire field.
-    attr_reader :confidence
+    raise SdkValidationError.new('AnswerResourceChoiceType', 'enum', "Unknown AnswerResourceChoiceType: #{value}")
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalAnswerResourcePredicateMetadata
+  FIELDS = {
+    type: "type",
+    name: "name",
+    probability: "probability",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    name
+    probability
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::AnswerResourcePredicateType.from_value(value)
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    name
+  ].freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalAnswerResourceChoiceMetadata::NULLABLE_FIELDS)
-    end
+# API model for AnswerResourcePredicate.
+# Typed representation of the `AnswerResourcePredicate` API schema.
+class AnswerResourcePredicate
+  include AnswerResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalAnswerResourcePredicateMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalAnswerResourcePredicateMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalAnswerResourcePredicateMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [AnswerResourcePredicateType] The type of the object. Always `predicate`.
+  attr_reader :type
+  # @return [String] Required `string` value serialized in the `name` wire field.
+  attr_reader :name
+  # @return [Float] Required `number` value serialized in the `probability` wire field.
+  attr_reader :probability
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the AnswerResourceChoiceType SDK namespace.
-  module AnswerResourceChoiceType
-    CHOICE = 'choice'
-    VALUES = ['choice'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('AnswerResourceChoiceType', 'enum', "Unknown AnswerResourceChoiceType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalAnswerResourcePredicateMetadata::NULLABLE_FIELDS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalAnswerResourcePredicateMetadata
-    FIELDS = {
-      type: 'type',
-      name: 'name',
-      probability: 'probability'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      name
-      probability
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::AnswerResourcePredicateType.from_value(value)
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      name
-    ].freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the AnswerResourcePredicateType SDK namespace.
+module AnswerResourcePredicateType
+  PREDICATE = 'predicate'
+  VALUES = ['predicate'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('AnswerResourcePredicateType', 'enum', "Unknown AnswerResourcePredicateType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalAnswerResourceRefusalMetadata
+  FIELDS = {
+    type: "type",
+    name: "name",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    name
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::AnswerResourceRefusalType.from_value(value)
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    name
+  ].freeze
+end
+
+# API model for AnswerResourceRefusal.
+# The model declined to answer this question. Other questions in the same request can still receive answers.
+class AnswerResourceRefusal
+  include AnswerResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalAnswerResourceRefusalMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalAnswerResourceRefusalMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalAnswerResourceRefusalMetadata::DECODERS
+
+  # @return [AnswerResourceRefusalType] The type of the object. Always `refusal`.
+  attr_reader :type
+  # @return [String] Required `string` value serialized in the `name` wire field.
+  attr_reader :name
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for AnswerResourcePredicate.
-  # Typed representation of the `AnswerResourcePredicate` API schema.
-  class AnswerResourcePredicate
-    include AnswerResource
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalAnswerResourcePredicateMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalAnswerResourcePredicateMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalAnswerResourcePredicateMetadata::DECODERS
-
-    # @return [AnswerResourcePredicateType] The type of the object. Always `predicate`.
-    attr_reader :type
-    # @return [String] Required `string` value serialized in the `name` wire field.
-    attr_reader :name
-    # @return [Float] Required `number` value serialized in the `probability` wire field.
-    attr_reader :probability
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalAnswerResourcePredicateMetadata::NULLABLE_FIELDS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalAnswerResourceRefusalMetadata::NULLABLE_FIELDS)
   end
 
-  # Defines the AnswerResourcePredicateType SDK namespace.
-  module AnswerResourcePredicateType
-    PREDICATE = 'predicate'
-    VALUES = ['predicate'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('AnswerResourcePredicateType', 'enum', "Unknown AnswerResourcePredicateType: #{value}")
-    end
+# Defines the AnswerResourceRefusalType SDK namespace.
+module AnswerResourceRefusalType
+  REFUSAL = 'refusal'
+  VALUES = ['refusal'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('AnswerResourceRefusalType', 'enum', "Unknown AnswerResourceRefusalType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalAnswerResourceScoreMetadata
+  FIELDS = {
+    type: "type",
+    name: "name",
+    score: "score",
+    probabilities: "probabilities",
+    confidence: "confidence",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    name
+    score
+    probabilities
+    confidence
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::AnswerResourceScoreType.from_value(value)
+    end,
+    probabilities: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::ScoreProbabilityResource.from_hash(item) }
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    name
+  ].freeze
+end
+
+# API model for AnswerResourceScore.
+# Typed representation of the `AnswerResourceScore` API schema.
+class AnswerResourceScore
+  include AnswerResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalAnswerResourceScoreMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalAnswerResourceScoreMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalAnswerResourceScoreMetadata::DECODERS
+
+  # @return [AnswerResourceScoreType] The type of the object. Always `score`.
+  attr_reader :type
+  # @return [String] Required `string` value serialized in the `name` wire field.
+  attr_reader :name
+  # @return [Float] Required `number` value serialized in the `score` wire field.
+  attr_reader :score
+  # @return [Array_of_ScoreProbabilityResource] Required array value serialized in the `probabilities` wire field.
+  attr_reader :probabilities
+  # @return [Float] Required `number` value serialized in the `confidence` wire field.
+  attr_reader :confidence
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalAnswerResourceRefusalMetadata
-    FIELDS = {
-      type: 'type',
-      name: 'name'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      name
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::AnswerResourceRefusalType.from_value(value)
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      name
-    ].freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalAnswerResourceScoreMetadata::NULLABLE_FIELDS)
   end
 
-  # API model for AnswerResourceRefusal.
-  # The model declined to answer this question. Other questions in the same request can still receive answers.
-  class AnswerResourceRefusal
-    include AnswerResource
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalAnswerResourceRefusalMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalAnswerResourceRefusalMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalAnswerResourceRefusalMetadata::DECODERS
-
-    # @return [AnswerResourceRefusalType] The type of the object. Always `refusal`.
-    attr_reader :type
-    # @return [String] Required `string` value serialized in the `name` wire field.
-    attr_reader :name
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalAnswerResourceRefusalMetadata::NULLABLE_FIELDS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the AnswerResourceRefusalType SDK namespace.
-  module AnswerResourceRefusalType
-    REFUSAL = 'refusal'
-    VALUES = ['refusal'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+# Defines the AnswerResourceScoreType SDK namespace.
+module AnswerResourceScoreType
+  SCORE = 'score'
+  VALUES = ['score'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-      raise SdkValidationError.new('AnswerResourceRefusalType', 'enum', "Unknown AnswerResourceRefusalType: #{value}")
-    end
+    raise SdkValidationError.new('AnswerResourceScoreType', 'enum', "Unknown AnswerResourceScoreType: #{value}")
   end
-
-  # Internal model hydration metadata.
-  class SdkInternalAnswerResourceScoreMetadata
-    FIELDS = {
-      type: 'type',
-      name: 'name',
-      score: 'score',
-      probabilities: 'probabilities',
-      confidence: 'confidence'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      name
-      score
-      probabilities
-      confidence
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::AnswerResourceScoreType.from_value(value)
-      end,
-      probabilities: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::ScoreProbabilityResource.from_hash(item) }
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      name
-    ].freeze
-  end
-
-  # API model for AnswerResourceScore.
-  # Typed representation of the `AnswerResourceScore` API schema.
-  class AnswerResourceScore
-    include AnswerResource
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalAnswerResourceScoreMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalAnswerResourceScoreMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalAnswerResourceScoreMetadata::DECODERS
-
-    # @return [AnswerResourceScoreType] The type of the object. Always `score`.
-    attr_reader :type
-    # @return [String] Required `string` value serialized in the `name` wire field.
-    attr_reader :name
-    # @return [Float] Required `number` value serialized in the `score` wire field.
-    attr_reader :score
-    # @return [Array_of_ScoreProbabilityResource] Required array value serialized in the `probabilities` wire field.
-    attr_reader :probabilities
-    # @return [Float] Required `number` value serialized in the `confidence` wire field.
-    attr_reader :confidence
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalAnswerResourceScoreMetadata::NULLABLE_FIELDS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the AnswerResourceScoreType SDK namespace.
-  module AnswerResourceScoreType
-    SCORE = 'score'
-    VALUES = ['score'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('AnswerResourceScoreType', 'enum', "Unknown AnswerResourceScoreType: #{value}")
-    end
-  end
+end
 end

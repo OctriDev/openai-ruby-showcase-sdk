@@ -5,654 +5,665 @@
 
 # realtime_realtime_beta_response domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalRealtimeBetaResponseStatusDetailsErrorMetadata
-    FIELDS = {
-      type: 'type',
-      code: 'code',
-      message: 'message'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {}.freeze
+# Internal model hydration metadata.
+class SdkInternalRealtimeBetaResponseStatusDetailsErrorMetadata
+  FIELDS = {
+    type: "type",
+    code: "code",
+    message: "message",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for RealtimeBetaResponseStatusDetailsError.
+# A description of the error that caused the response to fail, populated when the `status` is `failed`.
+class RealtimeBetaResponseStatusDetailsError
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRealtimeBetaResponseStatusDetailsErrorMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRealtimeBetaResponseStatusDetailsErrorMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRealtimeBetaResponseStatusDetailsErrorMetadata::DECODERS
+
+  # @return [String] The type of error.
+  attr_reader :type
+  # @return [String] Error code, if any.
+  attr_reader :code
+  # @return [String] A human-readable error message.
+  attr_reader :message
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for RealtimeBetaResponseStatusDetailsError.
-  # A description of the error that caused the response to fail, populated when the `status` is `failed`.
-  class RealtimeBetaResponseStatusDetailsError
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRealtimeBetaResponseStatusDetailsErrorMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRealtimeBetaResponseStatusDetailsErrorMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRealtimeBetaResponseStatusDetailsErrorMetadata::DECODERS
-
-    # @return [String] The type of error.
-    attr_reader :type
-    # @return [String] Error code, if any.
-    attr_reader :code
-    # @return [String] A human-readable error message.
-    attr_reader :message
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalRealtimeBetaResponseStatusDetailsMetadata
-    FIELDS = {
-      type: 'type',
-      reason: 'reason',
-      error: 'error'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::RealtimeBetaResponseStatusDetailsType.from_value(value)
-      end,
-      reason: lambda do |value|
-        ::OctridevOpenai::RealtimeBetaResponseStatusDetailsReason.from_value(value)
-      end,
-      error: lambda do |value|
-        ::OctridevOpenai::RealtimeBetaResponseStatusDetailsError.from_hash(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalRealtimeBetaResponseStatusDetailsMetadata
+  FIELDS = {
+    type: "type",
+    reason: "reason",
+    error: "error",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::RealtimeBetaResponseStatusDetailsType.from_value(value)
+    end,
+    reason: lambda do |value|
+      ::OctridevOpenai::RealtimeBetaResponseStatusDetailsReason.from_value(value)
+    end,
+    error: lambda do |value|
+      ::OctridevOpenai::RealtimeBetaResponseStatusDetailsError.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for RealtimeBetaResponseStatusDetails.
+# Additional details about the status.
+class RealtimeBetaResponseStatusDetails
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRealtimeBetaResponseStatusDetailsMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRealtimeBetaResponseStatusDetailsMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRealtimeBetaResponseStatusDetailsMetadata::DECODERS
+
+  # @return [RealtimeBetaResponseStatusDetailsType] The type of error that caused the response to fail, corresponding with the `status` field (`completed`, `cancelled`, `incomplete`, `failed`).
+  attr_reader :type
+  # @return [RealtimeBetaResponseStatusDetailsReason] The reason the Response did not complete. For a `cancelled` Response, one of `turn_detected` (the server VAD detected a new start of speech) or `client_cancelled` (the client sent a cancel event). For an `incomplete` Response, one of `max_output_tokens` or `content_filter` (the server-side safety filter activated and cut off the response).
+  attr_reader :reason
+  # @return [RealtimeBetaResponseStatusDetailsError] A description of the error that caused the response to fail, populated when the `status` is `failed`.
+  attr_reader :error
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for RealtimeBetaResponseStatusDetails.
-  # Additional details about the status.
-  class RealtimeBetaResponseStatusDetails
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRealtimeBetaResponseStatusDetailsMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRealtimeBetaResponseStatusDetailsMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRealtimeBetaResponseStatusDetailsMetadata::DECODERS
-
-    # @return [RealtimeBetaResponseStatusDetailsType] The type of error that caused the response to fail, corresponding with the `status` field (`completed`, `cancelled`, `incomplete`, `failed`).
-    attr_reader :type
-    # @return [RealtimeBetaResponseStatusDetailsReason] The reason the Response did not complete. For a `cancelled` Response, one of `turn_detected` (the server VAD detected a new start of speech) or `client_cancelled` (the client sent a cancel event). For an `incomplete` Response, one of `max_output_tokens` or `content_filter` (the server-side safety filter activated and cut off the response).
-    attr_reader :reason
-    # @return [RealtimeBetaResponseStatusDetailsError] A description of the error that caused the response to fail, populated when the `status` is `failed`.
-    attr_reader :error
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalRealtimeBetaResponseUsageInputTokenDetailsCachedTokensDetailsMetadata
-    FIELDS = {
-      text_tokens: 'text_tokens',
-      image_tokens: 'image_tokens',
-      audio_tokens: 'audio_tokens'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {}.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalRealtimeBetaResponseUsageInputTokenDetailsCachedTokensDetailsMetadata
+  FIELDS = {
+    text_tokens: "text_tokens",
+    image_tokens: "image_tokens",
+    audio_tokens: "audio_tokens",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for RealtimeBetaResponseUsageInputTokenDetailsCachedTokensDetails.
+# Details about the cached tokens used as input for the Response.
+class RealtimeBetaResponseUsageInputTokenDetailsCachedTokensDetails
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRealtimeBetaResponseUsageInputTokenDetailsCachedTokensDetailsMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRealtimeBetaResponseUsageInputTokenDetailsCachedTokensDetailsMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRealtimeBetaResponseUsageInputTokenDetailsCachedTokensDetailsMetadata::DECODERS
+
+  # @return [Integer] The number of cached text tokens used as input for the Response.
+  attr_reader :text_tokens
+  # @return [Integer] The number of cached image tokens used as input for the Response.
+  attr_reader :image_tokens
+  # @return [Integer] The number of cached audio tokens used as input for the Response.
+  attr_reader :audio_tokens
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for RealtimeBetaResponseUsageInputTokenDetailsCachedTokensDetails.
-  # Details about the cached tokens used as input for the Response.
-  class RealtimeBetaResponseUsageInputTokenDetailsCachedTokensDetails
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRealtimeBetaResponseUsageInputTokenDetailsCachedTokensDetailsMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRealtimeBetaResponseUsageInputTokenDetailsCachedTokensDetailsMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRealtimeBetaResponseUsageInputTokenDetailsCachedTokensDetailsMetadata::DECODERS
-
-    # @return [Integer] The number of cached text tokens used as input for the Response.
-    attr_reader :text_tokens
-    # @return [Integer] The number of cached image tokens used as input for the Response.
-    attr_reader :image_tokens
-    # @return [Integer] The number of cached audio tokens used as input for the Response.
-    attr_reader :audio_tokens
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalRealtimeBetaResponseUsageInputTokenDetailsMetadata
-    FIELDS = {
-      cached_tokens: 'cached_tokens',
-      text_tokens: 'text_tokens',
-      image_tokens: 'image_tokens',
-      audio_tokens: 'audio_tokens',
-      cached_tokens_details: 'cached_tokens_details'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {
-      cached_tokens_details: lambda do |value|
-        ::OctridevOpenai::RealtimeBetaResponseUsageInputTokenDetailsCachedTokensDetails.from_hash(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalRealtimeBetaResponseUsageInputTokenDetailsMetadata
+  FIELDS = {
+    cached_tokens: "cached_tokens",
+    text_tokens: "text_tokens",
+    image_tokens: "image_tokens",
+    audio_tokens: "audio_tokens",
+    cached_tokens_details: "cached_tokens_details",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+    cached_tokens_details: lambda do |value|
+      ::OctridevOpenai::RealtimeBetaResponseUsageInputTokenDetailsCachedTokensDetails.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for RealtimeBetaResponseUsageInputTokenDetails.
+# Details about the input tokens used in the Response.
+class RealtimeBetaResponseUsageInputTokenDetails
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRealtimeBetaResponseUsageInputTokenDetailsMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRealtimeBetaResponseUsageInputTokenDetailsMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRealtimeBetaResponseUsageInputTokenDetailsMetadata::DECODERS
+
+  # @return [Integer] The number of cached tokens used as input for the Response.
+  attr_reader :cached_tokens
+  # @return [Integer] The number of text tokens used as input for the Response.
+  attr_reader :text_tokens
+  # @return [Integer] The number of image tokens used as input for the Response.
+  attr_reader :image_tokens
+  # @return [Integer] The number of audio tokens used as input for the Response.
+  attr_reader :audio_tokens
+  # @return [RealtimeBetaResponseUsageInputTokenDetailsCachedTokensDetails] Details about the cached tokens used as input for the Response.
+  attr_reader :cached_tokens_details
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for RealtimeBetaResponseUsageInputTokenDetails.
-  # Details about the input tokens used in the Response.
-  class RealtimeBetaResponseUsageInputTokenDetails
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRealtimeBetaResponseUsageInputTokenDetailsMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRealtimeBetaResponseUsageInputTokenDetailsMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRealtimeBetaResponseUsageInputTokenDetailsMetadata::DECODERS
-
-    # @return [Integer] The number of cached tokens used as input for the Response.
-    attr_reader :cached_tokens
-    # @return [Integer] The number of text tokens used as input for the Response.
-    attr_reader :text_tokens
-    # @return [Integer] The number of image tokens used as input for the Response.
-    attr_reader :image_tokens
-    # @return [Integer] The number of audio tokens used as input for the Response.
-    attr_reader :audio_tokens
-    # @return [RealtimeBetaResponseUsageInputTokenDetailsCachedTokensDetails] Details about the cached tokens used as input for the Response.
-    attr_reader :cached_tokens_details
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalRealtimeBetaResponseUsageOutputTokenDetailsMetadata
-    FIELDS = {
-      text_tokens: 'text_tokens',
-      audio_tokens: 'audio_tokens'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {}.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalRealtimeBetaResponseUsageOutputTokenDetailsMetadata
+  FIELDS = {
+    text_tokens: "text_tokens",
+    audio_tokens: "audio_tokens",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for RealtimeBetaResponseUsageOutputTokenDetails.
+# Details about the output tokens used in the Response.
+class RealtimeBetaResponseUsageOutputTokenDetails
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRealtimeBetaResponseUsageOutputTokenDetailsMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRealtimeBetaResponseUsageOutputTokenDetailsMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRealtimeBetaResponseUsageOutputTokenDetailsMetadata::DECODERS
+
+  # @return [Integer] The number of text tokens used in the Response.
+  attr_reader :text_tokens
+  # @return [Integer] The number of audio tokens used in the Response.
+  attr_reader :audio_tokens
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for RealtimeBetaResponseUsageOutputTokenDetails.
-  # Details about the output tokens used in the Response.
-  class RealtimeBetaResponseUsageOutputTokenDetails
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRealtimeBetaResponseUsageOutputTokenDetailsMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRealtimeBetaResponseUsageOutputTokenDetailsMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRealtimeBetaResponseUsageOutputTokenDetailsMetadata::DECODERS
-
-    # @return [Integer] The number of text tokens used in the Response.
-    attr_reader :text_tokens
-    # @return [Integer] The number of audio tokens used in the Response.
-    attr_reader :audio_tokens
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalRealtimeBetaResponseUsageMetadata
-    FIELDS = {
-      total_tokens: 'total_tokens',
-      input_tokens: 'input_tokens',
-      output_tokens: 'output_tokens',
-      input_token_details: 'input_token_details',
-      output_token_details: 'output_token_details'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {
-      input_token_details: lambda do |value|
-        ::OctridevOpenai::RealtimeBetaResponseUsageInputTokenDetails.from_hash(value)
-      end,
-      output_token_details: lambda do |value|
-        ::OctridevOpenai::RealtimeBetaResponseUsageOutputTokenDetails.from_hash(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalRealtimeBetaResponseUsageMetadata
+  FIELDS = {
+    total_tokens: "total_tokens",
+    input_tokens: "input_tokens",
+    output_tokens: "output_tokens",
+    input_token_details: "input_token_details",
+    output_token_details: "output_token_details",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+    input_token_details: lambda do |value|
+      ::OctridevOpenai::RealtimeBetaResponseUsageInputTokenDetails.from_hash(value)
+    end,
+    output_token_details: lambda do |value|
+      ::OctridevOpenai::RealtimeBetaResponseUsageOutputTokenDetails.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for RealtimeBetaResponseUsage.
+# Usage statistics for the Response, this will correspond to billing. A Realtime API session will maintain a conversation context and append new Items to the Conversation, thus output from previous turns (text and audio tokens) will become the input for later turns.
+class RealtimeBetaResponseUsage
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRealtimeBetaResponseUsageMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRealtimeBetaResponseUsageMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRealtimeBetaResponseUsageMetadata::DECODERS
+
+  # @return [Integer] The total number of tokens in the Response including input and output text and audio tokens.
+  attr_reader :total_tokens
+  # @return [Integer] The number of input tokens used in the Response, including text and audio tokens.
+  attr_reader :input_tokens
+  # @return [Integer] The number of output tokens sent in the Response, including text and audio tokens.
+  attr_reader :output_tokens
+  # @return [RealtimeBetaResponseUsageInputTokenDetails] Details about the input tokens used in the Response.
+  attr_reader :input_token_details
+  # @return [RealtimeBetaResponseUsageOutputTokenDetails] Details about the output tokens used in the Response.
+  attr_reader :output_token_details
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for RealtimeBetaResponseUsage.
-  # Usage statistics for the Response, this will correspond to billing. A Realtime API session will maintain a conversation context and append new Items to the Conversation, thus output from previous turns (text and audio tokens) will become the input for later turns.
-  class RealtimeBetaResponseUsage
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRealtimeBetaResponseUsageMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRealtimeBetaResponseUsageMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRealtimeBetaResponseUsageMetadata::DECODERS
-
-    # @return [Integer] The total number of tokens in the Response including input and output text and audio tokens.
-    attr_reader :total_tokens
-    # @return [Integer] The number of input tokens used in the Response, including text and audio tokens.
-    attr_reader :input_tokens
-    # @return [Integer] The number of output tokens sent in the Response, including text and audio tokens.
-    attr_reader :output_tokens
-    # @return [RealtimeBetaResponseUsageInputTokenDetails] Details about the input tokens used in the Response.
-    attr_reader :input_token_details
-    # @return [RealtimeBetaResponseUsageOutputTokenDetails] Details about the output tokens used in the Response.
-    attr_reader :output_token_details
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalRealtimeBetaResponseMetadata
-    FIELDS = {
-      id: 'id',
-      object: 'object',
-      status: 'status',
-      status_details: 'status_details',
-      output: 'output',
-      metadata: 'metadata',
-      usage: 'usage',
-      conversation_id: 'conversation_id',
-      voice: 'voice',
-      modalities: 'modalities',
-      output_audio_format: 'output_audio_format',
-      temperature: 'temperature',
-      max_output_tokens: 'max_output_tokens'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::RealtimeBetaResponseObject.from_value(value)
-      end,
-      status: lambda do |value|
-        ::OctridevOpenai::RealtimeBetaResponseStatus.from_value(value)
-      end,
-      status_details: lambda do |value|
-        ::OctridevOpenai::RealtimeBetaResponseStatusDetails.from_hash(value)
-      end,
-      output: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::RealtimeConversationItem.from_hash(item) }
-      end,
-      metadata: lambda do |value|
-        ::OctridevOpenai::Metadata.from_hash(value)
-      end,
-      usage: lambda do |value|
-        ::OctridevOpenai::RealtimeBetaResponseUsage.from_hash(value)
-      end,
-      voice: lambda do |value|
-        ::OctridevOpenai::VoiceIdsShared.from_value(value)
-      end,
-      modalities: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::RealtimeBetaResponseModalitiesItem.from_value(item) }
-      end,
-      output_audio_format: lambda do |value|
-        ::OctridevOpenai::RealtimeBetaResponseOutputAudioFormat.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalRealtimeBetaResponseMetadata
+  FIELDS = {
+    id: "id",
+    object: "object",
+    status: "status",
+    status_details: "status_details",
+    output: "output",
+    metadata: "metadata",
+    usage: "usage",
+    conversation_id: "conversation_id",
+    voice: "voice",
+    modalities: "modalities",
+    output_audio_format: "output_audio_format",
+    temperature: "temperature",
+    max_output_tokens: "max_output_tokens",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::RealtimeBetaResponseObject.from_value(value)
+    end,
+    status: lambda do |value|
+      ::OctridevOpenai::RealtimeBetaResponseStatus.from_value(value)
+    end,
+    status_details: lambda do |value|
+      ::OctridevOpenai::RealtimeBetaResponseStatusDetails.from_hash(value)
+    end,
+    output: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::RealtimeConversationItem.from_hash(item) }
+    end,
+    metadata: lambda do |value|
+      ::OctridevOpenai::Metadata.from_hash(value)
+    end,
+    usage: lambda do |value|
+      ::OctridevOpenai::RealtimeBetaResponseUsage.from_hash(value)
+    end,
+    voice: lambda do |value|
+      ::OctridevOpenai::VoiceIdsShared.from_value(value)
+    end,
+    modalities: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::RealtimeBetaResponseModalitiesItem.from_value(item) }
+    end,
+    output_audio_format: lambda do |value|
+      ::OctridevOpenai::RealtimeBetaResponseOutputAudioFormat.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for RealtimeBetaResponse.
+# The response resource.
+class RealtimeBetaResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRealtimeBetaResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRealtimeBetaResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRealtimeBetaResponseMetadata::DECODERS
+
+  # @return [String] The unique ID of the response.
+  attr_reader :id
+  # @return [RealtimeBetaResponseObject] The object type, must be `realtime.response`.
+  attr_reader :object
+  # @return [RealtimeBetaResponseStatus] The final status of the response (`completed`, `cancelled`, `failed`, or `incomplete`, `in_progress`).
+  attr_reader :status
+  # @return [RealtimeBetaResponseStatusDetails] Additional details about the status.
+  attr_reader :status_details
+  # @return [Array_of_RealtimeConversationItem] The list of output items generated by the response.
+  attr_reader :output
+  # @return [Metadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
+  attr_reader :metadata
+  # @return [RealtimeBetaResponseUsage] Usage statistics for the Response, this will correspond to billing. A Realtime API session will maintain a conversation context and append new Items to the Conversation, thus output from previous turns (text and audio tokens) will become the input for later turns.
+  attr_reader :usage
+  # @return [String] Which conversation the response is added to, determined by the `conversation` field in the `response.create` event. If `auto`, the response will be added to the default conversation and the value of `conversation_id` will be an id like `conv_1234`. If `none`, the response will not be added to any conversation and the value of `conversation_id` will be `null`. If responses are being triggered by server VAD, the response will be added to the default conversation, thus the…
+  attr_reader :conversation_id
+  # @return [VoiceIdsShared] The voice the model used to respond. Current voice options are `alloy`, `ash`, `ballad`, `coral`, `echo`, `sage`, `shimmer`, and `verse`.
+  attr_reader :voice
+  # @return [Array_of_RealtimeBetaResponseModalitiesItem] The set of modalities the model used to respond. If there are multiple modalities, the model will pick one, for example if `modalities` is `["text", "audio"]`, the model could be responding in either text or audio.
+  attr_reader :modalities
+  # @return [RealtimeBetaResponseOutputAudioFormat] The format of output audio. Options are `pcm16`, `g711_ulaw`, or `g711_alaw`.
+  attr_reader :output_audio_format
+  # @return [Float] Sampling temperature for the model, limited to [0.6, 1.2]. Defaults to 0.8.
+  attr_reader :temperature
+  # @return [Object] Maximum number of output tokens for a single assistant response, inclusive of tool calls, that was used in this response.
+  attr_reader :max_output_tokens
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for RealtimeBetaResponse.
-  # The response resource.
-  class RealtimeBetaResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRealtimeBetaResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRealtimeBetaResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRealtimeBetaResponseMetadata::DECODERS
-
-    # @return [String] The unique ID of the response.
-    attr_reader :id
-    # @return [RealtimeBetaResponseObject] The object type, must be `realtime.response`.
-    attr_reader :object
-    # @return [RealtimeBetaResponseStatus] The final status of the response (`completed`, `cancelled`, `failed`, or `incomplete`, `in_progress`).
-    attr_reader :status
-    # @return [RealtimeBetaResponseStatusDetails] Additional details about the status.
-    attr_reader :status_details
-    # @return [Array_of_RealtimeConversationItem] The list of output items generated by the response.
-    attr_reader :output
-    # @return [Metadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
-    attr_reader :metadata
-    # @return [RealtimeBetaResponseUsage] Usage statistics for the Response, this will correspond to billing. A Realtime API session will maintain a conversation context and append new Items to the Conversation, thus output from previous turns (text and audio tokens) will become the input for later turns.
-    attr_reader :usage
-    # @return [String] Which conversation the response is added to, determined by the `conversation` field in the `response.create` event. If `auto`, the response will be added to the default conversation and the value of `conversation_id` will be an id like `conv_1234`. If `none`, the response will not be added to any conversation and the value of `conversation_id` will be `null`. If responses are being triggered by server VAD, the response will be added to the default conversation, thus the…
-    attr_reader :conversation_id
-    # @return [VoiceIdsShared] The voice the model used to respond. Current voice options are `alloy`, `ash`, `ballad`, `coral`, `echo`, `sage`, `shimmer`, and `verse`.
-    attr_reader :voice
-    # @return [Array_of_RealtimeBetaResponseModalitiesItem] The set of modalities the model used to respond. If there are multiple modalities, the model will pick one, for example if `modalities` is `["text", "audio"]`, the model could be responding in either text or audio.
-    attr_reader :modalities
-    # @return [RealtimeBetaResponseOutputAudioFormat] The format of output audio. Options are `pcm16`, `g711_ulaw`, or `g711_alaw`.
-    attr_reader :output_audio_format
-    # @return [Float] Sampling temperature for the model, limited to [0.6, 1.2]. Defaults to 0.8.
-    attr_reader :temperature
-    # @return [Object] Maximum number of output tokens for a single assistant response, inclusive of tool calls, that was used in this response.
-    attr_reader :max_output_tokens
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the RealtimeBetaResponseMaxOutputTokensVariant1 SDK namespace.
-  module RealtimeBetaResponseMaxOutputTokensVariant1
-    INF = 'inf'
-    VALUES = ['inf'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the RealtimeBetaResponseMaxOutputTokensVariant1 SDK namespace.
+module RealtimeBetaResponseMaxOutputTokensVariant1
+  INF = 'inf'
+  VALUES = ['inf'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the RealtimeBetaResponseModalitiesItem SDK namespace.
+module RealtimeBetaResponseModalitiesItem
+  TEXT = 'text'
+  AUDIO = 'audio'
+  VALUES = ['text', 'audio'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the RealtimeBetaResponseObject SDK namespace.
+module RealtimeBetaResponseObject
+  REALTIME_RESPONSE = 'realtime.response'
+  VALUES = ['realtime.response'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the RealtimeBetaResponseOutputAudioFormat SDK namespace.
+module RealtimeBetaResponseOutputAudioFormat
+  PCM16 = 'pcm16'
+  G711_ULAW = 'g711_ulaw'
+  G711_ALAW = 'g711_alaw'
+  VALUES = ['pcm16', 'g711_ulaw', 'g711_alaw'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the RealtimeBetaResponseStatus SDK namespace.
+module RealtimeBetaResponseStatus
+  COMPLETED = 'completed'
+  CANCELLED = 'cancelled'
+  FAILED = 'failed'
+  INCOMPLETE = 'incomplete'
+  IN_PROGRESS = 'in_progress'
+  VALUES = ['completed', 'cancelled', 'failed', 'incomplete', 'in_progress'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the RealtimeBetaResponseStatusDetailsReason SDK namespace.
+module RealtimeBetaResponseStatusDetailsReason
+  TURN_DETECTED = 'turn_detected'
+  CLIENT_CANCELLED = 'client_cancelled'
+  MAX_OUTPUT_TOKENS = 'max_output_tokens'
+  CONTENT_FILTER = 'content_filter'
+  VALUES = ['turn_detected', 'client_cancelled', 'max_output_tokens', 'content_filter'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the RealtimeBetaResponseStatusDetailsType SDK namespace.
+module RealtimeBetaResponseStatusDetailsType
+  COMPLETED = 'completed'
+  CANCELLED = 'cancelled'
+  FAILED = 'failed'
+  INCOMPLETE = 'incomplete'
+  VALUES = ['completed', 'cancelled', 'failed', 'incomplete'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalRealtimeBetaResponseCreateParamsToolsItemMetadata
+  FIELDS = {
+    type: "type",
+    name: "name",
+    description: "description",
+    parameters: "parameters",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::RealtimeBetaResponseCreateParamsToolsItemType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for RealtimeBetaResponseCreateParamsToolsItem.
+# Required object value serialized in the `tools[]` wire field.
+class RealtimeBetaResponseCreateParamsToolsItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRealtimeBetaResponseCreateParamsToolsItemMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRealtimeBetaResponseCreateParamsToolsItemMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRealtimeBetaResponseCreateParamsToolsItemMetadata::DECODERS
+
+  # @return [RealtimeBetaResponseCreateParamsToolsItemType] The type of the tool, i.e. `function`.
+  attr_reader :type
+  # @return [String] The name of the function.
+  attr_reader :name
+  # @return [String] The description of the function, including guidance on when and how to call it, and guidance about what to tell the user when calling (if anything).
+  attr_reader :description
+  # @return [Hash] Parameters of the function in JSON Schema.
+  attr_reader :parameters
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the RealtimeBetaResponseModalitiesItem SDK namespace.
-  module RealtimeBetaResponseModalitiesItem
-    TEXT = 'text'
-    AUDIO = 'audio'
-    VALUES = %w[text audio].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the RealtimeBetaResponseObject SDK namespace.
-  module RealtimeBetaResponseObject
-    REALTIME_RESPONSE = 'realtime.response'
-    VALUES = ['realtime.response'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the RealtimeBetaResponseCreateParamsConversationVariant1 SDK namespace.
+module RealtimeBetaResponseCreateParamsConversationVariant1
+  AUTO = 'auto'
+  NONE = 'none'
+  VALUES = ['auto', 'none'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalRealtimeBetaResponseCreateParamsMetadata
+  FIELDS = {
+    modalities: "modalities",
+    instructions: "instructions",
+    voice: "voice",
+    output_audio_format: "output_audio_format",
+    tools: "tools",
+    tool_choice: "tool_choice",
+    temperature: "temperature",
+    max_output_tokens: "max_output_tokens",
+    conversation: "conversation",
+    metadata: "metadata",
+    prompt: "prompt",
+    input: "input",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+    modalities: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::RealtimeBetaResponseCreateParamsModalitiesItem.from_value(item) }
+    end,
+    voice: lambda do |value|
+      ::OctridevOpenai::VoiceIdsOrCustomVoice.from_hash(value)
+    end,
+    output_audio_format: lambda do |value|
+      ::OctridevOpenai::RealtimeBetaResponseCreateParamsOutputAudioFormat.from_value(value)
+    end,
+    tools: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::RealtimeBetaResponseCreateParamsToolsItem.from_hash(item) }
+    end,
+    tool_choice: lambda do |value|
+      ::OctridevOpenai::RealtimeBetaResponseCreateParamsToolChoice.from_hash(value)
+    end,
+    conversation: lambda do |value|
+      ::OctridevOpenai::RealtimeBetaResponseCreateParamsConversationVariant1.from_value(value)
+    end,
+    metadata: lambda do |value|
+      ::OctridevOpenai::Metadata.from_hash(value)
+    end,
+    prompt: lambda do |value|
+      ::OctridevOpenai::Prompt.from_hash(value)
+    end,
+    input: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::RealtimeConversationItem.from_hash(item) }
+    end,
+  }.freeze
+end
+
+# API model for RealtimeBetaResponseCreateParams.
+# Create a new Realtime response with these parameters
+class RealtimeBetaResponseCreateParams
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRealtimeBetaResponseCreateParamsMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRealtimeBetaResponseCreateParamsMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRealtimeBetaResponseCreateParamsMetadata::DECODERS
+
+  # @return [Array_of_RealtimeBetaResponseCreateParamsModalitiesItem] The set of modalities the model can respond with. To disable audio, set this to ["text"].
+  attr_reader :modalities
+  # @return [String] The default system instructions (i.e. system message) prepended to model calls. This field allows the client to guide the model on desired responses. The model can be instructed on response content and format, (e.g. "be extremely succinct", "act friendly", "here are examples of good responses") and on audio behavior (e.g. "talk quickly", "inject emotion into your voice", "laugh frequently"). The instructions are not guaranteed to be followed by the model, but they provide…
+  attr_reader :instructions
+  # @return [VoiceIdsOrCustomVoice] The voice the model uses to respond. Supported built-in voices are `alloy`, `ash`, `ballad`, `coral`, `echo`, `sage`, `shimmer`, `verse`, `marin`, and `cedar`. You may also provide a custom voice object with an `id`, for example `{ "id": "voice_1234" }`. Voice cannot be changed during the session once the model has responded with audio at least once. Custom voices must be created from audio samples.
+  attr_reader :voice
+  # @return [RealtimeBetaResponseCreateParamsOutputAudioFormat] The format of output audio. Options are `pcm16`, `g711_ulaw`, or `g711_alaw`.
+  attr_reader :output_audio_format
+  # @return [Array_of_RealtimeBetaResponseCreateParamsToolsItem] Tools (functions) available to the model.
+  attr_reader :tools
+  # @return [RealtimeBetaResponseCreateParamsToolChoice] How the model chooses tools. Provide one of the string modes or force a specific function/MCP tool.
+  attr_reader :tool_choice
+  # @return [Float] Sampling temperature for the model, limited to [0.6, 1.2]. Defaults to 0.8.
+  attr_reader :temperature
+  # @return [Object] Maximum number of output tokens for a single assistant response, inclusive of tool calls. Provide an integer between 1 and 4096 to limit output tokens, or `inf` for the maximum available tokens for a given model. Defaults to `inf`.
+  attr_reader :max_output_tokens
+  # @return [RealtimeBetaResponseCreateParamsConversationVariant1] Controls which conversation the response is added to. Currently supports `auto` and `none`, with `auto` as the default value. The `auto` value means that the contents of the response will be added to the default conversation. Set this to `none` to create an out-of-band response which will not add items to default conversation.
+  attr_reader :conversation
+  # @return [Metadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
+  attr_reader :metadata
+  # @return [Prompt] Reference to a prompt template and its variables. Learn more.
+  attr_reader :prompt
+  # @return [Array_of_RealtimeConversationItem] Input items to include in the prompt for the model. Using this field creates a new context for this Response instead of using the default conversation. An empty array `[]` will clear the context for this Response. Note that this can include references to items from the default conversation.
+  attr_reader :input
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the RealtimeBetaResponseOutputAudioFormat SDK namespace.
-  module RealtimeBetaResponseOutputAudioFormat
-    PCM16 = 'pcm16'
-    G711_ULAW = 'g711_ulaw'
-    G711_ALAW = 'g711_alaw'
-    VALUES = %w[pcm16 g711_ulaw g711_alaw].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the RealtimeBetaResponseStatus SDK namespace.
-  module RealtimeBetaResponseStatus
-    COMPLETED = 'completed'
-    CANCELLED = 'cancelled'
-    FAILED = 'failed'
-    INCOMPLETE = 'incomplete'
-    IN_PROGRESS = 'in_progress'
-    VALUES = %w[completed cancelled failed incomplete in_progress].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the RealtimeBetaResponseStatusDetailsReason SDK namespace.
-  module RealtimeBetaResponseStatusDetailsReason
-    TURN_DETECTED = 'turn_detected'
-    CLIENT_CANCELLED = 'client_cancelled'
-    MAX_OUTPUT_TOKENS = 'max_output_tokens'
-    CONTENT_FILTER = 'content_filter'
-    VALUES = %w[turn_detected client_cancelled max_output_tokens content_filter].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the RealtimeBetaResponseCreateParamsMaxOutputTokensVariant1 SDK namespace.
+module RealtimeBetaResponseCreateParamsMaxOutputTokensVariant1
+  INF = 'inf'
+  VALUES = ['inf'].freeze
+  def self.from_value(value)
+    value
   end
+end
 
-  # Defines the RealtimeBetaResponseStatusDetailsType SDK namespace.
-  module RealtimeBetaResponseStatusDetailsType
-    COMPLETED = 'completed'
-    CANCELLED = 'cancelled'
-    FAILED = 'failed'
-    INCOMPLETE = 'incomplete'
-    VALUES = %w[completed cancelled failed incomplete].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the RealtimeBetaResponseCreateParamsModalitiesItem SDK namespace.
+module RealtimeBetaResponseCreateParamsModalitiesItem
+  TEXT = 'text'
+  AUDIO = 'audio'
+  VALUES = ['text', 'audio'].freeze
+  def self.from_value(value)
+    value
   end
+end
 
-  # Internal model hydration metadata.
-  class SdkInternalRealtimeBetaResponseCreateParamsToolsItemMetadata
-    FIELDS = {
-      type: 'type',
-      name: 'name',
-      description: 'description',
-      parameters: 'parameters'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::RealtimeBetaResponseCreateParamsToolsItemType.from_value(value)
-      end
-    }.freeze
+# Defines the RealtimeBetaResponseCreateParamsOutputAudioFormat SDK namespace.
+module RealtimeBetaResponseCreateParamsOutputAudioFormat
+  PCM16 = 'pcm16'
+  G711_ULAW = 'g711_ulaw'
+  G711_ALAW = 'g711_alaw'
+  VALUES = ['pcm16', 'g711_ulaw', 'g711_alaw'].freeze
+  def self.from_value(value)
+    value
   end
+end
 
-  # API model for RealtimeBetaResponseCreateParamsToolsItem.
-  # Required object value serialized in the `tools[]` wire field.
-  class RealtimeBetaResponseCreateParamsToolsItem
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRealtimeBetaResponseCreateParamsToolsItemMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRealtimeBetaResponseCreateParamsToolsItemMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRealtimeBetaResponseCreateParamsToolsItemMetadata::DECODERS
-
-    # @return [RealtimeBetaResponseCreateParamsToolsItemType] The type of the tool, i.e. `function`.
-    attr_reader :type
-    # @return [String] The name of the function.
-    attr_reader :name
-    # @return [String] The description of the function, including guidance on when and how to call it, and guidance about what to tell the user when calling (if anything).
-    attr_reader :description
-    # @return [Hash] Parameters of the function in JSON Schema.
-    attr_reader :parameters
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+# Defines the RealtimeBetaResponseCreateParamsToolsItemType SDK namespace.
+module RealtimeBetaResponseCreateParamsToolsItemType
+  FUNCTION = 'function'
+  VALUES = ['function'].freeze
+  def self.from_value(value)
+    value
   end
+end
 
-  # Defines the RealtimeBetaResponseCreateParamsConversationVariant1 SDK namespace.
-  module RealtimeBetaResponseCreateParamsConversationVariant1
-    AUTO = 'auto'
-    NONE = 'none'
-    VALUES = %w[auto none].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the RealtimeBetaResponseCreateParamsToolChoice SDK namespace.
+module RealtimeBetaResponseCreateParamsToolChoice
+  def self.from_hash(hash)
+    return ToolChoiceOptions.from_value(hash) if hash.is_a?(::String)
+    return hash unless hash.is_a?(::Hash)
+    mapping = { "function" => ToolChoiceFunction, "mcp" => ToolChoiceMCP }
+    type = mapping[hash["type"]]
+    return type.from_hash(hash) if type
+
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+
+    raise SdkValidationError.new('RealtimeBetaResponseCreateParamsToolChoice', 'variant', "Unknown RealtimeBetaResponseCreateParamsToolChoice discriminator: #{hash["type"].inspect}")
   end
-
-  # Internal model hydration metadata.
-  class SdkInternalRealtimeBetaResponseCreateParamsMetadata
-    FIELDS = {
-      modalities: 'modalities',
-      instructions: 'instructions',
-      voice: 'voice',
-      output_audio_format: 'output_audio_format',
-      tools: 'tools',
-      tool_choice: 'tool_choice',
-      temperature: 'temperature',
-      max_output_tokens: 'max_output_tokens',
-      conversation: 'conversation',
-      metadata: 'metadata',
-      prompt: 'prompt',
-      input: 'input'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {
-      modalities: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::RealtimeBetaResponseCreateParamsModalitiesItem.from_value(item) }
-      end,
-      voice: lambda do |value|
-        ::OctridevOpenai::VoiceIdsOrCustomVoice.from_hash(value)
-      end,
-      output_audio_format: lambda do |value|
-        ::OctridevOpenai::RealtimeBetaResponseCreateParamsOutputAudioFormat.from_value(value)
-      end,
-      tools: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::RealtimeBetaResponseCreateParamsToolsItem.from_hash(item) }
-      end,
-      tool_choice: lambda do |value|
-        ::OctridevOpenai::RealtimeBetaResponseCreateParamsToolChoice.from_hash(value)
-      end,
-      conversation: lambda do |value|
-        ::OctridevOpenai::RealtimeBetaResponseCreateParamsConversationVariant1.from_value(value)
-      end,
-      metadata: lambda do |value|
-        ::OctridevOpenai::Metadata.from_hash(value)
-      end,
-      prompt: lambda do |value|
-        ::OctridevOpenai::Prompt.from_hash(value)
-      end,
-      input: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::RealtimeConversationItem.from_hash(item) }
-      end
-    }.freeze
-  end
-
-  # API model for RealtimeBetaResponseCreateParams.
-  # Create a new Realtime response with these parameters
-  class RealtimeBetaResponseCreateParams
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRealtimeBetaResponseCreateParamsMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRealtimeBetaResponseCreateParamsMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRealtimeBetaResponseCreateParamsMetadata::DECODERS
-
-    # @return [Array_of_RealtimeBetaResponseCreateParamsModalitiesItem] The set of modalities the model can respond with. To disable audio, set this to ["text"].
-    attr_reader :modalities
-    # @return [String] The default system instructions (i.e. system message) prepended to model calls. This field allows the client to guide the model on desired responses. The model can be instructed on response content and format, (e.g. "be extremely succinct", "act friendly", "here are examples of good responses") and on audio behavior (e.g. "talk quickly", "inject emotion into your voice", "laugh frequently"). The instructions are not guaranteed to be followed by the model, but they provide…
-    attr_reader :instructions
-    # @return [VoiceIdsOrCustomVoice] The voice the model uses to respond. Supported built-in voices are `alloy`, `ash`, `ballad`, `coral`, `echo`, `sage`, `shimmer`, `verse`, `marin`, and `cedar`. You may also provide a custom voice object with an `id`, for example `{ "id": "voice_1234" }`. Voice cannot be changed during the session once the model has responded with audio at least once. Custom voices must be created from audio samples.
-    attr_reader :voice
-    # @return [RealtimeBetaResponseCreateParamsOutputAudioFormat] The format of output audio. Options are `pcm16`, `g711_ulaw`, or `g711_alaw`.
-    attr_reader :output_audio_format
-    # @return [Array_of_RealtimeBetaResponseCreateParamsToolsItem] Tools (functions) available to the model.
-    attr_reader :tools
-    # @return [RealtimeBetaResponseCreateParamsToolChoice] How the model chooses tools. Provide one of the string modes or force a specific function/MCP tool.
-    attr_reader :tool_choice
-    # @return [Float] Sampling temperature for the model, limited to [0.6, 1.2]. Defaults to 0.8.
-    attr_reader :temperature
-    # @return [Object] Maximum number of output tokens for a single assistant response, inclusive of tool calls. Provide an integer between 1 and 4096 to limit output tokens, or `inf` for the maximum available tokens for a given model. Defaults to `inf`.
-    attr_reader :max_output_tokens
-    # @return [RealtimeBetaResponseCreateParamsConversationVariant1] Controls which conversation the response is added to. Currently supports `auto` and `none`, with `auto` as the default value. The `auto` value means that the contents of the response will be added to the default conversation. Set this to `none` to create an out-of-band response which will not add items to default conversation.
-    attr_reader :conversation
-    # @return [Metadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
-    attr_reader :metadata
-    # @return [Prompt] Reference to a prompt template and its variables. Learn more.
-    attr_reader :prompt
-    # @return [Array_of_RealtimeConversationItem] Input items to include in the prompt for the model. Using this field creates a new context for this Response instead of using the default conversation. An empty array `[]` will clear the context for this Response. Note that this can include references to items from the default conversation.
-    attr_reader :input
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the RealtimeBetaResponseCreateParamsMaxOutputTokensVariant1 SDK namespace.
-  module RealtimeBetaResponseCreateParamsMaxOutputTokensVariant1
-    INF = 'inf'
-    VALUES = ['inf'].freeze
-    def self.from_value(value)
-      value
-    end
-  end
-
-  # Defines the RealtimeBetaResponseCreateParamsModalitiesItem SDK namespace.
-  module RealtimeBetaResponseCreateParamsModalitiesItem
-    TEXT = 'text'
-    AUDIO = 'audio'
-    VALUES = %w[text audio].freeze
-    def self.from_value(value)
-      value
-    end
-  end
-
-  # Defines the RealtimeBetaResponseCreateParamsOutputAudioFormat SDK namespace.
-  module RealtimeBetaResponseCreateParamsOutputAudioFormat
-    PCM16 = 'pcm16'
-    G711_ULAW = 'g711_ulaw'
-    G711_ALAW = 'g711_alaw'
-    VALUES = %w[pcm16 g711_ulaw g711_alaw].freeze
-    def self.from_value(value)
-      value
-    end
-  end
-
-  # Defines the RealtimeBetaResponseCreateParamsToolsItemType SDK namespace.
-  module RealtimeBetaResponseCreateParamsToolsItemType
-    FUNCTION = 'function'
-    VALUES = ['function'].freeze
-    def self.from_value(value)
-      value
-    end
-  end
-
-  # Defines the RealtimeBetaResponseCreateParamsToolChoice SDK namespace.
-  module RealtimeBetaResponseCreateParamsToolChoice
-    def self.from_hash(hash)
-      return ToolChoiceOptions.from_value(hash) if hash.is_a?(::String)
-      return hash unless hash.is_a?(::Hash)
-
-      mapping = { 'function' => ToolChoiceFunction, 'mcp' => ToolChoiceMCP }
-      type = mapping[hash['type']]
-      return type.from_hash(hash) if type
-
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
-
-      raise SdkValidationError.new('RealtimeBetaResponseCreateParamsToolChoice', 'variant', "Unknown RealtimeBetaResponseCreateParamsToolChoice discriminator: #{hash['type'].inspect}")
-    end
-  end
+end
 end

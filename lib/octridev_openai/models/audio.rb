@@ -5,693 +5,687 @@
 
 # audio domain models
 module OctridevOpenai
-  # Defines the AudioResponseFormat SDK namespace.
-  module AudioResponseFormat
-    JSON = 'json'
-    TEXT = 'text'
-    SRT = 'srt'
-    VERBOSE_JSON = 'verbose_json'
-    VTT = 'vtt'
-    DIARIZED_JSON = 'diarized_json'
-    VALUES = %w[json text srt verbose_json vtt diarized_json].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the AudioResponseFormat SDK namespace.
+module AudioResponseFormat
+  JSON = 'json'
+  TEXT = 'text'
+  SRT = 'srt'
+  VERBOSE_JSON = 'verbose_json'
+  VTT = 'vtt'
+  DIARIZED_JSON = 'diarized_json'
+  VALUES = ['json', 'text', 'srt', 'verbose_json', 'vtt', 'diarized_json'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalCreateSpeechRequestMetadata
+  FIELDS = {
+    model: "model",
+    input: "input",
+    instructions: "instructions",
+    voice: "voice",
+    response_format: "response_format",
+    speed: "speed",
+    stream_format: "stream_format",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    model
+    input
+    voice
+  ].freeze
+  DECODERS = {
+    voice: lambda do |value|
+      ::OctridevOpenai::CreateSpeechRequestVoice.from_hash(value)
+    end,
+    response_format: lambda do |value|
+      ::OctridevOpenai::CreateSpeechRequestResponseFormat.from_value(value)
+    end,
+    stream_format: lambda do |value|
+      ::OctridevOpenai::CreateSpeechRequestStreamFormat.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for CreateSpeechRequest.
+# Typed representation of the `CreateSpeechRequest` API schema.
+class CreateSpeechRequest
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCreateSpeechRequestMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCreateSpeechRequestMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCreateSpeechRequestMetadata::DECODERS
+
+  # @return [String] One of the available TTS models: `tts-1`, `tts-1-hd`, `gpt-4o-mini-tts`, or `gpt-4o-mini-tts-2025-12-15`.
+  attr_reader :model
+  # @return [String] The text to generate audio for. The maximum length is 4096 characters.
+  attr_reader :input
+  # @return [String] Control the voice of your generated audio with additional instructions. Does not work with `tts-1` or `tts-1-hd`.
+  attr_reader :instructions
+  # @return [CreateSpeechRequestVoice] The voice to use when generating the audio. Supported built-in voices are `alloy`, `ash`, `ballad`, `coral`, `echo`, `fable`, `onyx`, `nova`, `sage`, `shimmer`, `verse`, `marin`, and `cedar`. You may also provide a custom voice object with an `id`, for example `{ "id": "voice_1234" }`. Previews of the voices are available in the Text to speech guide. Custom voices must be created from audio samples.
+  attr_reader :voice
+  # @return [CreateSpeechRequestResponseFormat] The format to audio in. Supported formats are `mp3`, `opus`, `aac`, `flac`, `wav`, and `pcm`.
+  attr_reader :response_format
+  # @return [Float] The speed of the generated audio. Select a value from `0.25` to `4.0`. `1.0` is the default.
+  attr_reader :speed
+  # @return [CreateSpeechRequestStreamFormat] The format to stream the audio in. Supported formats are `sse` and `audio`. `sse` is not supported for `tts-1` or `tts-1-hd`.
+  attr_reader :stream_format
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalCreateSpeechRequestMetadata
-    FIELDS = {
-      model: 'model',
-      input: 'input',
-      instructions: 'instructions',
-      voice: 'voice',
-      response_format: 'response_format',
-      speed: 'speed',
-      stream_format: 'stream_format'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      model
-      input
-      voice
-    ].freeze
-    DECODERS = {
-      voice: lambda do |value|
-        ::OctridevOpenai::CreateSpeechRequestVoice.from_hash(value)
-      end,
-      response_format: lambda do |value|
-        ::OctridevOpenai::CreateSpeechRequestResponseFormat.from_value(value)
-      end,
-      stream_format: lambda do |value|
-        ::OctridevOpenai::CreateSpeechRequestStreamFormat.from_value(value)
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  end
+
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the CreateSpeechRequestResponseFormat SDK namespace.
+module CreateSpeechRequestResponseFormat
+  MP3 = 'mp3'
+  OPUS = 'opus'
+  AAC = 'aac'
+  FLAC = 'flac'
+  WAV = 'wav'
+  PCM = 'pcm'
+  VALUES = ['mp3', 'opus', 'aac', 'flac', 'wav', 'pcm'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the CreateSpeechRequestStreamFormat SDK namespace.
+module CreateSpeechRequestStreamFormat
+  SSE = 'sse'
+  AUDIO = 'audio'
+  VALUES = ['sse', 'audio'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalCreateSpeechRequestVoiceVariant2Metadata
+  FIELDS = {
+    id: "id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for CreateSpeechRequestVoiceVariant2.
+class CreateSpeechRequestVoiceVariant2
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCreateSpeechRequestVoiceVariant2Metadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCreateSpeechRequestVoiceVariant2Metadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCreateSpeechRequestVoiceVariant2Metadata::DECODERS
+
+  # @return [String] The custom voice ID, e.g. `voice_1234`.
+  attr_reader :id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
+  end
+
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  end
+
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the CreateSpeechRequestVoice SDK namespace.
+module CreateSpeechRequestVoice
+  def self.from_hash(hash)
+    if hash.is_a?(::String)
+      [VoiceIdsShared, CreateSpeechRequestVoiceVariant1].each do |type|
+        return type.from_value(hash)
+      rescue ::StandardError
+        next
       end
-    }.freeze
+    end
+    return CreateSpeechRequestVoiceVariant2.from_hash(hash)
+  end
+end
+
+# Defines the CreateSpeechRequestVoiceVariant1 SDK namespace.
+module CreateSpeechRequestVoiceVariant1
+  FABLE = 'fable'
+  ONYX = 'onyx'
+  NOVA = 'nova'
+  VALUES = ['fable', 'onyx', 'nova'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the CreateSpeechResponseStreamEvent SDK namespace.
+module CreateSpeechResponseStreamEvent
+  DISCRIMINATOR_MAPPING = {
+    "speech.audio.delta" => -> { SpeechAudioDeltaEvent },
+    "speech.audio.done" => -> { SpeechAudioDoneEvent },
+  }.freeze
+
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
+
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+
+    raise SdkValidationError.new('CreateSpeechResponseStreamEvent', 'variant', "Unknown CreateSpeechResponseStreamEvent discriminator: #{hash["type"].inspect}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalCreateTranscriptionRequestMetadata
+  FIELDS = {
+    file: "file",
+    model: "model",
+    language: "language",
+    languages: "languages",
+    keywords: "keywords",
+    prompt: "prompt",
+    response_format: "response_format",
+    temperature: "temperature",
+    include: "include",
+    timestamp_granularities: "timestamp_granularities",
+    stream: "stream",
+    chunking_strategy: "chunking_strategy",
+    known_speaker_names: "known_speaker_names",
+    known_speaker_references: "known_speaker_references",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    file
+    model
+  ].freeze
+  DECODERS = {
+    response_format: lambda do |value|
+      ::OctridevOpenai::AudioResponseFormat.from_value(value)
+    end,
+    include: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::TranscriptionInclude.from_value(item) }
+    end,
+    timestamp_granularities: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::CreateTranscriptionRequestTimestampGranularitiesItem.from_value(item) }
+    end,
+    chunking_strategy: lambda do |value|
+      ::OctridevOpenai::CreateTranscriptionRequestChunkingStrategy.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for CreateTranscriptionRequest.
+# Typed representation of the `CreateTranscriptionRequest` API schema.
+class CreateTranscriptionRequest
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCreateTranscriptionRequestMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCreateTranscriptionRequestMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCreateTranscriptionRequestMetadata::DECODERS
+
+  # @return [String] The audio file object (not file name) to transcribe, in one of these formats: flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, or webm. The request must include enough format metadata for the file to be identified. We recommend an extension-bearing filename and an appropriate content type.
+  attr_reader :file
+  # @return [String] ID of the model to use. The options are `gpt-transcribe`, `gpt-4o-transcribe`, `gpt-4o-mini-transcribe`, `gpt-4o-mini-transcribe-2025-12-15`, `whisper-1` (which is powered by our open source Whisper V2 model), and `gpt-4o-transcribe-diarize`.
+  attr_reader :model
+  # @return [String] The language of the input audio. Supplying the input language in ISO-639-1 (e.g. `en`) format will improve accuracy and latency.
+  attr_reader :language
+  # @return [Array_of_String] Possible languages of the input audio, in ISO-639-1 format. Supported by `gpt-transcribe`.
+  attr_reader :languages
+  # @return [Array_of_String] Words or phrases to guide transcription of the input audio. Supported by `gpt-transcribe`.
+  attr_reader :keywords
+  # @return [String] An optional text to guide the model's style or continue a previous audio segment. The prompt should match the audio language. This field is not supported when using `gpt-4o-transcribe-diarize`.
+  attr_reader :prompt
+  # @return [AudioResponseFormat] The format of the output, in one of these options: `json`, `text`, `srt`, `verbose_json`, `vtt`, or `diarized_json`. For `gpt-4o-transcribe` and `gpt-4o-mini-transcribe`, the only supported format is `json`. For `gpt-4o-transcribe-diarize`, the supported formats are `json`, `text`, and `diarized_json`, with `diarized_json` required to receive speaker annotations.
+  attr_reader :response_format
+  # @return [Float] The sampling temperature, between 0 and 1. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. If set to 0, the model will use log probability to automatically increase the temperature until certain thresholds are hit.
+  attr_reader :temperature
+  # @return [Array_of_TranscriptionInclude] Additional information to include in the transcription response. `logprobs` will return the log probabilities of the tokens in the response to understand the model's confidence in the transcription. `logprobs` only works with response_format set to `json` and only with the models `gpt-4o-transcribe`, `gpt-4o-mini-transcribe`, and `gpt-4o-mini-transcribe-2025-12-15`. This field is not supported when using `gpt-4o-transcribe-diarize`.
+  attr_reader :include
+  # @return [Array_of_CreateTranscriptionRequestTimestampGranularitiesItem] The timestamp granularities to populate for this transcription. `response_format` must be set `verbose_json` to use timestamp granularities. Either or both of these options are supported: `word`, or `segment`. Note: There is no additional latency for segment timestamps, but generating word timestamps incurs additional latency. This option is not available for `gpt-4o-transcribe-diarize`.
+  attr_reader :timestamp_granularities
+  # @return [Boolean] Optional `boolean` value serialized in the `stream` wire field.
+  attr_reader :stream
+  # @return [CreateTranscriptionRequestChunkingStrategy] Controls how the audio is cut into chunks. When set to `"auto"`, the server first normalizes loudness and then uses voice activity detection (VAD) to choose boundaries. `server_vad` object can be provided to tweak VAD detection parameters manually. If unset, the audio is transcribed as a single block. Required when using `gpt-4o-transcribe-diarize` for inputs longer than 30 seconds.
+  attr_reader :chunking_strategy
+  # @return [Array_of_String] Optional list of speaker names that correspond to the audio samples provided in `known_speaker_references[]`. Each entry should be a short identifier (for example `customer` or `agent`). Up to 4 speakers are supported.
+  attr_reader :known_speaker_names
+  # @return [Array_of_String] Optional list of audio samples (as data URLs) that contain known speaker references matching `known_speaker_names[]`. Each sample must be between 2 and 10 seconds, and can use any of the same input audio formats supported by `file`.
+  attr_reader :known_speaker_references
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for CreateSpeechRequest.
-  # Typed representation of the `CreateSpeechRequest` API schema.
-  class CreateSpeechRequest
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCreateSpeechRequestMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCreateSpeechRequestMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCreateSpeechRequestMetadata::DECODERS
-
-    # @return [String] One of the available TTS models: `tts-1`, `tts-1-hd`, `gpt-4o-mini-tts`, or `gpt-4o-mini-tts-2025-12-15`.
-    attr_reader :model
-    # @return [String] The text to generate audio for. The maximum length is 4096 characters.
-    attr_reader :input
-    # @return [String] Control the voice of your generated audio with additional instructions. Does not work with `tts-1` or `tts-1-hd`.
-    attr_reader :instructions
-    # @return [CreateSpeechRequestVoice] The voice to use when generating the audio. Supported built-in voices are `alloy`, `ash`, `ballad`, `coral`, `echo`, `fable`, `onyx`, `nova`, `sage`, `shimmer`, `verse`, `marin`, and `cedar`. You may also provide a custom voice object with an `id`, for example `{ "id": "voice_1234" }`. Previews of the voices are available in the Text to speech guide. Custom voices must be created from audio samples.
-    attr_reader :voice
-    # @return [CreateSpeechRequestResponseFormat] The format to audio in. Supported formats are `mp3`, `opus`, `aac`, `flac`, `wav`, and `pcm`.
-    attr_reader :response_format
-    # @return [Float] The speed of the generated audio. Select a value from `0.25` to `4.0`. `1.0` is the default.
-    attr_reader :speed
-    # @return [CreateSpeechRequestStreamFormat] The format to stream the audio in. Supported formats are `sse` and `audio`. `sse` is not supported for `tts-1` or `tts-1-hd`.
-    attr_reader :stream_format
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the CreateSpeechRequestResponseFormat SDK namespace.
-  module CreateSpeechRequestResponseFormat
-    MP3 = 'mp3'
-    OPUS = 'opus'
-    AAC = 'aac'
-    FLAC = 'flac'
-    WAV = 'wav'
-    PCM = 'pcm'
-    VALUES = %w[mp3 opus aac flac wav pcm].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the CreateTranscriptionRequestTimestampGranularitiesItem SDK namespace.
+module CreateTranscriptionRequestTimestampGranularitiesItem
+  WORD = 'word'
+  SEGMENT = 'segment'
+  VALUES = ['word', 'segment'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the CreateTranscriptionRequestChunkingStrategy SDK namespace.
+module CreateTranscriptionRequestChunkingStrategy
+  def self.from_hash(hash)
+    return CreateTranscriptionRequestChunkingStrategyVariant0.from_value(hash) if hash.is_a?(::String)
+    return VadConfig.from_hash(hash)
+  end
+end
+
+# Defines the CreateTranscriptionRequestChunkingStrategyVariant0 SDK namespace.
+module CreateTranscriptionRequestChunkingStrategyVariant0
+  AUTO = 'auto'
+  VALUES = ['auto'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the CreateTranscriptionResponse SDK namespace.
+module CreateTranscriptionResponse
+  def self.from_hash(hash)
+    shape_mapping = {
+      "task" => CreateTranscriptionResponseDiarizedJson,
+      "language" => CreateTranscriptionResponseVerboseJson,
+    }
+    type = shape_mapping.find { |required, _type| hash.is_a?(::Hash) && hash.key?(required) }&.last
+    decoded = type&.from_hash(hash)
+    return decoded unless type.nil?
+    return CreateTranscriptionResponseJson.from_hash(hash)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalCreateTranscriptionResponseDiarizedJsonMetadata
+  FIELDS = {
+    task: "task",
+    duration: "duration",
+    text: "text",
+    segments: "segments",
+    usage: "usage",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    task
+    duration
+    text
+    segments
+  ].freeze
+  DECODERS = {
+    task: lambda do |value|
+      ::OctridevOpenai::CreateTranscriptionResponseDiarizedJsonTask.from_value(value)
+    end,
+    segments: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::TranscriptionDiarizedSegment.from_hash(item) }
+    end,
+    usage: lambda do |value|
+      ::OctridevOpenai::CreateTranscriptionResponseDiarizedJsonUsage.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for CreateTranscriptionResponseDiarizedJson.
+# Represents a diarized transcription response returned by the model, including the combined transcript and speaker-segment annotations.
+class CreateTranscriptionResponseDiarizedJson
+  include CreateTranscriptionResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCreateTranscriptionResponseDiarizedJsonMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCreateTranscriptionResponseDiarizedJsonMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCreateTranscriptionResponseDiarizedJsonMetadata::DECODERS
+
+  # @return [CreateTranscriptionResponseDiarizedJsonTask] The type of task that was run. Always `transcribe`.
+  attr_reader :task
+  # @return [Float] Duration of the input audio in seconds.
+  attr_reader :duration
+  # @return [String] The concatenated transcript text for the entire audio input.
+  attr_reader :text
+  # @return [Array_of_TranscriptionDiarizedSegment] Segments of the transcript annotated with timestamps and speaker labels.
+  attr_reader :segments
+  # @return [CreateTranscriptionResponseDiarizedJsonUsage] Token or duration usage statistics for the request.
+  attr_reader :usage
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the CreateSpeechRequestStreamFormat SDK namespace.
-  module CreateSpeechRequestStreamFormat
-    SSE = 'sse'
-    AUDIO = 'audio'
-    VALUES = %w[sse audio].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalCreateSpeechRequestVoiceVariant2Metadata
-    FIELDS = {
-      id: 'id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-    ].freeze
-    DECODERS = {}.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the CreateTranscriptionResponseDiarizedJsonTask SDK namespace.
+module CreateTranscriptionResponseDiarizedJsonTask
+  TRANSCRIBE = 'transcribe'
+  VALUES = ['transcribe'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the CreateTranscriptionResponseDiarizedJsonUsage SDK namespace.
+module CreateTranscriptionResponseDiarizedJsonUsage
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    mapping = { "tokens" => TranscriptTextUsageTokens, "duration" => TranscriptTextUsageDuration }
+    type = mapping[hash["type"]]
+    return type.from_hash(hash) if type
+
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+
+    raise SdkValidationError.new('CreateTranscriptionResponseDiarizedJsonUsage', 'variant', "Unknown CreateTranscriptionResponseDiarizedJsonUsage discriminator: #{hash["type"].inspect}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalCreateTranscriptionResponseJsonLogprobsItemMetadata
+  FIELDS = {
+    token: "token",
+    logprob: "logprob",
+    bytes: "bytes",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for CreateTranscriptionResponseJsonLogprobsItem.
+# Required object value serialized in the `logprobs[]` wire field.
+class CreateTranscriptionResponseJsonLogprobsItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCreateTranscriptionResponseJsonLogprobsItemMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCreateTranscriptionResponseJsonLogprobsItemMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCreateTranscriptionResponseJsonLogprobsItemMetadata::DECODERS
+
+  # @return [String] The token in the transcription.
+  attr_reader :token
+  # @return [Float] The log probability of the token.
+  attr_reader :logprob
+  # @return [Array_of_Float] The bytes of the token.
+  attr_reader :bytes
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for CreateSpeechRequestVoiceVariant2.
-  class CreateSpeechRequestVoiceVariant2
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCreateSpeechRequestVoiceVariant2Metadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCreateSpeechRequestVoiceVariant2Metadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCreateSpeechRequestVoiceVariant2Metadata::DECODERS
-
-    # @return [String] The custom voice ID, e.g. `voice_1234`.
-    attr_reader :id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the CreateSpeechRequestVoice SDK namespace.
-  module CreateSpeechRequestVoice
-    def self.from_hash(hash)
-      if hash.is_a?(::String)
-        [VoiceIdsShared, CreateSpeechRequestVoiceVariant1].each do |type|
-          return type.from_value(hash)
-        rescue ::StandardError
-          next
-        end
-      end
-      CreateSpeechRequestVoiceVariant2.from_hash(hash)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalCreateTranscriptionResponseJsonMetadata
+  FIELDS = {
+    text: "text",
+    languages: "languages",
+    logprobs: "logprobs",
+    usage: "usage",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    text
+  ].freeze
+  DECODERS = {
+    languages: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::TranscriptionLanguage.from_hash(item) }
+    end,
+    logprobs: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::CreateTranscriptionResponseJsonLogprobsItem.from_hash(item) }
+    end,
+    usage: lambda do |value|
+      ::OctridevOpenai::CreateTranscriptionResponseJsonUsage.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for CreateTranscriptionResponseJson.
+# Represents a transcription response returned by model, based on the provided input.
+class CreateTranscriptionResponseJson
+  include CreateTranscriptionResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCreateTranscriptionResponseJsonMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCreateTranscriptionResponseJsonMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCreateTranscriptionResponseJsonMetadata::DECODERS
+
+  # @return [String] The transcribed text.
+  attr_reader :text
+  # @return [Array_of_TranscriptionLanguage] The languages detected in the audio. Returned by `gpt-transcribe`. An empty array indicates that no language could be reliably detected.
+  attr_reader :languages
+  # @return [Array_of_CreateTranscriptionResponseJsonLogprobsItem] The log probabilities of the tokens in the transcription. Only returned with the models `gpt-4o-transcribe` and `gpt-4o-mini-transcribe` if `logprobs` is added to the `include` array.
+  attr_reader :logprobs
+  # @return [CreateTranscriptionResponseJsonUsage] Token usage statistics for the request.
+  attr_reader :usage
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the CreateSpeechRequestVoiceVariant1 SDK namespace.
-  module CreateSpeechRequestVoiceVariant1
-    FABLE = 'fable'
-    ONYX = 'onyx'
-    NOVA = 'nova'
-    VALUES = %w[fable onyx nova].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the CreateSpeechResponseStreamEvent SDK namespace.
-  module CreateSpeechResponseStreamEvent
-    DISCRIMINATOR_MAPPING = {
-      'speech.audio.delta' => -> { SpeechAudioDeltaEvent },
-      'speech.audio.done' => -> { SpeechAudioDoneEvent }
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
+# Defines the CreateTranscriptionResponseJsonUsage SDK namespace.
+module CreateTranscriptionResponseJsonUsage
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    mapping = { "tokens" => TranscriptTextUsageTokens, "duration" => TranscriptTextUsageDuration }
+    type = mapping[hash["type"]]
+    return type.from_hash(hash) if type
 
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
 
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+    raise SdkValidationError.new('CreateTranscriptionResponseJsonUsage', 'variant', "Unknown CreateTranscriptionResponseJsonUsage discriminator: #{hash["type"].inspect}")
+  end
+end
 
-      raise SdkValidationError.new('CreateSpeechResponseStreamEvent', 'variant', "Unknown CreateSpeechResponseStreamEvent discriminator: #{hash['type'].inspect}")
-    end
+# Defines the CreateTranscriptionResponseStreamEvent SDK namespace.
+module CreateTranscriptionResponseStreamEvent
+  DISCRIMINATOR_MAPPING = {
+    "transcript.text.segment" => -> { TranscriptTextSegmentEvent },
+    "transcript.text.delta" => -> { TranscriptTextDeltaEvent },
+    "transcript.text.done" => -> { TranscriptTextDoneEvent },
+  }.freeze
+
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
+
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+
+    raise SdkValidationError.new('CreateTranscriptionResponseStreamEvent', 'variant', "Unknown CreateTranscriptionResponseStreamEvent discriminator: #{hash["type"].inspect}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalCreateTranscriptionResponseVerboseJsonMetadata
+  FIELDS = {
+    language: "language",
+    duration: "duration",
+    text: "text",
+    words: "words",
+    segments: "segments",
+    usage: "usage",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    language
+    duration
+    text
+  ].freeze
+  DECODERS = {
+    words: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::TranscriptionWord.from_hash(item) }
+    end,
+    segments: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::TranscriptionSegment.from_hash(item) }
+    end,
+    usage: lambda do |value|
+      ::OctridevOpenai::TranscriptTextUsageDuration.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for CreateTranscriptionResponseVerboseJson.
+# Represents a verbose json transcription response returned by model, based on the provided input.
+class CreateTranscriptionResponseVerboseJson
+  include CreateTranscriptionResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCreateTranscriptionResponseVerboseJsonMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCreateTranscriptionResponseVerboseJsonMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCreateTranscriptionResponseVerboseJsonMetadata::DECODERS
+
+  # @return [String] The language of the input audio.
+  attr_reader :language
+  # @return [Float] The duration of the input audio.
+  attr_reader :duration
+  # @return [String] The transcribed text.
+  attr_reader :text
+  # @return [Array_of_TranscriptionWord] Extracted words and their corresponding timestamps.
+  attr_reader :words
+  # @return [Array_of_TranscriptionSegment] Segments of the transcribed text and their corresponding details.
+  attr_reader :segments
+  # @return [TranscriptTextUsageDuration] Usage statistics for models billed by audio input duration.
+  attr_reader :usage
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalCreateTranscriptionRequestMetadata
-    FIELDS = {
-      file: 'file',
-      model: 'model',
-      language: 'language',
-      languages: 'languages',
-      keywords: 'keywords',
-      prompt: 'prompt',
-      response_format: 'response_format',
-      temperature: 'temperature',
-      include: 'include',
-      timestamp_granularities: 'timestamp_granularities',
-      stream: 'stream',
-      chunking_strategy: 'chunking_strategy',
-      known_speaker_names: 'known_speaker_names',
-      known_speaker_references: 'known_speaker_references'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      file
-      model
-    ].freeze
-    DECODERS = {
-      response_format: lambda do |value|
-        ::OctridevOpenai::AudioResponseFormat.from_value(value)
-      end,
-      include: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::TranscriptionInclude.from_value(item) }
-      end,
-      timestamp_granularities: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::CreateTranscriptionRequestTimestampGranularitiesItem.from_value(item) }
-      end,
-      chunking_strategy: lambda do |value|
-        ::OctridevOpenai::CreateTranscriptionRequestChunkingStrategy.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for CreateTranscriptionRequest.
-  # Typed representation of the `CreateTranscriptionRequest` API schema.
-  class CreateTranscriptionRequest
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCreateTranscriptionRequestMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCreateTranscriptionRequestMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCreateTranscriptionRequestMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] The audio file object (not file name) to transcribe, in one of these formats: flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, or webm. The request must include enough format metadata for the file to be identified. We recommend an extension-bearing filename and an appropriate content type.
-    attr_reader :file
-    # @return [String] ID of the model to use. The options are `gpt-transcribe`, `gpt-4o-transcribe`, `gpt-4o-mini-transcribe`, `gpt-4o-mini-transcribe-2025-12-15`, `whisper-1` (which is powered by our open source Whisper V2 model), and `gpt-4o-transcribe-diarize`.
-    attr_reader :model
-    # @return [String] The language of the input audio. Supplying the input language in ISO-639-1 (e.g. `en`) format will improve accuracy and latency.
-    attr_reader :language
-    # @return [Array_of_String] Possible languages of the input audio, in ISO-639-1 format. Supported by `gpt-transcribe`.
-    attr_reader :languages
-    # @return [Array_of_String] Words or phrases to guide transcription of the input audio. Supported by `gpt-transcribe`.
-    attr_reader :keywords
-    # @return [String] An optional text to guide the model's style or continue a previous audio segment. The prompt should match the audio language. This field is not supported when using `gpt-4o-transcribe-diarize`.
-    attr_reader :prompt
-    # @return [AudioResponseFormat] The format of the output, in one of these options: `json`, `text`, `srt`, `verbose_json`, `vtt`, or `diarized_json`. For `gpt-4o-transcribe` and `gpt-4o-mini-transcribe`, the only supported format is `json`. For `gpt-4o-transcribe-diarize`, the supported formats are `json`, `text`, and `diarized_json`, with `diarized_json` required to receive speaker annotations.
-    attr_reader :response_format
-    # @return [Float] The sampling temperature, between 0 and 1. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. If set to 0, the model will use log probability to automatically increase the temperature until certain thresholds are hit.
-    attr_reader :temperature
-    # @return [Array_of_TranscriptionInclude] Additional information to include in the transcription response. `logprobs` will return the log probabilities of the tokens in the response to understand the model's confidence in the transcription. `logprobs` only works with response_format set to `json` and only with the models `gpt-4o-transcribe`, `gpt-4o-mini-transcribe`, and `gpt-4o-mini-transcribe-2025-12-15`. This field is not supported when using `gpt-4o-transcribe-diarize`.
-    attr_reader :include
-    # @return [Array_of_CreateTranscriptionRequestTimestampGranularitiesItem] The timestamp granularities to populate for this transcription. `response_format` must be set `verbose_json` to use timestamp granularities. Either or both of these options are supported: `word`, or `segment`. Note: There is no additional latency for segment timestamps, but generating word timestamps incurs additional latency. This option is not available for `gpt-4o-transcribe-diarize`.
-    attr_reader :timestamp_granularities
-    # @return [Boolean] Optional `boolean` value serialized in the `stream` wire field.
-    attr_reader :stream
-    # @return [CreateTranscriptionRequestChunkingStrategy] Controls how the audio is cut into chunks. When set to `"auto"`, the server first normalizes loudness and then uses voice activity detection (VAD) to choose boundaries. `server_vad` object can be provided to tweak VAD detection parameters manually. If unset, the audio is transcribed as a single block. Required when using `gpt-4o-transcribe-diarize` for inputs longer than 30 seconds.
-    attr_reader :chunking_strategy
-    # @return [Array_of_String] Optional list of speaker names that correspond to the audio samples provided in `known_speaker_references[]`. Each entry should be a short identifier (for example `customer` or `agent`). Up to 4 speakers are supported.
-    attr_reader :known_speaker_names
-    # @return [Array_of_String] Optional list of audio samples (as data URLs) that contain known speaker references matching `known_speaker_names[]`. Each sample must be between 2 and 10 seconds, and can use any of the same input audio formats supported by `file`.
-    attr_reader :known_speaker_references
+# Internal model hydration metadata.
+class SdkInternalCreateTranslationRequestMetadata
+  FIELDS = {
+    file: "file",
+    model: "model",
+    prompt: "prompt",
+    response_format: "response_format",
+    temperature: "temperature",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    file
+    model
+  ].freeze
+  DECODERS = {
+    response_format: lambda do |value|
+      ::OctridevOpenai::CreateTranslationRequestResponseFormat.from_value(value)
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for CreateTranslationRequest.
+# Typed representation of the `CreateTranslationRequest` API schema.
+class CreateTranslationRequest
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCreateTranslationRequestMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCreateTranslationRequestMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCreateTranslationRequestMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [String] The audio file object (not file name) translate, in one of these formats: flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, or webm. The request must include enough format metadata for the file to be identified. We recommend an extension-bearing filename and an appropriate content type.
+  attr_reader :file
+  # @return [String] ID of the model to use. Only `whisper-1` (which is powered by our open source Whisper V2 model) is currently available.
+  attr_reader :model
+  # @return [String] An optional text to guide the model's style or continue a previous audio segment. The prompt should be in English.
+  attr_reader :prompt
+  # @return [CreateTranslationRequestResponseFormat] The format of the output, in one of these options: `json`, `text`, `srt`, `verbose_json`, or `vtt`.
+  attr_reader :response_format
+  # @return [Float] The sampling temperature, between 0 and 1. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. If set to 0, the model will use log probability to automatically increase the temperature until certain thresholds are hit.
+  attr_reader :temperature
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the CreateTranscriptionRequestTimestampGranularitiesItem SDK namespace.
-  module CreateTranscriptionRequestTimestampGranularitiesItem
-    WORD = 'word'
-    SEGMENT = 'segment'
-    VALUES = %w[word segment].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the CreateTranscriptionRequestChunkingStrategy SDK namespace.
-  module CreateTranscriptionRequestChunkingStrategy
-    def self.from_hash(hash)
-      return CreateTranscriptionRequestChunkingStrategyVariant0.from_value(hash) if hash.is_a?(::String)
-
-      VadConfig.from_hash(hash)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the CreateTranscriptionRequestChunkingStrategyVariant0 SDK namespace.
-  module CreateTranscriptionRequestChunkingStrategyVariant0
-    AUTO = 'auto'
-    VALUES = ['auto'].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the CreateTranslationRequestResponseFormat SDK namespace.
+module CreateTranslationRequestResponseFormat
+  JSON = 'json'
+  TEXT = 'text'
+  SRT = 'srt'
+  VERBOSE_JSON = 'verbose_json'
+  VTT = 'vtt'
+  VALUES = ['json', 'text', 'srt', 'verbose_json', 'vtt'].freeze
+  def self.from_value(value)
+    value
   end
+end
 
-  # Defines the CreateTranscriptionResponse SDK namespace.
-  module CreateTranscriptionResponse
-    def self.from_hash(hash)
-      shape_mapping = {
-        'task' => CreateTranscriptionResponseDiarizedJson,
-        'language' => CreateTranscriptionResponseVerboseJson
-      }
-      type = shape_mapping.find { |required, _type| hash.is_a?(::Hash) && hash.key?(required) }&.last
-      decoded = type&.from_hash(hash)
-      return decoded unless type.nil?
-
-      CreateTranscriptionResponseJson.from_hash(hash)
-    end
+# Defines the CreateTranslationResponse SDK namespace.
+module CreateTranslationResponse
+  def self.from_hash(hash)
+    shape_mapping = {
+      "language" => CreateTranslationResponseVerboseJson,
+    }
+    type = shape_mapping.find { |required, _type| hash.is_a?(::Hash) && hash.key?(required) }&.last
+    decoded = type&.from_hash(hash)
+    return decoded unless type.nil?
+    return CreateTranslationResponseJson.from_hash(hash)
   end
+end
 
-  # Internal model hydration metadata.
-  class SdkInternalCreateTranscriptionResponseDiarizedJsonMetadata
-    FIELDS = {
-      task: 'task',
-      duration: 'duration',
-      text: 'text',
-      segments: 'segments',
-      usage: 'usage'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      task
-      duration
-      text
-      segments
-    ].freeze
-    DECODERS = {
-      task: lambda do |value|
-        ::OctridevOpenai::CreateTranscriptionResponseDiarizedJsonTask.from_value(value)
-      end,
-      segments: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::TranscriptionDiarizedSegment.from_hash(item) }
-      end,
-      usage: lambda do |value|
-        ::OctridevOpenai::CreateTranscriptionResponseDiarizedJsonUsage.from_hash(value)
-      end
-    }.freeze
-  end
-
-  # API model for CreateTranscriptionResponseDiarizedJson.
-  # Represents a diarized transcription response returned by the model, including the combined transcript and speaker-segment annotations.
-  class CreateTranscriptionResponseDiarizedJson
-    include CreateTranscriptionResponse
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCreateTranscriptionResponseDiarizedJsonMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCreateTranscriptionResponseDiarizedJsonMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCreateTranscriptionResponseDiarizedJsonMetadata::DECODERS
-
-    # @return [CreateTranscriptionResponseDiarizedJsonTask] The type of task that was run. Always `transcribe`.
-    attr_reader :task
-    # @return [Float] Duration of the input audio in seconds.
-    attr_reader :duration
-    # @return [String] The concatenated transcript text for the entire audio input.
-    attr_reader :text
-    # @return [Array_of_TranscriptionDiarizedSegment] Segments of the transcript annotated with timestamps and speaker labels.
-    attr_reader :segments
-    # @return [CreateTranscriptionResponseDiarizedJsonUsage] Token or duration usage statistics for the request.
-    attr_reader :usage
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the CreateTranscriptionResponseDiarizedJsonTask SDK namespace.
-  module CreateTranscriptionResponseDiarizedJsonTask
-    TRANSCRIBE = 'transcribe'
-    VALUES = ['transcribe'].freeze
-    def self.from_value(value)
-      value
-    end
-  end
-
-  # Defines the CreateTranscriptionResponseDiarizedJsonUsage SDK namespace.
-  module CreateTranscriptionResponseDiarizedJsonUsage
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
-
-      mapping = { 'tokens' => TranscriptTextUsageTokens, 'duration' => TranscriptTextUsageDuration }
-      type = mapping[hash['type']]
-      return type.from_hash(hash) if type
-
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
-
-      raise SdkValidationError.new('CreateTranscriptionResponseDiarizedJsonUsage', 'variant', "Unknown CreateTranscriptionResponseDiarizedJsonUsage discriminator: #{hash['type'].inspect}")
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalCreateTranscriptionResponseJsonLogprobsItemMetadata
-    FIELDS = {
-      token: 'token',
-      logprob: 'logprob',
-      bytes: 'bytes'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {}.freeze
-  end
-
-  # API model for CreateTranscriptionResponseJsonLogprobsItem.
-  # Required object value serialized in the `logprobs[]` wire field.
-  class CreateTranscriptionResponseJsonLogprobsItem
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCreateTranscriptionResponseJsonLogprobsItemMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCreateTranscriptionResponseJsonLogprobsItemMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCreateTranscriptionResponseJsonLogprobsItemMetadata::DECODERS
-
-    # @return [String] The token in the transcription.
-    attr_reader :token
-    # @return [Float] The log probability of the token.
-    attr_reader :logprob
-    # @return [Array_of_Float] The bytes of the token.
-    attr_reader :bytes
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalCreateTranscriptionResponseJsonMetadata
-    FIELDS = {
-      text: 'text',
-      languages: 'languages',
-      logprobs: 'logprobs',
-      usage: 'usage'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      text
-    ].freeze
-    DECODERS = {
-      languages: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::TranscriptionLanguage.from_hash(item) }
-      end,
-      logprobs: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::CreateTranscriptionResponseJsonLogprobsItem.from_hash(item) }
-      end,
-      usage: lambda do |value|
-        ::OctridevOpenai::CreateTranscriptionResponseJsonUsage.from_hash(value)
-      end
-    }.freeze
-  end
-
-  # API model for CreateTranscriptionResponseJson.
-  # Represents a transcription response returned by model, based on the provided input.
-  class CreateTranscriptionResponseJson
-    include CreateTranscriptionResponse
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCreateTranscriptionResponseJsonMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCreateTranscriptionResponseJsonMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCreateTranscriptionResponseJsonMetadata::DECODERS
-
-    # @return [String] The transcribed text.
-    attr_reader :text
-    # @return [Array_of_TranscriptionLanguage] The languages detected in the audio. Returned by `gpt-transcribe`. An empty array indicates that no language could be reliably detected.
-    attr_reader :languages
-    # @return [Array_of_CreateTranscriptionResponseJsonLogprobsItem] The log probabilities of the tokens in the transcription. Only returned with the models `gpt-4o-transcribe` and `gpt-4o-mini-transcribe` if `logprobs` is added to the `include` array.
-    attr_reader :logprobs
-    # @return [CreateTranscriptionResponseJsonUsage] Token usage statistics for the request.
-    attr_reader :usage
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the CreateTranscriptionResponseJsonUsage SDK namespace.
-  module CreateTranscriptionResponseJsonUsage
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
-
-      mapping = { 'tokens' => TranscriptTextUsageTokens, 'duration' => TranscriptTextUsageDuration }
-      type = mapping[hash['type']]
-      return type.from_hash(hash) if type
-
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
-
-      raise SdkValidationError.new('CreateTranscriptionResponseJsonUsage', 'variant', "Unknown CreateTranscriptionResponseJsonUsage discriminator: #{hash['type'].inspect}")
-    end
-  end
-
-  # Defines the CreateTranscriptionResponseStreamEvent SDK namespace.
-  module CreateTranscriptionResponseStreamEvent
-    DISCRIMINATOR_MAPPING = {
-      'transcript.text.segment' => -> { TranscriptTextSegmentEvent },
-      'transcript.text.delta' => -> { TranscriptTextDeltaEvent },
-      'transcript.text.done' => -> { TranscriptTextDoneEvent }
-    }.freeze
-
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
-
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
-
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
-
-      raise SdkValidationError.new('CreateTranscriptionResponseStreamEvent', 'variant', "Unknown CreateTranscriptionResponseStreamEvent discriminator: #{hash['type'].inspect}")
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalCreateTranscriptionResponseVerboseJsonMetadata
-    FIELDS = {
-      language: 'language',
-      duration: 'duration',
-      text: 'text',
-      words: 'words',
-      segments: 'segments',
-      usage: 'usage'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      language
-      duration
-      text
-    ].freeze
-    DECODERS = {
-      words: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::TranscriptionWord.from_hash(item) }
-      end,
-      segments: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::TranscriptionSegment.from_hash(item) }
-      end,
-      usage: lambda do |value|
-        ::OctridevOpenai::TranscriptTextUsageDuration.from_hash(value)
-      end
-    }.freeze
-  end
-
-  # API model for CreateTranscriptionResponseVerboseJson.
-  # Represents a verbose json transcription response returned by model, based on the provided input.
-  class CreateTranscriptionResponseVerboseJson
-    include CreateTranscriptionResponse
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCreateTranscriptionResponseVerboseJsonMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCreateTranscriptionResponseVerboseJsonMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCreateTranscriptionResponseVerboseJsonMetadata::DECODERS
-
-    # @return [String] The language of the input audio.
-    attr_reader :language
-    # @return [Float] The duration of the input audio.
-    attr_reader :duration
-    # @return [String] The transcribed text.
-    attr_reader :text
-    # @return [Array_of_TranscriptionWord] Extracted words and their corresponding timestamps.
-    attr_reader :words
-    # @return [Array_of_TranscriptionSegment] Segments of the transcribed text and their corresponding details.
-    attr_reader :segments
-    # @return [TranscriptTextUsageDuration] Usage statistics for models billed by audio input duration.
-    attr_reader :usage
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalCreateTranslationRequestMetadata
-    FIELDS = {
-      file: 'file',
-      model: 'model',
-      prompt: 'prompt',
-      response_format: 'response_format',
-      temperature: 'temperature'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      file
-      model
-    ].freeze
-    DECODERS = {
-      response_format: lambda do |value|
-        ::OctridevOpenai::CreateTranslationRequestResponseFormat.from_value(value)
-      end
-    }.freeze
-  end
-
-  # API model for CreateTranslationRequest.
-  # Typed representation of the `CreateTranslationRequest` API schema.
-  class CreateTranslationRequest
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCreateTranslationRequestMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCreateTranslationRequestMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCreateTranslationRequestMetadata::DECODERS
-
-    # @return [String] The audio file object (not file name) translate, in one of these formats: flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, or webm. The request must include enough format metadata for the file to be identified. We recommend an extension-bearing filename and an appropriate content type.
-    attr_reader :file
-    # @return [String] ID of the model to use. Only `whisper-1` (which is powered by our open source Whisper V2 model) is currently available.
-    attr_reader :model
-    # @return [String] An optional text to guide the model's style or continue a previous audio segment. The prompt should be in English.
-    attr_reader :prompt
-    # @return [CreateTranslationRequestResponseFormat] The format of the output, in one of these options: `json`, `text`, `srt`, `verbose_json`, or `vtt`.
-    attr_reader :response_format
-    # @return [Float] The sampling temperature, between 0 and 1. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. If set to 0, the model will use log probability to automatically increase the temperature until certain thresholds are hit.
-    attr_reader :temperature
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the CreateTranslationRequestResponseFormat SDK namespace.
-  module CreateTranslationRequestResponseFormat
-    JSON = 'json'
-    TEXT = 'text'
-    SRT = 'srt'
-    VERBOSE_JSON = 'verbose_json'
-    VTT = 'vtt'
-    VALUES = %w[json text srt verbose_json vtt].freeze
-    def self.from_value(value)
-      value
-    end
-  end
-
-  # Defines the CreateTranslationResponse SDK namespace.
-  module CreateTranslationResponse
-    def self.from_hash(hash)
-      shape_mapping = {
-        'language' => CreateTranslationResponseVerboseJson
-      }
-      type = shape_mapping.find { |required, _type| hash.is_a?(::Hash) && hash.key?(required) }&.last
-      decoded = type&.from_hash(hash)
-      return decoded unless type.nil?
-
-      CreateTranslationResponseJson.from_hash(hash)
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalCreateTranslationResponseJsonMetadata
-    FIELDS = {
-      text: 'text'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      text
-    ].freeze
-    DECODERS = {}.freeze
-  end
+# Internal model hydration metadata.
+class SdkInternalCreateTranslationResponseJsonMetadata
+  FIELDS = {
+    text: "text",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    text
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
 end

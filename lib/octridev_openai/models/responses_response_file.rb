@@ -5,198 +5,195 @@
 
 # responses_response_file domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalResponseFileSearchCallCompletedEventMetadata
-    FIELDS = {
-      type: 'type',
-      output_index: 'output_index',
-      item_id: 'item_id',
-      sequence_number: 'sequence_number'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      output_index
-      item_id
-      sequence_number
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ResponseFileSearchCallCompletedEventType.from_value(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalResponseFileSearchCallCompletedEventMetadata
+  FIELDS = {
+    type: "type",
+    output_index: "output_index",
+    item_id: "item_id",
+    sequence_number: "sequence_number",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    output_index
+    item_id
+    sequence_number
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ResponseFileSearchCallCompletedEventType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for ResponseFileSearchCallCompletedEvent.
+# Emitted when a file search call is completed (results found).
+class ResponseFileSearchCallCompletedEvent
+  include ResponseStreamEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalResponseFileSearchCallCompletedEventMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalResponseFileSearchCallCompletedEventMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalResponseFileSearchCallCompletedEventMetadata::DECODERS
+
+  # @return [ResponseFileSearchCallCompletedEventType] The type of the event. Always `response.file_search_call.completed`.
+  attr_reader :type
+  # @return [Integer] The index of the output item that the file search call is initiated.
+  attr_reader :output_index
+  # @return [String] The ID of the output item that the file search call is initiated.
+  attr_reader :item_id
+  # @return [Integer] The sequence number of this event.
+  attr_reader :sequence_number
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ResponseFileSearchCallCompletedEvent.
-  # Emitted when a file search call is completed (results found).
-  class ResponseFileSearchCallCompletedEvent
-    include ResponseStreamEvent
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalResponseFileSearchCallCompletedEventMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalResponseFileSearchCallCompletedEventMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalResponseFileSearchCallCompletedEventMetadata::DECODERS
-
-    # @return [ResponseFileSearchCallCompletedEventType] The type of the event. Always `response.file_search_call.completed`.
-    attr_reader :type
-    # @return [Integer] The index of the output item that the file search call is initiated.
-    attr_reader :output_index
-    # @return [String] The ID of the output item that the file search call is initiated.
-    attr_reader :item_id
-    # @return [Integer] The sequence number of this event.
-    attr_reader :sequence_number
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the ResponseFileSearchCallCompletedEventType SDK namespace.
-  module ResponseFileSearchCallCompletedEventType
-    RESPONSE_FILE_SEARCH_CALL_COMPLETED = 'response.file_search_call.completed'
-    VALUES = ['response.file_search_call.completed'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('ResponseFileSearchCallCompletedEventType', 'enum', "Unknown ResponseFileSearchCallCompletedEventType: #{value}")
-    end
+# Defines the ResponseFileSearchCallCompletedEventType SDK namespace.
+module ResponseFileSearchCallCompletedEventType
+  RESPONSE_FILE_SEARCH_CALL_COMPLETED = 'response.file_search_call.completed'
+  VALUES = ['response.file_search_call.completed'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('ResponseFileSearchCallCompletedEventType', 'enum', "Unknown ResponseFileSearchCallCompletedEventType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalResponseFileSearchCallInProgressEventMetadata
+  FIELDS = {
+    type: "type",
+    output_index: "output_index",
+    item_id: "item_id",
+    sequence_number: "sequence_number",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    output_index
+    item_id
+    sequence_number
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ResponseFileSearchCallInProgressEventType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for ResponseFileSearchCallInProgressEvent.
+# Emitted when a file search call is initiated.
+class ResponseFileSearchCallInProgressEvent
+  include ResponseStreamEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalResponseFileSearchCallInProgressEventMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalResponseFileSearchCallInProgressEventMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalResponseFileSearchCallInProgressEventMetadata::DECODERS
+
+  # @return [ResponseFileSearchCallInProgressEventType] The type of the event. Always `response.file_search_call.in_progress`.
+  attr_reader :type
+  # @return [Integer] The index of the output item that the file search call is initiated.
+  attr_reader :output_index
+  # @return [String] The ID of the output item that the file search call is initiated.
+  attr_reader :item_id
+  # @return [Integer] The sequence number of this event.
+  attr_reader :sequence_number
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalResponseFileSearchCallInProgressEventMetadata
-    FIELDS = {
-      type: 'type',
-      output_index: 'output_index',
-      item_id: 'item_id',
-      sequence_number: 'sequence_number'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      output_index
-      item_id
-      sequence_number
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ResponseFileSearchCallInProgressEventType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ResponseFileSearchCallInProgressEvent.
-  # Emitted when a file search call is initiated.
-  class ResponseFileSearchCallInProgressEvent
-    include ResponseStreamEvent
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalResponseFileSearchCallInProgressEventMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalResponseFileSearchCallInProgressEventMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalResponseFileSearchCallInProgressEventMetadata::DECODERS
+# Defines the ResponseFileSearchCallInProgressEventType SDK namespace.
+module ResponseFileSearchCallInProgressEventType
+  RESPONSE_FILE_SEARCH_CALL_IN_PROGRESS = 'response.file_search_call.in_progress'
+  VALUES = ['response.file_search_call.in_progress'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    # @return [ResponseFileSearchCallInProgressEventType] The type of the event. Always `response.file_search_call.in_progress`.
-    attr_reader :type
-    # @return [Integer] The index of the output item that the file search call is initiated.
-    attr_reader :output_index
-    # @return [String] The ID of the output item that the file search call is initiated.
-    attr_reader :item_id
-    # @return [Integer] The sequence number of this event.
-    attr_reader :sequence_number
+    raise SdkValidationError.new('ResponseFileSearchCallInProgressEventType', 'enum', "Unknown ResponseFileSearchCallInProgressEventType: #{value}")
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalResponseFileSearchCallSearchingEventMetadata
+  FIELDS = {
+    type: "type",
+    output_index: "output_index",
+    item_id: "item_id",
+    sequence_number: "sequence_number",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    output_index
+    item_id
+    sequence_number
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ResponseFileSearchCallSearchingEventType.from_value(value)
+    end,
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for ResponseFileSearchCallSearchingEvent.
+# Emitted when a file search is currently searching.
+class ResponseFileSearchCallSearchingEvent
+  include ResponseStreamEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalResponseFileSearchCallSearchingEventMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalResponseFileSearchCallSearchingEventMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalResponseFileSearchCallSearchingEventMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [ResponseFileSearchCallSearchingEventType] The type of the event. Always `response.file_search_call.searching`.
+  attr_reader :type
+  # @return [Integer] The index of the output item that the file search call is searching.
+  attr_reader :output_index
+  # @return [String] The ID of the output item that the file search call is initiated.
+  attr_reader :item_id
+  # @return [Integer] The sequence number of this event.
+  attr_reader :sequence_number
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the ResponseFileSearchCallInProgressEventType SDK namespace.
-  module ResponseFileSearchCallInProgressEventType
-    RESPONSE_FILE_SEARCH_CALL_IN_PROGRESS = 'response.file_search_call.in_progress'
-    VALUES = ['response.file_search_call.in_progress'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('ResponseFileSearchCallInProgressEventType', 'enum', "Unknown ResponseFileSearchCallInProgressEventType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalResponseFileSearchCallSearchingEventMetadata
-    FIELDS = {
-      type: 'type',
-      output_index: 'output_index',
-      item_id: 'item_id',
-      sequence_number: 'sequence_number'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      output_index
-      item_id
-      sequence_number
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ResponseFileSearchCallSearchingEventType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # API model for ResponseFileSearchCallSearchingEvent.
-  # Emitted when a file search is currently searching.
-  class ResponseFileSearchCallSearchingEvent
-    include ResponseStreamEvent
+# Defines the ResponseFileSearchCallSearchingEventType SDK namespace.
+module ResponseFileSearchCallSearchingEventType
+  RESPONSE_FILE_SEARCH_CALL_SEARCHING = 'response.file_search_call.searching'
+  VALUES = ['response.file_search_call.searching'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalResponseFileSearchCallSearchingEventMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalResponseFileSearchCallSearchingEventMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalResponseFileSearchCallSearchingEventMetadata::DECODERS
-
-    # @return [ResponseFileSearchCallSearchingEventType] The type of the event. Always `response.file_search_call.searching`.
-    attr_reader :type
-    # @return [Integer] The index of the output item that the file search call is searching.
-    attr_reader :output_index
-    # @return [String] The ID of the output item that the file search call is initiated.
-    attr_reader :item_id
-    # @return [Integer] The sequence number of this event.
-    attr_reader :sequence_number
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+    raise SdkValidationError.new('ResponseFileSearchCallSearchingEventType', 'enum', "Unknown ResponseFileSearchCallSearchingEventType: #{value}")
   end
-
-  # Defines the ResponseFileSearchCallSearchingEventType SDK namespace.
-  module ResponseFileSearchCallSearchingEventType
-    RESPONSE_FILE_SEARCH_CALL_SEARCHING = 'response.file_search_call.searching'
-    VALUES = ['response.file_search_call.searching'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('ResponseFileSearchCallSearchingEventType', 'enum', "Unknown ResponseFileSearchCallSearchingEventType: #{value}")
-    end
-  end
+end
 end

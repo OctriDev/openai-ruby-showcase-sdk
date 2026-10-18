@@ -18,15 +18,16 @@ module OctridevOpenai
         body:,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
-          '/realtime/calls',
+          "/realtime/calls",
           config: config,
           body: SdkClient.form_value(body, { RealtimeCallCreateRequest => [] }),
           content_type: SdkClient.body_content_type(NOT_GIVEN, body, 'multipart/form-data', bytes: 'application/sdp'),
           decoder: :text,
           operation_id: 'create_realtime_call',
-          request_options: request_options
+          request_options: request_options,
         ).data
       end
 
@@ -106,14 +107,15 @@ module OctridevOpenai
         prompt: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.validate_enum('type', type, ['realtime'])
 
         SdkClient.request(
           'POST',
           [
-            '/realtime/calls/',
+            "/realtime/calls/",
             SdkClient.encode_path_segment(call_id),
-            '/accept'
+            "/accept"
           ].join,
           config: config,
           body: {
@@ -130,12 +132,12 @@ module OctridevOpenai
             'reasoning' => reasoning,
             'max_output_tokens' => max_output_tokens,
             'truncation' => truncation,
-            'prompt' => prompt
+            'prompt' => prompt,
           },
           decoder: :empty,
           operation_id: 'accept_realtime_call',
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::ErrorResponse, '409' => ::OctridevOpenai::ErrorResponse }
+          errors: { '404' => ::OctridevOpenai::ErrorResponse, '409' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -150,18 +152,19 @@ module OctridevOpenai
         call_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
           [
-            '/realtime/calls/',
+            "/realtime/calls/",
             SdkClient.encode_path_segment(call_id),
-            '/hangup'
+            "/hangup"
           ].join,
           config: config,
           decoder: :empty,
           operation_id: 'hangup_realtime_call',
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::ErrorResponse }
+          errors: { '404' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -177,21 +180,22 @@ module OctridevOpenai
         target_uri:,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
           [
-            '/realtime/calls/',
+            "/realtime/calls/",
             SdkClient.encode_path_segment(call_id),
-            '/refer'
+            "/refer"
           ].join,
           config: config,
           body: {
-            'target_uri' => target_uri
+            'target_uri' => target_uri,
           },
           decoder: :empty,
           operation_id: 'refer_realtime_call',
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::ErrorResponse }
+          errors: { '404' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -207,21 +211,22 @@ module OctridevOpenai
         status_code: NOT_GIVEN,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
           [
-            '/realtime/calls/',
+            "/realtime/calls/",
             SdkClient.encode_path_segment(call_id),
-            '/reject'
+            "/reject"
           ].join,
           config: config,
           body: {
-            'status_code' => status_code
+            'status_code' => status_code,
           },
           decoder: :empty,
           operation_id: 'reject_realtime_call',
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::ErrorResponse, '409' => ::OctridevOpenai::ErrorResponse }
+          errors: { '404' => ::OctridevOpenai::ErrorResponse, '409' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -241,19 +246,20 @@ module OctridevOpenai
         session: NOT_GIVEN,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
-          '/realtime/client_secrets',
+          "/realtime/client_secrets",
           config: config,
           body: {
             'expires_after' => expires_after,
-            'session' => session
+            'session' => session,
           },
           return_type: ::OctridevOpenai::RealtimeCreateClientSecretResponse,
           decoder: :json,
           operation_id: 'create_realtime_client_secret',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -342,11 +348,12 @@ module OctridevOpenai
         prompt: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.if_given(speed) { Validation.validate_range('speed', speed, min: 0.25, max: 1.5) }
 
         SdkClient.request(
           'POST',
-          '/realtime/sessions',
+          "/realtime/sessions",
           config: config,
           body: {
             'client_secret' => client_secret,
@@ -364,12 +371,12 @@ module OctridevOpenai
             'temperature' => temperature,
             'max_response_output_tokens' => max_response_output_tokens,
             'truncation' => truncation,
-            'prompt' => prompt
+            'prompt' => prompt,
           },
           return_type: ::OctridevOpenai::RealtimeSessionCreateResponse,
           decoder: :json,
           operation_id: 'create_realtime_session',
-          request_options: request_options
+          request_options: request_options,
         ).data
       end
 
@@ -409,21 +416,22 @@ module OctridevOpenai
         include: NOT_GIVEN,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
-          '/realtime/transcription_sessions',
+          "/realtime/transcription_sessions",
           config: config,
           body: {
             'turn_detection' => turn_detection,
             'input_audio_noise_reduction' => input_audio_noise_reduction,
             'input_audio_format' => input_audio_format,
             'input_audio_transcription' => input_audio_transcription,
-            'include' => include
+            'include' => include,
           },
           return_type: ::OctridevOpenai::RealtimeTranscriptionSessionCreateResponse,
           decoder: :json,
           operation_id: 'create_realtime_transcription_session',
-          request_options: request_options
+          request_options: request_options,
         ).data
       end
 
@@ -444,19 +452,20 @@ module OctridevOpenai
         expires_after: NOT_GIVEN,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
-          '/realtime/translations/client_secrets',
+          "/realtime/translations/client_secrets",
           config: config,
           body: {
             'session' => session,
-            'expires_after' => expires_after
+            'expires_after' => expires_after,
           },
           return_type: ::OctridevOpenai::RealtimeTranslationClientSecretCreateResponse,
           decoder: :json,
           operation_id: 'create_realtime_translation_client_secret',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
     end

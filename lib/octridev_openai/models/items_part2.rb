@@ -5,676 +5,669 @@
 
 # items domain models (part 2)
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalTaskItemMetadata
-    FIELDS = {
-      id: 'id',
-      object: 'object',
-      created_at: 'created_at',
-      thread_id: 'thread_id',
-      type: 'type',
-      task_type: 'task_type',
-      heading: 'heading',
-      summary: 'summary'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-      object
-      created_at
-      thread_id
-      type
-      task_type
-      heading
-      summary
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::TaskItemObject.from_value(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::TaskItemType.from_value(value)
-      end,
-      task_type: lambda do |value|
-        ::OctridevOpenai::TaskType.from_value(value)
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      heading
-      summary
-    ].freeze
+# Internal model hydration metadata.
+class SdkInternalTaskItemMetadata
+  FIELDS = {
+    id: "id",
+    object: "object",
+    created_at: "created_at",
+    thread_id: "thread_id",
+    type: "type",
+    task_type: "task_type",
+    heading: "heading",
+    summary: "summary",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+    object
+    created_at
+    thread_id
+    type
+    task_type
+    heading
+    summary
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::TaskItemObject.from_value(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::TaskItemType.from_value(value)
+    end,
+    task_type: lambda do |value|
+      ::OctridevOpenai::TaskType.from_value(value)
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    heading
+    summary
+  ].freeze
+end
+
+# API model for TaskItem.
+# Task emitted by the workflow to show progress and status updates.
+class TaskItem
+  include ThreadItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalTaskItemMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalTaskItemMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalTaskItemMetadata::DECODERS
+
+  # @return [String] Identifier of the thread item.
+  attr_reader :id
+  # @return [TaskItemObject] Type discriminator that is always `chatkit.thread_item`.
+  attr_reader :object
+  # @return [Integer] Unix timestamp (in seconds) for when the item was created.
+  attr_reader :created_at
+  # @return [String] Identifier of the parent thread.
+  attr_reader :thread_id
+  # @return [TaskItemType] Type discriminator that is always `chatkit.task`.
+  attr_reader :type
+  # @return [TaskType] Subtype for the task.
+  attr_reader :task_type
+  # @return [String] Required `string` value serialized in the `heading` wire field.
+  attr_reader :heading
+  # @return [String] Required `string` value serialized in the `summary` wire field.
+  attr_reader :summary
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for TaskItem.
-  # Task emitted by the workflow to show progress and status updates.
-  class TaskItem
-    include ThreadItem
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalTaskItemMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalTaskItemMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalTaskItemMetadata::DECODERS
-
-    # @return [String] Identifier of the thread item.
-    attr_reader :id
-    # @return [TaskItemObject] Type discriminator that is always `chatkit.thread_item`.
-    attr_reader :object
-    # @return [Integer] Unix timestamp (in seconds) for when the item was created.
-    attr_reader :created_at
-    # @return [String] Identifier of the parent thread.
-    attr_reader :thread_id
-    # @return [TaskItemType] Type discriminator that is always `chatkit.task`.
-    attr_reader :type
-    # @return [TaskType] Subtype for the task.
-    attr_reader :task_type
-    # @return [String] Required `string` value serialized in the `heading` wire field.
-    attr_reader :heading
-    # @return [String] Required `string` value serialized in the `summary` wire field.
-    attr_reader :summary
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalTaskItemMetadata::NULLABLE_FIELDS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalTaskItemMetadata::NULLABLE_FIELDS)
   end
 
-  # Defines the TaskItemObject SDK namespace.
-  module TaskItemObject
-    CHATKIT_THREAD_ITEM = 'chatkit.thread_item'
-    VALUES = ['chatkit.thread_item'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the TaskItemObject SDK namespace.
+module TaskItemObject
+  CHATKIT_THREAD_ITEM = 'chatkit.thread_item'
+  VALUES = ['chatkit.thread_item'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the TaskItemType SDK namespace.
+module TaskItemType
+  CHATKIT_TASK = 'chatkit.task'
+  VALUES = ['chatkit.task'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('TaskItemType', 'enum', "Unknown TaskItemType: #{value}")
+  end
+end
+
+# Defines the TaskType SDK namespace.
+module TaskType
+  CUSTOM = 'custom'
+  THOUGHT = 'thought'
+  VALUES = ['custom', 'thought'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the ThreadItem SDK namespace.
+module ThreadItem
+  DISCRIMINATOR_MAPPING = {
+    "chatkit.user_message" => -> { UserMessageItem },
+    "chatkit.assistant_message" => -> { AssistantMessageItem },
+    "chatkit.widget" => -> { WidgetMessageItem },
+    "chatkit.client_tool_call" => -> { ClientToolCallItem },
+    "chatkit.task" => -> { TaskItem },
+    "chatkit.task_group" => -> { TaskGroupItem },
+  }.freeze
+
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
+
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+
+    raise SdkValidationError.new('ThreadItem', 'variant', "Unknown ThreadItem discriminator: #{hash["type"].inspect}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalThreadItemListResourceMetadata
+  FIELDS = {
+    object: "object",
+    data: "data",
+    first_id: "first_id",
+    last_id: "last_id",
+    has_more: "has_more",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    data
+    first_id
+    last_id
+    has_more
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::ThreadItemListResourceObject.from_value(value)
+    end,
+    data: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::ThreadItem.from_hash(item) }
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    first_id
+    last_id
+  ].freeze
+end
+
+# API model for ThreadItemListResource.
+# A paginated list of thread items rendered for the ChatKit API.
+class ThreadItemListResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalThreadItemListResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalThreadItemListResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalThreadItemListResourceMetadata::DECODERS
+
+  # @return [ThreadItemListResourceObject] The type of object returned, must be `list`.
+  attr_reader :object
+  # @return [Array_of_ThreadItem] A list of items
+  attr_reader :data
+  # @return [String] Required `string` value serialized in the `first_id` wire field.
+  attr_reader :first_id
+  # @return [String] Required `string` value serialized in the `last_id` wire field.
+  attr_reader :last_id
+  # @return [Boolean] Whether there are more items available.
+  attr_reader :has_more
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the TaskItemType SDK namespace.
-  module TaskItemType
-    CHATKIT_TASK = 'chatkit.task'
-    VALUES = ['chatkit.task'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('TaskItemType', 'enum', "Unknown TaskItemType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalThreadItemListResourceMetadata::NULLABLE_FIELDS)
   end
 
-  # Defines the TaskType SDK namespace.
-  module TaskType
-    CUSTOM = 'custom'
-    THOUGHT = 'thought'
-    VALUES = %w[custom thought].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the ThreadItemListResourceObject SDK namespace.
+module ThreadItemListResourceObject
+  LIST = 'list'
+  VALUES = ['list'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalToolChoiceMetadata
+  FIELDS = {
+    id: "id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for ToolChoice.
+# Tool selection that the assistant should honor when executing the item.
+class ToolChoice
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalToolChoiceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalToolChoiceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalToolChoiceMetadata::DECODERS
+
+  # @return [String] Identifier of the requested tool.
+  attr_reader :id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the ThreadItem SDK namespace.
-  module ThreadItem
-    DISCRIMINATOR_MAPPING = {
-      'chatkit.user_message' => -> { UserMessageItem },
-      'chatkit.assistant_message' => -> { AssistantMessageItem },
-      'chatkit.widget' => -> { WidgetMessageItem },
-      'chatkit.client_tool_call' => -> { ClientToolCallItem },
-      'chatkit.task' => -> { TaskItem },
-      'chatkit.task_group' => -> { TaskGroupItem }
-    }.freeze
-
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
-
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
-
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
-
-      raise SdkValidationError.new('ThreadItem', 'variant', "Unknown ThreadItem discriminator: #{hash['type'].inspect}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalThreadItemListResourceMetadata
-    FIELDS = {
-      object: 'object',
-      data: 'data',
-      first_id: 'first_id',
-      last_id: 'last_id',
-      has_more: 'has_more'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      data
-      first_id
-      last_id
-      has_more
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::ThreadItemListResourceObject.from_value(value)
-      end,
-      data: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::ThreadItem.from_hash(item) }
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      first_id
-      last_id
-    ].freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalUrlAnnotationMetadata
+  FIELDS = {
+    type: "type",
+    source: "source",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    source
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::UrlAnnotationType.from_value(value)
+    end,
+    source: lambda do |value|
+      ::OctridevOpenai::UrlAnnotationSource.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for UrlAnnotation.
+# Annotation that references a URL.
+class UrlAnnotation
+  include ResponseOutputTextAnnotationsItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalUrlAnnotationMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalUrlAnnotationMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalUrlAnnotationMetadata::DECODERS
+
+  # @return [UrlAnnotationType] Type discriminator that is always `url` for this annotation.
+  attr_reader :type
+  # @return [UrlAnnotationSource] URL referenced by the annotation.
+  attr_reader :source
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ThreadItemListResource.
-  # A paginated list of thread items rendered for the ChatKit API.
-  class ThreadItemListResource
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalThreadItemListResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalThreadItemListResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalThreadItemListResourceMetadata::DECODERS
-
-    # @return [ThreadItemListResourceObject] The type of object returned, must be `list`.
-    attr_reader :object
-    # @return [Array_of_ThreadItem] A list of items
-    attr_reader :data
-    # @return [String] Required `string` value serialized in the `first_id` wire field.
-    attr_reader :first_id
-    # @return [String] Required `string` value serialized in the `last_id` wire field.
-    attr_reader :last_id
-    # @return [Boolean] Whether there are more items available.
-    attr_reader :has_more
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalThreadItemListResourceMetadata::NULLABLE_FIELDS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the ThreadItemListResourceObject SDK namespace.
-  module ThreadItemListResourceObject
-    LIST = 'list'
-    VALUES = ['list'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the UrlAnnotationType SDK namespace.
+module UrlAnnotationType
+  URL = 'url'
+  VALUES = ['url'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('UrlAnnotationType', 'enum', "Unknown UrlAnnotationType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalUrlAnnotationSourceMetadata
+  FIELDS = {
+    type: "type",
+    url: "url",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    url
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::UrlAnnotationSourceType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for UrlAnnotationSource.
+# URL backing an annotation entry.
+class UrlAnnotationSource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalUrlAnnotationSourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalUrlAnnotationSourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalUrlAnnotationSourceMetadata::DECODERS
+
+  # @return [UrlAnnotationSourceType] Type discriminator that is always `url`.
+  attr_reader :type
+  # @return [String] URL referenced by the annotation.
+  attr_reader :url
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalToolChoiceMetadata
-    FIELDS = {
-      id: 'id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-    ].freeze
-    DECODERS = {}.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ToolChoice.
-  # Tool selection that the assistant should honor when executing the item.
-  class ToolChoice
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalToolChoiceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalToolChoiceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalToolChoiceMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] Identifier of the requested tool.
-    attr_reader :id
+# Defines the UrlAnnotationSourceType SDK namespace.
+module UrlAnnotationSourceType
+  URL = 'url'
+  VALUES = ['url'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalUserMessageInputTextMetadata
+  FIELDS = {
+    type: "type",
+    text: "text",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    text
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::UserMessageInputTextType.from_value(value)
+    end,
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for UserMessageInputText.
+# Text block that a user contributed to the thread.
+class UserMessageInputText
+  include UserMessageItemContentItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalUserMessageInputTextMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalUserMessageInputTextMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalUserMessageInputTextMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [UserMessageInputTextType] Type discriminator that is always `input_text`.
+  attr_reader :type
+  # @return [String] Plain-text content supplied by the user.
+  attr_reader :text
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalUrlAnnotationMetadata
-    FIELDS = {
-      type: 'type',
-      source: 'source'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      source
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::UrlAnnotationType.from_value(value)
-      end,
-      source: lambda do |value|
-        ::OctridevOpenai::UrlAnnotationSource.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for UrlAnnotation.
-  # Annotation that references a URL.
-  class UrlAnnotation
-    include ResponseOutputTextAnnotationsItem
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalUrlAnnotationMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalUrlAnnotationMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalUrlAnnotationMetadata::DECODERS
+# Defines the UserMessageInputTextType SDK namespace.
+module UserMessageInputTextType
+  INPUT_TEXT = 'input_text'
+  VALUES = ['input_text'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    # @return [UrlAnnotationType] Type discriminator that is always `url` for this annotation.
-    attr_reader :type
-    # @return [UrlAnnotationSource] URL referenced by the annotation.
-    attr_reader :source
+    raise SdkValidationError.new('UserMessageInputTextType', 'enum', "Unknown UserMessageInputTextType: #{value}")
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalUserMessageItemMetadata
+  FIELDS = {
+    id: "id",
+    object: "object",
+    created_at: "created_at",
+    thread_id: "thread_id",
+    type: "type",
+    content: "content",
+    attachments: "attachments",
+    inference_options: "inference_options",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+    object
+    created_at
+    thread_id
+    type
+    content
+    attachments
+    inference_options
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::UserMessageItemObject.from_value(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::UserMessageItemType.from_value(value)
+    end,
+    content: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::UserMessageItemContentItem.from_hash(item) }
+    end,
+    attachments: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::Attachment.from_hash(item) }
+    end,
+    inference_options: lambda do |value|
+      ::OctridevOpenai::InferenceOptions.from_hash(value)
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    inference_options
+  ].freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for UserMessageItem.
+# User-authored messages within a thread.
+class UserMessageItem
+  include ThreadItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalUserMessageItemMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalUserMessageItemMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalUserMessageItemMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [String] Identifier of the thread item.
+  attr_reader :id
+  # @return [UserMessageItemObject] Type discriminator that is always `chatkit.thread_item`.
+  attr_reader :object
+  # @return [Integer] Unix timestamp (in seconds) for when the item was created.
+  attr_reader :created_at
+  # @return [String] Identifier of the parent thread.
+  attr_reader :thread_id
+  # @return [UserMessageItemType] Required enumerated value serialized in the `type` wire field.
+  attr_reader :type
+  # @return [Array_of_UserMessageItemContentItem] Ordered content elements supplied by the user.
+  attr_reader :content
+  # @return [Array_of_Attachment] Attachments associated with the user message. Defaults to an empty list.
+  attr_reader :attachments
+  # @return [InferenceOptions] Required API value serialized in the `inference_options` wire field.
+  attr_reader :inference_options
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the UrlAnnotationType SDK namespace.
-  module UrlAnnotationType
-    URL = 'url'
-    VALUES = ['url'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('UrlAnnotationType', 'enum', "Unknown UrlAnnotationType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalUserMessageItemMetadata::NULLABLE_FIELDS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalUrlAnnotationSourceMetadata
-    FIELDS = {
-      type: 'type',
-      url: 'url'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      url
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::UrlAnnotationSourceType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the UserMessageItemObject SDK namespace.
+module UserMessageItemObject
+  CHATKIT_THREAD_ITEM = 'chatkit.thread_item'
+  VALUES = ['chatkit.thread_item'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the UserMessageItemType SDK namespace.
+module UserMessageItemType
+  CHATKIT_USER_MESSAGE = 'chatkit.user_message'
+  VALUES = ['chatkit.user_message'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('UserMessageItemType', 'enum', "Unknown UserMessageItemType: #{value}")
+  end
+end
+
+# Defines the UserMessageItemContentItem SDK namespace.
+module UserMessageItemContentItem
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    mapping = { "input_text" => UserMessageInputText, "quoted_text" => UserMessageQuotedText }
+    type = mapping[hash["type"]]
+    return type.from_hash(hash) if type
+
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+
+    raise SdkValidationError.new('UserMessageItemContentItem', 'variant', "Unknown UserMessageItemContentItem discriminator: #{hash["type"].inspect}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalUserMessageQuotedTextMetadata
+  FIELDS = {
+    type: "type",
+    text: "text",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    text
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::UserMessageQuotedTextType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for UserMessageQuotedText.
+# Quoted snippet that the user referenced in their message.
+class UserMessageQuotedText
+  include UserMessageItemContentItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalUserMessageQuotedTextMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalUserMessageQuotedTextMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalUserMessageQuotedTextMetadata::DECODERS
+
+  # @return [UserMessageQuotedTextType] Type discriminator that is always `quoted_text`.
+  attr_reader :type
+  # @return [String] Quoted text content.
+  attr_reader :text
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for UrlAnnotationSource.
-  # URL backing an annotation entry.
-  class UrlAnnotationSource
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalUrlAnnotationSourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalUrlAnnotationSourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalUrlAnnotationSourceMetadata::DECODERS
-
-    # @return [UrlAnnotationSourceType] Type discriminator that is always `url`.
-    attr_reader :type
-    # @return [String] URL referenced by the annotation.
-    attr_reader :url
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the UrlAnnotationSourceType SDK namespace.
-  module UrlAnnotationSourceType
-    URL = 'url'
-    VALUES = ['url'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the UserMessageQuotedTextType SDK namespace.
+module UserMessageQuotedTextType
+  QUOTED_TEXT = 'quoted_text'
+  VALUES = ['quoted_text'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('UserMessageQuotedTextType', 'enum', "Unknown UserMessageQuotedTextType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalWidgetMessageItemMetadata
+  FIELDS = {
+    id: "id",
+    object: "object",
+    created_at: "created_at",
+    thread_id: "thread_id",
+    type: "type",
+    widget: "widget",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+    object
+    created_at
+    thread_id
+    type
+    widget
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::WidgetMessageItemObject.from_value(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::WidgetMessageItemType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for WidgetMessageItem.
+# Thread item that renders a widget payload.
+class WidgetMessageItem
+  include ThreadItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalWidgetMessageItemMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalWidgetMessageItemMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalWidgetMessageItemMetadata::DECODERS
+
+  # @return [String] Identifier of the thread item.
+  attr_reader :id
+  # @return [WidgetMessageItemObject] Type discriminator that is always `chatkit.thread_item`.
+  attr_reader :object
+  # @return [Integer] Unix timestamp (in seconds) for when the item was created.
+  attr_reader :created_at
+  # @return [String] Identifier of the parent thread.
+  attr_reader :thread_id
+  # @return [WidgetMessageItemType] Type discriminator that is always `chatkit.widget`.
+  attr_reader :type
+  # @return [String] Serialized widget payload rendered in the UI.
+  attr_reader :widget
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalUserMessageInputTextMetadata
-    FIELDS = {
-      type: 'type',
-      text: 'text'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      text
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::UserMessageInputTextType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for UserMessageInputText.
-  # Text block that a user contributed to the thread.
-  class UserMessageInputText
-    include UserMessageItemContentItem
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalUserMessageInputTextMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalUserMessageInputTextMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalUserMessageInputTextMetadata::DECODERS
-
-    # @return [UserMessageInputTextType] Type discriminator that is always `input_text`.
-    attr_reader :type
-    # @return [String] Plain-text content supplied by the user.
-    attr_reader :text
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the UserMessageInputTextType SDK namespace.
-  module UserMessageInputTextType
-    INPUT_TEXT = 'input_text'
-    VALUES = ['input_text'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('UserMessageInputTextType', 'enum', "Unknown UserMessageInputTextType: #{value}")
-    end
+# Defines the WidgetMessageItemObject SDK namespace.
+module WidgetMessageItemObject
+  CHATKIT_THREAD_ITEM = 'chatkit.thread_item'
+  VALUES = ['chatkit.thread_item'].freeze
+  def self.from_value(value)
+    value
   end
+end
 
-  # Internal model hydration metadata.
-  class SdkInternalUserMessageItemMetadata
-    FIELDS = {
-      id: 'id',
-      object: 'object',
-      created_at: 'created_at',
-      thread_id: 'thread_id',
-      type: 'type',
-      content: 'content',
-      attachments: 'attachments',
-      inference_options: 'inference_options'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-      object
-      created_at
-      thread_id
-      type
-      content
-      attachments
-      inference_options
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::UserMessageItemObject.from_value(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::UserMessageItemType.from_value(value)
-      end,
-      content: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::UserMessageItemContentItem.from_hash(item) }
-      end,
-      attachments: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::Attachment.from_hash(item) }
-      end,
-      inference_options: lambda do |value|
-        ::OctridevOpenai::InferenceOptions.from_hash(value)
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      inference_options
-    ].freeze
+# Defines the WidgetMessageItemType SDK namespace.
+module WidgetMessageItemType
+  CHATKIT_WIDGET = 'chatkit.widget'
+  VALUES = ['chatkit.widget'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('WidgetMessageItemType', 'enum', "Unknown WidgetMessageItemType: #{value}")
   end
-
-  # API model for UserMessageItem.
-  # User-authored messages within a thread.
-  class UserMessageItem
-    include ThreadItem
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalUserMessageItemMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalUserMessageItemMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalUserMessageItemMetadata::DECODERS
-
-    # @return [String] Identifier of the thread item.
-    attr_reader :id
-    # @return [UserMessageItemObject] Type discriminator that is always `chatkit.thread_item`.
-    attr_reader :object
-    # @return [Integer] Unix timestamp (in seconds) for when the item was created.
-    attr_reader :created_at
-    # @return [String] Identifier of the parent thread.
-    attr_reader :thread_id
-    # @return [UserMessageItemType] Required enumerated value serialized in the `type` wire field.
-    attr_reader :type
-    # @return [Array_of_UserMessageItemContentItem] Ordered content elements supplied by the user.
-    attr_reader :content
-    # @return [Array_of_Attachment] Attachments associated with the user message. Defaults to an empty list.
-    attr_reader :attachments
-    # @return [InferenceOptions] Required API value serialized in the `inference_options` wire field.
-    attr_reader :inference_options
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalUserMessageItemMetadata::NULLABLE_FIELDS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the UserMessageItemObject SDK namespace.
-  module UserMessageItemObject
-    CHATKIT_THREAD_ITEM = 'chatkit.thread_item'
-    VALUES = ['chatkit.thread_item'].freeze
-    def self.from_value(value)
-      value
-    end
-  end
-
-  # Defines the UserMessageItemType SDK namespace.
-  module UserMessageItemType
-    CHATKIT_USER_MESSAGE = 'chatkit.user_message'
-    VALUES = ['chatkit.user_message'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('UserMessageItemType', 'enum', "Unknown UserMessageItemType: #{value}")
-    end
-  end
-
-  # Defines the UserMessageItemContentItem SDK namespace.
-  module UserMessageItemContentItem
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
-
-      mapping = { 'input_text' => UserMessageInputText, 'quoted_text' => UserMessageQuotedText }
-      type = mapping[hash['type']]
-      return type.from_hash(hash) if type
-
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
-
-      raise SdkValidationError.new('UserMessageItemContentItem', 'variant', "Unknown UserMessageItemContentItem discriminator: #{hash['type'].inspect}")
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalUserMessageQuotedTextMetadata
-    FIELDS = {
-      type: 'type',
-      text: 'text'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      text
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::UserMessageQuotedTextType.from_value(value)
-      end
-    }.freeze
-  end
-
-  # API model for UserMessageQuotedText.
-  # Quoted snippet that the user referenced in their message.
-  class UserMessageQuotedText
-    include UserMessageItemContentItem
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalUserMessageQuotedTextMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalUserMessageQuotedTextMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalUserMessageQuotedTextMetadata::DECODERS
-
-    # @return [UserMessageQuotedTextType] Type discriminator that is always `quoted_text`.
-    attr_reader :type
-    # @return [String] Quoted text content.
-    attr_reader :text
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the UserMessageQuotedTextType SDK namespace.
-  module UserMessageQuotedTextType
-    QUOTED_TEXT = 'quoted_text'
-    VALUES = ['quoted_text'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('UserMessageQuotedTextType', 'enum', "Unknown UserMessageQuotedTextType: #{value}")
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalWidgetMessageItemMetadata
-    FIELDS = {
-      id: 'id',
-      object: 'object',
-      created_at: 'created_at',
-      thread_id: 'thread_id',
-      type: 'type',
-      widget: 'widget'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-      object
-      created_at
-      thread_id
-      type
-      widget
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::WidgetMessageItemObject.from_value(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::WidgetMessageItemType.from_value(value)
-      end
-    }.freeze
-  end
-
-  # API model for WidgetMessageItem.
-  # Thread item that renders a widget payload.
-  class WidgetMessageItem
-    include ThreadItem
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalWidgetMessageItemMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalWidgetMessageItemMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalWidgetMessageItemMetadata::DECODERS
-
-    # @return [String] Identifier of the thread item.
-    attr_reader :id
-    # @return [WidgetMessageItemObject] Type discriminator that is always `chatkit.thread_item`.
-    attr_reader :object
-    # @return [Integer] Unix timestamp (in seconds) for when the item was created.
-    attr_reader :created_at
-    # @return [String] Identifier of the parent thread.
-    attr_reader :thread_id
-    # @return [WidgetMessageItemType] Type discriminator that is always `chatkit.widget`.
-    attr_reader :type
-    # @return [String] Serialized widget payload rendered in the UI.
-    attr_reader :widget
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the WidgetMessageItemObject SDK namespace.
-  module WidgetMessageItemObject
-    CHATKIT_THREAD_ITEM = 'chatkit.thread_item'
-    VALUES = ['chatkit.thread_item'].freeze
-    def self.from_value(value)
-      value
-    end
-  end
-
-  # Defines the WidgetMessageItemType SDK namespace.
-  module WidgetMessageItemType
-    CHATKIT_WIDGET = 'chatkit.widget'
-    VALUES = ['chatkit.widget'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('WidgetMessageItemType', 'enum', "Unknown WidgetMessageItemType: #{value}")
-    end
-  end
+end
 end

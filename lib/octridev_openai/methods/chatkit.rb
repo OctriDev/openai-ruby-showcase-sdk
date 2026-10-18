@@ -18,19 +18,20 @@ module OctridevOpenai
         session_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
           [
-            '/chatkit/sessions/',
+            "/chatkit/sessions/",
             SdkClient.encode_path_segment(session_id),
-            '/cancel'
+            "/cancel"
           ].join,
           config: config,
           return_type: ::OctridevOpenai::ChatSessionResource,
           decoder: :json,
           operation_id: 'cancel_chatkit_session',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -57,24 +58,25 @@ module OctridevOpenai
         chatkit_configuration: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.validate_length('user', user, min: 1)
 
         SdkClient.request(
           'POST',
-          '/chatkit/sessions',
+          "/chatkit/sessions",
           config: config,
           body: {
             'workflow' => workflow,
             'user' => user,
             'expires_after' => expires_after,
             'rate_limits' => rate_limits,
-            'chatkit_configuration' => chatkit_configuration
+            'chatkit_configuration' => chatkit_configuration,
           },
           return_type: ::OctridevOpenai::ChatSessionResource,
           decoder: :json,
           operation_id: 'create_chatkit_session',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -101,31 +103,32 @@ module OctridevOpenai
         before: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 0, max: 100) }
 
         SdkClient.request(
           'GET',
           [
-            '/chatkit/threads/',
+            "/chatkit/threads/",
             SdkClient.encode_path_segment(thread_id),
-            '/items'
+            "/items"
           ].join,
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'order' => QueryValue.new(order, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
-            'before' => QueryValue.new(before, style: 'form', explode: true)
+            'before' => QueryValue.new(before, style: 'form', explode: true),
           },
           return_type: ::OctridevOpenai::ThreadItemListResource,
           decoder: :json,
           operation_id: 'list_chatkit_thread_items',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
-      ListChatkitThreadItemsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+    ListChatkitThreadItemsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists items belonging to a ChatKit thread. Use `after` or `before` to select items relative to a thread item ID, and use `limit` and `order` to control the result set. The response includes pagination identifiers and a `has_more` flag.
       #
@@ -164,13 +167,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             items.each { |item| y << item }
             break unless page.has_more
-
             next_cursor = page.last_id
             break if next_cursor.nil?
-
             cursor = next_cursor
           end
         end
@@ -199,12 +199,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListChatkitThreadItemsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
-
             cursor = next_cursor
           end
         end
@@ -220,10 +218,11 @@ module OctridevOpenai
         thread_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
           [
-            '/chatkit/threads/',
+            "/chatkit/threads/",
             SdkClient.encode_path_segment(thread_id)
           ].join,
           config: config,
@@ -231,7 +230,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'retrieve_chatkit_thread',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -243,10 +242,11 @@ module OctridevOpenai
         thread_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'DELETE',
           [
-            '/chatkit/threads/',
+            "/chatkit/threads/",
             SdkClient.encode_path_segment(thread_id)
           ].join,
           config: config,
@@ -254,7 +254,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_chatkit_thread',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -279,30 +279,31 @@ module OctridevOpenai
         user: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 0, max: 100) }
 
         Validation.if_given(user) { Validation.validate_length('user', user, min: 1, max: 512) }
 
         SdkClient.request(
           'GET',
-          '/chatkit/threads',
+          "/chatkit/threads",
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'order' => QueryValue.new(order, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
             'before' => QueryValue.new(before, style: 'form', explode: true),
-            'user' => QueryValue.new(user, style: 'form', explode: true)
+            'user' => QueryValue.new(user, style: 'form', explode: true),
           },
           return_type: ::OctridevOpenai::ThreadListResource,
           decoder: :json,
           operation_id: 'list_chatkit_threads',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
-      ListChatkitThreadsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+    ListChatkitThreadsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # List ChatKit threads with optional pagination and user filters.
       #
@@ -339,13 +340,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             items.each { |item| y << item }
             break unless page.has_more
-
             next_cursor = page.last_id
             break if next_cursor.nil?
-
             cursor = next_cursor
           end
         end
@@ -374,12 +372,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListChatkitThreadsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
-
             cursor = next_cursor
           end
         end

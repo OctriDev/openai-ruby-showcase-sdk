@@ -5,275 +5,277 @@
 
 # admin_api_keys domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalAdminApiKeyOwnerMetadata
-    FIELDS = {
-      type: 'type',
-      object: 'object',
-      id: 'id',
-      name: 'name',
-      created_at: 'created_at',
-      role: 'role'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {}.freeze
+# Internal model hydration metadata.
+class SdkInternalAdminApiKeyOwnerMetadata
+  FIELDS = {
+    type: "type",
+    object: "object",
+    id: "id",
+    name: "name",
+    created_at: "created_at",
+    role: "role",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for AdminApiKeyOwner.
+# Required object value serialized in the `owner` wire field.
+class AdminApiKeyOwner
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalAdminApiKeyOwnerMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalAdminApiKeyOwnerMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalAdminApiKeyOwnerMetadata::DECODERS
+
+  # @return [String] Always `user`
+  attr_reader :type
+  # @return [String] The object type, which is always organization.user
+  attr_reader :object
+  # @return [String] The identifier, which can be referenced in API endpoints
+  attr_reader :id
+  # @return [String] The name of the user
+  attr_reader :name
+  # @return [Integer] The Unix timestamp (in seconds) of when the user was created
+  attr_reader :created_at
+  # @return [String] Always `owner`
+  attr_reader :role
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for AdminApiKeyOwner.
-  # Required object value serialized in the `owner` wire field.
-  class AdminApiKeyOwner
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalAdminApiKeyOwnerMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalAdminApiKeyOwnerMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalAdminApiKeyOwnerMetadata::DECODERS
-
-    # @return [String] Always `user`
-    attr_reader :type
-    # @return [String] The object type, which is always organization.user
-    attr_reader :object
-    # @return [String] The identifier, which can be referenced in API endpoints
-    attr_reader :id
-    # @return [String] The name of the user
-    attr_reader :name
-    # @return [Integer] The Unix timestamp (in seconds) of when the user was created
-    attr_reader :created_at
-    # @return [String] Always `owner`
-    attr_reader :role
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalAdminApiKeyMetadata
-    FIELDS = {
-      object: 'object',
-      id: 'id',
-      name: 'name',
-      redacted_value: 'redacted_value',
-      created_at: 'created_at',
-      expires_at: 'expires_at',
-      last_used_at: 'last_used_at',
-      owner: 'owner'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      id
-      redacted_value
-      created_at
-      expires_at
-      owner
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::AdminApiKeyObject.from_value(value)
-      end,
-      owner: lambda do |value|
-        ::OctridevOpenai::AdminApiKeyOwner.from_hash(value)
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      expires_at
-    ].freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalAdminApiKeyMetadata
+  FIELDS = {
+    object: "object",
+    id: "id",
+    name: "name",
+    redacted_value: "redacted_value",
+    created_at: "created_at",
+    expires_at: "expires_at",
+    last_used_at: "last_used_at",
+    owner: "owner",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    id
+    redacted_value
+    created_at
+    expires_at
+    owner
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::AdminApiKeyObject.from_value(value)
+    end,
+    owner: lambda do |value|
+      ::OctridevOpenai::AdminApiKeyOwner.from_hash(value)
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    expires_at
+  ].freeze
+end
+
+# API model for AdminApiKey.
+# Represents an individual Admin API key in an org.
+class AdminApiKey
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalAdminApiKeyMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalAdminApiKeyMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalAdminApiKeyMetadata::DECODERS
+
+  # @return [AdminApiKeyObject] The object type, which is always `organization.admin_api_key`
+  attr_reader :object
+  # @return [String] The identifier, which can be referenced in API endpoints
+  attr_reader :id
+  # @return [String] The name of the API key
+  attr_reader :name
+  # @return [String] The redacted value of the API key
+  attr_reader :redacted_value
+  # @return [Integer] The Unix timestamp (in seconds) of when the API key was created
+  attr_reader :created_at
+  # @return [Integer] Required API value serialized in the `expires_at` wire field.
+  attr_reader :expires_at
+  # @return [Integer] Optional API value serialized in the `last_used_at` wire field.
+  attr_reader :last_used_at
+  # @return [AdminApiKeyOwner] Required object value serialized in the `owner` wire field.
+  attr_reader :owner
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for AdminApiKey.
-  # Represents an individual Admin API key in an org.
-  class AdminApiKey
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalAdminApiKeyMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalAdminApiKeyMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalAdminApiKeyMetadata::DECODERS
-
-    # @return [AdminApiKeyObject] The object type, which is always `organization.admin_api_key`
-    attr_reader :object
-    # @return [String] The identifier, which can be referenced in API endpoints
-    attr_reader :id
-    # @return [String] The name of the API key
-    attr_reader :name
-    # @return [String] The redacted value of the API key
-    attr_reader :redacted_value
-    # @return [Integer] The Unix timestamp (in seconds) of when the API key was created
-    attr_reader :created_at
-    # @return [Integer] Required API value serialized in the `expires_at` wire field.
-    attr_reader :expires_at
-    # @return [Integer] Optional API value serialized in the `last_used_at` wire field.
-    attr_reader :last_used_at
-    # @return [AdminApiKeyOwner] Required object value serialized in the `owner` wire field.
-    attr_reader :owner
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalAdminApiKeyMetadata::NULLABLE_FIELDS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalAdminApiKeyMetadata::NULLABLE_FIELDS)
   end
 
-  # Defines the AdminApiKeyObject SDK namespace.
-  module AdminApiKeyObject
-    ORGANIZATION_ADMIN_API_KEY = 'organization.admin_api_key'
-    VALUES = ['organization.admin_api_key'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the AdminApiKeyObject SDK namespace.
+module AdminApiKeyObject
+  ORGANIZATION_ADMIN_API_KEY = 'organization.admin_api_key'
+  VALUES = ['organization.admin_api_key'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalAdminApiKeyCreateResponseMetadata
+  FIELDS = {
+    object: "object",
+    id: "id",
+    name: "name",
+    redacted_value: "redacted_value",
+    created_at: "created_at",
+    expires_at: "expires_at",
+    last_used_at: "last_used_at",
+    owner: "owner",
+    value: "value",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    id
+    redacted_value
+    created_at
+    expires_at
+    owner
+    value
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::AdminApiKeyObject.from_value(value)
+    end,
+    owner: lambda do |value|
+      ::OctridevOpenai::AdminApiKeyOwner.from_hash(value)
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    expires_at
+  ].freeze
+end
+
+# API model for AdminApiKeyCreateResponse.
+# Typed representation of the `AdminApiKeyCreateResponse` API schema.
+class AdminApiKeyCreateResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalAdminApiKeyCreateResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalAdminApiKeyCreateResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalAdminApiKeyCreateResponseMetadata::DECODERS
+
+  # @return [AdminApiKeyObject] The object type, which is always `organization.admin_api_key`
+  attr_reader :object
+  # @return [String] The identifier, which can be referenced in API endpoints
+  attr_reader :id
+  # @return [String] The name of the API key
+  attr_reader :name
+  # @return [String] The redacted value of the API key
+  attr_reader :redacted_value
+  # @return [Integer] The Unix timestamp (in seconds) of when the API key was created
+  attr_reader :created_at
+  # @return [Integer] Required API value serialized in the `expires_at` wire field.
+  attr_reader :expires_at
+  # @return [Integer] Optional API value serialized in the `last_used_at` wire field.
+  attr_reader :last_used_at
+  # @return [AdminApiKeyOwner] Required object value serialized in the `owner` wire field.
+  attr_reader :owner
+  # @return [String] The value of the API key. Only shown on create.
+  attr_reader :value
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalAdminApiKeyCreateResponseMetadata
-    FIELDS = {
-      object: 'object',
-      id: 'id',
-      name: 'name',
-      redacted_value: 'redacted_value',
-      created_at: 'created_at',
-      expires_at: 'expires_at',
-      last_used_at: 'last_used_at',
-      owner: 'owner',
-      value: 'value'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      id
-      redacted_value
-      created_at
-      expires_at
-      owner
-      value
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::AdminApiKeyObject.from_value(value)
-      end,
-      owner: lambda do |value|
-        ::OctridevOpenai::AdminApiKeyOwner.from_hash(value)
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      expires_at
-    ].freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalAdminApiKeyCreateResponseMetadata::NULLABLE_FIELDS)
   end
 
-  # API model for AdminApiKeyCreateResponse.
-  # Typed representation of the `AdminApiKeyCreateResponse` API schema.
-  class AdminApiKeyCreateResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalAdminApiKeyCreateResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalAdminApiKeyCreateResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalAdminApiKeyCreateResponseMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [AdminApiKeyObject] The object type, which is always `organization.admin_api_key`
-    attr_reader :object
-    # @return [String] The identifier, which can be referenced in API endpoints
-    attr_reader :id
-    # @return [String] The name of the API key
-    attr_reader :name
-    # @return [String] The redacted value of the API key
-    attr_reader :redacted_value
-    # @return [Integer] The Unix timestamp (in seconds) of when the API key was created
-    attr_reader :created_at
-    # @return [Integer] Required API value serialized in the `expires_at` wire field.
-    attr_reader :expires_at
-    # @return [Integer] Optional API value serialized in the `last_used_at` wire field.
-    attr_reader :last_used_at
-    # @return [AdminApiKeyOwner] Required object value serialized in the `owner` wire field.
-    attr_reader :owner
-    # @return [String] The value of the API key. Only shown on create.
-    attr_reader :value
+# Internal model hydration metadata.
+class SdkInternalApiKeyListMetadata
+  FIELDS = {
+    object: "object",
+    data: "data",
+    has_more: "has_more",
+    first_id: "first_id",
+    last_id: "last_id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    data
+    has_more
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::ApiKeyListObject.from_value(value)
+    end,
+    data: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::AdminApiKey.from_hash(item) }
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for ApiKeyList.
+# Typed representation of the `ApiKeyList` API schema.
+class ApiKeyList
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalApiKeyListMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalApiKeyListMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalApiKeyListMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalAdminApiKeyCreateResponseMetadata::NULLABLE_FIELDS)
-    end
+  # @return [ApiKeyListObject] Required enumerated value serialized in the `object` wire field.
+  attr_reader :object
+  # @return [Array_of_AdminApiKey] Required array value serialized in the `data` wire field.
+  attr_reader :data
+  # @return [Boolean] Required `boolean` value serialized in the `has_more` wire field.
+  attr_reader :has_more
+  # @return [String] Optional `string` value serialized in the `first_id` wire field.
+  attr_reader :first_id
+  # @return [String] Optional `string` value serialized in the `last_id` wire field.
+  attr_reader :last_id
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalApiKeyListMetadata
-    FIELDS = {
-      object: 'object',
-      data: 'data',
-      has_more: 'has_more',
-      first_id: 'first_id',
-      last_id: 'last_id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      data
-      has_more
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::ApiKeyListObject.from_value(value)
-      end,
-      data: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::AdminApiKey.from_hash(item) }
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ApiKeyList.
-  # Typed representation of the `ApiKeyList` API schema.
-  class ApiKeyList
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalApiKeyListMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalApiKeyListMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalApiKeyListMetadata::DECODERS
-
-    # @return [ApiKeyListObject] Required enumerated value serialized in the `object` wire field.
-    attr_reader :object
-    # @return [Array_of_AdminApiKey] Required array value serialized in the `data` wire field.
-    attr_reader :data
-    # @return [Boolean] Required `boolean` value serialized in the `has_more` wire field.
-    attr_reader :has_more
-    # @return [String] Optional `string` value serialized in the `first_id` wire field.
-    attr_reader :first_id
-    # @return [String] Optional `string` value serialized in the `last_id` wire field.
-    attr_reader :last_id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the ApiKeyListObject SDK namespace.
-  module ApiKeyListObject
-    LIST = 'list'
-    VALUES = ['list'].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the ApiKeyListObject SDK namespace.
+module ApiKeyListObject
+  LIST = 'list'
+  VALUES = ['list'].freeze
+  def self.from_value(value)
+    value
   end
+end
 end

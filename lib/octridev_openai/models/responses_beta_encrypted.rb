@@ -5,118 +5,116 @@
 
 # responses_beta_encrypted domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalBetaEncryptedContentMetadata
-    FIELDS = {
-      type: 'type',
-      encrypted_content: 'encrypted_content'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      encrypted_content
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::BetaEncryptedContentType.from_value(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalBetaEncryptedContentMetadata
+  FIELDS = {
+    type: "type",
+    encrypted_content: "encrypted_content",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    encrypted_content
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::BetaEncryptedContentType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaEncryptedContent.
+# Opaque encrypted content that Responses API decrypts inside trusted model execution.
+class BetaEncryptedContent
+  include BetaAgentMessageContentItem
+  include BetaMessageContentItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaEncryptedContentMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaEncryptedContentMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaEncryptedContentMetadata::DECODERS
+
+  # @return [BetaEncryptedContentType] The type of the input item. Always `encrypted_content`.
+  attr_reader :type
+  # @return [String] Opaque encrypted content.
+  attr_reader :encrypted_content
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BetaEncryptedContent.
-  # Opaque encrypted content that Responses API decrypts inside trusted model execution.
-  class BetaEncryptedContent
-    include BetaAgentMessageContentItem
-    include BetaMessageContentItem
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaEncryptedContentMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaEncryptedContentMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaEncryptedContentMetadata::DECODERS
-
-    # @return [BetaEncryptedContentType] The type of the input item. Always `encrypted_content`.
-    attr_reader :type
-    # @return [String] Opaque encrypted content.
-    attr_reader :encrypted_content
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the BetaEncryptedContentType SDK namespace.
-  module BetaEncryptedContentType
-    ENCRYPTED_CONTENT = 'encrypted_content'
-    VALUES = ['encrypted_content'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('BetaEncryptedContentType', 'enum', "Unknown BetaEncryptedContentType: #{value}")
-    end
+# Defines the BetaEncryptedContentType SDK namespace.
+module BetaEncryptedContentType
+  ENCRYPTED_CONTENT = 'encrypted_content'
+  VALUES = ['encrypted_content'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('BetaEncryptedContentType', 'enum', "Unknown BetaEncryptedContentType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaEncryptedContentParamMetadata
+  FIELDS = {
+    type: "type",
+    encrypted_content: "encrypted_content",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    encrypted_content
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::BetaEncryptedContentParamType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaEncryptedContentParam.
+# Opaque encrypted content that Responses API decrypts inside trusted model execution.
+class BetaEncryptedContentParam
+  include BetaAgentMessageItemParamContentItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaEncryptedContentParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaEncryptedContentParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaEncryptedContentParamMetadata::DECODERS
+
+  # @return [BetaEncryptedContentParamType] The type of the input item. Always `encrypted_content`.
+  attr_reader :type
+  # @return [String] Opaque encrypted content.
+  attr_reader :encrypted_content
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaEncryptedContentParamMetadata
-    FIELDS = {
-      type: 'type',
-      encrypted_content: 'encrypted_content'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      encrypted_content
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::BetaEncryptedContentParamType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for BetaEncryptedContentParam.
-  # Opaque encrypted content that Responses API decrypts inside trusted model execution.
-  class BetaEncryptedContentParam
-    include BetaAgentMessageItemParamContentItem
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaEncryptedContentParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaEncryptedContentParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaEncryptedContentParamMetadata::DECODERS
-
-    # @return [BetaEncryptedContentParamType] The type of the input item. Always `encrypted_content`.
-    attr_reader :type
-    # @return [String] Opaque encrypted content.
-    attr_reader :encrypted_content
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the BetaEncryptedContentParamType SDK namespace.
-  module BetaEncryptedContentParamType
-    ENCRYPTED_CONTENT = 'encrypted_content'
-    VALUES = ['encrypted_content'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+# Defines the BetaEncryptedContentParamType SDK namespace.
+module BetaEncryptedContentParamType
+  ENCRYPTED_CONTENT = 'encrypted_content'
+  VALUES = ['encrypted_content'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-      raise SdkValidationError.new('BetaEncryptedContentParamType', 'enum', "Unknown BetaEncryptedContentParamType: #{value}")
-    end
+    raise SdkValidationError.new('BetaEncryptedContentParamType', 'enum', "Unknown BetaEncryptedContentParamType: #{value}")
   end
+end
 end

@@ -27,24 +27,25 @@ module OctridevOpenai
         emails: NOT_GIVEN,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
-          '/organization/users',
+          "/organization/users",
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
-            'emails' => QueryValue.new(emails, style: 'form', explode: true)
+            'emails' => QueryValue.new(emails, style: 'form', explode: true),
           },
           return_type: ::OctridevOpenai::UserListResponse,
           decoder: :json,
           operation_id: 'list_users',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
-      ListUsersPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+    ListUsersPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists users in the organization. Use `emails` to filter the list by email address and `limit` and `after` to control the page of results. The response includes pagination fields to help you retrieve additional users.
       #
@@ -76,13 +77,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             items.each { |item| y << item }
             break unless page.has_more
-
             next_cursor = page.last_id
             break if next_cursor.nil?
-
             cursor = next_cursor
           end
         end
@@ -107,12 +105,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListUsersPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
-
             cursor = next_cursor
           end
         end
@@ -128,10 +124,11 @@ module OctridevOpenai
         user_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
           [
-            '/organization/users/',
+            "/organization/users/",
             SdkClient.encode_path_segment(user_id)
           ].join,
           config: config,
@@ -139,7 +136,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'retrieve_user',
           request_options: request_options,
-          errors: { '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -161,10 +158,11 @@ module OctridevOpenai
         developer_persona: NOT_GIVEN,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
           [
-            '/organization/users/',
+            "/organization/users/",
             SdkClient.encode_path_segment(user_id)
           ].join,
           config: config,
@@ -172,13 +170,13 @@ module OctridevOpenai
             'role' => role,
             'role_id' => role_id,
             'technical_level' => technical_level,
-            'developer_persona' => developer_persona
+            'developer_persona' => developer_persona,
           },
           return_type: ::OctridevOpenai::User,
           decoder: :json,
           operation_id: 'modify_user',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -192,10 +190,11 @@ module OctridevOpenai
         user_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'DELETE',
           [
-            '/organization/users/',
+            "/organization/users/",
             SdkClient.encode_path_segment(user_id)
           ].join,
           config: config,
@@ -203,7 +202,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_user',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
     end

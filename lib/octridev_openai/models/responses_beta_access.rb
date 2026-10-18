@@ -5,81 +5,82 @@
 
 # responses_beta_access domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalBetaAccessProgramsBodyMetadata
-    FIELDS = {
-      cyber: 'cyber'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      cyber
-    ].freeze
-    DECODERS = {
-      cyber: lambda do |value|
-        ::OctridevOpenai::BetaCyberAccessProgramEnum.from_value(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalBetaAccessProgramsBodyMetadata
+  FIELDS = {
+    cyber: "cyber",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    cyber
+  ].freeze
+  DECODERS = {
+    cyber: lambda do |value|
+      ::OctridevOpenai::BetaCyberAccessProgramEnum.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaAccessProgramsBody.
+# Typed representation of the `BetaAccessProgramsBody` API schema.
+class BetaAccessProgramsBody
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaAccessProgramsBodyMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaAccessProgramsBodyMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaAccessProgramsBodyMetadata::DECODERS
+
+  # @return [BetaCyberAccessProgramEnum] The effective Cyber access program used for this response.
+  attr_reader :cyber
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BetaAccessProgramsBody.
-  # Typed representation of the `BetaAccessProgramsBody` API schema.
-  class BetaAccessProgramsBody
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaAccessProgramsBodyMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaAccessProgramsBodyMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaAccessProgramsBodyMetadata::DECODERS
-
-    # @return [BetaCyberAccessProgramEnum] The effective Cyber access program used for this response.
-    attr_reader :cyber
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaAccessProgramsParamMetadata
-    FIELDS = {
-      cyber: 'cyber'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {
-      cyber: lambda do |value|
-        ::OctridevOpenai::BetaCyberAccessProgramEnum.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaAccessProgramsParamMetadata
+  FIELDS = {
+    cyber: "cyber",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+    cyber: lambda do |value|
+      ::OctridevOpenai::BetaCyberAccessProgramEnum.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaAccessProgramsParam.
+# Domain-specific access programs to use for this request.
+class BetaAccessProgramsParam
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaAccessProgramsParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaAccessProgramsParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaAccessProgramsParamMetadata::DECODERS
+
+  # @return [BetaCyberAccessProgramEnum] The Cyber access program to use for this request. Supported values are `standard`, `daybreak_blue`, and `daybreak_red`. If omitted, the API resolves the program from the model's Cyber tier and your organization and project access, subject to model-specific eligibility restrictions. By default, models without a Cyber tier use Standard. Blue-tier models use Daybreak Blue when authorized; otherwise they fall back to Standard unless the model requires Daybreak access. Red-tier…
+  attr_reader :cyber
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BetaAccessProgramsParam.
-  # Domain-specific access programs to use for this request.
-  class BetaAccessProgramsParam
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaAccessProgramsParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaAccessProgramsParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaAccessProgramsParamMetadata::DECODERS
-
-    # @return [BetaCyberAccessProgramEnum] The Cyber access program to use for this request. Supported values are `standard`, `daybreak_blue`, and `daybreak_red`. If omitted, the API resolves the program from the model's Cyber tier and your organization and project access, subject to model-specific eligibility restrictions. By default, models without a Cyber tier use Standard. Blue-tier models use Daybreak Blue when authorized; otherwise they fall back to Standard unless the model requires Daybreak access. Red-tier…
-    attr_reader :cyber
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
+
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 end

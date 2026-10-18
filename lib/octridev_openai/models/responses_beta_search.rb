@@ -5,24 +5,24 @@
 
 # responses_beta_search domain models
 module OctridevOpenai
-  # Defines the BetaSearchContentType SDK namespace.
-  module BetaSearchContentType
-    TEXT = 'text'
-    IMAGE = 'image'
-    VALUES = %w[text image].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the BetaSearchContentType SDK namespace.
+module BetaSearchContentType
+  TEXT = 'text'
+  IMAGE = 'image'
+  VALUES = ['text', 'image'].freeze
+  def self.from_value(value)
+    value
   end
+end
 
-  # Defines the BetaSearchContextSize SDK namespace.
-  module BetaSearchContextSize
-    LOW = 'low'
-    MEDIUM = 'medium'
-    HIGH = 'high'
-    VALUES = %w[low medium high].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the BetaSearchContextSize SDK namespace.
+module BetaSearchContextSize
+  LOW = 'low'
+  MEDIUM = 'medium'
+  HIGH = 'high'
+  VALUES = ['low', 'medium', 'high'].freeze
+  def self.from_value(value)
+    value
   end
+end
 end

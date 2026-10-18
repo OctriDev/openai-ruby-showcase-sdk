@@ -5,683 +5,683 @@
 
 # assistants_run domain models (part 5)
 module OctridevOpenai
-  # Defines the RunStepStreamEventVariant2Event SDK namespace.
-  module RunStepStreamEventVariant2Event
-    THREAD_RUN_STEP_DELTA = 'thread.run.step.delta'
-    VALUES = ['thread.run.step.delta'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+# Defines the RunStepStreamEventVariant2Event SDK namespace.
+module RunStepStreamEventVariant2Event
+  THREAD_RUN_STEP_DELTA = 'thread.run.step.delta'
+  VALUES = ['thread.run.step.delta'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-      raise SdkValidationError.new('RunStepStreamEventVariant2Event', 'enum', "Unknown RunStepStreamEventVariant2Event: #{value}")
-    end
+    raise SdkValidationError.new('RunStepStreamEventVariant2Event', 'enum', "Unknown RunStepStreamEventVariant2Event: #{value}")
+  end
+end
+
+# Defines the RunStepStreamEventVariant3Event SDK namespace.
+module RunStepStreamEventVariant3Event
+  THREAD_RUN_STEP_COMPLETED = 'thread.run.step.completed'
+  VALUES = ['thread.run.step.completed'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('RunStepStreamEventVariant3Event', 'enum', "Unknown RunStepStreamEventVariant3Event: #{value}")
+  end
+end
+
+# Defines the RunStepStreamEventVariant4Event SDK namespace.
+module RunStepStreamEventVariant4Event
+  THREAD_RUN_STEP_FAILED = 'thread.run.step.failed'
+  VALUES = ['thread.run.step.failed'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('RunStepStreamEventVariant4Event', 'enum', "Unknown RunStepStreamEventVariant4Event: #{value}")
+  end
+end
+
+# Defines the RunStepStreamEventVariant5Event SDK namespace.
+module RunStepStreamEventVariant5Event
+  THREAD_RUN_STEP_CANCELLED = 'thread.run.step.cancelled'
+  VALUES = ['thread.run.step.cancelled'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('RunStepStreamEventVariant5Event', 'enum', "Unknown RunStepStreamEventVariant5Event: #{value}")
+  end
+end
+
+# Defines the RunStepStreamEventVariant6Event SDK namespace.
+module RunStepStreamEventVariant6Event
+  THREAD_RUN_STEP_EXPIRED = 'thread.run.step.expired'
+  VALUES = ['thread.run.step.expired'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('RunStepStreamEventVariant6Event', 'enum', "Unknown RunStepStreamEventVariant6Event: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalRunStreamEventVariant0Metadata
+  FIELDS = {
+    event: "event",
+    data: "data",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    event
+    data
+  ].freeze
+  DECODERS = {
+    event: lambda do |value|
+      ::OctridevOpenai::RunStreamEventVariant0Event.from_value(value)
+    end,
+    data: lambda do |value|
+      ::OctridevOpenai::RunObject.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for RunStreamEventVariant0.
+class RunStreamEventVariant0
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRunStreamEventVariant0Metadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRunStreamEventVariant0Metadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRunStreamEventVariant0Metadata::DECODERS
+
+  attr_reader :event
+  # @return [RunObject] Represents an execution run on a thread.
+  attr_reader :data
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the RunStepStreamEventVariant3Event SDK namespace.
-  module RunStepStreamEventVariant3Event
-    THREAD_RUN_STEP_COMPLETED = 'thread.run.step.completed'
-    VALUES = ['thread.run.step.completed'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('RunStepStreamEventVariant3Event', 'enum', "Unknown RunStepStreamEventVariant3Event: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the RunStepStreamEventVariant4Event SDK namespace.
-  module RunStepStreamEventVariant4Event
-    THREAD_RUN_STEP_FAILED = 'thread.run.step.failed'
-    VALUES = ['thread.run.step.failed'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('RunStepStreamEventVariant4Event', 'enum', "Unknown RunStepStreamEventVariant4Event: #{value}")
-    end
+# Internal model hydration metadata.
+class SdkInternalRunStreamEventVariant1Metadata
+  FIELDS = {
+    event: "event",
+    data: "data",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    event
+    data
+  ].freeze
+  DECODERS = {
+    event: lambda do |value|
+      ::OctridevOpenai::RunStreamEventVariant1Event.from_value(value)
+    end,
+    data: lambda do |value|
+      ::OctridevOpenai::RunObject.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for RunStreamEventVariant1.
+class RunStreamEventVariant1
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRunStreamEventVariant1Metadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRunStreamEventVariant1Metadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRunStreamEventVariant1Metadata::DECODERS
+
+  attr_reader :event
+  # @return [RunObject] Represents an execution run on a thread.
+  attr_reader :data
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the RunStepStreamEventVariant5Event SDK namespace.
-  module RunStepStreamEventVariant5Event
-    THREAD_RUN_STEP_CANCELLED = 'thread.run.step.cancelled'
-    VALUES = ['thread.run.step.cancelled'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('RunStepStreamEventVariant5Event', 'enum', "Unknown RunStepStreamEventVariant5Event: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the RunStepStreamEventVariant6Event SDK namespace.
-  module RunStepStreamEventVariant6Event
-    THREAD_RUN_STEP_EXPIRED = 'thread.run.step.expired'
-    VALUES = ['thread.run.step.expired'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('RunStepStreamEventVariant6Event', 'enum', "Unknown RunStepStreamEventVariant6Event: #{value}")
-    end
+# Internal model hydration metadata.
+class SdkInternalRunStreamEventVariant2Metadata
+  FIELDS = {
+    event: "event",
+    data: "data",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    event
+    data
+  ].freeze
+  DECODERS = {
+    event: lambda do |value|
+      ::OctridevOpenai::RunStreamEventVariant2Event.from_value(value)
+    end,
+    data: lambda do |value|
+      ::OctridevOpenai::RunObject.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for RunStreamEventVariant2.
+class RunStreamEventVariant2
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRunStreamEventVariant2Metadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRunStreamEventVariant2Metadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRunStreamEventVariant2Metadata::DECODERS
+
+  attr_reader :event
+  # @return [RunObject] Represents an execution run on a thread.
+  attr_reader :data
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalRunStreamEventVariant0Metadata
-    FIELDS = {
-      event: 'event',
-      data: 'data'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      event
-      data
-    ].freeze
-    DECODERS = {
-      event: lambda do |value|
-        ::OctridevOpenai::RunStreamEventVariant0Event.from_value(value)
-      end,
-      data: lambda do |value|
-        ::OctridevOpenai::RunObject.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for RunStreamEventVariant0.
-  class RunStreamEventVariant0
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRunStreamEventVariant0Metadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRunStreamEventVariant0Metadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRunStreamEventVariant0Metadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    attr_reader :event
-    # @return [RunObject] Represents an execution run on a thread.
-    attr_reader :data
+# Internal model hydration metadata.
+class SdkInternalRunStreamEventVariant3Metadata
+  FIELDS = {
+    event: "event",
+    data: "data",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    event
+    data
+  ].freeze
+  DECODERS = {
+    event: lambda do |value|
+      ::OctridevOpenai::RunStreamEventVariant3Event.from_value(value)
+    end,
+    data: lambda do |value|
+      ::OctridevOpenai::RunObject.from_hash(value)
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for RunStreamEventVariant3.
+class RunStreamEventVariant3
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRunStreamEventVariant3Metadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRunStreamEventVariant3Metadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRunStreamEventVariant3Metadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  attr_reader :event
+  # @return [RunObject] Represents an execution run on a thread.
+  attr_reader :data
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalRunStreamEventVariant1Metadata
-    FIELDS = {
-      event: 'event',
-      data: 'data'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      event
-      data
-    ].freeze
-    DECODERS = {
-      event: lambda do |value|
-        ::OctridevOpenai::RunStreamEventVariant1Event.from_value(value)
-      end,
-      data: lambda do |value|
-        ::OctridevOpenai::RunObject.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for RunStreamEventVariant1.
-  class RunStreamEventVariant1
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRunStreamEventVariant1Metadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRunStreamEventVariant1Metadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRunStreamEventVariant1Metadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    attr_reader :event
-    # @return [RunObject] Represents an execution run on a thread.
-    attr_reader :data
+# Internal model hydration metadata.
+class SdkInternalRunStreamEventVariant4Metadata
+  FIELDS = {
+    event: "event",
+    data: "data",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    event
+    data
+  ].freeze
+  DECODERS = {
+    event: lambda do |value|
+      ::OctridevOpenai::RunStreamEventVariant4Event.from_value(value)
+    end,
+    data: lambda do |value|
+      ::OctridevOpenai::RunObject.from_hash(value)
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for RunStreamEventVariant4.
+class RunStreamEventVariant4
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRunStreamEventVariant4Metadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRunStreamEventVariant4Metadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRunStreamEventVariant4Metadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  attr_reader :event
+  # @return [RunObject] Represents an execution run on a thread.
+  attr_reader :data
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalRunStreamEventVariant2Metadata
-    FIELDS = {
-      event: 'event',
-      data: 'data'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      event
-      data
-    ].freeze
-    DECODERS = {
-      event: lambda do |value|
-        ::OctridevOpenai::RunStreamEventVariant2Event.from_value(value)
-      end,
-      data: lambda do |value|
-        ::OctridevOpenai::RunObject.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for RunStreamEventVariant2.
-  class RunStreamEventVariant2
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRunStreamEventVariant2Metadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRunStreamEventVariant2Metadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRunStreamEventVariant2Metadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    attr_reader :event
-    # @return [RunObject] Represents an execution run on a thread.
-    attr_reader :data
+# Internal model hydration metadata.
+class SdkInternalRunStreamEventVariant5Metadata
+  FIELDS = {
+    event: "event",
+    data: "data",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    event
+    data
+  ].freeze
+  DECODERS = {
+    event: lambda do |value|
+      ::OctridevOpenai::RunStreamEventVariant5Event.from_value(value)
+    end,
+    data: lambda do |value|
+      ::OctridevOpenai::RunObject.from_hash(value)
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for RunStreamEventVariant5.
+class RunStreamEventVariant5
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRunStreamEventVariant5Metadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRunStreamEventVariant5Metadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRunStreamEventVariant5Metadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  attr_reader :event
+  # @return [RunObject] Represents an execution run on a thread.
+  attr_reader :data
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalRunStreamEventVariant3Metadata
-    FIELDS = {
-      event: 'event',
-      data: 'data'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      event
-      data
-    ].freeze
-    DECODERS = {
-      event: lambda do |value|
-        ::OctridevOpenai::RunStreamEventVariant3Event.from_value(value)
-      end,
-      data: lambda do |value|
-        ::OctridevOpenai::RunObject.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for RunStreamEventVariant3.
-  class RunStreamEventVariant3
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRunStreamEventVariant3Metadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRunStreamEventVariant3Metadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRunStreamEventVariant3Metadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    attr_reader :event
-    # @return [RunObject] Represents an execution run on a thread.
-    attr_reader :data
+# Internal model hydration metadata.
+class SdkInternalRunStreamEventVariant6Metadata
+  FIELDS = {
+    event: "event",
+    data: "data",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    event
+    data
+  ].freeze
+  DECODERS = {
+    event: lambda do |value|
+      ::OctridevOpenai::RunStreamEventVariant6Event.from_value(value)
+    end,
+    data: lambda do |value|
+      ::OctridevOpenai::RunObject.from_hash(value)
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for RunStreamEventVariant6.
+class RunStreamEventVariant6
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRunStreamEventVariant6Metadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRunStreamEventVariant6Metadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRunStreamEventVariant6Metadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  attr_reader :event
+  # @return [RunObject] Represents an execution run on a thread.
+  attr_reader :data
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalRunStreamEventVariant4Metadata
-    FIELDS = {
-      event: 'event',
-      data: 'data'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      event
-      data
-    ].freeze
-    DECODERS = {
-      event: lambda do |value|
-        ::OctridevOpenai::RunStreamEventVariant4Event.from_value(value)
-      end,
-      data: lambda do |value|
-        ::OctridevOpenai::RunObject.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for RunStreamEventVariant4.
-  class RunStreamEventVariant4
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRunStreamEventVariant4Metadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRunStreamEventVariant4Metadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRunStreamEventVariant4Metadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    attr_reader :event
-    # @return [RunObject] Represents an execution run on a thread.
-    attr_reader :data
+# Internal model hydration metadata.
+class SdkInternalRunStreamEventVariant7Metadata
+  FIELDS = {
+    event: "event",
+    data: "data",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    event
+    data
+  ].freeze
+  DECODERS = {
+    event: lambda do |value|
+      ::OctridevOpenai::RunStreamEventVariant7Event.from_value(value)
+    end,
+    data: lambda do |value|
+      ::OctridevOpenai::RunObject.from_hash(value)
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for RunStreamEventVariant7.
+class RunStreamEventVariant7
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRunStreamEventVariant7Metadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRunStreamEventVariant7Metadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRunStreamEventVariant7Metadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  attr_reader :event
+  # @return [RunObject] Represents an execution run on a thread.
+  attr_reader :data
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalRunStreamEventVariant5Metadata
-    FIELDS = {
-      event: 'event',
-      data: 'data'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      event
-      data
-    ].freeze
-    DECODERS = {
-      event: lambda do |value|
-        ::OctridevOpenai::RunStreamEventVariant5Event.from_value(value)
-      end,
-      data: lambda do |value|
-        ::OctridevOpenai::RunObject.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for RunStreamEventVariant5.
-  class RunStreamEventVariant5
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRunStreamEventVariant5Metadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRunStreamEventVariant5Metadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRunStreamEventVariant5Metadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    attr_reader :event
-    # @return [RunObject] Represents an execution run on a thread.
-    attr_reader :data
+# Internal model hydration metadata.
+class SdkInternalRunStreamEventVariant8Metadata
+  FIELDS = {
+    event: "event",
+    data: "data",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    event
+    data
+  ].freeze
+  DECODERS = {
+    event: lambda do |value|
+      ::OctridevOpenai::RunStreamEventVariant8Event.from_value(value)
+    end,
+    data: lambda do |value|
+      ::OctridevOpenai::RunObject.from_hash(value)
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for RunStreamEventVariant8.
+class RunStreamEventVariant8
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRunStreamEventVariant8Metadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRunStreamEventVariant8Metadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRunStreamEventVariant8Metadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  attr_reader :event
+  # @return [RunObject] Represents an execution run on a thread.
+  attr_reader :data
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalRunStreamEventVariant6Metadata
-    FIELDS = {
-      event: 'event',
-      data: 'data'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      event
-      data
-    ].freeze
-    DECODERS = {
-      event: lambda do |value|
-        ::OctridevOpenai::RunStreamEventVariant6Event.from_value(value)
-      end,
-      data: lambda do |value|
-        ::OctridevOpenai::RunObject.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for RunStreamEventVariant6.
-  class RunStreamEventVariant6
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRunStreamEventVariant6Metadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRunStreamEventVariant6Metadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRunStreamEventVariant6Metadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    attr_reader :event
-    # @return [RunObject] Represents an execution run on a thread.
-    attr_reader :data
+# Internal model hydration metadata.
+class SdkInternalRunStreamEventVariant9Metadata
+  FIELDS = {
+    event: "event",
+    data: "data",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    event
+    data
+  ].freeze
+  DECODERS = {
+    event: lambda do |value|
+      ::OctridevOpenai::RunStreamEventVariant9Event.from_value(value)
+    end,
+    data: lambda do |value|
+      ::OctridevOpenai::RunObject.from_hash(value)
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for RunStreamEventVariant9.
+class RunStreamEventVariant9
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRunStreamEventVariant9Metadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRunStreamEventVariant9Metadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRunStreamEventVariant9Metadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  attr_reader :event
+  # @return [RunObject] Represents an execution run on a thread.
+  attr_reader :data
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalRunStreamEventVariant7Metadata
-    FIELDS = {
-      event: 'event',
-      data: 'data'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      event
-      data
-    ].freeze
-    DECODERS = {
-      event: lambda do |value|
-        ::OctridevOpenai::RunStreamEventVariant7Event.from_value(value)
-      end,
-      data: lambda do |value|
-        ::OctridevOpenai::RunObject.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for RunStreamEventVariant7.
-  class RunStreamEventVariant7
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRunStreamEventVariant7Metadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRunStreamEventVariant7Metadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRunStreamEventVariant7Metadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    attr_reader :event
-    # @return [RunObject] Represents an execution run on a thread.
-    attr_reader :data
+# Defines the RunStreamEvent SDK namespace.
+module RunStreamEvent
+  DISCRIMINATOR_MAPPING = {
+    "thread.run.created" => -> { RunStreamEventVariant0 },
+    "thread.run.queued" => -> { RunStreamEventVariant1 },
+    "thread.run.in_progress" => -> { RunStreamEventVariant2 },
+    "thread.run.requires_action" => -> { RunStreamEventVariant3 },
+    "thread.run.completed" => -> { RunStreamEventVariant4 },
+    "thread.run.incomplete" => -> { RunStreamEventVariant5 },
+    "thread.run.failed" => -> { RunStreamEventVariant6 },
+    "thread.run.cancelling" => -> { RunStreamEventVariant7 },
+    "thread.run.cancelled" => -> { RunStreamEventVariant8 },
+    "thread.run.expired" => -> { RunStreamEventVariant9 },
+  }.freeze
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["event"]]&.call
+    return type.from_hash(hash) if type
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+    raise SdkValidationError.new('RunStreamEvent', 'variant', "Unknown RunStreamEvent discriminator: #{hash["event"].inspect}")
+  end
+end
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+# Defines the RunStreamEventVariant0Event SDK namespace.
+module RunStreamEventVariant0Event
+  THREAD_RUN_CREATED = 'thread.run.created'
+  VALUES = ['thread.run.created'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('RunStreamEventVariant0Event', 'enum', "Unknown RunStreamEventVariant0Event: #{value}")
+  end
+end
+
+# Defines the RunStreamEventVariant1Event SDK namespace.
+module RunStreamEventVariant1Event
+  THREAD_RUN_QUEUED = 'thread.run.queued'
+  VALUES = ['thread.run.queued'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('RunStreamEventVariant1Event', 'enum', "Unknown RunStreamEventVariant1Event: #{value}")
+  end
+end
+
+# Defines the RunStreamEventVariant2Event SDK namespace.
+module RunStreamEventVariant2Event
+  THREAD_RUN_IN_PROGRESS = 'thread.run.in_progress'
+  VALUES = ['thread.run.in_progress'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('RunStreamEventVariant2Event', 'enum', "Unknown RunStreamEventVariant2Event: #{value}")
+  end
+end
+
+# Defines the RunStreamEventVariant3Event SDK namespace.
+module RunStreamEventVariant3Event
+  THREAD_RUN_REQUIRES_ACTION = 'thread.run.requires_action'
+  VALUES = ['thread.run.requires_action'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('RunStreamEventVariant3Event', 'enum', "Unknown RunStreamEventVariant3Event: #{value}")
+  end
+end
+
+# Defines the RunStreamEventVariant4Event SDK namespace.
+module RunStreamEventVariant4Event
+  THREAD_RUN_COMPLETED = 'thread.run.completed'
+  VALUES = ['thread.run.completed'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('RunStreamEventVariant4Event', 'enum', "Unknown RunStreamEventVariant4Event: #{value}")
+  end
+end
+
+# Defines the RunStreamEventVariant5Event SDK namespace.
+module RunStreamEventVariant5Event
+  THREAD_RUN_INCOMPLETE = 'thread.run.incomplete'
+  VALUES = ['thread.run.incomplete'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('RunStreamEventVariant5Event', 'enum', "Unknown RunStreamEventVariant5Event: #{value}")
+  end
+end
+
+# Defines the RunStreamEventVariant6Event SDK namespace.
+module RunStreamEventVariant6Event
+  THREAD_RUN_FAILED = 'thread.run.failed'
+  VALUES = ['thread.run.failed'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('RunStreamEventVariant6Event', 'enum', "Unknown RunStreamEventVariant6Event: #{value}")
+  end
+end
+
+# Defines the RunStreamEventVariant7Event SDK namespace.
+module RunStreamEventVariant7Event
+  THREAD_RUN_CANCELLING = 'thread.run.cancelling'
+  VALUES = ['thread.run.cancelling'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('RunStreamEventVariant7Event', 'enum', "Unknown RunStreamEventVariant7Event: #{value}")
+  end
+end
+
+# Defines the RunStreamEventVariant8Event SDK namespace.
+module RunStreamEventVariant8Event
+  THREAD_RUN_CANCELLED = 'thread.run.cancelled'
+  VALUES = ['thread.run.cancelled'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('RunStreamEventVariant8Event', 'enum', "Unknown RunStreamEventVariant8Event: #{value}")
+  end
+end
+
+# Defines the RunStreamEventVariant9Event SDK namespace.
+module RunStreamEventVariant9Event
+  THREAD_RUN_EXPIRED = 'thread.run.expired'
+  VALUES = ['thread.run.expired'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('RunStreamEventVariant9Event', 'enum', "Unknown RunStreamEventVariant9Event: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalRunToolCallObjectFunctionMetadata
+  FIELDS = {
+    name: "name",
+    arguments: "arguments",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    name
+    arguments
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for RunToolCallObjectFunction.
+# The function definition.
+class RunToolCallObjectFunction
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRunToolCallObjectFunctionMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRunToolCallObjectFunctionMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRunToolCallObjectFunctionMetadata::DECODERS
+
+  # @return [String] The name of the function.
+  attr_reader :name
+  # @return [String] The arguments that the model expects you to pass to the function.
+  attr_reader :arguments
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalRunStreamEventVariant8Metadata
-    FIELDS = {
-      event: 'event',
-      data: 'data'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      event
-      data
-    ].freeze
-    DECODERS = {
-      event: lambda do |value|
-        ::OctridevOpenai::RunStreamEventVariant8Event.from_value(value)
-      end,
-      data: lambda do |value|
-        ::OctridevOpenai::RunObject.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for RunStreamEventVariant8.
-  class RunStreamEventVariant8
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRunStreamEventVariant8Metadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRunStreamEventVariant8Metadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRunStreamEventVariant8Metadata::DECODERS
-
-    attr_reader :event
-    # @return [RunObject] Represents an execution run on a thread.
-    attr_reader :data
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
-
-  # Internal model hydration metadata.
-  class SdkInternalRunStreamEventVariant9Metadata
-    FIELDS = {
-      event: 'event',
-      data: 'data'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      event
-      data
-    ].freeze
-    DECODERS = {
-      event: lambda do |value|
-        ::OctridevOpenai::RunStreamEventVariant9Event.from_value(value)
-      end,
-      data: lambda do |value|
-        ::OctridevOpenai::RunObject.from_hash(value)
-      end
-    }.freeze
-  end
-
-  # API model for RunStreamEventVariant9.
-  class RunStreamEventVariant9
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRunStreamEventVariant9Metadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRunStreamEventVariant9Metadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRunStreamEventVariant9Metadata::DECODERS
-
-    attr_reader :event
-    # @return [RunObject] Represents an execution run on a thread.
-    attr_reader :data
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the RunStreamEvent SDK namespace.
-  module RunStreamEvent
-    DISCRIMINATOR_MAPPING = {
-      'thread.run.created' => -> { RunStreamEventVariant0 },
-      'thread.run.queued' => -> { RunStreamEventVariant1 },
-      'thread.run.in_progress' => -> { RunStreamEventVariant2 },
-      'thread.run.requires_action' => -> { RunStreamEventVariant3 },
-      'thread.run.completed' => -> { RunStreamEventVariant4 },
-      'thread.run.incomplete' => -> { RunStreamEventVariant5 },
-      'thread.run.failed' => -> { RunStreamEventVariant6 },
-      'thread.run.cancelling' => -> { RunStreamEventVariant7 },
-      'thread.run.cancelled' => -> { RunStreamEventVariant8 },
-      'thread.run.expired' => -> { RunStreamEventVariant9 }
-    }.freeze
-
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
-
-      type = DISCRIMINATOR_MAPPING[hash['event']]&.call
-      return type.from_hash(hash) if type
-
-      raise SdkValidationError.new('RunStreamEvent', 'variant', "Unknown RunStreamEvent discriminator: #{hash['event'].inspect}")
-    end
-  end
-
-  # Defines the RunStreamEventVariant0Event SDK namespace.
-  module RunStreamEventVariant0Event
-    THREAD_RUN_CREATED = 'thread.run.created'
-    VALUES = ['thread.run.created'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('RunStreamEventVariant0Event', 'enum', "Unknown RunStreamEventVariant0Event: #{value}")
-    end
-  end
-
-  # Defines the RunStreamEventVariant1Event SDK namespace.
-  module RunStreamEventVariant1Event
-    THREAD_RUN_QUEUED = 'thread.run.queued'
-    VALUES = ['thread.run.queued'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('RunStreamEventVariant1Event', 'enum', "Unknown RunStreamEventVariant1Event: #{value}")
-    end
-  end
-
-  # Defines the RunStreamEventVariant2Event SDK namespace.
-  module RunStreamEventVariant2Event
-    THREAD_RUN_IN_PROGRESS = 'thread.run.in_progress'
-    VALUES = ['thread.run.in_progress'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('RunStreamEventVariant2Event', 'enum', "Unknown RunStreamEventVariant2Event: #{value}")
-    end
-  end
-
-  # Defines the RunStreamEventVariant3Event SDK namespace.
-  module RunStreamEventVariant3Event
-    THREAD_RUN_REQUIRES_ACTION = 'thread.run.requires_action'
-    VALUES = ['thread.run.requires_action'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('RunStreamEventVariant3Event', 'enum', "Unknown RunStreamEventVariant3Event: #{value}")
-    end
-  end
-
-  # Defines the RunStreamEventVariant4Event SDK namespace.
-  module RunStreamEventVariant4Event
-    THREAD_RUN_COMPLETED = 'thread.run.completed'
-    VALUES = ['thread.run.completed'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('RunStreamEventVariant4Event', 'enum', "Unknown RunStreamEventVariant4Event: #{value}")
-    end
-  end
-
-  # Defines the RunStreamEventVariant5Event SDK namespace.
-  module RunStreamEventVariant5Event
-    THREAD_RUN_INCOMPLETE = 'thread.run.incomplete'
-    VALUES = ['thread.run.incomplete'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('RunStreamEventVariant5Event', 'enum', "Unknown RunStreamEventVariant5Event: #{value}")
-    end
-  end
-
-  # Defines the RunStreamEventVariant6Event SDK namespace.
-  module RunStreamEventVariant6Event
-    THREAD_RUN_FAILED = 'thread.run.failed'
-    VALUES = ['thread.run.failed'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('RunStreamEventVariant6Event', 'enum', "Unknown RunStreamEventVariant6Event: #{value}")
-    end
-  end
-
-  # Defines the RunStreamEventVariant7Event SDK namespace.
-  module RunStreamEventVariant7Event
-    THREAD_RUN_CANCELLING = 'thread.run.cancelling'
-    VALUES = ['thread.run.cancelling'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('RunStreamEventVariant7Event', 'enum', "Unknown RunStreamEventVariant7Event: #{value}")
-    end
-  end
-
-  # Defines the RunStreamEventVariant8Event SDK namespace.
-  module RunStreamEventVariant8Event
-    THREAD_RUN_CANCELLED = 'thread.run.cancelled'
-    VALUES = ['thread.run.cancelled'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('RunStreamEventVariant8Event', 'enum', "Unknown RunStreamEventVariant8Event: #{value}")
-    end
-  end
-
-  # Defines the RunStreamEventVariant9Event SDK namespace.
-  module RunStreamEventVariant9Event
-    THREAD_RUN_EXPIRED = 'thread.run.expired'
-    VALUES = ['thread.run.expired'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('RunStreamEventVariant9Event', 'enum', "Unknown RunStreamEventVariant9Event: #{value}")
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalRunToolCallObjectFunctionMetadata
-    FIELDS = {
-      name: 'name',
-      arguments: 'arguments'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      name
-      arguments
-    ].freeze
-    DECODERS = {}.freeze
-  end
-
-  # API model for RunToolCallObjectFunction.
-  # The function definition.
-  class RunToolCallObjectFunction
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRunToolCallObjectFunctionMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRunToolCallObjectFunctionMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRunToolCallObjectFunctionMetadata::DECODERS
-
-    # @return [String] The name of the function.
-    attr_reader :name
-    # @return [String] The arguments that the model expects you to pass to the function.
-    attr_reader :arguments
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
+end
 end

@@ -5,143 +5,144 @@
 
 # live_live_sideband domain models
 module OctridevOpenai
-  # Defines the LiveSidebandClientEvent SDK namespace.
-  module LiveSidebandClientEvent
-    DISCRIMINATOR_MAPPING = {
-      'session.update' => -> { LiveSessionUpdateParam },
-      'session.input_audio.mute' => -> { LiveInputAudioMuteParam },
-      'session.input_audio.unmute' => -> { LiveInputAudioUnmuteParam },
-      'session.output_audio.fixture.play' => -> { LiveOutputAudioFixturePlayParam },
-      'session.instructions.append' => -> { LiveInstructionsAppendParam },
-      'session.thinking.append' => -> { LiveThinkingAppendParam },
-      'session.commentary.append' => -> { LiveCommentaryAppendParam },
-      'decision.create' => -> { LiveDecisionCreateParam },
-      'decision.item.create' => -> { LiveDecisionItemCreateParam },
-      'decision.item.delete' => -> { LiveDecisionItemDeleteParam },
-      'response.item.create' => -> { LiveResponseItemCreateParam },
-      'response.create' => -> { LiveResponseCreateParam },
-      'session.close' => -> { LiveSessionCloseParam }
-    }.freeze
+# Defines the LiveSidebandClientEvent SDK namespace.
+module LiveSidebandClientEvent
+  DISCRIMINATOR_MAPPING = {
+    "session.update" => -> { LiveSessionUpdateParam },
+    "session.input_audio.mute" => -> { LiveInputAudioMuteParam },
+    "session.input_audio.unmute" => -> { LiveInputAudioUnmuteParam },
+    "session.output_audio.fixture.play" => -> { LiveOutputAudioFixturePlayParam },
+    "session.instructions.append" => -> { LiveInstructionsAppendParam },
+    "session.thinking.append" => -> { LiveThinkingAppendParam },
+    "session.commentary.append" => -> { LiveCommentaryAppendParam },
+    "decision.create" => -> { LiveDecisionCreateParam },
+    "decision.item.create" => -> { LiveDecisionItemCreateParam },
+    "decision.item.delete" => -> { LiveDecisionItemDeleteParam },
+    "response.item.create" => -> { LiveResponseItemCreateParam },
+    "response.create" => -> { LiveResponseCreateParam },
+    "session.close" => -> { LiveSessionCloseParam },
+  }.freeze
 
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
 
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
 
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+    raise SdkValidationError.new('LiveSidebandClientEvent', 'variant', "Unknown LiveSidebandClientEvent discriminator: #{hash["type"].inspect}")
+  end
+end
 
-      raise SdkValidationError.new('LiveSidebandClientEvent', 'variant', "Unknown LiveSidebandClientEvent discriminator: #{hash['type'].inspect}")
-    end
+# Internal model hydration metadata.
+class SdkInternalLiveSidebandConnectParamsMetadata
+  FIELDS = {
+    graceful_close: "graceful_close",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for LiveSidebandConnectParams.
+# Connection options for a sideband WebSocket attached to an existing Live session.
+class LiveSidebandConnectParams
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalLiveSidebandConnectParamsMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalLiveSidebandConnectParamsMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalLiveSidebandConnectParamsMetadata::DECODERS
+
+  # @return [Boolean] Opt in to the graceful WebSocket closing handshake when the session ends. The server may also enable this behavior by default.
+  attr_reader :graceful_close
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalLiveSidebandConnectParamsMetadata
-    FIELDS = {
-      graceful_close: 'graceful_close'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {}.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for LiveSidebandConnectParams.
-  # Connection options for a sideband WebSocket attached to an existing Live session.
-  class LiveSidebandConnectParams
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalLiveSidebandConnectParamsMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalLiveSidebandConnectParamsMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalLiveSidebandConnectParamsMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [Boolean] Opt in to the graceful WebSocket closing handshake when the session ends. The server may also enable this behavior by default.
-    attr_reader :graceful_close
+# Internal model hydration metadata.
+class SdkInternalLiveSidebandPathParamsMetadata
+  FIELDS = {
+    session_id: "session_id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    session_id
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for LiveSidebandPathParams.
+# Identifies the Live session to observe and control through a sideband WebSocket.
+class LiveSidebandPathParams
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalLiveSidebandPathParamsMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalLiveSidebandPathParamsMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalLiveSidebandPathParamsMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [String] The ID of the existing Live session to attach to.
+  attr_reader :session_id
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalLiveSidebandPathParamsMetadata
-    FIELDS = {
-      session_id: 'session_id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      session_id
-    ].freeze
-    DECODERS = {}.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for LiveSidebandPathParams.
-  # Identifies the Live session to observe and control through a sideband WebSocket.
-  class LiveSidebandPathParams
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalLiveSidebandPathParamsMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalLiveSidebandPathParamsMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalLiveSidebandPathParamsMetadata::DECODERS
-
-    # @return [String] The ID of the existing Live session to attach to.
-    attr_reader :session_id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the LiveSidebandServerEvent SDK namespace.
-  module LiveSidebandServerEvent
-    DISCRIMINATOR_MAPPING = {
-      'transport.ringing' => -> { LiveTransportRinging },
-      'transport.answered' => -> { LiveTransportAnswered },
-      'transport.failed' => -> { LiveTransportFailed },
-      'session.started' => -> { LiveSessionStarted },
-      'session.updated' => -> { LiveSessionUpdated },
-      'session.input_audio.muted' => -> { LiveInputAudioMuted },
-      'session.input_audio.unmuted' => -> { LiveInputAudioUnmuted },
-      'session.output_audio.fixture.playing' => -> { LiveOutputAudioFixturePlaying },
-      'session.output_audio.fixture.played' => -> { LiveOutputAudioFixturePlayed },
-      'session.instructions.appended' => -> { LiveInstructionsAppended },
-      'session.thinking.appended' => -> { LiveThinkingAppended },
-      'session.commentary.appended' => -> { LiveCommentaryAppended },
-      'session.input_transcript.delta' => -> { LiveInputTranscriptDelta },
-      'session.output_transcript.delta' => -> { LiveOutputTranscriptDelta },
-      'session.delegation.created' => -> { LiveDelegationCreated },
-      'decision.event' => -> { LiveDecisionEvent },
-      'decision.item.created' => -> { LiveDecisionItemCreated },
-      'decision.item.deleted' => -> { LiveDecisionItemDeleted },
-      'response.event' => -> { LiveResponseEvent },
-      'session.usage.updated' => -> { LiveSessionUsageUpdated },
-      'session.closed' => -> { LiveSessionClosed },
-      'error' => -> { LiveErrorEvent },
-      'info' => -> { LiveInfoEvent }
-    }.freeze
+# Defines the LiveSidebandServerEvent SDK namespace.
+module LiveSidebandServerEvent
+  DISCRIMINATOR_MAPPING = {
+    "transport.ringing" => -> { LiveTransportRinging },
+    "transport.answered" => -> { LiveTransportAnswered },
+    "transport.failed" => -> { LiveTransportFailed },
+    "session.started" => -> { LiveSessionStarted },
+    "session.updated" => -> { LiveSessionUpdated },
+    "session.input_audio.muted" => -> { LiveInputAudioMuted },
+    "session.input_audio.unmuted" => -> { LiveInputAudioUnmuted },
+    "session.output_audio.fixture.playing" => -> { LiveOutputAudioFixturePlaying },
+    "session.output_audio.fixture.played" => -> { LiveOutputAudioFixturePlayed },
+    "session.instructions.appended" => -> { LiveInstructionsAppended },
+    "session.thinking.appended" => -> { LiveThinkingAppended },
+    "session.commentary.appended" => -> { LiveCommentaryAppended },
+    "session.input_transcript.delta" => -> { LiveInputTranscriptDelta },
+    "session.output_transcript.delta" => -> { LiveOutputTranscriptDelta },
+    "session.delegation.created" => -> { LiveDelegationCreated },
+    "decision.event" => -> { LiveDecisionEvent },
+    "decision.item.created" => -> { LiveDecisionItemCreated },
+    "decision.item.deleted" => -> { LiveDecisionItemDeleted },
+    "response.event" => -> { LiveResponseEvent },
+    "session.usage.updated" => -> { LiveSessionUsageUpdated },
+    "session.closed" => -> { LiveSessionClosed },
+    "error" => -> { LiveErrorEvent },
+    "info" => -> { LiveInfoEvent },
+  }.freeze
 
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
 
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
 
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
-
-      raise SdkValidationError.new('LiveSidebandServerEvent', 'variant', "Unknown LiveSidebandServerEvent discriminator: #{hash['type'].inspect}")
-    end
+    raise SdkValidationError.new('LiveSidebandServerEvent', 'variant', "Unknown LiveSidebandServerEvent discriminator: #{hash["type"].inspect}")
   end
+end
 end

@@ -5,372 +5,371 @@
 
 # decisions_decisions domain models
 module OctridevOpenai
-  # Defines the DecisionsUsageApiSource SDK namespace.
-  module DecisionsUsageApiSource
-    AGENTS_API = 'agents_api'
-    UNLABELED = 'unlabeled'
-    VALUES = %w[agents_api unlabeled].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the DecisionsUsageApiSource SDK namespace.
+module DecisionsUsageApiSource
+  AGENTS_API = 'agents_api'
+  UNLABELED = 'unlabeled'
+  VALUES = ['agents_api', 'unlabeled'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalDecisionsUsageBucketMetadata
+  FIELDS = {
+    object: "object",
+    start_time: "start_time",
+    end_time: "end_time",
+    results: "results",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    start_time
+    end_time
+    results
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::DecisionsUsageBucketObject.from_value(value)
+    end,
+    results: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::DecisionsUsageResult.from_hash(item) }
+    end,
+  }.freeze
+end
+
+# API model for DecisionsUsageBucket.
+# Typed representation of the `DecisionsUsageBucket` API schema.
+class DecisionsUsageBucket
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalDecisionsUsageBucketMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalDecisionsUsageBucketMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalDecisionsUsageBucketMetadata::DECODERS
+
+  # @return [DecisionsUsageBucketObject] Required enumerated value serialized in the `object` wire field.
+  attr_reader :object
+  # @return [Integer] Required `integer` value serialized in the `start_time` wire field.
+  attr_reader :start_time
+  # @return [Integer] Required `integer` value serialized in the `end_time` wire field.
+  attr_reader :end_time
+  # @return [Array_of_DecisionsUsageResult] Required array value serialized in the `results` wire field.
+  attr_reader :results
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalDecisionsUsageBucketMetadata
-    FIELDS = {
-      object: 'object',
-      start_time: 'start_time',
-      end_time: 'end_time',
-      results: 'results'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      start_time
-      end_time
-      results
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::DecisionsUsageBucketObject.from_value(value)
-      end,
-      results: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::DecisionsUsageResult.from_hash(item) }
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for DecisionsUsageBucket.
-  # Typed representation of the `DecisionsUsageBucket` API schema.
-  class DecisionsUsageBucket
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalDecisionsUsageBucketMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalDecisionsUsageBucketMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalDecisionsUsageBucketMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [DecisionsUsageBucketObject] Required enumerated value serialized in the `object` wire field.
-    attr_reader :object
-    # @return [Integer] Required `integer` value serialized in the `start_time` wire field.
-    attr_reader :start_time
-    # @return [Integer] Required `integer` value serialized in the `end_time` wire field.
-    attr_reader :end_time
-    # @return [Array_of_DecisionsUsageResult] Required array value serialized in the `results` wire field.
-    attr_reader :results
+# Defines the DecisionsUsageBucketObject SDK namespace.
+module DecisionsUsageBucketObject
+  BUCKET = 'bucket'
+  VALUES = ['bucket'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Defines the DecisionsUsageBucketWidth SDK namespace.
+module DecisionsUsageBucketWidth
+  V_1_M = '1m'
+  V_1_H = '1h'
+  V_1_D = '1d'
+  VALUES = ['1m', '1h', '1d'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# Internal model hydration metadata.
+class SdkInternalDecisionsUsageErrorDetailsMetadata
+  FIELDS = {
+    code: "code",
+    message: "message",
+    param: "param",
+    type: "type",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    code
+    message
+    param
+    type
+  ].freeze
+  DECODERS = {
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    code
+    param
+  ].freeze
+end
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+# API model for DecisionsUsageErrorDetails.
+# Typed representation of the `DecisionsUsageErrorDetails` API schema.
+class DecisionsUsageErrorDetails
+  include DecisionsUsagePermissionErrorResponseError
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalDecisionsUsageErrorDetailsMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalDecisionsUsageErrorDetailsMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalDecisionsUsageErrorDetailsMetadata::DECODERS
+
+  # @return [String] Required `string` value serialized in the `code` wire field.
+  attr_reader :code
+  # @return [String] Required `string` value serialized in the `message` wire field.
+  attr_reader :message
+  # @return [String] Required `string` value serialized in the `param` wire field.
+  attr_reader :param
+  # @return [String] Required `string` value serialized in the `type` wire field.
+  attr_reader :type
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the DecisionsUsageBucketObject SDK namespace.
-  module DecisionsUsageBucketObject
-    BUCKET = 'bucket'
-    VALUES = ['bucket'].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalDecisionsUsageErrorDetailsMetadata::NULLABLE_FIELDS)
   end
 
-  # Defines the DecisionsUsageBucketWidth SDK namespace.
-  module DecisionsUsageBucketWidth
-    V_1_M = '1m'
-    V_1_H = '1h'
-    V_1_D = '1d'
-    VALUES = %w[1m 1h 1d].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalDecisionsUsageErrorResponseMetadata
+  FIELDS = {
+    error: "error",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    error
+  ].freeze
+  DECODERS = {
+    error: lambda do |value|
+      ::OctridevOpenai::DecisionsUsageErrorDetails.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for DecisionsUsageErrorResponse.
+# Typed representation of the `DecisionsUsageErrorResponse` API schema.
+class DecisionsUsageErrorResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalDecisionsUsageErrorResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalDecisionsUsageErrorResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalDecisionsUsageErrorResponseMetadata::DECODERS
+
+  # @return [DecisionsUsageErrorDetails] Required object value serialized in the `error` wire field.
+  attr_reader :error
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalDecisionsUsageErrorDetailsMetadata
-    FIELDS = {
-      code: 'code',
-      message: 'message',
-      param: 'param',
-      type: 'type'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      code
-      message
-      param
-      type
-    ].freeze
-    DECODERS = {}.freeze
-    NULLABLE_FIELDS = %i[
-      code
-      param
-    ].freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for DecisionsUsageErrorDetails.
-  # Typed representation of the `DecisionsUsageErrorDetails` API schema.
-  class DecisionsUsageErrorDetails
-    include DecisionsUsagePermissionErrorResponseError
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalDecisionsUsageErrorDetailsMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalDecisionsUsageErrorDetailsMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalDecisionsUsageErrorDetailsMetadata::DECODERS
+# Defines the DecisionsUsageGroupBy SDK namespace.
+module DecisionsUsageGroupBy
+  PROJECT_ID = 'project_id'
+  USER_ID = 'user_id'
+  API_KEY_ID = 'api_key_id'
+  MODEL = 'model'
+  BATCH = 'batch'
+  SERVICE_TIER = 'service_tier'
+  API_SOURCE = 'api_source'
+  VALUES = [
+    'project_id', 'user_id', 'api_key_id', 'model', 'batch', 'service_tier', 'api_source'
+  ].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    # @return [String] Required `string` value serialized in the `code` wire field.
-    attr_reader :code
-    # @return [String] Required `string` value serialized in the `message` wire field.
-    attr_reader :message
-    # @return [String] Required `string` value serialized in the `param` wire field.
-    attr_reader :param
-    # @return [String] Required `string` value serialized in the `type` wire field.
-    attr_reader :type
+# Internal model hydration metadata.
+class SdkInternalDecisionsUsagePermissionErrorResponseMetadata
+  FIELDS = {
+    error: "error",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    error
+  ].freeze
+  DECODERS = {
+    error: lambda do |value|
+      ::OctridevOpenai::DecisionsUsagePermissionErrorResponseError.from_hash(value)
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for DecisionsUsagePermissionErrorResponse.
+# Typed representation of the `DecisionsUsagePermissionErrorResponse` API schema.
+class DecisionsUsagePermissionErrorResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalDecisionsUsagePermissionErrorResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalDecisionsUsagePermissionErrorResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalDecisionsUsagePermissionErrorResponseMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalDecisionsUsageErrorDetailsMetadata::NULLABLE_FIELDS)
-    end
+  # @return [DecisionsUsagePermissionErrorResponseError] Details about the permission error.
+  attr_reader :error
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalDecisionsUsageErrorResponseMetadata
-    FIELDS = {
-      error: 'error'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      error
-    ].freeze
-    DECODERS = {
-      error: lambda do |value|
-        ::OctridevOpenai::DecisionsUsageErrorDetails.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for DecisionsUsageErrorResponse.
-  # Typed representation of the `DecisionsUsageErrorResponse` API schema.
-  class DecisionsUsageErrorResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalDecisionsUsageErrorResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalDecisionsUsageErrorResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalDecisionsUsageErrorResponseMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [DecisionsUsageErrorDetails] Required object value serialized in the `error` wire field.
-    attr_reader :error
+# Defines the DecisionsUsagePermissionErrorResponseError SDK namespace.
+module DecisionsUsagePermissionErrorResponseError
+  def self.from_hash(hash)
+    return hash if hash.is_a?(::String)
+    return DecisionsUsageErrorDetails.from_hash(hash)
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalDecisionsUsageResultMetadata
+  FIELDS = {
+    api_source: "api_source",
+    object: "object",
+    input_tokens: "input_tokens",
+    input_cached_tokens: "input_cached_tokens",
+    input_cache_write_tokens: "input_cache_write_tokens",
+    input_cache_write12h_tokens: "input_cache_write_12h_tokens",
+    input_uncached_tokens: "input_uncached_tokens",
+    output_tokens: "output_tokens",
+    input_text_tokens: "input_text_tokens",
+    output_text_tokens: "output_text_tokens",
+    input_cached_text_tokens: "input_cached_text_tokens",
+    input_audio_tokens: "input_audio_tokens",
+    input_cached_audio_tokens: "input_cached_audio_tokens",
+    output_audio_tokens: "output_audio_tokens",
+    input_image_tokens: "input_image_tokens",
+    input_cached_image_tokens: "input_cached_image_tokens",
+    output_image_tokens: "output_image_tokens",
+    num_model_requests: "num_model_requests",
+    project_id: "project_id",
+    user_id: "user_id",
+    api_key_id: "api_key_id",
+    model: "model",
+    batch: "batch",
+    service_tier: "service_tier",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    input_tokens
+    output_tokens
+    num_model_requests
+  ].freeze
+  DECODERS = {
+    api_source: lambda do |value|
+      ::OctridevOpenai::DecisionsUsageApiSource.from_value(value)
+    end,
+    object: lambda do |value|
+      ::OctridevOpenai::DecisionsUsageResultObject.from_value(value)
+    end,
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for DecisionsUsageResult.
+# The aggregated Decisions API usage details of the specific time bucket.
+class DecisionsUsageResult
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalDecisionsUsageResultMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalDecisionsUsageResultMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalDecisionsUsageResultMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [DecisionsUsageApiSource] Optional API value serialized in the `api_source` wire field.
+  attr_reader :api_source
+  # @return [DecisionsUsageResultObject] Required enumerated value serialized in the `object` wire field.
+  attr_reader :object
+  # @return [Integer] The aggregated number of input tokens used, including cached and cache-write tokens. This includes text, audio, and image tokens. For customers subscribed to Scale Tier, this includes Scale Tier tokens.
+  attr_reader :input_tokens
+  # @return [Integer] Optional `integer` value serialized in the `input_cached_tokens` wire field.
+  attr_reader :input_cached_tokens
+  # @return [Integer] Optional `integer` value serialized in the `input_cache_write_tokens` wire field.
+  attr_reader :input_cache_write_tokens
+  # @return [Integer] Optional `integer` value serialized in the `input_cache_write_12h_tokens` wire field.
+  attr_reader :input_cache_write12h_tokens
+  # @return [Integer] Optional `integer` value serialized in the `input_uncached_tokens` wire field.
+  attr_reader :input_uncached_tokens
+  # @return [Integer] The aggregated number of output tokens used across text, audio, and image outputs. For customers subscribed to Scale Tier, this includes Scale Tier tokens.
+  attr_reader :output_tokens
+  # @return [Integer] Optional `integer` value serialized in the `input_text_tokens` wire field.
+  attr_reader :input_text_tokens
+  # @return [Integer] Optional `integer` value serialized in the `output_text_tokens` wire field.
+  attr_reader :output_text_tokens
+  # @return [Integer] Optional `integer` value serialized in the `input_cached_text_tokens` wire field.
+  attr_reader :input_cached_text_tokens
+  # @return [Integer] Optional `integer` value serialized in the `input_audio_tokens` wire field.
+  attr_reader :input_audio_tokens
+  # @return [Integer] Optional `integer` value serialized in the `input_cached_audio_tokens` wire field.
+  attr_reader :input_cached_audio_tokens
+  # @return [Integer] Optional `integer` value serialized in the `output_audio_tokens` wire field.
+  attr_reader :output_audio_tokens
+  # @return [Integer] Optional `integer` value serialized in the `input_image_tokens` wire field.
+  attr_reader :input_image_tokens
+  # @return [Integer] Optional `integer` value serialized in the `input_cached_image_tokens` wire field.
+  attr_reader :input_cached_image_tokens
+  # @return [Integer] Optional `integer` value serialized in the `output_image_tokens` wire field.
+  attr_reader :output_image_tokens
+  # @return [Integer] The count of requests made to the model.
+  attr_reader :num_model_requests
+  # @return [String] Optional `string` value serialized in the `project_id` wire field.
+  attr_reader :project_id
+  # @return [String] Optional `string` value serialized in the `user_id` wire field.
+  attr_reader :user_id
+  # @return [String] Optional `string` value serialized in the `api_key_id` wire field.
+  attr_reader :api_key_id
+  # @return [String] Optional `string` value serialized in the `model` wire field.
+  attr_reader :model
+  # @return [Boolean] Optional `boolean` value serialized in the `batch` wire field.
+  attr_reader :batch
+  # @return [String] Optional `string` value serialized in the `service_tier` wire field.
+  attr_reader :service_tier
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the DecisionsUsageGroupBy SDK namespace.
-  module DecisionsUsageGroupBy
-    PROJECT_ID = 'project_id'
-    USER_ID = 'user_id'
-    API_KEY_ID = 'api_key_id'
-    MODEL = 'model'
-    BATCH = 'batch'
-    SERVICE_TIER = 'service_tier'
-    API_SOURCE = 'api_source'
-    VALUES = %w[
-      project_id user_id api_key_id model batch service_tier api_source
-    ].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalDecisionsUsagePermissionErrorResponseMetadata
-    FIELDS = {
-      error: 'error'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      error
-    ].freeze
-    DECODERS = {
-      error: lambda do |value|
-        ::OctridevOpenai::DecisionsUsagePermissionErrorResponseError.from_hash(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # API model for DecisionsUsagePermissionErrorResponse.
-  # Typed representation of the `DecisionsUsagePermissionErrorResponse` API schema.
-  class DecisionsUsagePermissionErrorResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalDecisionsUsagePermissionErrorResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalDecisionsUsagePermissionErrorResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalDecisionsUsagePermissionErrorResponseMetadata::DECODERS
-
-    # @return [DecisionsUsagePermissionErrorResponseError] Details about the permission error.
-    attr_reader :error
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+# Defines the DecisionsUsageResultObject SDK namespace.
+module DecisionsUsageResultObject
+  ORGANIZATION_USAGE_DECISIONS_RESULT = 'organization.usage.decisions.result'
+  VALUES = ['organization.usage.decisions.result'].freeze
+  def self.from_value(value)
+    value
   end
-
-  # Defines the DecisionsUsagePermissionErrorResponseError SDK namespace.
-  module DecisionsUsagePermissionErrorResponseError
-    def self.from_hash(hash)
-      return hash if hash.is_a?(::String)
-
-      DecisionsUsageErrorDetails.from_hash(hash)
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalDecisionsUsageResultMetadata
-    FIELDS = {
-      api_source: 'api_source',
-      object: 'object',
-      input_tokens: 'input_tokens',
-      input_cached_tokens: 'input_cached_tokens',
-      input_cache_write_tokens: 'input_cache_write_tokens',
-      input_cache_write12h_tokens: 'input_cache_write_12h_tokens',
-      input_uncached_tokens: 'input_uncached_tokens',
-      output_tokens: 'output_tokens',
-      input_text_tokens: 'input_text_tokens',
-      output_text_tokens: 'output_text_tokens',
-      input_cached_text_tokens: 'input_cached_text_tokens',
-      input_audio_tokens: 'input_audio_tokens',
-      input_cached_audio_tokens: 'input_cached_audio_tokens',
-      output_audio_tokens: 'output_audio_tokens',
-      input_image_tokens: 'input_image_tokens',
-      input_cached_image_tokens: 'input_cached_image_tokens',
-      output_image_tokens: 'output_image_tokens',
-      num_model_requests: 'num_model_requests',
-      project_id: 'project_id',
-      user_id: 'user_id',
-      api_key_id: 'api_key_id',
-      model: 'model',
-      batch: 'batch',
-      service_tier: 'service_tier'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      input_tokens
-      output_tokens
-      num_model_requests
-    ].freeze
-    DECODERS = {
-      api_source: lambda do |value|
-        ::OctridevOpenai::DecisionsUsageApiSource.from_value(value)
-      end,
-      object: lambda do |value|
-        ::OctridevOpenai::DecisionsUsageResultObject.from_value(value)
-      end
-    }.freeze
-  end
-
-  # API model for DecisionsUsageResult.
-  # The aggregated Decisions API usage details of the specific time bucket.
-  class DecisionsUsageResult
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalDecisionsUsageResultMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalDecisionsUsageResultMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalDecisionsUsageResultMetadata::DECODERS
-
-    # @return [DecisionsUsageApiSource] Optional API value serialized in the `api_source` wire field.
-    attr_reader :api_source
-    # @return [DecisionsUsageResultObject] Required enumerated value serialized in the `object` wire field.
-    attr_reader :object
-    # @return [Integer] The aggregated number of input tokens used, including cached and cache-write tokens. This includes text, audio, and image tokens. For customers subscribed to Scale Tier, this includes Scale Tier tokens.
-    attr_reader :input_tokens
-    # @return [Integer] Optional `integer` value serialized in the `input_cached_tokens` wire field.
-    attr_reader :input_cached_tokens
-    # @return [Integer] Optional `integer` value serialized in the `input_cache_write_tokens` wire field.
-    attr_reader :input_cache_write_tokens
-    # @return [Integer] Optional `integer` value serialized in the `input_cache_write_12h_tokens` wire field.
-    attr_reader :input_cache_write12h_tokens
-    # @return [Integer] Optional `integer` value serialized in the `input_uncached_tokens` wire field.
-    attr_reader :input_uncached_tokens
-    # @return [Integer] The aggregated number of output tokens used across text, audio, and image outputs. For customers subscribed to Scale Tier, this includes Scale Tier tokens.
-    attr_reader :output_tokens
-    # @return [Integer] Optional `integer` value serialized in the `input_text_tokens` wire field.
-    attr_reader :input_text_tokens
-    # @return [Integer] Optional `integer` value serialized in the `output_text_tokens` wire field.
-    attr_reader :output_text_tokens
-    # @return [Integer] Optional `integer` value serialized in the `input_cached_text_tokens` wire field.
-    attr_reader :input_cached_text_tokens
-    # @return [Integer] Optional `integer` value serialized in the `input_audio_tokens` wire field.
-    attr_reader :input_audio_tokens
-    # @return [Integer] Optional `integer` value serialized in the `input_cached_audio_tokens` wire field.
-    attr_reader :input_cached_audio_tokens
-    # @return [Integer] Optional `integer` value serialized in the `output_audio_tokens` wire field.
-    attr_reader :output_audio_tokens
-    # @return [Integer] Optional `integer` value serialized in the `input_image_tokens` wire field.
-    attr_reader :input_image_tokens
-    # @return [Integer] Optional `integer` value serialized in the `input_cached_image_tokens` wire field.
-    attr_reader :input_cached_image_tokens
-    # @return [Integer] Optional `integer` value serialized in the `output_image_tokens` wire field.
-    attr_reader :output_image_tokens
-    # @return [Integer] The count of requests made to the model.
-    attr_reader :num_model_requests
-    # @return [String] Optional `string` value serialized in the `project_id` wire field.
-    attr_reader :project_id
-    # @return [String] Optional `string` value serialized in the `user_id` wire field.
-    attr_reader :user_id
-    # @return [String] Optional `string` value serialized in the `api_key_id` wire field.
-    attr_reader :api_key_id
-    # @return [String] Optional `string` value serialized in the `model` wire field.
-    attr_reader :model
-    # @return [Boolean] Optional `boolean` value serialized in the `batch` wire field.
-    attr_reader :batch
-    # @return [String] Optional `string` value serialized in the `service_tier` wire field.
-    attr_reader :service_tier
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the DecisionsUsageResultObject SDK namespace.
-  module DecisionsUsageResultObject
-    ORGANIZATION_USAGE_DECISIONS_RESULT = 'organization.usage.decisions.result'
-    VALUES = ['organization.usage.decisions.result'].freeze
-    def self.from_value(value)
-      value
-    end
-  end
+end
 end

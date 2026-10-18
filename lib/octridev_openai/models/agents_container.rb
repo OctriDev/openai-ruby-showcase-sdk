@@ -5,25 +5,25 @@
 
 # agents_container domain models
 module OctridevOpenai
-  # Defines the ContainerSizeParam SDK namespace.
-  module ContainerSizeParam
-    SMALL = 'small'
-    MEDIUM = 'medium'
-    LARGE = 'large'
-    VALUES = %w[small medium large].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the ContainerSizeParam SDK namespace.
+module ContainerSizeParam
+  SMALL = 'small'
+  MEDIUM = 'medium'
+  LARGE = 'large'
+  VALUES = ['small', 'medium', 'large'].freeze
+  def self.from_value(value)
+    value
   end
+end
 
-  # Defines the ContainerSizeResource SDK namespace.
-  module ContainerSizeResource
-    SMALL = 'small'
-    MEDIUM = 'medium'
-    LARGE = 'large'
-    VALUES = %w[small medium large].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the ContainerSizeResource SDK namespace.
+module ContainerSizeResource
+  SMALL = 'small'
+  MEDIUM = 'medium'
+  LARGE = 'large'
+  VALUES = ['small', 'medium', 'large'].freeze
+  def self.from_value(value)
+    value
   end
+end
 end

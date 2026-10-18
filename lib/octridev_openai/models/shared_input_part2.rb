@@ -5,14 +5,14 @@
 
 # shared_input domain models (part 2)
 module OctridevOpenai
-  # Defines the InputTextContentParamType SDK namespace.
-  module InputTextContentParamType
-    INPUT_TEXT = 'input_text'
-    VALUES = ['input_text'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+# Defines the InputTextContentParamType SDK namespace.
+module InputTextContentParamType
+  INPUT_TEXT = 'input_text'
+  VALUES = ['input_text'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-      raise SdkValidationError.new('InputTextContentParamType', 'enum', "Unknown InputTextContentParamType: #{value}")
-    end
+    raise SdkValidationError.new('InputTextContentParamType', 'enum', "Unknown InputTextContentParamType: #{value}")
   end
+end
 end

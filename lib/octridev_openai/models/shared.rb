@@ -5,666 +5,669 @@
 
 # shared domain models
 module OctridevOpenai
-  # Defines the Annotation SDK namespace.
-  module Annotation
-    DISCRIMINATOR_MAPPING = {
-      'file_citation' => -> { FileCitationBody },
-      'url_citation' => -> { UrlCitationBody },
-      'container_file_citation' => -> { ContainerFileCitationBody },
-      'file_path' => -> { FilePath }
-    }.freeze
+# Defines the Annotation SDK namespace.
+module Annotation
+  DISCRIMINATOR_MAPPING = {
+    "file_citation" => -> { FileCitationBody },
+    "url_citation" => -> { UrlCitationBody },
+    "container_file_citation" => -> { ContainerFileCitationBody },
+    "file_path" => -> { FilePath },
+  }.freeze
 
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
 
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
 
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+    raise SdkValidationError.new('Annotation', 'variant', "Unknown Annotation discriminator: #{hash["type"].inspect}")
+  end
+end
 
-      raise SdkValidationError.new('Annotation', 'variant', "Unknown Annotation discriminator: #{hash['type'].inspect}")
-    end
+# Internal model hydration metadata.
+class SdkInternalApproximateLocationMetadata
+  FIELDS = {
+    type: "type",
+    country: "country",
+    region: "region",
+    city: "city",
+    timezone: "timezone",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ApproximateLocationType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for ApproximateLocation.
+# Typed representation of the `ApproximateLocation` API schema.
+class ApproximateLocation
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalApproximateLocationMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalApproximateLocationMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalApproximateLocationMetadata::DECODERS
+
+  # @return [ApproximateLocationType] The type of location approximation. Always `approximate`.
+  attr_reader :type
+  # @return [String] Optional `string` value serialized in the `country` wire field.
+  attr_reader :country
+  # @return [String] Optional `string` value serialized in the `region` wire field.
+  attr_reader :region
+  # @return [String] Optional `string` value serialized in the `city` wire field.
+  attr_reader :city
+  # @return [String] Optional `string` value serialized in the `timezone` wire field.
+  attr_reader :timezone
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalApproximateLocationMetadata
-    FIELDS = {
-      type: 'type',
-      country: 'country',
-      region: 'region',
-      city: 'city',
-      timezone: 'timezone'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ApproximateLocationType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ApproximateLocation.
-  # Typed representation of the `ApproximateLocation` API schema.
-  class ApproximateLocation
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalApproximateLocationMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalApproximateLocationMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalApproximateLocationMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [ApproximateLocationType] The type of location approximation. Always `approximate`.
-    attr_reader :type
-    # @return [String] Optional `string` value serialized in the `country` wire field.
-    attr_reader :country
-    # @return [String] Optional `string` value serialized in the `region` wire field.
-    attr_reader :region
-    # @return [String] Optional `string` value serialized in the `city` wire field.
-    attr_reader :city
-    # @return [String] Optional `string` value serialized in the `timezone` wire field.
-    attr_reader :timezone
+# Defines the ApproximateLocationType SDK namespace.
+module ApproximateLocationType
+  APPROXIMATE = 'approximate'
+  VALUES = ['approximate'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalAssignedRoleDetailsAssignmentSourcesItemMetadata
+  FIELDS = {
+    principal_id: "principal_id",
+    principal_type: "principal_type",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    principal_id
+    principal_type
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for AssignedRoleDetailsAssignmentSourcesItem.
+# Required object value serialized in the `assignment_sources[]` wire field.
+class AssignedRoleDetailsAssignmentSourcesItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalAssignedRoleDetailsAssignmentSourcesItemMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalAssignedRoleDetailsAssignmentSourcesItemMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalAssignedRoleDetailsAssignmentSourcesItemMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [String] Required `string` value serialized in the `principal_id` wire field.
+  attr_reader :principal_id
+  # @return [String] Required `string` value serialized in the `principal_type` wire field.
+  attr_reader :principal_type
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the ApproximateLocationType SDK namespace.
-  module ApproximateLocationType
-    APPROXIMATE = 'approximate'
-    VALUES = ['approximate'].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalAssignedRoleDetailsAssignmentSourcesItemMetadata
-    FIELDS = {
-      principal_id: 'principal_id',
-      principal_type: 'principal_type'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      principal_id
-      principal_type
-    ].freeze
-    DECODERS = {}.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalAssignedRoleDetailsMetadata
+  FIELDS = {
+    id: "id",
+    name: "name",
+    permissions: "permissions",
+    resource_type: "resource_type",
+    predefined_role: "predefined_role",
+    description: "description",
+    created_at: "created_at",
+    updated_at: "updated_at",
+    created_by: "created_by",
+    created_by_user_obj: "created_by_user_obj",
+    metadata: "metadata",
+    assignment_sources: "assignment_sources",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+    name
+    permissions
+    resource_type
+    predefined_role
+    description
+    created_at
+    updated_at
+    created_by
+    created_by_user_obj
+    metadata
+    assignment_sources
+  ].freeze
+  DECODERS = {
+    assignment_sources: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::AssignedRoleDetailsAssignmentSourcesItem.from_hash(item) }
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    description
+    created_at
+    updated_at
+    created_by
+    created_by_user_obj
+    metadata
+    assignment_sources
+  ].freeze
+end
+
+# API model for AssignedRoleDetails.
+# Detailed information about a role assignment entry returned when listing assignments.
+class AssignedRoleDetails
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalAssignedRoleDetailsMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalAssignedRoleDetailsMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalAssignedRoleDetailsMetadata::DECODERS
+
+  # @return [String] Identifier for the role.
+  attr_reader :id
+  # @return [String] Name of the role.
+  attr_reader :name
+  # @return [Array_of_String] Permissions associated with the role.
+  attr_reader :permissions
+  # @return [String] Resource type the role applies to.
+  attr_reader :resource_type
+  # @return [Boolean] Whether the role is predefined by OpenAI.
+  attr_reader :predefined_role
+  # @return [String] Description of the role.
+  attr_reader :description
+  # @return [Integer] When the role was created.
+  attr_reader :created_at
+  # @return [Integer] When the role was last updated.
+  attr_reader :updated_at
+  # @return [String] Identifier of the actor who created the role.
+  attr_reader :created_by
+  # @return [Hash] User details for the actor that created the role, when available.
+  attr_reader :created_by_user_obj
+  # @return [Hash] Arbitrary metadata stored on the role.
+  attr_reader :metadata
+  # @return [Array_of_AssignedRoleDetailsAssignmentSourcesItem] Principals from which the role assignment is inherited, when available.
+  attr_reader :assignment_sources
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for AssignedRoleDetailsAssignmentSourcesItem.
-  # Required object value serialized in the `assignment_sources[]` wire field.
-  class AssignedRoleDetailsAssignmentSourcesItem
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalAssignedRoleDetailsAssignmentSourcesItemMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalAssignedRoleDetailsAssignmentSourcesItemMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalAssignedRoleDetailsAssignmentSourcesItemMetadata::DECODERS
-
-    # @return [String] Required `string` value serialized in the `principal_id` wire field.
-    attr_reader :principal_id
-    # @return [String] Required `string` value serialized in the `principal_type` wire field.
-    attr_reader :principal_type
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalAssignedRoleDetailsMetadata::NULLABLE_FIELDS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalAssignedRoleDetailsMetadata
-    FIELDS = {
-      id: 'id',
-      name: 'name',
-      permissions: 'permissions',
-      resource_type: 'resource_type',
-      predefined_role: 'predefined_role',
-      description: 'description',
-      created_at: 'created_at',
-      updated_at: 'updated_at',
-      created_by: 'created_by',
-      created_by_user_obj: 'created_by_user_obj',
-      metadata: 'metadata',
-      assignment_sources: 'assignment_sources'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-      name
-      permissions
-      resource_type
-      predefined_role
-      description
-      created_at
-      updated_at
-      created_by
-      created_by_user_obj
-      metadata
-      assignment_sources
-    ].freeze
-    DECODERS = {
-      assignment_sources: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::AssignedRoleDetailsAssignmentSourcesItem.from_hash(item) }
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      description
-      created_at
-      updated_at
-      created_by
-      created_by_user_obj
-      metadata
-      assignment_sources
-    ].freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalAwsExternalStorageProviderResponseMetadata
+  FIELDS = {
+    type: "type",
+    account_id: "account_id",
+    region: "region",
+    bucket: "bucket",
+    role_arn: "role_arn",
+    external_id: "external_id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    account_id
+    region
+    bucket
+    role_arn
+    external_id
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::AwsExternalStorageProviderResponseType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for AwsExternalStorageProviderResponse.
+# Typed representation of the `AwsExternalStorageProviderResponse` API schema.
+class AwsExternalStorageProviderResponse
+  include Provider
+  include ExternalStorageResponseProvider
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalAwsExternalStorageProviderResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalAwsExternalStorageProviderResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalAwsExternalStorageProviderResponseMetadata::DECODERS
+
+  # @return [AwsExternalStorageProviderResponseType] Required enumerated value serialized in the `type` wire field.
+  attr_reader :type
+  # @return [String] Required `string` value serialized in the `account_id` wire field.
+  attr_reader :account_id
+  # @return [String] Required `string` value serialized in the `region` wire field.
+  attr_reader :region
+  # @return [String] Required `string` value serialized in the `bucket` wire field.
+  attr_reader :bucket
+  # @return [String] Required `string` value serialized in the `role_arn` wire field.
+  attr_reader :role_arn
+  # @return [String] Required `string` value serialized in the `external_id` wire field.
+  attr_reader :external_id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for AssignedRoleDetails.
-  # Detailed information about a role assignment entry returned when listing assignments.
-  class AssignedRoleDetails
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalAssignedRoleDetailsMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalAssignedRoleDetailsMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalAssignedRoleDetailsMetadata::DECODERS
-
-    # @return [String] Identifier for the role.
-    attr_reader :id
-    # @return [String] Name of the role.
-    attr_reader :name
-    # @return [Array_of_String] Permissions associated with the role.
-    attr_reader :permissions
-    # @return [String] Resource type the role applies to.
-    attr_reader :resource_type
-    # @return [Boolean] Whether the role is predefined by OpenAI.
-    attr_reader :predefined_role
-    # @return [String] Description of the role.
-    attr_reader :description
-    # @return [Integer] When the role was created.
-    attr_reader :created_at
-    # @return [Integer] When the role was last updated.
-    attr_reader :updated_at
-    # @return [String] Identifier of the actor who created the role.
-    attr_reader :created_by
-    # @return [Hash] User details for the actor that created the role, when available.
-    attr_reader :created_by_user_obj
-    # @return [Hash] Arbitrary metadata stored on the role.
-    attr_reader :metadata
-    # @return [Array_of_AssignedRoleDetailsAssignmentSourcesItem] Principals from which the role assignment is inherited, when available.
-    attr_reader :assignment_sources
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalAssignedRoleDetailsMetadata::NULLABLE_FIELDS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalAwsExternalStorageProviderResponseMetadata
-    FIELDS = {
-      type: 'type',
-      account_id: 'account_id',
-      region: 'region',
-      bucket: 'bucket',
-      role_arn: 'role_arn',
-      external_id: 'external_id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      account_id
-      region
-      bucket
-      role_arn
-      external_id
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::AwsExternalStorageProviderResponseType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the AwsExternalStorageProviderResponseType SDK namespace.
+module AwsExternalStorageProviderResponseType
+  AWS = 'aws'
+  VALUES = ['aws'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('AwsExternalStorageProviderResponseType', 'enum', "Unknown AwsExternalStorageProviderResponseType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalAzureExternalStorageProviderResponseMetadata
+  FIELDS = {
+    type: "type",
+    tenant_id: "tenant_id",
+    subscription_id: "subscription_id",
+    resource_group: "resource_group",
+    account_name: "account_name",
+    container: "container",
+    region: "region",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    tenant_id
+    subscription_id
+    resource_group
+    account_name
+    container
+    region
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::AzureExternalStorageProviderResponseType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for AzureExternalStorageProviderResponse.
+# Typed representation of the `AzureExternalStorageProviderResponse` API schema.
+class AzureExternalStorageProviderResponse
+  include Provider
+  include ExternalStorageResponseProvider
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalAzureExternalStorageProviderResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalAzureExternalStorageProviderResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalAzureExternalStorageProviderResponseMetadata::DECODERS
+
+  # @return [AzureExternalStorageProviderResponseType] Required enumerated value serialized in the `type` wire field.
+  attr_reader :type
+  # @return [String] Required `string` value serialized in the `tenant_id` wire field.
+  attr_reader :tenant_id
+  # @return [String] Required `string` value serialized in the `subscription_id` wire field.
+  attr_reader :subscription_id
+  # @return [String] Required `string` value serialized in the `resource_group` wire field.
+  attr_reader :resource_group
+  # @return [String] Required `string` value serialized in the `account_name` wire field.
+  attr_reader :account_name
+  # @return [String] Required `string` value serialized in the `container` wire field.
+  attr_reader :container
+  # @return [String] Required `string` value serialized in the `region` wire field.
+  attr_reader :region
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for AwsExternalStorageProviderResponse.
-  # Typed representation of the `AwsExternalStorageProviderResponse` API schema.
-  class AwsExternalStorageProviderResponse
-    include Provider
-    include ExternalStorageResponseProvider
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalAwsExternalStorageProviderResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalAwsExternalStorageProviderResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalAwsExternalStorageProviderResponseMetadata::DECODERS
-
-    # @return [AwsExternalStorageProviderResponseType] Required enumerated value serialized in the `type` wire field.
-    attr_reader :type
-    # @return [String] Required `string` value serialized in the `account_id` wire field.
-    attr_reader :account_id
-    # @return [String] Required `string` value serialized in the `region` wire field.
-    attr_reader :region
-    # @return [String] Required `string` value serialized in the `bucket` wire field.
-    attr_reader :bucket
-    # @return [String] Required `string` value serialized in the `role_arn` wire field.
-    attr_reader :role_arn
-    # @return [String] Required `string` value serialized in the `external_id` wire field.
-    attr_reader :external_id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the AwsExternalStorageProviderResponseType SDK namespace.
-  module AwsExternalStorageProviderResponseType
-    AWS = 'aws'
-    VALUES = ['aws'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('AwsExternalStorageProviderResponseType', 'enum', "Unknown AwsExternalStorageProviderResponseType: #{value}")
-    end
+# Defines the AzureExternalStorageProviderResponseType SDK namespace.
+module AzureExternalStorageProviderResponseType
+  AZURE = 'azure'
+  VALUES = ['azure'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('AzureExternalStorageProviderResponseType', 'enum', "Unknown AzureExternalStorageProviderResponseType: #{value}")
+  end
+end
+
+# Defines the CallableToolAllowedCaller SDK namespace.
+module CallableToolAllowedCaller
+  DIRECT = 'direct'
+  PROGRAMMATIC = 'programmatic'
+  VALUES = ['direct', 'programmatic'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalComparisonFilterMetadata
+  FIELDS = {
+    type: "type",
+    key: "key",
+    value: "value",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    key
+    value
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ComparisonFilterType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for ComparisonFilter.
+# A filter used to compare a specified attribute key to a given value using a defined comparison operation.
+class ComparisonFilter
+  include Filters
+  include CompoundFilterFiltersItem
+  include VectorStoreSearchRequestFilters
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalComparisonFilterMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalComparisonFilterMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalComparisonFilterMetadata::DECODERS
+
+  # @return [ComparisonFilterType] Specifies the comparison operator: `eq`, `ne`, `gt`, `gte`, `lt`, `lte`, `in`, `nin`. - `eq`: equals - `ne`: not equal - `gt`: greater than - `gte`: greater than or equal - `lt`: less than - `lte`: less than or equal - `in`: in - `nin`: not in
+  attr_reader :type
+  # @return [String] The key to compare against the value.
+  attr_reader :key
+  # @return [Object] The value to compare against the attribute key; supports string, number, or boolean types.
+  attr_reader :value
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalAzureExternalStorageProviderResponseMetadata
-    FIELDS = {
-      type: 'type',
-      tenant_id: 'tenant_id',
-      subscription_id: 'subscription_id',
-      resource_group: 'resource_group',
-      account_name: 'account_name',
-      container: 'container',
-      region: 'region'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      tenant_id
-      subscription_id
-      resource_group
-      account_name
-      container
-      region
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::AzureExternalStorageProviderResponseType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for AzureExternalStorageProviderResponse.
-  # Typed representation of the `AzureExternalStorageProviderResponse` API schema.
-  class AzureExternalStorageProviderResponse
-    include Provider
-    include ExternalStorageResponseProvider
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalAzureExternalStorageProviderResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalAzureExternalStorageProviderResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalAzureExternalStorageProviderResponseMetadata::DECODERS
+# Defines the ComparisonFilterType SDK namespace.
+module ComparisonFilterType
+  EQ = 'eq'
+  NE = 'ne'
+  GT = 'gt'
+  GTE = 'gte'
+  LT = 'lt'
+  LTE = 'lte'
+  IN = 'in'
+  NIN = 'nin'
+  VALUES = ['eq', 'ne', 'gt', 'gte', 'lt', 'lte', 'in', 'nin'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    # @return [AzureExternalStorageProviderResponseType] Required enumerated value serialized in the `type` wire field.
-    attr_reader :type
-    # @return [String] Required `string` value serialized in the `tenant_id` wire field.
-    attr_reader :tenant_id
-    # @return [String] Required `string` value serialized in the `subscription_id` wire field.
-    attr_reader :subscription_id
-    # @return [String] Required `string` value serialized in the `resource_group` wire field.
-    attr_reader :resource_group
-    # @return [String] Required `string` value serialized in the `account_name` wire field.
-    attr_reader :account_name
-    # @return [String] Required `string` value serialized in the `container` wire field.
-    attr_reader :container
-    # @return [String] Required `string` value serialized in the `region` wire field.
-    attr_reader :region
+    raise SdkValidationError.new('ComparisonFilterType', 'enum', "Unknown ComparisonFilterType: #{value}")
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalCompletionUsageCompletionTokensDetailsMetadata
+  FIELDS = {
+    accepted_prediction_tokens: "accepted_prediction_tokens",
+    audio_tokens: "audio_tokens",
+    reasoning_tokens: "reasoning_tokens",
+    text_tokens: "text_tokens",
+    rejected_prediction_tokens: "rejected_prediction_tokens",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for CompletionUsageCompletionTokensDetails.
+# Breakdown of tokens used in a completion.
+class CompletionUsageCompletionTokensDetails
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCompletionUsageCompletionTokensDetailsMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCompletionUsageCompletionTokensDetailsMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCompletionUsageCompletionTokensDetailsMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [Integer] When using Predicted Outputs, the number of tokens in the prediction that appeared in the completion.
+  attr_reader :accepted_prediction_tokens
+  # @return [Integer] Audio input tokens generated by the model.
+  attr_reader :audio_tokens
+  # @return [Integer] Tokens generated by the model for reasoning.
+  attr_reader :reasoning_tokens
+  # @return [Integer] Text output tokens generated by the model.
+  attr_reader :text_tokens
+  # @return [Integer] When using Predicted Outputs, the number of tokens in the prediction that did not appear in the completion. However, like reasoning tokens, these tokens are still counted in the total completion tokens for purposes of billing, output, and context window limits.
+  attr_reader :rejected_prediction_tokens
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the AzureExternalStorageProviderResponseType SDK namespace.
-  module AzureExternalStorageProviderResponseType
-    AZURE = 'azure'
-    VALUES = ['azure'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('AzureExternalStorageProviderResponseType', 'enum', "Unknown AzureExternalStorageProviderResponseType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the CallableToolAllowedCaller SDK namespace.
-  module CallableToolAllowedCaller
-    DIRECT = 'direct'
-    PROGRAMMATIC = 'programmatic'
-    VALUES = %w[direct programmatic].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalCompletionUsagePromptTokensDetailsMetadata
+  FIELDS = {
+    audio_tokens: "audio_tokens",
+    cached_tokens: "cached_tokens",
+    text_tokens: "text_tokens",
+    image_tokens: "image_tokens",
+    cache_write_tokens: "cache_write_tokens",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for CompletionUsagePromptTokensDetails.
+# Breakdown of tokens used in the prompt.
+class CompletionUsagePromptTokensDetails
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCompletionUsagePromptTokensDetailsMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCompletionUsagePromptTokensDetailsMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCompletionUsagePromptTokensDetailsMetadata::DECODERS
+
+  # @return [Integer] Audio input tokens present in the prompt.
+  attr_reader :audio_tokens
+  # @return [Integer] Cached tokens present in the prompt.
+  attr_reader :cached_tokens
+  # @return [Integer] Text input tokens present in the prompt.
+  attr_reader :text_tokens
+  # @return [Integer] Image input tokens present in the prompt.
+  attr_reader :image_tokens
+  # @return [Integer] The unadjusted number of prompt tokens written to cache.
+  attr_reader :cache_write_tokens
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalComparisonFilterMetadata
-    FIELDS = {
-      type: 'type',
-      key: 'key',
-      value: 'value'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      key
-      value
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ComparisonFilterType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ComparisonFilter.
-  # A filter used to compare a specified attribute key to a given value using a defined comparison operation.
-  class ComparisonFilter
-    include Filters
-    include CompoundFilterFiltersItem
-    include VectorStoreSearchRequestFilters
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalComparisonFilterMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalComparisonFilterMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalComparisonFilterMetadata::DECODERS
+# Internal model hydration metadata.
+class SdkInternalCompletionUsageMetadata
+  FIELDS = {
+    completion_tokens: "completion_tokens",
+    prompt_tokens: "prompt_tokens",
+    total_tokens: "total_tokens",
+    completion_tokens_details: "completion_tokens_details",
+    prompt_tokens_details: "prompt_tokens_details",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    completion_tokens
+    prompt_tokens
+    total_tokens
+  ].freeze
+  DECODERS = {
+    completion_tokens_details: lambda do |value|
+      ::OctridevOpenai::CompletionUsageCompletionTokensDetails.from_hash(value)
+    end,
+    prompt_tokens_details: lambda do |value|
+      ::OctridevOpenai::CompletionUsagePromptTokensDetails.from_hash(value)
+    end,
+  }.freeze
+end
 
-    # @return [ComparisonFilterType] Specifies the comparison operator: `eq`, `ne`, `gt`, `gte`, `lt`, `lte`, `in`, `nin`. - `eq`: equals - `ne`: not equal - `gt`: greater than - `gte`: greater than or equal - `lt`: less than - `lte`: less than or equal - `in`: in - `nin`: not in
-    attr_reader :type
-    # @return [String] The key to compare against the value.
-    attr_reader :key
-    # @return [Object] The value to compare against the attribute key; supports string, number, or boolean types.
-    attr_reader :value
+# API model for CompletionUsage.
+# Usage statistics for the completion request.
+class CompletionUsage
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCompletionUsageMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCompletionUsageMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCompletionUsageMetadata::DECODERS
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+  # @return [Integer] Number of tokens in the generated completion.
+  attr_reader :completion_tokens
+  # @return [Integer] Number of tokens in the prompt.
+  attr_reader :prompt_tokens
+  # @return [Integer] Total number of tokens used in the request (prompt + completion).
+  attr_reader :total_tokens
+  # @return [CompletionUsageCompletionTokensDetails] Breakdown of tokens used in a completion.
+  attr_reader :completion_tokens_details
+  # @return [CompletionUsagePromptTokensDetails] Breakdown of tokens used in the prompt.
+  attr_reader :prompt_tokens_details
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the ComparisonFilterType SDK namespace.
-  module ComparisonFilterType
-    EQ = 'eq'
-    NE = 'ne'
-    GT = 'gt'
-    GTE = 'gte'
-    LT = 'lt'
-    LTE = 'lte'
-    IN = 'in'
-    NIN = 'nin'
-    VALUES = %w[eq ne gt gte lt lte in nin].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('ComparisonFilterType', 'enum', "Unknown ComparisonFilterType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalCompletionUsageCompletionTokensDetailsMetadata
-    FIELDS = {
-      accepted_prediction_tokens: 'accepted_prediction_tokens',
-      audio_tokens: 'audio_tokens',
-      reasoning_tokens: 'reasoning_tokens',
-      text_tokens: 'text_tokens',
-      rejected_prediction_tokens: 'rejected_prediction_tokens'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {}.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalCoordParamMetadata
+  FIELDS = {
+    x_coordinate: "x",
+    y_coordinate: "y",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    x_coordinate
+    y_coordinate
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for CoordParam.
+# An x/y coordinate pair, e.g. `{ x: 100, y: 200 }`.
+class CoordParam
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCoordParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCoordParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCoordParamMetadata::DECODERS
+
+  # @return [Integer] The x-coordinate.
+  attr_reader :x_coordinate
+  # @return [Integer] The y-coordinate.
+  attr_reader :y_coordinate
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for CompletionUsageCompletionTokensDetails.
-  # Breakdown of tokens used in a completion.
-  class CompletionUsageCompletionTokensDetails
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCompletionUsageCompletionTokensDetailsMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCompletionUsageCompletionTokensDetailsMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCompletionUsageCompletionTokensDetailsMetadata::DECODERS
-
-    # @return [Integer] When using Predicted Outputs, the number of tokens in the prediction that appeared in the completion.
-    attr_reader :accepted_prediction_tokens
-    # @return [Integer] Audio input tokens generated by the model.
-    attr_reader :audio_tokens
-    # @return [Integer] Tokens generated by the model for reasoning.
-    attr_reader :reasoning_tokens
-    # @return [Integer] Text output tokens generated by the model.
-    attr_reader :text_tokens
-    # @return [Integer] When using Predicted Outputs, the number of tokens in the prediction that did not appear in the completion. However, like reasoning tokens, these tokens are still counted in the total completion tokens for purposes of billing, output, and context window limits.
-    attr_reader :rejected_prediction_tokens
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalCompletionUsagePromptTokensDetailsMetadata
-    FIELDS = {
-      audio_tokens: 'audio_tokens',
-      cached_tokens: 'cached_tokens',
-      text_tokens: 'text_tokens',
-      image_tokens: 'image_tokens',
-      cache_write_tokens: 'cache_write_tokens'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {}.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # API model for CompletionUsagePromptTokensDetails.
-  # Breakdown of tokens used in the prompt.
-  class CompletionUsagePromptTokensDetails
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCompletionUsagePromptTokensDetailsMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCompletionUsagePromptTokensDetailsMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCompletionUsagePromptTokensDetailsMetadata::DECODERS
-
-    # @return [Integer] Audio input tokens present in the prompt.
-    attr_reader :audio_tokens
-    # @return [Integer] Cached tokens present in the prompt.
-    attr_reader :cached_tokens
-    # @return [Integer] Text input tokens present in the prompt.
-    attr_reader :text_tokens
-    # @return [Integer] Image input tokens present in the prompt.
-    attr_reader :image_tokens
-    # @return [Integer] The unadjusted number of prompt tokens written to cache.
-    attr_reader :cache_write_tokens
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalCompletionUsageMetadata
-    FIELDS = {
-      completion_tokens: 'completion_tokens',
-      prompt_tokens: 'prompt_tokens',
-      total_tokens: 'total_tokens',
-      completion_tokens_details: 'completion_tokens_details',
-      prompt_tokens_details: 'prompt_tokens_details'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      completion_tokens
-      prompt_tokens
-      total_tokens
-    ].freeze
-    DECODERS = {
-      completion_tokens_details: lambda do |value|
-        ::OctridevOpenai::CompletionUsageCompletionTokensDetails.from_hash(value)
-      end,
-      prompt_tokens_details: lambda do |value|
-        ::OctridevOpenai::CompletionUsagePromptTokensDetails.from_hash(value)
-      end
-    }.freeze
-  end
-
-  # API model for CompletionUsage.
-  # Usage statistics for the completion request.
-  class CompletionUsage
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCompletionUsageMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCompletionUsageMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCompletionUsageMetadata::DECODERS
-
-    # @return [Integer] Number of tokens in the generated completion.
-    attr_reader :completion_tokens
-    # @return [Integer] Number of tokens in the prompt.
-    attr_reader :prompt_tokens
-    # @return [Integer] Total number of tokens used in the request (prompt + completion).
-    attr_reader :total_tokens
-    # @return [CompletionUsageCompletionTokensDetails] Breakdown of tokens used in a completion.
-    attr_reader :completion_tokens_details
-    # @return [CompletionUsagePromptTokensDetails] Breakdown of tokens used in the prompt.
-    attr_reader :prompt_tokens_details
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalCoordParamMetadata
-    FIELDS = {
-      x_coordinate: 'x',
-      y_coordinate: 'y'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      x_coordinate
-      y_coordinate
-    ].freeze
-    DECODERS = {}.freeze
-  end
-
-  # API model for CoordParam.
-  # An x/y coordinate pair, e.g. `{ x: 100, y: 200 }`.
-  class CoordParam
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCoordParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCoordParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCoordParamMetadata::DECODERS
-
-    # @return [Integer] The x-coordinate.
-    attr_reader :x_coordinate
-    # @return [Integer] The y-coordinate.
-    attr_reader :y_coordinate
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalCreateModelResponsePropertiesMetadata
-    FIELDS = {
-      metadata: 'metadata',
-      top_logprobs: 'top_logprobs',
-      temperature: 'temperature',
-      top_p: 'top_p',
-      user: 'user',
-      safety_identifier: 'safety_identifier',
-      prompt_cache_key: 'prompt_cache_key',
-      prompt_cache_retention: 'prompt_cache_retention',
-      prompt_cache_options: 'prompt_cache_options'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {
-      metadata: lambda do |value|
-        ::OctridevOpenai::Metadata.from_hash(value)
-      end,
-      prompt_cache_retention: lambda do |value|
-        ::OctridevOpenai::ModelResponsePropertiesPromptCacheRetentionVariant0.from_value(value)
-      end,
-      prompt_cache_options: lambda do |value|
-        ::OctridevOpenai::PromptCacheOptionsParam.from_hash(value)
-      end
-    }.freeze
-  end
+# Internal model hydration metadata.
+class SdkInternalCreateModelResponsePropertiesMetadata
+  FIELDS = {
+    metadata: "metadata",
+    top_logprobs: "top_logprobs",
+    temperature: "temperature",
+    top_p: "top_p",
+    user: "user",
+    safety_identifier: "safety_identifier",
+    prompt_cache_key: "prompt_cache_key",
+    prompt_cache_retention: "prompt_cache_retention",
+    prompt_cache_options: "prompt_cache_options",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+    metadata: lambda do |value|
+      ::OctridevOpenai::Metadata.from_hash(value)
+    end,
+    prompt_cache_retention: lambda do |value|
+      ::OctridevOpenai::ModelResponsePropertiesPromptCacheRetentionVariant0.from_value(value)
+    end,
+    prompt_cache_options: lambda do |value|
+      ::OctridevOpenai::PromptCacheOptionsParam.from_hash(value)
+    end,
+  }.freeze
+end
 end

@@ -18,20 +18,21 @@ module OctridevOpenai
         file_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
           [
-            '/containers/',
+            "/containers/",
             SdkClient.encode_path_segment(container_id),
-            '/files/',
+            "/files/",
             SdkClient.encode_path_segment(file_id),
-            '/content'
+            "/content"
           ].join,
           config: config,
           decoder: :bytes,
           operation_id: 'retrieve_container_file_content',
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
     end

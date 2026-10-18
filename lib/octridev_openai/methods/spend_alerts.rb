@@ -13,7 +13,7 @@ module OctridevOpenai
       module ListProjectSpendAlertsParameter
         ASC = 'asc'
         DESC = 'desc'
-        VALUES = %w[asc desc].freeze
+        VALUES = ['asc', 'desc'].freeze
         def self.from_value(value)
           value
         end
@@ -23,7 +23,7 @@ module OctridevOpenai
       module ListOrganizationSpendAlertsParameter
         ASC = 'asc'
         DESC = 'desc'
-        VALUES = %w[asc desc].freeze
+        VALUES = ['asc', 'desc'].freeze
         def self.from_value(value)
           value
         end
@@ -51,31 +51,32 @@ module OctridevOpenai
         before: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 0, max: 100) }
 
         SdkClient.request(
           'GET',
           [
-            '/organization/projects/',
+            "/organization/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/spend_alerts'
+            "/spend_alerts"
           ].join,
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'order' => QueryValue.new(order, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
-            'before' => QueryValue.new(before, style: 'form', explode: true)
+            'before' => QueryValue.new(before, style: 'form', explode: true),
           },
           return_type: ::OctridevOpenai::ProjectSpendAlertListResource,
           decoder: :json,
           operation_id: 'list_project_spend_alerts',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
-      ListProjectSpendAlertsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+    ListProjectSpendAlertsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists spend alerts configured for a project, with cursor-based pagination. Use `limit` to set the page size, `order` to choose the sort direction, and `after` or `before` to move through the results.
       #
@@ -113,13 +114,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             items.each { |item| y << item }
             break unless page.has_more
-
             next_cursor = page.last_id
             break if next_cursor.nil?
-
             cursor = next_cursor
           end
         end
@@ -148,12 +146,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListProjectSpendAlertsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
-
             cursor = next_cursor
           end
         end
@@ -180,27 +176,28 @@ module OctridevOpenai
         notification_channel:,
         request_options: nil
       )
+
         Validation.validate_range('threshold_amount', threshold_amount, min: 0)
 
         SdkClient.request(
           'POST',
           [
-            '/organization/projects/',
+            "/organization/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/spend_alerts'
+            "/spend_alerts"
           ].join,
           config: config,
           body: {
             'threshold_amount' => threshold_amount,
             'currency' => currency,
             'interval' => interval,
-            'notification_channel' => notification_channel
+            'notification_channel' => notification_channel,
           },
           return_type: ::OctridevOpenai::ProjectSpendAlert,
           decoder: :json,
           operation_id: 'create_project_spend_alert',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -216,12 +213,13 @@ module OctridevOpenai
         alert_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
           [
-            '/organization/projects/',
+            "/organization/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/spend_alerts/',
+            "/spend_alerts/",
             SdkClient.encode_path_segment(alert_id)
           ].join,
           config: config,
@@ -229,7 +227,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'retrieve_project_spend_alert',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -256,14 +254,15 @@ module OctridevOpenai
         notification_channel:,
         request_options: nil
       )
+
         Validation.validate_range('threshold_amount', threshold_amount, min: 0)
 
         SdkClient.request(
           'POST',
           [
-            '/organization/projects/',
+            "/organization/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/spend_alerts/',
+            "/spend_alerts/",
             SdkClient.encode_path_segment(alert_id)
           ].join,
           config: config,
@@ -271,13 +270,13 @@ module OctridevOpenai
             'threshold_amount' => threshold_amount,
             'currency' => currency,
             'interval' => interval,
-            'notification_channel' => notification_channel
+            'notification_channel' => notification_channel,
           },
           return_type: ::OctridevOpenai::ProjectSpendAlert,
           decoder: :json,
           operation_id: 'update_project_spend_alert',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -293,12 +292,13 @@ module OctridevOpenai
         alert_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'DELETE',
           [
-            '/organization/projects/',
+            "/organization/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/spend_alerts/',
+            "/spend_alerts/",
             SdkClient.encode_path_segment(alert_id)
           ].join,
           config: config,
@@ -306,7 +306,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_project_spend_alert',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -330,27 +330,28 @@ module OctridevOpenai
         before: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 0, max: 100) }
 
         SdkClient.request(
           'GET',
-          '/organization/spend_alerts',
+          "/organization/spend_alerts",
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'order' => QueryValue.new(order, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
-            'before' => QueryValue.new(before, style: 'form', explode: true)
+            'before' => QueryValue.new(before, style: 'form', explode: true),
           },
           return_type: ::OctridevOpenai::OrganizationSpendAlertListResource,
           decoder: :json,
           operation_id: 'list_organization_spend_alerts',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
-      ListOrganizationSpendAlertsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+    ListOrganizationSpendAlertsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists spend alerts configured for the organization. Use `limit` and `order` to control the result page, and use `after` or `before` to navigate from a spend alert in a previous response. The response includes cursor IDs and a `has_more` flag for pagination.
       #
@@ -385,13 +386,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             items.each { |item| y << item }
             break unless page.has_more
-
             next_cursor = page.last_id
             break if next_cursor.nil?
-
             cursor = next_cursor
           end
         end
@@ -418,12 +416,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListOrganizationSpendAlertsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
-
             cursor = next_cursor
           end
         end
@@ -448,23 +444,24 @@ module OctridevOpenai
         notification_channel:,
         request_options: nil
       )
+
         Validation.validate_range('threshold_amount', threshold_amount, min: 0)
 
         SdkClient.request(
           'POST',
-          '/organization/spend_alerts',
+          "/organization/spend_alerts",
           config: config,
           body: {
             'threshold_amount' => threshold_amount,
             'currency' => currency,
             'interval' => interval,
-            'notification_channel' => notification_channel
+            'notification_channel' => notification_channel,
           },
           return_type: ::OctridevOpenai::OrganizationSpendAlert,
           decoder: :json,
           operation_id: 'create_organization_spend_alert',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse },
         ).data
       end
 
@@ -478,10 +475,11 @@ module OctridevOpenai
         alert_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
           [
-            '/organization/spend_alerts/',
+            "/organization/spend_alerts/",
             SdkClient.encode_path_segment(alert_id)
           ].join,
           config: config,
@@ -489,7 +487,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'retrieve_organization_spend_alert',
           request_options: request_options,
-          errors: { '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
+          errors: { '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -514,12 +512,13 @@ module OctridevOpenai
         notification_channel:,
         request_options: nil
       )
+
         Validation.validate_range('threshold_amount', threshold_amount, min: 0)
 
         SdkClient.request(
           'POST',
           [
-            '/organization/spend_alerts/',
+            "/organization/spend_alerts/",
             SdkClient.encode_path_segment(alert_id)
           ].join,
           config: config,
@@ -527,13 +526,13 @@ module OctridevOpenai
             'threshold_amount' => threshold_amount,
             'currency' => currency,
             'interval' => interval,
-            'notification_channel' => notification_channel
+            'notification_channel' => notification_channel,
           },
           return_type: ::OctridevOpenai::OrganizationSpendAlert,
           decoder: :json,
           operation_id: 'update_organization_spend_alert',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -547,10 +546,11 @@ module OctridevOpenai
         alert_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'DELETE',
           [
-            '/organization/spend_alerts/',
+            "/organization/spend_alerts/",
             SdkClient.encode_path_segment(alert_id)
           ].join,
           config: config,
@@ -558,7 +558,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_organization_spend_alert',
           request_options: request_options,
-          errors: { '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
+          errors: { '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
     end

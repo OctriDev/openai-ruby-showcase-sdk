@@ -13,7 +13,7 @@ module OctridevOpenai
       module ListFineTuningCheckpointPermissionsParameter
         ASCENDING = 'ascending'
         DESCENDING = 'descending'
-        VALUES = %w[ascending descending].freeze
+        VALUES = ['ascending', 'descending'].freeze
         def self.from_value(value)
           value
         end
@@ -39,20 +39,21 @@ module OctridevOpenai
         item: NOT_GIVEN,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
-          '/fine_tuning/alpha/graders/run',
+          "/fine_tuning/alpha/graders/run",
           config: config,
           body: {
             'grader' => grader,
             'model_sample' => model_sample,
-            'item' => item
+            'item' => item,
           },
           return_type: ::OctridevOpenai::RunGraderResponse,
           decoder: :json,
           operation_id: 'run_grader',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -67,18 +68,19 @@ module OctridevOpenai
         grader:,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
-          '/fine_tuning/alpha/graders/validate',
+          "/fine_tuning/alpha/graders/validate",
           config: config,
           body: {
-            'grader' => grader
+            'grader' => grader,
           },
           return_type: ::OctridevOpenai::ValidateGraderResponse,
           decoder: :json,
           operation_id: 'validate_grader',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -103,29 +105,30 @@ module OctridevOpenai
         order: NOT_GIVEN,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
           [
-            '/fine_tuning/checkpoints/',
+            "/fine_tuning/checkpoints/",
             SdkClient.encode_path_segment(fine_tuned_model_checkpoint),
-            '/permissions'
+            "/permissions"
           ].join,
           config: config,
           query: {
             'project_id' => QueryValue.new(project_id, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
-            'order' => QueryValue.new(order, style: 'form', explode: true)
+            'order' => QueryValue.new(order, style: 'form', explode: true),
           },
           return_type: ::OctridevOpenai::ListFineTuningCheckpointPermissionResponse,
           decoder: :json,
           operation_id: 'list_fine_tuning_checkpoint_permissions',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
-      ListFineTuningCheckpointPermissionsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+    ListFineTuningCheckpointPermissionsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists permissions for a fine-tuned model checkpoint. Use `project_id` to filter permissions by project and `after` to continue from a permission ID; this endpoint requires an admin API key.
       #
@@ -162,13 +165,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             items.each { |item| y << item }
             break unless page.has_more
-
             next_cursor = page.last_id
             break if next_cursor.nil?
-
             cursor = next_cursor
           end
         end
@@ -197,12 +197,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListFineTuningCheckpointPermissionsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
-
             cursor = next_cursor
           end
         end
@@ -222,22 +220,23 @@ module OctridevOpenai
         project_ids:,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
           [
-            '/fine_tuning/checkpoints/',
+            "/fine_tuning/checkpoints/",
             SdkClient.encode_path_segment(fine_tuned_model_checkpoint),
-            '/permissions'
+            "/permissions"
           ].join,
           config: config,
           body: {
-            'project_ids' => project_ids
+            'project_ids' => project_ids,
           },
           return_type: ::OctridevOpenai::ListFineTuningCheckpointPermissionResponse,
           decoder: :json,
           operation_id: 'create_fine_tuning_checkpoint_permission',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -255,12 +254,13 @@ module OctridevOpenai
         permission_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'DELETE',
           [
-            '/fine_tuning/checkpoints/',
+            "/fine_tuning/checkpoints/",
             SdkClient.encode_path_segment(fine_tuned_model_checkpoint),
-            '/permissions/',
+            "/permissions/",
             SdkClient.encode_path_segment(permission_id)
           ].join,
           config: config,
@@ -268,7 +268,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_fine_tuning_checkpoint_permission',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -323,13 +323,14 @@ module OctridevOpenai
         metadata: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.if_given(suffix) { Validation.validate_length('suffix', suffix, min: 1, max: 64) }
 
-        Validation.if_given(seed) { Validation.validate_range('seed', seed, min: 0, max: 2_147_483_647) }
+        Validation.if_given(seed) { Validation.validate_range('seed', seed, min: 0, max: 2147483647) }
 
         SdkClient.request(
           'POST',
-          '/fine_tuning/jobs',
+          "/fine_tuning/jobs",
           config: config,
           body: {
             'model' => model,
@@ -340,13 +341,13 @@ module OctridevOpenai
             'integrations' => integrations,
             'seed' => seed,
             'method' => method,
-            'metadata' => metadata
+            'metadata' => metadata,
           },
           return_type: ::OctridevOpenai::FineTuningJob,
           decoder: :json,
           operation_id: 'create_fine_tuning_job',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -371,20 +372,21 @@ module OctridevOpenai
         metadata: NOT_GIVEN,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
-          '/fine_tuning/jobs',
+          "/fine_tuning/jobs",
           config: config,
           query: {
             'after' => QueryValue.new(after, style: 'form', explode: true),
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
-            'metadata' => QueryValue.new(metadata, style: 'deepObject', explode: true)
+            'metadata' => QueryValue.new(metadata, style: 'deepObject', explode: true),
           },
           return_type: ::OctridevOpenai::ListPaginatedFineTuningJobsResponse,
           decoder: :json,
           operation_id: 'list_fine_tuning_jobs',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -398,10 +400,11 @@ module OctridevOpenai
         fine_tuning_job_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
           [
-            '/fine_tuning/jobs/',
+            "/fine_tuning/jobs/",
             SdkClient.encode_path_segment(fine_tuning_job_id)
           ].join,
           config: config,
@@ -409,7 +412,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'retrieve_fine_tuning_job',
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -423,19 +426,20 @@ module OctridevOpenai
         fine_tuning_job_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
           [
-            '/fine_tuning/jobs/',
+            "/fine_tuning/jobs/",
             SdkClient.encode_path_segment(fine_tuning_job_id),
-            '/cancel'
+            "/cancel"
           ].join,
           config: config,
           return_type: ::OctridevOpenai::FineTuningJob,
           decoder: :json,
           operation_id: 'cancel_fine_tuning_job',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -455,27 +459,28 @@ module OctridevOpenai
         limit: NOT_GIVEN,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
           [
-            '/fine_tuning/jobs/',
+            "/fine_tuning/jobs/",
             SdkClient.encode_path_segment(fine_tuning_job_id),
-            '/checkpoints'
+            "/checkpoints"
           ].join,
           config: config,
           query: {
             'after' => QueryValue.new(after, style: 'form', explode: true),
-            'limit' => QueryValue.new(limit, style: 'form', explode: true)
+            'limit' => QueryValue.new(limit, style: 'form', explode: true),
           },
           return_type: ::OctridevOpenai::ListFineTuningJobCheckpointsResponse,
           decoder: :json,
           operation_id: 'list_fine_tuning_job_checkpoints',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
-      ListFineTuningJobCheckpointsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+    ListFineTuningJobCheckpointsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists checkpoints produced by a fine-tuning job. Use `fine_tuning_job_id` to select the job, and use `after` to continue from a checkpoint on a previous page. Set `limit` to control the number of checkpoints retrieved.
       #
@@ -505,13 +510,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             items.each { |item| y << item }
             break unless page.has_more
-
             next_cursor = page.last_id
             break if next_cursor.nil?
-
             cursor = next_cursor
           end
         end
@@ -536,12 +538,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListFineTuningJobCheckpointsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
-
             cursor = next_cursor
           end
         end

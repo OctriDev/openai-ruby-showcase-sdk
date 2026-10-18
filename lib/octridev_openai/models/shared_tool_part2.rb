@@ -5,133 +5,130 @@
 
 # shared_tool domain models (part 2)
 module OctridevOpenai
-  # Defines the ToolSearchOutputNamespaceToolParamType SDK namespace.
-  module ToolSearchOutputNamespaceToolParamType
-    NAMESPACE = 'namespace'
-    VALUES = ['namespace'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+# Defines the ToolSearchOutputNamespaceToolParamType SDK namespace.
+module ToolSearchOutputNamespaceToolParamType
+  NAMESPACE = 'namespace'
+  VALUES = ['namespace'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-      raise SdkValidationError.new('ToolSearchOutputNamespaceToolParamType', 'enum', "Unknown ToolSearchOutputNamespaceToolParamType: #{value}")
-    end
+    raise SdkValidationError.new('ToolSearchOutputNamespaceToolParamType', 'enum', "Unknown ToolSearchOutputNamespaceToolParamType: #{value}")
+  end
+end
+
+# Defines the ToolSearchOutputNamespaceToolParamToolsItem SDK namespace.
+module ToolSearchOutputNamespaceToolParamToolsItem
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    mapping = { "function" => ToolSearchOutputFunctionToolParam, "custom" => CustomToolParam }
+    type = mapping[hash["type"]]
+    return type.from_hash(hash) if type
+
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+
+    raise SdkValidationError.new('ToolSearchOutputNamespaceToolParamToolsItem', 'variant', "Unknown ToolSearchOutputNamespaceToolParamToolsItem discriminator: #{hash["type"].inspect}")
+  end
+end
+
+# Defines the ToolSearchOutputTool SDK namespace.
+module ToolSearchOutputTool
+  DISCRIMINATOR_MAPPING = {
+    "function" => -> { FunctionTool },
+    "file_search" => -> { FileSearchTool },
+    "computer" => -> { ComputerTool },
+    "computer_use_preview" => -> { ComputerUsePreviewTool },
+    "web_search" => -> { WebSearchTool },
+    "web_search_2025_08_26" => -> { WebSearchTool },
+    "mcp" => -> { MCPTool },
+    "code_interpreter" => -> { CodeInterpreterTool },
+    "programmatic_tool_calling" => -> { ProgrammaticToolCallingParam },
+    "image_generation" => -> { ImageGenTool },
+    "local_shell" => -> { LocalShellToolParam },
+    "shell" => -> { FunctionShellToolParam },
+    "custom" => -> { CustomToolParam },
+    "namespace" => -> { ToolSearchOutputNamespaceToolParam },
+    "tool_search" => -> { ToolSearchToolParam },
+    "web_search_preview" => -> { WebSearchPreviewTool },
+    "web_search_preview_2025_03_11" => -> { WebSearchPreviewTool },
+    "apply_patch" => -> { ApplyPatchToolParam },
+  }.freeze
+
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
+
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+
+    raise SdkValidationError.new('ToolSearchOutputTool', 'variant', "Unknown ToolSearchOutputTool discriminator: #{hash["type"].inspect}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalToolSearchToolParamMetadata
+  FIELDS = {
+    type: "type",
+    execution: "execution",
+    description: "description",
+    parameters: "parameters",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ToolSearchToolParamType.from_value(value)
+    end,
+    execution: lambda do |value|
+      ::OctridevOpenai::ToolSearchExecutionType.from_value(value)
+    end,
+    parameters: lambda do |value|
+      ::OctridevOpenai::EmptyModelParam.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for ToolSearchToolParam.
+# Hosted or BYOT tool search configuration for deferred tools.
+class ToolSearchToolParam
+  include Tool
+  include ToolSearchOutputTool
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalToolSearchToolParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalToolSearchToolParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalToolSearchToolParamMetadata::DECODERS
+
+  # @return [ToolSearchToolParamType] The type of the tool. Always `tool_search`.
+  attr_reader :type
+  # @return [ToolSearchExecutionType] Whether tool search is executed by the server or by the client.
+  attr_reader :execution
+  # @return [String] Optional `string` value serialized in the `description` wire field.
+  attr_reader :description
+  # @return [EmptyModelParam] Optional API value serialized in the `parameters` wire field.
+  attr_reader :parameters
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the ToolSearchOutputNamespaceToolParamToolsItem SDK namespace.
-  module ToolSearchOutputNamespaceToolParamToolsItem
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
-
-      mapping = { 'function' => ToolSearchOutputFunctionToolParam, 'custom' => CustomToolParam }
-      type = mapping[hash['type']]
-      return type.from_hash(hash) if type
-
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
-
-      raise SdkValidationError.new('ToolSearchOutputNamespaceToolParamToolsItem', 'variant', "Unknown ToolSearchOutputNamespaceToolParamToolsItem discriminator: #{hash['type'].inspect}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the ToolSearchOutputTool SDK namespace.
-  module ToolSearchOutputTool
-    DISCRIMINATOR_MAPPING = {
-      'function' => -> { FunctionTool },
-      'file_search' => -> { FileSearchTool },
-      'computer' => -> { ComputerTool },
-      'computer_use_preview' => -> { ComputerUsePreviewTool },
-      'web_search' => -> { WebSearchTool },
-      'web_search_2025_08_26' => -> { WebSearchTool },
-      'mcp' => -> { MCPTool },
-      'code_interpreter' => -> { CodeInterpreterTool },
-      'programmatic_tool_calling' => -> { ProgrammaticToolCallingParam },
-      'image_generation' => -> { ImageGenTool },
-      'local_shell' => -> { LocalShellToolParam },
-      'shell' => -> { FunctionShellToolParam },
-      'custom' => -> { CustomToolParam },
-      'namespace' => -> { ToolSearchOutputNamespaceToolParam },
-      'tool_search' => -> { ToolSearchToolParam },
-      'web_search_preview' => -> { WebSearchPreviewTool },
-      'web_search_preview_2025_03_11' => -> { WebSearchPreviewTool },
-      'apply_patch' => -> { ApplyPatchToolParam }
-    }.freeze
-
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
-
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
-
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
-
-      raise SdkValidationError.new('ToolSearchOutputTool', 'variant', "Unknown ToolSearchOutputTool discriminator: #{hash['type'].inspect}")
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Internal model hydration metadata.
-  class SdkInternalToolSearchToolParamMetadata
-    FIELDS = {
-      type: 'type',
-      execution: 'execution',
-      description: 'description',
-      parameters: 'parameters'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ToolSearchToolParamType.from_value(value)
-      end,
-      execution: lambda do |value|
-        ::OctridevOpenai::ToolSearchExecutionType.from_value(value)
-      end,
-      parameters: lambda do |value|
-        ::OctridevOpenai::EmptyModelParam.from_hash(value)
-      end
-    }.freeze
+# Defines the ToolSearchToolParamType SDK namespace.
+module ToolSearchToolParamType
+  TOOL_SEARCH = 'tool_search'
+  VALUES = ['tool_search'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('ToolSearchToolParamType', 'enum', "Unknown ToolSearchToolParamType: #{value}")
   end
-
-  # API model for ToolSearchToolParam.
-  # Hosted or BYOT tool search configuration for deferred tools.
-  class ToolSearchToolParam
-    include Tool
-    include ToolSearchOutputTool
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalToolSearchToolParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalToolSearchToolParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalToolSearchToolParamMetadata::DECODERS
-
-    # @return [ToolSearchToolParamType] The type of the tool. Always `tool_search`.
-    attr_reader :type
-    # @return [ToolSearchExecutionType] Whether tool search is executed by the server or by the client.
-    attr_reader :execution
-    # @return [String] Optional `string` value serialized in the `description` wire field.
-    attr_reader :description
-    # @return [EmptyModelParam] Optional API value serialized in the `parameters` wire field.
-    attr_reader :parameters
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the ToolSearchToolParamType SDK namespace.
-  module ToolSearchToolParamType
-    TOOL_SEARCH = 'tool_search'
-    VALUES = ['tool_search'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('ToolSearchToolParamType', 'enum', "Unknown ToolSearchToolParamType: #{value}")
-    end
-  end
+end
 end

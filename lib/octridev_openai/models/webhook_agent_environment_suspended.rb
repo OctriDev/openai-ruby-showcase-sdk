@@ -5,74 +5,74 @@
 
 # webhook_agent_environment_suspended domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalWebhookAgentEnvironmentSuspendedMetadata
-    FIELDS = {
-      id: 'id',
-      object: 'object',
-      created_at: 'created_at',
-      type: 'type',
-      data: 'data'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-      object
-      created_at
-      type
-      data
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::WebhookAgentSessionEnvelopeObject.from_value(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::WebhookAgentEnvironmentSuspendedVariant1Type.from_value(value)
-      end,
-      data: lambda do |value|
-        ::OctridevOpenai::AgentEnvironmentEvent.from_hash(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalWebhookAgentEnvironmentSuspendedMetadata
+  FIELDS = {
+    id: "id",
+    object: "object",
+    created_at: "created_at",
+    type: "type",
+    data: "data",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+    object
+    created_at
+    type
+    data
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::WebhookAgentSessionEnvelopeObject.from_value(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::WebhookAgentEnvironmentSuspendedVariant1Type.from_value(value)
+    end,
+    data: lambda do |value|
+      ::OctridevOpenai::AgentEnvironmentEvent.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for WebhookAgentEnvironmentSuspended.
+# Sent when an agent environment is suspended and can resume from a snapshot.
+class WebhookAgentEnvironmentSuspended
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalWebhookAgentEnvironmentSuspendedMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalWebhookAgentEnvironmentSuspendedMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalWebhookAgentEnvironmentSuspendedMetadata::DECODERS
+
+  # @return [String] The unique ID of the event.
+  attr_reader :id
+  # @return [WebhookAgentSessionEnvelopeObject] The object type. Always `event`.
+  attr_reader :object
+  # @return [Integer] The Unix timestamp, in seconds, when the event was created.
+  attr_reader :created_at
+  # @return [WebhookAgentEnvironmentSuspendedVariant1Type] The event type. Always `agent.environment.suspended`.
+  attr_reader :type
+  # @return [AgentEnvironmentEvent] Identifies the environment whose lifecycle changed.
+  attr_reader :data
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for WebhookAgentEnvironmentSuspended.
-  # Sent when an agent environment is suspended and can resume from a snapshot.
-  class WebhookAgentEnvironmentSuspended
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalWebhookAgentEnvironmentSuspendedMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalWebhookAgentEnvironmentSuspendedMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalWebhookAgentEnvironmentSuspendedMetadata::DECODERS
-
-    # @return [String] The unique ID of the event.
-    attr_reader :id
-    # @return [WebhookAgentSessionEnvelopeObject] The object type. Always `event`.
-    attr_reader :object
-    # @return [Integer] The Unix timestamp, in seconds, when the event was created.
-    attr_reader :created_at
-    # @return [WebhookAgentEnvironmentSuspendedVariant1Type] The event type. Always `agent.environment.suspended`.
-    attr_reader :type
-    # @return [AgentEnvironmentEvent] Identifies the environment whose lifecycle changed.
-    attr_reader :data
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the WebhookAgentEnvironmentSuspendedVariant1Type SDK namespace.
-  module WebhookAgentEnvironmentSuspendedVariant1Type
-    AGENT_ENVIRONMENT_SUSPENDED = 'agent.environment.suspended'
-    VALUES = ['agent.environment.suspended'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
+
+# Defines the WebhookAgentEnvironmentSuspendedVariant1Type SDK namespace.
+module WebhookAgentEnvironmentSuspendedVariant1Type
+  AGENT_ENVIRONMENT_SUSPENDED = 'agent.environment.suspended'
+  VALUES = ['agent.environment.suspended'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 end

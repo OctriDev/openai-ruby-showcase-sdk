@@ -5,24 +5,24 @@
 
 # shared_search domain models
 module OctridevOpenai
-  # Defines the SearchContentType SDK namespace.
-  module SearchContentType
-    TEXT = 'text'
-    IMAGE = 'image'
-    VALUES = %w[text image].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the SearchContentType SDK namespace.
+module SearchContentType
+  TEXT = 'text'
+  IMAGE = 'image'
+  VALUES = ['text', 'image'].freeze
+  def self.from_value(value)
+    value
   end
+end
 
-  # Defines the SearchContextSize SDK namespace.
-  module SearchContextSize
-    LOW = 'low'
-    MEDIUM = 'medium'
-    HIGH = 'high'
-    VALUES = %w[low medium high].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the SearchContextSize SDK namespace.
+module SearchContextSize
+  LOW = 'low'
+  MEDIUM = 'medium'
+  HIGH = 'high'
+  VALUES = ['low', 'medium', 'high'].freeze
+  def self.from_value(value)
+    value
   end
+end
 end

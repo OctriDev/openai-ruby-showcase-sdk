@@ -5,657 +5,661 @@
 
 # assistants_run domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalRunCompletionUsageMetadata
-    FIELDS = {
-      completion_tokens: 'completion_tokens',
-      prompt_tokens: 'prompt_tokens',
-      total_tokens: 'total_tokens'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      completion_tokens
-      prompt_tokens
-      total_tokens
-    ].freeze
-    DECODERS = {}.freeze
+# Internal model hydration metadata.
+class SdkInternalRunCompletionUsageMetadata
+  FIELDS = {
+    completion_tokens: "completion_tokens",
+    prompt_tokens: "prompt_tokens",
+    total_tokens: "total_tokens",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    completion_tokens
+    prompt_tokens
+    total_tokens
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for RunCompletionUsage.
+# Usage statistics related to the run. This value will be `null` if the run is not in a terminal state (i.e. `in_progress`, `queued`, etc.).
+class RunCompletionUsage
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRunCompletionUsageMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRunCompletionUsageMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRunCompletionUsageMetadata::DECODERS
+
+  # @return [Integer] Number of completion tokens used over the course of the run.
+  attr_reader :completion_tokens
+  # @return [Integer] Number of prompt tokens used over the course of the run.
+  attr_reader :prompt_tokens
+  # @return [Integer] Total number of tokens used (prompt + completion).
+  attr_reader :total_tokens
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for RunCompletionUsage.
-  # Usage statistics related to the run. This value will be `null` if the run is not in a terminal state (i.e. `in_progress`, `queued`, etc.).
-  class RunCompletionUsage
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRunCompletionUsageMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRunCompletionUsageMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRunCompletionUsageMetadata::DECODERS
-
-    # @return [Integer] Number of completion tokens used over the course of the run.
-    attr_reader :completion_tokens
-    # @return [Integer] Number of prompt tokens used over the course of the run.
-    attr_reader :prompt_tokens
-    # @return [Integer] Total number of tokens used (prompt + completion).
-    attr_reader :total_tokens
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalRunObjectRequiredActionSubmitToolOutputsMetadata
-    FIELDS = {
-      tool_calls: 'tool_calls'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      tool_calls
-    ].freeze
-    DECODERS = {
-      tool_calls: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::RunToolCallObject.from_hash(item) }
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalRunObjectRequiredActionSubmitToolOutputsMetadata
+  FIELDS = {
+    tool_calls: "tool_calls",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    tool_calls
+  ].freeze
+  DECODERS = {
+    tool_calls: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::RunToolCallObject.from_hash(item) }
+    end,
+  }.freeze
+end
+
+# API model for RunObjectRequiredActionSubmitToolOutputs.
+# Details on the tool outputs needed for this run to continue.
+class RunObjectRequiredActionSubmitToolOutputs
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRunObjectRequiredActionSubmitToolOutputsMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRunObjectRequiredActionSubmitToolOutputsMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRunObjectRequiredActionSubmitToolOutputsMetadata::DECODERS
+
+  # @return [Array_of_RunToolCallObject] A list of the relevant tool calls.
+  attr_reader :tool_calls
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for RunObjectRequiredActionSubmitToolOutputs.
-  # Details on the tool outputs needed for this run to continue.
-  class RunObjectRequiredActionSubmitToolOutputs
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRunObjectRequiredActionSubmitToolOutputsMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRunObjectRequiredActionSubmitToolOutputsMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRunObjectRequiredActionSubmitToolOutputsMetadata::DECODERS
-
-    # @return [Array_of_RunToolCallObject] A list of the relevant tool calls.
-    attr_reader :tool_calls
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalRunObjectRequiredActionMetadata
-    FIELDS = {
-      type: 'type',
-      submit_tool_outputs: 'submit_tool_outputs'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      submit_tool_outputs
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::RunObjectRequiredActionType.from_value(value)
-      end,
-      submit_tool_outputs: lambda do |value|
-        ::OctridevOpenai::RunObjectRequiredActionSubmitToolOutputs.from_hash(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalRunObjectRequiredActionMetadata
+  FIELDS = {
+    type: "type",
+    submit_tool_outputs: "submit_tool_outputs",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    submit_tool_outputs
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::RunObjectRequiredActionType.from_value(value)
+    end,
+    submit_tool_outputs: lambda do |value|
+      ::OctridevOpenai::RunObjectRequiredActionSubmitToolOutputs.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for RunObjectRequiredAction.
+# Details on the action required to continue the run. Will be `null` if no action is required.
+class RunObjectRequiredAction
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRunObjectRequiredActionMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRunObjectRequiredActionMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRunObjectRequiredActionMetadata::DECODERS
+
+  # @return [RunObjectRequiredActionType] For now, this is always `submit_tool_outputs`.
+  attr_reader :type
+  # @return [RunObjectRequiredActionSubmitToolOutputs] Details on the tool outputs needed for this run to continue.
+  attr_reader :submit_tool_outputs
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for RunObjectRequiredAction.
-  # Details on the action required to continue the run. Will be `null` if no action is required.
-  class RunObjectRequiredAction
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRunObjectRequiredActionMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRunObjectRequiredActionMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRunObjectRequiredActionMetadata::DECODERS
-
-    # @return [RunObjectRequiredActionType] For now, this is always `submit_tool_outputs`.
-    attr_reader :type
-    # @return [RunObjectRequiredActionSubmitToolOutputs] Details on the tool outputs needed for this run to continue.
-    attr_reader :submit_tool_outputs
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalRunObjectLastErrorMetadata
-    FIELDS = {
-      code: 'code',
-      message: 'message'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      code
-      message
-    ].freeze
-    DECODERS = {
-      code: lambda do |value|
-        ::OctridevOpenai::RunObjectLastErrorCode.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalRunObjectLastErrorMetadata
+  FIELDS = {
+    code: "code",
+    message: "message",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    code
+    message
+  ].freeze
+  DECODERS = {
+    code: lambda do |value|
+      ::OctridevOpenai::RunObjectLastErrorCode.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for RunObjectLastError.
+# The last error associated with this run. Will be `null` if there are no errors.
+class RunObjectLastError
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRunObjectLastErrorMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRunObjectLastErrorMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRunObjectLastErrorMetadata::DECODERS
+
+  # @return [RunObjectLastErrorCode] One of `server_error`, `rate_limit_exceeded`, or `invalid_prompt`.
+  attr_reader :code
+  # @return [String] A human-readable description of the error.
+  attr_reader :message
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for RunObjectLastError.
-  # The last error associated with this run. Will be `null` if there are no errors.
-  class RunObjectLastError
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRunObjectLastErrorMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRunObjectLastErrorMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRunObjectLastErrorMetadata::DECODERS
-
-    # @return [RunObjectLastErrorCode] One of `server_error`, `rate_limit_exceeded`, or `invalid_prompt`.
-    attr_reader :code
-    # @return [String] A human-readable description of the error.
-    attr_reader :message
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalRunObjectIncompleteDetailsMetadata
-    FIELDS = {
-      reason: 'reason'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {
-      reason: lambda do |value|
-        ::OctridevOpenai::RunObjectIncompleteDetailsReason.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalRunObjectIncompleteDetailsMetadata
+  FIELDS = {
+    reason: "reason",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+    reason: lambda do |value|
+      ::OctridevOpenai::RunObjectIncompleteDetailsReason.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for RunObjectIncompleteDetails.
+# Details on why the run is incomplete. Will be `null` if the run is not incomplete.
+class RunObjectIncompleteDetails
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRunObjectIncompleteDetailsMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRunObjectIncompleteDetailsMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRunObjectIncompleteDetailsMetadata::DECODERS
+
+  # @return [RunObjectIncompleteDetailsReason] The reason why the run is incomplete. This will point to which specific token limit was reached over the course of the run.
+  attr_reader :reason
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for RunObjectIncompleteDetails.
-  # Details on why the run is incomplete. Will be `null` if the run is not incomplete.
-  class RunObjectIncompleteDetails
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRunObjectIncompleteDetailsMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRunObjectIncompleteDetailsMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRunObjectIncompleteDetailsMetadata::DECODERS
-
-    # @return [RunObjectIncompleteDetailsReason] The reason why the run is incomplete. This will point to which specific token limit was reached over the course of the run.
-    attr_reader :reason
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalRunObjectMetadata
-    FIELDS = {
-      id: 'id',
-      object: 'object',
-      created_at: 'created_at',
-      thread_id: 'thread_id',
-      assistant_id: 'assistant_id',
-      status: 'status',
-      required_action: 'required_action',
-      last_error: 'last_error',
-      expires_at: 'expires_at',
-      started_at: 'started_at',
-      cancelled_at: 'cancelled_at',
-      failed_at: 'failed_at',
-      completed_at: 'completed_at',
-      incomplete_details: 'incomplete_details',
-      model: 'model',
-      instructions: 'instructions',
-      tools: 'tools',
-      metadata: 'metadata',
-      usage: 'usage',
-      temperature: 'temperature',
-      top_p: 'top_p',
-      max_prompt_tokens: 'max_prompt_tokens',
-      max_completion_tokens: 'max_completion_tokens',
-      truncation_strategy: 'truncation_strategy',
-      tool_choice: 'tool_choice',
-      parallel_tool_calls: 'parallel_tool_calls',
-      response_format: 'response_format'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-      object
-      created_at
-      thread_id
-      assistant_id
-      status
-      required_action
-      last_error
-      expires_at
-      started_at
-      cancelled_at
-      failed_at
-      completed_at
-      incomplete_details
-      model
-      instructions
-      tools
-      metadata
-      usage
-      max_prompt_tokens
-      max_completion_tokens
-      truncation_strategy
-      tool_choice
-      parallel_tool_calls
-      response_format
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::RunObjectObject.from_value(value)
-      end,
-      status: lambda do |value|
-        ::OctridevOpenai::RunObjectStatus.from_value(value)
-      end,
-      required_action: lambda do |value|
-        ::OctridevOpenai::RunObjectRequiredAction.from_hash(value)
-      end,
-      last_error: lambda do |value|
-        ::OctridevOpenai::RunObjectLastError.from_hash(value)
-      end,
-      incomplete_details: lambda do |value|
-        ::OctridevOpenai::RunObjectIncompleteDetails.from_hash(value)
-      end,
-      tools: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::RunObjectToolsItem.from_hash(item) }
-      end,
-      metadata: lambda do |value|
-        ::OctridevOpenai::Metadata.from_hash(value)
-      end,
-      usage: lambda do |value|
-        ::OctridevOpenai::RunCompletionUsage.from_hash(value)
-      end,
-      truncation_strategy: lambda do |value|
-        ::OctridevOpenai::TruncationObject.from_hash(value)
-      end,
-      tool_choice: lambda do |value|
-        ::OctridevOpenai::AssistantsApiToolChoiceOption.from_hash(value)
-      end,
-      parallel_tool_calls: lambda do |value|
-        ::OctridevOpenai::ParallelToolCalls.from_value(value)
-      end,
-      response_format: lambda do |value|
-        ::OctridevOpenai::AssistantsApiResponseFormatOption.from_hash(value)
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      required_action
-      last_error
-      expires_at
-      started_at
-      cancelled_at
-      failed_at
-      completed_at
-      incomplete_details
-      metadata
-      usage
-      max_prompt_tokens
-      max_completion_tokens
-      truncation_strategy
-      tool_choice
-      response_format
-    ].freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalRunObjectMetadata
+  FIELDS = {
+    id: "id",
+    object: "object",
+    created_at: "created_at",
+    thread_id: "thread_id",
+    assistant_id: "assistant_id",
+    status: "status",
+    required_action: "required_action",
+    last_error: "last_error",
+    expires_at: "expires_at",
+    started_at: "started_at",
+    cancelled_at: "cancelled_at",
+    failed_at: "failed_at",
+    completed_at: "completed_at",
+    incomplete_details: "incomplete_details",
+    model: "model",
+    instructions: "instructions",
+    tools: "tools",
+    metadata: "metadata",
+    usage: "usage",
+    temperature: "temperature",
+    top_p: "top_p",
+    max_prompt_tokens: "max_prompt_tokens",
+    max_completion_tokens: "max_completion_tokens",
+    truncation_strategy: "truncation_strategy",
+    tool_choice: "tool_choice",
+    parallel_tool_calls: "parallel_tool_calls",
+    response_format: "response_format",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+    object
+    created_at
+    thread_id
+    assistant_id
+    status
+    required_action
+    last_error
+    expires_at
+    started_at
+    cancelled_at
+    failed_at
+    completed_at
+    incomplete_details
+    model
+    instructions
+    tools
+    metadata
+    usage
+    max_prompt_tokens
+    max_completion_tokens
+    truncation_strategy
+    tool_choice
+    parallel_tool_calls
+    response_format
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::RunObjectObject.from_value(value)
+    end,
+    status: lambda do |value|
+      ::OctridevOpenai::RunObjectStatus.from_value(value)
+    end,
+    required_action: lambda do |value|
+      ::OctridevOpenai::RunObjectRequiredAction.from_hash(value)
+    end,
+    last_error: lambda do |value|
+      ::OctridevOpenai::RunObjectLastError.from_hash(value)
+    end,
+    incomplete_details: lambda do |value|
+      ::OctridevOpenai::RunObjectIncompleteDetails.from_hash(value)
+    end,
+    tools: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::RunObjectToolsItem.from_hash(item) }
+    end,
+    metadata: lambda do |value|
+      ::OctridevOpenai::Metadata.from_hash(value)
+    end,
+    usage: lambda do |value|
+      ::OctridevOpenai::RunCompletionUsage.from_hash(value)
+    end,
+    truncation_strategy: lambda do |value|
+      ::OctridevOpenai::TruncationObject.from_hash(value)
+    end,
+    tool_choice: lambda do |value|
+      ::OctridevOpenai::AssistantsApiToolChoiceOption.from_hash(value)
+    end,
+    parallel_tool_calls: lambda do |value|
+      ::OctridevOpenai::ParallelToolCalls.from_value(value)
+    end,
+    response_format: lambda do |value|
+      ::OctridevOpenai::AssistantsApiResponseFormatOption.from_hash(value)
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    required_action
+    last_error
+    expires_at
+    started_at
+    cancelled_at
+    failed_at
+    completed_at
+    incomplete_details
+    metadata
+    usage
+    max_prompt_tokens
+    max_completion_tokens
+    truncation_strategy
+    tool_choice
+    response_format
+  ].freeze
+end
+
+# API model for RunObject.
+# Represents an execution run on a thread.
+class RunObject
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRunObjectMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRunObjectMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRunObjectMetadata::DECODERS
+
+  # @return [String] The identifier, which can be referenced in API endpoints.
+  attr_reader :id
+  # @return [RunObjectObject] The object type, which is always `thread.run`.
+  attr_reader :object
+  # @return [Integer] The Unix timestamp (in seconds) for when the run was created.
+  attr_reader :created_at
+  # @return [String] The ID of the thread that was executed on as a part of this run.
+  attr_reader :thread_id
+  # @return [String] The ID of the assistant used for execution of this run.
+  attr_reader :assistant_id
+  # @return [RunObjectStatus] The status of the run, which can be either `queued`, `in_progress`, `requires_action`, `cancelling`, `cancelled`, `failed`, `completed`, `incomplete`, or `expired`.
+  attr_reader :status
+  # @return [RunObjectRequiredAction] Details on the action required to continue the run. Will be `null` if no action is required.
+  attr_reader :required_action
+  # @return [RunObjectLastError] The last error associated with this run. Will be `null` if there are no errors.
+  attr_reader :last_error
+  # @return [Integer] The Unix timestamp (in seconds) for when the run will expire.
+  attr_reader :expires_at
+  # @return [Integer] The Unix timestamp (in seconds) for when the run was started.
+  attr_reader :started_at
+  # @return [Integer] The Unix timestamp (in seconds) for when the run was cancelled.
+  attr_reader :cancelled_at
+  # @return [Integer] The Unix timestamp (in seconds) for when the run failed.
+  attr_reader :failed_at
+  # @return [Integer] The Unix timestamp (in seconds) for when the run was completed.
+  attr_reader :completed_at
+  # @return [RunObjectIncompleteDetails] Details on why the run is incomplete. Will be `null` if the run is not incomplete.
+  attr_reader :incomplete_details
+  # @return [String] The model that the assistant used for this run.
+  attr_reader :model
+  # @return [String] The instructions that the assistant used for this run.
+  attr_reader :instructions
+  # @return [Array_of_RunObjectToolsItem] The list of tools that the assistant used for this run.
+  attr_reader :tools
+  # @return [Metadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
+  attr_reader :metadata
+  # @return [RunCompletionUsage] Usage statistics related to the run. This value will be `null` if the run is not in a terminal state (i.e. `in_progress`, `queued`, etc.).
+  attr_reader :usage
+  # @return [Float] The sampling temperature used for this run. If not set, defaults to 1.
+  attr_reader :temperature
+  # @return [Float] The nucleus sampling value used for this run. If not set, defaults to 1.
+  attr_reader :top_p
+  # @return [Integer] The maximum number of prompt tokens specified to have been used over the course of the run.
+  attr_reader :max_prompt_tokens
+  # @return [Integer] The maximum number of completion tokens specified to have been used over the course of the run.
+  attr_reader :max_completion_tokens
+  # @return [TruncationObject] Required API value serialized in the `truncation_strategy` wire field.
+  attr_reader :truncation_strategy
+  # @return [AssistantsApiToolChoiceOption] Required API value serialized in the `tool_choice` wire field.
+  attr_reader :tool_choice
+  # @return [ParallelToolCalls] Whether to enable parallel function calling during tool use.
+  attr_reader :parallel_tool_calls
+  # @return [AssistantsApiResponseFormatOption] Required API value serialized in the `response_format` wire field.
+  attr_reader :response_format
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for RunObject.
-  # Represents an execution run on a thread.
-  class RunObject
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRunObjectMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRunObjectMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRunObjectMetadata::DECODERS
-
-    # @return [String] The identifier, which can be referenced in API endpoints.
-    attr_reader :id
-    # @return [RunObjectObject] The object type, which is always `thread.run`.
-    attr_reader :object
-    # @return [Integer] The Unix timestamp (in seconds) for when the run was created.
-    attr_reader :created_at
-    # @return [String] The ID of the thread that was executed on as a part of this run.
-    attr_reader :thread_id
-    # @return [String] The ID of the assistant used for execution of this run.
-    attr_reader :assistant_id
-    # @return [RunObjectStatus] The status of the run, which can be either `queued`, `in_progress`, `requires_action`, `cancelling`, `cancelled`, `failed`, `completed`, `incomplete`, or `expired`.
-    attr_reader :status
-    # @return [RunObjectRequiredAction] Details on the action required to continue the run. Will be `null` if no action is required.
-    attr_reader :required_action
-    # @return [RunObjectLastError] The last error associated with this run. Will be `null` if there are no errors.
-    attr_reader :last_error
-    # @return [Integer] The Unix timestamp (in seconds) for when the run will expire.
-    attr_reader :expires_at
-    # @return [Integer] The Unix timestamp (in seconds) for when the run was started.
-    attr_reader :started_at
-    # @return [Integer] The Unix timestamp (in seconds) for when the run was cancelled.
-    attr_reader :cancelled_at
-    # @return [Integer] The Unix timestamp (in seconds) for when the run failed.
-    attr_reader :failed_at
-    # @return [Integer] The Unix timestamp (in seconds) for when the run was completed.
-    attr_reader :completed_at
-    # @return [RunObjectIncompleteDetails] Details on why the run is incomplete. Will be `null` if the run is not incomplete.
-    attr_reader :incomplete_details
-    # @return [String] The model that the assistant used for this run.
-    attr_reader :model
-    # @return [String] The instructions that the assistant used for this run.
-    attr_reader :instructions
-    # @return [Array_of_RunObjectToolsItem] The list of tools that the assistant used for this run.
-    attr_reader :tools
-    # @return [Metadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
-    attr_reader :metadata
-    # @return [RunCompletionUsage] Usage statistics related to the run. This value will be `null` if the run is not in a terminal state (i.e. `in_progress`, `queued`, etc.).
-    attr_reader :usage
-    # @return [Float] The sampling temperature used for this run. If not set, defaults to 1.
-    attr_reader :temperature
-    # @return [Float] The nucleus sampling value used for this run. If not set, defaults to 1.
-    attr_reader :top_p
-    # @return [Integer] The maximum number of prompt tokens specified to have been used over the course of the run.
-    attr_reader :max_prompt_tokens
-    # @return [Integer] The maximum number of completion tokens specified to have been used over the course of the run.
-    attr_reader :max_completion_tokens
-    # @return [TruncationObject] Required API value serialized in the `truncation_strategy` wire field.
-    attr_reader :truncation_strategy
-    # @return [AssistantsApiToolChoiceOption] Required API value serialized in the `tool_choice` wire field.
-    attr_reader :tool_choice
-    # @return [ParallelToolCalls] Whether to enable parallel function calling during tool use.
-    attr_reader :parallel_tool_calls
-    # @return [AssistantsApiResponseFormatOption] Required API value serialized in the `response_format` wire field.
-    attr_reader :response_format
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalRunObjectMetadata::NULLABLE_FIELDS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalRunObjectMetadata::NULLABLE_FIELDS)
   end
 
-  # Defines the RunObjectIncompleteDetailsReason SDK namespace.
-  module RunObjectIncompleteDetailsReason
-    MAX_COMPLETION_TOKENS = 'max_completion_tokens'
-    MAX_PROMPT_TOKENS = 'max_prompt_tokens'
-    VALUES = %w[max_completion_tokens max_prompt_tokens].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the RunObjectIncompleteDetailsReason SDK namespace.
+module RunObjectIncompleteDetailsReason
+  MAX_COMPLETION_TOKENS = 'max_completion_tokens'
+  MAX_PROMPT_TOKENS = 'max_prompt_tokens'
+  VALUES = ['max_completion_tokens', 'max_prompt_tokens'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the RunObjectLastErrorCode SDK namespace.
+module RunObjectLastErrorCode
+  SERVER_ERROR = 'server_error'
+  RATE_LIMIT_EXCEEDED = 'rate_limit_exceeded'
+  INVALID_PROMPT = 'invalid_prompt'
+  VALUES = ['server_error', 'rate_limit_exceeded', 'invalid_prompt'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the RunObjectObject SDK namespace.
+module RunObjectObject
+  THREAD_RUN = 'thread.run'
+  VALUES = ['thread.run'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the RunObjectRequiredActionType SDK namespace.
+module RunObjectRequiredActionType
+  SUBMIT_TOOL_OUTPUTS = 'submit_tool_outputs'
+  VALUES = ['submit_tool_outputs'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the RunObjectStatus SDK namespace.
+module RunObjectStatus
+  QUEUED = 'queued'
+  IN_PROGRESS = 'in_progress'
+  REQUIRES_ACTION = 'requires_action'
+  CANCELLING = 'cancelling'
+  CANCELLED = 'cancelled'
+  FAILED = 'failed'
+  COMPLETED = 'completed'
+  INCOMPLETE = 'incomplete'
+  EXPIRED = 'expired'
+  VALUES = [
+    'queued', 'in_progress', 'requires_action', 'cancelling', 'cancelled', 'failed', 'completed',
+    'incomplete', 'expired'
+  ].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the RunObjectToolsItem SDK namespace.
+module RunObjectToolsItem
+  DISCRIMINATOR_MAPPING = {
+    "code_interpreter" => -> { AssistantToolsCode },
+    "file_search" => -> { AssistantToolsFileSearch },
+    "function" => -> { AssistantToolsFunction },
+  }.freeze
+
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
+
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+
+    raise SdkValidationError.new('RunObjectToolsItem', 'variant', "Unknown RunObjectToolsItem discriminator: #{hash["type"].inspect}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalRunStepCompletionUsageMetadata
+  FIELDS = {
+    completion_tokens: "completion_tokens",
+    prompt_tokens: "prompt_tokens",
+    total_tokens: "total_tokens",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    completion_tokens
+    prompt_tokens
+    total_tokens
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for RunStepCompletionUsage.
+# Usage statistics related to the run step. This value will be `null` while the run step's status is `in_progress`.
+class RunStepCompletionUsage
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRunStepCompletionUsageMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRunStepCompletionUsageMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRunStepCompletionUsageMetadata::DECODERS
+
+  # @return [Integer] Number of completion tokens used over the course of the run step.
+  attr_reader :completion_tokens
+  # @return [Integer] Number of prompt tokens used over the course of the run step.
+  attr_reader :prompt_tokens
+  # @return [Integer] Total number of tokens used (prompt + completion).
+  attr_reader :total_tokens
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the RunObjectLastErrorCode SDK namespace.
-  module RunObjectLastErrorCode
-    SERVER_ERROR = 'server_error'
-    RATE_LIMIT_EXCEEDED = 'rate_limit_exceeded'
-    INVALID_PROMPT = 'invalid_prompt'
-    VALUES = %w[server_error rate_limit_exceeded invalid_prompt].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the RunObjectObject SDK namespace.
-  module RunObjectObject
-    THREAD_RUN = 'thread.run'
-    VALUES = ['thread.run'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalRunStepDeltaObjectDeltaMetadata
+  FIELDS = {
+    step_details: "step_details",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+    step_details: lambda do |value|
+      ::OctridevOpenai::RunStepDeltaObjectDeltaStepDetails.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for RunStepDeltaObjectDelta.
+# The delta containing the fields that have changed on the run step.
+class RunStepDeltaObjectDelta
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRunStepDeltaObjectDeltaMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRunStepDeltaObjectDeltaMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRunStepDeltaObjectDeltaMetadata::DECODERS
+
+  # @return [RunStepDeltaObjectDeltaStepDetails] The details of the run step.
+  attr_reader :step_details
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the RunObjectRequiredActionType SDK namespace.
-  module RunObjectRequiredActionType
-    SUBMIT_TOOL_OUTPUTS = 'submit_tool_outputs'
-    VALUES = ['submit_tool_outputs'].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the RunObjectStatus SDK namespace.
-  module RunObjectStatus
-    QUEUED = 'queued'
-    IN_PROGRESS = 'in_progress'
-    REQUIRES_ACTION = 'requires_action'
-    CANCELLING = 'cancelling'
-    CANCELLED = 'cancelled'
-    FAILED = 'failed'
-    COMPLETED = 'completed'
-    INCOMPLETE = 'incomplete'
-    EXPIRED = 'expired'
-    VALUES = %w[
-      queued in_progress requires_action cancelling cancelled failed completed
-      incomplete expired
-    ].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalRunStepDeltaObjectMetadata
+  FIELDS = {
+    id: "id",
+    object: "object",
+    delta: "delta",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+    object
+    delta
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::RunStepDeltaObjectObject.from_value(value)
+    end,
+    delta: lambda do |value|
+      ::OctridevOpenai::RunStepDeltaObjectDelta.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for RunStepDeltaObject.
+# Represents a run step delta i.e. any changed fields on a run step during streaming.
+class RunStepDeltaObject
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRunStepDeltaObjectMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRunStepDeltaObjectMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRunStepDeltaObjectMetadata::DECODERS
+
+  # @return [String] The identifier of the run step, which can be referenced in API endpoints.
+  attr_reader :id
+  # @return [RunStepDeltaObjectObject] The object type, which is always `thread.run.step.delta`.
+  attr_reader :object
+  # @return [RunStepDeltaObjectDelta] The delta containing the fields that have changed on the run step.
+  attr_reader :delta
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the RunObjectToolsItem SDK namespace.
-  module RunObjectToolsItem
-    DISCRIMINATOR_MAPPING = {
-      'code_interpreter' => -> { AssistantToolsCode },
-      'file_search' => -> { AssistantToolsFileSearch },
-      'function' => -> { AssistantToolsFunction }
-    }.freeze
-
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
-
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
-
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
-
-      raise SdkValidationError.new('RunObjectToolsItem', 'variant', "Unknown RunObjectToolsItem discriminator: #{hash['type'].inspect}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalRunStepCompletionUsageMetadata
-    FIELDS = {
-      completion_tokens: 'completion_tokens',
-      prompt_tokens: 'prompt_tokens',
-      total_tokens: 'total_tokens'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      completion_tokens
-      prompt_tokens
-      total_tokens
-    ].freeze
-    DECODERS = {}.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # API model for RunStepCompletionUsage.
-  # Usage statistics related to the run step. This value will be `null` while the run step's status is `in_progress`.
-  class RunStepCompletionUsage
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRunStepCompletionUsageMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRunStepCompletionUsageMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRunStepCompletionUsageMetadata::DECODERS
-
-    # @return [Integer] Number of completion tokens used over the course of the run step.
-    attr_reader :completion_tokens
-    # @return [Integer] Number of prompt tokens used over the course of the run step.
-    attr_reader :prompt_tokens
-    # @return [Integer] Total number of tokens used (prompt + completion).
-    attr_reader :total_tokens
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+# Defines the RunStepDeltaObjectObject SDK namespace.
+module RunStepDeltaObjectObject
+  THREAD_RUN_STEP_DELTA = 'thread.run.step.delta'
+  VALUES = ['thread.run.step.delta'].freeze
+  def self.from_value(value)
+    value
   end
+end
 
-  # Internal model hydration metadata.
-  class SdkInternalRunStepDeltaObjectDeltaMetadata
-    FIELDS = {
-      step_details: 'step_details'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {
-      step_details: lambda do |value|
-        ::OctridevOpenai::RunStepDeltaObjectDeltaStepDetails.from_hash(value)
-      end
-    }.freeze
+# Defines the RunStepDeltaObjectDeltaStepDetails SDK namespace.
+module RunStepDeltaObjectDeltaStepDetails
+  DISCRIMINATOR_MAPPING = {
+    "message_creation" => -> { RunStepDeltaStepDetailsMessageCreationObject },
+    "tool_calls" => -> { RunStepDeltaStepDetailsToolCallsObject },
+  }.freeze
+
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
+
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+
+    raise SdkValidationError.new('RunStepDeltaObjectDeltaStepDetails', 'variant', "Unknown RunStepDeltaObjectDeltaStepDetails discriminator: #{hash["type"].inspect}")
   end
+end
 
-  # API model for RunStepDeltaObjectDelta.
-  # The delta containing the fields that have changed on the run step.
-  class RunStepDeltaObjectDelta
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRunStepDeltaObjectDeltaMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRunStepDeltaObjectDeltaMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRunStepDeltaObjectDeltaMetadata::DECODERS
-
-    # @return [RunStepDeltaObjectDeltaStepDetails] The details of the run step.
-    attr_reader :step_details
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalRunStepDeltaObjectMetadata
-    FIELDS = {
-      id: 'id',
-      object: 'object',
-      delta: 'delta'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-      object
-      delta
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::RunStepDeltaObjectObject.from_value(value)
-      end,
-      delta: lambda do |value|
-        ::OctridevOpenai::RunStepDeltaObjectDelta.from_hash(value)
-      end
-    }.freeze
-  end
-
-  # API model for RunStepDeltaObject.
-  # Represents a run step delta i.e. any changed fields on a run step during streaming.
-  class RunStepDeltaObject
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRunStepDeltaObjectMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRunStepDeltaObjectMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRunStepDeltaObjectMetadata::DECODERS
-
-    # @return [String] The identifier of the run step, which can be referenced in API endpoints.
-    attr_reader :id
-    # @return [RunStepDeltaObjectObject] The object type, which is always `thread.run.step.delta`.
-    attr_reader :object
-    # @return [RunStepDeltaObjectDelta] The delta containing the fields that have changed on the run step.
-    attr_reader :delta
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the RunStepDeltaObjectObject SDK namespace.
-  module RunStepDeltaObjectObject
-    THREAD_RUN_STEP_DELTA = 'thread.run.step.delta'
-    VALUES = ['thread.run.step.delta'].freeze
-    def self.from_value(value)
-      value
-    end
-  end
-
-  # Defines the RunStepDeltaObjectDeltaStepDetails SDK namespace.
-  module RunStepDeltaObjectDeltaStepDetails
-    DISCRIMINATOR_MAPPING = {
-      'message_creation' => -> { RunStepDeltaStepDetailsMessageCreationObject },
-      'tool_calls' => -> { RunStepDeltaStepDetailsToolCallsObject }
-    }.freeze
-
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
-
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
-
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
-
-      raise SdkValidationError.new('RunStepDeltaObjectDeltaStepDetails', 'variant', "Unknown RunStepDeltaObjectDeltaStepDetails discriminator: #{hash['type'].inspect}")
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalRunStepDeltaStepDetailsMessageCreationObjectMessageCreationMetadata
-    FIELDS = {
-      message_id: 'message_id'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {}.freeze
-  end
+# Internal model hydration metadata.
+class SdkInternalRunStepDeltaStepDetailsMessageCreationObjectMessageCreationMetadata
+  FIELDS = {
+    message_id: "message_id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
 end

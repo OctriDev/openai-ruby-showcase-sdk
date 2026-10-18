@@ -25,23 +25,24 @@ module OctridevOpenai
         limit: NOT_GIVEN,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
           [
-            '/fine_tuning/jobs/',
+            "/fine_tuning/jobs/",
             SdkClient.encode_path_segment(fine_tuning_job_id),
-            '/events'
+            "/events"
           ].join,
           config: config,
           query: {
             'after' => QueryValue.new(after, style: 'form', explode: true),
-            'limit' => QueryValue.new(limit, style: 'form', explode: true)
+            'limit' => QueryValue.new(limit, style: 'form', explode: true),
           },
           return_type: ::OctridevOpenai::ListFineTuningJobEventsResponse,
           decoder: :json,
           operation_id: 'list_fine_tuning_events',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -55,19 +56,20 @@ module OctridevOpenai
         fine_tuning_job_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
           [
-            '/fine_tuning/jobs/',
+            "/fine_tuning/jobs/",
             SdkClient.encode_path_segment(fine_tuning_job_id),
-            '/pause'
+            "/pause"
           ].join,
           config: config,
           return_type: ::OctridevOpenai::FineTuningJob,
           decoder: :json,
           operation_id: 'pause_fine_tuning_job',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -81,19 +83,20 @@ module OctridevOpenai
         fine_tuning_job_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
           [
-            '/fine_tuning/jobs/',
+            "/fine_tuning/jobs/",
             SdkClient.encode_path_segment(fine_tuning_job_id),
-            '/resume'
+            "/resume"
           ].join,
           config: config,
           return_type: ::OctridevOpenai::FineTuningJob,
           decoder: :json,
           operation_id: 'resume_fine_tuning_job',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
     end

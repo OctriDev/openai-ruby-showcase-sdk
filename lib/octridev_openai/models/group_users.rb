@@ -5,338 +5,340 @@
 
 # group_users domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalCreateGroupUserBodyMetadata
-    FIELDS = {
-      user_id: 'user_id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      user_id
-    ].freeze
-    DECODERS = {}.freeze
+# Internal model hydration metadata.
+class SdkInternalCreateGroupUserBodyMetadata
+  FIELDS = {
+    user_id: "user_id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    user_id
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for CreateGroupUserBody.
+# Request payload for adding a user to a group.
+class CreateGroupUserBody
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCreateGroupUserBodyMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCreateGroupUserBodyMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCreateGroupUserBodyMetadata::DECODERS
+
+  # @return [String] Identifier of the user to add to the group.
+  attr_reader :user_id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for CreateGroupUserBody.
-  # Request payload for adding a user to a group.
-  class CreateGroupUserBody
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCreateGroupUserBodyMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCreateGroupUserBodyMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCreateGroupUserBodyMetadata::DECODERS
-
-    # @return [String] Identifier of the user to add to the group.
-    attr_reader :user_id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalGroupMemberUserMetadata
-    FIELDS = {
-      id: 'id',
-      name: 'name',
-      email: 'email',
-      picture: 'picture',
-      is_service_account: 'is_service_account',
-      user_type: 'user_type'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-      name
-      email
-      picture
-      is_service_account
-      user_type
-    ].freeze
-    DECODERS = {
-      user_type: lambda do |value|
-        ::OctridevOpenai::GroupMemberUserUserType.from_value(value)
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      email
-      picture
-      is_service_account
-    ].freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalGroupMemberUserMetadata
+  FIELDS = {
+    id: "id",
+    name: "name",
+    email: "email",
+    picture: "picture",
+    is_service_account: "is_service_account",
+    user_type: "user_type",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+    name
+    email
+    picture
+    is_service_account
+    user_type
+  ].freeze
+  DECODERS = {
+    user_type: lambda do |value|
+      ::OctridevOpenai::GroupMemberUserUserType.from_value(value)
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    email
+    picture
+    is_service_account
+  ].freeze
+end
+
+# API model for GroupMemberUser.
+# Details about a user returned from an organization group membership lookup.
+class GroupMemberUser
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalGroupMemberUserMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalGroupMemberUserMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalGroupMemberUserMetadata::DECODERS
+
+  # @return [String] Identifier for the user.
+  attr_reader :id
+  # @return [String] Display name of the user.
+  attr_reader :name
+  # @return [String] Email address of the user, or `null` for users without an email.
+  attr_reader :email
+  # @return [String] URL of the user's profile picture, if available.
+  attr_reader :picture
+  # @return [Boolean] Whether the user is a service account.
+  attr_reader :is_service_account
+  # @return [GroupMemberUserUserType] The type of user.
+  attr_reader :user_type
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for GroupMemberUser.
-  # Details about a user returned from an organization group membership lookup.
-  class GroupMemberUser
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalGroupMemberUserMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalGroupMemberUserMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalGroupMemberUserMetadata::DECODERS
-
-    # @return [String] Identifier for the user.
-    attr_reader :id
-    # @return [String] Display name of the user.
-    attr_reader :name
-    # @return [String] Email address of the user, or `null` for users without an email.
-    attr_reader :email
-    # @return [String] URL of the user's profile picture, if available.
-    attr_reader :picture
-    # @return [Boolean] Whether the user is a service account.
-    attr_reader :is_service_account
-    # @return [GroupMemberUserUserType] The type of user.
-    attr_reader :user_type
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalGroupMemberUserMetadata::NULLABLE_FIELDS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalGroupMemberUserMetadata::NULLABLE_FIELDS)
   end
 
-  # Defines the GroupMemberUserUserType SDK namespace.
-  module GroupMemberUserUserType
-    USER = 'user'
-    TENANT_USER = 'tenant_user'
-    VALUES = %w[user tenant_user].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the GroupMemberUserUserType SDK namespace.
+module GroupMemberUserUserType
+  USER = 'user'
+  TENANT_USER = 'tenant_user'
+  VALUES = ['user', 'tenant_user'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalGroupUserMetadata
+  FIELDS = {
+    id: "id",
+    name: "name",
+    email: "email",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+    name
+    email
+  ].freeze
+  DECODERS = {
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    email
+  ].freeze
+end
+
+# API model for GroupUser.
+# Represents an individual user returned when inspecting group membership.
+class GroupUser
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalGroupUserMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalGroupUserMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalGroupUserMetadata::DECODERS
+
+  # @return [String] The identifier, which can be referenced in API endpoints
+  attr_reader :id
+  # @return [String] The name of the user.
+  attr_reader :name
+  # @return [String] The email address of the user.
+  attr_reader :email
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalGroupUserMetadata
-    FIELDS = {
-      id: 'id',
-      name: 'name',
-      email: 'email'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-      name
-      email
-    ].freeze
-    DECODERS = {}.freeze
-    NULLABLE_FIELDS = %i[
-      email
-    ].freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalGroupUserMetadata::NULLABLE_FIELDS)
   end
 
-  # API model for GroupUser.
-  # Represents an individual user returned when inspecting group membership.
-  class GroupUser
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalGroupUserMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalGroupUserMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalGroupUserMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] The identifier, which can be referenced in API endpoints
-    attr_reader :id
-    # @return [String] The name of the user.
-    attr_reader :name
-    # @return [String] The email address of the user.
-    attr_reader :email
+# Internal model hydration metadata.
+class SdkInternalGroupUserAssignmentMetadata
+  FIELDS = {
+    object: "object",
+    user_id: "user_id",
+    group_id: "group_id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    user_id
+    group_id
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::GroupUserAssignmentObject.from_value(value)
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for GroupUserAssignment.
+# Confirmation payload returned after adding a user to a group.
+class GroupUserAssignment
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalGroupUserAssignmentMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalGroupUserAssignmentMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalGroupUserAssignmentMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalGroupUserMetadata::NULLABLE_FIELDS)
-    end
+  # @return [GroupUserAssignmentObject] Always `group.user`.
+  attr_reader :object
+  # @return [String] Identifier of the user that was added.
+  attr_reader :user_id
+  # @return [String] Identifier of the group the user was added to.
+  attr_reader :group_id
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalGroupUserAssignmentMetadata
-    FIELDS = {
-      object: 'object',
-      user_id: 'user_id',
-      group_id: 'group_id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      user_id
-      group_id
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::GroupUserAssignmentObject.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for GroupUserAssignment.
-  # Confirmation payload returned after adding a user to a group.
-  class GroupUserAssignment
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalGroupUserAssignmentMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalGroupUserAssignmentMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalGroupUserAssignmentMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [GroupUserAssignmentObject] Always `group.user`.
-    attr_reader :object
-    # @return [String] Identifier of the user that was added.
-    attr_reader :user_id
-    # @return [String] Identifier of the group the user was added to.
-    attr_reader :group_id
+# Defines the GroupUserAssignmentObject SDK namespace.
+module GroupUserAssignmentObject
+  GROUP_USER = 'group.user'
+  VALUES = ['group.user'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalGroupUserDeletedResourceMetadata
+  FIELDS = {
+    object: "object",
+    deleted: "deleted",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    deleted
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::GroupUserDeletedResourceObject.from_value(value)
+    end,
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for GroupUserDeletedResource.
+# Confirmation payload returned after removing a user from a group.
+class GroupUserDeletedResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalGroupUserDeletedResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalGroupUserDeletedResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalGroupUserDeletedResourceMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [GroupUserDeletedResourceObject] Always `group.user.deleted`.
+  attr_reader :object
+  # @return [Boolean] Whether the group membership was removed.
+  attr_reader :deleted
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the GroupUserAssignmentObject SDK namespace.
-  module GroupUserAssignmentObject
-    GROUP_USER = 'group.user'
-    VALUES = ['group.user'].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalGroupUserDeletedResourceMetadata
-    FIELDS = {
-      object: 'object',
-      deleted: 'deleted'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      deleted
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::GroupUserDeletedResourceObject.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the GroupUserDeletedResourceObject SDK namespace.
+module GroupUserDeletedResourceObject
+  GROUP_USER_DELETED = 'group.user.deleted'
+  VALUES = ['group.user.deleted'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalUserListResourceMetadata
+  FIELDS = {
+    object: "object",
+    data: "data",
+    has_more: "has_more",
+    next_: "next",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    data
+    has_more
+    next_
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::UserListResourceObject.from_value(value)
+    end,
+    data: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::GroupUser.from_hash(item) }
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    next_
+  ].freeze
+end
+
+# API model for UserListResource.
+# Paginated list of user objects returned when inspecting group membership.
+class UserListResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalUserListResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalUserListResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalUserListResourceMetadata::DECODERS
+
+  # @return [UserListResourceObject] Always `list`.
+  attr_reader :object
+  # @return [Array_of_GroupUser] Users in the current page.
+  attr_reader :data
+  # @return [Boolean] Whether more users are available when paginating.
+  attr_reader :has_more
+  # @return [String] Cursor to fetch the next page of results, or `null` when no further users are available.
+  attr_reader :next_
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for GroupUserDeletedResource.
-  # Confirmation payload returned after removing a user from a group.
-  class GroupUserDeletedResource
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalGroupUserDeletedResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalGroupUserDeletedResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalGroupUserDeletedResourceMetadata::DECODERS
-
-    # @return [GroupUserDeletedResourceObject] Always `group.user.deleted`.
-    attr_reader :object
-    # @return [Boolean] Whether the group membership was removed.
-    attr_reader :deleted
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalUserListResourceMetadata::NULLABLE_FIELDS)
   end
 
-  # Defines the GroupUserDeletedResourceObject SDK namespace.
-  module GroupUserDeletedResourceObject
-    GROUP_USER_DELETED = 'group.user.deleted'
-    VALUES = ['group.user.deleted'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Internal model hydration metadata.
-  class SdkInternalUserListResourceMetadata
-    FIELDS = {
-      object: 'object',
-      data: 'data',
-      has_more: 'has_more',
-      next_: 'next'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      data
-      has_more
-      next_
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::UserListResourceObject.from_value(value)
-      end,
-      data: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::GroupUser.from_hash(item) }
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      next_
-    ].freeze
+# Defines the UserListResourceObject SDK namespace.
+module UserListResourceObject
+  LIST = 'list'
+  VALUES = ['list'].freeze
+  def self.from_value(value)
+    value
   end
-
-  # API model for UserListResource.
-  # Paginated list of user objects returned when inspecting group membership.
-  class UserListResource
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalUserListResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalUserListResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalUserListResourceMetadata::DECODERS
-
-    # @return [UserListResourceObject] Always `list`.
-    attr_reader :object
-    # @return [Array_of_GroupUser] Users in the current page.
-    attr_reader :data
-    # @return [Boolean] Whether more users are available when paginating.
-    attr_reader :has_more
-    # @return [String] Cursor to fetch the next page of results, or `null` when no further users are available.
-    attr_reader :next_
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalUserListResourceMetadata::NULLABLE_FIELDS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the UserListResourceObject SDK namespace.
-  module UserListResourceObject
-    LIST = 'list'
-    VALUES = ['list'].freeze
-    def self.from_value(value)
-      value
-    end
-  end
+end
 end

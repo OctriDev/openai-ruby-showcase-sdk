@@ -5,73 +5,73 @@
 
 # webhook_agent_session_in_progress domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalWebhookAgentSessionInProgressMetadata
-    FIELDS = {
-      id: 'id',
-      object: 'object',
-      created_at: 'created_at',
-      type: 'type',
-      data: 'data'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-      object
-      created_at
-      type
-      data
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::WebhookAgentSessionEnvelopeObject.from_value(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::WebhookAgentSessionInProgressVariant1Type.from_value(value)
-      end,
-      data: lambda do |value|
-        ::OctridevOpenai::AgentSessionEnvironmentPayloadResource.from_hash(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalWebhookAgentSessionInProgressMetadata
+  FIELDS = {
+    id: "id",
+    object: "object",
+    created_at: "created_at",
+    type: "type",
+    data: "data",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+    object
+    created_at
+    type
+    data
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::WebhookAgentSessionEnvelopeObject.from_value(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::WebhookAgentSessionInProgressVariant1Type.from_value(value)
+    end,
+    data: lambda do |value|
+      ::OctridevOpenai::AgentSessionEnvironmentPayloadResource.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for WebhookAgentSessionInProgress.
+# Sent when an agent session enters the in-progress state.
+class WebhookAgentSessionInProgress
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalWebhookAgentSessionInProgressMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalWebhookAgentSessionInProgressMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalWebhookAgentSessionInProgressMetadata::DECODERS
+
+  attr_reader :data
+  # @return [String] The unique ID of the event.
+  attr_reader :id
+  # @return [WebhookAgentSessionEnvelopeObject] The object type. Always `event`.
+  attr_reader :object
+  # @return [Integer] The Unix timestamp, in seconds, when the event was created.
+  attr_reader :created_at
+  # @return [WebhookAgentSessionInProgressVariant1Type] The event type. Always `agent.session.in_progress`.
+  attr_reader :type
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for WebhookAgentSessionInProgress.
-  # Sent when an agent session enters the in-progress state.
-  class WebhookAgentSessionInProgress
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalWebhookAgentSessionInProgressMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalWebhookAgentSessionInProgressMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalWebhookAgentSessionInProgressMetadata::DECODERS
-
-    attr_reader :data
-    # @return [String] The unique ID of the event.
-    attr_reader :id
-    # @return [WebhookAgentSessionEnvelopeObject] The object type. Always `event`.
-    attr_reader :object
-    # @return [Integer] The Unix timestamp, in seconds, when the event was created.
-    attr_reader :created_at
-    # @return [WebhookAgentSessionInProgressVariant1Type] The event type. Always `agent.session.in_progress`.
-    attr_reader :type
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the WebhookAgentSessionInProgressVariant1Type SDK namespace.
-  module WebhookAgentSessionInProgressVariant1Type
-    AGENT_SESSION_IN_PROGRESS = 'agent.session.in_progress'
-    VALUES = ['agent.session.in_progress'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
+
+# Defines the WebhookAgentSessionInProgressVariant1Type SDK namespace.
+module WebhookAgentSessionInProgressVariant1Type
+  AGENT_SESSION_IN_PROGRESS = 'agent.session.in_progress'
+  VALUES = ['agent.session.in_progress'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 end

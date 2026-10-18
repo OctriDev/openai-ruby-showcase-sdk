@@ -5,79 +5,77 @@
 
 # responses_input domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalInputMessageResourceMetadata
-    FIELDS = {
-      type: 'type',
-      role: 'role',
-      status: 'status',
-      content: 'content',
-      id: 'id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      role
-      content
-      id
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::InputMessageType.from_value(value)
-      end,
-      role: lambda do |value|
-        ::OctridevOpenai::InputMessageRole.from_value(value)
-      end,
-      status: lambda do |value|
-        ::OctridevOpenai::InputMessageStatus.from_value(value)
-      end,
-      content: lambda do |value|
-        ::OctridevOpenai::InputMessageContentList.from_hash(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalInputMessageResourceMetadata
+  FIELDS = {
+    type: "type",
+    role: "role",
+    status: "status",
+    content: "content",
+    id: "id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    role
+    content
+    id
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::InputMessageType.from_value(value)
+    end,
+    role: lambda do |value|
+      ::OctridevOpenai::InputMessageRole.from_value(value)
+    end,
+    status: lambda do |value|
+      ::OctridevOpenai::InputMessageStatus.from_value(value)
+    end,
+    content: lambda do |value|
+      ::OctridevOpenai::InputMessageContentList.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for InputMessageResource.
+# Typed representation of the `InputMessageResource` API schema.
+class InputMessageResource
+  include ItemResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalInputMessageResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalInputMessageResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalInputMessageResourceMetadata::DECODERS
+
+  # @return [InputMessageType] The type of the message input. Always set to `message`.
+  attr_reader :type
+  # @return [InputMessageRole] The role of the message input. One of `user`, `system`, or `developer`.
+  attr_reader :role
+  # @return [InputMessageStatus] The status of item. One of `in_progress`, `completed`, or `incomplete`. Populated when items are returned via API.
+  attr_reader :status
+  # @return [InputMessageContentList] A list of one or many input items to the model, containing different content types.
+  attr_reader :content
+  # @return [String] The unique ID of the message input.
+  attr_reader :id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for InputMessageResource.
-  # Typed representation of the `InputMessageResource` API schema.
-  class InputMessageResource
-    include ItemResource
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalInputMessageResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalInputMessageResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalInputMessageResourceMetadata::DECODERS
-
-    # @return [InputMessageType] The type of the message input. Always set to `message`.
-    attr_reader :type
-    # @return [InputMessageRole] The role of the message input. One of `user`, `system`, or `developer`.
-    attr_reader :role
-    # @return [InputMessageStatus] The status of item. One of `in_progress`, `completed`, or `incomplete`. Populated when items are returned via API.
-    attr_reader :status
-    # @return [InputMessageContentList] A list of one or many input items to the model, containing different content types.
-    attr_reader :content
-    # @return [String] The unique ID of the message input.
-    attr_reader :id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the InputParam SDK namespace.
-  module InputParam
-    def self.from_hash(hash)
-      return hash if hash.is_a?(::String)
-      return hash.map { |item| InputItem.from_hash(item) } if hash.is_a?(::Array)
-
-      raise "Could not deserialize InputParam from #{hash.inspect}"
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
+
+# Defines the InputParam SDK namespace.
+module InputParam
+  def self.from_hash(hash)
+    return hash if hash.is_a?(::String)
+    return hash.map { |item| InputItem.from_hash(item) } if hash.is_a?(::Array)
+    raise "Could not deserialize InputParam from #{hash.inspect}"
+  end
+end
 end

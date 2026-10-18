@@ -5,73 +5,73 @@
 
 # webhook_agent_session_failed domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalWebhookAgentSessionFailedMetadata
-    FIELDS = {
-      id: 'id',
-      object: 'object',
-      created_at: 'created_at',
-      type: 'type',
-      data: 'data'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-      object
-      created_at
-      type
-      data
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::WebhookAgentSessionEnvelopeObject.from_value(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::WebhookAgentSessionFailedVariant1Type.from_value(value)
-      end,
-      data: lambda do |value|
-        ::OctridevOpenai::AgentSessionEnvironmentPayloadResource.from_hash(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalWebhookAgentSessionFailedMetadata
+  FIELDS = {
+    id: "id",
+    object: "object",
+    created_at: "created_at",
+    type: "type",
+    data: "data",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+    object
+    created_at
+    type
+    data
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::WebhookAgentSessionEnvelopeObject.from_value(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::WebhookAgentSessionFailedVariant1Type.from_value(value)
+    end,
+    data: lambda do |value|
+      ::OctridevOpenai::AgentSessionEnvironmentPayloadResource.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for WebhookAgentSessionFailed.
+# Sent when an agent session fails.
+class WebhookAgentSessionFailed
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalWebhookAgentSessionFailedMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalWebhookAgentSessionFailedMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalWebhookAgentSessionFailedMetadata::DECODERS
+
+  attr_reader :data
+  # @return [String] The unique ID of the event.
+  attr_reader :id
+  # @return [WebhookAgentSessionEnvelopeObject] The object type. Always `event`.
+  attr_reader :object
+  # @return [Integer] The Unix timestamp, in seconds, when the event was created.
+  attr_reader :created_at
+  # @return [WebhookAgentSessionFailedVariant1Type] The event type. Always `agent.session.failed`.
+  attr_reader :type
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for WebhookAgentSessionFailed.
-  # Sent when an agent session fails.
-  class WebhookAgentSessionFailed
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalWebhookAgentSessionFailedMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalWebhookAgentSessionFailedMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalWebhookAgentSessionFailedMetadata::DECODERS
-
-    attr_reader :data
-    # @return [String] The unique ID of the event.
-    attr_reader :id
-    # @return [WebhookAgentSessionEnvelopeObject] The object type. Always `event`.
-    attr_reader :object
-    # @return [Integer] The Unix timestamp, in seconds, when the event was created.
-    attr_reader :created_at
-    # @return [WebhookAgentSessionFailedVariant1Type] The event type. Always `agent.session.failed`.
-    attr_reader :type
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the WebhookAgentSessionFailedVariant1Type SDK namespace.
-  module WebhookAgentSessionFailedVariant1Type
-    AGENT_SESSION_FAILED = 'agent.session.failed'
-    VALUES = ['agent.session.failed'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
+
+# Defines the WebhookAgentSessionFailedVariant1Type SDK namespace.
+module WebhookAgentSessionFailedVariant1Type
+  AGENT_SESSION_FAILED = 'agent.session.failed'
+  VALUES = ['agent.session.failed'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 end

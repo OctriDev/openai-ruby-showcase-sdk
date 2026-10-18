@@ -5,425 +5,419 @@
 
 # shared_program domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalProgramMetadata
-    FIELDS = {
-      type: 'type',
-      id: 'id',
-      call_id: 'call_id',
-      code: 'code',
-      fingerprint: 'fingerprint'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      id
-      call_id
-      code
-      fingerprint
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ProgramType.from_value(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalProgramMetadata
+  FIELDS = {
+    type: "type",
+    id: "id",
+    call_id: "call_id",
+    code: "code",
+    fingerprint: "fingerprint",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    id
+    call_id
+    code
+    fingerprint
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ProgramType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for Program.
+# Typed representation of the `Program` API schema.
+class Program
+  include ConversationItem
+  include ItemResource
+  include OutputItem
+  include ItemField
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalProgramMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalProgramMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalProgramMetadata::DECODERS
+
+  # @return [ProgramType] The type of the item. Always `program`.
+  attr_reader :type
+  # @return [String] The unique ID of the program item.
+  attr_reader :id
+  # @return [String] The stable call ID of the program item.
+  attr_reader :call_id
+  # @return [String] The JavaScript source executed by programmatic tool calling.
+  attr_reader :code
+  # @return [String] Opaque program replay fingerprint that must be round-tripped.
+  attr_reader :fingerprint
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for Program.
-  # Typed representation of the `Program` API schema.
-  class Program
-    include ConversationItem
-    include ItemResource
-    include OutputItem
-    include ItemField
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalProgramMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalProgramMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalProgramMetadata::DECODERS
-
-    # @return [ProgramType] The type of the item. Always `program`.
-    attr_reader :type
-    # @return [String] The unique ID of the program item.
-    attr_reader :id
-    # @return [String] The stable call ID of the program item.
-    attr_reader :call_id
-    # @return [String] The JavaScript source executed by programmatic tool calling.
-    attr_reader :code
-    # @return [String] Opaque program replay fingerprint that must be round-tripped.
-    attr_reader :fingerprint
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the ProgramType SDK namespace.
-  module ProgramType
-    PROGRAM = 'program'
-    VALUES = ['program'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('ProgramType', 'enum', "Unknown ProgramType: #{value}")
-    end
+# Defines the ProgramType SDK namespace.
+module ProgramType
+  PROGRAM = 'program'
+  VALUES = ['program'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('ProgramType', 'enum', "Unknown ProgramType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalProgramItemParamMetadata
+  FIELDS = {
+    id: "id",
+    type: "type",
+    call_id: "call_id",
+    code: "code",
+    fingerprint: "fingerprint",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+    type
+    call_id
+    code
+    fingerprint
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ProgramItemParamType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for ProgramItemParam.
+# Typed representation of the `ProgramItemParam` API schema.
+class ProgramItemParam
+  include InputItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalProgramItemParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalProgramItemParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalProgramItemParamMetadata::DECODERS
+
+  # @return [String] The unique ID of this program item.
+  attr_reader :id
+  # @return [ProgramItemParamType] The item type. Always `program`.
+  attr_reader :type
+  # @return [String] The stable call ID of the program item.
+  attr_reader :call_id
+  # @return [String] The JavaScript source executed by programmatic tool calling.
+  attr_reader :code
+  # @return [String] Opaque program replay fingerprint that must be round-tripped.
+  attr_reader :fingerprint
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalProgramItemParamMetadata
-    FIELDS = {
-      id: 'id',
-      type: 'type',
-      call_id: 'call_id',
-      code: 'code',
-      fingerprint: 'fingerprint'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-      type
-      call_id
-      code
-      fingerprint
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ProgramItemParamType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ProgramItemParam.
-  # Typed representation of the `ProgramItemParam` API schema.
-  class ProgramItemParam
-    include InputItem
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalProgramItemParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalProgramItemParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalProgramItemParamMetadata::DECODERS
+# Defines the ProgramItemParamType SDK namespace.
+module ProgramItemParamType
+  PROGRAM = 'program'
+  VALUES = ['program'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    # @return [String] The unique ID of this program item.
-    attr_reader :id
-    # @return [ProgramItemParamType] The item type. Always `program`.
-    attr_reader :type
-    # @return [String] The stable call ID of the program item.
-    attr_reader :call_id
-    # @return [String] The JavaScript source executed by programmatic tool calling.
-    attr_reader :code
-    # @return [String] Opaque program replay fingerprint that must be round-tripped.
-    attr_reader :fingerprint
+    raise SdkValidationError.new('ProgramItemParamType', 'enum', "Unknown ProgramItemParamType: #{value}")
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalProgramOutputMetadata
+  FIELDS = {
+    type: "type",
+    id: "id",
+    call_id: "call_id",
+    result: "result",
+    status: "status",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    id
+    call_id
+    result
+    status
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ProgramOutputType.from_value(value)
+    end,
+    status: lambda do |value|
+      ::OctridevOpenai::ProgramOutputStatus.from_value(value)
+    end,
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for ProgramOutput.
+# Typed representation of the `ProgramOutput` API schema.
+class ProgramOutput
+  include ConversationItem
+  include ItemResource
+  include OutputItem
+  include ItemField
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalProgramOutputMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalProgramOutputMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalProgramOutputMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [ProgramOutputType] The type of the item. Always `program_output`.
+  attr_reader :type
+  # @return [String] The unique ID of the program output item.
+  attr_reader :id
+  # @return [String] The call ID of the program item.
+  attr_reader :call_id
+  # @return [String] The result produced by the program item.
+  attr_reader :result
+  # @return [ProgramOutputStatus] The terminal status of the program output item.
+  attr_reader :status
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the ProgramItemParamType SDK namespace.
-  module ProgramItemParamType
-    PROGRAM = 'program'
-    VALUES = ['program'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('ProgramItemParamType', 'enum', "Unknown ProgramItemParamType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalProgramOutputMetadata
-    FIELDS = {
-      type: 'type',
-      id: 'id',
-      call_id: 'call_id',
-      result: 'result',
-      status: 'status'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      id
-      call_id
-      result
-      status
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ProgramOutputType.from_value(value)
-      end,
-      status: lambda do |value|
-        ::OctridevOpenai::ProgramOutputStatus.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the ProgramOutputType SDK namespace.
+module ProgramOutputType
+  PROGRAM_OUTPUT = 'program_output'
+  VALUES = ['program_output'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('ProgramOutputType', 'enum', "Unknown ProgramOutputType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalProgramOutputItemParamMetadata
+  FIELDS = {
+    id: "id",
+    type: "type",
+    call_id: "call_id",
+    result: "result",
+    status: "status",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+    type
+    call_id
+    result
+    status
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ProgramOutputItemParamType.from_value(value)
+    end,
+    status: lambda do |value|
+      ::OctridevOpenai::ProgramOutputItemStatus.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for ProgramOutputItemParam.
+# Typed representation of the `ProgramOutputItemParam` API schema.
+class ProgramOutputItemParam
+  include InputItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalProgramOutputItemParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalProgramOutputItemParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalProgramOutputItemParamMetadata::DECODERS
+
+  # @return [String] The unique ID of this program output item.
+  attr_reader :id
+  # @return [ProgramOutputItemParamType] The item type. Always `program_output`.
+  attr_reader :type
+  # @return [String] The call ID of the program item.
+  attr_reader :call_id
+  # @return [String] The result produced by the program item.
+  attr_reader :result
+  # @return [ProgramOutputItemStatus] The terminal status of the program output.
+  attr_reader :status
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ProgramOutput.
-  # Typed representation of the `ProgramOutput` API schema.
-  class ProgramOutput
-    include ConversationItem
-    include ItemResource
-    include OutputItem
-    include ItemField
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalProgramOutputMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalProgramOutputMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalProgramOutputMetadata::DECODERS
-
-    # @return [ProgramOutputType] The type of the item. Always `program_output`.
-    attr_reader :type
-    # @return [String] The unique ID of the program output item.
-    attr_reader :id
-    # @return [String] The call ID of the program item.
-    attr_reader :call_id
-    # @return [String] The result produced by the program item.
-    attr_reader :result
-    # @return [ProgramOutputStatus] The terminal status of the program output item.
-    attr_reader :status
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the ProgramOutputType SDK namespace.
-  module ProgramOutputType
-    PROGRAM_OUTPUT = 'program_output'
-    VALUES = ['program_output'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('ProgramOutputType', 'enum', "Unknown ProgramOutputType: #{value}")
-    end
+# Defines the ProgramOutputItemParamType SDK namespace.
+module ProgramOutputItemParamType
+  PROGRAM_OUTPUT = 'program_output'
+  VALUES = ['program_output'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('ProgramOutputItemParamType', 'enum', "Unknown ProgramOutputItemParamType: #{value}")
+  end
+end
+
+# Defines the ProgramOutputItemStatus SDK namespace.
+module ProgramOutputItemStatus
+  COMPLETED = 'completed'
+  INCOMPLETE = 'incomplete'
+  VALUES = ['completed', 'incomplete'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the ProgramOutputStatus SDK namespace.
+module ProgramOutputStatus
+  COMPLETED = 'completed'
+  INCOMPLETE = 'incomplete'
+  VALUES = ['completed', 'incomplete'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalProgramToolCallCallerMetadata
+  FIELDS = {
+    type: "type",
+    caller_id: "caller_id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    caller_id
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ProgramToolCallCallerType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for ProgramToolCallCaller.
+# Typed representation of the `ProgramToolCallCaller` API schema.
+class ProgramToolCallCaller
+  include ToolCallCaller
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalProgramToolCallCallerMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalProgramToolCallCallerMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalProgramToolCallCallerMetadata::DECODERS
+
+  # @return [ProgramToolCallCallerType] Required enumerated value serialized in the `type` wire field.
+  attr_reader :type
+  # @return [String] The call ID of the program item that produced this tool call.
+  attr_reader :caller_id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalProgramOutputItemParamMetadata
-    FIELDS = {
-      id: 'id',
-      type: 'type',
-      call_id: 'call_id',
-      result: 'result',
-      status: 'status'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-      type
-      call_id
-      result
-      status
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ProgramOutputItemParamType.from_value(value)
-      end,
-      status: lambda do |value|
-        ::OctridevOpenai::ProgramOutputItemStatus.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ProgramOutputItemParam.
-  # Typed representation of the `ProgramOutputItemParam` API schema.
-  class ProgramOutputItemParam
-    include InputItem
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalProgramOutputItemParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalProgramOutputItemParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalProgramOutputItemParamMetadata::DECODERS
+# Defines the ProgramToolCallCallerType SDK namespace.
+module ProgramToolCallCallerType
+  PROGRAM = 'program'
+  VALUES = ['program'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    # @return [String] The unique ID of this program output item.
-    attr_reader :id
-    # @return [ProgramOutputItemParamType] The item type. Always `program_output`.
-    attr_reader :type
-    # @return [String] The call ID of the program item.
-    attr_reader :call_id
-    # @return [String] The result produced by the program item.
-    attr_reader :result
-    # @return [ProgramOutputItemStatus] The terminal status of the program output.
-    attr_reader :status
+    raise SdkValidationError.new('ProgramToolCallCallerType', 'enum', "Unknown ProgramToolCallCallerType: #{value}")
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalProgramToolCallCallerParamMetadata
+  FIELDS = {
+    type: "type",
+    caller_id: "caller_id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    caller_id
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ProgramToolCallCallerParamType.from_value(value)
+    end,
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for ProgramToolCallCallerParam.
+# Typed representation of the `ProgramToolCallCallerParam` API schema.
+class ProgramToolCallCallerParam
+  include ToolCallCallerParam
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalProgramToolCallCallerParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalProgramToolCallCallerParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalProgramToolCallCallerParamMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [ProgramToolCallCallerParamType] The caller type. Always `program`.
+  attr_reader :type
+  # @return [String] The call ID of the program item that produced this tool call.
+  attr_reader :caller_id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the ProgramOutputItemParamType SDK namespace.
-  module ProgramOutputItemParamType
-    PROGRAM_OUTPUT = 'program_output'
-    VALUES = ['program_output'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('ProgramOutputItemParamType', 'enum', "Unknown ProgramOutputItemParamType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the ProgramOutputItemStatus SDK namespace.
-  module ProgramOutputItemStatus
-    COMPLETED = 'completed'
-    INCOMPLETE = 'incomplete'
-    VALUES = %w[completed incomplete].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the ProgramOutputStatus SDK namespace.
-  module ProgramOutputStatus
-    COMPLETED = 'completed'
-    INCOMPLETE = 'incomplete'
-    VALUES = %w[completed incomplete].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the ProgramToolCallCallerParamType SDK namespace.
+module ProgramToolCallCallerParamType
+  PROGRAM = 'program'
+  VALUES = ['program'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('ProgramToolCallCallerParamType', 'enum', "Unknown ProgramToolCallCallerParamType: #{value}")
   end
-
-  # Internal model hydration metadata.
-  class SdkInternalProgramToolCallCallerMetadata
-    FIELDS = {
-      type: 'type',
-      caller_id: 'caller_id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      caller_id
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ProgramToolCallCallerType.from_value(value)
-      end
-    }.freeze
-  end
-
-  # API model for ProgramToolCallCaller.
-  # Typed representation of the `ProgramToolCallCaller` API schema.
-  class ProgramToolCallCaller
-    include ToolCallCaller
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalProgramToolCallCallerMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalProgramToolCallCallerMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalProgramToolCallCallerMetadata::DECODERS
-
-    # @return [ProgramToolCallCallerType] Required enumerated value serialized in the `type` wire field.
-    attr_reader :type
-    # @return [String] The call ID of the program item that produced this tool call.
-    attr_reader :caller_id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the ProgramToolCallCallerType SDK namespace.
-  module ProgramToolCallCallerType
-    PROGRAM = 'program'
-    VALUES = ['program'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('ProgramToolCallCallerType', 'enum', "Unknown ProgramToolCallCallerType: #{value}")
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalProgramToolCallCallerParamMetadata
-    FIELDS = {
-      type: 'type',
-      caller_id: 'caller_id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      caller_id
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ProgramToolCallCallerParamType.from_value(value)
-      end
-    }.freeze
-  end
-
-  # API model for ProgramToolCallCallerParam.
-  # Typed representation of the `ProgramToolCallCallerParam` API schema.
-  class ProgramToolCallCallerParam
-    include ToolCallCallerParam
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalProgramToolCallCallerParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalProgramToolCallCallerParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalProgramToolCallCallerParamMetadata::DECODERS
-
-    # @return [ProgramToolCallCallerParamType] The caller type. Always `program`.
-    attr_reader :type
-    # @return [String] The call ID of the program item that produced this tool call.
-    attr_reader :caller_id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the ProgramToolCallCallerParamType SDK namespace.
-  module ProgramToolCallCallerParamType
-    PROGRAM = 'program'
-    VALUES = ['program'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('ProgramToolCallCallerParamType', 'enum', "Unknown ProgramToolCallCallerParamType: #{value}")
-    end
-  end
+end
 end

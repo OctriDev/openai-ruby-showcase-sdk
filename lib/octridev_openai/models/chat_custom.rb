@@ -5,285 +5,284 @@
 
 # chat_custom domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalCustomToolChatCompletionsCustomMetadata
-    FIELDS = {
-      name: 'name',
-      description: 'description',
-      format: 'format'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      name
-    ].freeze
-    DECODERS = {
-      format: lambda do |value|
-        ::OctridevOpenai::CustomToolChatCompletionsCustomFormat.from_hash(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalCustomToolChatCompletionsCustomMetadata
+  FIELDS = {
+    name: "name",
+    description: "description",
+    format: "format",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    name
+  ].freeze
+  DECODERS = {
+    format: lambda do |value|
+      ::OctridevOpenai::CustomToolChatCompletionsCustomFormat.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for CustomToolChatCompletionsCustom.
+# Properties of the custom tool.
+class CustomToolChatCompletionsCustom
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCustomToolChatCompletionsCustomMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCustomToolChatCompletionsCustomMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCustomToolChatCompletionsCustomMetadata::DECODERS
+
+  # @return [String] The name of the custom tool, used to identify it in tool calls.
+  attr_reader :name
+  # @return [String] Optional description of the custom tool, used to provide more context.
+  attr_reader :description
+  # @return [CustomToolChatCompletionsCustomFormat] The input format for the custom tool. Default is unconstrained text.
+  attr_reader :format
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for CustomToolChatCompletionsCustom.
-  # Properties of the custom tool.
-  class CustomToolChatCompletionsCustom
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCustomToolChatCompletionsCustomMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCustomToolChatCompletionsCustomMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCustomToolChatCompletionsCustomMetadata::DECODERS
-
-    # @return [String] The name of the custom tool, used to identify it in tool calls.
-    attr_reader :name
-    # @return [String] Optional description of the custom tool, used to provide more context.
-    attr_reader :description
-    # @return [CustomToolChatCompletionsCustomFormat] The input format for the custom tool. Default is unconstrained text.
-    attr_reader :format
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalCustomToolChatCompletionsMetadata
-    FIELDS = {
-      type: 'type',
-      custom: 'custom'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      custom
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::CustomToolChatCompletionsType.from_value(value)
-      end,
-      custom: lambda do |value|
-        ::OctridevOpenai::CustomToolChatCompletionsCustom.from_hash(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalCustomToolChatCompletionsMetadata
+  FIELDS = {
+    type: "type",
+    custom: "custom",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    custom
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::CustomToolChatCompletionsType.from_value(value)
+    end,
+    custom: lambda do |value|
+      ::OctridevOpenai::CustomToolChatCompletionsCustom.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for CustomToolChatCompletions.
+# A custom tool that processes input using a specified format.
+class CustomToolChatCompletions
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCustomToolChatCompletionsMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCustomToolChatCompletionsMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCustomToolChatCompletionsMetadata::DECODERS
+
+  # @return [CustomToolChatCompletionsType] The type of the custom tool. Always `custom`.
+  attr_reader :type
+  # @return [CustomToolChatCompletionsCustom] Properties of the custom tool.
+  attr_reader :custom
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for CustomToolChatCompletions.
-  # A custom tool that processes input using a specified format.
-  class CustomToolChatCompletions
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCustomToolChatCompletionsMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCustomToolChatCompletionsMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCustomToolChatCompletionsMetadata::DECODERS
-
-    # @return [CustomToolChatCompletionsType] The type of the custom tool. Always `custom`.
-    attr_reader :type
-    # @return [CustomToolChatCompletionsCustom] Properties of the custom tool.
-    attr_reader :custom
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the CustomToolChatCompletionsType SDK namespace.
-  module CustomToolChatCompletionsType
-    CUSTOM = 'custom'
-    VALUES = ['custom'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('CustomToolChatCompletionsType', 'enum', "Unknown CustomToolChatCompletionsType: #{value}")
-    end
+# Defines the CustomToolChatCompletionsType SDK namespace.
+module CustomToolChatCompletionsType
+  CUSTOM = 'custom'
+  VALUES = ['custom'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('CustomToolChatCompletionsType', 'enum', "Unknown CustomToolChatCompletionsType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalCustomToolChatCompletionsCustomFormatVariant0Metadata
+  FIELDS = {
+    type: "type",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::CustomToolChatCompletionsCustomFormatVariant0Type.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for CustomToolChatCompletionsCustomFormatVariant0.
+class CustomToolChatCompletionsCustomFormatVariant0
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCustomToolChatCompletionsCustomFormatVariant0Metadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCustomToolChatCompletionsCustomFormatVariant0Metadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCustomToolChatCompletionsCustomFormatVariant0Metadata::DECODERS
+
+  # @return [CustomToolChatCompletionsCustomFormatVariant0Type] Unconstrained text format. Always `text`.
+  attr_reader :type
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalCustomToolChatCompletionsCustomFormatVariant0Metadata
-    FIELDS = {
-      type: 'type'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::CustomToolChatCompletionsCustomFormatVariant0Type.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for CustomToolChatCompletionsCustomFormatVariant0.
-  class CustomToolChatCompletionsCustomFormatVariant0
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCustomToolChatCompletionsCustomFormatVariant0Metadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCustomToolChatCompletionsCustomFormatVariant0Metadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCustomToolChatCompletionsCustomFormatVariant0Metadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [CustomToolChatCompletionsCustomFormatVariant0Type] Unconstrained text format. Always `text`.
-    attr_reader :type
+# Internal model hydration metadata.
+class SdkInternalCustomToolChatCompletionsCustomFormatVariant1GrammarMetadata
+  FIELDS = {
+    definition: "definition",
+    syntax: "syntax",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    definition
+    syntax
+  ].freeze
+  DECODERS = {
+    syntax: lambda do |value|
+      ::OctridevOpenai::CustomToolChatCompletionsCustomFormatVariant1GrammarSyntax.from_value(value)
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for CustomToolChatCompletionsCustomFormatVariant1Grammar.
+# Your chosen grammar.
+class CustomToolChatCompletionsCustomFormatVariant1Grammar
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCustomToolChatCompletionsCustomFormatVariant1GrammarMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCustomToolChatCompletionsCustomFormatVariant1GrammarMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCustomToolChatCompletionsCustomFormatVariant1GrammarMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [String] The grammar definition.
+  attr_reader :definition
+  # @return [CustomToolChatCompletionsCustomFormatVariant1GrammarSyntax] The syntax of the grammar definition. One of `lark` or `regex`.
+  attr_reader :syntax
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalCustomToolChatCompletionsCustomFormatVariant1GrammarMetadata
-    FIELDS = {
-      definition: 'definition',
-      syntax: 'syntax'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      definition
-      syntax
-    ].freeze
-    DECODERS = {
-      syntax: lambda do |value|
-        ::OctridevOpenai::CustomToolChatCompletionsCustomFormatVariant1GrammarSyntax.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for CustomToolChatCompletionsCustomFormatVariant1Grammar.
-  # Your chosen grammar.
-  class CustomToolChatCompletionsCustomFormatVariant1Grammar
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCustomToolChatCompletionsCustomFormatVariant1GrammarMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCustomToolChatCompletionsCustomFormatVariant1GrammarMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCustomToolChatCompletionsCustomFormatVariant1GrammarMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] The grammar definition.
-    attr_reader :definition
-    # @return [CustomToolChatCompletionsCustomFormatVariant1GrammarSyntax] The syntax of the grammar definition. One of `lark` or `regex`.
-    attr_reader :syntax
+# Internal model hydration metadata.
+class SdkInternalCustomToolChatCompletionsCustomFormatVariant1Metadata
+  FIELDS = {
+    type: "type",
+    grammar: "grammar",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    grammar
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::CustomToolChatCompletionsCustomFormatVariant1Type.from_value(value)
+    end,
+    grammar: lambda do |value|
+      ::OctridevOpenai::CustomToolChatCompletionsCustomFormatVariant1Grammar.from_hash(value)
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for CustomToolChatCompletionsCustomFormatVariant1.
+class CustomToolChatCompletionsCustomFormatVariant1
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCustomToolChatCompletionsCustomFormatVariant1Metadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCustomToolChatCompletionsCustomFormatVariant1Metadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCustomToolChatCompletionsCustomFormatVariant1Metadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [CustomToolChatCompletionsCustomFormatVariant1Type] Grammar format. Always `grammar`.
+  attr_reader :type
+  # @return [CustomToolChatCompletionsCustomFormatVariant1Grammar] Your chosen grammar.
+  attr_reader :grammar
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalCustomToolChatCompletionsCustomFormatVariant1Metadata
-    FIELDS = {
-      type: 'type',
-      grammar: 'grammar'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      grammar
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::CustomToolChatCompletionsCustomFormatVariant1Type.from_value(value)
-      end,
-      grammar: lambda do |value|
-        ::OctridevOpenai::CustomToolChatCompletionsCustomFormatVariant1Grammar.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for CustomToolChatCompletionsCustomFormatVariant1.
-  class CustomToolChatCompletionsCustomFormatVariant1
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCustomToolChatCompletionsCustomFormatVariant1Metadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCustomToolChatCompletionsCustomFormatVariant1Metadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCustomToolChatCompletionsCustomFormatVariant1Metadata::DECODERS
-
-    # @return [CustomToolChatCompletionsCustomFormatVariant1Type] Grammar format. Always `grammar`.
-    attr_reader :type
-    # @return [CustomToolChatCompletionsCustomFormatVariant1Grammar] Your chosen grammar.
-    attr_reader :grammar
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the CustomToolChatCompletionsCustomFormat SDK namespace.
-  module CustomToolChatCompletionsCustomFormat
-    DISCRIMINATOR_MAPPING = {
-      'text' => -> { CustomToolChatCompletionsCustomFormatVariant0 },
-      'grammar' => -> { CustomToolChatCompletionsCustomFormatVariant1 }
-    }.freeze
+# Defines the CustomToolChatCompletionsCustomFormat SDK namespace.
+module CustomToolChatCompletionsCustomFormat
+  DISCRIMINATOR_MAPPING = {
+    "text" => -> { CustomToolChatCompletionsCustomFormatVariant0 },
+    "grammar" => -> { CustomToolChatCompletionsCustomFormatVariant1 },
+  }.freeze
 
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
 
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
-
-      raise SdkValidationError.new('CustomToolChatCompletionsCustomFormat', 'variant', "Unknown CustomToolChatCompletionsCustomFormat discriminator: #{hash['type'].inspect}")
-    end
+    raise SdkValidationError.new('CustomToolChatCompletionsCustomFormat', 'variant', "Unknown CustomToolChatCompletionsCustomFormat discriminator: #{hash["type"].inspect}")
   end
+end
 
-  # Defines the CustomToolChatCompletionsCustomFormatVariant0Type SDK namespace.
-  module CustomToolChatCompletionsCustomFormatVariant0Type
-    TEXT = 'text'
-    VALUES = ['text'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+# Defines the CustomToolChatCompletionsCustomFormatVariant0Type SDK namespace.
+module CustomToolChatCompletionsCustomFormatVariant0Type
+  TEXT = 'text'
+  VALUES = ['text'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-      raise SdkValidationError.new('CustomToolChatCompletionsCustomFormatVariant0Type', 'enum', "Unknown CustomToolChatCompletionsCustomFormatVariant0Type: #{value}")
-    end
+    raise SdkValidationError.new('CustomToolChatCompletionsCustomFormatVariant0Type', 'enum', "Unknown CustomToolChatCompletionsCustomFormatVariant0Type: #{value}")
   end
+end
 
-  # Defines the CustomToolChatCompletionsCustomFormatVariant1GrammarSyntax SDK namespace.
-  module CustomToolChatCompletionsCustomFormatVariant1GrammarSyntax
-    LARK = 'lark'
-    REGEX = 'regex'
-    VALUES = %w[lark regex].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the CustomToolChatCompletionsCustomFormatVariant1GrammarSyntax SDK namespace.
+module CustomToolChatCompletionsCustomFormatVariant1GrammarSyntax
+  LARK = 'lark'
+  REGEX = 'regex'
+  VALUES = ['lark', 'regex'].freeze
+  def self.from_value(value)
+    value
   end
+end
 
-  # Defines the CustomToolChatCompletionsCustomFormatVariant1Type SDK namespace.
-  module CustomToolChatCompletionsCustomFormatVariant1Type
-    GRAMMAR = 'grammar'
-    VALUES = ['grammar'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+# Defines the CustomToolChatCompletionsCustomFormatVariant1Type SDK namespace.
+module CustomToolChatCompletionsCustomFormatVariant1Type
+  GRAMMAR = 'grammar'
+  VALUES = ['grammar'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-      raise SdkValidationError.new('CustomToolChatCompletionsCustomFormatVariant1Type', 'enum', "Unknown CustomToolChatCompletionsCustomFormatVariant1Type: #{value}")
-    end
+    raise SdkValidationError.new('CustomToolChatCompletionsCustomFormatVariant1Type', 'enum', "Unknown CustomToolChatCompletionsCustomFormatVariant1Type: #{value}")
   end
+end
 end

@@ -5,102 +5,100 @@
 
 # user_message_item domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalUserMessageItemParamMetadata
-    FIELDS = {
-      id: 'id',
-      type: 'type',
-      role: 'role',
-      content: 'content',
-      status: 'status'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      role
-      content
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::UserMessageItemParamType.from_value(value)
-      end,
-      role: lambda do |value|
-        ::OctridevOpenai::UserMessageItemParamRole.from_value(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalUserMessageItemParamMetadata
+  FIELDS = {
+    id: "id",
+    type: "type",
+    role: "role",
+    content: "content",
+    status: "status",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    role
+    content
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::UserMessageItemParamType.from_value(value)
+    end,
+    role: lambda do |value|
+      ::OctridevOpenai::UserMessageItemParamRole.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for UserMessageItemParam.
+# Typed representation of the `UserMessageItemParam` API schema.
+class UserMessageItemParam
+  include ResponseSteerInputItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalUserMessageItemParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalUserMessageItemParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalUserMessageItemParamMetadata::DECODERS
+
+  # @return [String] Optional `string` value serialized in the `id` wire field.
+  attr_reader :id
+  # @return [UserMessageItemParamType] The item type. Always `message`.
+  attr_reader :type
+  # @return [UserMessageItemParamRole] The message role. Always `user`.
+  attr_reader :role
+  # @return [Object] The message content, as an array of content parts.
+  attr_reader :content
+  # @return [String] Optional `string` value serialized in the `status` wire field.
+  attr_reader :status
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for UserMessageItemParam.
-  # Typed representation of the `UserMessageItemParam` API schema.
-  class UserMessageItemParam
-    include ResponseSteerInputItem
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalUserMessageItemParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalUserMessageItemParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalUserMessageItemParamMetadata::DECODERS
-
-    # @return [String] Optional `string` value serialized in the `id` wire field.
-    attr_reader :id
-    # @return [UserMessageItemParamType] The item type. Always `message`.
-    attr_reader :type
-    # @return [UserMessageItemParamRole] The message role. Always `user`.
-    attr_reader :role
-    # @return [Object] The message content, as an array of content parts.
-    attr_reader :content
-    # @return [String] Optional `string` value serialized in the `status` wire field.
-    attr_reader :status
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the UserMessageItemParamRole SDK namespace.
-  module UserMessageItemParamRole
-    USER = 'user'
-    VALUES = ['user'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the UserMessageItemParamType SDK namespace.
-  module UserMessageItemParamType
-    MESSAGE = 'message'
-    VALUES = ['message'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('UserMessageItemParamType', 'enum', "Unknown UserMessageItemParamType: #{value}")
-    end
+# Defines the UserMessageItemParamRole SDK namespace.
+module UserMessageItemParamRole
+  USER = 'user'
+  VALUES = ['user'].freeze
+  def self.from_value(value)
+    value
   end
+end
 
-  # Defines the UserMessageItemParamContentItem SDK namespace.
-  module UserMessageItemParamContentItem
-    DISCRIMINATOR_MAPPING = {
-      'input_text' => -> { InputTextContentParam },
-      'input_image' => -> { InputImageContentParamAutoParam },
-      'input_file' => -> { InputFileContentParam }
-    }.freeze
+# Defines the UserMessageItemParamType SDK namespace.
+module UserMessageItemParamType
+  MESSAGE = 'message'
+  VALUES = ['message'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
-
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
-
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
-
-      raise SdkValidationError.new('UserMessageItemParamContentItem', 'variant', "Unknown UserMessageItemParamContentItem discriminator: #{hash['type'].inspect}")
-    end
+    raise SdkValidationError.new('UserMessageItemParamType', 'enum', "Unknown UserMessageItemParamType: #{value}")
   end
+end
+
+# Defines the UserMessageItemParamContentItem SDK namespace.
+module UserMessageItemParamContentItem
+  DISCRIMINATOR_MAPPING = {
+    "input_text" => -> { InputTextContentParam },
+    "input_image" => -> { InputImageContentParamAutoParam },
+    "input_file" => -> { InputFileContentParam },
+  }.freeze
+
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
+
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+
+    raise SdkValidationError.new('UserMessageItemParamContentItem', 'variant', "Unknown UserMessageItemParamContentItem discriminator: #{hash["type"].inspect}")
+  end
+end
 end

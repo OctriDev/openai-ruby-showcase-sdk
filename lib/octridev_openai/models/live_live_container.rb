@@ -5,125 +5,123 @@
 
 # live_live_container domain models
 module OctridevOpenai
-  # Defines the LiveContainerMemoryLimit SDK namespace.
-  module LiveContainerMemoryLimit
-    V_1_G = '1g'
-    V_4_G = '4g'
-    V_16_G = '16g'
-    V_64_G = '64g'
-    VALUES = %w[1g 4g 16g 64g].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the LiveContainerMemoryLimit SDK namespace.
+module LiveContainerMemoryLimit
+  V_1_G = '1g'
+  V_4_G = '4g'
+  V_16_G = '16g'
+  V_64_G = '64g'
+  VALUES = ['1g', '4g', '16g', '64g'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalLiveContainerNetworkPolicyDisabledParamMetadata
+  FIELDS = {
+    type: "type",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::LiveContainerNetworkPolicyDisabledParamType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for LiveContainerNetworkPolicyDisabledParam.
+# Typed representation of the `LiveContainerNetworkPolicyDisabledParam` API schema.
+class LiveContainerNetworkPolicyDisabledParam
+  include LiveHostedShellContainerAutoParamNetworkPolicy
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalLiveContainerNetworkPolicyDisabledParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalLiveContainerNetworkPolicyDisabledParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalLiveContainerNetworkPolicyDisabledParamMetadata::DECODERS
+
+  # @return [LiveContainerNetworkPolicyDisabledParamType] Disable outbound network access. Always `disabled`.
+  attr_reader :type
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalLiveContainerNetworkPolicyDisabledParamMetadata
-    FIELDS = {
-      type: 'type'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::LiveContainerNetworkPolicyDisabledParamType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for LiveContainerNetworkPolicyDisabledParam.
-  # Typed representation of the `LiveContainerNetworkPolicyDisabledParam` API schema.
-  class LiveContainerNetworkPolicyDisabledParam
-    include LiveHostedShellContainerAutoParamNetworkPolicy
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalLiveContainerNetworkPolicyDisabledParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalLiveContainerNetworkPolicyDisabledParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalLiveContainerNetworkPolicyDisabledParamMetadata::DECODERS
+# Defines the LiveContainerNetworkPolicyDisabledParamType SDK namespace.
+module LiveContainerNetworkPolicyDisabledParamType
+  DISABLED = 'disabled'
+  VALUES = ['disabled'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    # @return [LiveContainerNetworkPolicyDisabledParamType] Disable outbound network access. Always `disabled`.
-    attr_reader :type
+    raise SdkValidationError.new('LiveContainerNetworkPolicyDisabledParamType', 'enum', "Unknown LiveContainerNetworkPolicyDisabledParamType: #{value}")
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalLiveContainerReferenceParamMetadata
+  FIELDS = {
+    type: "type",
+    container_id: "container_id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    container_id
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::LiveContainerReferenceParamType.from_value(value)
+    end,
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for LiveContainerReferenceParam.
+# Typed representation of the `LiveContainerReferenceParam` API schema.
+class LiveContainerReferenceParam
+  include LiveHostedShellToolInputParamEnvironment
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalLiveContainerReferenceParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalLiveContainerReferenceParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalLiveContainerReferenceParamMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [LiveContainerReferenceParamType] References a container created with the /v1/containers endpoint
+  attr_reader :type
+  # @return [String] The ID of the referenced container.
+  attr_reader :container_id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the LiveContainerNetworkPolicyDisabledParamType SDK namespace.
-  module LiveContainerNetworkPolicyDisabledParamType
-    DISABLED = 'disabled'
-    VALUES = ['disabled'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('LiveContainerNetworkPolicyDisabledParamType', 'enum', "Unknown LiveContainerNetworkPolicyDisabledParamType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalLiveContainerReferenceParamMetadata
-    FIELDS = {
-      type: 'type',
-      container_id: 'container_id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      container_id
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::LiveContainerReferenceParamType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # API model for LiveContainerReferenceParam.
-  # Typed representation of the `LiveContainerReferenceParam` API schema.
-  class LiveContainerReferenceParam
-    include LiveHostedShellToolInputParamEnvironment
+# Defines the LiveContainerReferenceParamType SDK namespace.
+module LiveContainerReferenceParamType
+  CONTAINER_REFERENCE = 'container_reference'
+  VALUES = ['container_reference'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalLiveContainerReferenceParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalLiveContainerReferenceParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalLiveContainerReferenceParamMetadata::DECODERS
-
-    # @return [LiveContainerReferenceParamType] References a container created with the /v1/containers endpoint
-    attr_reader :type
-    # @return [String] The ID of the referenced container.
-    attr_reader :container_id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+    raise SdkValidationError.new('LiveContainerReferenceParamType', 'enum', "Unknown LiveContainerReferenceParamType: #{value}")
   end
-
-  # Defines the LiveContainerReferenceParamType SDK namespace.
-  module LiveContainerReferenceParamType
-    CONTAINER_REFERENCE = 'container_reference'
-    VALUES = ['container_reference'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('LiveContainerReferenceParamType', 'enum', "Unknown LiveContainerReferenceParamType: #{value}")
-    end
-  end
+end
 end

@@ -5,119 +5,117 @@
 
 # live_live_mcptool domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalLiveMCPToolChoiceParamMetadata
-    FIELDS = {
-      type: 'type',
-      server_label: 'server_label',
-      name: 'name'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      server_label
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::LiveMCPToolChoiceParamType.from_value(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalLiveMCPToolChoiceParamMetadata
+  FIELDS = {
+    type: "type",
+    server_label: "server_label",
+    name: "name",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    server_label
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::LiveMCPToolChoiceParamType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for LiveMCPToolChoiceParam.
+# Typed representation of the `LiveMCPToolChoiceParam` API schema.
+class LiveMCPToolChoiceParam
+  include LiveResponsesDelegationSettingsInputParamToolChoice
+  include LiveAllowedToolsChoiceParamToolsItem
+  include LiveResponsesDelegationSettingsUpdateInputParamToolChoice
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalLiveMCPToolChoiceParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalLiveMCPToolChoiceParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalLiveMCPToolChoiceParamMetadata::DECODERS
+
+  # @return [LiveMCPToolChoiceParamType] The tool to call. Always `mcp`.
+  attr_reader :type
+  # @return [String] The label of the MCP server to call.
+  attr_reader :server_label
+  # @return [String] Optional `string` value serialized in the `name` wire field.
+  attr_reader :name
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for LiveMCPToolChoiceParam.
-  # Typed representation of the `LiveMCPToolChoiceParam` API schema.
-  class LiveMCPToolChoiceParam
-    include LiveResponsesDelegationSettingsInputParamToolChoice
-    include LiveAllowedToolsChoiceParamToolsItem
-    include LiveResponsesDelegationSettingsUpdateInputParamToolChoice
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalLiveMCPToolChoiceParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalLiveMCPToolChoiceParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalLiveMCPToolChoiceParamMetadata::DECODERS
-
-    # @return [LiveMCPToolChoiceParamType] The tool to call. Always `mcp`.
-    attr_reader :type
-    # @return [String] The label of the MCP server to call.
-    attr_reader :server_label
-    # @return [String] Optional `string` value serialized in the `name` wire field.
-    attr_reader :name
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the LiveMCPToolChoiceParamType SDK namespace.
-  module LiveMCPToolChoiceParamType
-    MCP = 'mcp'
-    VALUES = ['mcp'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('LiveMCPToolChoiceParamType', 'enum', "Unknown LiveMCPToolChoiceParamType: #{value}")
-    end
+# Defines the LiveMCPToolChoiceParamType SDK namespace.
+module LiveMCPToolChoiceParamType
+  MCP = 'mcp'
+  VALUES = ['mcp'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('LiveMCPToolChoiceParamType', 'enum', "Unknown LiveMCPToolChoiceParamType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalLiveMCPToolInputParamMetadata
+  FIELDS = {
+    type: "type",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::LiveMCPToolInputParamType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for LiveMCPToolInputParam.
+# Typed representation of the `LiveMCPToolInputParam` API schema.
+class LiveMCPToolInputParam
+  include LiveResponsesDelegationSettingsInputParamToolsItem
+  include LiveResponsesDelegationSettingsUpdateInputParamToolsItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalLiveMCPToolInputParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalLiveMCPToolInputParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalLiveMCPToolInputParamMetadata::DECODERS
+
+  # @return [LiveMCPToolInputParamType] Required enumerated value serialized in the `type` wire field.
+  attr_reader :type
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalLiveMCPToolInputParamMetadata
-    FIELDS = {
-      type: 'type'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::LiveMCPToolInputParamType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for LiveMCPToolInputParam.
-  # Typed representation of the `LiveMCPToolInputParam` API schema.
-  class LiveMCPToolInputParam
-    include LiveResponsesDelegationSettingsInputParamToolsItem
-    include LiveResponsesDelegationSettingsUpdateInputParamToolsItem
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalLiveMCPToolInputParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalLiveMCPToolInputParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalLiveMCPToolInputParamMetadata::DECODERS
-
-    # @return [LiveMCPToolInputParamType] Required enumerated value serialized in the `type` wire field.
-    attr_reader :type
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the LiveMCPToolInputParamType SDK namespace.
-  module LiveMCPToolInputParamType
-    MCP = 'mcp'
-    VALUES = ['mcp'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+# Defines the LiveMCPToolInputParamType SDK namespace.
+module LiveMCPToolInputParamType
+  MCP = 'mcp'
+  VALUES = ['mcp'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-      raise SdkValidationError.new('LiveMCPToolInputParamType', 'enum', "Unknown LiveMCPToolInputParamType: #{value}")
-    end
+    raise SdkValidationError.new('LiveMCPToolInputParamType', 'enum', "Unknown LiveMCPToolInputParamType: #{value}")
   end
+end
 end

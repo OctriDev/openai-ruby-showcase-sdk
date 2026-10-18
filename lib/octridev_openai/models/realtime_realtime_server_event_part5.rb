@@ -5,688 +5,678 @@
 
 # realtime_realtime_server_event domain models (part 5)
 module OctridevOpenai
-  # API model for RealtimeServerEventResponseFunctionCallArgumentsDelta.
-  # Returned when the model-generated function call arguments are updated.
-  class RealtimeServerEventResponseFunctionCallArgumentsDelta
-    include RealtimeServerEvent
+# API model for RealtimeServerEventResponseFunctionCallArgumentsDelta.
+# Returned when the model-generated function call arguments are updated.
+class RealtimeServerEventResponseFunctionCallArgumentsDelta
+  include RealtimeServerEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRealtimeServerEventResponseFunctionCallArgumentsDeltaMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRealtimeServerEventResponseFunctionCallArgumentsDeltaMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRealtimeServerEventResponseFunctionCallArgumentsDeltaMetadata::DECODERS
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRealtimeServerEventResponseFunctionCallArgumentsDeltaMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRealtimeServerEventResponseFunctionCallArgumentsDeltaMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRealtimeServerEventResponseFunctionCallArgumentsDeltaMetadata::DECODERS
+  # @return [String] The unique ID of the server event.
+  attr_reader :event_id
+  # @return [RealtimeServerEventResponseFunctionCallArgumentsDeltaType] The event type, must be `response.function_call_arguments.delta`.
+  attr_reader :type
+  # @return [String] The ID of the response.
+  attr_reader :response_id
+  # @return [String] The ID of the function call item.
+  attr_reader :item_id
+  # @return [Integer] The index of the output item in the response.
+  attr_reader :output_index
+  # @return [String] The ID of the function call.
+  attr_reader :call_id
+  # @return [String] The arguments delta as a JSON string.
+  attr_reader :delta
 
-    # @return [String] The unique ID of the server event.
-    attr_reader :event_id
-    # @return [RealtimeServerEventResponseFunctionCallArgumentsDeltaType] The event type, must be `response.function_call_arguments.delta`.
-    attr_reader :type
-    # @return [String] The ID of the response.
-    attr_reader :response_id
-    # @return [String] The ID of the function call item.
-    attr_reader :item_id
-    # @return [Integer] The index of the output item in the response.
-    attr_reader :output_index
-    # @return [String] The ID of the function call.
-    attr_reader :call_id
-    # @return [String] The arguments delta as a JSON string.
-    attr_reader :delta
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the RealtimeServerEventResponseFunctionCallArgumentsDeltaType SDK namespace.
-  module RealtimeServerEventResponseFunctionCallArgumentsDeltaType
-    RESPONSE_FUNCTION_CALL_ARGUMENTS_DELTA = 'response.function_call_arguments.delta'
-    VALUES = ['response.function_call_arguments.delta'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('RealtimeServerEventResponseFunctionCallArgumentsDeltaType', 'enum', "Unknown RealtimeServerEventResponseFunctionCallArgumentsDeltaType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalRealtimeServerEventResponseFunctionCallArgumentsDoneMetadata
-    FIELDS = {
-      event_id: 'event_id',
-      type: 'type',
-      response_id: 'response_id',
-      item_id: 'item_id',
-      output_index: 'output_index',
-      call_id: 'call_id',
-      name: 'name',
-      arguments: 'arguments'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      event_id
-      type
-      response_id
-      item_id
-      output_index
-      call_id
-      name
-      arguments
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::RealtimeServerEventResponseFunctionCallArgumentsDoneType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the RealtimeServerEventResponseFunctionCallArgumentsDeltaType SDK namespace.
+module RealtimeServerEventResponseFunctionCallArgumentsDeltaType
+  RESPONSE_FUNCTION_CALL_ARGUMENTS_DELTA = 'response.function_call_arguments.delta'
+  VALUES = ['response.function_call_arguments.delta'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('RealtimeServerEventResponseFunctionCallArgumentsDeltaType', 'enum', "Unknown RealtimeServerEventResponseFunctionCallArgumentsDeltaType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalRealtimeServerEventResponseFunctionCallArgumentsDoneMetadata
+  FIELDS = {
+    event_id: "event_id",
+    type: "type",
+    response_id: "response_id",
+    item_id: "item_id",
+    output_index: "output_index",
+    call_id: "call_id",
+    name: "name",
+    arguments: "arguments",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    event_id
+    type
+    response_id
+    item_id
+    output_index
+    call_id
+    name
+    arguments
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::RealtimeServerEventResponseFunctionCallArgumentsDoneType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for RealtimeServerEventResponseFunctionCallArgumentsDone.
+# Returned when the model-generated function call arguments are done streaming. Also emitted when a Response is interrupted, incomplete, or cancelled.
+class RealtimeServerEventResponseFunctionCallArgumentsDone
+  include RealtimeServerEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRealtimeServerEventResponseFunctionCallArgumentsDoneMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRealtimeServerEventResponseFunctionCallArgumentsDoneMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRealtimeServerEventResponseFunctionCallArgumentsDoneMetadata::DECODERS
+
+  # @return [String] The unique ID of the server event.
+  attr_reader :event_id
+  # @return [RealtimeServerEventResponseFunctionCallArgumentsDoneType] The event type, must be `response.function_call_arguments.done`.
+  attr_reader :type
+  # @return [String] The ID of the response.
+  attr_reader :response_id
+  # @return [String] The ID of the function call item.
+  attr_reader :item_id
+  # @return [Integer] The index of the output item in the response.
+  attr_reader :output_index
+  # @return [String] The ID of the function call.
+  attr_reader :call_id
+  # @return [String] The name of the function that was called.
+  attr_reader :name
+  # @return [String] The final arguments as a JSON string.
+  attr_reader :arguments
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for RealtimeServerEventResponseFunctionCallArgumentsDone.
-  # Returned when the model-generated function call arguments are done streaming. Also emitted when a Response is interrupted, incomplete, or cancelled.
-  class RealtimeServerEventResponseFunctionCallArgumentsDone
-    include RealtimeServerEvent
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRealtimeServerEventResponseFunctionCallArgumentsDoneMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRealtimeServerEventResponseFunctionCallArgumentsDoneMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRealtimeServerEventResponseFunctionCallArgumentsDoneMetadata::DECODERS
-
-    # @return [String] The unique ID of the server event.
-    attr_reader :event_id
-    # @return [RealtimeServerEventResponseFunctionCallArgumentsDoneType] The event type, must be `response.function_call_arguments.done`.
-    attr_reader :type
-    # @return [String] The ID of the response.
-    attr_reader :response_id
-    # @return [String] The ID of the function call item.
-    attr_reader :item_id
-    # @return [Integer] The index of the output item in the response.
-    attr_reader :output_index
-    # @return [String] The ID of the function call.
-    attr_reader :call_id
-    # @return [String] The name of the function that was called.
-    attr_reader :name
-    # @return [String] The final arguments as a JSON string.
-    attr_reader :arguments
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the RealtimeServerEventResponseFunctionCallArgumentsDoneType SDK namespace.
-  module RealtimeServerEventResponseFunctionCallArgumentsDoneType
-    RESPONSE_FUNCTION_CALL_ARGUMENTS_DONE = 'response.function_call_arguments.done'
-    VALUES = ['response.function_call_arguments.done'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('RealtimeServerEventResponseFunctionCallArgumentsDoneType', 'enum', "Unknown RealtimeServerEventResponseFunctionCallArgumentsDoneType: #{value}")
-    end
+# Defines the RealtimeServerEventResponseFunctionCallArgumentsDoneType SDK namespace.
+module RealtimeServerEventResponseFunctionCallArgumentsDoneType
+  RESPONSE_FUNCTION_CALL_ARGUMENTS_DONE = 'response.function_call_arguments.done'
+  VALUES = ['response.function_call_arguments.done'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('RealtimeServerEventResponseFunctionCallArgumentsDoneType', 'enum', "Unknown RealtimeServerEventResponseFunctionCallArgumentsDoneType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalRealtimeServerEventResponseMCPCallArgumentsDeltaMetadata
+  FIELDS = {
+    event_id: "event_id",
+    type: "type",
+    response_id: "response_id",
+    item_id: "item_id",
+    output_index: "output_index",
+    delta: "delta",
+    obfuscation: "obfuscation",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    event_id
+    type
+    response_id
+    item_id
+    output_index
+    delta
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::RealtimeServerEventResponseMCPCallArgumentsDeltaType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for RealtimeServerEventResponseMCPCallArgumentsDelta.
+# Returned when MCP tool call arguments are updated during response generation.
+class RealtimeServerEventResponseMCPCallArgumentsDelta
+  include RealtimeServerEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRealtimeServerEventResponseMCPCallArgumentsDeltaMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRealtimeServerEventResponseMCPCallArgumentsDeltaMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRealtimeServerEventResponseMCPCallArgumentsDeltaMetadata::DECODERS
+
+  # @return [String] The unique ID of the server event.
+  attr_reader :event_id
+  # @return [RealtimeServerEventResponseMCPCallArgumentsDeltaType] The event type, must be `response.mcp_call_arguments.delta`.
+  attr_reader :type
+  # @return [String] The ID of the response.
+  attr_reader :response_id
+  # @return [String] The ID of the MCP tool call item.
+  attr_reader :item_id
+  # @return [Integer] The index of the output item in the response.
+  attr_reader :output_index
+  # @return [String] The JSON-encoded arguments delta.
+  attr_reader :delta
+  # @return [String] Optional `string` value serialized in the `obfuscation` wire field.
+  attr_reader :obfuscation
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalRealtimeServerEventResponseMCPCallArgumentsDeltaMetadata
-    FIELDS = {
-      event_id: 'event_id',
-      type: 'type',
-      response_id: 'response_id',
-      item_id: 'item_id',
-      output_index: 'output_index',
-      delta: 'delta',
-      obfuscation: 'obfuscation'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      event_id
-      type
-      response_id
-      item_id
-      output_index
-      delta
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::RealtimeServerEventResponseMCPCallArgumentsDeltaType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for RealtimeServerEventResponseMCPCallArgumentsDelta.
-  # Returned when MCP tool call arguments are updated during response generation.
-  class RealtimeServerEventResponseMCPCallArgumentsDelta
-    include RealtimeServerEvent
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRealtimeServerEventResponseMCPCallArgumentsDeltaMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRealtimeServerEventResponseMCPCallArgumentsDeltaMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRealtimeServerEventResponseMCPCallArgumentsDeltaMetadata::DECODERS
+# Defines the RealtimeServerEventResponseMCPCallArgumentsDeltaType SDK namespace.
+module RealtimeServerEventResponseMCPCallArgumentsDeltaType
+  RESPONSE_MCP_CALL_ARGUMENTS_DELTA = 'response.mcp_call_arguments.delta'
+  VALUES = ['response.mcp_call_arguments.delta'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    # @return [String] The unique ID of the server event.
-    attr_reader :event_id
-    # @return [RealtimeServerEventResponseMCPCallArgumentsDeltaType] The event type, must be `response.mcp_call_arguments.delta`.
-    attr_reader :type
-    # @return [String] The ID of the response.
-    attr_reader :response_id
-    # @return [String] The ID of the MCP tool call item.
-    attr_reader :item_id
-    # @return [Integer] The index of the output item in the response.
-    attr_reader :output_index
-    # @return [String] The JSON-encoded arguments delta.
-    attr_reader :delta
-    # @return [String] Optional `string` value serialized in the `obfuscation` wire field.
-    attr_reader :obfuscation
+    raise SdkValidationError.new('RealtimeServerEventResponseMCPCallArgumentsDeltaType', 'enum', "Unknown RealtimeServerEventResponseMCPCallArgumentsDeltaType: #{value}")
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalRealtimeServerEventResponseMCPCallArgumentsDoneMetadata
+  FIELDS = {
+    event_id: "event_id",
+    type: "type",
+    response_id: "response_id",
+    item_id: "item_id",
+    output_index: "output_index",
+    arguments: "arguments",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    event_id
+    type
+    response_id
+    item_id
+    output_index
+    arguments
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::RealtimeServerEventResponseMCPCallArgumentsDoneType.from_value(value)
+    end,
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for RealtimeServerEventResponseMCPCallArgumentsDone.
+# Returned when MCP tool call arguments are finalized during response generation.
+class RealtimeServerEventResponseMCPCallArgumentsDone
+  include RealtimeServerEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRealtimeServerEventResponseMCPCallArgumentsDoneMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRealtimeServerEventResponseMCPCallArgumentsDoneMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRealtimeServerEventResponseMCPCallArgumentsDoneMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [String] The unique ID of the server event.
+  attr_reader :event_id
+  # @return [RealtimeServerEventResponseMCPCallArgumentsDoneType] The event type, must be `response.mcp_call_arguments.done`.
+  attr_reader :type
+  # @return [String] The ID of the response.
+  attr_reader :response_id
+  # @return [String] The ID of the MCP tool call item.
+  attr_reader :item_id
+  # @return [Integer] The index of the output item in the response.
+  attr_reader :output_index
+  # @return [String] The final JSON-encoded arguments string.
+  attr_reader :arguments
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the RealtimeServerEventResponseMCPCallArgumentsDeltaType SDK namespace.
-  module RealtimeServerEventResponseMCPCallArgumentsDeltaType
-    RESPONSE_MCP_CALL_ARGUMENTS_DELTA = 'response.mcp_call_arguments.delta'
-    VALUES = ['response.mcp_call_arguments.delta'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('RealtimeServerEventResponseMCPCallArgumentsDeltaType', 'enum', "Unknown RealtimeServerEventResponseMCPCallArgumentsDeltaType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalRealtimeServerEventResponseMCPCallArgumentsDoneMetadata
-    FIELDS = {
-      event_id: 'event_id',
-      type: 'type',
-      response_id: 'response_id',
-      item_id: 'item_id',
-      output_index: 'output_index',
-      arguments: 'arguments'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      event_id
-      type
-      response_id
-      item_id
-      output_index
-      arguments
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::RealtimeServerEventResponseMCPCallArgumentsDoneType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the RealtimeServerEventResponseMCPCallArgumentsDoneType SDK namespace.
+module RealtimeServerEventResponseMCPCallArgumentsDoneType
+  RESPONSE_MCP_CALL_ARGUMENTS_DONE = 'response.mcp_call_arguments.done'
+  VALUES = ['response.mcp_call_arguments.done'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('RealtimeServerEventResponseMCPCallArgumentsDoneType', 'enum', "Unknown RealtimeServerEventResponseMCPCallArgumentsDoneType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalRealtimeServerEventResponseMCPCallCompletedMetadata
+  FIELDS = {
+    event_id: "event_id",
+    type: "type",
+    output_index: "output_index",
+    item_id: "item_id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    event_id
+    type
+    output_index
+    item_id
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::RealtimeServerEventResponseMCPCallCompletedType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for RealtimeServerEventResponseMCPCallCompleted.
+# Returned when an MCP tool call has completed successfully.
+class RealtimeServerEventResponseMCPCallCompleted
+  include RealtimeServerEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRealtimeServerEventResponseMCPCallCompletedMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRealtimeServerEventResponseMCPCallCompletedMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRealtimeServerEventResponseMCPCallCompletedMetadata::DECODERS
+
+  # @return [String] The unique ID of the server event.
+  attr_reader :event_id
+  # @return [RealtimeServerEventResponseMCPCallCompletedType] The event type, must be `response.mcp_call.completed`.
+  attr_reader :type
+  # @return [Integer] The index of the output item in the response.
+  attr_reader :output_index
+  # @return [String] The ID of the MCP tool call item.
+  attr_reader :item_id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for RealtimeServerEventResponseMCPCallArgumentsDone.
-  # Returned when MCP tool call arguments are finalized during response generation.
-  class RealtimeServerEventResponseMCPCallArgumentsDone
-    include RealtimeServerEvent
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRealtimeServerEventResponseMCPCallArgumentsDoneMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRealtimeServerEventResponseMCPCallArgumentsDoneMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRealtimeServerEventResponseMCPCallArgumentsDoneMetadata::DECODERS
-
-    # @return [String] The unique ID of the server event.
-    attr_reader :event_id
-    # @return [RealtimeServerEventResponseMCPCallArgumentsDoneType] The event type, must be `response.mcp_call_arguments.done`.
-    attr_reader :type
-    # @return [String] The ID of the response.
-    attr_reader :response_id
-    # @return [String] The ID of the MCP tool call item.
-    attr_reader :item_id
-    # @return [Integer] The index of the output item in the response.
-    attr_reader :output_index
-    # @return [String] The final JSON-encoded arguments string.
-    attr_reader :arguments
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the RealtimeServerEventResponseMCPCallArgumentsDoneType SDK namespace.
-  module RealtimeServerEventResponseMCPCallArgumentsDoneType
-    RESPONSE_MCP_CALL_ARGUMENTS_DONE = 'response.mcp_call_arguments.done'
-    VALUES = ['response.mcp_call_arguments.done'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('RealtimeServerEventResponseMCPCallArgumentsDoneType', 'enum', "Unknown RealtimeServerEventResponseMCPCallArgumentsDoneType: #{value}")
-    end
+# Defines the RealtimeServerEventResponseMCPCallCompletedType SDK namespace.
+module RealtimeServerEventResponseMCPCallCompletedType
+  RESPONSE_MCP_CALL_COMPLETED = 'response.mcp_call.completed'
+  VALUES = ['response.mcp_call.completed'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('RealtimeServerEventResponseMCPCallCompletedType', 'enum', "Unknown RealtimeServerEventResponseMCPCallCompletedType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalRealtimeServerEventResponseMCPCallFailedMetadata
+  FIELDS = {
+    event_id: "event_id",
+    type: "type",
+    output_index: "output_index",
+    item_id: "item_id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    event_id
+    type
+    output_index
+    item_id
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::RealtimeServerEventResponseMCPCallFailedType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for RealtimeServerEventResponseMCPCallFailed.
+# Returned when an MCP tool call has failed.
+class RealtimeServerEventResponseMCPCallFailed
+  include RealtimeServerEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRealtimeServerEventResponseMCPCallFailedMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRealtimeServerEventResponseMCPCallFailedMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRealtimeServerEventResponseMCPCallFailedMetadata::DECODERS
+
+  # @return [String] The unique ID of the server event.
+  attr_reader :event_id
+  # @return [RealtimeServerEventResponseMCPCallFailedType] The event type, must be `response.mcp_call.failed`.
+  attr_reader :type
+  # @return [Integer] The index of the output item in the response.
+  attr_reader :output_index
+  # @return [String] The ID of the MCP tool call item.
+  attr_reader :item_id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalRealtimeServerEventResponseMCPCallCompletedMetadata
-    FIELDS = {
-      event_id: 'event_id',
-      type: 'type',
-      output_index: 'output_index',
-      item_id: 'item_id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      event_id
-      type
-      output_index
-      item_id
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::RealtimeServerEventResponseMCPCallCompletedType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for RealtimeServerEventResponseMCPCallCompleted.
-  # Returned when an MCP tool call has completed successfully.
-  class RealtimeServerEventResponseMCPCallCompleted
-    include RealtimeServerEvent
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRealtimeServerEventResponseMCPCallCompletedMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRealtimeServerEventResponseMCPCallCompletedMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRealtimeServerEventResponseMCPCallCompletedMetadata::DECODERS
+# Defines the RealtimeServerEventResponseMCPCallFailedType SDK namespace.
+module RealtimeServerEventResponseMCPCallFailedType
+  RESPONSE_MCP_CALL_FAILED = 'response.mcp_call.failed'
+  VALUES = ['response.mcp_call.failed'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    # @return [String] The unique ID of the server event.
-    attr_reader :event_id
-    # @return [RealtimeServerEventResponseMCPCallCompletedType] The event type, must be `response.mcp_call.completed`.
-    attr_reader :type
-    # @return [Integer] The index of the output item in the response.
-    attr_reader :output_index
-    # @return [String] The ID of the MCP tool call item.
-    attr_reader :item_id
+    raise SdkValidationError.new('RealtimeServerEventResponseMCPCallFailedType', 'enum', "Unknown RealtimeServerEventResponseMCPCallFailedType: #{value}")
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalRealtimeServerEventResponseMCPCallInProgressMetadata
+  FIELDS = {
+    event_id: "event_id",
+    type: "type",
+    output_index: "output_index",
+    item_id: "item_id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    event_id
+    type
+    output_index
+    item_id
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::RealtimeServerEventResponseMCPCallInProgressType.from_value(value)
+    end,
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for RealtimeServerEventResponseMCPCallInProgress.
+# Returned when an MCP tool call has started and is in progress.
+class RealtimeServerEventResponseMCPCallInProgress
+  include RealtimeServerEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRealtimeServerEventResponseMCPCallInProgressMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRealtimeServerEventResponseMCPCallInProgressMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRealtimeServerEventResponseMCPCallInProgressMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [String] The unique ID of the server event.
+  attr_reader :event_id
+  # @return [RealtimeServerEventResponseMCPCallInProgressType] The event type, must be `response.mcp_call.in_progress`.
+  attr_reader :type
+  # @return [Integer] The index of the output item in the response.
+  attr_reader :output_index
+  # @return [String] The ID of the MCP tool call item.
+  attr_reader :item_id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the RealtimeServerEventResponseMCPCallCompletedType SDK namespace.
-  module RealtimeServerEventResponseMCPCallCompletedType
-    RESPONSE_MCP_CALL_COMPLETED = 'response.mcp_call.completed'
-    VALUES = ['response.mcp_call.completed'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('RealtimeServerEventResponseMCPCallCompletedType', 'enum', "Unknown RealtimeServerEventResponseMCPCallCompletedType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalRealtimeServerEventResponseMCPCallFailedMetadata
-    FIELDS = {
-      event_id: 'event_id',
-      type: 'type',
-      output_index: 'output_index',
-      item_id: 'item_id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      event_id
-      type
-      output_index
-      item_id
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::RealtimeServerEventResponseMCPCallFailedType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the RealtimeServerEventResponseMCPCallInProgressType SDK namespace.
+module RealtimeServerEventResponseMCPCallInProgressType
+  RESPONSE_MCP_CALL_IN_PROGRESS = 'response.mcp_call.in_progress'
+  VALUES = ['response.mcp_call.in_progress'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('RealtimeServerEventResponseMCPCallInProgressType', 'enum', "Unknown RealtimeServerEventResponseMCPCallInProgressType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalRealtimeServerEventResponseOutputItemAddedMetadata
+  FIELDS = {
+    event_id: "event_id",
+    type: "type",
+    response_id: "response_id",
+    output_index: "output_index",
+    item: "item",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    event_id
+    type
+    response_id
+    output_index
+    item
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::RealtimeServerEventResponseOutputItemAddedType.from_value(value)
+    end,
+    item: lambda do |value|
+      ::OctridevOpenai::RealtimeConversationItem.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for RealtimeServerEventResponseOutputItemAdded.
+# Returned when a new Item is created during Response generation.
+class RealtimeServerEventResponseOutputItemAdded
+  include RealtimeServerEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRealtimeServerEventResponseOutputItemAddedMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRealtimeServerEventResponseOutputItemAddedMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRealtimeServerEventResponseOutputItemAddedMetadata::DECODERS
+
+  # @return [String] The unique ID of the server event.
+  attr_reader :event_id
+  # @return [RealtimeServerEventResponseOutputItemAddedType] The event type, must be `response.output_item.added`.
+  attr_reader :type
+  # @return [String] The ID of the Response to which the item belongs.
+  attr_reader :response_id
+  # @return [Integer] The index of the output item in the Response.
+  attr_reader :output_index
+  # @return [RealtimeConversationItem] A single item within a Realtime conversation.
+  attr_reader :item
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for RealtimeServerEventResponseMCPCallFailed.
-  # Returned when an MCP tool call has failed.
-  class RealtimeServerEventResponseMCPCallFailed
-    include RealtimeServerEvent
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRealtimeServerEventResponseMCPCallFailedMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRealtimeServerEventResponseMCPCallFailedMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRealtimeServerEventResponseMCPCallFailedMetadata::DECODERS
-
-    # @return [String] The unique ID of the server event.
-    attr_reader :event_id
-    # @return [RealtimeServerEventResponseMCPCallFailedType] The event type, must be `response.mcp_call.failed`.
-    attr_reader :type
-    # @return [Integer] The index of the output item in the response.
-    attr_reader :output_index
-    # @return [String] The ID of the MCP tool call item.
-    attr_reader :item_id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the RealtimeServerEventResponseMCPCallFailedType SDK namespace.
-  module RealtimeServerEventResponseMCPCallFailedType
-    RESPONSE_MCP_CALL_FAILED = 'response.mcp_call.failed'
-    VALUES = ['response.mcp_call.failed'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('RealtimeServerEventResponseMCPCallFailedType', 'enum', "Unknown RealtimeServerEventResponseMCPCallFailedType: #{value}")
-    end
+# Defines the RealtimeServerEventResponseOutputItemAddedType SDK namespace.
+module RealtimeServerEventResponseOutputItemAddedType
+  RESPONSE_OUTPUT_ITEM_ADDED = 'response.output_item.added'
+  VALUES = ['response.output_item.added'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('RealtimeServerEventResponseOutputItemAddedType', 'enum', "Unknown RealtimeServerEventResponseOutputItemAddedType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalRealtimeServerEventResponseOutputItemDoneMetadata
+  FIELDS = {
+    event_id: "event_id",
+    type: "type",
+    response_id: "response_id",
+    output_index: "output_index",
+    item: "item",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    event_id
+    type
+    response_id
+    output_index
+    item
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::RealtimeServerEventResponseOutputItemDoneType.from_value(value)
+    end,
+    item: lambda do |value|
+      ::OctridevOpenai::RealtimeConversationItem.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for RealtimeServerEventResponseOutputItemDone.
+# Returned when an Item is done streaming. Also emitted when a Response is interrupted, incomplete, or cancelled.
+class RealtimeServerEventResponseOutputItemDone
+  include RealtimeServerEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRealtimeServerEventResponseOutputItemDoneMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRealtimeServerEventResponseOutputItemDoneMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRealtimeServerEventResponseOutputItemDoneMetadata::DECODERS
+
+  # @return [String] The unique ID of the server event.
+  attr_reader :event_id
+  # @return [RealtimeServerEventResponseOutputItemDoneType] The event type, must be `response.output_item.done`.
+  attr_reader :type
+  # @return [String] The ID of the Response to which the item belongs.
+  attr_reader :response_id
+  # @return [Integer] The index of the output item in the Response.
+  attr_reader :output_index
+  # @return [RealtimeConversationItem] A single item within a Realtime conversation.
+  attr_reader :item
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalRealtimeServerEventResponseMCPCallInProgressMetadata
-    FIELDS = {
-      event_id: 'event_id',
-      type: 'type',
-      output_index: 'output_index',
-      item_id: 'item_id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      event_id
-      type
-      output_index
-      item_id
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::RealtimeServerEventResponseMCPCallInProgressType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for RealtimeServerEventResponseMCPCallInProgress.
-  # Returned when an MCP tool call has started and is in progress.
-  class RealtimeServerEventResponseMCPCallInProgress
-    include RealtimeServerEvent
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRealtimeServerEventResponseMCPCallInProgressMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRealtimeServerEventResponseMCPCallInProgressMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRealtimeServerEventResponseMCPCallInProgressMetadata::DECODERS
+# Defines the RealtimeServerEventResponseOutputItemDoneType SDK namespace.
+module RealtimeServerEventResponseOutputItemDoneType
+  RESPONSE_OUTPUT_ITEM_DONE = 'response.output_item.done'
+  VALUES = ['response.output_item.done'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    # @return [String] The unique ID of the server event.
-    attr_reader :event_id
-    # @return [RealtimeServerEventResponseMCPCallInProgressType] The event type, must be `response.mcp_call.in_progress`.
-    attr_reader :type
-    # @return [Integer] The index of the output item in the response.
-    attr_reader :output_index
-    # @return [String] The ID of the MCP tool call item.
-    attr_reader :item_id
+    raise SdkValidationError.new('RealtimeServerEventResponseOutputItemDoneType', 'enum', "Unknown RealtimeServerEventResponseOutputItemDoneType: #{value}")
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalRealtimeServerEventResponseTextDeltaMetadata
+  FIELDS = {
+    event_id: "event_id",
+    type: "type",
+    response_id: "response_id",
+    item_id: "item_id",
+    output_index: "output_index",
+    content_index: "content_index",
+    delta: "delta",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    event_id
+    type
+    response_id
+    item_id
+    output_index
+    content_index
+    delta
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::RealtimeServerEventResponseTextDeltaType.from_value(value)
+    end,
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for RealtimeServerEventResponseTextDelta.
+# Returned when the text value of an "output_text" content part is updated.
+class RealtimeServerEventResponseTextDelta
+  include RealtimeServerEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRealtimeServerEventResponseTextDeltaMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRealtimeServerEventResponseTextDeltaMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRealtimeServerEventResponseTextDeltaMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [String] The unique ID of the server event.
+  attr_reader :event_id
+  # @return [RealtimeServerEventResponseTextDeltaType] The event type, must be `response.output_text.delta`.
+  attr_reader :type
+  # @return [String] The ID of the response.
+  attr_reader :response_id
+  # @return [String] The ID of the item.
+  attr_reader :item_id
+  # @return [Integer] The index of the output item in the response.
+  attr_reader :output_index
+  # @return [Integer] The index of the content part in the item's content array.
+  attr_reader :content_index
+  # @return [String] The text delta.
+  attr_reader :delta
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the RealtimeServerEventResponseMCPCallInProgressType SDK namespace.
-  module RealtimeServerEventResponseMCPCallInProgressType
-    RESPONSE_MCP_CALL_IN_PROGRESS = 'response.mcp_call.in_progress'
-    VALUES = ['response.mcp_call.in_progress'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('RealtimeServerEventResponseMCPCallInProgressType', 'enum', "Unknown RealtimeServerEventResponseMCPCallInProgressType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalRealtimeServerEventResponseOutputItemAddedMetadata
-    FIELDS = {
-      event_id: 'event_id',
-      type: 'type',
-      response_id: 'response_id',
-      output_index: 'output_index',
-      item: 'item'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      event_id
-      type
-      response_id
-      output_index
-      item
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::RealtimeServerEventResponseOutputItemAddedType.from_value(value)
-      end,
-      item: lambda do |value|
-        ::OctridevOpenai::RealtimeConversationItem.from_hash(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
-
-  # API model for RealtimeServerEventResponseOutputItemAdded.
-  # Returned when a new Item is created during Response generation.
-  class RealtimeServerEventResponseOutputItemAdded
-    include RealtimeServerEvent
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRealtimeServerEventResponseOutputItemAddedMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRealtimeServerEventResponseOutputItemAddedMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRealtimeServerEventResponseOutputItemAddedMetadata::DECODERS
-
-    # @return [String] The unique ID of the server event.
-    attr_reader :event_id
-    # @return [RealtimeServerEventResponseOutputItemAddedType] The event type, must be `response.output_item.added`.
-    attr_reader :type
-    # @return [String] The ID of the Response to which the item belongs.
-    attr_reader :response_id
-    # @return [Integer] The index of the output item in the Response.
-    attr_reader :output_index
-    # @return [RealtimeConversationItem] A single item within a Realtime conversation.
-    attr_reader :item
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the RealtimeServerEventResponseOutputItemAddedType SDK namespace.
-  module RealtimeServerEventResponseOutputItemAddedType
-    RESPONSE_OUTPUT_ITEM_ADDED = 'response.output_item.added'
-    VALUES = ['response.output_item.added'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('RealtimeServerEventResponseOutputItemAddedType', 'enum', "Unknown RealtimeServerEventResponseOutputItemAddedType: #{value}")
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalRealtimeServerEventResponseOutputItemDoneMetadata
-    FIELDS = {
-      event_id: 'event_id',
-      type: 'type',
-      response_id: 'response_id',
-      output_index: 'output_index',
-      item: 'item'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      event_id
-      type
-      response_id
-      output_index
-      item
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::RealtimeServerEventResponseOutputItemDoneType.from_value(value)
-      end,
-      item: lambda do |value|
-        ::OctridevOpenai::RealtimeConversationItem.from_hash(value)
-      end
-    }.freeze
-  end
-
-  # API model for RealtimeServerEventResponseOutputItemDone.
-  # Returned when an Item is done streaming. Also emitted when a Response is interrupted, incomplete, or cancelled.
-  class RealtimeServerEventResponseOutputItemDone
-    include RealtimeServerEvent
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRealtimeServerEventResponseOutputItemDoneMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRealtimeServerEventResponseOutputItemDoneMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRealtimeServerEventResponseOutputItemDoneMetadata::DECODERS
-
-    # @return [String] The unique ID of the server event.
-    attr_reader :event_id
-    # @return [RealtimeServerEventResponseOutputItemDoneType] The event type, must be `response.output_item.done`.
-    attr_reader :type
-    # @return [String] The ID of the Response to which the item belongs.
-    attr_reader :response_id
-    # @return [Integer] The index of the output item in the Response.
-    attr_reader :output_index
-    # @return [RealtimeConversationItem] A single item within a Realtime conversation.
-    attr_reader :item
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the RealtimeServerEventResponseOutputItemDoneType SDK namespace.
-  module RealtimeServerEventResponseOutputItemDoneType
-    RESPONSE_OUTPUT_ITEM_DONE = 'response.output_item.done'
-    VALUES = ['response.output_item.done'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('RealtimeServerEventResponseOutputItemDoneType', 'enum', "Unknown RealtimeServerEventResponseOutputItemDoneType: #{value}")
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalRealtimeServerEventResponseTextDeltaMetadata
-    FIELDS = {
-      event_id: 'event_id',
-      type: 'type',
-      response_id: 'response_id',
-      item_id: 'item_id',
-      output_index: 'output_index',
-      content_index: 'content_index',
-      delta: 'delta'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      event_id
-      type
-      response_id
-      item_id
-      output_index
-      content_index
-      delta
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::RealtimeServerEventResponseTextDeltaType.from_value(value)
-      end
-    }.freeze
-  end
-
-  # API model for RealtimeServerEventResponseTextDelta.
-  # Returned when the text value of an "output_text" content part is updated.
-  class RealtimeServerEventResponseTextDelta
-    include RealtimeServerEvent
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRealtimeServerEventResponseTextDeltaMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRealtimeServerEventResponseTextDeltaMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRealtimeServerEventResponseTextDeltaMetadata::DECODERS
-
-    # @return [String] The unique ID of the server event.
-    attr_reader :event_id
-    # @return [RealtimeServerEventResponseTextDeltaType] The event type, must be `response.output_text.delta`.
-    attr_reader :type
-    # @return [String] The ID of the response.
-    attr_reader :response_id
-    # @return [String] The ID of the item.
-    attr_reader :item_id
-    # @return [Integer] The index of the output item in the response.
-    attr_reader :output_index
-    # @return [Integer] The index of the content part in the item's content array.
-    attr_reader :content_index
-    # @return [String] The text delta.
-    attr_reader :delta
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
+end
 end

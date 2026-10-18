@@ -5,423 +5,422 @@
 
 # containers domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalContainerListResourceMetadata
-    FIELDS = {
-      object: 'object',
-      data: 'data',
-      first_id: 'first_id',
-      last_id: 'last_id',
-      has_more: 'has_more'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      data
-      first_id
-      last_id
-      has_more
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::ContainerListResourceObject.from_value(value)
-      end,
-      data: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::ContainerResource.from_hash(item) }
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalContainerListResourceMetadata
+  FIELDS = {
+    object: "object",
+    data: "data",
+    first_id: "first_id",
+    last_id: "last_id",
+    has_more: "has_more",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    data
+    first_id
+    last_id
+    has_more
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::ContainerListResourceObject.from_value(value)
+    end,
+    data: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::ContainerResource.from_hash(item) }
+    end,
+  }.freeze
+end
+
+# API model for ContainerListResource.
+# Typed representation of the `ContainerListResource` API schema.
+class ContainerListResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalContainerListResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalContainerListResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalContainerListResourceMetadata::DECODERS
+
+  # @return [ContainerListResourceObject] The type of object returned, must be 'list'.
+  attr_reader :object
+  # @return [Array_of_ContainerResource] A list of containers.
+  attr_reader :data
+  # @return [String] The ID of the first container in the list.
+  attr_reader :first_id
+  # @return [String] The ID of the last container in the list.
+  attr_reader :last_id
+  # @return [Boolean] Whether there are more containers available.
+  attr_reader :has_more
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ContainerListResource.
-  # Typed representation of the `ContainerListResource` API schema.
-  class ContainerListResource
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalContainerListResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalContainerListResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalContainerListResourceMetadata::DECODERS
-
-    # @return [ContainerListResourceObject] The type of object returned, must be 'list'.
-    attr_reader :object
-    # @return [Array_of_ContainerResource] A list of containers.
-    attr_reader :data
-    # @return [String] The ID of the first container in the list.
-    attr_reader :first_id
-    # @return [String] The ID of the last container in the list.
-    attr_reader :last_id
-    # @return [Boolean] Whether there are more containers available.
-    attr_reader :has_more
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the ContainerListResourceObject SDK namespace.
-  module ContainerListResourceObject
-    LIST = 'list'
-    VALUES = ['list'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the ContainerListResourceObject SDK namespace.
+module ContainerListResourceObject
+  LIST = 'list'
+  VALUES = ['list'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalContainerResourceExpiresAfterMetadata
+  FIELDS = {
+    anchor: "anchor",
+    minutes: "minutes",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+    anchor: lambda do |value|
+      ::OctridevOpenai::ContainerResourceExpiresAfterAnchor.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for ContainerResourceExpiresAfter.
+# The container will expire after this time period. The anchor is the reference point for the expiration. The minutes is the number of minutes after the anchor before the container expires.
+class ContainerResourceExpiresAfter
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalContainerResourceExpiresAfterMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalContainerResourceExpiresAfterMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalContainerResourceExpiresAfterMetadata::DECODERS
+
+  # @return [ContainerResourceExpiresAfterAnchor] The reference point for the expiration.
+  attr_reader :anchor
+  # @return [Integer] The number of minutes after the anchor before the container expires.
+  attr_reader :minutes
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalContainerResourceExpiresAfterMetadata
-    FIELDS = {
-      anchor: 'anchor',
-      minutes: 'minutes'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {
-      anchor: lambda do |value|
-        ::OctridevOpenai::ContainerResourceExpiresAfterAnchor.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ContainerResourceExpiresAfter.
-  # The container will expire after this time period. The anchor is the reference point for the expiration. The minutes is the number of minutes after the anchor before the container expires.
-  class ContainerResourceExpiresAfter
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalContainerResourceExpiresAfterMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalContainerResourceExpiresAfterMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalContainerResourceExpiresAfterMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [ContainerResourceExpiresAfterAnchor] The reference point for the expiration.
-    attr_reader :anchor
-    # @return [Integer] The number of minutes after the anchor before the container expires.
-    attr_reader :minutes
+# Internal model hydration metadata.
+class SdkInternalContainerResourceNetworkPolicyMetadata
+  FIELDS = {
+    type: "type",
+    allowed_domains: "allowed_domains",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ContainerResourceNetworkPolicyType.from_value(value)
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for ContainerResourceNetworkPolicy.
+# Network access policy for the container.
+class ContainerResourceNetworkPolicy
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalContainerResourceNetworkPolicyMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalContainerResourceNetworkPolicyMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalContainerResourceNetworkPolicyMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [ContainerResourceNetworkPolicyType] The network policy mode.
+  attr_reader :type
+  # @return [Array_of_String] Allowed outbound domains when `type` is `allowlist`.
+  attr_reader :allowed_domains
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalContainerResourceNetworkPolicyMetadata
-    FIELDS = {
-      type: 'type',
-      allowed_domains: 'allowed_domains'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ContainerResourceNetworkPolicyType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ContainerResourceNetworkPolicy.
-  # Network access policy for the container.
-  class ContainerResourceNetworkPolicy
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalContainerResourceNetworkPolicyMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalContainerResourceNetworkPolicyMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalContainerResourceNetworkPolicyMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [ContainerResourceNetworkPolicyType] The network policy mode.
-    attr_reader :type
-    # @return [Array_of_String] Allowed outbound domains when `type` is `allowlist`.
-    attr_reader :allowed_domains
+# Internal model hydration metadata.
+class SdkInternalContainerResourceMetadata
+  FIELDS = {
+    id: "id",
+    object: "object",
+    name: "name",
+    created_at: "created_at",
+    status: "status",
+    last_active_at: "last_active_at",
+    expires_after: "expires_after",
+    memory_limit: "memory_limit",
+    network_policy: "network_policy",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+    object
+    name
+    created_at
+    status
+  ].freeze
+  DECODERS = {
+    expires_after: lambda do |value|
+      ::OctridevOpenai::ContainerResourceExpiresAfter.from_hash(value)
+    end,
+    memory_limit: lambda do |value|
+      ::OctridevOpenai::ContainerResourceMemoryLimit.from_value(value)
+    end,
+    network_policy: lambda do |value|
+      ::OctridevOpenai::ContainerResourceNetworkPolicy.from_hash(value)
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for ContainerResource.
+# Typed representation of the `ContainerResource` API schema.
+class ContainerResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalContainerResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalContainerResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalContainerResourceMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [String] Unique identifier for the container.
+  attr_reader :id
+  # @return [String] The type of this object.
+  attr_reader :object
+  # @return [String] Name of the container.
+  attr_reader :name
+  # @return [Integer] Unix timestamp (in seconds) when the container was created.
+  attr_reader :created_at
+  # @return [String] Status of the container (e.g., active, deleted).
+  attr_reader :status
+  # @return [Integer] Unix timestamp (in seconds) when the container was last active.
+  attr_reader :last_active_at
+  # @return [ContainerResourceExpiresAfter] The container will expire after this time period. The anchor is the reference point for the expiration. The minutes is the number of minutes after the anchor before the container expires.
+  attr_reader :expires_after
+  # @return [ContainerResourceMemoryLimit] The memory limit configured for the container.
+  attr_reader :memory_limit
+  # @return [ContainerResourceNetworkPolicy] Network access policy for the container.
+  attr_reader :network_policy
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalContainerResourceMetadata
-    FIELDS = {
-      id: 'id',
-      object: 'object',
-      name: 'name',
-      created_at: 'created_at',
-      status: 'status',
-      last_active_at: 'last_active_at',
-      expires_after: 'expires_after',
-      memory_limit: 'memory_limit',
-      network_policy: 'network_policy'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-      object
-      name
-      created_at
-      status
-    ].freeze
-    DECODERS = {
-      expires_after: lambda do |value|
-        ::OctridevOpenai::ContainerResourceExpiresAfter.from_hash(value)
-      end,
-      memory_limit: lambda do |value|
-        ::OctridevOpenai::ContainerResourceMemoryLimit.from_value(value)
-      end,
-      network_policy: lambda do |value|
-        ::OctridevOpenai::ContainerResourceNetworkPolicy.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ContainerResource.
-  # Typed representation of the `ContainerResource` API schema.
-  class ContainerResource
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalContainerResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalContainerResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalContainerResourceMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] Unique identifier for the container.
-    attr_reader :id
-    # @return [String] The type of this object.
-    attr_reader :object
-    # @return [String] Name of the container.
-    attr_reader :name
-    # @return [Integer] Unix timestamp (in seconds) when the container was created.
-    attr_reader :created_at
-    # @return [String] Status of the container (e.g., active, deleted).
-    attr_reader :status
-    # @return [Integer] Unix timestamp (in seconds) when the container was last active.
-    attr_reader :last_active_at
-    # @return [ContainerResourceExpiresAfter] The container will expire after this time period. The anchor is the reference point for the expiration. The minutes is the number of minutes after the anchor before the container expires.
-    attr_reader :expires_after
-    # @return [ContainerResourceMemoryLimit] The memory limit configured for the container.
-    attr_reader :memory_limit
-    # @return [ContainerResourceNetworkPolicy] Network access policy for the container.
-    attr_reader :network_policy
+# Defines the ContainerResourceExpiresAfterAnchor SDK namespace.
+module ContainerResourceExpiresAfterAnchor
+  LAST_ACTIVE_AT = 'last_active_at'
+  VALUES = ['last_active_at'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Defines the ContainerResourceMemoryLimit SDK namespace.
+module ContainerResourceMemoryLimit
+  V_1_G = '1g'
+  V_4_G = '4g'
+  V_16_G = '16g'
+  V_64_G = '64g'
+  VALUES = ['1g', '4g', '16g', '64g'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# Defines the ContainerResourceNetworkPolicyType SDK namespace.
+module ContainerResourceNetworkPolicyType
+  ALLOWLIST = 'allowlist'
+  DISABLED = 'disabled'
+  VALUES = ['allowlist', 'disabled'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+# Internal model hydration metadata.
+class SdkInternalCreateContainerBodyExpiresAfterMetadata
+  FIELDS = {
+    anchor: "anchor",
+    minutes: "minutes",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    anchor
+    minutes
+  ].freeze
+  DECODERS = {
+    anchor: lambda do |value|
+      ::OctridevOpenai::CreateContainerBodyExpiresAfterAnchor.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for CreateContainerBodyExpiresAfter.
+# Container expiration time in seconds relative to the 'anchor' time.
+class CreateContainerBodyExpiresAfter
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCreateContainerBodyExpiresAfterMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCreateContainerBodyExpiresAfterMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCreateContainerBodyExpiresAfterMetadata::DECODERS
+
+  # @return [CreateContainerBodyExpiresAfterAnchor] Time anchor for the expiration time. Currently only 'last_active_at' is supported.
+  attr_reader :anchor
+  # @return [Integer] Required `integer` value serialized in the `minutes` wire field.
+  attr_reader :minutes
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the ContainerResourceExpiresAfterAnchor SDK namespace.
-  module ContainerResourceExpiresAfterAnchor
-    LAST_ACTIVE_AT = 'last_active_at'
-    VALUES = ['last_active_at'].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the ContainerResourceMemoryLimit SDK namespace.
-  module ContainerResourceMemoryLimit
-    V_1_G = '1g'
-    V_4_G = '4g'
-    V_16_G = '16g'
-    V_64_G = '64g'
-    VALUES = %w[1g 4g 16g 64g].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalCreateContainerBodyMetadata
+  FIELDS = {
+    name: "name",
+    file_ids: "file_ids",
+    expires_after: "expires_after",
+    skills: "skills",
+    memory_limit: "memory_limit",
+    network_policy: "network_policy",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    name
+  ].freeze
+  DECODERS = {
+    expires_after: lambda do |value|
+      ::OctridevOpenai::CreateContainerBodyExpiresAfter.from_hash(value)
+    end,
+    skills: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::CreateContainerBodySkillsItem.from_hash(item) }
+    end,
+    memory_limit: lambda do |value|
+      ::OctridevOpenai::CreateContainerBodyMemoryLimit.from_value(value)
+    end,
+    network_policy: lambda do |value|
+      ::OctridevOpenai::CreateContainerBodyNetworkPolicy.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for CreateContainerBody.
+# Typed representation of the `CreateContainerBody` API schema.
+class CreateContainerBody
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCreateContainerBodyMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCreateContainerBodyMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCreateContainerBodyMetadata::DECODERS
+
+  # @return [String] Name of the container to create.
+  attr_reader :name
+  # @return [Array_of_String] IDs of files to copy to the container.
+  attr_reader :file_ids
+  # @return [CreateContainerBodyExpiresAfter] Container expiration time in seconds relative to the 'anchor' time.
+  attr_reader :expires_after
+  # @return [Array_of_CreateContainerBodySkillsItem] An optional list of skills referenced by id or inline data.
+  attr_reader :skills
+  # @return [CreateContainerBodyMemoryLimit] Optional memory limit for the container. Defaults to "1g".
+  attr_reader :memory_limit
+  # @return [CreateContainerBodyNetworkPolicy] Network access policy for the container.
+  attr_reader :network_policy
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the ContainerResourceNetworkPolicyType SDK namespace.
-  module ContainerResourceNetworkPolicyType
-    ALLOWLIST = 'allowlist'
-    DISABLED = 'disabled'
-    VALUES = %w[allowlist disabled].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalCreateContainerBodyExpiresAfterMetadata
-    FIELDS = {
-      anchor: 'anchor',
-      minutes: 'minutes'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      anchor
-      minutes
-    ].freeze
-    DECODERS = {
-      anchor: lambda do |value|
-        ::OctridevOpenai::CreateContainerBodyExpiresAfterAnchor.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # API model for CreateContainerBodyExpiresAfter.
-  # Container expiration time in seconds relative to the 'anchor' time.
-  class CreateContainerBodyExpiresAfter
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCreateContainerBodyExpiresAfterMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCreateContainerBodyExpiresAfterMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCreateContainerBodyExpiresAfterMetadata::DECODERS
-
-    # @return [CreateContainerBodyExpiresAfterAnchor] Time anchor for the expiration time. Currently only 'last_active_at' is supported.
-    attr_reader :anchor
-    # @return [Integer] Required `integer` value serialized in the `minutes` wire field.
-    attr_reader :minutes
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+# Defines the CreateContainerBodyExpiresAfterAnchor SDK namespace.
+module CreateContainerBodyExpiresAfterAnchor
+  LAST_ACTIVE_AT = 'last_active_at'
+  VALUES = ['last_active_at'].freeze
+  def self.from_value(value)
+    value
   end
+end
 
-  # Internal model hydration metadata.
-  class SdkInternalCreateContainerBodyMetadata
-    FIELDS = {
-      name: 'name',
-      file_ids: 'file_ids',
-      expires_after: 'expires_after',
-      skills: 'skills',
-      memory_limit: 'memory_limit',
-      network_policy: 'network_policy'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      name
-    ].freeze
-    DECODERS = {
-      expires_after: lambda do |value|
-        ::OctridevOpenai::CreateContainerBodyExpiresAfter.from_hash(value)
-      end,
-      skills: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::CreateContainerBodySkillsItem.from_hash(item) }
-      end,
-      memory_limit: lambda do |value|
-        ::OctridevOpenai::CreateContainerBodyMemoryLimit.from_value(value)
-      end,
-      network_policy: lambda do |value|
-        ::OctridevOpenai::CreateContainerBodyNetworkPolicy.from_hash(value)
-      end
-    }.freeze
+# Defines the CreateContainerBodyMemoryLimit SDK namespace.
+module CreateContainerBodyMemoryLimit
+  V_1_G = '1g'
+  V_4_G = '4g'
+  V_16_G = '16g'
+  V_64_G = '64g'
+  VALUES = ['1g', '4g', '16g', '64g'].freeze
+  def self.from_value(value)
+    value
   end
+end
 
-  # API model for CreateContainerBody.
-  # Typed representation of the `CreateContainerBody` API schema.
-  class CreateContainerBody
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCreateContainerBodyMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCreateContainerBodyMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCreateContainerBodyMetadata::DECODERS
+# Defines the CreateContainerBodyNetworkPolicy SDK namespace.
+module CreateContainerBodyNetworkPolicy
+  DISCRIMINATOR_MAPPING = {
+    "disabled" => -> { ContainerNetworkPolicyDisabledParam },
+    "allowlist" => -> { ContainerNetworkPolicyAllowlistParam },
+  }.freeze
 
-    # @return [String] Name of the container to create.
-    attr_reader :name
-    # @return [Array_of_String] IDs of files to copy to the container.
-    attr_reader :file_ids
-    # @return [CreateContainerBodyExpiresAfter] Container expiration time in seconds relative to the 'anchor' time.
-    attr_reader :expires_after
-    # @return [Array_of_CreateContainerBodySkillsItem] An optional list of skills referenced by id or inline data.
-    attr_reader :skills
-    # @return [CreateContainerBodyMemoryLimit] Optional memory limit for the container. Defaults to "1g".
-    attr_reader :memory_limit
-    # @return [CreateContainerBodyNetworkPolicy] Network access policy for the container.
-    attr_reader :network_policy
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+    raise SdkValidationError.new('CreateContainerBodyNetworkPolicy', 'variant', "Unknown CreateContainerBodyNetworkPolicy discriminator: #{hash["type"].inspect}")
   end
+end
 
-  # Defines the CreateContainerBodyExpiresAfterAnchor SDK namespace.
-  module CreateContainerBodyExpiresAfterAnchor
-    LAST_ACTIVE_AT = 'last_active_at'
-    VALUES = ['last_active_at'].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the CreateContainerBodySkillsItem SDK namespace.
+module CreateContainerBodySkillsItem
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    mapping = { "skill_reference" => SkillReferenceParam, "inline" => InlineSkillParam }
+    type = mapping[hash["type"]]
+    return type.from_hash(hash) if type
+
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+
+    raise SdkValidationError.new('CreateContainerBodySkillsItem', 'variant', "Unknown CreateContainerBodySkillsItem discriminator: #{hash["type"].inspect}")
   end
-
-  # Defines the CreateContainerBodyMemoryLimit SDK namespace.
-  module CreateContainerBodyMemoryLimit
-    V_1_G = '1g'
-    V_4_G = '4g'
-    V_16_G = '16g'
-    V_64_G = '64g'
-    VALUES = %w[1g 4g 16g 64g].freeze
-    def self.from_value(value)
-      value
-    end
-  end
-
-  # Defines the CreateContainerBodyNetworkPolicy SDK namespace.
-  module CreateContainerBodyNetworkPolicy
-    DISCRIMINATOR_MAPPING = {
-      'disabled' => -> { ContainerNetworkPolicyDisabledParam },
-      'allowlist' => -> { ContainerNetworkPolicyAllowlistParam }
-    }.freeze
-
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
-
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
-
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
-
-      raise SdkValidationError.new('CreateContainerBodyNetworkPolicy', 'variant', "Unknown CreateContainerBodyNetworkPolicy discriminator: #{hash['type'].inspect}")
-    end
-  end
-
-  # Defines the CreateContainerBodySkillsItem SDK namespace.
-  module CreateContainerBodySkillsItem
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
-
-      mapping = { 'skill_reference' => SkillReferenceParam, 'inline' => InlineSkillParam }
-      type = mapping[hash['type']]
-      return type.from_hash(hash) if type
-
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
-
-      raise SdkValidationError.new('CreateContainerBodySkillsItem', 'variant', "Unknown CreateContainerBodySkillsItem discriminator: #{hash['type'].inspect}")
-    end
-  end
+end
 end

@@ -5,265 +5,265 @@
 
 # assistants domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalDoneEventMetadata
-    FIELDS = {
-      event: 'event',
-      data: 'data'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      event
-      data
-    ].freeze
-    DECODERS = {
-      event: lambda do |value|
-        ::OctridevOpenai::DoneEventEvent.from_value(value)
-      end,
-      data: lambda do |value|
-        ::OctridevOpenai::DoneEventData.from_value(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalDoneEventMetadata
+  FIELDS = {
+    event: "event",
+    data: "data",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    event
+    data
+  ].freeze
+  DECODERS = {
+    event: lambda do |value|
+      ::OctridevOpenai::DoneEventEvent.from_value(value)
+    end,
+    data: lambda do |value|
+      ::OctridevOpenai::DoneEventData.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for DoneEvent.
+# Occurs when a stream ends.
+class DoneEvent
+  include AssistantStreamEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalDoneEventMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalDoneEventMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalDoneEventMetadata::DECODERS
+
+  # @return [DoneEventEvent] Required enumerated value serialized in the `event` wire field.
+  attr_reader :event
+  # @return [DoneEventData] Required enumerated value serialized in the `data` wire field.
+  attr_reader :data
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for DoneEvent.
-  # Occurs when a stream ends.
-  class DoneEvent
-    include AssistantStreamEvent
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalDoneEventMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalDoneEventMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalDoneEventMetadata::DECODERS
-
-    # @return [DoneEventEvent] Required enumerated value serialized in the `event` wire field.
-    attr_reader :event
-    # @return [DoneEventData] Required enumerated value serialized in the `data` wire field.
-    attr_reader :data
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the DoneEventData SDK namespace.
-  module DoneEventData
-    DONE = '[DONE]'
-    VALUES = ['[DONE]'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the DoneEventData SDK namespace.
+module DoneEventData
+  DONE = '[DONE]'
+  VALUES = ['[DONE]'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the DoneEventEvent SDK namespace.
+module DoneEventEvent
+  DONE = 'done'
+  VALUES = ['done'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('DoneEventEvent', 'enum', "Unknown DoneEventEvent: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalErrorEventMetadata
+  FIELDS = {
+    event: "event",
+    data: "data",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    event
+    data
+  ].freeze
+  DECODERS = {
+    event: lambda do |value|
+      ::OctridevOpenai::ErrorEventEvent.from_value(value)
+    end,
+    data: lambda do |value|
+      ::OctridevOpenai::Error3.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for ErrorEvent.
+# Occurs when an error occurs. This can happen due to an internal server error or a timeout.
+class ErrorEvent
+  include AssistantStreamEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalErrorEventMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalErrorEventMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalErrorEventMetadata::DECODERS
+
+  # @return [ErrorEventEvent] Required enumerated value serialized in the `event` wire field.
+  attr_reader :event
+  # @return [Error3] Required object value serialized in the `data` wire field.
+  attr_reader :data
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the DoneEventEvent SDK namespace.
-  module DoneEventEvent
-    DONE = 'done'
-    VALUES = ['done'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('DoneEventEvent', 'enum', "Unknown DoneEventEvent: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalErrorEventMetadata
-    FIELDS = {
-      event: 'event',
-      data: 'data'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      event
-      data
-    ].freeze
-    DECODERS = {
-      event: lambda do |value|
-        ::OctridevOpenai::ErrorEventEvent.from_value(value)
-      end,
-      data: lambda do |value|
-        ::OctridevOpenai::Error3.from_hash(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the ErrorEventEvent SDK namespace.
+module ErrorEventEvent
+  ERROR = 'error'
+  VALUES = ['error'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('ErrorEventEvent', 'enum', "Unknown ErrorEventEvent: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalSubmitToolOutputsRunRequestToolOutputsItemMetadata
+  FIELDS = {
+    tool_call_id: "tool_call_id",
+    output: "output",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for SubmitToolOutputsRunRequestToolOutputsItem.
+# Required object value serialized in the `tool_outputs[]` wire field.
+class SubmitToolOutputsRunRequestToolOutputsItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalSubmitToolOutputsRunRequestToolOutputsItemMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalSubmitToolOutputsRunRequestToolOutputsItemMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalSubmitToolOutputsRunRequestToolOutputsItemMetadata::DECODERS
+
+  # @return [String] The ID of the tool call in the `required_action` object within the run object the output is being submitted for.
+  attr_reader :tool_call_id
+  # @return [String] The output of the tool call to be submitted to continue the run.
+  attr_reader :output
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ErrorEvent.
-  # Occurs when an error occurs. This can happen due to an internal server error or a timeout.
-  class ErrorEvent
-    include AssistantStreamEvent
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalErrorEventMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalErrorEventMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalErrorEventMetadata::DECODERS
-
-    # @return [ErrorEventEvent] Required enumerated value serialized in the `event` wire field.
-    attr_reader :event
-    # @return [Error3] Required object value serialized in the `data` wire field.
-    attr_reader :data
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the ErrorEventEvent SDK namespace.
-  module ErrorEventEvent
-    ERROR = 'error'
-    VALUES = ['error'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('ErrorEventEvent', 'enum', "Unknown ErrorEventEvent: #{value}")
-    end
+# Internal model hydration metadata.
+class SdkInternalSubmitToolOutputsRunRequestMetadata
+  FIELDS = {
+    tool_outputs: "tool_outputs",
+    stream: "stream",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    tool_outputs
+  ].freeze
+  DECODERS = {
+    tool_outputs: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::SubmitToolOutputsRunRequestToolOutputsItem.from_hash(item) }
+    end,
+  }.freeze
+end
+
+# API model for SubmitToolOutputsRunRequest.
+# Typed representation of the `SubmitToolOutputsRunRequest` API schema.
+class SubmitToolOutputsRunRequest
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalSubmitToolOutputsRunRequestMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalSubmitToolOutputsRunRequestMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalSubmitToolOutputsRunRequestMetadata::DECODERS
+
+  # @return [Array_of_SubmitToolOutputsRunRequestToolOutputsItem] A list of tools for which the outputs are being submitted.
+  attr_reader :tool_outputs
+  # @return [Boolean] Optional `boolean` value serialized in the `stream` wire field.
+  attr_reader :stream
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalSubmitToolOutputsRunRequestToolOutputsItemMetadata
-    FIELDS = {
-      tool_call_id: 'tool_call_id',
-      output: 'output'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {}.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for SubmitToolOutputsRunRequestToolOutputsItem.
-  # Required object value serialized in the `tool_outputs[]` wire field.
-  class SubmitToolOutputsRunRequestToolOutputsItem
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalSubmitToolOutputsRunRequestToolOutputsItemMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalSubmitToolOutputsRunRequestToolOutputsItemMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalSubmitToolOutputsRunRequestToolOutputsItemMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] The ID of the tool call in the `required_action` object within the run object the output is being submitted for.
-    attr_reader :tool_call_id
-    # @return [String] The output of the tool call to be submitted to continue the run.
-    attr_reader :output
+# Internal model hydration metadata.
+class SdkInternalTruncationObjectMetadata
+  FIELDS = {
+    type: "type",
+    last_messages: "last_messages",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::TruncationObjectType.from_value(value)
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for TruncationObject.
+# Controls for how a thread will be truncated prior to the run. Use this to control the initial context window of the run.
+class TruncationObject
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalTruncationObjectMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalTruncationObjectMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalTruncationObjectMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [TruncationObjectType] The truncation strategy to use for the thread. The default is `auto`. If set to `last_messages`, the thread will be truncated to the n most recent messages in the thread. When set to `auto`, messages in the middle of the thread will be dropped to fit the context length of the model, `max_prompt_tokens`.
+  attr_reader :type
+  # @return [Integer] Optional API value serialized in the `last_messages` wire field.
+  attr_reader :last_messages
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalSubmitToolOutputsRunRequestMetadata
-    FIELDS = {
-      tool_outputs: 'tool_outputs',
-      stream: 'stream'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      tool_outputs
-    ].freeze
-    DECODERS = {
-      tool_outputs: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::SubmitToolOutputsRunRequestToolOutputsItem.from_hash(item) }
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for SubmitToolOutputsRunRequest.
-  # Typed representation of the `SubmitToolOutputsRunRequest` API schema.
-  class SubmitToolOutputsRunRequest
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalSubmitToolOutputsRunRequestMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalSubmitToolOutputsRunRequestMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalSubmitToolOutputsRunRequestMetadata::DECODERS
-
-    # @return [Array_of_SubmitToolOutputsRunRequestToolOutputsItem] A list of tools for which the outputs are being submitted.
-    attr_reader :tool_outputs
-    # @return [Boolean] Optional `boolean` value serialized in the `stream` wire field.
-    attr_reader :stream
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Internal model hydration metadata.
-  class SdkInternalTruncationObjectMetadata
-    FIELDS = {
-      type: 'type',
-      last_messages: 'last_messages'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::TruncationObjectType.from_value(value)
-      end
-    }.freeze
+# Defines the TruncationObjectType SDK namespace.
+module TruncationObjectType
+  AUTO = 'auto'
+  LAST_MESSAGES = 'last_messages'
+  VALUES = ['auto', 'last_messages'].freeze
+  def self.from_value(value)
+    value
   end
-
-  # API model for TruncationObject.
-  # Controls for how a thread will be truncated prior to the run. Use this to control the initial context window of the run.
-  class TruncationObject
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalTruncationObjectMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalTruncationObjectMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalTruncationObjectMetadata::DECODERS
-
-    # @return [TruncationObjectType] The truncation strategy to use for the thread. The default is `auto`. If set to `last_messages`, the thread will be truncated to the n most recent messages in the thread. When set to `auto`, messages in the middle of the thread will be dropped to fit the context length of the model, `max_prompt_tokens`.
-    attr_reader :type
-    # @return [Integer] Optional API value serialized in the `last_messages` wire field.
-    attr_reader :last_messages
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the TruncationObjectType SDK namespace.
-  module TruncationObjectType
-    AUTO = 'auto'
-    LAST_MESSAGES = 'last_messages'
-    VALUES = %w[auto last_messages].freeze
-    def self.from_value(value)
-      value
-    end
-  end
+end
 end
