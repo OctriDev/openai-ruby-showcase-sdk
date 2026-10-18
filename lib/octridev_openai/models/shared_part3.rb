@@ -414,46 +414,6 @@ module OctridevOpenai
   end
 
   # Internal model hydration metadata.
-  class SdkInternalPermissionErrorResponseMetadata
-    FIELDS = {
-      error: 'error'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      error
-    ].freeze
-    DECODERS = {
-      error: lambda do |value|
-        SdkModel.union_branch(value, [::OctridevOpenai::Error3])
-      end
-    }.freeze
-  end
-
-  # API model for PermissionErrorResponse.
-  # Typed representation of the `PermissionErrorResponse` API schema.
-  class PermissionErrorResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalPermissionErrorResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalPermissionErrorResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalPermissionErrorResponseMetadata::DECODERS
-
-    # @return [Object] Details about the permission error.
-    attr_reader :error
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Internal model hydration metadata.
   class SdkInternalProgrammaticToolCallingParamMetadata
     FIELDS = {
       type: 'type'
@@ -657,6 +617,63 @@ module OctridevOpenai
     DECODERS = {
       type: lambda do |value|
         ::OctridevOpenai::RefusalContentType.from_value(value)
+      end
+    }.freeze
+  end
+
+  # API model for RefusalContent.
+  # A refusal from the model.
+  class RefusalContent
+    include OutputContent
+    include OutputMessageContent
+    include MessageContentItem
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRefusalContentMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRefusalContentMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRefusalContentMetadata::DECODERS
+
+    # @return [RefusalContentType] The type of the refusal. Always `refusal`.
+    attr_reader :type
+    # @return [String] The refusal explanation from the model.
+    attr_reader :refusal
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the RefusalContentType SDK namespace.
+  module RefusalContentType
+    REFUSAL = 'refusal'
+    VALUES = ['refusal'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('RefusalContentType', 'enum', "Unknown RefusalContentType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalScreenshotParamMetadata
+    FIELDS = {
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ScreenshotParamType.from_value(value)
       end
     }.freeze
   end

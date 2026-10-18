@@ -5,6 +5,44 @@
 
 # realtime_realtime_server_event domain models (part 6)
 module OctridevOpenai
+  # Defines the RealtimeServerEventResponseTextDeltaType SDK namespace.
+  module RealtimeServerEventResponseTextDeltaType
+    RESPONSE_OUTPUT_TEXT_DELTA = 'response.output_text.delta'
+    VALUES = ['response.output_text.delta'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('RealtimeServerEventResponseTextDeltaType', 'enum', "Unknown RealtimeServerEventResponseTextDeltaType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeServerEventResponseTextDoneMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      response_id: 'response_id',
+      item_id: 'item_id',
+      output_index: 'output_index',
+      content_index: 'content_index',
+      text: 'text'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      event_id
+      type
+      response_id
+      item_id
+      output_index
+      content_index
+      text
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeServerEventResponseTextDoneType.from_value(value)
+      end
+    }.freeze
+  end
+
   # API model for RealtimeServerEventResponseTextDone.
   # Returned when the text value of an "output_text" content part is done streaming. Also emitted when a Response is interrupted, incomplete, or cancelled.
   class RealtimeServerEventResponseTextDone

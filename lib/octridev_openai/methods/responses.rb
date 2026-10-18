@@ -224,7 +224,7 @@ module OctridevOpenai
         request_options: nil,
         &block
       )
-        unless block_given?
+        unless block
           return enum_for(
             __method__,
             config: config,
@@ -313,7 +313,7 @@ module OctridevOpenai
       #   `include_obfuscation` to false to optimize for bandwidth if you trust the
       #   network links between your application and the OpenAI API.
       singleton_class.define_method(:get_response_stream) do |config:, response_id:, include: NOT_GIVEN, stream: NOT_GIVEN, starting_after: NOT_GIVEN, include_obfuscation: NOT_GIVEN, request_options: nil, &block|
-        unless block_given?
+        unless block
           return enum_for(
             __method__,
             config: config,

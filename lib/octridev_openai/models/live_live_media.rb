@@ -60,7 +60,7 @@ module OctridevOpenai
     ].freeze
     DECODERS = {
       model: lambda do |value|
-        ::OctridevOpenai::ModelIdsLive.from_hash(value)
+        ::OctridevOpenai::ModelIdsLive.from_value(value)
       end,
       instructions: lambda do |value|
         ::OctridevOpenai::Instructions.from_value(value)

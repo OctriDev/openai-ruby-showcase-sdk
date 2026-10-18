@@ -95,6 +95,9 @@ module OctridevOpenai
       end,
       tools: lambda do |value|
         value&.map { |item| ::OctridevOpenai::LiveResponsesDelegationSettingsInputParamToolsItem.from_hash(item) }
+      end,
+      tool_choice: lambda do |value|
+        ::OctridevOpenai::LiveResponsesDelegationSettingsInputParamToolChoice.from_hash(value)
       end
     }.freeze
   end
@@ -121,7 +124,7 @@ module OctridevOpenai
     attr_reader :text
     # @return [Array_of_LiveResponsesDelegationSettingsInputParamToolsItem] Tools available to the Responses backend while it handles tasks delegated by the Live model.
     attr_reader :tools
-    # @return [Object] Controls which tool the Responses backend uses when handling a task delegated by the Live model.
+    # @return [LiveResponsesDelegationSettingsInputParamToolChoice] Controls which tool the Responses backend uses when handling a task delegated by the Live model.
     attr_reader :tool_choice
     # @return [Boolean] Optional `boolean` value serialized in the `parallel_tool_calls` wire field.
     attr_reader :parallel_tool_calls
@@ -137,6 +140,32 @@ module OctridevOpenai
 
     def to_h
       SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the LiveResponsesDelegationSettingsInputParamToolChoice SDK namespace.
+  module LiveResponsesDelegationSettingsInputParamToolChoice
+    def self.from_hash(hash)
+      return LiveToolChoiceEnum.from_value(hash) if hash.is_a?(::String)
+
+      shape_mapping = {
+        'server_label' => LiveMCPToolChoiceParam,
+        'tools' => LiveAllowedToolsChoiceParam
+      }
+      type = shape_mapping.find { |required, _type| hash.is_a?(::Hash) && hash.key?(required) }&.last
+      decoded = type&.from_hash(hash)
+      return decoded unless type.nil?
+
+      lossy = nil
+      [LiveFunctionToolChoiceParam, LiveSpecificFileSearchParam, LiveSpecificWebSearchParam, LiveSpecificWebSearchPreviewParam, LiveSpecificImageGenParam, LiveSpecificComputerParam, LiveSpecificCodeInterpreterParam, LiveSpecificProgrammaticToolCallingParam, LiveSpecificFunctionShellParam, LiveSpecificCustomToolParam, LiveSpecificApplyPatchParam].each do |type|
+        decoded = type.from_hash(hash)
+        return decoded if SdkModel.keeps_every_key?(hash, decoded)
+
+        lossy ||= decoded
+      rescue ::StandardError
+        next
+      end
+      lossy unless lossy.nil?
     end
   end
 
@@ -196,6 +225,9 @@ module OctridevOpenai
       end,
       tools: lambda do |value|
         value&.map { |item| ::OctridevOpenai::LiveResponsesDelegationSettingsUpdateInputParamToolsItem.from_hash(item) }
+      end,
+      tool_choice: lambda do |value|
+        ::OctridevOpenai::LiveResponsesDelegationSettingsUpdateInputParamToolChoice.from_hash(value)
       end
     }.freeze
   end
@@ -222,7 +254,7 @@ module OctridevOpenai
     attr_reader :text
     # @return [Array_of_LiveResponsesDelegationSettingsUpdateInputParamToolsItem] Tools available to the Responses backend while it handles tasks delegated by the Live model.
     attr_reader :tools
-    # @return [Object] Controls which tool the Responses backend uses when handling a task delegated by the Live model.
+    # @return [LiveResponsesDelegationSettingsUpdateInputParamToolChoice] Controls which tool the Responses backend uses when handling a task delegated by the Live model.
     attr_reader :tool_choice
     # @return [Boolean] Optional `boolean` value serialized in the `parallel_tool_calls` wire field.
     attr_reader :parallel_tool_calls
@@ -238,6 +270,32 @@ module OctridevOpenai
 
     def to_h
       SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the LiveResponsesDelegationSettingsUpdateInputParamToolChoice SDK namespace.
+  module LiveResponsesDelegationSettingsUpdateInputParamToolChoice
+    def self.from_hash(hash)
+      return LiveToolChoiceEnum.from_value(hash) if hash.is_a?(::String)
+
+      shape_mapping = {
+        'server_label' => LiveMCPToolChoiceParam,
+        'tools' => LiveAllowedToolsChoiceParam
+      }
+      type = shape_mapping.find { |required, _type| hash.is_a?(::Hash) && hash.key?(required) }&.last
+      decoded = type&.from_hash(hash)
+      return decoded unless type.nil?
+
+      lossy = nil
+      [LiveFunctionToolChoiceParam, LiveSpecificFileSearchParam, LiveSpecificWebSearchParam, LiveSpecificWebSearchPreviewParam, LiveSpecificImageGenParam, LiveSpecificComputerParam, LiveSpecificCodeInterpreterParam, LiveSpecificProgrammaticToolCallingParam, LiveSpecificFunctionShellParam, LiveSpecificCustomToolParam, LiveSpecificApplyPatchParam].each do |type|
+        decoded = type.from_hash(hash)
+        return decoded if SdkModel.keeps_every_key?(hash, decoded)
+
+        lossy ||= decoded
+      rescue ::StandardError
+        next
+      end
+      lossy unless lossy.nil?
     end
   end
 

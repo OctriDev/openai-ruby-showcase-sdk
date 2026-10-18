@@ -5,6 +5,37 @@
 
 # fine_tuning domain models (part 4)
 module OctridevOpenai
+  # API model for RunGraderResponseMetadataTokenUsage.
+  # Required object value serialized in the `token_usage` wire field.
+  class RunGraderResponseMetadataTokenUsage
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRunGraderResponseMetadataTokenUsageMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRunGraderResponseMetadataTokenUsageMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRunGraderResponseMetadataTokenUsageMetadata::DECODERS
+
+    # @return [Integer] Required `integer` value serialized in the `prompt_tokens` wire field.
+    attr_reader :prompt_tokens
+    # @return [Integer] Required `integer` value serialized in the `total_tokens` wire field.
+    attr_reader :total_tokens
+    # @return [Integer] Optional `integer` value serialized in the `completion_tokens` wire field.
+    attr_reader :completion_tokens
+    # @return [Integer] Optional `integer` value serialized in the `cached_tokens` wire field.
+    attr_reader :cached_tokens
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
   # Internal model hydration metadata.
   class SdkInternalRunGraderResponseMetadataMetadata
     FIELDS = {

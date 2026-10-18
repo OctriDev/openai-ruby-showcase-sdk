@@ -5,6 +5,58 @@
 
 # agents_session_event domain models (part 4)
 module OctridevOpenai
+  # API model for SessionEventAgentSessionTurnOutputTextDelta.
+  # Emitted when text is appended to an output text content part.
+  class SessionEventAgentSessionTurnOutputTextDelta
+    include SessionEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalSessionEventAgentSessionTurnOutputTextDeltaMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalSessionEventAgentSessionTurnOutputTextDeltaMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalSessionEventAgentSessionTurnOutputTextDeltaMetadata::DECODERS
+
+    # @return [SessionEventAgentSessionTurnOutputTextDeltaType] The type of the object. Always `agent.session.turn.output_text.delta`.
+    attr_reader :type
+    # @return [String] The unique ID of the event.
+    attr_reader :event_id
+    # @return [String] The ID of the session associated with the event.
+    attr_reader :session_id
+    # @return [String] The ID of the turn associated with the event, when applicable.
+    attr_reader :turn_id
+    # @return [String] The ID of the message item.
+    attr_reader :item_id
+    # @return [Integer] The index of the item in the turn output.
+    attr_reader :output_index
+    # @return [Integer] The index of the content part in the message.
+    attr_reader :content_index
+    # @return [String] The text that was appended.
+    attr_reader :delta
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalSessionEventAgentSessionTurnOutputTextDeltaMetadata::NULLABLE_FIELDS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the SessionEventAgentSessionTurnOutputTextDeltaType SDK namespace.
+  module SessionEventAgentSessionTurnOutputTextDeltaType
+    AGENT_SESSION_TURN_OUTPUT_TEXT_DELTA = 'agent.session.turn.output_text.delta'
+    VALUES = ['agent.session.turn.output_text.delta'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('SessionEventAgentSessionTurnOutputTextDeltaType', 'enum', "Unknown SessionEventAgentSessionTurnOutputTextDeltaType: #{value}")
+    end
+  end
+
   # Internal model hydration metadata.
   class SdkInternalSessionEventAgentSessionTurnOutputTextDoneMetadata
     FIELDS = {

@@ -5,6 +5,36 @@
 
 # fine_tuning domain models (part 3)
 module OctridevOpenai
+  # Internal model hydration metadata.
+  class SdkInternalFineTuningJobCheckpointMetadata
+    FIELDS = {
+      id: 'id',
+      created_at: 'created_at',
+      fine_tuned_model_checkpoint: 'fine_tuned_model_checkpoint',
+      step_number: 'step_number',
+      metrics: 'metrics',
+      fine_tuning_job_id: 'fine_tuning_job_id',
+      object: 'object'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      created_at
+      fine_tuned_model_checkpoint
+      step_number
+      metrics
+      fine_tuning_job_id
+      object
+    ].freeze
+    DECODERS = {
+      metrics: lambda do |value|
+        ::OctridevOpenai::FineTuningJobCheckpointMetrics.from_hash(value)
+      end,
+      object: lambda do |value|
+        ::OctridevOpenai::FineTuningJobCheckpointObject.from_value(value)
+      end
+    }.freeze
+  end
+
   # API model for FineTuningJobCheckpoint.
   # The `fine_tuning.job.checkpoint` object represents a model checkpoint for a fine-tuning job that is ready to use.
   class FineTuningJobCheckpoint
@@ -644,36 +674,5 @@ module OctridevOpenai
       total_tokens
     ].freeze
     DECODERS = {}.freeze
-  end
-
-  # API model for RunGraderResponseMetadataTokenUsage.
-  # Required object value serialized in the `token_usage` wire field.
-  class RunGraderResponseMetadataTokenUsage
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRunGraderResponseMetadataTokenUsageMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRunGraderResponseMetadataTokenUsageMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRunGraderResponseMetadataTokenUsageMetadata::DECODERS
-
-    # @return [Integer] Required `integer` value serialized in the `prompt_tokens` wire field.
-    attr_reader :prompt_tokens
-    # @return [Integer] Required `integer` value serialized in the `total_tokens` wire field.
-    attr_reader :total_tokens
-    # @return [Integer] Optional `integer` value serialized in the `completion_tokens` wire field.
-    attr_reader :completion_tokens
-    # @return [Integer] Optional `integer` value serialized in the `cached_tokens` wire field.
-    attr_reader :cached_tokens
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
   end
 end

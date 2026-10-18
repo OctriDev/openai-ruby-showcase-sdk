@@ -74,8 +74,6 @@ module OctridevOpenai
   # API model for CustomToolChatCompletions.
   # A custom tool that processes input using a specified format.
   class CustomToolChatCompletions
-    include ToolsItem
-
     CONSTRUCTION_SURFACE = :named
     FIELDS = SdkInternalCustomToolChatCompletionsMetadata::FIELDS
     REQUIRED_FIELDS = SdkInternalCustomToolChatCompletionsMetadata::REQUIRED_FIELDS

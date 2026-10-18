@@ -227,7 +227,6 @@ module OctridevOpenai
   class ResponseFormatJsonObject
     include AssistantsApiResponseFormatOption
     include TextResponseFormatConfiguration
-    include ResponseFormat
     include CreateEvalCompletionsRunDataSourceSamplingParamsResponseFormat
 
     CONSTRUCTION_SURFACE = :named
@@ -336,7 +335,6 @@ module OctridevOpenai
   # JSON Schema response format. Used to generate structured JSON responses. Learn more about Structured Outputs.
   class ResponseFormatJsonSchema
     include AssistantsApiResponseFormatOption
-    include ResponseFormat
     include CreateEvalCompletionsRunDataSourceSamplingParamsResponseFormat
 
     CONSTRUCTION_SURFACE = :named
@@ -403,7 +401,6 @@ module OctridevOpenai
   class ResponseFormatText
     include AssistantsApiResponseFormatOption
     include TextResponseFormatConfiguration
-    include ResponseFormat
     include CreateEvalCompletionsRunDataSourceSamplingParamsResponseFormat
 
     CONSTRUCTION_SURFACE = :named

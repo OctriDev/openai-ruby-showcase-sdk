@@ -5,63 +5,6 @@
 
 # shared domain models (part 4)
 module OctridevOpenai
-  # API model for RefusalContent.
-  # A refusal from the model.
-  class RefusalContent
-    include OutputContent
-    include OutputMessageContent
-    include MessageContentItem
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRefusalContentMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRefusalContentMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRefusalContentMetadata::DECODERS
-
-    # @return [RefusalContentType] The type of the refusal. Always `refusal`.
-    attr_reader :type
-    # @return [String] The refusal explanation from the model.
-    attr_reader :refusal
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the RefusalContentType SDK namespace.
-  module RefusalContentType
-    REFUSAL = 'refusal'
-    VALUES = ['refusal'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('RefusalContentType', 'enum', "Unknown RefusalContentType: #{value}")
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalScreenshotParamMetadata
-    FIELDS = {
-      type: 'type'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ScreenshotParamType.from_value(value)
-      end
-    }.freeze
-  end
-
   # API model for ScreenshotParam.
   # A screenshot action.
   class ScreenshotParam
@@ -237,10 +180,9 @@ module OctridevOpenai
   module StopConfiguration
     def self.from_hash(hash)
       return hash if hash.is_a?(::String)
-      return hash if hash.is_a?(::Object)
       return hash if hash.is_a?(::Array)
 
-      raise "Could not deserialize StopConfiguration from #{hash.inspect}"
+      hash
     end
   end
 
@@ -483,10 +425,9 @@ module OctridevOpenai
   # Defines the Verbosity SDK namespace.
   module Verbosity
     def self.from_hash(hash)
-      return hash if hash.is_a?(::Object)
       return VerbosityVariant0.from_value(hash) if hash.is_a?(::String)
 
-      raise "Could not deserialize Verbosity from #{hash.inspect}"
+      hash
     end
   end
 

@@ -135,7 +135,7 @@ module OctridevOpenai
         ::OctridevOpenai::CodeInterpreterToolType.from_value(value)
       end,
       container: lambda do |value|
-        SdkModel.union_branch(value, [::OctridevOpenai::AutoCodeInterpreterToolParam])
+        ::OctridevOpenai::CodeInterpreterToolContainer.from_hash(value)
       end,
       allowed_callers: lambda do |value|
         value&.map { |item| ::OctridevOpenai::CallableToolAllowedCaller.from_value(item) }
@@ -156,7 +156,7 @@ module OctridevOpenai
 
     # @return [CodeInterpreterToolType] The type of the code interpreter tool. Always `code_interpreter`.
     attr_reader :type
-    # @return [Object] The code interpreter container. Can be a container ID or an object that specifies uploaded file IDs to make available to your code, along with an optional `memory_limit` setting.
+    # @return [CodeInterpreterToolContainer] The code interpreter container. Can be a container ID or an object that specifies uploaded file IDs to make available to your code, along with an optional `memory_limit` setting.
     attr_reader :container
     # @return [Array_of_CallableToolAllowedCaller] The tool invocation context(s).
     attr_reader :allowed_callers
@@ -298,6 +298,15 @@ module OctridevOpenai
       return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
 
       raise SdkValidationError.new('CodeInterpreterToolCallOutputsItem', 'variant', "Unknown CodeInterpreterToolCallOutputsItem discriminator: #{hash['type'].inspect}")
+    end
+  end
+
+  # Defines the CodeInterpreterToolContainer SDK namespace.
+  module CodeInterpreterToolContainer
+    def self.from_hash(hash)
+      return hash if hash.is_a?(::String)
+
+      AutoCodeInterpreterToolParam.from_hash(hash)
     end
   end
 end

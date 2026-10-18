@@ -53,6 +53,44 @@ module OctridevOpenai
   end
 
   # Internal model hydration metadata.
+  class SdkInternalRealtimeTranscriptionSessionCreateRequestInputAudioNoiseReductionMetadata
+    FIELDS = {
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::NoiseReductionType.from_value(value)
+      end
+    }.freeze
+  end
+
+  # API model for RealtimeTranscriptionSessionCreateRequestInputAudioNoiseReduction.
+  # Configuration for input audio noise reduction. This can be set to `null` to turn off. Noise reduction filters audio added to the input audio buffer before it is sent to VAD and the model. Filtering the audio can improve VAD and turn detection accuracy (reducing false positives) and model performance by improving perception of the input audio.
+  class RealtimeTranscriptionSessionCreateRequestInputAudioNoiseReduction
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeTranscriptionSessionCreateRequestInputAudioNoiseReductionMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeTranscriptionSessionCreateRequestInputAudioNoiseReductionMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeTranscriptionSessionCreateRequestInputAudioNoiseReductionMetadata::DECODERS
+
+    # @return [NoiseReductionType] Type of noise reduction. `near_field` is for close-talking microphones such as headphones, `far_field` is for far-field microphones such as laptop or conference room microphones.
+    attr_reader :type
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Internal model hydration metadata.
   class SdkInternalRealtimeTranscriptionSessionCreateRequestMetadata
     FIELDS = {
       turn_detection: 'turn_detection',
@@ -65,6 +103,9 @@ module OctridevOpenai
     DECODERS = {
       turn_detection: lambda do |value|
         ::OctridevOpenai::RealtimeTranscriptionSessionCreateRequestTurnDetection.from_hash(value)
+      end,
+      input_audio_noise_reduction: lambda do |value|
+        ::OctridevOpenai::RealtimeTranscriptionSessionCreateRequestInputAudioNoiseReduction.from_hash(value)
       end,
       input_audio_format: lambda do |value|
         ::OctridevOpenai::RealtimeTranscriptionSessionCreateRequestInputAudioFormat.from_value(value)
@@ -88,7 +129,7 @@ module OctridevOpenai
 
     # @return [RealtimeTranscriptionSessionCreateRequestTurnDetection] Configuration for turn detection. Can be set to `null` to turn off. Server VAD means that the model will detect the start and end of speech based on audio volume and respond at the end of user speech.
     attr_reader :turn_detection
-    # @return [Object] Configuration for input audio noise reduction. This can be set to `null` to turn off. Noise reduction filters audio added to the input audio buffer before it is sent to VAD and the model. Filtering the audio can improve VAD and turn detection accuracy (reducing false positives) and model performance by improving perception of the input audio.
+    # @return [RealtimeTranscriptionSessionCreateRequestInputAudioNoiseReduction] Configuration for input audio noise reduction. This can be set to `null` to turn off. Noise reduction filters audio added to the input audio buffer before it is sent to VAD and the model. Filtering the audio can improve VAD and turn detection accuracy (reducing false positives) and model performance by improving perception of the input audio.
     attr_reader :input_audio_noise_reduction
     # @return [RealtimeTranscriptionSessionCreateRequestInputAudioFormat] The format of input audio. Options are `pcm16`, `g711_ulaw`, or `g711_alaw`. For `pcm16`, input audio must be 16-bit PCM at a 24kHz sample rate, single channel (mono), and little-endian byte order.
     attr_reader :input_audio_format
@@ -141,6 +182,44 @@ module OctridevOpenai
   end
 
   # Internal model hydration metadata.
+  class SdkInternalRealtimeTranscriptionSessionCreateRequestGAAudioInputNoiseReductionMetadata
+    FIELDS = {
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::NoiseReductionType.from_value(value)
+      end
+    }.freeze
+  end
+
+  # API model for RealtimeTranscriptionSessionCreateRequestGAAudioInputNoiseReduction.
+  # Configuration for input audio noise reduction. This can be set to `null` to turn off. Noise reduction filters audio added to the input audio buffer before it is sent to VAD and the model. Filtering the audio can improve VAD and turn detection accuracy (reducing false positives) and model performance by improving perception of the input audio.
+  class RealtimeTranscriptionSessionCreateRequestGAAudioInputNoiseReduction
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeTranscriptionSessionCreateRequestGAAudioInputNoiseReductionMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeTranscriptionSessionCreateRequestGAAudioInputNoiseReductionMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeTranscriptionSessionCreateRequestGAAudioInputNoiseReductionMetadata::DECODERS
+
+    # @return [NoiseReductionType] Type of noise reduction. `near_field` is for close-talking microphones such as headphones, `far_field` is for far-field microphones such as laptop or conference room microphones.
+    attr_reader :type
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Internal model hydration metadata.
   class SdkInternalRealtimeTranscriptionSessionCreateRequestGAAudioInputMetadata
     FIELDS = {
       format: 'format',
@@ -155,6 +234,9 @@ module OctridevOpenai
       end,
       transcription: lambda do |value|
         ::OctridevOpenai::AudioTranscription.from_hash(value)
+      end,
+      noise_reduction: lambda do |value|
+        ::OctridevOpenai::RealtimeTranscriptionSessionCreateRequestGAAudioInputNoiseReduction.from_hash(value)
       end,
       turn_detection: lambda do |value|
         ::OctridevOpenai::RealtimeTurnDetection.from_hash(value)
@@ -174,7 +256,7 @@ module OctridevOpenai
     attr_reader :format
     # @return [AudioTranscription] Configuration for input audio transcription, defaults to off and can be set to `null` to turn off once on. Input audio transcription is not native to the model, since the model consumes audio directly. Transcription runs asynchronously through the /audio/transcriptions endpoint and should be treated as guidance of input audio content rather than precisely what the model heard. The client can optionally set the language and prompt for transcription, these offer additional…
     attr_reader :transcription
-    # @return [Object] Configuration for input audio noise reduction. This can be set to `null` to turn off. Noise reduction filters audio added to the input audio buffer before it is sent to VAD and the model. Filtering the audio can improve VAD and turn detection accuracy (reducing false positives) and model performance by improving perception of the input audio.
+    # @return [RealtimeTranscriptionSessionCreateRequestGAAudioInputNoiseReduction] Configuration for input audio noise reduction. This can be set to `null` to turn off. Noise reduction filters audio added to the input audio buffer before it is sent to VAD and the model. Filtering the audio can improve VAD and turn detection accuracy (reducing false positives) and model performance by improving perception of the input audio.
     attr_reader :noise_reduction
     # @return [RealtimeTurnDetection] Configuration for turn detection, ether Server VAD or Semantic VAD. This can be set to `null` to turn off, in which case the client must manually trigger model response. Server VAD means that the model will detect the start and end of speech based on audio volume and respond at the end of user speech. Semantic VAD is more advanced and uses a turn detection model (in conjunction with VAD) to semantically estimate whether the user has finished speaking, then dynamically sets a…
     attr_reader :turn_detection
@@ -562,103 +644,6 @@ module OctridevOpenai
       end,
       turn_detection: lambda do |value|
         ::OctridevOpenai::RealtimeTranscriptionSessionCreateResponseGAAudioInputTurnDetection.from_hash(value)
-      end
-    }.freeze
-  end
-
-  # API model for RealtimeTranscriptionSessionCreateResponseGAAudioInput.
-  # Optional object value serialized in the `input` wire field.
-  class RealtimeTranscriptionSessionCreateResponseGAAudioInput
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRealtimeTranscriptionSessionCreateResponseGAAudioInputMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRealtimeTranscriptionSessionCreateResponseGAAudioInputMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRealtimeTranscriptionSessionCreateResponseGAAudioInputMetadata::DECODERS
-
-    # @return [RealtimeAudioFormats] Optional API value serialized in the `format` wire field.
-    attr_reader :format
-    # @return [AudioTranscriptionResponse] Configuration of the transcription model.
-    attr_reader :transcription
-    # @return [RealtimeTranscriptionSessionCreateResponseGAAudioInputNoiseReduction] Configuration for input audio noise reduction.
-    attr_reader :noise_reduction
-    # @return [RealtimeTranscriptionSessionCreateResponseGAAudioInputTurnDetection] Configuration for turn detection. For `gpt-realtime-whisper`, this must be `null`; VAD is not supported.
-    attr_reader :turn_detection
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalRealtimeTranscriptionSessionCreateResponseGAAudioMetadata
-    FIELDS = {
-      input: 'input'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {
-      input: lambda do |value|
-        ::OctridevOpenai::RealtimeTranscriptionSessionCreateResponseGAAudioInput.from_hash(value)
-      end
-    }.freeze
-  end
-
-  # API model for RealtimeTranscriptionSessionCreateResponseGAAudio.
-  # Configuration for input audio for the session.
-  class RealtimeTranscriptionSessionCreateResponseGAAudio
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRealtimeTranscriptionSessionCreateResponseGAAudioMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRealtimeTranscriptionSessionCreateResponseGAAudioMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRealtimeTranscriptionSessionCreateResponseGAAudioMetadata::DECODERS
-
-    # @return [RealtimeTranscriptionSessionCreateResponseGAAudioInput] Optional object value serialized in the `input` wire field.
-    attr_reader :input
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalRealtimeTranscriptionSessionCreateResponseGAMetadata
-    FIELDS = {
-      type: 'type',
-      id: 'id',
-      object: 'object',
-      expires_at: 'expires_at',
-      include: 'include',
-      audio: 'audio'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      id
-      object
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::RealtimeTranscriptionSessionCreateResponseGAType.from_value(value)
-      end,
-      include: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::RealtimeTranscriptionSessionCreateResponseGAIncludeItem.from_value(item) }
-      end,
-      audio: lambda do |value|
-        ::OctridevOpenai::RealtimeTranscriptionSessionCreateResponseGAAudio.from_hash(value)
       end
     }.freeze
   end

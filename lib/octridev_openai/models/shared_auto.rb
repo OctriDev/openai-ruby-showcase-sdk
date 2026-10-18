@@ -32,6 +32,8 @@ module OctridevOpenai
   # API model for AutoCodeInterpreterToolParam.
   # Configuration for a code interpreter container. Optionally specify the IDs of the files to run the code on.
   class AutoCodeInterpreterToolParam
+    include CodeInterpreterToolContainer
+
     CONSTRUCTION_SURFACE = :named
     FIELDS = SdkInternalAutoCodeInterpreterToolParamMetadata::FIELDS
     REQUIRED_FIELDS = SdkInternalAutoCodeInterpreterToolParamMetadata::REQUIRED_FIELDS

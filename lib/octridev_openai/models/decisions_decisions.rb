@@ -114,6 +114,8 @@ module OctridevOpenai
   # API model for DecisionsUsageErrorDetails.
   # Typed representation of the `DecisionsUsageErrorDetails` API schema.
   class DecisionsUsageErrorDetails
+    include DecisionsUsagePermissionErrorResponseError
+
     CONSTRUCTION_SURFACE = :named
     FIELDS = SdkInternalDecisionsUsageErrorDetailsMetadata::FIELDS
     REQUIRED_FIELDS = SdkInternalDecisionsUsageErrorDetailsMetadata::REQUIRED_FIELDS
@@ -209,7 +211,7 @@ module OctridevOpenai
     ].freeze
     DECODERS = {
       error: lambda do |value|
-        SdkModel.union_branch(value, [::OctridevOpenai::DecisionsUsageErrorDetails])
+        ::OctridevOpenai::DecisionsUsagePermissionErrorResponseError.from_hash(value)
       end
     }.freeze
   end
@@ -222,7 +224,7 @@ module OctridevOpenai
     REQUIRED_FIELDS = SdkInternalDecisionsUsagePermissionErrorResponseMetadata::REQUIRED_FIELDS
     DECODERS = SdkInternalDecisionsUsagePermissionErrorResponseMetadata::DECODERS
 
-    # @return [Object] Details about the permission error.
+    # @return [DecisionsUsagePermissionErrorResponseError] Details about the permission error.
     attr_reader :error
 
     def initialize(**attributes)
@@ -236,6 +238,15 @@ module OctridevOpenai
 
     def to_h
       SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the DecisionsUsagePermissionErrorResponseError SDK namespace.
+  module DecisionsUsagePermissionErrorResponseError
+    def self.from_hash(hash)
+      return hash if hash.is_a?(::String)
+
+      DecisionsUsageErrorDetails.from_hash(hash)
     end
   end
 

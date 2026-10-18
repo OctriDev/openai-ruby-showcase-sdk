@@ -230,7 +230,7 @@ module OctridevOpenai
         ::OctridevOpenai::CreateChatCompletionRequestVariant1WebSearchOptions.from_hash(value)
       end,
       response_format: lambda do |value|
-        ::OctridevOpenai::ResponseFormat.from_hash(value)
+        SdkModel.union_branch(value, [::OctridevOpenai::ResponseFormatText, ::OctridevOpenai::ResponseFormatJsonSchema, ::OctridevOpenai::ResponseFormatJsonObject])
       end,
       audio: lambda do |value|
         ::OctridevOpenai::CreateChatCompletionRequestVariant1Audio.from_hash(value)
@@ -246,9 +246,6 @@ module OctridevOpenai
       end,
       stream_options: lambda do |value|
         ::OctridevOpenai::ChatCompletionStreamOptions.from_hash(value)
-      end,
-      tools: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::ToolsItem.from_hash(item) }
       end,
       tool_choice: lambda do |value|
         ::OctridevOpenai::ChatCompletionToolChoiceOption.from_hash(value)
@@ -306,7 +303,7 @@ module OctridevOpenai
     attr_reader :presence_penalty
     # @return [CreateChatCompletionRequestVariant1WebSearchOptions] This tool searches the web for relevant results to use in a response. Learn more about the web search tool.
     attr_reader :web_search_options
-    # @return [ResponseFormat] An object specifying the format that the model must output. Setting to `{ "type": "json_schema", "json_schema": {...} }` enables Structured Outputs which ensures the model will match your supplied JSON schema. Learn more in the [Structured Outputs guide](developers.openai.com). Setting to `{ "type": "json_object" }` enables the older JSON mode, which ensures the message the model generates is valid JSON. Using `json_schema` is preferred for models that support it.
+    # @return [Object] An object specifying the format that the model must output. Setting to `{ "type": "json_schema", "json_schema": {...} }` enables Structured Outputs which ensures the model will match your supplied JSON schema. Learn more in the [Structured Outputs guide](developers.openai.com). Setting to `{ "type": "json_object" }` enables the older JSON mode, which ensures the message the model generates is valid JSON. Using `json_schema` is preferred for models that support it.
     attr_reader :response_format
     # @return [CreateChatCompletionRequestVariant1Audio] Parameters for audio output. Required when audio output is requested with `modalities: "audio"]`. [Learn more.
     attr_reader :audio
@@ -330,7 +327,7 @@ module OctridevOpenai
     attr_reader :seed
     # @return [ChatCompletionStreamOptions] Options for streaming response. Only set this when you set `stream: true`.
     attr_reader :stream_options
-    # @return [Array_of_ToolsItem] A list of tools the model may call. You can provide either custom tools or function tools.
+    # @return [Array_of_Object] A list of tools the model may call. You can provide either custom tools or function tools.
     attr_reader :tools
     # @return [ChatCompletionToolChoiceOption] Controls which (if any) tool is called by the model. `none` means the model will not call any tool and instead generates a message. `auto` means the model can pick between generating a message or calling one or more tools. `required` means the model must call one or more tools. Specifying a particular tool via `{"type": "function", "function": {"name": "my_function"}}` forces the model to call that tool. `none` is the default when no tools are present. `auto` is the default…
     attr_reader :tool_choice

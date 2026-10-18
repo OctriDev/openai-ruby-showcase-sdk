@@ -78,13 +78,56 @@ module OctridevOpenai
     end
   end
 
-  # Defines the CreateVectorStoreFileBatchRequest SDK namespace.
-  module CreateVectorStoreFileBatchRequest
-    def self.from_hash(hash)
-      return hash if hash.is_a?(::Object)
-      return hash if hash.is_a?(::Object)
+  # Internal model hydration metadata.
+  class SdkInternalCreateVectorStoreFileBatchRequestMetadata
+    FIELDS = {
+      file_ids: 'file_ids',
+      files: 'files',
+      chunking_strategy: 'chunking_strategy',
+      attributes: 'attributes'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      files: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::CreateVectorStoreFileRequest.from_hash(item) }
+      end,
+      chunking_strategy: lambda do |value|
+        ::OctridevOpenai::ChunkingStrategyRequestParam.from_hash(value)
+      end,
+      attributes: lambda do |value|
+        ::OctridevOpenai::VectorStoreFileAttributes.from_hash(value)
+      end
+    }.freeze
+  end
 
-      raise "Could not deserialize CreateVectorStoreFileBatchRequest from #{hash.inspect}"
+  # API model for CreateVectorStoreFileBatchRequest.
+  # Typed representation of the `CreateVectorStoreFileBatchRequest` API schema.
+  class CreateVectorStoreFileBatchRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCreateVectorStoreFileBatchRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCreateVectorStoreFileBatchRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCreateVectorStoreFileBatchRequestMetadata::DECODERS
+
+    # @return [Array_of_String] A list of File IDs that the vector store should use. Useful for tools like `file_search` that can access files. If `attributes` or `chunking_strategy` are provided, they will be applied to all files in the batch. The maximum batch size is 2000 files. This endpoint is recommended for multi-file ingestion and helps reduce per-vector-store write request pressure. Mutually exclusive with `files`.
+    attr_reader :file_ids
+    # @return [Array_of_CreateVectorStoreFileRequest] A list of objects that each include a `file_id` plus optional `attributes` or `chunking_strategy`. Use this when you need to override metadata for specific files. The global `attributes` or `chunking_strategy` will be ignored and must be specified for each file. The maximum batch size is 2000 files. This endpoint is recommended for multi-file ingestion and helps reduce per-vector-store write request pressure. Mutually exclusive with `file_ids`.
+    attr_reader :files
+    # @return [ChunkingStrategyRequestParam] The chunking strategy used to chunk the file(s). If not set, will use the `auto` strategy.
+    attr_reader :chunking_strategy
+    # @return [VectorStoreFileAttributes] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters, booleans, or numbers.
+    attr_reader :attributes
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
     end
   end
 
@@ -613,63 +656,5 @@ module OctridevOpenai
         ::OctridevOpenai::StaticChunkingStrategy.from_hash(value)
       end
     }.freeze
-  end
-
-  # API model for StaticChunkingStrategyResponseParam.
-  # Typed representation of the `StaticChunkingStrategyResponseParam` API schema.
-  class StaticChunkingStrategyResponseParam
-    include VectorStoreFileObjectChunkingStrategy
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalStaticChunkingStrategyResponseParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalStaticChunkingStrategyResponseParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalStaticChunkingStrategyResponseParamMetadata::DECODERS
-
-    # @return [StaticChunkingStrategyResponseParamType] Always `static`.
-    attr_reader :type
-    # @return [StaticChunkingStrategy] Required object value serialized in the `static` wire field.
-    attr_reader :static
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the StaticChunkingStrategyResponseParamType SDK namespace.
-  module StaticChunkingStrategyResponseParamType
-    STATIC = 'static'
-    VALUES = ['static'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('StaticChunkingStrategyResponseParamType', 'enum', "Unknown StaticChunkingStrategyResponseParamType: #{value}")
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalUpdateVectorStoreFileAttributesRequestMetadata
-    FIELDS = {
-      attributes: 'attributes'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      attributes
-    ].freeze
-    DECODERS = {
-      attributes: lambda do |value|
-        ::OctridevOpenai::VectorStoreFileAttributes.from_hash(value)
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      attributes
-    ].freeze
   end
 end

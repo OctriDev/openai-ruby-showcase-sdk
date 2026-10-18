@@ -612,13 +612,40 @@ module OctridevOpenai
     end
   end
 
-  # Defines the ImageRefParam SDK namespace.
-  module ImageRefParam
-    def self.from_hash(hash)
-      return hash if hash.is_a?(::Object)
-      return hash if hash.is_a?(::Object)
+  # Internal model hydration metadata.
+  class SdkInternalImageRefParamMetadata
+    FIELDS = {
+      image_url: 'image_url',
+      file_id: 'file_id'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
+  end
 
-      raise "Could not deserialize ImageRefParam from #{hash.inspect}"
+  # API model for ImageRefParam.
+  # Reference an input image by either URL or uploaded file ID. Provide exactly one of `image_url` or `file_id`.
+  class ImageRefParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalImageRefParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalImageRefParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalImageRefParamMetadata::DECODERS
+
+    # @return [String] A fully qualified URL or base64-encoded data URL.
+    attr_reader :image_url
+    # @return [String] The File API ID of an uploaded image to use as input.
+    attr_reader :file_id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
     end
   end
 
@@ -654,44 +681,5 @@ module OctridevOpenai
         ::OctridevOpenai::ImageGenUsage.from_hash(value)
       end
     }.freeze
-  end
-
-  # API model for ImagesResponse.
-  # The response from the image generation endpoint.
-  class ImagesResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalImagesResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalImagesResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalImagesResponseMetadata::DECODERS
-
-    # @return [String] The effective safety identifier used for safety monitoring and abuse detection. This is the non-empty `safety_identifier` from the request, or the deprecated `user` value when `safety_identifier` is omitted, null, or empty.
-    attr_reader :safety_identifier
-    # @return [Integer] The Unix timestamp (in seconds) of when the image was created.
-    attr_reader :created
-    # @return [Array_of_Image] The list of generated images.
-    attr_reader :data
-    # @return [ImagesResponseBackground] The background parameter used for the image generation. Either `transparent` or `opaque`.
-    attr_reader :background
-    # @return [ImagesResponseOutputFormat] The output format of the image generation. Either `png`, `webp`, or `jpeg`.
-    attr_reader :output_format
-    # @return [String] The image dimensions as a `WIDTHxHEIGHT` string, for example `1536x864`.
-    attr_reader :size
-    # @return [ImagesResponseQuality] The quality of the image generated. One of `low`, `medium`, `high`, `xhigh`, or `max`.
-    attr_reader :quality
-    # @return [ImageGenUsage] For `gpt-image-1` only, the token usage information for the image generation.
-    attr_reader :usage
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
   end
 end

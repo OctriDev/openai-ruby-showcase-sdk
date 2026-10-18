@@ -41,20 +41,8 @@ module OctridevOpenai
     end
   end
 
-  # Defines the ModelIdsLive SDK namespace.
+  # Defines the ModelIdsLive SDK value decoder.
   module ModelIdsLive
-    def self.from_hash(hash)
-      return hash if hash.is_a?(::String)
-      return ModelIdsLiveVariant1.from_value(hash) if hash.is_a?(::String)
-
-      raise "Could not deserialize ModelIdsLive from #{hash.inspect}"
-    end
-  end
-
-  # Defines the ModelIdsLiveVariant1 SDK namespace.
-  module ModelIdsLiveVariant1
-    GPT_LIVE_1 = 'gpt-live-1'
-    VALUES = ['gpt-live-1'].freeze
     def self.from_value(value)
       value
     end

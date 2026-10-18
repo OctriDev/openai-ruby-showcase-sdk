@@ -135,7 +135,7 @@ module OctridevOpenai
         ::OctridevOpenai::BetaCodeInterpreterToolType.from_value(value)
       end,
       container: lambda do |value|
-        SdkModel.union_branch(value, [::OctridevOpenai::BetaAutoCodeInterpreterToolParam])
+        ::OctridevOpenai::BetaCodeInterpreterToolContainer.from_hash(value)
       end,
       allowed_callers: lambda do |value|
         value&.map { |item| ::OctridevOpenai::BetaCallableToolAllowedCaller.from_value(item) }
@@ -156,7 +156,7 @@ module OctridevOpenai
 
     # @return [BetaCodeInterpreterToolType] The type of the code interpreter tool. Always `code_interpreter`.
     attr_reader :type
-    # @return [Object] The code interpreter container. Can be a container ID or an object that specifies uploaded file IDs to make available to your code, along with an optional `memory_limit` setting.
+    # @return [BetaCodeInterpreterToolContainer] The code interpreter container. Can be a container ID or an object that specifies uploaded file IDs to make available to your code, along with an optional `memory_limit` setting.
     attr_reader :container
     # @return [Array_of_BetaCallableToolAllowedCaller] The tool invocation context(s).
     attr_reader :allowed_callers
@@ -303,6 +303,15 @@ module OctridevOpenai
       return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
 
       raise SdkValidationError.new('BetaCodeInterpreterToolCallOutputsItem', 'variant', "Unknown BetaCodeInterpreterToolCallOutputsItem discriminator: #{hash['type'].inspect}")
+    end
+  end
+
+  # Defines the BetaCodeInterpreterToolContainer SDK namespace.
+  module BetaCodeInterpreterToolContainer
+    def self.from_hash(hash)
+      return hash if hash.is_a?(::String)
+
+      BetaAutoCodeInterpreterToolParam.from_hash(hash)
     end
   end
 end

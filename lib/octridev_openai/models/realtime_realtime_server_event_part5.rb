@@ -5,6 +5,56 @@
 
 # realtime_realtime_server_event domain models (part 5)
 module OctridevOpenai
+  # API model for RealtimeServerEventResponseFunctionCallArgumentsDelta.
+  # Returned when the model-generated function call arguments are updated.
+  class RealtimeServerEventResponseFunctionCallArgumentsDelta
+    include RealtimeServerEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeServerEventResponseFunctionCallArgumentsDeltaMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeServerEventResponseFunctionCallArgumentsDeltaMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeServerEventResponseFunctionCallArgumentsDeltaMetadata::DECODERS
+
+    # @return [String] The unique ID of the server event.
+    attr_reader :event_id
+    # @return [RealtimeServerEventResponseFunctionCallArgumentsDeltaType] The event type, must be `response.function_call_arguments.delta`.
+    attr_reader :type
+    # @return [String] The ID of the response.
+    attr_reader :response_id
+    # @return [String] The ID of the function call item.
+    attr_reader :item_id
+    # @return [Integer] The index of the output item in the response.
+    attr_reader :output_index
+    # @return [String] The ID of the function call.
+    attr_reader :call_id
+    # @return [String] The arguments delta as a JSON string.
+    attr_reader :delta
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the RealtimeServerEventResponseFunctionCallArgumentsDeltaType SDK namespace.
+  module RealtimeServerEventResponseFunctionCallArgumentsDeltaType
+    RESPONSE_FUNCTION_CALL_ARGUMENTS_DELTA = 'response.function_call_arguments.delta'
+    VALUES = ['response.function_call_arguments.delta'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('RealtimeServerEventResponseFunctionCallArgumentsDeltaType', 'enum', "Unknown RealtimeServerEventResponseFunctionCallArgumentsDeltaType: #{value}")
+    end
+  end
+
   # Internal model hydration metadata.
   class SdkInternalRealtimeServerEventResponseFunctionCallArgumentsDoneMetadata
     FIELDS = {
@@ -638,43 +688,5 @@ module OctridevOpenai
     def to_h
       SdkModel.to_h(self, FIELDS)
     end
-  end
-
-  # Defines the RealtimeServerEventResponseTextDeltaType SDK namespace.
-  module RealtimeServerEventResponseTextDeltaType
-    RESPONSE_OUTPUT_TEXT_DELTA = 'response.output_text.delta'
-    VALUES = ['response.output_text.delta'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('RealtimeServerEventResponseTextDeltaType', 'enum', "Unknown RealtimeServerEventResponseTextDeltaType: #{value}")
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalRealtimeServerEventResponseTextDoneMetadata
-    FIELDS = {
-      event_id: 'event_id',
-      type: 'type',
-      response_id: 'response_id',
-      item_id: 'item_id',
-      output_index: 'output_index',
-      content_index: 'content_index',
-      text: 'text'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      event_id
-      type
-      response_id
-      item_id
-      output_index
-      content_index
-      text
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::RealtimeServerEventResponseTextDoneType.from_value(value)
-      end
-    }.freeze
   end
 end

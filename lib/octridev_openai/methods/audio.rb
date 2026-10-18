@@ -106,7 +106,7 @@ module OctridevOpenai
         request_options: nil,
         &block
       )
-        unless block_given?
+        unless block
           return enum_for(
             __method__,
             config: config,
@@ -262,6 +262,7 @@ module OctridevOpenai
             'known_speaker_references' => known_speaker_references
           },
           content_type: 'multipart/form-data',
+          return_type: ::OctridevOpenai::CreateTranscriptionResponse,
           decoder: :json,
           operation_id: 'create_transcription',
           request_options: request_options,
@@ -355,7 +356,7 @@ module OctridevOpenai
         request_options: nil,
         &block
       )
-        unless block_given?
+        unless block
           return enum_for(
             __method__,
             config: config,
@@ -451,6 +452,7 @@ module OctridevOpenai
             'temperature' => temperature
           },
           content_type: 'multipart/form-data',
+          return_type: ::OctridevOpenai::CreateTranslationResponse,
           decoder: :json,
           operation_id: 'create_translation',
           request_options: request_options,

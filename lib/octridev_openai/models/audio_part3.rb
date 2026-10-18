@@ -5,6 +5,61 @@
 
 # audio domain models (part 3)
 module OctridevOpenai
+  # API model for TranscriptTextDeltaEvent.
+  # Emitted when there is an additional text delta. This is also the first event emitted when the transcription starts. Only emitted when you create a transcription with the `Stream` parameter set to `true`.
+  class TranscriptTextDeltaEvent
+    include CreateTranscriptionResponseStreamEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalTranscriptTextDeltaEventMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalTranscriptTextDeltaEventMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalTranscriptTextDeltaEventMetadata::DECODERS
+
+    # @return [TranscriptTextDeltaEventType] The type of the event. Always `transcript.text.delta`.
+    attr_reader :type
+    # @return [String] The text delta that was additionally transcribed.
+    attr_reader :delta
+    # @return [Array_of_TranscriptTextDeltaEventLogprobsItem] The log probabilities of the delta. Only included if you create a transcription with the `include[]` parameter set to `logprobs`.
+    attr_reader :logprobs
+    # @return [String] Identifier of the diarized segment that this delta belongs to. Only present when using `gpt-4o-transcribe-diarize`.
+    attr_reader :segment_id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the TranscriptTextDeltaEventType SDK namespace.
+  module TranscriptTextDeltaEventType
+    TRANSCRIPT_TEXT_DELTA = 'transcript.text.delta'
+    VALUES = ['transcript.text.delta'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('TranscriptTextDeltaEventType', 'enum', "Unknown TranscriptTextDeltaEventType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalTranscriptTextDoneEventLogprobsItemMetadata
+    FIELDS = {
+      token: 'token',
+      logprob: 'logprob',
+      bytes: 'bytes'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
+  end
+
   # API model for TranscriptTextDoneEventLogprobsItem.
   # Required object value serialized in the `logprobs[]` wire field.
   class TranscriptTextDoneEventLogprobsItem
@@ -411,6 +466,7 @@ module OctridevOpenai
   # Typed representation of the `VadConfig` API schema.
   class VadConfig
     include TranscriptionChunkingStrategy
+    include CreateTranscriptionRequestChunkingStrategy
 
     CONSTRUCTION_SURFACE = :named
     FIELDS = SdkInternalVadConfigMetadata::FIELDS
@@ -626,40 +682,5 @@ module OctridevOpenai
     def to_h
       SdkModel.to_h(self, FIELDS)
     end
-  end
-
-  # Defines the VoiceConsentResourceObject SDK namespace.
-  module VoiceConsentResourceObject
-    AUDIO_VOICE_CONSENT = 'audio.voice_consent'
-    VALUES = ['audio.voice_consent'].freeze
-    def self.from_value(value)
-      value
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalVoiceResourceMetadata
-    FIELDS = {
-      object: 'object',
-      id: 'id',
-      type: 'type',
-      name: 'name',
-      created_at: 'created_at'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      id
-      type
-      name
-      created_at
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::VoiceResourceObject.from_value(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::VoiceResourceType.from_value(value)
-      end
-    }.freeze
   end
 end

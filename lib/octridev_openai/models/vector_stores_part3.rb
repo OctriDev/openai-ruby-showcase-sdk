@@ -5,6 +5,39 @@
 
 # vector_stores domain models (part 3)
 module OctridevOpenai
+  # API model for VectorStoreObjectFileCounts.
+  # Required object value serialized in the `file_counts` wire field.
+  class VectorStoreObjectFileCounts
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalVectorStoreObjectFileCountsMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalVectorStoreObjectFileCountsMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalVectorStoreObjectFileCountsMetadata::DECODERS
+
+    # @return [Integer] The number of files that are currently being processed.
+    attr_reader :in_progress
+    # @return [Integer] The number of files that have been successfully processed.
+    attr_reader :completed
+    # @return [Integer] The number of files that have failed to process.
+    attr_reader :failed
+    # @return [Integer] The number of files that were cancelled.
+    attr_reader :cancelled
+    # @return [Integer] The total number of files.
+    attr_reader :total
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
   # Internal model hydration metadata.
   class SdkInternalVectorStoreObjectMetadata
     FIELDS = {

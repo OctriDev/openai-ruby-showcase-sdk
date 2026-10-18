@@ -5,6 +5,45 @@
 
 # images domain models (part 3)
 module OctridevOpenai
+  # API model for ImagesResponse.
+  # The response from the image generation endpoint.
+  class ImagesResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalImagesResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalImagesResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalImagesResponseMetadata::DECODERS
+
+    # @return [String] The effective safety identifier used for safety monitoring and abuse detection. This is the non-empty `safety_identifier` from the request, or the deprecated `user` value when `safety_identifier` is omitted, null, or empty.
+    attr_reader :safety_identifier
+    # @return [Integer] The Unix timestamp (in seconds) of when the image was created.
+    attr_reader :created
+    # @return [Array_of_Image] The list of generated images.
+    attr_reader :data
+    # @return [ImagesResponseBackground] The background parameter used for the image generation. Either `transparent` or `opaque`.
+    attr_reader :background
+    # @return [ImagesResponseOutputFormat] The output format of the image generation. Either `png`, `webp`, or `jpeg`.
+    attr_reader :output_format
+    # @return [String] The image dimensions as a `WIDTHxHEIGHT` string, for example `1536x864`.
+    attr_reader :size
+    # @return [ImagesResponseQuality] The quality of the image generated. One of `low`, `medium`, `high`, `xhigh`, or `max`.
+    attr_reader :quality
+    # @return [ImageGenUsage] For `gpt-image-1` only, the token usage information for the image generation.
+    attr_reader :usage
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
   # Defines the ImagesResponseBackground SDK namespace.
   module ImagesResponseBackground
     TRANSPARENT = 'transparent'
@@ -135,9 +174,8 @@ module OctridevOpenai
   module PartialImages
     def self.from_hash(hash)
       return hash if hash.is_a?(::Integer)
-      return hash if hash.is_a?(::Object)
 
-      raise "Could not deserialize PartialImages from #{hash.inspect}"
+      hash
     end
   end
 end

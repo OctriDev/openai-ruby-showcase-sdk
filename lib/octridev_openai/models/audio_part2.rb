@@ -5,9 +5,58 @@
 
 # audio domain models (part 2)
 module OctridevOpenai
+  # API model for CreateTranslationResponseJson.
+  # Typed representation of the `CreateTranslationResponseJson` API schema.
+  class CreateTranslationResponseJson
+    include CreateTranslationResponse
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCreateTranslationResponseJsonMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCreateTranslationResponseJsonMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCreateTranslationResponseJsonMetadata::DECODERS
+
+    # @return [String] Required `string` value serialized in the `text` wire field.
+    attr_reader :text
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalCreateTranslationResponseVerboseJsonMetadata
+    FIELDS = {
+      language: 'language',
+      duration: 'duration',
+      text: 'text',
+      segments: 'segments'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      language
+      duration
+      text
+    ].freeze
+    DECODERS = {
+      segments: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::TranscriptionSegment.from_hash(item) }
+      end
+    }.freeze
+  end
+
   # API model for CreateTranslationResponseVerboseJson.
   # Typed representation of the `CreateTranslationResponseVerboseJson` API schema.
   class CreateTranslationResponseVerboseJson
+    include CreateTranslationResponse
+
     CONSTRUCTION_SURFACE = :named
     FIELDS = SdkInternalCreateTranslationResponseVerboseJsonMetadata::FIELDS
     REQUIRED_FIELDS = SdkInternalCreateTranslationResponseVerboseJsonMetadata::REQUIRED_FIELDS
@@ -610,60 +659,5 @@ module OctridevOpenai
         value&.map { |item| ::OctridevOpenai::TranscriptTextDeltaEventLogprobsItem.from_hash(item) }
       end
     }.freeze
-  end
-
-  # API model for TranscriptTextDeltaEvent.
-  # Emitted when there is an additional text delta. This is also the first event emitted when the transcription starts. Only emitted when you create a transcription with the `Stream` parameter set to `true`.
-  class TranscriptTextDeltaEvent
-    include CreateTranscriptionResponseStreamEvent
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalTranscriptTextDeltaEventMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalTranscriptTextDeltaEventMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalTranscriptTextDeltaEventMetadata::DECODERS
-
-    # @return [TranscriptTextDeltaEventType] The type of the event. Always `transcript.text.delta`.
-    attr_reader :type
-    # @return [String] The text delta that was additionally transcribed.
-    attr_reader :delta
-    # @return [Array_of_TranscriptTextDeltaEventLogprobsItem] The log probabilities of the delta. Only included if you create a transcription with the `include[]` parameter set to `logprobs`.
-    attr_reader :logprobs
-    # @return [String] Identifier of the diarized segment that this delta belongs to. Only present when using `gpt-4o-transcribe-diarize`.
-    attr_reader :segment_id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the TranscriptTextDeltaEventType SDK namespace.
-  module TranscriptTextDeltaEventType
-    TRANSCRIPT_TEXT_DELTA = 'transcript.text.delta'
-    VALUES = ['transcript.text.delta'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('TranscriptTextDeltaEventType', 'enum', "Unknown TranscriptTextDeltaEventType: #{value}")
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalTranscriptTextDoneEventLogprobsItemMetadata
-    FIELDS = {
-      token: 'token',
-      logprob: 'logprob',
-      bytes: 'bytes'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {}.freeze
   end
 end

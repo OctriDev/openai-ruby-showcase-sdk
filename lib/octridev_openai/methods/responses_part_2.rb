@@ -182,7 +182,7 @@ module OctridevOpenai
         request_options: nil,
         &block
       )
-        unless block_given?
+        unless block
           return enum_for(
             __method__,
             config: config,
@@ -302,7 +302,7 @@ module OctridevOpenai
         request_options: nil,
         &block
       )
-        unless block_given?
+        unless block
           return enum_for(
             __method__,
             config: config,

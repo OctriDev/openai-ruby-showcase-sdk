@@ -353,12 +353,16 @@ module OctridevOpenai
       decoded = type&.from_hash(hash)
       return decoded unless type.nil?
 
+      lossy = nil
       [BetaItem, BetaCompactionTriggerItemParam, BetaItemReferenceParam].each do |type|
-        return type.from_hash(hash)
+        decoded = type.from_hash(hash)
+        return decoded if SdkModel.keeps_every_key?(hash, decoded)
+
+        lossy ||= decoded
       rescue ::StandardError
         next
       end
-      raise SdkValidationError.new('BetaInputItem', 'variant', 'Cannot select BetaInputItem variant without a discriminator')
+      lossy unless lossy.nil?
     end
   end
 

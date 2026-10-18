@@ -5,6 +5,64 @@
 
 # vector_stores domain models (part 2)
 module OctridevOpenai
+  # API model for StaticChunkingStrategyResponseParam.
+  # Typed representation of the `StaticChunkingStrategyResponseParam` API schema.
+  class StaticChunkingStrategyResponseParam
+    include VectorStoreFileObjectChunkingStrategy
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalStaticChunkingStrategyResponseParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalStaticChunkingStrategyResponseParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalStaticChunkingStrategyResponseParamMetadata::DECODERS
+
+    # @return [StaticChunkingStrategyResponseParamType] Always `static`.
+    attr_reader :type
+    # @return [StaticChunkingStrategy] Required object value serialized in the `static` wire field.
+    attr_reader :static
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the StaticChunkingStrategyResponseParamType SDK namespace.
+  module StaticChunkingStrategyResponseParamType
+    STATIC = 'static'
+    VALUES = ['static'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('StaticChunkingStrategyResponseParamType', 'enum', "Unknown StaticChunkingStrategyResponseParamType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalUpdateVectorStoreFileAttributesRequestMetadata
+    FIELDS = {
+      attributes: 'attributes'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      attributes
+    ].freeze
+    DECODERS = {
+      attributes: lambda do |value|
+        ::OctridevOpenai::VectorStoreFileAttributes.from_hash(value)
+      end
+    }.freeze
+    NULLABLE_FIELDS = %i[
+      attributes
+    ].freeze
+  end
+
   # API model for UpdateVectorStoreFileAttributesRequest.
   # Typed representation of the `UpdateVectorStoreFileAttributesRequest` API schema.
   class UpdateVectorStoreFileAttributesRequest
@@ -614,38 +672,5 @@ module OctridevOpenai
       total
     ].freeze
     DECODERS = {}.freeze
-  end
-
-  # API model for VectorStoreObjectFileCounts.
-  # Required object value serialized in the `file_counts` wire field.
-  class VectorStoreObjectFileCounts
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalVectorStoreObjectFileCountsMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalVectorStoreObjectFileCountsMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalVectorStoreObjectFileCountsMetadata::DECODERS
-
-    # @return [Integer] The number of files that are currently being processed.
-    attr_reader :in_progress
-    # @return [Integer] The number of files that have been successfully processed.
-    attr_reader :completed
-    # @return [Integer] The number of files that have failed to process.
-    attr_reader :failed
-    # @return [Integer] The number of files that were cancelled.
-    attr_reader :cancelled
-    # @return [Integer] The total number of files.
-    attr_reader :total
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
   end
 end

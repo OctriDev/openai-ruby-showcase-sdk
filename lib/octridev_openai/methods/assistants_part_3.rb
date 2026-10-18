@@ -9,6 +9,100 @@ module OctridevOpenai
   module Methods
     # Defines the Assistants SDK namespace.
     module Assistants
+      # Retrieves a message from a thread. Provide both identifiers to select the thread and the message whose role, content, status, and associated details you need.
+      #
+      # Retrieve a message.
+      #
+      # @param thread_id [String] The ID of the thread to which this message
+      #   belongs.
+      # @param message_id [String] The ID of the message to retrieve.
+      singleton_class.define_method(:get_message) do |config:, thread_id:, message_id:, request_options: nil|
+        SdkClient.request(
+          'GET',
+          [
+            '/threads/',
+            SdkClient.encode_path_segment(thread_id),
+            '/messages/',
+            SdkClient.encode_path_segment(message_id)
+          ].join,
+          config: config,
+          return_type: ::OctridevOpenai::MessageObject,
+          decoder: :json,
+          operation_id: 'get_message',
+          request_options: request_options,
+          errors: { '429' => ::OctridevOpenai::ErrorResponse }
+        ).data
+      end
+
+      # Updates the metadata attached to a message in a thread. Provide the thread and message identifiers to select the message, then supply metadata key-value pairs to change. Use this operation when you need to update message metadata without changing its content.
+      #
+      # Modifies a message.
+      #
+      # @param thread_id [String] The ID of the thread to which this message
+      #   belongs.
+      # @param message_id [String] The ID of the message to modify.
+      # @param metadata [Metadata] Set of 16 key-value pairs that can be attached to
+      #   an object. This can be useful for storing additional information about the
+      #   object in a structured format, and querying for objects via API or the
+      #   dashboard. Keys are strings with a maximum length of 64 characters. Values
+      #   are strings with a maximum length of 512 characters.
+      def self.modify_message(
+        config:,
+        thread_id:,
+        message_id:,
+        metadata: NOT_GIVEN,
+        request_options: nil
+      )
+        SdkClient.request(
+          'POST',
+          [
+            '/threads/',
+            SdkClient.encode_path_segment(thread_id),
+            '/messages/',
+            SdkClient.encode_path_segment(message_id)
+          ].join,
+          config: config,
+          body: {
+            'metadata' => metadata
+          },
+          return_type: ::OctridevOpenai::MessageObject,
+          decoder: :json,
+          operation_id: 'modify_message',
+          request_options: request_options,
+          errors: { '429' => ::OctridevOpenai::ErrorResponse }
+        ).data
+      end
+
+      # Deletes a message from a thread. Provide both identifiers to select the thread and the message to remove; the response confirms the deletion.
+      #
+      # Deletes a message.
+      #
+      # @param thread_id [String] The ID of the thread to which this message
+      #   belongs.
+      # @param message_id [String] The ID of the message to delete.
+      def self.delete_message(
+        config:,
+        thread_id:,
+        message_id:,
+        request_options: nil
+      )
+        SdkClient.request(
+          'DELETE',
+          [
+            '/threads/',
+            SdkClient.encode_path_segment(thread_id),
+            '/messages/',
+            SdkClient.encode_path_segment(message_id)
+          ].join,
+          config: config,
+          return_type: ::OctridevOpenai::DeleteMessageResponse,
+          decoder: :json,
+          operation_id: 'delete_message',
+          request_options: request_options,
+          errors: { '429' => ::OctridevOpenai::ErrorResponse }
+        ).data
+      end
+
       # Lists runs belonging to a thread. Use `order` to sort runs by creation time and `after` or `before` to navigate through the results. The returned run statuses show whether each run is queued, active, completed, or in another state.
       #
       # Returns a list of runs belonging to a thread.
@@ -382,7 +476,7 @@ module OctridevOpenai
         request_options: nil,
         &block
       )
-        unless block_given?
+        unless block
           return enum_for(
             __method__,
             config: config,
@@ -470,74 +564,6 @@ module OctridevOpenai
           return_type: ::OctridevOpenai::RunObject,
           decoder: :json,
           operation_id: 'get_run',
-          request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse }
-        ).data
-      end
-
-      # Updates the metadata attached to a run. Send the key-value pairs you want associated with the run; the metadata object supports up to 16 pairs, with string values and keys of up to 64 characters.
-      #
-      # Modifies a run.
-      #
-      # @param thread_id [String] The ID of the thread that was run.
-      # @param run_id [String] The ID of the run to modify.
-      # @param metadata [Metadata] Set of 16 key-value pairs that can be attached to
-      #   an object. This can be useful for storing additional information about the
-      #   object in a structured format, and querying for objects via API or the
-      #   dashboard. Keys are strings with a maximum length of 64 characters. Values
-      #   are strings with a maximum length of 512 characters.
-      def self.modify_run(
-        config:,
-        thread_id:,
-        run_id:,
-        metadata: NOT_GIVEN,
-        request_options: nil
-      )
-        SdkClient.request(
-          'POST',
-          [
-            '/threads/',
-            SdkClient.encode_path_segment(thread_id),
-            '/runs/',
-            SdkClient.encode_path_segment(run_id)
-          ].join,
-          config: config,
-          body: {
-            'metadata' => metadata
-          },
-          return_type: ::OctridevOpenai::RunObject,
-          decoder: :json,
-          operation_id: 'modify_run',
-          request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse }
-        ).data
-      end
-
-      # Cancels a run that is in progress on a thread. Use this operation when you need to stop the run before it completes; the returned run object reports its current status.
-      #
-      # Cancels a run that is `in_progress`.
-      #
-      # @param thread_id [String] The ID of the thread to which this run belongs.
-      # @param run_id [String] The ID of the run to cancel.
-      def self.cancel_run(
-        config:,
-        thread_id:,
-        run_id:,
-        request_options: nil
-      )
-        SdkClient.request(
-          'POST',
-          [
-            '/threads/',
-            SdkClient.encode_path_segment(thread_id),
-            '/runs/',
-            SdkClient.encode_path_segment(run_id),
-            '/cancel'
-          ].join,
-          config: config,
-          return_type: ::OctridevOpenai::RunObject,
-          decoder: :json,
-          operation_id: 'cancel_run',
           request_options: request_options,
           errors: { '429' => ::OctridevOpenai::ErrorResponse }
         ).data

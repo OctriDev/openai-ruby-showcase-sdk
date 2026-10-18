@@ -218,7 +218,7 @@ module OctridevOpenai
         request_options: nil,
         &block
       )
-        unless block_given?
+        unless block
           return enum_for(
             __method__,
             config: config,
@@ -416,6 +416,100 @@ module OctridevOpenai
         ).data
       end
 
+      ListMessagesPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+
+      # Lists messages belonging to a thread. Use `run_id` to filter by the run that generated the messages and `order` to control their creation-time order. Use `after` or `before` cursors to navigate the results.
+      #
+      # Returns a list of messages for a given thread.
+      #
+      # @param thread_id [String] The ID of the thread the messages belong to.
+      # @param limit [Integer] A limit on the number of objects to be returned.
+      #   Limit can range between 1 and 100, and the default is 20.
+      # @param order [ListMessagesParameter] Sort order by the `created_at`
+      #   timestamp of the objects. `asc` for ascending order and `desc` for
+      #   descending order.
+      # @param after [String] A cursor for use in pagination. `after` is an object
+      #   ID that defines your place in the list. For instance, if you make a list
+      #   request and receive 100 objects, ending with obj_foo, your subsequent call
+      #   can include after=obj_foo in order to fetch the next page of the list.
+      # @param before [String] A cursor for use in pagination. `before` is an object
+      #   ID that defines your place in the list. For instance, if you make a list
+      #   request and receive 100 objects, starting with obj_foo, your subsequent call
+      #   can include before=obj_foo in order to fetch the previous page of the list.
+      # @param run_id [String] Filter messages by the run ID that generated them.
+      def self.list_messages_paginated(
+        config:,
+        thread_id: nil,
+        limit: nil,
+        order: nil,
+        after: nil,
+        before: nil,
+        run_id: nil,
+        request_options: nil
+      )
+        Enumerator.new do |y|
+          cursor = after
+          loop do
+            page = list_messages(
+              config: config,
+              thread_id: thread_id,
+              limit: limit,
+              order: order,
+              after: cursor,
+              before: before,
+              run_id: run_id,
+              request_options: request_options
+            )
+            items = page.data || []
+            break if items.empty?
+
+            items.each { |item| y << item }
+            break unless page.has_more
+
+            next_cursor = page.last_id
+            break if next_cursor.nil?
+
+            cursor = next_cursor
+          end
+        end
+      end
+
+      def self.list_messages_pages(
+        config:,
+        thread_id: nil,
+        limit: nil,
+        order: nil,
+        after: nil,
+        before: nil,
+        run_id: nil,
+        request_options: nil
+      )
+        Enumerator.new do |y|
+          cursor = after
+          loop do
+            page = list_messages(
+              config: config,
+              thread_id: thread_id,
+              limit: limit,
+              order: order,
+              after: cursor,
+              before: before,
+              run_id: run_id,
+              request_options: request_options
+            )
+            items = page.data || []
+            break if items.empty?
+
+            next_cursor = page.last_id
+            has_more = page.has_more && !next_cursor.nil?
+            y << ListMessagesPage.new(data: page, items: items, has_more: has_more)
+            break unless has_more
+
+            cursor = next_cursor
+          end
+        end
+      end
+
       # Creates a message in a thread. Provide the message `role` and `content`, and optionally include file attachments or metadata. Use this operation to add a user or assistant message to an existing conversation thread.
       #
       # Create a message.
@@ -462,100 +556,6 @@ module OctridevOpenai
           return_type: ::OctridevOpenai::MessageObject,
           decoder: :json,
           operation_id: 'create_message',
-          request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse }
-        ).data
-      end
-
-      # Retrieves a message from a thread. Provide both identifiers to select the thread and the message whose role, content, status, and associated details you need.
-      #
-      # Retrieve a message.
-      #
-      # @param thread_id [String] The ID of the thread to which this message
-      #   belongs.
-      # @param message_id [String] The ID of the message to retrieve.
-      singleton_class.define_method(:get_message) do |config:, thread_id:, message_id:, request_options: nil|
-        SdkClient.request(
-          'GET',
-          [
-            '/threads/',
-            SdkClient.encode_path_segment(thread_id),
-            '/messages/',
-            SdkClient.encode_path_segment(message_id)
-          ].join,
-          config: config,
-          return_type: ::OctridevOpenai::MessageObject,
-          decoder: :json,
-          operation_id: 'get_message',
-          request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse }
-        ).data
-      end
-
-      # Updates the metadata attached to a message in a thread. Provide the thread and message identifiers to select the message, then supply metadata key-value pairs to change. Use this operation when you need to update message metadata without changing its content.
-      #
-      # Modifies a message.
-      #
-      # @param thread_id [String] The ID of the thread to which this message
-      #   belongs.
-      # @param message_id [String] The ID of the message to modify.
-      # @param metadata [Metadata] Set of 16 key-value pairs that can be attached to
-      #   an object. This can be useful for storing additional information about the
-      #   object in a structured format, and querying for objects via API or the
-      #   dashboard. Keys are strings with a maximum length of 64 characters. Values
-      #   are strings with a maximum length of 512 characters.
-      def self.modify_message(
-        config:,
-        thread_id:,
-        message_id:,
-        metadata: NOT_GIVEN,
-        request_options: nil
-      )
-        SdkClient.request(
-          'POST',
-          [
-            '/threads/',
-            SdkClient.encode_path_segment(thread_id),
-            '/messages/',
-            SdkClient.encode_path_segment(message_id)
-          ].join,
-          config: config,
-          body: {
-            'metadata' => metadata
-          },
-          return_type: ::OctridevOpenai::MessageObject,
-          decoder: :json,
-          operation_id: 'modify_message',
-          request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse }
-        ).data
-      end
-
-      # Deletes a message from a thread. Provide both identifiers to select the thread and the message to remove; the response confirms the deletion.
-      #
-      # Deletes a message.
-      #
-      # @param thread_id [String] The ID of the thread to which this message
-      #   belongs.
-      # @param message_id [String] The ID of the message to delete.
-      def self.delete_message(
-        config:,
-        thread_id:,
-        message_id:,
-        request_options: nil
-      )
-        SdkClient.request(
-          'DELETE',
-          [
-            '/threads/',
-            SdkClient.encode_path_segment(thread_id),
-            '/messages/',
-            SdkClient.encode_path_segment(message_id)
-          ].join,
-          config: config,
-          return_type: ::OctridevOpenai::DeleteMessageResponse,
-          decoder: :json,
-          operation_id: 'delete_message',
           request_options: request_options,
           errors: { '429' => ::OctridevOpenai::ErrorResponse }
         ).data

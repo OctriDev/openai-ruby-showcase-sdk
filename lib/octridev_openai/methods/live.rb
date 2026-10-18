@@ -145,7 +145,7 @@ module OctridevOpenai
         request_options: nil
       )
         Validation.validate_length('target_uri', target_uri, min: 1)
-        Validation.validate_pattern('target_uri', target_uri, '\S')
+        Validation.validate_pattern('target_uri', target_uri, '\\S')
 
         SdkClient.request(
           'POST',
