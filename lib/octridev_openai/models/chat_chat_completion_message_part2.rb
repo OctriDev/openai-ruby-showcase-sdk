@@ -5,21 +5,22 @@
 
 # chat_chat_completion_message domain models (part 2)
 module OctridevOpenai
-# Defines the ChatCompletionMessageToolCallsItem SDK namespace.
-module ChatCompletionMessageToolCallsItem
-  DISCRIMINATOR_MAPPING = {
-    "function" => -> { ChatCompletionMessageToolCall },
-    "custom" => -> { ChatCompletionMessageCustomToolCall },
-  }.freeze
+  # Defines the ChatCompletionMessageToolCallsItem SDK namespace.
+  module ChatCompletionMessageToolCallsItem
+    DISCRIMINATOR_MAPPING = {
+      'function' => -> { ChatCompletionMessageToolCall },
+      'custom' => -> { ChatCompletionMessageCustomToolCall }
+    }.freeze
 
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
 
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
 
-    raise SdkValidationError.new('ChatCompletionMessageToolCallsItem', 'variant', "Unknown ChatCompletionMessageToolCallsItem discriminator: #{hash["type"].inspect}")
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('ChatCompletionMessageToolCallsItem', 'variant', "Unknown ChatCompletionMessageToolCallsItem discriminator: #{hash['type'].inspect}")
+    end
   end
-end
 end

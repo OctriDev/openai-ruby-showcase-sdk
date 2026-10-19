@@ -5,62 +5,62 @@
 
 # responses_beta_response_prompt domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalBetaResponsePromptCacheOptionsParamMetadata
-  FIELDS = {
-    ttl: "ttl",
-    mode: "mode",
-    prewarm: "prewarm",
-    comparison_response_id: "comparison_response_id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    ttl: lambda do |value|
-      ::OctridevOpenai::BetaPromptCacheTTLEnum.from_value(value)
-    end,
-    mode: lambda do |value|
-      ::OctridevOpenai::BetaPromptCacheModeEnum.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaResponsePromptCacheOptionsParam.
-# Options for prompt caching. Supported for `gpt-5.6` and later models. By default, OpenAI automatically chooses one implicit cache breakpoint. You can add explicit breakpoints to content blocks with `prompt_cache_breakpoint`. Each request can write up to four breakpoints. For cache matching, OpenAI considers up to the latest 80 breakpoints in the conversation, without a content-block lookback limit. Set `mode` to `explicit` to disable the implicit breakpoint. The `ttl`…
-class BetaResponsePromptCacheOptionsParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaResponsePromptCacheOptionsParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaResponsePromptCacheOptionsParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaResponsePromptCacheOptionsParamMetadata::DECODERS
-
-  # @return [BetaPromptCacheTTLEnum] The minimum lifetime applied to every implicit and explicit cache breakpoint written by the request. Defaults to `30m`, which is currently the only supported value. The backend may retain cache entries for longer.
-  attr_reader :ttl
-  # @return [BetaPromptCacheModeEnum] Controls whether OpenAI automatically creates an implicit cache breakpoint. Defaults to `implicit`. With `implicit`, OpenAI creates one implicit breakpoint and writes up to the latest three explicit breakpoints in the request. With `explicit`, OpenAI does not create an implicit breakpoint and writes up to the latest four explicit breakpoints. If there are no explicit breakpoints, the request does not use prompt caching.
-  attr_reader :mode
-  # @return [Boolean] Prepares the prompt cache without generating output. Defaults to `false`. When set to `true`, overrides the `generate` field to `false`.
-  attr_reader :prewarm
-  # @return [String] Optional `string` value serialized in the `comparison_response_id` wire field.
-  attr_reader :comparison_response_id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalBetaResponsePromptCacheOptionsParamMetadata
+    FIELDS = {
+      ttl: 'ttl',
+      mode: 'mode',
+      prewarm: 'prewarm',
+      comparison_response_id: 'comparison_response_id'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      ttl: lambda do |value|
+        ::OctridevOpenai::BetaPromptCacheTTLEnum.from_value(value)
+      end,
+      mode: lambda do |value|
+        ::OctridevOpenai::BetaPromptCacheModeEnum.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for BetaResponsePromptCacheOptionsParam.
+  # Options for prompt caching. Supported for `gpt-5.6` and later models. By default, OpenAI automatically chooses one implicit cache breakpoint. You can add explicit breakpoints to content blocks with `prompt_cache_breakpoint`. Each request can write up to four breakpoints. For cache matching, OpenAI considers up to the latest 80 breakpoints in the conversation, without a content-block lookback limit. Set `mode` to `explicit` to disable the implicit breakpoint. The `ttl`…
+  class BetaResponsePromptCacheOptionsParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaResponsePromptCacheOptionsParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaResponsePromptCacheOptionsParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaResponsePromptCacheOptionsParamMetadata::DECODERS
+
+    # @return [BetaPromptCacheTTLEnum] The minimum lifetime applied to every implicit and explicit cache breakpoint written by the request. Defaults to `30m`, which is currently the only supported value. The backend may retain cache entries for longer.
+    attr_reader :ttl
+    # @return [BetaPromptCacheModeEnum] Controls whether OpenAI automatically creates an implicit cache breakpoint. Defaults to `implicit`. With `implicit`, OpenAI creates one implicit breakpoint and writes up to the latest three explicit breakpoints in the request. With `explicit`, OpenAI does not create an implicit breakpoint and writes up to the latest four explicit breakpoints. If there are no explicit breakpoints, the request does not use prompt caching.
+    attr_reader :mode
+    # @return [Boolean] Prepares the prompt cache without generating output. Defaults to `false`. When set to `true`, overrides the `generate` field to `false`.
+    attr_reader :prewarm
+    # @return [String] Optional `string` value serialized in the `comparison_response_id` wire field.
+    attr_reader :comparison_response_id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the BetaResponsePromptVariables SDK value decoder.
+  module BetaResponsePromptVariables
+    def self.from_hash(value)
+      return nil if value.nil?
 
-# Defines the BetaResponsePromptVariables SDK value decoder.
-module BetaResponsePromptVariables
-  def self.from_hash(value)
-    return nil if value.nil?
-    value&.transform_values { |item| item }
+      value&.transform_values { |item| item }
+    end
   end
-end
 end

@@ -5,96 +5,98 @@
 
 # chat domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalPredictionContentMetadata
-  FIELDS = {
-    type: "type",
-    content: "content",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    content
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::PredictionContentType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for PredictionContent.
-# Static predicted output content, such as the content of a text file that is being regenerated.
-class PredictionContent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalPredictionContentMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalPredictionContentMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalPredictionContentMetadata::DECODERS
-
-  # @return [PredictionContentType] The type of the predicted content you want to provide. This type is currently always `content`.
-  attr_reader :type
-  # @return [Object] The content that should be matched when generating a model response. If generated tokens would match this content, the entire model response can be returned much more quickly.
-  attr_reader :content
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalPredictionContentMetadata
+    FIELDS = {
+      type: 'type',
+      content: 'content'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      content
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::PredictionContentType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for PredictionContent.
+  # Static predicted output content, such as the content of a text file that is being regenerated.
+  class PredictionContent
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalPredictionContentMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalPredictionContentMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalPredictionContentMetadata::DECODERS
+
+    # @return [PredictionContentType] The type of the predicted content you want to provide. This type is currently always `content`.
+    attr_reader :type
+    # @return [Object] The content that should be matched when generating a model response. If generated tokens would match this content, the entire model response can be returned much more quickly.
+    attr_reader :content
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the PredictionContentType SDK namespace.
+  module PredictionContentType
+    CONTENT = 'content'
+    VALUES = ['content'].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
 
-# Defines the PredictionContentType SDK namespace.
-module PredictionContentType
-  CONTENT = 'content'
-  VALUES = ['content'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+  # Defines the ResponseModalities SDK value decoder.
+  module ResponseModalities
+    def self.from_hash(value)
+      return nil if value.nil?
 
-# Defines the ResponseModalities SDK value decoder.
-module ResponseModalities
-  def self.from_hash(value)
-    return nil if value.nil?
-    value&.map { |item| item }
+      value&.map { |item| item }
+    end
   end
-end
 
-# Defines the ResponseModalitiesItem SDK namespace.
-module ResponseModalitiesItem
-  TEXT = 'text'
-  AUDIO = 'audio'
-  VALUES = ['text', 'audio'].freeze
-  def self.from_value(value)
-    value
+  # Defines the ResponseModalitiesItem SDK namespace.
+  module ResponseModalitiesItem
+    TEXT = 'text'
+    AUDIO = 'audio'
+    VALUES = %w[text audio].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
 
-# Defines the ServiceTier SDK namespace.
-module ServiceTier
-  def self.from_hash(hash)
-    return ServiceTierVariant0.from_value(hash) if hash.is_a?(::String)
-    hash
-  end
-end
+  # Defines the ServiceTier SDK namespace.
+  module ServiceTier
+    def self.from_hash(hash)
+      return ServiceTierVariant0.from_value(hash) if hash.is_a?(::String)
 
-# Defines the ServiceTierVariant0 SDK namespace.
-module ServiceTierVariant0
-  AUTO = 'auto'
-  DEFAULT = 'default'
-  FLEX = 'flex'
-  SCALE = 'scale'
-  PRIORITY = 'priority'
-  FAST = 'fast'
-  VALUES = ['auto', 'default', 'flex', 'scale', 'priority', 'fast'].freeze
-  def self.from_value(value)
-    value
+      hash
+    end
   end
-end
+
+  # Defines the ServiceTierVariant0 SDK namespace.
+  module ServiceTierVariant0
+    AUTO = 'auto'
+    DEFAULT = 'default'
+    FLEX = 'flex'
+    SCALE = 'scale'
+    PRIORITY = 'priority'
+    FAST = 'fast'
+    VALUES = %w[auto default flex scale priority fast].freeze
+    def self.from_value(value)
+      value
+    end
+  end
 end

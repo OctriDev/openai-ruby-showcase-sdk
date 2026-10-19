@@ -5,168 +5,167 @@
 
 # models domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalDeleteModelResponseMetadata
-  FIELDS = {
-    id: "id",
-    deleted: "deleted",
-    object: "object",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    deleted
-    object
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for DeleteModelResponse.
-# Typed representation of the `DeleteModelResponse` API schema.
-class DeleteModelResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalDeleteModelResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalDeleteModelResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalDeleteModelResponseMetadata::DECODERS
-
-  # @return [String] Required `string` value serialized in the `id` wire field.
-  attr_reader :id
-  # @return [Boolean] Required `boolean` value serialized in the `deleted` wire field.
-  attr_reader :deleted
-  # @return [String] Required `string` value serialized in the `object` wire field.
-  attr_reader :object
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalDeleteModelResponseMetadata
+    FIELDS = {
+      id: 'id',
+      deleted: 'deleted',
+      object: 'object'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      deleted
+      object
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for DeleteModelResponse.
+  # Typed representation of the `DeleteModelResponse` API schema.
+  class DeleteModelResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalDeleteModelResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalDeleteModelResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalDeleteModelResponseMetadata::DECODERS
+
+    # @return [String] Required `string` value serialized in the `id` wire field.
+    attr_reader :id
+    # @return [Boolean] Required `boolean` value serialized in the `deleted` wire field.
+    attr_reader :deleted
+    # @return [String] Required `string` value serialized in the `object` wire field.
+    attr_reader :object
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalListModelsResponseMetadata
-  FIELDS = {
-    object: "object",
-    data: "data",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    object
-    data
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::ListModelsResponseObject.from_value(value)
-    end,
-    data: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::Model.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for ListModelsResponse.
-# Typed representation of the `ListModelsResponse` API schema.
-class ListModelsResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalListModelsResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalListModelsResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalListModelsResponseMetadata::DECODERS
-
-  # @return [ListModelsResponseObject] Required enumerated value serialized in the `object` wire field.
-  attr_reader :object
-  # @return [Array_of_Model] Required array value serialized in the `data` wire field.
-  attr_reader :data
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalListModelsResponseMetadata
+    FIELDS = {
+      object: 'object',
+      data: 'data'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      object
+      data
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::ListModelsResponseObject.from_value(value)
+      end,
+      data: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::Model.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ListModelsResponse.
+  # Typed representation of the `ListModelsResponse` API schema.
+  class ListModelsResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalListModelsResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalListModelsResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalListModelsResponseMetadata::DECODERS
+
+    # @return [ListModelsResponseObject] Required enumerated value serialized in the `object` wire field.
+    attr_reader :object
+    # @return [Array_of_Model] Required array value serialized in the `data` wire field.
+    attr_reader :data
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the ListModelsResponseObject SDK namespace.
-module ListModelsResponseObject
-  LIST = 'list'
-  VALUES = ['list'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalModelMetadata
-  FIELDS = {
-    id: "id",
-    created: "created",
-    object: "object",
-    owned_by: "owned_by",
-    shutdown_date: "shutdown_date",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    created
-    object
-    owned_by
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::ModelObject.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for Model.
-# Describes an OpenAI model offering that can be used with the API.
-class Model
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalModelMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalModelMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalModelMetadata::DECODERS
-
-  # @return [String] The model identifier, which can be referenced in the API endpoints.
-  attr_reader :id
-  # @return [Integer] The Unix timestamp (in seconds) when the model was created.
-  attr_reader :created
-  # @return [ModelObject] The object type, which is always "model".
-  attr_reader :object
-  # @return [String] The organization that owns the model.
-  attr_reader :owned_by
-  # @return [String] The date when the model will shut down, or null if not announced.
-  attr_reader :shutdown_date
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the ListModelsResponseObject SDK namespace.
+  module ListModelsResponseObject
+    LIST = 'list'
+    VALUES = ['list'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalModelMetadata
+    FIELDS = {
+      id: 'id',
+      created: 'created',
+      object: 'object',
+      owned_by: 'owned_by',
+      shutdown_date: 'shutdown_date'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      created
+      object
+      owned_by
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::ModelObject.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for Model.
+  # Describes an OpenAI model offering that can be used with the API.
+  class Model
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalModelMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalModelMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalModelMetadata::DECODERS
 
-# Defines the ModelObject SDK namespace.
-module ModelObject
-  MODEL = 'model'
-  VALUES = ['model'].freeze
-  def self.from_value(value)
-    value
+    # @return [String] The model identifier, which can be referenced in the API endpoints.
+    attr_reader :id
+    # @return [Integer] The Unix timestamp (in seconds) when the model was created.
+    attr_reader :created
+    # @return [ModelObject] The object type, which is always "model".
+    attr_reader :object
+    # @return [String] The organization that owns the model.
+    attr_reader :owned_by
+    # @return [String] The date when the model will shut down, or null if not announced.
+    attr_reader :shutdown_date
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
+
+  # Defines the ModelObject SDK namespace.
+  module ModelObject
+    MODEL = 'model'
+    VALUES = ['model'].freeze
+    def self.from_value(value)
+      value
+    end
+  end
 end

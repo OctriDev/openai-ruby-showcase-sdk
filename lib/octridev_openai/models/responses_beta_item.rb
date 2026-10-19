@@ -5,41 +5,40 @@
 
 # responses_beta_item domain models
 module OctridevOpenai
-# Defines the BetaItem SDK namespace.
-module BetaItem
-  DISCRIMINATOR_MAPPING = {
-    "file_search_call" => -> { BetaFileSearchToolCall },
-    "computer_call" => -> { BetaComputerToolCall },
-    "computer_call_output" => -> { BetaComputerCallOutputItemParam },
-    "web_search_call" => -> { BetaWebSearchToolCall },
-    "function_call" => -> { BetaFunctionToolCall },
-    "function_call_output" => -> { BetaFunctionCallOutputItemParam },
-    "agent_message" => -> { BetaAgentMessageItemParam },
-    "multi_agent_call" => -> { BetaMultiAgentCallItemParam },
-    "multi_agent_call_output" => -> { BetaMultiAgentCallOutputItemParam },
-    "tool_search_call" => -> { BetaToolSearchCallItemParam },
-    "tool_search_output" => -> { BetaToolSearchOutputItemParam },
-    "additional_tools" => -> { BetaAdditionalToolsItemParam },
-    "configuration_update" => -> { BetaResponseConfigurationUpdateItemParam },
-    "reasoning" => -> { BetaReasoningItem },
-    "compaction" => -> { BetaCompactionSummaryItemParam },
-    "image_generation_call" => -> { BetaImageGenToolCall },
-    "code_interpreter_call" => -> { BetaCodeInterpreterToolCall },
-    "local_shell_call" => -> { BetaLocalShellToolCall },
-    "local_shell_call_output" => -> { BetaLocalShellToolCallOutput },
-    "shell_call" => -> { BetaFunctionShellCallItemParam },
-    "shell_call_output" => -> { BetaFunctionShellCallOutputItemParam },
-    "apply_patch_call" => -> { BetaApplyPatchToolCallItemParam },
-    "apply_patch_call_output" => -> { BetaApplyPatchToolCallOutputItemParam },
-    "mcp_list_tools" => -> { BetaMCPListTools },
-    "mcp_approval_request" => -> { BetaMCPApprovalRequest },
-    "mcp_approval_response" => -> { BetaMCPApprovalResponse },
-    "mcp_call" => -> { BetaMCPToolCall },
-    "custom_tool_call_output" => -> { BetaCustomToolCallOutput },
-    "custom_tool_call" => -> { BetaCustomToolCall },
-  }.freeze
-  UNDECIDED_VARIANTS = (
-    [
+  # Defines the BetaItem SDK namespace.
+  module BetaItem
+    DISCRIMINATOR_MAPPING = {
+      'file_search_call' => -> { BetaFileSearchToolCall },
+      'computer_call' => -> { BetaComputerToolCall },
+      'computer_call_output' => -> { BetaComputerCallOutputItemParam },
+      'web_search_call' => -> { BetaWebSearchToolCall },
+      'function_call' => -> { BetaFunctionToolCall },
+      'function_call_output' => -> { BetaFunctionCallOutputItemParam },
+      'agent_message' => -> { BetaAgentMessageItemParam },
+      'multi_agent_call' => -> { BetaMultiAgentCallItemParam },
+      'multi_agent_call_output' => -> { BetaMultiAgentCallOutputItemParam },
+      'tool_search_call' => -> { BetaToolSearchCallItemParam },
+      'tool_search_output' => -> { BetaToolSearchOutputItemParam },
+      'additional_tools' => -> { BetaAdditionalToolsItemParam },
+      'configuration_update' => -> { BetaResponseConfigurationUpdateItemParam },
+      'reasoning' => -> { BetaReasoningItem },
+      'compaction' => -> { BetaCompactionSummaryItemParam },
+      'image_generation_call' => -> { BetaImageGenToolCall },
+      'code_interpreter_call' => -> { BetaCodeInterpreterToolCall },
+      'local_shell_call' => -> { BetaLocalShellToolCall },
+      'local_shell_call_output' => -> { BetaLocalShellToolCallOutput },
+      'shell_call' => -> { BetaFunctionShellCallItemParam },
+      'shell_call_output' => -> { BetaFunctionShellCallOutputItemParam },
+      'apply_patch_call' => -> { BetaApplyPatchToolCallItemParam },
+      'apply_patch_call_output' => -> { BetaApplyPatchToolCallOutputItemParam },
+      'mcp_list_tools' => -> { BetaMCPListTools },
+      'mcp_approval_request' => -> { BetaMCPApprovalRequest },
+      'mcp_approval_response' => -> { BetaMCPApprovalResponse },
+      'mcp_call' => -> { BetaMCPToolCall },
+      'custom_tool_call_output' => -> { BetaCustomToolCallOutput },
+      'custom_tool_call' => -> { BetaCustomToolCall }
+    }.freeze
+    UNDECIDED_VARIANTS = [
       -> { BetaInputMessage },
       -> { BetaOutputMessage },
       -> { BetaComputerCallOutputItemParam },
@@ -61,176 +60,177 @@ module BetaItem
       -> { BetaMCPListTools },
       -> { BetaMCPApprovalRequest },
       -> { BetaMCPToolCall },
-      -> { BetaCustomToolCallOutput },
-    ]
-  ).freeze
+      -> { BetaCustomToolCallOutput }
+    ].freeze
 
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
 
-    # Several branches claim one type, which then names none of
-    # them. The role they pin does.
-    secondary_mapping = {
-      'user' => BetaInputMessage,
-      'system' => BetaInputMessage,
-      'developer' => BetaInputMessage,
-      'assistant' => BetaOutputMessage,
-    }
-    type = secondary_mapping[hash["role"]]
-    decoded = type&.from_hash(hash)
-    return decoded unless type.nil?
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
 
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+      # Several branches claim one type, which then names none of
+      # them. The role they pin does.
+      secondary_mapping = {
+        'user' => BetaInputMessage,
+        'system' => BetaInputMessage,
+        'developer' => BetaInputMessage,
+        'assistant' => BetaOutputMessage
+      }
+      type = secondary_mapping[hash['role']]
+      decoded = type&.from_hash(hash)
+      return decoded unless type.nil?
 
-    raise SdkValidationError.new('BetaItem', 'variant', "Unknown BetaItem discriminator: #{hash["type"].inspect}")
-  end
-end
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
 
-# Defines the BetaItemField SDK namespace.
-module BetaItemField
-  DISCRIMINATOR_MAPPING = {
-    "message" => -> { BetaMessage },
-    "program" => -> { BetaProgram },
-    "program_output" => -> { BetaProgramOutput },
-    "function_call" => -> { BetaFunctionToolCall },
-    "multi_agent_call" => -> { BetaMultiAgentCall },
-    "multi_agent_call_output" => -> { BetaMultiAgentCallOutput },
-    "tool_search_call" => -> { BetaToolSearchCall },
-    "tool_search_output" => -> { BetaToolSearchOutput },
-    "additional_tools" => -> { BetaAdditionalTools },
-    "agent_message" => -> { BetaAgentMessage },
-    "function_call_output" => -> { BetaFunctionToolCallOutput },
-    "file_search_call" => -> { BetaFileSearchToolCall },
-    "web_search_call" => -> { BetaWebSearchToolCall },
-    "image_generation_call" => -> { BetaImageGenToolCall },
-    "computer_call" => -> { BetaComputerToolCall },
-    "computer_call_output" => -> { BetaComputerToolCallOutputResource },
-    "reasoning" => -> { BetaReasoningItem },
-    "compaction" => -> { BetaCompactionBody },
-    "code_interpreter_call" => -> { BetaCodeInterpreterToolCall },
-    "local_shell_call" => -> { BetaLocalShellToolCall },
-    "local_shell_call_output" => -> { BetaLocalShellToolCallOutput },
-    "shell_call" => -> { BetaFunctionShellCall },
-    "shell_call_output" => -> { BetaFunctionShellCallOutput },
-    "apply_patch_call" => -> { BetaApplyPatchToolCall },
-    "apply_patch_call_output" => -> { BetaApplyPatchToolCallOutput },
-    "mcp_list_tools" => -> { BetaMCPListTools },
-    "mcp_approval_request" => -> { BetaMCPApprovalRequest },
-    "mcp_approval_response" => -> { BetaMCPApprovalResponseResource },
-    "mcp_call" => -> { BetaMCPToolCall },
-    "custom_tool_call" => -> { BetaCustomToolCall },
-    "custom_tool_call_output" => -> { BetaCustomToolCallOutput },
-  }.freeze
-
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('BetaItemField', 'variant', "Unknown BetaItemField discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Defines the BetaItemReferenceParamTypeVariant0 SDK namespace.
-module BetaItemReferenceParamTypeVariant0
-  ITEM_REFERENCE = 'item_reference'
-  VALUES = ['item_reference'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaItemReferenceParamMetadata
-  FIELDS = {
-    agent: "agent",
-    type: "type",
-    id: "id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-  ].freeze
-  DECODERS = {
-    agent: lambda do |value|
-      ::OctridevOpenai::BetaAgentTagParam.from_hash(value)
-    end,
-    type: lambda do |value|
-      ::OctridevOpenai::BetaItemReferenceParamTypeVariant0.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaItemReferenceParam.
-# An internal identifier for an item to reference.
-class BetaItemReferenceParam
-  include BetaInputItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaItemReferenceParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaItemReferenceParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaItemReferenceParamMetadata::DECODERS
-
-  # @return [BetaAgentTagParam] Optional API value serialized in the `agent` wire field.
-  attr_reader :agent
-  # @return [BetaItemReferenceParamTypeVariant0] Optional API value serialized in the `type` wire field.
-  attr_reader :type
-  # @return [String] The ID of the item to reference.
-  attr_reader :id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('BetaItem', 'variant', "Unknown BetaItem discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the BetaItemField SDK namespace.
+  module BetaItemField
+    DISCRIMINATOR_MAPPING = {
+      'message' => -> { BetaMessage },
+      'program' => -> { BetaProgram },
+      'program_output' => -> { BetaProgramOutput },
+      'function_call' => -> { BetaFunctionToolCall },
+      'multi_agent_call' => -> { BetaMultiAgentCall },
+      'multi_agent_call_output' => -> { BetaMultiAgentCallOutput },
+      'tool_search_call' => -> { BetaToolSearchCall },
+      'tool_search_output' => -> { BetaToolSearchOutput },
+      'additional_tools' => -> { BetaAdditionalTools },
+      'agent_message' => -> { BetaAgentMessage },
+      'function_call_output' => -> { BetaFunctionToolCallOutput },
+      'file_search_call' => -> { BetaFileSearchToolCall },
+      'web_search_call' => -> { BetaWebSearchToolCall },
+      'image_generation_call' => -> { BetaImageGenToolCall },
+      'computer_call' => -> { BetaComputerToolCall },
+      'computer_call_output' => -> { BetaComputerToolCallOutputResource },
+      'reasoning' => -> { BetaReasoningItem },
+      'compaction' => -> { BetaCompactionBody },
+      'code_interpreter_call' => -> { BetaCodeInterpreterToolCall },
+      'local_shell_call' => -> { BetaLocalShellToolCall },
+      'local_shell_call_output' => -> { BetaLocalShellToolCallOutput },
+      'shell_call' => -> { BetaFunctionShellCall },
+      'shell_call_output' => -> { BetaFunctionShellCallOutput },
+      'apply_patch_call' => -> { BetaApplyPatchToolCall },
+      'apply_patch_call_output' => -> { BetaApplyPatchToolCallOutput },
+      'mcp_list_tools' => -> { BetaMCPListTools },
+      'mcp_approval_request' => -> { BetaMCPApprovalRequest },
+      'mcp_approval_response' => -> { BetaMCPApprovalResponseResource },
+      'mcp_call' => -> { BetaMCPToolCall },
+      'custom_tool_call' => -> { BetaCustomToolCall },
+      'custom_tool_call_output' => -> { BetaCustomToolCallOutput }
+    }.freeze
+
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('BetaItemField', 'variant', "Unknown BetaItemField discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the BetaItemReferenceParamTypeVariant0 SDK namespace.
+  module BetaItemReferenceParamTypeVariant0
+    ITEM_REFERENCE = 'item_reference'
+    VALUES = ['item_reference'].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
 
-# Defines the BetaItemResource SDK namespace.
-module BetaItemResource
-  DISCRIMINATOR_MAPPING = {
-    "file_search_call" => -> { BetaFileSearchToolCall },
-    "computer_call" => -> { BetaComputerToolCall },
-    "computer_call_output" => -> { BetaComputerToolCallOutputResource },
-    "web_search_call" => -> { BetaWebSearchToolCall },
-    "function_call" => -> { BetaFunctionToolCallResource },
-    "function_call_output" => -> { BetaFunctionToolCallOutputResource },
-    "agent_message" => -> { BetaAgentMessage },
-    "multi_agent_call" => -> { BetaMultiAgentCall },
-    "multi_agent_call_output" => -> { BetaMultiAgentCallOutput },
-    "tool_search_call" => -> { BetaToolSearchCall },
-    "tool_search_output" => -> { BetaToolSearchOutput },
-    "additional_tools" => -> { BetaAdditionalTools },
-    "configuration_update" => -> { BetaResponseConfigurationUpdate },
-    "reasoning" => -> { BetaReasoningItem },
-    "program" => -> { BetaProgram },
-    "program_output" => -> { BetaProgramOutput },
-    "compaction" => -> { BetaCompactionBody },
-    "image_generation_call" => -> { BetaImageGenToolCall },
-    "code_interpreter_call" => -> { BetaCodeInterpreterToolCall },
-    "local_shell_call" => -> { BetaLocalShellToolCall },
-    "local_shell_call_output" => -> { BetaLocalShellToolCallOutput },
-    "shell_call" => -> { BetaFunctionShellCall },
-    "shell_call_output" => -> { BetaFunctionShellCallOutput },
-    "apply_patch_call" => -> { BetaApplyPatchToolCall },
-    "apply_patch_call_output" => -> { BetaApplyPatchToolCallOutput },
-    "mcp_list_tools" => -> { BetaMCPListTools },
-    "mcp_approval_request" => -> { BetaMCPApprovalRequest },
-    "mcp_approval_response" => -> { BetaMCPApprovalResponseResource },
-    "mcp_call" => -> { BetaMCPToolCall },
-    "custom_tool_call" => -> { BetaCustomToolCallResource },
-    "custom_tool_call_output" => -> { BetaCustomToolCallOutputResource },
-  }.freeze
-  UNDECIDED_VARIANTS = (
-    [
+  # Internal model hydration metadata.
+  class SdkInternalBetaItemReferenceParamMetadata
+    FIELDS = {
+      agent: 'agent',
+      type: 'type',
+      id: 'id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+    ].freeze
+    DECODERS = {
+      agent: lambda do |value|
+        ::OctridevOpenai::BetaAgentTagParam.from_hash(value)
+      end,
+      type: lambda do |value|
+        ::OctridevOpenai::BetaItemReferenceParamTypeVariant0.from_value(value)
+      end
+    }.freeze
+  end
+
+  # API model for BetaItemReferenceParam.
+  # An internal identifier for an item to reference.
+  class BetaItemReferenceParam
+    include BetaInputItem
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaItemReferenceParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaItemReferenceParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaItemReferenceParamMetadata::DECODERS
+
+    # @return [BetaAgentTagParam] Optional API value serialized in the `agent` wire field.
+    attr_reader :agent
+    # @return [BetaItemReferenceParamTypeVariant0] Optional API value serialized in the `type` wire field.
+    attr_reader :type
+    # @return [String] The ID of the item to reference.
+    attr_reader :id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the BetaItemResource SDK namespace.
+  module BetaItemResource
+    DISCRIMINATOR_MAPPING = {
+      'file_search_call' => -> { BetaFileSearchToolCall },
+      'computer_call' => -> { BetaComputerToolCall },
+      'computer_call_output' => -> { BetaComputerToolCallOutputResource },
+      'web_search_call' => -> { BetaWebSearchToolCall },
+      'function_call' => -> { BetaFunctionToolCallResource },
+      'function_call_output' => -> { BetaFunctionToolCallOutputResource },
+      'agent_message' => -> { BetaAgentMessage },
+      'multi_agent_call' => -> { BetaMultiAgentCall },
+      'multi_agent_call_output' => -> { BetaMultiAgentCallOutput },
+      'tool_search_call' => -> { BetaToolSearchCall },
+      'tool_search_output' => -> { BetaToolSearchOutput },
+      'additional_tools' => -> { BetaAdditionalTools },
+      'configuration_update' => -> { BetaResponseConfigurationUpdate },
+      'reasoning' => -> { BetaReasoningItem },
+      'program' => -> { BetaProgram },
+      'program_output' => -> { BetaProgramOutput },
+      'compaction' => -> { BetaCompactionBody },
+      'image_generation_call' => -> { BetaImageGenToolCall },
+      'code_interpreter_call' => -> { BetaCodeInterpreterToolCall },
+      'local_shell_call' => -> { BetaLocalShellToolCall },
+      'local_shell_call_output' => -> { BetaLocalShellToolCallOutput },
+      'shell_call' => -> { BetaFunctionShellCall },
+      'shell_call_output' => -> { BetaFunctionShellCallOutput },
+      'apply_patch_call' => -> { BetaApplyPatchToolCall },
+      'apply_patch_call_output' => -> { BetaApplyPatchToolCallOutput },
+      'mcp_list_tools' => -> { BetaMCPListTools },
+      'mcp_approval_request' => -> { BetaMCPApprovalRequest },
+      'mcp_approval_response' => -> { BetaMCPApprovalResponseResource },
+      'mcp_call' => -> { BetaMCPToolCall },
+      'custom_tool_call' => -> { BetaCustomToolCallResource },
+      'custom_tool_call_output' => -> { BetaCustomToolCallOutputResource }
+    }.freeze
+    UNDECIDED_VARIANTS = [
       -> { BetaInputMessageResource },
       -> { BetaOutputMessage },
       -> { BetaComputerToolCallOutputResource },
@@ -252,30 +252,30 @@ module BetaItemResource
       -> { BetaMCPListTools },
       -> { BetaMCPApprovalRequest },
       -> { BetaMCPToolCall },
-      -> { BetaCustomToolCallOutputResource },
-    ]
-  ).freeze
+      -> { BetaCustomToolCallOutputResource }
+    ].freeze
 
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
 
-    # Several branches claim one type, which then names none of
-    # them. The role they pin does.
-    secondary_mapping = {
-      'user' => BetaInputMessageResource,
-      'system' => BetaInputMessageResource,
-      'developer' => BetaInputMessageResource,
-      'assistant' => BetaOutputMessage,
-    }
-    type = secondary_mapping[hash["role"]]
-    decoded = type&.from_hash(hash)
-    return decoded unless type.nil?
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
 
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+      # Several branches claim one type, which then names none of
+      # them. The role they pin does.
+      secondary_mapping = {
+        'user' => BetaInputMessageResource,
+        'system' => BetaInputMessageResource,
+        'developer' => BetaInputMessageResource,
+        'assistant' => BetaOutputMessage
+      }
+      type = secondary_mapping[hash['role']]
+      decoded = type&.from_hash(hash)
+      return decoded unless type.nil?
 
-    raise SdkValidationError.new('BetaItemResource', 'variant', "Unknown BetaItemResource discriminator: #{hash["type"].inspect}")
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('BetaItemResource', 'variant', "Unknown BetaItemResource discriminator: #{hash['type'].inspect}")
+    end
   end
-end
 end

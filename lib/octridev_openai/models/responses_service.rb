@@ -5,39 +5,40 @@
 
 # responses_service domain models
 module OctridevOpenai
-# Defines the ServiceTierEnum SDK namespace.
-module ServiceTierEnum
-  AUTO = 'auto'
-  DEFAULT = 'default'
-  FAST = 'fast'
-  FLEX = 'flex'
-  PRIORITY = 'priority'
-  VALUES = ['auto', 'default', 'fast', 'flex', 'priority'].freeze
-  def self.from_value(value)
-    value
+  # Defines the ServiceTierEnum SDK namespace.
+  module ServiceTierEnum
+    AUTO = 'auto'
+    DEFAULT = 'default'
+    FAST = 'fast'
+    FLEX = 'flex'
+    PRIORITY = 'priority'
+    VALUES = %w[auto default fast flex priority].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
 
-# Defines the ServiceTierResponses SDK namespace.
-module ServiceTierResponses
-  def self.from_hash(hash)
-    return ServiceTierResponsesVariant0.from_value(hash) if hash.is_a?(::String)
-    hash
-  end
-end
+  # Defines the ServiceTierResponses SDK namespace.
+  module ServiceTierResponses
+    def self.from_hash(hash)
+      return ServiceTierResponsesVariant0.from_value(hash) if hash.is_a?(::String)
 
-# Defines the ServiceTierResponsesVariant0 SDK namespace.
-module ServiceTierResponsesVariant0
-  AUTO = 'auto'
-  DEFAULT = 'default'
-  FLEX = 'flex'
-  SCALE = 'scale'
-  PRIORITY = 'priority'
-  FAST = 'fast'
-  ULTRAFAST = 'ultrafast'
-  VALUES = ['auto', 'default', 'flex', 'scale', 'priority', 'fast', 'ultrafast'].freeze
-  def self.from_value(value)
-    value
+      hash
+    end
   end
-end
+
+  # Defines the ServiceTierResponsesVariant0 SDK namespace.
+  module ServiceTierResponsesVariant0
+    AUTO = 'auto'
+    DEFAULT = 'default'
+    FLEX = 'flex'
+    SCALE = 'scale'
+    PRIORITY = 'priority'
+    FAST = 'fast'
+    ULTRAFAST = 'ultrafast'
+    VALUES = %w[auto default flex scale priority fast ultrafast].freeze
+    def self.from_value(value)
+      value
+    end
+  end
 end

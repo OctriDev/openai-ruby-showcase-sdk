@@ -5,409 +5,411 @@
 
 # responses_beta_mcptool domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalBetaMCPToolMetadata
-  FIELDS = {
-    type: "type",
-    server_label: "server_label",
-    server_url: "server_url",
-    connector_id: "connector_id",
-    tunnel_id: "tunnel_id",
-    authorization: "authorization",
-    server_description: "server_description",
-    headers: "headers",
-    allowed_tools: "allowed_tools",
-    allowed_callers: "allowed_callers",
-    require_approval: "require_approval",
-    defer_loading: "defer_loading",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    server_label
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaMCPToolType.from_value(value)
-    end,
-    connector_id: lambda do |value|
-      ::OctridevOpenai::BetaMCPToolConnectorId.from_value(value)
-    end,
-    allowed_tools: lambda do |value|
-      SdkModel.union_branch(value, [::OctridevOpenai::BetaMCPToolFilter])
-    end,
-    allowed_callers: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::BetaCallableToolAllowedCaller.from_value(item) }
-    end,
-    require_approval: lambda do |value|
-      ::OctridevOpenai::BetaMCPToolRequireApproval.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaMCPTool.
-# Give the model access to additional tools via remote Model Context Protocol (MCP) servers. Learn more about MCP.
-class BetaMCPTool
-  include BetaTool
-  include BetaToolSearchOutputTool
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaMCPToolMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaMCPToolMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaMCPToolMetadata::DECODERS
-
-  # @return [BetaMCPToolType] The type of the MCP tool. Always `mcp`.
-  attr_reader :type
-  # @return [String] A label for this MCP server, used to identify it in tool calls.
-  attr_reader :server_label
-  # @return [String] The URL for the MCP server. One of `server_url`, `connector_id`, or `tunnel_id` must be provided.
-  attr_reader :server_url
-  # @return [BetaMCPToolConnectorId] Identifier for service connectors, like those available in ChatGPT. One of `server_url`, `connector_id`, or `tunnel_id` must be provided. Learn more about service connectors here. This field is deprecated for models released after September 1, 2026. Use `server_url` to connect to a remote MCP server, or `tunnel_id` to connect through a Secure MCP Tunnel. Currently supported `connector_id` values are: - Dropbox: `connector_dropbox` - Gmail: `connector_gmail` - Google…
-  attr_reader :connector_id
-  # @return [String] The Secure MCP Tunnel ID to use instead of a direct server URL. One of `server_url`, `connector_id`, or `tunnel_id` must be provided.
-  attr_reader :tunnel_id
-  # @return [String] An OAuth access token that can be used with a remote MCP server, either with a custom MCP server URL or a service connector. Your application must handle the OAuth authorization flow and provide the token here.
-  attr_reader :authorization
-  # @return [String] Optional description of the MCP server, used to provide more context.
-  attr_reader :server_description
-  # @return [Hash] Optional HTTP headers to send to the MCP server. Use for authentication or other purposes.
-  attr_reader :headers
-  # @return [Object] List of allowed tool names or a filter object.
-  attr_reader :allowed_tools
-  # @return [Array_of_BetaCallableToolAllowedCaller] The tool invocation context(s).
-  attr_reader :allowed_callers
-  # @return [BetaMCPToolRequireApproval] Specify which of the MCP server's tools require approval.
-  attr_reader :require_approval
-  # @return [Boolean] Whether this MCP tool is deferred and discovered via tool search.
-  attr_reader :defer_loading
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalBetaMCPToolMetadata
+    FIELDS = {
+      type: 'type',
+      server_label: 'server_label',
+      server_url: 'server_url',
+      connector_id: 'connector_id',
+      tunnel_id: 'tunnel_id',
+      authorization: 'authorization',
+      server_description: 'server_description',
+      headers: 'headers',
+      allowed_tools: 'allowed_tools',
+      allowed_callers: 'allowed_callers',
+      require_approval: 'require_approval',
+      defer_loading: 'defer_loading'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      server_label
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaMCPToolType.from_value(value)
+      end,
+      connector_id: lambda do |value|
+        ::OctridevOpenai::BetaMCPToolConnectorId.from_value(value)
+      end,
+      allowed_tools: lambda do |value|
+        SdkModel.union_branch(value, [::OctridevOpenai::BetaMCPToolFilter])
+      end,
+      allowed_callers: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::BetaCallableToolAllowedCaller.from_value(item) }
+      end,
+      require_approval: lambda do |value|
+        ::OctridevOpenai::BetaMCPToolRequireApproval.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for BetaMCPTool.
+  # Give the model access to additional tools via remote Model Context Protocol (MCP) servers. Learn more about MCP.
+  class BetaMCPTool
+    include BetaTool
+    include BetaToolSearchOutputTool
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaMCPToolMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaMCPToolMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaMCPToolMetadata::DECODERS
+
+    # @return [BetaMCPToolType] The type of the MCP tool. Always `mcp`.
+    attr_reader :type
+    # @return [String] A label for this MCP server, used to identify it in tool calls.
+    attr_reader :server_label
+    # @return [String] The URL for the MCP server. One of `server_url`, `connector_id`, or `tunnel_id` must be provided.
+    attr_reader :server_url
+    # @return [BetaMCPToolConnectorId] Identifier for service connectors, like those available in ChatGPT. One of `server_url`, `connector_id`, or `tunnel_id` must be provided. Learn more about service connectors here. This field is deprecated for models released after September 1, 2026. Use `server_url` to connect to a remote MCP server, or `tunnel_id` to connect through a Secure MCP Tunnel. Currently supported `connector_id` values are: - Dropbox: `connector_dropbox` - Gmail: `connector_gmail` - Google…
+    attr_reader :connector_id
+    # @return [String] The Secure MCP Tunnel ID to use instead of a direct server URL. One of `server_url`, `connector_id`, or `tunnel_id` must be provided.
+    attr_reader :tunnel_id
+    # @return [String] An OAuth access token that can be used with a remote MCP server, either with a custom MCP server URL or a service connector. Your application must handle the OAuth authorization flow and provide the token here.
+    attr_reader :authorization
+    # @return [String] Optional description of the MCP server, used to provide more context.
+    attr_reader :server_description
+    # @return [Hash] Optional HTTP headers to send to the MCP server. Use for authentication or other purposes.
+    attr_reader :headers
+    # @return [Object] List of allowed tool names or a filter object.
+    attr_reader :allowed_tools
+    # @return [Array_of_BetaCallableToolAllowedCaller] The tool invocation context(s).
+    attr_reader :allowed_callers
+    # @return [BetaMCPToolRequireApproval] Specify which of the MCP server's tools require approval.
+    attr_reader :require_approval
+    # @return [Boolean] Whether this MCP tool is deferred and discovered via tool search.
+    attr_reader :defer_loading
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the BetaMCPToolConnectorId SDK namespace.
-module BetaMCPToolConnectorId
-  CONNECTOR_DROPBOX = 'connector_dropbox'
-  CONNECTOR_GMAIL = 'connector_gmail'
-  CONNECTOR_GOOGLECALENDAR = 'connector_googlecalendar'
-  CONNECTOR_GOOGLEDRIVE = 'connector_googledrive'
-  CONNECTOR_MICROSOFTTEAMS = 'connector_microsoftteams'
-  CONNECTOR_OUTLOOKCALENDAR = 'connector_outlookcalendar'
-  CONNECTOR_OUTLOOKEMAIL = 'connector_outlookemail'
-  CONNECTOR_SHAREPOINT = 'connector_sharepoint'
-  VALUES = [
-    'connector_dropbox', 'connector_gmail', 'connector_googlecalendar', 'connector_googledrive',
-    'connector_microsoftteams', 'connector_outlookcalendar', 'connector_outlookemail',
-    'connector_sharepoint'
-  ].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the BetaMCPToolType SDK namespace.
-module BetaMCPToolType
-  MCP = 'mcp'
-  VALUES = ['mcp'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('BetaMCPToolType', 'enum', "Unknown BetaMCPToolType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaMCPToolCallMetadata
-  FIELDS = {
-    agent: "agent",
-    type: "type",
-    id: "id",
-    server_label: "server_label",
-    name: "name",
-    arguments: "arguments",
-    output: "output",
-    error: "error",
-    status: "status",
-    approval_request_id: "approval_request_id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    id
-    server_label
-    name
-    arguments
-  ].freeze
-  DECODERS = {
-    agent: lambda do |value|
-      ::OctridevOpenai::BetaAgentTag.from_hash(value)
-    end,
-    type: lambda do |value|
-      ::OctridevOpenai::BetaMCPToolCallType.from_value(value)
-    end,
-    error: lambda do |value|
-      ::OctridevOpenai::BetaMCPToolCallError.from_hash(value)
-    end,
-    status: lambda do |value|
-      ::OctridevOpenai::BetaMCPToolCallStatus.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaMCPToolCall.
-# An invocation of a tool on an MCP server.
-class BetaMCPToolCall
-  include BetaItem
-  include BetaItemResource
-  include BetaItemField
-  include BetaOutputItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaMCPToolCallMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaMCPToolCallMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaMCPToolCallMetadata::DECODERS
-
-  # @return [BetaAgentTag] The agent that produced this item.
-  attr_reader :agent
-  # @return [BetaMCPToolCallType] The type of the item. Always `mcp_call`.
-  attr_reader :type
-  # @return [String] The unique ID of the tool call.
-  attr_reader :id
-  # @return [String] The label of the MCP server running the tool.
-  attr_reader :server_label
-  # @return [String] The name of the tool that was run.
-  attr_reader :name
-  # @return [String] A JSON string of the arguments passed to the tool.
-  attr_reader :arguments
-  # @return [String] Optional `string` value serialized in the `output` wire field.
-  attr_reader :output
-  # @return [BetaMCPToolCallError] The error from the tool call, if any.
-  attr_reader :error
-  # @return [BetaMCPToolCallStatus] The status of the tool call. One of `in_progress`, `completed`, `incomplete`, `calling`, or `failed`.
-  attr_reader :status
-  # @return [String] Optional `string` value serialized in the `approval_request_id` wire field.
-  attr_reader :approval_request_id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the BetaMCPToolConnectorId SDK namespace.
+  module BetaMCPToolConnectorId
+    CONNECTOR_DROPBOX = 'connector_dropbox'
+    CONNECTOR_GMAIL = 'connector_gmail'
+    CONNECTOR_GOOGLECALENDAR = 'connector_googlecalendar'
+    CONNECTOR_GOOGLEDRIVE = 'connector_googledrive'
+    CONNECTOR_MICROSOFTTEAMS = 'connector_microsoftteams'
+    CONNECTOR_OUTLOOKCALENDAR = 'connector_outlookcalendar'
+    CONNECTOR_OUTLOOKEMAIL = 'connector_outlookemail'
+    CONNECTOR_SHAREPOINT = 'connector_sharepoint'
+    VALUES = %w[
+      connector_dropbox connector_gmail connector_googlecalendar connector_googledrive
+      connector_microsoftteams connector_outlookcalendar connector_outlookemail
+      connector_sharepoint
+    ].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the BetaMCPToolType SDK namespace.
+  module BetaMCPToolType
+    MCP = 'mcp'
+    VALUES = ['mcp'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaMCPToolType', 'enum', "Unknown BetaMCPToolType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the BetaMCPToolCallType SDK namespace.
-module BetaMCPToolCallType
-  MCP_CALL = 'mcp_call'
-  VALUES = ['mcp_call'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('BetaMCPToolCallType', 'enum', "Unknown BetaMCPToolCallType: #{value}")
-  end
-end
-
-# Defines the BetaMCPToolCallError SDK namespace.
-module BetaMCPToolCallError
-  DISCRIMINATOR_MAPPING = {
-    "mcp_protocol_error" => -> { BetaMCPProtocolError },
-    "mcp_tool_execution_error" => -> { BetaMCPToolExecutionError },
-    "http_error" => -> { BetaHTTPError },
-  }.freeze
-
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('BetaMCPToolCallError', 'variant', "Unknown BetaMCPToolCallError discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Defines the BetaMCPToolCallStatus SDK namespace.
-module BetaMCPToolCallStatus
-  IN_PROGRESS = 'in_progress'
-  COMPLETED = 'completed'
-  INCOMPLETE = 'incomplete'
-  CALLING = 'calling'
-  FAILED = 'failed'
-  VALUES = ['in_progress', 'completed', 'incomplete', 'calling', 'failed'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaMCPToolExecutionErrorMetadata
-  FIELDS = {
-    type: "type",
-    content: "content",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    content
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaMCPToolExecutionErrorType.from_value(value)
-    end,
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    content
-  ].freeze
-end
-
-# API model for BetaMCPToolExecutionError.
-# Typed representation of the `BetaMCPToolExecutionError` API schema.
-class BetaMCPToolExecutionError
-  include BetaMCPToolCallError
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaMCPToolExecutionErrorMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaMCPToolExecutionErrorMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaMCPToolExecutionErrorMetadata::DECODERS
-
-  # @return [BetaMCPToolExecutionErrorType] Required enumerated value serialized in the `type` wire field.
-  attr_reader :type
-  # @return [Object] Required API value serialized in the `content` wire field.
-  attr_reader :content
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalBetaMCPToolCallMetadata
+    FIELDS = {
+      agent: 'agent',
+      type: 'type',
+      id: 'id',
+      server_label: 'server_label',
+      name: 'name',
+      arguments: 'arguments',
+      output: 'output',
+      error: 'error',
+      status: 'status',
+      approval_request_id: 'approval_request_id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      id
+      server_label
+      name
+      arguments
+    ].freeze
+    DECODERS = {
+      agent: lambda do |value|
+        ::OctridevOpenai::BetaAgentTag.from_hash(value)
+      end,
+      type: lambda do |value|
+        ::OctridevOpenai::BetaMCPToolCallType.from_value(value)
+      end,
+      error: lambda do |value|
+        ::OctridevOpenai::BetaMCPToolCallError.from_hash(value)
+      end,
+      status: lambda do |value|
+        ::OctridevOpenai::BetaMCPToolCallStatus.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalBetaMCPToolExecutionErrorMetadata::NULLABLE_FIELDS)
+  # API model for BetaMCPToolCall.
+  # An invocation of a tool on an MCP server.
+  class BetaMCPToolCall
+    include BetaItem
+    include BetaItemResource
+    include BetaItemField
+    include BetaOutputItem
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaMCPToolCallMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaMCPToolCallMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaMCPToolCallMetadata::DECODERS
+
+    # @return [BetaAgentTag] The agent that produced this item.
+    attr_reader :agent
+    # @return [BetaMCPToolCallType] The type of the item. Always `mcp_call`.
+    attr_reader :type
+    # @return [String] The unique ID of the tool call.
+    attr_reader :id
+    # @return [String] The label of the MCP server running the tool.
+    attr_reader :server_label
+    # @return [String] The name of the tool that was run.
+    attr_reader :name
+    # @return [String] A JSON string of the arguments passed to the tool.
+    attr_reader :arguments
+    # @return [String] Optional `string` value serialized in the `output` wire field.
+    attr_reader :output
+    # @return [BetaMCPToolCallError] The error from the tool call, if any.
+    attr_reader :error
+    # @return [BetaMCPToolCallStatus] The status of the tool call. One of `in_progress`, `completed`, `incomplete`, `calling`, or `failed`.
+    attr_reader :status
+    # @return [String] Optional `string` value serialized in the `approval_request_id` wire field.
+    attr_reader :approval_request_id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the BetaMCPToolCallType SDK namespace.
+  module BetaMCPToolCallType
+    MCP_CALL = 'mcp_call'
+    VALUES = ['mcp_call'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the BetaMCPToolExecutionErrorType SDK namespace.
-module BetaMCPToolExecutionErrorType
-  MCP_TOOL_EXECUTION_ERROR = 'mcp_tool_execution_error'
-  VALUES = ['mcp_tool_execution_error'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('BetaMCPToolExecutionErrorType', 'enum', "Unknown BetaMCPToolExecutionErrorType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaMCPToolFilterMetadata
-  FIELDS = {
-    tool_names: "tool_names",
-    read_only: "read_only",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for BetaMCPToolFilter.
-# A filter object to specify which tools are allowed.
-class BetaMCPToolFilter
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaMCPToolFilterMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaMCPToolFilterMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaMCPToolFilterMetadata::DECODERS
-
-  # @return [Array_of_String] List of allowed tool names.
-  attr_reader :tool_names
-  # @return [Boolean] Indicates whether or not a tool modifies data or is read-only. If an MCP server is annotated with `readOnlyHint`, it will match this filter.
-  attr_reader :read_only
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('BetaMCPToolCallType', 'enum', "Unknown BetaMCPToolCallType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the BetaMCPToolCallError SDK namespace.
+  module BetaMCPToolCallError
+    DISCRIMINATOR_MAPPING = {
+      'mcp_protocol_error' => -> { BetaMCPProtocolError },
+      'mcp_tool_execution_error' => -> { BetaMCPToolExecutionError },
+      'http_error' => -> { BetaHTTPError }
+    }.freeze
+
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('BetaMCPToolCallError', 'variant', "Unknown BetaMCPToolCallError discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaMCPToolRequireApprovalVariant0Metadata
-  FIELDS = {
-    always: "always",
-    never: "never",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    always: lambda do |value|
-      ::OctridevOpenai::BetaMCPToolFilter.from_hash(value)
-    end,
-    never: lambda do |value|
-      ::OctridevOpenai::BetaMCPToolFilter.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaMCPToolRequireApprovalVariant0.
-class BetaMCPToolRequireApprovalVariant0
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaMCPToolRequireApprovalVariant0Metadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaMCPToolRequireApprovalVariant0Metadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaMCPToolRequireApprovalVariant0Metadata::DECODERS
-
-  # @return [BetaMCPToolFilter] A filter object to specify which tools are allowed.
-  attr_reader :always
-  # @return [BetaMCPToolFilter] A filter object to specify which tools are allowed.
-  attr_reader :never
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the BetaMCPToolCallStatus SDK namespace.
+  module BetaMCPToolCallStatus
+    IN_PROGRESS = 'in_progress'
+    COMPLETED = 'completed'
+    INCOMPLETE = 'incomplete'
+    CALLING = 'calling'
+    FAILED = 'failed'
+    VALUES = %w[in_progress completed incomplete calling failed].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalBetaMCPToolExecutionErrorMetadata
+    FIELDS = {
+      type: 'type',
+      content: 'content'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      content
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaMCPToolExecutionErrorType.from_value(value)
+      end
+    }.freeze
+    NULLABLE_FIELDS = %i[
+      content
+    ].freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for BetaMCPToolExecutionError.
+  # Typed representation of the `BetaMCPToolExecutionError` API schema.
+  class BetaMCPToolExecutionError
+    include BetaMCPToolCallError
 
-# Defines the BetaMCPToolRequireApproval SDK namespace.
-module BetaMCPToolRequireApproval
-  def self.from_hash(hash)
-    return BetaMCPToolRequireApprovalVariant1.from_value(hash) if hash.is_a?(::String)
-    return BetaMCPToolRequireApprovalVariant0.from_hash(hash)
-  end
-end
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaMCPToolExecutionErrorMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaMCPToolExecutionErrorMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaMCPToolExecutionErrorMetadata::DECODERS
 
-# Defines the BetaMCPToolRequireApprovalVariant1 SDK namespace.
-module BetaMCPToolRequireApprovalVariant1
-  ALWAYS = 'always'
-  NEVER = 'never'
-  VALUES = ['always', 'never'].freeze
-  def self.from_value(value)
-    value
+    # @return [BetaMCPToolExecutionErrorType] Required enumerated value serialized in the `type` wire field.
+    attr_reader :type
+    # @return [Object] Required API value serialized in the `content` wire field.
+    attr_reader :content
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalBetaMCPToolExecutionErrorMetadata::NULLABLE_FIELDS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
+
+  # Defines the BetaMCPToolExecutionErrorType SDK namespace.
+  module BetaMCPToolExecutionErrorType
+    MCP_TOOL_EXECUTION_ERROR = 'mcp_tool_execution_error'
+    VALUES = ['mcp_tool_execution_error'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaMCPToolExecutionErrorType', 'enum', "Unknown BetaMCPToolExecutionErrorType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalBetaMCPToolFilterMetadata
+    FIELDS = {
+      tool_names: 'tool_names',
+      read_only: 'read_only'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
+  end
+
+  # API model for BetaMCPToolFilter.
+  # A filter object to specify which tools are allowed.
+  class BetaMCPToolFilter
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaMCPToolFilterMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaMCPToolFilterMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaMCPToolFilterMetadata::DECODERS
+
+    # @return [Array_of_String] List of allowed tool names.
+    attr_reader :tool_names
+    # @return [Boolean] Indicates whether or not a tool modifies data or is read-only. If an MCP server is annotated with `readOnlyHint`, it will match this filter.
+    attr_reader :read_only
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalBetaMCPToolRequireApprovalVariant0Metadata
+    FIELDS = {
+      always: 'always',
+      never: 'never'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      always: lambda do |value|
+        ::OctridevOpenai::BetaMCPToolFilter.from_hash(value)
+      end,
+      never: lambda do |value|
+        ::OctridevOpenai::BetaMCPToolFilter.from_hash(value)
+      end
+    }.freeze
+  end
+
+  # API model for BetaMCPToolRequireApprovalVariant0.
+  class BetaMCPToolRequireApprovalVariant0
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaMCPToolRequireApprovalVariant0Metadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaMCPToolRequireApprovalVariant0Metadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaMCPToolRequireApprovalVariant0Metadata::DECODERS
+
+    # @return [BetaMCPToolFilter] A filter object to specify which tools are allowed.
+    attr_reader :always
+    # @return [BetaMCPToolFilter] A filter object to specify which tools are allowed.
+    attr_reader :never
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the BetaMCPToolRequireApproval SDK namespace.
+  module BetaMCPToolRequireApproval
+    def self.from_hash(hash)
+      return BetaMCPToolRequireApprovalVariant1.from_value(hash) if hash.is_a?(::String)
+
+      BetaMCPToolRequireApprovalVariant0.from_hash(hash)
+    end
+  end
+
+  # Defines the BetaMCPToolRequireApprovalVariant1 SDK namespace.
+  module BetaMCPToolRequireApprovalVariant1
+    ALWAYS = 'always'
+    NEVER = 'never'
+    VALUES = %w[always never].freeze
+    def self.from_value(value)
+      value
+    end
+  end
 end

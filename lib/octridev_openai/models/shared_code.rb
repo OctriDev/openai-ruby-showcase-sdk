@@ -5,302 +5,308 @@
 
 # shared_code domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalCodeInterpreterOutputImageMetadata
-  FIELDS = {
-    type: "type",
-    url: "url",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    url
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::CodeInterpreterOutputImageType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for CodeInterpreterOutputImage.
-# The image output from the code interpreter.
-class CodeInterpreterOutputImage
-  include CodeInterpreterToolCallOutputsItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCodeInterpreterOutputImageMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCodeInterpreterOutputImageMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCodeInterpreterOutputImageMetadata::DECODERS
-
-  # @return [CodeInterpreterOutputImageType] The type of the output. Always `image`.
-  attr_reader :type
-  # @return [String] The URL of the image output from the code interpreter.
-  attr_reader :url
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalCodeInterpreterOutputImageMetadata
+    FIELDS = {
+      type: 'type',
+      url: 'url'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      url
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::CodeInterpreterOutputImageType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for CodeInterpreterOutputImage.
+  # The image output from the code interpreter.
+  class CodeInterpreterOutputImage
+    include CodeInterpreterToolCallOutputsItem
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCodeInterpreterOutputImageMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCodeInterpreterOutputImageMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCodeInterpreterOutputImageMetadata::DECODERS
+
+    # @return [CodeInterpreterOutputImageType] The type of the output. Always `image`.
+    attr_reader :type
+    # @return [String] The URL of the image output from the code interpreter.
+    attr_reader :url
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the CodeInterpreterOutputImageType SDK namespace.
+  module CodeInterpreterOutputImageType
+    IMAGE = 'image'
+    VALUES = ['image'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the CodeInterpreterOutputImageType SDK namespace.
-module CodeInterpreterOutputImageType
-  IMAGE = 'image'
-  VALUES = ['image'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('CodeInterpreterOutputImageType', 'enum', "Unknown CodeInterpreterOutputImageType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalCodeInterpreterOutputLogsMetadata
-  FIELDS = {
-    type: "type",
-    logs: "logs",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    logs
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::CodeInterpreterOutputLogsType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for CodeInterpreterOutputLogs.
-# The logs output from the code interpreter.
-class CodeInterpreterOutputLogs
-  include CodeInterpreterToolCallOutputsItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCodeInterpreterOutputLogsMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCodeInterpreterOutputLogsMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCodeInterpreterOutputLogsMetadata::DECODERS
-
-  # @return [CodeInterpreterOutputLogsType] The type of the output. Always `logs`.
-  attr_reader :type
-  # @return [String] The logs output from the code interpreter.
-  attr_reader :logs
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('CodeInterpreterOutputImageType', 'enum', "Unknown CodeInterpreterOutputImageType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalCodeInterpreterOutputLogsMetadata
+    FIELDS = {
+      type: 'type',
+      logs: 'logs'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      logs
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::CodeInterpreterOutputLogsType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for CodeInterpreterOutputLogs.
+  # The logs output from the code interpreter.
+  class CodeInterpreterOutputLogs
+    include CodeInterpreterToolCallOutputsItem
 
-# Defines the CodeInterpreterOutputLogsType SDK namespace.
-module CodeInterpreterOutputLogsType
-  LOGS = 'logs'
-  VALUES = ['logs'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCodeInterpreterOutputLogsMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCodeInterpreterOutputLogsMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCodeInterpreterOutputLogsMetadata::DECODERS
 
-    raise SdkValidationError.new('CodeInterpreterOutputLogsType', 'enum', "Unknown CodeInterpreterOutputLogsType: #{value}")
-  end
-end
+    # @return [CodeInterpreterOutputLogsType] The type of the output. Always `logs`.
+    attr_reader :type
+    # @return [String] The logs output from the code interpreter.
+    attr_reader :logs
 
-# Internal model hydration metadata.
-class SdkInternalCodeInterpreterToolMetadata
-  FIELDS = {
-    type: "type",
-    container: "container",
-    allowed_callers: "allowed_callers",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    container
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::CodeInterpreterToolType.from_value(value)
-    end,
-    container: lambda do |value|
-      ::OctridevOpenai::CodeInterpreterToolContainer.from_hash(value)
-    end,
-    allowed_callers: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::CallableToolAllowedCaller.from_value(item) }
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for CodeInterpreterTool.
-# A tool that runs Python code to help generate a response to a prompt.
-class CodeInterpreterTool
-  include Tool
-  include ToolSearchOutputTool
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCodeInterpreterToolMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCodeInterpreterToolMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCodeInterpreterToolMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [CodeInterpreterToolType] The type of the code interpreter tool. Always `code_interpreter`.
-  attr_reader :type
-  # @return [CodeInterpreterToolContainer] The code interpreter container. Can be a container ID or an object that specifies uploaded file IDs to make available to your code, along with an optional `memory_limit` setting.
-  attr_reader :container
-  # @return [Array_of_CallableToolAllowedCaller] The tool invocation context(s).
-  attr_reader :allowed_callers
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the CodeInterpreterOutputLogsType SDK namespace.
+  module CodeInterpreterOutputLogsType
+    LOGS = 'logs'
+    VALUES = ['logs'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('CodeInterpreterOutputLogsType', 'enum', "Unknown CodeInterpreterOutputLogsType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the CodeInterpreterToolType SDK namespace.
-module CodeInterpreterToolType
-  CODE_INTERPRETER = 'code_interpreter'
-  VALUES = ['code_interpreter'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('CodeInterpreterToolType', 'enum', "Unknown CodeInterpreterToolType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalCodeInterpreterToolCallMetadata
-  FIELDS = {
-    type: "type",
-    id: "id",
-    status: "status",
-    container_id: "container_id",
-    code: "code",
-    outputs: "outputs",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    id
-    status
-    container_id
-    code
-    outputs
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::CodeInterpreterToolCallType.from_value(value)
-    end,
-    status: lambda do |value|
-      ::OctridevOpenai::CodeInterpreterToolCallStatus.from_value(value)
-    end,
-    outputs: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::CodeInterpreterToolCallOutputsItem.from_hash(item) }
-    end,
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    code
-    outputs
-  ].freeze
-end
-
-# API model for CodeInterpreterToolCall.
-# A tool call to run code.
-class CodeInterpreterToolCall
-  include ConversationItem
-  include Item
-  include ItemResource
-  include OutputItem
-  include ItemField
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCodeInterpreterToolCallMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCodeInterpreterToolCallMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCodeInterpreterToolCallMetadata::DECODERS
-
-  # @return [CodeInterpreterToolCallType] The type of the code interpreter tool call. Always `code_interpreter_call`.
-  attr_reader :type
-  # @return [String] The unique ID of the code interpreter tool call.
-  attr_reader :id
-  # @return [CodeInterpreterToolCallStatus] The status of the code interpreter tool call. Valid values are `in_progress`, `completed`, `incomplete`, `interpreting`, and `failed`.
-  attr_reader :status
-  # @return [String] The ID of the container used to run the code.
-  attr_reader :container_id
-  # @return [String] Required `string` value serialized in the `code` wire field.
-  attr_reader :code
-  # @return [Array_of_CodeInterpreterToolCallOutputsItem] The outputs generated by the code interpreter, such as logs or images. Can be null if no outputs are available.
-  attr_reader :outputs
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalCodeInterpreterToolMetadata
+    FIELDS = {
+      type: 'type',
+      container: 'container',
+      allowed_callers: 'allowed_callers'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      container
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::CodeInterpreterToolType.from_value(value)
+      end,
+      container: lambda do |value|
+        ::OctridevOpenai::CodeInterpreterToolContainer.from_hash(value)
+      end,
+      allowed_callers: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::CallableToolAllowedCaller.from_value(item) }
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalCodeInterpreterToolCallMetadata::NULLABLE_FIELDS)
+  # API model for CodeInterpreterTool.
+  # A tool that runs Python code to help generate a response to a prompt.
+  class CodeInterpreterTool
+    include Tool
+    include ToolSearchOutputTool
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCodeInterpreterToolMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCodeInterpreterToolMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCodeInterpreterToolMetadata::DECODERS
+
+    # @return [CodeInterpreterToolType] The type of the code interpreter tool. Always `code_interpreter`.
+    attr_reader :type
+    # @return [CodeInterpreterToolContainer] The code interpreter container. Can be a container ID or an object that specifies uploaded file IDs to make available to your code, along with an optional `memory_limit` setting.
+    attr_reader :container
+    # @return [Array_of_CallableToolAllowedCaller] The tool invocation context(s).
+    attr_reader :allowed_callers
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the CodeInterpreterToolType SDK namespace.
+  module CodeInterpreterToolType
+    CODE_INTERPRETER = 'code_interpreter'
+    VALUES = ['code_interpreter'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('CodeInterpreterToolType', 'enum', "Unknown CodeInterpreterToolType: #{value}")
+    end
   end
-end
 
-# Defines the CodeInterpreterToolCallStatus SDK namespace.
-module CodeInterpreterToolCallStatus
-  IN_PROGRESS = 'in_progress'
-  COMPLETED = 'completed'
-  INCOMPLETE = 'incomplete'
-  INTERPRETING = 'interpreting'
-  FAILED = 'failed'
-  VALUES = ['in_progress', 'completed', 'incomplete', 'interpreting', 'failed'].freeze
-  def self.from_value(value)
-    value
+  # Internal model hydration metadata.
+  class SdkInternalCodeInterpreterToolCallMetadata
+    FIELDS = {
+      type: 'type',
+      id: 'id',
+      status: 'status',
+      container_id: 'container_id',
+      code: 'code',
+      outputs: 'outputs'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      id
+      status
+      container_id
+      code
+      outputs
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::CodeInterpreterToolCallType.from_value(value)
+      end,
+      status: lambda do |value|
+        ::OctridevOpenai::CodeInterpreterToolCallStatus.from_value(value)
+      end,
+      outputs: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::CodeInterpreterToolCallOutputsItem.from_hash(item) }
+      end
+    }.freeze
+    NULLABLE_FIELDS = %i[
+      code
+      outputs
+    ].freeze
   end
-end
 
-# Defines the CodeInterpreterToolCallType SDK namespace.
-module CodeInterpreterToolCallType
-  CODE_INTERPRETER_CALL = 'code_interpreter_call'
-  VALUES = ['code_interpreter_call'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+  # API model for CodeInterpreterToolCall.
+  # A tool call to run code.
+  class CodeInterpreterToolCall
+    include ConversationItem
+    include Item
+    include ItemResource
+    include OutputItem
+    include ItemField
 
-    raise SdkValidationError.new('CodeInterpreterToolCallType', 'enum', "Unknown CodeInterpreterToolCallType: #{value}")
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCodeInterpreterToolCallMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCodeInterpreterToolCallMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCodeInterpreterToolCallMetadata::DECODERS
+
+    # @return [CodeInterpreterToolCallType] The type of the code interpreter tool call. Always `code_interpreter_call`.
+    attr_reader :type
+    # @return [String] The unique ID of the code interpreter tool call.
+    attr_reader :id
+    # @return [CodeInterpreterToolCallStatus] The status of the code interpreter tool call. Valid values are `in_progress`, `completed`, `incomplete`, `interpreting`, and `failed`.
+    attr_reader :status
+    # @return [String] The ID of the container used to run the code.
+    attr_reader :container_id
+    # @return [String] Required `string` value serialized in the `code` wire field.
+    attr_reader :code
+    # @return [Array_of_CodeInterpreterToolCallOutputsItem] The outputs generated by the code interpreter, such as logs or images. Can be null if no outputs are available.
+    attr_reader :outputs
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalCodeInterpreterToolCallMetadata::NULLABLE_FIELDS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
 
-# Defines the CodeInterpreterToolCallOutputsItem SDK namespace.
-module CodeInterpreterToolCallOutputsItem
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    mapping = { "logs" => CodeInterpreterOutputLogs, "image" => CodeInterpreterOutputImage }
-    type = mapping[hash["type"]]
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('CodeInterpreterToolCallOutputsItem', 'variant', "Unknown CodeInterpreterToolCallOutputsItem discriminator: #{hash["type"].inspect}")
+  # Defines the CodeInterpreterToolCallStatus SDK namespace.
+  module CodeInterpreterToolCallStatus
+    IN_PROGRESS = 'in_progress'
+    COMPLETED = 'completed'
+    INCOMPLETE = 'incomplete'
+    INTERPRETING = 'interpreting'
+    FAILED = 'failed'
+    VALUES = %w[in_progress completed incomplete interpreting failed].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
 
-# Defines the CodeInterpreterToolContainer SDK namespace.
-module CodeInterpreterToolContainer
-  def self.from_hash(hash)
-    return hash if hash.is_a?(::String)
-    return AutoCodeInterpreterToolParam.from_hash(hash)
+  # Defines the CodeInterpreterToolCallType SDK namespace.
+  module CodeInterpreterToolCallType
+    CODE_INTERPRETER_CALL = 'code_interpreter_call'
+    VALUES = ['code_interpreter_call'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('CodeInterpreterToolCallType', 'enum', "Unknown CodeInterpreterToolCallType: #{value}")
+    end
   end
-end
+
+  # Defines the CodeInterpreterToolCallOutputsItem SDK namespace.
+  module CodeInterpreterToolCallOutputsItem
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      mapping = { 'logs' => CodeInterpreterOutputLogs, 'image' => CodeInterpreterOutputImage }
+      type = mapping[hash['type']]
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('CodeInterpreterToolCallOutputsItem', 'variant', "Unknown CodeInterpreterToolCallOutputsItem discriminator: #{hash['type'].inspect}")
+    end
+  end
+
+  # Defines the CodeInterpreterToolContainer SDK namespace.
+  module CodeInterpreterToolContainer
+    def self.from_hash(hash)
+      return hash if hash.is_a?(::String)
+
+      AutoCodeInterpreterToolParam.from_hash(hash)
+    end
+  end
 end

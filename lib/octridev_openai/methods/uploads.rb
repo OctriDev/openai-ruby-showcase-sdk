@@ -32,23 +32,22 @@ module OctridevOpenai
         expires_after: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
-          "/uploads",
+          '/uploads',
           config: config,
           body: {
             'filename' => filename,
             'purpose' => purpose,
             'bytes' => bytes,
             'mime_type' => mime_type,
-            'expires_after' => expires_after,
+            'expires_after' => expires_after
           },
           return_type: ::OctridevOpenai::Upload,
           decoder: :json,
           operation_id: 'create_upload',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -62,20 +61,19 @@ module OctridevOpenai
         upload_id:,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
           [
-            "/uploads/",
+            '/uploads/',
             SdkClient.encode_path_segment(upload_id),
-            "/cancel"
+            '/cancel'
           ].join,
           config: config,
           return_type: ::OctridevOpenai::Upload,
           decoder: :json,
           operation_id: 'cancel_upload',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '410' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '410' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -94,24 +92,23 @@ module OctridevOpenai
         md5: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
           [
-            "/uploads/",
+            '/uploads/',
             SdkClient.encode_path_segment(upload_id),
-            "/complete"
+            '/complete'
           ].join,
           config: config,
           body: {
             'part_ids' => part_ids,
-            'md5' => md5,
+            'md5' => md5
           },
           return_type: ::OctridevOpenai::Upload,
           decoder: :json,
           operation_id: 'complete_upload',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '410' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '410' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -127,24 +124,23 @@ module OctridevOpenai
         data:,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
           [
-            "/uploads/",
+            '/uploads/',
             SdkClient.encode_path_segment(upload_id),
-            "/parts"
+            '/parts'
           ].join,
           config: config,
           body: {
-            'data' => SdkClient.upload(data, 'data'),
+            'data' => SdkClient.upload(data, 'data')
           },
           content_type: 'multipart/form-data',
           return_type: ::OctridevOpenai::UploadPart,
           decoder: :json,
           operation_id: 'add_upload_part',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '410' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '410' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
     end

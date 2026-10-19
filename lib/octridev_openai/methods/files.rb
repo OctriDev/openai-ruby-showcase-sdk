@@ -13,7 +13,7 @@ module OctridevOpenai
       module ListFilesParameter
         ASC = 'asc'
         DESC = 'desc'
-        VALUES = ['asc', 'desc'].freeze
+        VALUES = %w[asc desc].freeze
         def self.from_value(value)
           value
         end
@@ -40,26 +40,25 @@ module OctridevOpenai
         after: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
-          "/files",
+          '/files',
           config: config,
           query: {
             'purpose' => QueryValue.new(purpose, style: 'form', explode: true),
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'order' => QueryValue.new(order, style: 'form', explode: true),
-            'after' => QueryValue.new(after, style: 'form', explode: true),
+            'after' => QueryValue.new(after, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::ListFilesResponse,
           decoder: :json,
           operation_id: 'list_files',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
-    ListFilesPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      ListFilesPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists uploaded files, with optional filtering, sorting, and cursor-based pagination. Use `purpose` to filter the results, and use `after` with the last file ID from a page to retrieve the next page.
       #
@@ -95,10 +94,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.last_id
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -125,10 +127,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListFilesPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end
@@ -154,22 +158,21 @@ module OctridevOpenai
         expires_after: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
-          "/files",
+          '/files',
           config: config,
           body: {
             'file' => SdkClient.upload(file, 'file'),
             'purpose' => purpose,
-            'expires_after' => MultipartPart.new(expires_after, content_type: 'application/json'),
+            'expires_after' => MultipartPart.new(expires_after, content_type: 'application/json')
           },
           content_type: 'multipart/form-data',
           return_type: ::OctridevOpenai::OpenAIFile,
           decoder: :json,
           operation_id: 'create_file',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -183,11 +186,10 @@ module OctridevOpenai
         file_id:,
         request_options: nil
       )
-
         SdkClient.request(
           'DELETE',
           [
-            "/files/",
+            '/files/',
             SdkClient.encode_path_segment(file_id)
           ].join,
           config: config,
@@ -195,7 +197,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_file',
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -209,11 +211,10 @@ module OctridevOpenai
         file_id:,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
           [
-            "/files/",
+            '/files/',
             SdkClient.encode_path_segment(file_id)
           ].join,
           config: config,
@@ -221,7 +222,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'retrieve_file',
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -235,19 +236,18 @@ module OctridevOpenai
         file_id:,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
           [
-            "/files/",
+            '/files/',
             SdkClient.encode_path_segment(file_id),
-            "/content"
+            '/content'
           ].join,
           config: config,
           decoder: :bytes,
           operation_id: 'download_file',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
     end

@@ -5,213 +5,217 @@
 
 # decisions_question domain models
 module OctridevOpenai
-# Defines the QuestionParam SDK namespace.
-module QuestionParam
-  DISCRIMINATOR_MAPPING = {
-    "predicate" => -> { QuestionParamPredicate },
-    "choice" => -> { QuestionParamChoice },
-    "score" => -> { QuestionParamScore },
-  }.freeze
+  # Defines the QuestionParam SDK namespace.
+  module QuestionParam
+    DISCRIMINATOR_MAPPING = {
+      'predicate' => -> { QuestionParamPredicate },
+      'choice' => -> { QuestionParamChoice },
+      'score' => -> { QuestionParamScore }
+    }.freeze
 
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
 
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
 
-    raise SdkValidationError.new('QuestionParam', 'variant', "Unknown QuestionParam discriminator: #{hash["type"].inspect}")
-  end
-end
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
 
-# Internal model hydration metadata.
-class SdkInternalQuestionParamChoiceMetadata
-  FIELDS = {
-    type: "type",
-    name: "name",
-    instructions: "instructions",
-    choices: "choices",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    instructions
-    choices
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::QuestionParamChoiceType.from_value(value)
-    end,
-    choices: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::ChoiceOptionParam.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for QuestionParamChoice.
-# Choose from the supplied options based on the input.
-class QuestionParamChoice
-  include QuestionParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalQuestionParamChoiceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalQuestionParamChoiceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalQuestionParamChoiceMetadata::DECODERS
-
-  # @return [QuestionParamChoiceType] The type of the object. Always `choice`.
-  attr_reader :type
-  # @return [String] Optional `string` value serialized in the `name` wire field.
-  attr_reader :name
-  # @return [String] Required `string` value serialized in the `instructions` wire field.
-  attr_reader :instructions
-  # @return [Array_of_ChoiceOptionParam] Provide between 2 and 255 choices. Each choice must be unique.
-  attr_reader :choices
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('QuestionParam', 'variant', "Unknown QuestionParam discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalQuestionParamChoiceMetadata
+    FIELDS = {
+      type: 'type',
+      name: 'name',
+      instructions: 'instructions',
+      choices: 'choices'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      instructions
+      choices
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::QuestionParamChoiceType.from_value(value)
+      end,
+      choices: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::ChoiceOptionParam.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for QuestionParamChoice.
+  # Choose from the supplied options based on the input.
+  class QuestionParamChoice
+    include QuestionParam
 
-# Defines the QuestionParamChoiceType SDK namespace.
-module QuestionParamChoiceType
-  CHOICE = 'choice'
-  VALUES = ['choice'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalQuestionParamChoiceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalQuestionParamChoiceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalQuestionParamChoiceMetadata::DECODERS
 
-    raise SdkValidationError.new('QuestionParamChoiceType', 'enum', "Unknown QuestionParamChoiceType: #{value}")
-  end
-end
+    # @return [QuestionParamChoiceType] The type of the object. Always `choice`.
+    attr_reader :type
+    # @return [String] Optional `string` value serialized in the `name` wire field.
+    attr_reader :name
+    # @return [String] Required `string` value serialized in the `instructions` wire field.
+    attr_reader :instructions
+    # @return [Array_of_ChoiceOptionParam] Provide between 2 and 255 choices. Each choice must be unique.
+    attr_reader :choices
 
-# Internal model hydration metadata.
-class SdkInternalQuestionParamPredicateMetadata
-  FIELDS = {
-    type: "type",
-    name: "name",
-    instructions: "instructions",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    instructions
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::QuestionParamPredicateType.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for QuestionParamPredicate.
-# Estimate how likely it is that a statement about the input is true.
-class QuestionParamPredicate
-  include QuestionParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalQuestionParamPredicateMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalQuestionParamPredicateMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalQuestionParamPredicateMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [QuestionParamPredicateType] The type of the object. Always `predicate`.
-  attr_reader :type
-  # @return [String] Optional `string` value serialized in the `name` wire field.
-  attr_reader :name
-  # @return [String] Required `string` value serialized in the `instructions` wire field.
-  attr_reader :instructions
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the QuestionParamChoiceType SDK namespace.
+  module QuestionParamChoiceType
+    CHOICE = 'choice'
+    VALUES = ['choice'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('QuestionParamChoiceType', 'enum', "Unknown QuestionParamChoiceType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the QuestionParamPredicateType SDK namespace.
-module QuestionParamPredicateType
-  PREDICATE = 'predicate'
-  VALUES = ['predicate'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('QuestionParamPredicateType', 'enum', "Unknown QuestionParamPredicateType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalQuestionParamScoreMetadata
-  FIELDS = {
-    type: "type",
-    name: "name",
-    instructions: "instructions",
-    levels: "levels",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    instructions
-    levels
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::QuestionParamScoreType.from_value(value)
-    end,
-    levels: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::ScoreLevelParam.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for QuestionParamScore.
-# Rate the input against the supplied ordered levels.
-class QuestionParamScore
-  include QuestionParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalQuestionParamScoreMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalQuestionParamScoreMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalQuestionParamScoreMetadata::DECODERS
-
-  # @return [QuestionParamScoreType] The type of the object. Always `score`.
-  attr_reader :type
-  # @return [String] Optional `string` value serialized in the `name` wire field.
-  attr_reader :name
-  # @return [String] Required `string` value serialized in the `instructions` wire field.
-  attr_reader :instructions
-  # @return [Array_of_ScoreLevelParam] Required array value serialized in the `levels` wire field.
-  attr_reader :levels
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalQuestionParamPredicateMetadata
+    FIELDS = {
+      type: 'type',
+      name: 'name',
+      instructions: 'instructions'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      instructions
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::QuestionParamPredicateType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for QuestionParamPredicate.
+  # Estimate how likely it is that a statement about the input is true.
+  class QuestionParamPredicate
+    include QuestionParam
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalQuestionParamPredicateMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalQuestionParamPredicateMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalQuestionParamPredicateMetadata::DECODERS
+
+    # @return [QuestionParamPredicateType] The type of the object. Always `predicate`.
+    attr_reader :type
+    # @return [String] Optional `string` value serialized in the `name` wire field.
+    attr_reader :name
+    # @return [String] Required `string` value serialized in the `instructions` wire field.
+    attr_reader :instructions
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the QuestionParamPredicateType SDK namespace.
+  module QuestionParamPredicateType
+    PREDICATE = 'predicate'
+    VALUES = ['predicate'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the QuestionParamScoreType SDK namespace.
-module QuestionParamScoreType
-  SCORE = 'score'
-  VALUES = ['score'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('QuestionParamScoreType', 'enum', "Unknown QuestionParamScoreType: #{value}")
+      raise SdkValidationError.new('QuestionParamPredicateType', 'enum', "Unknown QuestionParamPredicateType: #{value}")
+    end
   end
-end
+
+  # Internal model hydration metadata.
+  class SdkInternalQuestionParamScoreMetadata
+    FIELDS = {
+      type: 'type',
+      name: 'name',
+      instructions: 'instructions',
+      levels: 'levels'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      instructions
+      levels
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::QuestionParamScoreType.from_value(value)
+      end,
+      levels: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::ScoreLevelParam.from_hash(item) }
+      end
+    }.freeze
+  end
+
+  # API model for QuestionParamScore.
+  # Rate the input against the supplied ordered levels.
+  class QuestionParamScore
+    include QuestionParam
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalQuestionParamScoreMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalQuestionParamScoreMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalQuestionParamScoreMetadata::DECODERS
+
+    # @return [QuestionParamScoreType] The type of the object. Always `score`.
+    attr_reader :type
+    # @return [String] Optional `string` value serialized in the `name` wire field.
+    attr_reader :name
+    # @return [String] Required `string` value serialized in the `instructions` wire field.
+    attr_reader :instructions
+    # @return [Array_of_ScoreLevelParam] Required array value serialized in the `levels` wire field.
+    attr_reader :levels
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the QuestionParamScoreType SDK namespace.
+  module QuestionParamScoreType
+    SCORE = 'score'
+    VALUES = ['score'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('QuestionParamScoreType', 'enum', "Unknown QuestionParamScoreType: #{value}")
+    end
+  end
 end

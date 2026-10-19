@@ -5,460 +5,447 @@
 
 # assistants_modify domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalModifyAssistantRequestToolResourcesCodeInterpreterMetadata
-  FIELDS = {
-    file_ids: "file_ids",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for ModifyAssistantRequestToolResourcesCodeInterpreter.
-# Optional object value serialized in the `code_interpreter` wire field.
-class ModifyAssistantRequestToolResourcesCodeInterpreter
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalModifyAssistantRequestToolResourcesCodeInterpreterMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalModifyAssistantRequestToolResourcesCodeInterpreterMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalModifyAssistantRequestToolResourcesCodeInterpreterMetadata::DECODERS
-
-  # @return [Array_of_String] Overrides the list of file IDs made available to the `code_interpreter` tool. There can be a maximum of 20 files associated with the tool.
-  attr_reader :file_ids
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalModifyAssistantRequestToolResourcesCodeInterpreterMetadata
+    FIELDS = {
+      file_ids: 'file_ids'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ModifyAssistantRequestToolResourcesCodeInterpreter.
+  # Optional object value serialized in the `code_interpreter` wire field.
+  class ModifyAssistantRequestToolResourcesCodeInterpreter
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalModifyAssistantRequestToolResourcesCodeInterpreterMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalModifyAssistantRequestToolResourcesCodeInterpreterMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalModifyAssistantRequestToolResourcesCodeInterpreterMetadata::DECODERS
+
+    # @return [Array_of_String] Overrides the list of file IDs made available to the `code_interpreter` tool. There can be a maximum of 20 files associated with the tool.
+    attr_reader :file_ids
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalModifyAssistantRequestToolResourcesFileSearchMetadata
-  FIELDS = {
-    vector_store_ids: "vector_store_ids",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for ModifyAssistantRequestToolResourcesFileSearch.
-# Optional object value serialized in the `file_search` wire field.
-class ModifyAssistantRequestToolResourcesFileSearch
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalModifyAssistantRequestToolResourcesFileSearchMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalModifyAssistantRequestToolResourcesFileSearchMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalModifyAssistantRequestToolResourcesFileSearchMetadata::DECODERS
-
-  # @return [Array_of_String] Overrides the vector store attached to this assistant. There can be a maximum of 1 vector store attached to the assistant.
-  attr_reader :vector_store_ids
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalModifyAssistantRequestToolResourcesFileSearchMetadata
+    FIELDS = {
+      vector_store_ids: 'vector_store_ids'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ModifyAssistantRequestToolResourcesFileSearch.
+  # Optional object value serialized in the `file_search` wire field.
+  class ModifyAssistantRequestToolResourcesFileSearch
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalModifyAssistantRequestToolResourcesFileSearchMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalModifyAssistantRequestToolResourcesFileSearchMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalModifyAssistantRequestToolResourcesFileSearchMetadata::DECODERS
+
+    # @return [Array_of_String] Overrides the vector store attached to this assistant. There can be a maximum of 1 vector store attached to the assistant.
+    attr_reader :vector_store_ids
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalModifyAssistantRequestToolResourcesMetadata
-  FIELDS = {
-    code_interpreter: "code_interpreter",
-    file_search: "file_search",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    code_interpreter: lambda do |value|
-      ::OctridevOpenai::ModifyAssistantRequestToolResourcesCodeInterpreter.from_hash(value)
-    end,
-    file_search: lambda do |value|
-      ::OctridevOpenai::ModifyAssistantRequestToolResourcesFileSearch.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for ModifyAssistantRequestToolResources.
-# A set of resources that are used by the assistant's tools. The resources are specific to the type of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires a list of vector store IDs.
-class ModifyAssistantRequestToolResources
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalModifyAssistantRequestToolResourcesMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalModifyAssistantRequestToolResourcesMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalModifyAssistantRequestToolResourcesMetadata::DECODERS
-
-  # @return [ModifyAssistantRequestToolResourcesCodeInterpreter] Optional object value serialized in the `code_interpreter` wire field.
-  attr_reader :code_interpreter
-  # @return [ModifyAssistantRequestToolResourcesFileSearch] Optional object value serialized in the `file_search` wire field.
-  attr_reader :file_search
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalModifyAssistantRequestToolResourcesMetadata
+    FIELDS = {
+      code_interpreter: 'code_interpreter',
+      file_search: 'file_search'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      code_interpreter: lambda do |value|
+        ::OctridevOpenai::ModifyAssistantRequestToolResourcesCodeInterpreter.from_hash(value)
+      end,
+      file_search: lambda do |value|
+        ::OctridevOpenai::ModifyAssistantRequestToolResourcesFileSearch.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ModifyAssistantRequestToolResources.
+  # A set of resources that are used by the assistant's tools. The resources are specific to the type of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires a list of vector store IDs.
+  class ModifyAssistantRequestToolResources
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalModifyAssistantRequestToolResourcesMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalModifyAssistantRequestToolResourcesMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalModifyAssistantRequestToolResourcesMetadata::DECODERS
+
+    # @return [ModifyAssistantRequestToolResourcesCodeInterpreter] Optional object value serialized in the `code_interpreter` wire field.
+    attr_reader :code_interpreter
+    # @return [ModifyAssistantRequestToolResourcesFileSearch] Optional object value serialized in the `file_search` wire field.
+    attr_reader :file_search
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalModifyAssistantRequestMetadata
-  FIELDS = {
-    model: "model",
-    reasoning_effort: "reasoning_effort",
-    name: "name",
-    description: "description",
-    instructions: "instructions",
-    tools: "tools",
-    tool_resources: "tool_resources",
-    metadata: "metadata",
-    temperature: "temperature",
-    top_p: "top_p",
-    response_format: "response_format",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    reasoning_effort: lambda do |value|
-      ::OctridevOpenai::ReasoningEffort.from_hash(value)
-    end,
-    tools: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::ModifyAssistantRequestToolsItem.from_hash(item) }
-    end,
-    tool_resources: lambda do |value|
-      ::OctridevOpenai::ModifyAssistantRequestToolResources.from_hash(value)
-    end,
-    metadata: lambda do |value|
-      ::OctridevOpenai::Metadata.from_hash(value)
-    end,
-    response_format: lambda do |value|
-      ::OctridevOpenai::AssistantsApiResponseFormatOption.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for ModifyAssistantRequest.
-# Typed representation of the `ModifyAssistantRequest` API schema.
-class ModifyAssistantRequest
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalModifyAssistantRequestMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalModifyAssistantRequestMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalModifyAssistantRequestMetadata::DECODERS
-
-  # @return [Object] ID of the model to use. You can use the List models API to see all of your available models, or see our Model overview for descriptions of them.
-  attr_reader :model
-  # @return [ReasoningEffort] Optional API value serialized in the `reasoning_effort` wire field.
-  attr_reader :reasoning_effort
-  # @return [String] Optional API value serialized in the `name` wire field.
-  attr_reader :name
-  # @return [String] Optional API value serialized in the `description` wire field.
-  attr_reader :description
-  # @return [String] Optional API value serialized in the `instructions` wire field.
-  attr_reader :instructions
-  # @return [Array_of_ModifyAssistantRequestToolsItem] A list of tool enabled on the assistant. There can be a maximum of 128 tools per assistant. Tools can be of types `code_interpreter`, `file_search`, or `function`.
-  attr_reader :tools
-  # @return [ModifyAssistantRequestToolResources] A set of resources that are used by the assistant's tools. The resources are specific to the type of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires a list of vector store IDs.
-  attr_reader :tool_resources
-  # @return [Metadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
-  attr_reader :metadata
-  # @return [Float] Optional API value serialized in the `temperature` wire field.
-  attr_reader :temperature
-  # @return [Float] Optional API value serialized in the `top_p` wire field.
-  attr_reader :top_p
-  # @return [AssistantsApiResponseFormatOption] Optional API value serialized in the `response_format` wire field.
-  attr_reader :response_format
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalModifyAssistantRequestMetadata
+    FIELDS = {
+      model: 'model',
+      reasoning_effort: 'reasoning_effort',
+      name: 'name',
+      description: 'description',
+      instructions: 'instructions',
+      tools: 'tools',
+      tool_resources: 'tool_resources',
+      metadata: 'metadata',
+      temperature: 'temperature',
+      top_p: 'top_p',
+      response_format: 'response_format'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      reasoning_effort: lambda do |value|
+        ::OctridevOpenai::ReasoningEffort.from_hash(value)
+      end,
+      tools: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::ModifyAssistantRequestToolsItem.from_hash(item) }
+      end,
+      tool_resources: lambda do |value|
+        ::OctridevOpenai::ModifyAssistantRequestToolResources.from_hash(value)
+      end,
+      metadata: lambda do |value|
+        ::OctridevOpenai::Metadata.from_hash(value)
+      end,
+      response_format: lambda do |value|
+        ::OctridevOpenai::AssistantsApiResponseFormatOption.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ModifyAssistantRequest.
+  # Typed representation of the `ModifyAssistantRequest` API schema.
+  class ModifyAssistantRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalModifyAssistantRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalModifyAssistantRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalModifyAssistantRequestMetadata::DECODERS
+
+    # @return [Object] ID of the model to use. You can use the List models API to see all of your available models, or see our Model overview for descriptions of them.
+    attr_reader :model
+    # @return [ReasoningEffort] Optional API value serialized in the `reasoning_effort` wire field.
+    attr_reader :reasoning_effort
+    # @return [String] Optional API value serialized in the `name` wire field.
+    attr_reader :name
+    # @return [String] Optional API value serialized in the `description` wire field.
+    attr_reader :description
+    # @return [String] Optional API value serialized in the `instructions` wire field.
+    attr_reader :instructions
+    # @return [Array_of_ModifyAssistantRequestToolsItem] A list of tool enabled on the assistant. There can be a maximum of 128 tools per assistant. Tools can be of types `code_interpreter`, `file_search`, or `function`.
+    attr_reader :tools
+    # @return [ModifyAssistantRequestToolResources] A set of resources that are used by the assistant's tools. The resources are specific to the type of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires a list of vector store IDs.
+    attr_reader :tool_resources
+    # @return [Metadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
+    attr_reader :metadata
+    # @return [Float] Optional API value serialized in the `temperature` wire field.
+    attr_reader :temperature
+    # @return [Float] Optional API value serialized in the `top_p` wire field.
+    attr_reader :top_p
+    # @return [AssistantsApiResponseFormatOption] Optional API value serialized in the `response_format` wire field.
+    attr_reader :response_format
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the ModifyAssistantRequestToolsItem SDK namespace.
+  module ModifyAssistantRequestToolsItem
+    DISCRIMINATOR_MAPPING = {
+      'code_interpreter' => -> { AssistantToolsCode },
+      'file_search' => -> { AssistantToolsFileSearch },
+      'function' => -> { AssistantToolsFunction }
+    }.freeze
 
-# Defines the ModifyAssistantRequestToolsItem SDK namespace.
-module ModifyAssistantRequestToolsItem
-  DISCRIMINATOR_MAPPING = {
-    "code_interpreter" => -> { AssistantToolsCode },
-    "file_search" => -> { AssistantToolsFileSearch },
-    "function" => -> { AssistantToolsFunction },
-  }.freeze
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
 
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
 
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
 
-    raise SdkValidationError.new('ModifyAssistantRequestToolsItem', 'variant', "Unknown ModifyAssistantRequestToolsItem discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalModifyMessageRequestMetadata
-  FIELDS = {
-    metadata: "metadata",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    metadata: lambda do |value|
-      ::OctridevOpenai::Metadata.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for ModifyMessageRequest.
-# Typed representation of the `ModifyMessageRequest` API schema.
-class ModifyMessageRequest
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalModifyMessageRequestMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalModifyMessageRequestMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalModifyMessageRequestMetadata::DECODERS
-
-  # @return [Metadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
-  attr_reader :metadata
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('ModifyAssistantRequestToolsItem', 'variant', "Unknown ModifyAssistantRequestToolsItem discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalModifyMessageRequestMetadata
+    FIELDS = {
+      metadata: 'metadata'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      metadata: lambda do |value|
+        ::OctridevOpenai::Metadata.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for ModifyMessageRequest.
+  # Typed representation of the `ModifyMessageRequest` API schema.
+  class ModifyMessageRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalModifyMessageRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalModifyMessageRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalModifyMessageRequestMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalModifyRunRequestMetadata
-  FIELDS = {
-    metadata: "metadata",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    metadata: lambda do |value|
-      ::OctridevOpenai::Metadata.from_hash(value)
-    end,
-  }.freeze
-end
+    # @return [Metadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
+    attr_reader :metadata
 
-# API model for ModifyRunRequest.
-# Typed representation of the `ModifyRunRequest` API schema.
-class ModifyRunRequest
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalModifyRunRequestMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalModifyRunRequestMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalModifyRunRequestMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [Metadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
-  attr_reader :metadata
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalModifyRunRequestMetadata
+    FIELDS = {
+      metadata: 'metadata'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      metadata: lambda do |value|
+        ::OctridevOpenai::Metadata.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for ModifyRunRequest.
+  # Typed representation of the `ModifyRunRequest` API schema.
+  class ModifyRunRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalModifyRunRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalModifyRunRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalModifyRunRequestMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalModifyThreadRequestToolResourcesCodeInterpreterMetadata
-  FIELDS = {
-    file_ids: "file_ids",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
+    # @return [Metadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
+    attr_reader :metadata
 
-# API model for ModifyThreadRequestToolResourcesCodeInterpreter.
-# Optional object value serialized in the `code_interpreter` wire field.
-class ModifyThreadRequestToolResourcesCodeInterpreter
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalModifyThreadRequestToolResourcesCodeInterpreterMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalModifyThreadRequestToolResourcesCodeInterpreterMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalModifyThreadRequestToolResourcesCodeInterpreterMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [Array_of_String] A list of file IDs made available to the `code_interpreter` tool. There can be a maximum of 20 files associated with the tool.
-  attr_reader :file_ids
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalModifyThreadRequestToolResourcesCodeInterpreterMetadata
+    FIELDS = {
+      file_ids: 'file_ids'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for ModifyThreadRequestToolResourcesCodeInterpreter.
+  # Optional object value serialized in the `code_interpreter` wire field.
+  class ModifyThreadRequestToolResourcesCodeInterpreter
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalModifyThreadRequestToolResourcesCodeInterpreterMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalModifyThreadRequestToolResourcesCodeInterpreterMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalModifyThreadRequestToolResourcesCodeInterpreterMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalModifyThreadRequestToolResourcesFileSearchMetadata
-  FIELDS = {
-    vector_store_ids: "vector_store_ids",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
+    # @return [Array_of_String] A list of file IDs made available to the `code_interpreter` tool. There can be a maximum of 20 files associated with the tool.
+    attr_reader :file_ids
 
-# API model for ModifyThreadRequestToolResourcesFileSearch.
-# Optional object value serialized in the `file_search` wire field.
-class ModifyThreadRequestToolResourcesFileSearch
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalModifyThreadRequestToolResourcesFileSearchMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalModifyThreadRequestToolResourcesFileSearchMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalModifyThreadRequestToolResourcesFileSearchMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [Array_of_String] The vector store attached to this thread. There can be a maximum of 1 vector store attached to the thread.
-  attr_reader :vector_store_ids
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalModifyThreadRequestToolResourcesFileSearchMetadata
+    FIELDS = {
+      vector_store_ids: 'vector_store_ids'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for ModifyThreadRequestToolResourcesFileSearch.
+  # Optional object value serialized in the `file_search` wire field.
+  class ModifyThreadRequestToolResourcesFileSearch
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalModifyThreadRequestToolResourcesFileSearchMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalModifyThreadRequestToolResourcesFileSearchMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalModifyThreadRequestToolResourcesFileSearchMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalModifyThreadRequestToolResourcesMetadata
-  FIELDS = {
-    code_interpreter: "code_interpreter",
-    file_search: "file_search",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    code_interpreter: lambda do |value|
-      ::OctridevOpenai::ModifyThreadRequestToolResourcesCodeInterpreter.from_hash(value)
-    end,
-    file_search: lambda do |value|
-      ::OctridevOpenai::ModifyThreadRequestToolResourcesFileSearch.from_hash(value)
-    end,
-  }.freeze
-end
+    # @return [Array_of_String] The vector store attached to this thread. There can be a maximum of 1 vector store attached to the thread.
+    attr_reader :vector_store_ids
 
-# API model for ModifyThreadRequestToolResources.
-# A set of resources that are made available to the assistant's tools in this thread. The resources are specific to the type of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires a list of vector store IDs.
-class ModifyThreadRequestToolResources
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalModifyThreadRequestToolResourcesMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalModifyThreadRequestToolResourcesMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalModifyThreadRequestToolResourcesMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [ModifyThreadRequestToolResourcesCodeInterpreter] Optional object value serialized in the `code_interpreter` wire field.
-  attr_reader :code_interpreter
-  # @return [ModifyThreadRequestToolResourcesFileSearch] Optional object value serialized in the `file_search` wire field.
-  attr_reader :file_search
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalModifyThreadRequestToolResourcesMetadata
+    FIELDS = {
+      code_interpreter: 'code_interpreter',
+      file_search: 'file_search'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      code_interpreter: lambda do |value|
+        ::OctridevOpenai::ModifyThreadRequestToolResourcesCodeInterpreter.from_hash(value)
+      end,
+      file_search: lambda do |value|
+        ::OctridevOpenai::ModifyThreadRequestToolResourcesFileSearch.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for ModifyThreadRequestToolResources.
+  # A set of resources that are made available to the assistant's tools in this thread. The resources are specific to the type of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires a list of vector store IDs.
+  class ModifyThreadRequestToolResources
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalModifyThreadRequestToolResourcesMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalModifyThreadRequestToolResourcesMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalModifyThreadRequestToolResourcesMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalModifyThreadRequestMetadata
-  FIELDS = {
-    tool_resources: "tool_resources",
-    metadata: "metadata",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    tool_resources: lambda do |value|
-      ::OctridevOpenai::ModifyThreadRequestToolResources.from_hash(value)
-    end,
-    metadata: lambda do |value|
-      ::OctridevOpenai::Metadata.from_hash(value)
-    end,
-  }.freeze
-end
+    # @return [ModifyThreadRequestToolResourcesCodeInterpreter] Optional object value serialized in the `code_interpreter` wire field.
+    attr_reader :code_interpreter
+    # @return [ModifyThreadRequestToolResourcesFileSearch] Optional object value serialized in the `file_search` wire field.
+    attr_reader :file_search
 
-# API model for ModifyThreadRequest.
-# Typed representation of the `ModifyThreadRequest` API schema.
-class ModifyThreadRequest
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalModifyThreadRequestMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalModifyThreadRequestMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalModifyThreadRequestMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [ModifyThreadRequestToolResources] A set of resources that are made available to the assistant's tools in this thread. The resources are specific to the type of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires a list of vector store IDs.
-  attr_reader :tool_resources
-  # @return [Metadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
-  attr_reader :metadata
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalModifyThreadRequestMetadata
+    FIELDS = {
+      tool_resources: 'tool_resources',
+      metadata: 'metadata'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      tool_resources: lambda do |value|
+        ::OctridevOpenai::ModifyThreadRequestToolResources.from_hash(value)
+      end,
+      metadata: lambda do |value|
+        ::OctridevOpenai::Metadata.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # API model for ModifyThreadRequest.
+  # Typed representation of the `ModifyThreadRequest` API schema.
+  class ModifyThreadRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalModifyThreadRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalModifyThreadRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalModifyThreadRequestMetadata::DECODERS
+
+    # @return [ModifyThreadRequestToolResources] A set of resources that are made available to the assistant's tools in this thread. The resources are specific to the type of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires a list of vector store IDs.
+    attr_reader :tool_resources
+    # @return [Metadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
+    attr_reader :metadata
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
 end

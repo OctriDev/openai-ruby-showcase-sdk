@@ -5,680 +5,681 @@
 
 # images domain models (part 2)
 module OctridevOpenai
-# Defines the ImageEditCompletedEventBackground SDK namespace.
-module ImageEditCompletedEventBackground
-  TRANSPARENT = 'transparent'
-  OPAQUE = 'opaque'
-  AUTO = 'auto'
-  VALUES = ['transparent', 'opaque', 'auto'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the ImageEditCompletedEventOutputFormat SDK namespace.
-module ImageEditCompletedEventOutputFormat
-  PNG = 'png'
-  WEBP = 'webp'
-  JPEG = 'jpeg'
-  VALUES = ['png', 'webp', 'jpeg'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the ImageEditCompletedEventQuality SDK namespace.
-module ImageEditCompletedEventQuality
-  LOW = 'low'
-  MEDIUM = 'medium'
-  HIGH = 'high'
-  XHIGH = 'xhigh'
-  MAX = 'max'
-  AUTO = 'auto'
-  VALUES = ['low', 'medium', 'high', 'xhigh', 'max', 'auto'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the ImageEditCompletedEventType SDK namespace.
-module ImageEditCompletedEventType
-  IMAGE_EDIT_COMPLETED = 'image_edit.completed'
-  VALUES = ['image_edit.completed'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('ImageEditCompletedEventType', 'enum', "Unknown ImageEditCompletedEventType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalImageEditPartialImageEventMetadata
-  FIELDS = {
-    type: "type",
-    b64_json: "b64_json",
-    created_at: "created_at",
-    size: "size",
-    quality: "quality",
-    background: "background",
-    output_format: "output_format",
-    partial_image_index: "partial_image_index",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    b64_json
-    created_at
-    size
-    quality
-    background
-    output_format
-    partial_image_index
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ImageEditPartialImageEventType.from_value(value)
-    end,
-    quality: lambda do |value|
-      ::OctridevOpenai::ImageEditPartialImageEventQuality.from_value(value)
-    end,
-    background: lambda do |value|
-      ::OctridevOpenai::ImageEditPartialImageEventBackground.from_value(value)
-    end,
-    output_format: lambda do |value|
-      ::OctridevOpenai::ImageEditPartialImageEventOutputFormat.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for ImageEditPartialImageEvent.
-# Emitted when a partial image is available during image editing streaming.
-class ImageEditPartialImageEvent
-  include ImageEditStreamEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalImageEditPartialImageEventMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalImageEditPartialImageEventMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalImageEditPartialImageEventMetadata::DECODERS
-
-  # @return [ImageEditPartialImageEventType] The type of the event. Always `image_edit.partial_image`.
-  attr_reader :type
-  # @return [String] Base64-encoded partial image data, suitable for rendering as an image.
-  attr_reader :b64_json
-  # @return [Integer] The Unix timestamp when the event was created.
-  attr_reader :created_at
-  # @return [String] The image dimensions as a `WIDTHxHEIGHT` string, for example `1536x864`.
-  attr_reader :size
-  # @return [ImageEditPartialImageEventQuality] The quality setting for the requested edited image.
-  attr_reader :quality
-  # @return [ImageEditPartialImageEventBackground] The background setting for the requested edited image.
-  attr_reader :background
-  # @return [ImageEditPartialImageEventOutputFormat] The output format for the requested edited image.
-  attr_reader :output_format
-  # @return [Integer] 0-based index for the partial image (streaming).
-  attr_reader :partial_image_index
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the ImageEditCompletedEventBackground SDK namespace.
+  module ImageEditCompletedEventBackground
+    TRANSPARENT = 'transparent'
+    OPAQUE = 'opaque'
+    AUTO = 'auto'
+    VALUES = %w[transparent opaque auto].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the ImageEditCompletedEventOutputFormat SDK namespace.
+  module ImageEditCompletedEventOutputFormat
+    PNG = 'png'
+    WEBP = 'webp'
+    JPEG = 'jpeg'
+    VALUES = %w[png webp jpeg].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the ImageEditPartialImageEventBackground SDK namespace.
-module ImageEditPartialImageEventBackground
-  TRANSPARENT = 'transparent'
-  OPAQUE = 'opaque'
-  AUTO = 'auto'
-  VALUES = ['transparent', 'opaque', 'auto'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the ImageEditPartialImageEventOutputFormat SDK namespace.
-module ImageEditPartialImageEventOutputFormat
-  PNG = 'png'
-  WEBP = 'webp'
-  JPEG = 'jpeg'
-  VALUES = ['png', 'webp', 'jpeg'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the ImageEditPartialImageEventQuality SDK namespace.
-module ImageEditPartialImageEventQuality
-  LOW = 'low'
-  MEDIUM = 'medium'
-  HIGH = 'high'
-  XHIGH = 'xhigh'
-  MAX = 'max'
-  AUTO = 'auto'
-  VALUES = ['low', 'medium', 'high', 'xhigh', 'max', 'auto'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the ImageEditPartialImageEventType SDK namespace.
-module ImageEditPartialImageEventType
-  IMAGE_EDIT_PARTIAL_IMAGE = 'image_edit.partial_image'
-  VALUES = ['image_edit.partial_image'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('ImageEditPartialImageEventType', 'enum', "Unknown ImageEditPartialImageEventType: #{value}")
-  end
-end
-
-# Defines the ImageEditStreamEvent SDK namespace.
-module ImageEditStreamEvent
-  DISCRIMINATOR_MAPPING = {
-    "image_edit.partial_image" => -> { ImageEditPartialImageEvent },
-    "image_edit.completed" => -> { ImageEditCompletedEvent },
-  }.freeze
-
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('ImageEditStreamEvent', 'variant', "Unknown ImageEditStreamEvent discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalImageGenCompletedEventMetadata
-  FIELDS = {
-    safety_identifier: "safety_identifier",
-    type: "type",
-    b64_json: "b64_json",
-    created_at: "created_at",
-    size: "size",
-    quality: "quality",
-    background: "background",
-    output_format: "output_format",
-    usage: "usage",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    b64_json
-    created_at
-    size
-    quality
-    background
-    output_format
-    usage
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ImageGenCompletedEventType.from_value(value)
-    end,
-    quality: lambda do |value|
-      ::OctridevOpenai::ImageGenCompletedEventQuality.from_value(value)
-    end,
-    background: lambda do |value|
-      ::OctridevOpenai::ImageGenCompletedEventBackground.from_value(value)
-    end,
-    output_format: lambda do |value|
-      ::OctridevOpenai::ImageGenCompletedEventOutputFormat.from_value(value)
-    end,
-    usage: lambda do |value|
-      ::OctridevOpenai::ImagesUsage.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for ImageGenCompletedEvent.
-# Emitted when image generation has completed and the final image is available.
-class ImageGenCompletedEvent
-  include ImageGenStreamEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalImageGenCompletedEventMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalImageGenCompletedEventMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalImageGenCompletedEventMetadata::DECODERS
-
-  # @return [String] The effective safety identifier used for safety monitoring and abuse detection. This is the non-empty `safety_identifier` from the request, or the deprecated `user` value when `safety_identifier` is omitted, null, or empty.
-  attr_reader :safety_identifier
-  # @return [ImageGenCompletedEventType] The type of the event. Always `image_generation.completed`.
-  attr_reader :type
-  # @return [String] Base64-encoded image data, suitable for rendering as an image.
-  attr_reader :b64_json
-  # @return [Integer] The Unix timestamp when the event was created.
-  attr_reader :created_at
-  # @return [String] The image dimensions as a `WIDTHxHEIGHT` string, for example `1536x864`.
-  attr_reader :size
-  # @return [ImageGenCompletedEventQuality] The quality setting for the generated image.
-  attr_reader :quality
-  # @return [ImageGenCompletedEventBackground] The background setting for the generated image.
-  attr_reader :background
-  # @return [ImageGenCompletedEventOutputFormat] The output format for the generated image.
-  attr_reader :output_format
-  # @return [ImagesUsage] For the GPT image models only, the token usage information for the image generation.
-  attr_reader :usage
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the ImageEditCompletedEventQuality SDK namespace.
+  module ImageEditCompletedEventQuality
+    LOW = 'low'
+    MEDIUM = 'medium'
+    HIGH = 'high'
+    XHIGH = 'xhigh'
+    MAX = 'max'
+    AUTO = 'auto'
+    VALUES = %w[low medium high xhigh max auto].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the ImageEditCompletedEventType SDK namespace.
+  module ImageEditCompletedEventType
+    IMAGE_EDIT_COMPLETED = 'image_edit.completed'
+    VALUES = ['image_edit.completed'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('ImageEditCompletedEventType', 'enum', "Unknown ImageEditCompletedEventType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the ImageGenCompletedEventBackground SDK namespace.
-module ImageGenCompletedEventBackground
-  TRANSPARENT = 'transparent'
-  OPAQUE = 'opaque'
-  AUTO = 'auto'
-  VALUES = ['transparent', 'opaque', 'auto'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the ImageGenCompletedEventOutputFormat SDK namespace.
-module ImageGenCompletedEventOutputFormat
-  PNG = 'png'
-  WEBP = 'webp'
-  JPEG = 'jpeg'
-  VALUES = ['png', 'webp', 'jpeg'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the ImageGenCompletedEventQuality SDK namespace.
-module ImageGenCompletedEventQuality
-  LOW = 'low'
-  MEDIUM = 'medium'
-  HIGH = 'high'
-  XHIGH = 'xhigh'
-  MAX = 'max'
-  AUTO = 'auto'
-  VALUES = ['low', 'medium', 'high', 'xhigh', 'max', 'auto'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the ImageGenCompletedEventType SDK namespace.
-module ImageGenCompletedEventType
-  IMAGE_GENERATION_COMPLETED = 'image_generation.completed'
-  VALUES = ['image_generation.completed'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('ImageGenCompletedEventType', 'enum', "Unknown ImageGenCompletedEventType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalImageGenInputUsageDetailsMetadata
-  FIELDS = {
-    text_tokens: "text_tokens",
-    image_tokens: "image_tokens",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    text_tokens
-    image_tokens
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for ImageGenInputUsageDetails.
-# The input tokens detailed information for the image generation.
-class ImageGenInputUsageDetails
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalImageGenInputUsageDetailsMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalImageGenInputUsageDetailsMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalImageGenInputUsageDetailsMetadata::DECODERS
-
-  # @return [Integer] The number of text tokens in the input prompt.
-  attr_reader :text_tokens
-  # @return [Integer] The number of image tokens in the input prompt.
-  attr_reader :image_tokens
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalImageEditPartialImageEventMetadata
+    FIELDS = {
+      type: 'type',
+      b64_json: 'b64_json',
+      created_at: 'created_at',
+      size: 'size',
+      quality: 'quality',
+      background: 'background',
+      output_format: 'output_format',
+      partial_image_index: 'partial_image_index'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      b64_json
+      created_at
+      size
+      quality
+      background
+      output_format
+      partial_image_index
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ImageEditPartialImageEventType.from_value(value)
+      end,
+      quality: lambda do |value|
+        ::OctridevOpenai::ImageEditPartialImageEventQuality.from_value(value)
+      end,
+      background: lambda do |value|
+        ::OctridevOpenai::ImageEditPartialImageEventBackground.from_value(value)
+      end,
+      output_format: lambda do |value|
+        ::OctridevOpenai::ImageEditPartialImageEventOutputFormat.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ImageEditPartialImageEvent.
+  # Emitted when a partial image is available during image editing streaming.
+  class ImageEditPartialImageEvent
+    include ImageEditStreamEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalImageEditPartialImageEventMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalImageEditPartialImageEventMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalImageEditPartialImageEventMetadata::DECODERS
+
+    # @return [ImageEditPartialImageEventType] The type of the event. Always `image_edit.partial_image`.
+    attr_reader :type
+    # @return [String] Base64-encoded partial image data, suitable for rendering as an image.
+    attr_reader :b64_json
+    # @return [Integer] The Unix timestamp when the event was created.
+    attr_reader :created_at
+    # @return [String] The image dimensions as a `WIDTHxHEIGHT` string, for example `1536x864`.
+    attr_reader :size
+    # @return [ImageEditPartialImageEventQuality] The quality setting for the requested edited image.
+    attr_reader :quality
+    # @return [ImageEditPartialImageEventBackground] The background setting for the requested edited image.
+    attr_reader :background
+    # @return [ImageEditPartialImageEventOutputFormat] The output format for the requested edited image.
+    attr_reader :output_format
+    # @return [Integer] 0-based index for the partial image (streaming).
+    attr_reader :partial_image_index
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalImageGenOutputTokensDetailsMetadata
-  FIELDS = {
-    image_tokens: "image_tokens",
-    text_tokens: "text_tokens",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    image_tokens
-    text_tokens
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for ImageGenOutputTokensDetails.
-# The output token details for the image generation.
-class ImageGenOutputTokensDetails
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalImageGenOutputTokensDetailsMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalImageGenOutputTokensDetailsMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalImageGenOutputTokensDetailsMetadata::DECODERS
-
-  # @return [Integer] The number of image output tokens generated by the model.
-  attr_reader :image_tokens
-  # @return [Integer] The number of text output tokens generated by the model.
-  attr_reader :text_tokens
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the ImageEditPartialImageEventBackground SDK namespace.
+  module ImageEditPartialImageEventBackground
+    TRANSPARENT = 'transparent'
+    OPAQUE = 'opaque'
+    AUTO = 'auto'
+    VALUES = %w[transparent opaque auto].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the ImageEditPartialImageEventOutputFormat SDK namespace.
+  module ImageEditPartialImageEventOutputFormat
+    PNG = 'png'
+    WEBP = 'webp'
+    JPEG = 'jpeg'
+    VALUES = %w[png webp jpeg].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalImageGenPartialImageEventMetadata
-  FIELDS = {
-    type: "type",
-    b64_json: "b64_json",
-    created_at: "created_at",
-    size: "size",
-    quality: "quality",
-    background: "background",
-    output_format: "output_format",
-    partial_image_index: "partial_image_index",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    b64_json
-    created_at
-    size
-    quality
-    background
-    output_format
-    partial_image_index
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ImageGenPartialImageEventType.from_value(value)
-    end,
-    quality: lambda do |value|
-      ::OctridevOpenai::ImageGenPartialImageEventQuality.from_value(value)
-    end,
-    background: lambda do |value|
-      ::OctridevOpenai::ImageGenPartialImageEventBackground.from_value(value)
-    end,
-    output_format: lambda do |value|
-      ::OctridevOpenai::ImageGenPartialImageEventOutputFormat.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for ImageGenPartialImageEvent.
-# Emitted when a partial image is available during image generation streaming.
-class ImageGenPartialImageEvent
-  include ImageGenStreamEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalImageGenPartialImageEventMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalImageGenPartialImageEventMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalImageGenPartialImageEventMetadata::DECODERS
-
-  # @return [ImageGenPartialImageEventType] The type of the event. Always `image_generation.partial_image`.
-  attr_reader :type
-  # @return [String] Base64-encoded partial image data, suitable for rendering as an image.
-  attr_reader :b64_json
-  # @return [Integer] The Unix timestamp when the event was created.
-  attr_reader :created_at
-  # @return [String] The image dimensions as a `WIDTHxHEIGHT` string, for example `1536x864`.
-  attr_reader :size
-  # @return [ImageGenPartialImageEventQuality] The quality setting for the requested image.
-  attr_reader :quality
-  # @return [ImageGenPartialImageEventBackground] The background setting for the requested image.
-  attr_reader :background
-  # @return [ImageGenPartialImageEventOutputFormat] The output format for the requested image.
-  attr_reader :output_format
-  # @return [Integer] 0-based index for the partial image (streaming).
-  attr_reader :partial_image_index
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the ImageEditPartialImageEventQuality SDK namespace.
+  module ImageEditPartialImageEventQuality
+    LOW = 'low'
+    MEDIUM = 'medium'
+    HIGH = 'high'
+    XHIGH = 'xhigh'
+    MAX = 'max'
+    AUTO = 'auto'
+    VALUES = %w[low medium high xhigh max auto].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the ImageEditPartialImageEventType SDK namespace.
+  module ImageEditPartialImageEventType
+    IMAGE_EDIT_PARTIAL_IMAGE = 'image_edit.partial_image'
+    VALUES = ['image_edit.partial_image'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('ImageEditPartialImageEventType', 'enum', "Unknown ImageEditPartialImageEventType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the ImageEditStreamEvent SDK namespace.
+  module ImageEditStreamEvent
+    DISCRIMINATOR_MAPPING = {
+      'image_edit.partial_image' => -> { ImageEditPartialImageEvent },
+      'image_edit.completed' => -> { ImageEditCompletedEvent }
+    }.freeze
 
-# Defines the ImageGenPartialImageEventBackground SDK namespace.
-module ImageGenPartialImageEventBackground
-  TRANSPARENT = 'transparent'
-  OPAQUE = 'opaque'
-  AUTO = 'auto'
-  VALUES = ['transparent', 'opaque', 'auto'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
 
-# Defines the ImageGenPartialImageEventOutputFormat SDK namespace.
-module ImageGenPartialImageEventOutputFormat
-  PNG = 'png'
-  WEBP = 'webp'
-  JPEG = 'jpeg'
-  VALUES = ['png', 'webp', 'jpeg'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
 
-# Defines the ImageGenPartialImageEventQuality SDK namespace.
-module ImageGenPartialImageEventQuality
-  LOW = 'low'
-  MEDIUM = 'medium'
-  HIGH = 'high'
-  XHIGH = 'xhigh'
-  MAX = 'max'
-  AUTO = 'auto'
-  VALUES = ['low', 'medium', 'high', 'xhigh', 'max', 'auto'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
 
-# Defines the ImageGenPartialImageEventType SDK namespace.
-module ImageGenPartialImageEventType
-  IMAGE_GENERATION_PARTIAL_IMAGE = 'image_generation.partial_image'
-  VALUES = ['image_generation.partial_image'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('ImageGenPartialImageEventType', 'enum', "Unknown ImageGenPartialImageEventType: #{value}")
-  end
-end
-
-# Defines the ImageGenStreamEvent SDK namespace.
-module ImageGenStreamEvent
-  DISCRIMINATOR_MAPPING = {
-    "image_generation.partial_image" => -> { ImageGenPartialImageEvent },
-    "image_generation.completed" => -> { ImageGenCompletedEvent },
-  }.freeze
-
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('ImageGenStreamEvent', 'variant', "Unknown ImageGenStreamEvent discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalImageGenUsageMetadata
-  FIELDS = {
-    input_tokens: "input_tokens",
-    total_tokens: "total_tokens",
-    output_tokens: "output_tokens",
-    output_tokens_details: "output_tokens_details",
-    input_tokens_details: "input_tokens_details",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    input_tokens
-    total_tokens
-    output_tokens
-    input_tokens_details
-  ].freeze
-  DECODERS = {
-    output_tokens_details: lambda do |value|
-      ::OctridevOpenai::ImageGenOutputTokensDetails.from_hash(value)
-    end,
-    input_tokens_details: lambda do |value|
-      ::OctridevOpenai::ImageGenInputUsageDetails.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for ImageGenUsage.
-# For `gpt-image-1` only, the token usage information for the image generation.
-class ImageGenUsage
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalImageGenUsageMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalImageGenUsageMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalImageGenUsageMetadata::DECODERS
-
-  # @return [Integer] The number of tokens (images and text) in the input prompt.
-  attr_reader :input_tokens
-  # @return [Integer] The total number of tokens (images and text) used for the image generation.
-  attr_reader :total_tokens
-  # @return [Integer] The number of output tokens generated by the model.
-  attr_reader :output_tokens
-  # @return [ImageGenOutputTokensDetails] The output token details for the image generation.
-  attr_reader :output_tokens_details
-  # @return [ImageGenInputUsageDetails] The input tokens detailed information for the image generation.
-  attr_reader :input_tokens_details
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('ImageEditStreamEvent', 'variant', "Unknown ImageEditStreamEvent discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalImageGenCompletedEventMetadata
+    FIELDS = {
+      safety_identifier: 'safety_identifier',
+      type: 'type',
+      b64_json: 'b64_json',
+      created_at: 'created_at',
+      size: 'size',
+      quality: 'quality',
+      background: 'background',
+      output_format: 'output_format',
+      usage: 'usage'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      b64_json
+      created_at
+      size
+      quality
+      background
+      output_format
+      usage
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ImageGenCompletedEventType.from_value(value)
+      end,
+      quality: lambda do |value|
+        ::OctridevOpenai::ImageGenCompletedEventQuality.from_value(value)
+      end,
+      background: lambda do |value|
+        ::OctridevOpenai::ImageGenCompletedEventBackground.from_value(value)
+      end,
+      output_format: lambda do |value|
+        ::OctridevOpenai::ImageGenCompletedEventOutputFormat.from_value(value)
+      end,
+      usage: lambda do |value|
+        ::OctridevOpenai::ImagesUsage.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # API model for ImageGenCompletedEvent.
+  # Emitted when image generation has completed and the final image is available.
+  class ImageGenCompletedEvent
+    include ImageGenStreamEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalImageGenCompletedEventMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalImageGenCompletedEventMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalImageGenCompletedEventMetadata::DECODERS
+
+    # @return [String] The effective safety identifier used for safety monitoring and abuse detection. This is the non-empty `safety_identifier` from the request, or the deprecated `user` value when `safety_identifier` is omitted, null, or empty.
+    attr_reader :safety_identifier
+    # @return [ImageGenCompletedEventType] The type of the event. Always `image_generation.completed`.
+    attr_reader :type
+    # @return [String] Base64-encoded image data, suitable for rendering as an image.
+    attr_reader :b64_json
+    # @return [Integer] The Unix timestamp when the event was created.
+    attr_reader :created_at
+    # @return [String] The image dimensions as a `WIDTHxHEIGHT` string, for example `1536x864`.
+    attr_reader :size
+    # @return [ImageGenCompletedEventQuality] The quality setting for the generated image.
+    attr_reader :quality
+    # @return [ImageGenCompletedEventBackground] The background setting for the generated image.
+    attr_reader :background
+    # @return [ImageGenCompletedEventOutputFormat] The output format for the generated image.
+    attr_reader :output_format
+    # @return [ImagesUsage] For the GPT image models only, the token usage information for the image generation.
+    attr_reader :usage
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
 
-# Internal model hydration metadata.
-class SdkInternalImageRefParamMetadata
-  FIELDS = {
-    image_url: "image_url",
-    file_id: "file_id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for ImageRefParam.
-# Reference an input image by either URL or uploaded file ID. Provide exactly one of `image_url` or `file_id`.
-class ImageRefParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalImageRefParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalImageRefParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalImageRefParamMetadata::DECODERS
-
-  # @return [String] A fully qualified URL or base64-encoded data URL.
-  attr_reader :image_url
-  # @return [String] The File API ID of an uploaded image to use as input.
-  attr_reader :file_id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the ImageGenCompletedEventBackground SDK namespace.
+  module ImageGenCompletedEventBackground
+    TRANSPARENT = 'transparent'
+    OPAQUE = 'opaque'
+    AUTO = 'auto'
+    VALUES = %w[transparent opaque auto].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the ImageGenCompletedEventOutputFormat SDK namespace.
+  module ImageGenCompletedEventOutputFormat
+    PNG = 'png'
+    WEBP = 'webp'
+    JPEG = 'jpeg'
+    VALUES = %w[png webp jpeg].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the ImageGenCompletedEventQuality SDK namespace.
+  module ImageGenCompletedEventQuality
+    LOW = 'low'
+    MEDIUM = 'medium'
+    HIGH = 'high'
+    XHIGH = 'xhigh'
+    MAX = 'max'
+    AUTO = 'auto'
+    VALUES = %w[low medium high xhigh max auto].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
 
-# Internal model hydration metadata.
-class SdkInternalImagesResponseMetadata
-  FIELDS = {
-    safety_identifier: "safety_identifier",
-    created: "created",
-    data: "data",
-    background: "background",
-    output_format: "output_format",
-    size: "size",
-    quality: "quality",
-    usage: "usage",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    created
-  ].freeze
-  DECODERS = {
-    data: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::Image.from_hash(item) }
-    end,
-    background: lambda do |value|
-      ::OctridevOpenai::ImagesResponseBackground.from_value(value)
-    end,
-    output_format: lambda do |value|
-      ::OctridevOpenai::ImagesResponseOutputFormat.from_value(value)
-    end,
-    quality: lambda do |value|
-      ::OctridevOpenai::ImagesResponseQuality.from_value(value)
-    end,
-    usage: lambda do |value|
-      ::OctridevOpenai::ImageGenUsage.from_hash(value)
-    end,
-  }.freeze
-end
+  # Defines the ImageGenCompletedEventType SDK namespace.
+  module ImageGenCompletedEventType
+    IMAGE_GENERATION_COMPLETED = 'image_generation.completed'
+    VALUES = ['image_generation.completed'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('ImageGenCompletedEventType', 'enum', "Unknown ImageGenCompletedEventType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalImageGenInputUsageDetailsMetadata
+    FIELDS = {
+      text_tokens: 'text_tokens',
+      image_tokens: 'image_tokens'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      text_tokens
+      image_tokens
+    ].freeze
+    DECODERS = {}.freeze
+  end
+
+  # API model for ImageGenInputUsageDetails.
+  # The input tokens detailed information for the image generation.
+  class ImageGenInputUsageDetails
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalImageGenInputUsageDetailsMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalImageGenInputUsageDetailsMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalImageGenInputUsageDetailsMetadata::DECODERS
+
+    # @return [Integer] The number of text tokens in the input prompt.
+    attr_reader :text_tokens
+    # @return [Integer] The number of image tokens in the input prompt.
+    attr_reader :image_tokens
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalImageGenOutputTokensDetailsMetadata
+    FIELDS = {
+      image_tokens: 'image_tokens',
+      text_tokens: 'text_tokens'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      image_tokens
+      text_tokens
+    ].freeze
+    DECODERS = {}.freeze
+  end
+
+  # API model for ImageGenOutputTokensDetails.
+  # The output token details for the image generation.
+  class ImageGenOutputTokensDetails
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalImageGenOutputTokensDetailsMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalImageGenOutputTokensDetailsMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalImageGenOutputTokensDetailsMetadata::DECODERS
+
+    # @return [Integer] The number of image output tokens generated by the model.
+    attr_reader :image_tokens
+    # @return [Integer] The number of text output tokens generated by the model.
+    attr_reader :text_tokens
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalImageGenPartialImageEventMetadata
+    FIELDS = {
+      type: 'type',
+      b64_json: 'b64_json',
+      created_at: 'created_at',
+      size: 'size',
+      quality: 'quality',
+      background: 'background',
+      output_format: 'output_format',
+      partial_image_index: 'partial_image_index'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      b64_json
+      created_at
+      size
+      quality
+      background
+      output_format
+      partial_image_index
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ImageGenPartialImageEventType.from_value(value)
+      end,
+      quality: lambda do |value|
+        ::OctridevOpenai::ImageGenPartialImageEventQuality.from_value(value)
+      end,
+      background: lambda do |value|
+        ::OctridevOpenai::ImageGenPartialImageEventBackground.from_value(value)
+      end,
+      output_format: lambda do |value|
+        ::OctridevOpenai::ImageGenPartialImageEventOutputFormat.from_value(value)
+      end
+    }.freeze
+  end
+
+  # API model for ImageGenPartialImageEvent.
+  # Emitted when a partial image is available during image generation streaming.
+  class ImageGenPartialImageEvent
+    include ImageGenStreamEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalImageGenPartialImageEventMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalImageGenPartialImageEventMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalImageGenPartialImageEventMetadata::DECODERS
+
+    # @return [ImageGenPartialImageEventType] The type of the event. Always `image_generation.partial_image`.
+    attr_reader :type
+    # @return [String] Base64-encoded partial image data, suitable for rendering as an image.
+    attr_reader :b64_json
+    # @return [Integer] The Unix timestamp when the event was created.
+    attr_reader :created_at
+    # @return [String] The image dimensions as a `WIDTHxHEIGHT` string, for example `1536x864`.
+    attr_reader :size
+    # @return [ImageGenPartialImageEventQuality] The quality setting for the requested image.
+    attr_reader :quality
+    # @return [ImageGenPartialImageEventBackground] The background setting for the requested image.
+    attr_reader :background
+    # @return [ImageGenPartialImageEventOutputFormat] The output format for the requested image.
+    attr_reader :output_format
+    # @return [Integer] 0-based index for the partial image (streaming).
+    attr_reader :partial_image_index
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the ImageGenPartialImageEventBackground SDK namespace.
+  module ImageGenPartialImageEventBackground
+    TRANSPARENT = 'transparent'
+    OPAQUE = 'opaque'
+    AUTO = 'auto'
+    VALUES = %w[transparent opaque auto].freeze
+    def self.from_value(value)
+      value
+    end
+  end
+
+  # Defines the ImageGenPartialImageEventOutputFormat SDK namespace.
+  module ImageGenPartialImageEventOutputFormat
+    PNG = 'png'
+    WEBP = 'webp'
+    JPEG = 'jpeg'
+    VALUES = %w[png webp jpeg].freeze
+    def self.from_value(value)
+      value
+    end
+  end
+
+  # Defines the ImageGenPartialImageEventQuality SDK namespace.
+  module ImageGenPartialImageEventQuality
+    LOW = 'low'
+    MEDIUM = 'medium'
+    HIGH = 'high'
+    XHIGH = 'xhigh'
+    MAX = 'max'
+    AUTO = 'auto'
+    VALUES = %w[low medium high xhigh max auto].freeze
+    def self.from_value(value)
+      value
+    end
+  end
+
+  # Defines the ImageGenPartialImageEventType SDK namespace.
+  module ImageGenPartialImageEventType
+    IMAGE_GENERATION_PARTIAL_IMAGE = 'image_generation.partial_image'
+    VALUES = ['image_generation.partial_image'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('ImageGenPartialImageEventType', 'enum', "Unknown ImageGenPartialImageEventType: #{value}")
+    end
+  end
+
+  # Defines the ImageGenStreamEvent SDK namespace.
+  module ImageGenStreamEvent
+    DISCRIMINATOR_MAPPING = {
+      'image_generation.partial_image' => -> { ImageGenPartialImageEvent },
+      'image_generation.completed' => -> { ImageGenCompletedEvent }
+    }.freeze
+
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('ImageGenStreamEvent', 'variant', "Unknown ImageGenStreamEvent discriminator: #{hash['type'].inspect}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalImageGenUsageMetadata
+    FIELDS = {
+      input_tokens: 'input_tokens',
+      total_tokens: 'total_tokens',
+      output_tokens: 'output_tokens',
+      output_tokens_details: 'output_tokens_details',
+      input_tokens_details: 'input_tokens_details'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      input_tokens
+      total_tokens
+      output_tokens
+      input_tokens_details
+    ].freeze
+    DECODERS = {
+      output_tokens_details: lambda do |value|
+        ::OctridevOpenai::ImageGenOutputTokensDetails.from_hash(value)
+      end,
+      input_tokens_details: lambda do |value|
+        ::OctridevOpenai::ImageGenInputUsageDetails.from_hash(value)
+      end
+    }.freeze
+  end
+
+  # API model for ImageGenUsage.
+  # For `gpt-image-1` only, the token usage information for the image generation.
+  class ImageGenUsage
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalImageGenUsageMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalImageGenUsageMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalImageGenUsageMetadata::DECODERS
+
+    # @return [Integer] The number of tokens (images and text) in the input prompt.
+    attr_reader :input_tokens
+    # @return [Integer] The total number of tokens (images and text) used for the image generation.
+    attr_reader :total_tokens
+    # @return [Integer] The number of output tokens generated by the model.
+    attr_reader :output_tokens
+    # @return [ImageGenOutputTokensDetails] The output token details for the image generation.
+    attr_reader :output_tokens_details
+    # @return [ImageGenInputUsageDetails] The input tokens detailed information for the image generation.
+    attr_reader :input_tokens_details
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalImageRefParamMetadata
+    FIELDS = {
+      image_url: 'image_url',
+      file_id: 'file_id'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
+  end
+
+  # API model for ImageRefParam.
+  # Reference an input image by either URL or uploaded file ID. Provide exactly one of `image_url` or `file_id`.
+  class ImageRefParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalImageRefParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalImageRefParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalImageRefParamMetadata::DECODERS
+
+    # @return [String] A fully qualified URL or base64-encoded data URL.
+    attr_reader :image_url
+    # @return [String] The File API ID of an uploaded image to use as input.
+    attr_reader :file_id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalImagesResponseMetadata
+    FIELDS = {
+      safety_identifier: 'safety_identifier',
+      created: 'created',
+      data: 'data',
+      background: 'background',
+      output_format: 'output_format',
+      size: 'size',
+      quality: 'quality',
+      usage: 'usage'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      created
+    ].freeze
+    DECODERS = {
+      data: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::Image.from_hash(item) }
+      end,
+      background: lambda do |value|
+        ::OctridevOpenai::ImagesResponseBackground.from_value(value)
+      end,
+      output_format: lambda do |value|
+        ::OctridevOpenai::ImagesResponseOutputFormat.from_value(value)
+      end,
+      quality: lambda do |value|
+        ::OctridevOpenai::ImagesResponseQuality.from_value(value)
+      end,
+      usage: lambda do |value|
+        ::OctridevOpenai::ImageGenUsage.from_hash(value)
+      end
+    }.freeze
+  end
 end

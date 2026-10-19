@@ -5,407 +5,396 @@
 
 # sessions domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalAutomaticThreadTitlingParamMetadata
-  FIELDS = {
-    enabled: "enabled",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for AutomaticThreadTitlingParam.
-# Controls whether ChatKit automatically generates thread titles.
-class AutomaticThreadTitlingParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAutomaticThreadTitlingParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAutomaticThreadTitlingParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAutomaticThreadTitlingParamMetadata::DECODERS
-
-  # @return [Boolean] Enable automatic thread title generation. Defaults to true.
-  attr_reader :enabled
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalAutomaticThreadTitlingParamMetadata
+    FIELDS = {
+      enabled: 'enabled'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for AutomaticThreadTitlingParam.
+  # Controls whether ChatKit automatically generates thread titles.
+  class AutomaticThreadTitlingParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAutomaticThreadTitlingParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAutomaticThreadTitlingParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAutomaticThreadTitlingParamMetadata::DECODERS
+
+    # @return [Boolean] Enable automatic thread title generation. Defaults to true.
+    attr_reader :enabled
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalChatkitConfigurationParamMetadata
-  FIELDS = {
-    automatic_thread_titling: "automatic_thread_titling",
-    file_upload: "file_upload",
-    history: "history",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    automatic_thread_titling: lambda do |value|
-      ::OctridevOpenai::AutomaticThreadTitlingParam.from_hash(value)
-    end,
-    file_upload: lambda do |value|
-      ::OctridevOpenai::FileUploadParam.from_hash(value)
-    end,
-    history: lambda do |value|
-      ::OctridevOpenai::HistoryParam.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for ChatkitConfigurationParam.
-# Optional per-session configuration settings for ChatKit behavior.
-class ChatkitConfigurationParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalChatkitConfigurationParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalChatkitConfigurationParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalChatkitConfigurationParamMetadata::DECODERS
-
-  # @return [AutomaticThreadTitlingParam] Configuration for automatic thread titling. When omitted, automatic thread titling is enabled by default.
-  attr_reader :automatic_thread_titling
-  # @return [FileUploadParam] Configuration for upload enablement and limits. When omitted, uploads are disabled by default (max_files 10, max_file_size 512 MB).
-  attr_reader :file_upload
-  # @return [HistoryParam] Configuration for chat history retention. When omitted, history is enabled by default with no limit on recent_threads (null).
-  attr_reader :history
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalChatkitConfigurationParamMetadata
+    FIELDS = {
+      automatic_thread_titling: 'automatic_thread_titling',
+      file_upload: 'file_upload',
+      history: 'history'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      automatic_thread_titling: lambda do |value|
+        ::OctridevOpenai::AutomaticThreadTitlingParam.from_hash(value)
+      end,
+      file_upload: lambda do |value|
+        ::OctridevOpenai::FileUploadParam.from_hash(value)
+      end,
+      history: lambda do |value|
+        ::OctridevOpenai::HistoryParam.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ChatkitConfigurationParam.
+  # Optional per-session configuration settings for ChatKit behavior.
+  class ChatkitConfigurationParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalChatkitConfigurationParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalChatkitConfigurationParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalChatkitConfigurationParamMetadata::DECODERS
+
+    # @return [AutomaticThreadTitlingParam] Configuration for automatic thread titling. When omitted, automatic thread titling is enabled by default.
+    attr_reader :automatic_thread_titling
+    # @return [FileUploadParam] Configuration for upload enablement and limits. When omitted, uploads are disabled by default (max_files 10, max_file_size 512 MB).
+    attr_reader :file_upload
+    # @return [HistoryParam] Configuration for chat history retention. When omitted, history is enabled by default with no limit on recent_threads (null).
+    attr_reader :history
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalCreateChatSessionBodyMetadata
-  FIELDS = {
-    workflow: "workflow",
-    user: "user",
-    expires_after: "expires_after",
-    rate_limits: "rate_limits",
-    chatkit_configuration: "chatkit_configuration",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    workflow
-    user
-  ].freeze
-  DECODERS = {
-    workflow: lambda do |value|
-      ::OctridevOpenai::WorkflowParam.from_hash(value)
-    end,
-    expires_after: lambda do |value|
-      ::OctridevOpenai::ExpiresAfterParam.from_hash(value)
-    end,
-    rate_limits: lambda do |value|
-      ::OctridevOpenai::RateLimitsParam.from_hash(value)
-    end,
-    chatkit_configuration: lambda do |value|
-      ::OctridevOpenai::ChatkitConfigurationParam.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for CreateChatSessionBody.
-# Parameters for provisioning a new ChatKit session.
-class CreateChatSessionBody
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCreateChatSessionBodyMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCreateChatSessionBodyMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCreateChatSessionBodyMetadata::DECODERS
-
-  # @return [WorkflowParam] Workflow that powers the session.
-  attr_reader :workflow
-  # @return [String] A free-form string that identifies your end user; ensures this Session can access other objects that have the same `user` scope.
-  attr_reader :user
-  # @return [ExpiresAfterParam] Optional override for session expiration timing in seconds from creation. Defaults to 10 minutes.
-  attr_reader :expires_after
-  # @return [RateLimitsParam] Optional override for per-minute request limits. When omitted, defaults to 10.
-  attr_reader :rate_limits
-  # @return [ChatkitConfigurationParam] Optional overrides for ChatKit runtime configuration features
-  attr_reader :chatkit_configuration
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalCreateChatSessionBodyMetadata
+    FIELDS = {
+      workflow: 'workflow',
+      user: 'user',
+      expires_after: 'expires_after',
+      rate_limits: 'rate_limits',
+      chatkit_configuration: 'chatkit_configuration'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      workflow
+      user
+    ].freeze
+    DECODERS = {
+      workflow: lambda do |value|
+        ::OctridevOpenai::WorkflowParam.from_hash(value)
+      end,
+      expires_after: lambda do |value|
+        ::OctridevOpenai::ExpiresAfterParam.from_hash(value)
+      end,
+      rate_limits: lambda do |value|
+        ::OctridevOpenai::RateLimitsParam.from_hash(value)
+      end,
+      chatkit_configuration: lambda do |value|
+        ::OctridevOpenai::ChatkitConfigurationParam.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for CreateChatSessionBody.
+  # Parameters for provisioning a new ChatKit session.
+  class CreateChatSessionBody
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCreateChatSessionBodyMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCreateChatSessionBodyMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCreateChatSessionBodyMetadata::DECODERS
+
+    # @return [WorkflowParam] Workflow that powers the session.
+    attr_reader :workflow
+    # @return [String] A free-form string that identifies your end user; ensures this Session can access other objects that have the same `user` scope.
+    attr_reader :user
+    # @return [ExpiresAfterParam] Optional override for session expiration timing in seconds from creation. Defaults to 10 minutes.
+    attr_reader :expires_after
+    # @return [RateLimitsParam] Optional override for per-minute request limits. When omitted, defaults to 10.
+    attr_reader :rate_limits
+    # @return [ChatkitConfigurationParam] Optional overrides for ChatKit runtime configuration features
+    attr_reader :chatkit_configuration
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalExpiresAfterParamMetadata
-  FIELDS = {
-    anchor: "anchor",
-    seconds: "seconds",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    anchor
-    seconds
-  ].freeze
-  DECODERS = {
-    anchor: lambda do |value|
-      ::OctridevOpenai::ExpiresAfterParamAnchor.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for ExpiresAfterParam.
-# Controls when the session expires relative to an anchor timestamp.
-class ExpiresAfterParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalExpiresAfterParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalExpiresAfterParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalExpiresAfterParamMetadata::DECODERS
-
-  # @return [ExpiresAfterParamAnchor] Base timestamp used to calculate expiration. Currently fixed to `created_at`.
-  attr_reader :anchor
-  # @return [Integer] Number of seconds after the anchor when the session expires.
-  attr_reader :seconds
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalExpiresAfterParamMetadata
+    FIELDS = {
+      anchor: 'anchor',
+      seconds: 'seconds'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      anchor
+      seconds
+    ].freeze
+    DECODERS = {
+      anchor: lambda do |value|
+        ::OctridevOpenai::ExpiresAfterParamAnchor.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ExpiresAfterParam.
+  # Controls when the session expires relative to an anchor timestamp.
+  class ExpiresAfterParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalExpiresAfterParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalExpiresAfterParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalExpiresAfterParamMetadata::DECODERS
+
+    # @return [ExpiresAfterParamAnchor] Base timestamp used to calculate expiration. Currently fixed to `created_at`.
+    attr_reader :anchor
+    # @return [Integer] Number of seconds after the anchor when the session expires.
+    attr_reader :seconds
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the ExpiresAfterParamAnchor SDK namespace.
-module ExpiresAfterParamAnchor
-  CREATED_AT = 'created_at'
-  VALUES = ['created_at'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalFileUploadParamMetadata
-  FIELDS = {
-    enabled: "enabled",
-    max_file_size: "max_file_size",
-    max_files: "max_files",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for FileUploadParam.
-# Controls whether users can upload files.
-class FileUploadParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalFileUploadParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalFileUploadParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalFileUploadParamMetadata::DECODERS
-
-  # @return [Boolean] Enable uploads for this session. Defaults to false.
-  attr_reader :enabled
-  # @return [Integer] Maximum size in megabytes for each uploaded file. Defaults to 512 MB, which is the maximum allowable size.
-  attr_reader :max_file_size
-  # @return [Integer] Maximum number of files that can be uploaded to the session. Defaults to 10.
-  attr_reader :max_files
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the ExpiresAfterParamAnchor SDK namespace.
+  module ExpiresAfterParamAnchor
+    CREATED_AT = 'created_at'
+    VALUES = ['created_at'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalFileUploadParamMetadata
+    FIELDS = {
+      enabled: 'enabled',
+      max_file_size: 'max_file_size',
+      max_files: 'max_files'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for FileUploadParam.
+  # Controls whether users can upload files.
+  class FileUploadParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalFileUploadParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalFileUploadParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalFileUploadParamMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalHistoryParamMetadata
-  FIELDS = {
-    enabled: "enabled",
-    recent_threads: "recent_threads",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
+    # @return [Boolean] Enable uploads for this session. Defaults to false.
+    attr_reader :enabled
+    # @return [Integer] Maximum size in megabytes for each uploaded file. Defaults to 512 MB, which is the maximum allowable size.
+    attr_reader :max_file_size
+    # @return [Integer] Maximum number of files that can be uploaded to the session. Defaults to 10.
+    attr_reader :max_files
 
-# API model for HistoryParam.
-# Controls how much historical context is retained for the session.
-class HistoryParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalHistoryParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalHistoryParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalHistoryParamMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [Boolean] Enables chat users to access previous ChatKit threads. Defaults to true.
-  attr_reader :enabled
-  # @return [Integer] Number of recent ChatKit threads users have access to. Defaults to unlimited when unset.
-  attr_reader :recent_threads
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalHistoryParamMetadata
+    FIELDS = {
+      enabled: 'enabled',
+      recent_threads: 'recent_threads'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for HistoryParam.
+  # Controls how much historical context is retained for the session.
+  class HistoryParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalHistoryParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalHistoryParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalHistoryParamMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalRateLimitsParamMetadata
-  FIELDS = {
-    max_requests_per1_minute: "max_requests_per_1_minute",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
+    # @return [Boolean] Enables chat users to access previous ChatKit threads. Defaults to true.
+    attr_reader :enabled
+    # @return [Integer] Number of recent ChatKit threads users have access to. Defaults to unlimited when unset.
+    attr_reader :recent_threads
 
-# API model for RateLimitsParam.
-# Controls request rate limits for the session.
-class RateLimitsParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRateLimitsParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRateLimitsParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRateLimitsParamMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [Integer] Maximum number of requests allowed per minute for the session. Defaults to 10.
-  attr_reader :max_requests_per1_minute
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalRateLimitsParamMetadata
+    FIELDS = {
+      max_requests_per1_minute: 'max_requests_per_1_minute'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for RateLimitsParam.
+  # Controls request rate limits for the session.
+  class RateLimitsParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRateLimitsParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRateLimitsParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRateLimitsParamMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalWorkflowParamMetadata
-  FIELDS = {
-    id: "id",
-    version: "version",
-    state_variables: "state_variables",
-    tracing: "tracing",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-  ].freeze
-  DECODERS = {
-    tracing: lambda do |value|
-      ::OctridevOpenai::WorkflowTracingParam.from_hash(value)
-    end,
-  }.freeze
-end
+    # @return [Integer] Maximum number of requests allowed per minute for the session. Defaults to 10.
+    attr_reader :max_requests_per1_minute
 
-# API model for WorkflowParam.
-# Workflow reference and overrides applied to the chat session.
-class WorkflowParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalWorkflowParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalWorkflowParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalWorkflowParamMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [String] Identifier for the workflow invoked by the session.
-  attr_reader :id
-  # @return [String] Specific workflow version to run. Defaults to the latest deployed version.
-  attr_reader :version
-  # @return [Hash] State variables forwarded to the workflow. Keys may be up to 64 characters, values must be primitive types, and the map defaults to an empty object.
-  attr_reader :state_variables
-  # @return [WorkflowTracingParam] Optional tracing overrides for the workflow invocation. When omitted, tracing is enabled by default.
-  attr_reader :tracing
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalWorkflowParamMetadata
+    FIELDS = {
+      id: 'id',
+      version: 'version',
+      state_variables: 'state_variables',
+      tracing: 'tracing'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+    ].freeze
+    DECODERS = {
+      tracing: lambda do |value|
+        ::OctridevOpenai::WorkflowTracingParam.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for WorkflowParam.
+  # Workflow reference and overrides applied to the chat session.
+  class WorkflowParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalWorkflowParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalWorkflowParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalWorkflowParamMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalWorkflowTracingParamMetadata
-  FIELDS = {
-    enabled: "enabled",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
+    # @return [String] Identifier for the workflow invoked by the session.
+    attr_reader :id
+    # @return [String] Specific workflow version to run. Defaults to the latest deployed version.
+    attr_reader :version
+    # @return [Hash] State variables forwarded to the workflow. Keys may be up to 64 characters, values must be primitive types, and the map defaults to an empty object.
+    attr_reader :state_variables
+    # @return [WorkflowTracingParam] Optional tracing overrides for the workflow invocation. When omitted, tracing is enabled by default.
+    attr_reader :tracing
 
-# API model for WorkflowTracingParam.
-# Controls diagnostic tracing during the session.
-class WorkflowTracingParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalWorkflowTracingParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalWorkflowTracingParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalWorkflowTracingParamMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [Boolean] Whether tracing is enabled during the session. Defaults to true.
-  attr_reader :enabled
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalWorkflowTracingParamMetadata
+    FIELDS = {
+      enabled: 'enabled'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
   end
-end
+
+  # API model for WorkflowTracingParam.
+  # Controls diagnostic tracing during the session.
+  class WorkflowTracingParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalWorkflowTracingParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalWorkflowTracingParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalWorkflowTracingParamMetadata::DECODERS
+
+    # @return [Boolean] Whether tracing is enabled during the session. Defaults to true.
+    attr_reader :enabled
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
 end

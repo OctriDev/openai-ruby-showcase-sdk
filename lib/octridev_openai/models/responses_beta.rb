@@ -5,668 +5,669 @@
 
 # responses_beta domain models
 module OctridevOpenai
-# Defines the BetaAnnotation SDK namespace.
-module BetaAnnotation
-  DISCRIMINATOR_MAPPING = {
-    "file_citation" => -> { BetaFileCitationBody },
-    "url_citation" => -> { BetaUrlCitationBody },
-    "container_file_citation" => -> { BetaContainerFileCitationBody },
-    "file_path" => -> { BetaFilePath },
-  }.freeze
+  # Defines the BetaAnnotation SDK namespace.
+  module BetaAnnotation
+    DISCRIMINATOR_MAPPING = {
+      'file_citation' => -> { BetaFileCitationBody },
+      'url_citation' => -> { BetaUrlCitationBody },
+      'container_file_citation' => -> { BetaContainerFileCitationBody },
+      'file_path' => -> { BetaFilePath }
+    }.freeze
 
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
 
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
 
-    raise SdkValidationError.new('BetaAnnotation', 'variant', "Unknown BetaAnnotation discriminator: #{hash["type"].inspect}")
-  end
-end
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
 
-# Internal model hydration metadata.
-class SdkInternalBetaApproximateLocationMetadata
-  FIELDS = {
-    type: "type",
-    country: "country",
-    region: "region",
-    city: "city",
-    timezone: "timezone",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaApproximateLocationType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaApproximateLocation.
-# Typed representation of the `BetaApproximateLocation` API schema.
-class BetaApproximateLocation
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaApproximateLocationMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaApproximateLocationMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaApproximateLocationMetadata::DECODERS
-
-  # @return [BetaApproximateLocationType] The type of location approximation. Always `approximate`.
-  attr_reader :type
-  # @return [String] Optional `string` value serialized in the `country` wire field.
-  attr_reader :country
-  # @return [String] Optional `string` value serialized in the `region` wire field.
-  attr_reader :region
-  # @return [String] Optional `string` value serialized in the `city` wire field.
-  attr_reader :city
-  # @return [String] Optional `string` value serialized in the `timezone` wire field.
-  attr_reader :timezone
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('BetaAnnotation', 'variant', "Unknown BetaAnnotation discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalBetaApproximateLocationMetadata
+    FIELDS = {
+      type: 'type',
+      country: 'country',
+      region: 'region',
+      city: 'city',
+      timezone: 'timezone'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaApproximateLocationType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for BetaApproximateLocation.
+  # Typed representation of the `BetaApproximateLocation` API schema.
+  class BetaApproximateLocation
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaApproximateLocationMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaApproximateLocationMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaApproximateLocationMetadata::DECODERS
 
-# Defines the BetaApproximateLocationType SDK namespace.
-module BetaApproximateLocationType
-  APPROXIMATE = 'approximate'
-  VALUES = ['approximate'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    # @return [BetaApproximateLocationType] The type of location approximation. Always `approximate`.
+    attr_reader :type
+    # @return [String] Optional `string` value serialized in the `country` wire field.
+    attr_reader :country
+    # @return [String] Optional `string` value serialized in the `region` wire field.
+    attr_reader :region
+    # @return [String] Optional `string` value serialized in the `city` wire field.
+    attr_reader :city
+    # @return [String] Optional `string` value serialized in the `timezone` wire field.
+    attr_reader :timezone
 
-# Defines the BetaCacheMissReasonTypeEnum SDK namespace.
-module BetaCacheMissReasonTypeEnum
-  MODEL_CHANGED = 'model_changed'
-  PROMPT_CACHE_KEY_CHANGED = 'prompt_cache_key_changed'
-  TOOLS_CHANGED = 'tools_changed'
-  TEXT_FORMAT_CHANGED = 'text_format_changed'
-  REASONING_EFFORT_CHANGED = 'reasoning_effort_changed'
-  VERBOSITY_CHANGED = 'verbosity_changed'
-  CONTEXT_COMPACTED = 'context_compacted'
-  INPUT_CHANGED = 'input_changed'
-  SERVICE_TIER_CHANGED = 'service_tier_changed'
-  VALUES = [
-    'model_changed', 'prompt_cache_key_changed', 'tools_changed', 'text_format_changed',
-    'reasoning_effort_changed', 'verbosity_changed', 'context_compacted', 'input_changed',
-    'service_tier_changed'
-  ].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# Defines the BetaCallableToolAllowedCaller SDK namespace.
-module BetaCallableToolAllowedCaller
-  DIRECT = 'direct'
-  PROGRAMMATIC = 'programmatic'
-  VALUES = ['direct', 'programmatic'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-# Internal model hydration metadata.
-class SdkInternalBetaComparisonFilterMetadata
-  FIELDS = {
-    type: "type",
-    key: "key",
-    value: "value",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    key
-    value
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaComparisonFilterType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaComparisonFilter.
-# A filter used to compare a specified attribute key to a given value using a defined comparison operation.
-class BetaComparisonFilter
-  include BetaFilters
-  include BetaCompoundFilterFiltersItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaComparisonFilterMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaComparisonFilterMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaComparisonFilterMetadata::DECODERS
-
-  # @return [BetaComparisonFilterType] Specifies the comparison operator: `eq`, `ne`, `gt`, `gte`, `lt`, `lte`, `in`, `nin`. - `eq`: equals - `ne`: not equal - `gt`: greater than - `gte`: greater than or equal - `lt`: less than - `lte`: less than or equal - `in`: in - `nin`: not in
-  attr_reader :type
-  # @return [String] The key to compare against the value.
-  attr_reader :key
-  # @return [Object] The value to compare against the attribute key; supports string, number, or boolean types.
-  attr_reader :value
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the BetaApproximateLocationType SDK namespace.
+  module BetaApproximateLocationType
+    APPROXIMATE = 'approximate'
+    VALUES = ['approximate'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the BetaComparisonFilterType SDK namespace.
-module BetaComparisonFilterType
-  EQ = 'eq'
-  NE = 'ne'
-  GT = 'gt'
-  GTE = 'gte'
-  LT = 'lt'
-  LTE = 'lte'
-  IN = 'in'
-  NIN = 'nin'
-  VALUES = ['eq', 'ne', 'gt', 'gte', 'lt', 'lte', 'in', 'nin'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('BetaComparisonFilterType', 'enum', "Unknown BetaComparisonFilterType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaContextManagementParamMetadata
-  FIELDS = {
-    type: "type",
-    compact_threshold: "compact_threshold",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for BetaContextManagementParam.
-# Typed representation of the `BetaContextManagementParam` API schema.
-class BetaContextManagementParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaContextManagementParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaContextManagementParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaContextManagementParamMetadata::DECODERS
-
-  # @return [String] The context management entry type. Currently only 'compaction' is supported.
-  attr_reader :type
-  # @return [Integer] Optional API value serialized in the `compact_threshold` wire field.
-  attr_reader :compact_threshold
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the BetaCacheMissReasonTypeEnum SDK namespace.
+  module BetaCacheMissReasonTypeEnum
+    MODEL_CHANGED = 'model_changed'
+    PROMPT_CACHE_KEY_CHANGED = 'prompt_cache_key_changed'
+    TOOLS_CHANGED = 'tools_changed'
+    TEXT_FORMAT_CHANGED = 'text_format_changed'
+    REASONING_EFFORT_CHANGED = 'reasoning_effort_changed'
+    VERBOSITY_CHANGED = 'verbosity_changed'
+    CONTEXT_COMPACTED = 'context_compacted'
+    INPUT_CHANGED = 'input_changed'
+    SERVICE_TIER_CHANGED = 'service_tier_changed'
+    VALUES = %w[
+      model_changed prompt_cache_key_changed tools_changed text_format_changed
+      reasoning_effort_changed verbosity_changed context_compacted input_changed
+      service_tier_changed
+    ].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the BetaCallableToolAllowedCaller SDK namespace.
+  module BetaCallableToolAllowedCaller
+    DIRECT = 'direct'
+    PROGRAMMATIC = 'programmatic'
+    VALUES = %w[direct programmatic].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaCoordParamMetadata
-  FIELDS = {
-    x_coordinate: "x",
-    y_coordinate: "y",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    x_coordinate
-    y_coordinate
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for BetaCoordParam.
-# An x/y coordinate pair, e.g. `{ x: 100, y: 200 }`.
-class BetaCoordParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaCoordParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaCoordParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaCoordParamMetadata::DECODERS
-
-  # @return [Integer] The x-coordinate.
-  attr_reader :x_coordinate
-  # @return [Integer] The y-coordinate.
-  attr_reader :y_coordinate
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalBetaComparisonFilterMetadata
+    FIELDS = {
+      type: 'type',
+      key: 'key',
+      value: 'value'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      key
+      value
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaComparisonFilterType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for BetaComparisonFilter.
+  # A filter used to compare a specified attribute key to a given value using a defined comparison operation.
+  class BetaComparisonFilter
+    include BetaFilters
+    include BetaCompoundFilterFiltersItem
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaComparisonFilterMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaComparisonFilterMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaComparisonFilterMetadata::DECODERS
+
+    # @return [BetaComparisonFilterType] Specifies the comparison operator: `eq`, `ne`, `gt`, `gte`, `lt`, `lte`, `in`, `nin`. - `eq`: equals - `ne`: not equal - `gt`: greater than - `gte`: greater than or equal - `lt`: less than - `lte`: less than or equal - `in`: in - `nin`: not in
+    attr_reader :type
+    # @return [String] The key to compare against the value.
+    attr_reader :key
+    # @return [Object] The value to compare against the attribute key; supports string, number, or boolean types.
+    attr_reader :value
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the BetaComparisonFilterType SDK namespace.
+  module BetaComparisonFilterType
+    EQ = 'eq'
+    NE = 'ne'
+    GT = 'gt'
+    GTE = 'gte'
+    LT = 'lt'
+    LTE = 'lte'
+    IN = 'in'
+    NIN = 'nin'
+    VALUES = %w[eq ne gt gte lt lte in nin].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the BetaCyberAccessProgramEnum SDK namespace.
-module BetaCyberAccessProgramEnum
-  STANDARD = 'standard'
-  DAYBREAK_BLUE = 'daybreak_blue'
-  DAYBREAK_RED = 'daybreak_red'
-  VALUES = ['standard', 'daybreak_blue', 'daybreak_red'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the BetaDetailEnum SDK namespace.
-module BetaDetailEnum
-  LOW = 'low'
-  HIGH = 'high'
-  AUTO = 'auto'
-  ORIGINAL = 'original'
-  VALUES = ['low', 'high', 'auto', 'original'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaDoubleClickActionMetadata
-  FIELDS = {
-    type: "type",
-    x_coordinate: "x",
-    y_coordinate: "y",
-    keys: "keys",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    x_coordinate
-    y_coordinate
-    keys
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaDoubleClickActionType.from_value(value)
-    end,
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    keys
-  ].freeze
-end
-
-# API model for BetaDoubleClickAction.
-# A double click action.
-class BetaDoubleClickAction
-  include BetaComputerAction
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaDoubleClickActionMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaDoubleClickActionMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaDoubleClickActionMetadata::DECODERS
-
-  # @return [BetaDoubleClickActionType] Specifies the event type. For a double click action, this property is always set to `double_click`.
-  attr_reader :type
-  # @return [Integer] The x-coordinate where the double click occurred.
-  attr_reader :x_coordinate
-  # @return [Integer] The y-coordinate where the double click occurred.
-  attr_reader :y_coordinate
-  # @return [Array_of_String] The keys being held while double-clicking.
-  attr_reader :keys
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('BetaComparisonFilterType', 'enum', "Unknown BetaComparisonFilterType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalBetaDoubleClickActionMetadata::NULLABLE_FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalBetaContextManagementParamMetadata
+    FIELDS = {
+      type: 'type',
+      compact_threshold: 'compact_threshold'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for BetaContextManagementParam.
+  # Typed representation of the `BetaContextManagementParam` API schema.
+  class BetaContextManagementParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaContextManagementParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaContextManagementParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaContextManagementParamMetadata::DECODERS
 
-# Defines the BetaDoubleClickActionType SDK namespace.
-module BetaDoubleClickActionType
-  DOUBLE_CLICK = 'double_click'
-  VALUES = ['double_click'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    # @return [String] The context management entry type. Currently only 'compaction' is supported.
+    attr_reader :type
+    # @return [Integer] Optional API value serialized in the `compact_threshold` wire field.
+    attr_reader :compact_threshold
 
-    raise SdkValidationError.new('BetaDoubleClickActionType', 'enum', "Unknown BetaDoubleClickActionType: #{value}")
-  end
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# Internal model hydration metadata.
-class SdkInternalBetaDragParamMetadata
-  FIELDS = {
-    type: "type",
-    path: "path",
-    keys: "keys",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    path
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaDragParamType.from_value(value)
-    end,
-    path: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::BetaCoordParam.from_hash(item) }
-    end,
-  }.freeze
-end
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-# API model for BetaDragParam.
-# A drag action.
-class BetaDragParam
-  include BetaComputerAction
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaDragParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaDragParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaDragParamMetadata::DECODERS
-
-  # @return [BetaDragParamType] Specifies the event type. For a drag action, this property is always set to `drag`.
-  attr_reader :type
-  # @return [Array_of_BetaCoordParam] An array of coordinates representing the path of the drag action. Coordinates will appear as an array of objects, eg ``` [ { x: 100, y: 200 }, { x: 200, y: 300 } ] ```
-  attr_reader :path
-  # @return [Array_of_String] The keys being held while dragging the mouse.
-  attr_reader :keys
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalBetaCoordParamMetadata
+    FIELDS = {
+      x_coordinate: 'x',
+      y_coordinate: 'y'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      x_coordinate
+      y_coordinate
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for BetaCoordParam.
+  # An x/y coordinate pair, e.g. `{ x: 100, y: 200 }`.
+  class BetaCoordParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaCoordParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaCoordParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaCoordParamMetadata::DECODERS
 
-# Defines the BetaDragParamType SDK namespace.
-module BetaDragParamType
-  DRAG = 'drag'
-  VALUES = ['drag'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    # @return [Integer] The x-coordinate.
+    attr_reader :x_coordinate
+    # @return [Integer] The y-coordinate.
+    attr_reader :y_coordinate
 
-    raise SdkValidationError.new('BetaDragParamType', 'enum', "Unknown BetaDragParamType: #{value}")
-  end
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# Internal model hydration metadata.
-class SdkInternalBetaEasyInputMessageMetadata
-  FIELDS = {
-    role: "role",
-    content: "content",
-    phase: "phase",
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    role
-    content
-  ].freeze
-  DECODERS = {
-    role: lambda do |value|
-      ::OctridevOpenai::BetaEasyInputMessageRole.from_value(value)
-    end,
-    phase: lambda do |value|
-      ::OctridevOpenai::BetaMessagePhase.from_value(value)
-    end,
-    type: lambda do |value|
-      ::OctridevOpenai::BetaEasyInputMessageType.from_value(value)
-    end,
-  }.freeze
-end
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-# API model for BetaEasyInputMessage.
-# A message input to the model with a role indicating instruction following hierarchy. Instructions given with the `developer` or `system` role take precedence over instructions given with the `user` role. Messages with the `assistant` role are presumed to have been generated by the model in previous interactions.
-class BetaEasyInputMessage
-  include BetaInputItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaEasyInputMessageMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaEasyInputMessageMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaEasyInputMessageMetadata::DECODERS
-
-  # @return [BetaEasyInputMessageRole] The role of the message input. One of `user`, `assistant`, `system`, or `developer`.
-  attr_reader :role
-  # @return [Object] Text, image, or audio input to the model, used to generate a response. Can also contain previous assistant responses.
-  attr_reader :content
-  # @return [BetaMessagePhase] Optional API value serialized in the `phase` wire field.
-  attr_reader :phase
-  # @return [BetaEasyInputMessageType] The type of the message input. Always `message`.
-  attr_reader :type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the BetaCyberAccessProgramEnum SDK namespace.
+  module BetaCyberAccessProgramEnum
+    STANDARD = 'standard'
+    DAYBREAK_BLUE = 'daybreak_blue'
+    DAYBREAK_RED = 'daybreak_red'
+    VALUES = %w[standard daybreak_blue daybreak_red].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the BetaEasyInputMessageRole SDK namespace.
-module BetaEasyInputMessageRole
-  USER = 'user'
-  ASSISTANT = 'assistant'
-  SYSTEM = 'system'
-  DEVELOPER = 'developer'
-  VALUES = ['user', 'assistant', 'system', 'developer'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the BetaEasyInputMessageType SDK namespace.
-module BetaEasyInputMessageType
-  MESSAGE = 'message'
-  VALUES = ['message'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('BetaEasyInputMessageType', 'enum', "Unknown BetaEasyInputMessageType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaEmptyModelParamMetadata
-  FIELDS = {
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for BetaEmptyModelParam.
-# Typed representation of the `BetaEmptyModelParam` API schema.
-class BetaEmptyModelParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaEmptyModelParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaEmptyModelParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaEmptyModelParamMetadata::DECODERS
-
-  # @return [Hash{String => Object}] Keys the schema admits beside the declared fields.
-  attr_reader :additional_properties
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS, extras: true)
-    freeze
+  # Defines the BetaDetailEnum SDK namespace.
+  module BetaDetailEnum
+    LOW = 'low'
+    HIGH = 'high'
+    AUTO = 'auto'
+    ORIGINAL = 'original'
+    VALUES = %w[low high auto original].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, extras: true)
+  # Internal model hydration metadata.
+  class SdkInternalBetaDoubleClickActionMetadata
+    FIELDS = {
+      type: 'type',
+      x_coordinate: 'x',
+      y_coordinate: 'y',
+      keys: 'keys'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      x_coordinate
+      y_coordinate
+      keys
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaDoubleClickActionType.from_value(value)
+      end
+    }.freeze
+    NULLABLE_FIELDS = %i[
+      keys
+    ].freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS, extras: true)
-  end
-end
+  # API model for BetaDoubleClickAction.
+  # A double click action.
+  class BetaDoubleClickAction
+    include BetaComputerAction
 
-# Defines the BetaFilters SDK namespace.
-module BetaFilters
-  DISCRIMINATOR_MAPPING = {
-    "eq" => -> { BetaComparisonFilter },
-    "ne" => -> { BetaComparisonFilter },
-    "gt" => -> { BetaComparisonFilter },
-    "gte" => -> { BetaComparisonFilter },
-    "lt" => -> { BetaComparisonFilter },
-    "lte" => -> { BetaComparisonFilter },
-    "in" => -> { BetaComparisonFilter },
-    "nin" => -> { BetaComparisonFilter },
-    "and" => -> { BetaCompoundFilter },
-    "or" => -> { BetaCompoundFilter },
-  }.freeze
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaDoubleClickActionMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaDoubleClickActionMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaDoubleClickActionMetadata::DECODERS
 
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
+    # @return [BetaDoubleClickActionType] Specifies the event type. For a double click action, this property is always set to `double_click`.
+    attr_reader :type
+    # @return [Integer] The x-coordinate where the double click occurred.
+    attr_reader :x_coordinate
+    # @return [Integer] The y-coordinate where the double click occurred.
+    attr_reader :y_coordinate
+    # @return [Array_of_String] The keys being held while double-clicking.
+    attr_reader :keys
 
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-    raise SdkValidationError.new('BetaFilters', 'variant', "Unknown BetaFilters discriminator: #{hash["type"].inspect}")
-  end
-end
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalBetaDoubleClickActionMetadata::NULLABLE_FIELDS)
+    end
 
-# Defines the BetaGrammarSyntax1 SDK namespace.
-module BetaGrammarSyntax1
-  LARK = 'lark'
-  REGEX = 'regex'
-  VALUES = ['lark', 'regex'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaHTTPErrorMetadata
-  FIELDS = {
-    type: "type",
-    code: "code",
-    message: "message",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    code
-    message
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaHTTPErrorType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaHTTPError.
-# Typed representation of the `BetaHTTPError` API schema.
-class BetaHTTPError
-  include BetaMCPToolCallError
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaHTTPErrorMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaHTTPErrorMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaHTTPErrorMetadata::DECODERS
-
-  # @return [BetaHTTPErrorType] Required enumerated value serialized in the `type` wire field.
-  attr_reader :type
-  # @return [Integer] Required `integer` value serialized in the `code` wire field.
-  attr_reader :code
-  # @return [String] Required `string` value serialized in the `message` wire field.
-  attr_reader :message
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the BetaDoubleClickActionType SDK namespace.
+  module BetaDoubleClickActionType
+    DOUBLE_CLICK = 'double_click'
+    VALUES = ['double_click'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaDoubleClickActionType', 'enum', "Unknown BetaDoubleClickActionType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the BetaHTTPErrorType SDK namespace.
-module BetaHTTPErrorType
-  HTTP_ERROR = 'http_error'
-  VALUES = ['http_error'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('BetaHTTPErrorType', 'enum', "Unknown BetaHTTPErrorType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaHybridSearchOptionsMetadata
-  FIELDS = {
-    embedding_weight: "embedding_weight",
-    text_weight: "text_weight",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    embedding_weight
-    text_weight
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for BetaHybridSearchOptions.
-# Typed representation of the `BetaHybridSearchOptions` API schema.
-class BetaHybridSearchOptions
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaHybridSearchOptionsMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaHybridSearchOptionsMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaHybridSearchOptionsMetadata::DECODERS
-
-  # @return [Float] The weight of the embedding in the reciprocal ranking fusion.
-  attr_reader :embedding_weight
-  # @return [Float] The weight of the text in the reciprocal ranking fusion.
-  attr_reader :text_weight
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalBetaDragParamMetadata
+    FIELDS = {
+      type: 'type',
+      path: 'path',
+      keys: 'keys'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      path
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaDragParamType.from_value(value)
+      end,
+      path: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::BetaCoordParam.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for BetaDragParam.
+  # A drag action.
+  class BetaDragParam
+    include BetaComputerAction
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaDragParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaDragParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaDragParamMetadata::DECODERS
+
+    # @return [BetaDragParamType] Specifies the event type. For a drag action, this property is always set to `drag`.
+    attr_reader :type
+    # @return [Array_of_BetaCoordParam] An array of coordinates representing the path of the drag action. Coordinates will appear as an array of objects, eg ``` [ { x: 100, y: 200 }, { x: 200, y: 300 } ] ```
+    attr_reader :path
+    # @return [Array_of_String] The keys being held while dragging the mouse.
+    attr_reader :keys
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the BetaDragParamType SDK namespace.
+  module BetaDragParamType
+    DRAG = 'drag'
+    VALUES = ['drag'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaDragParamType', 'enum', "Unknown BetaDragParamType: #{value}")
+    end
   end
-end
+
+  # Internal model hydration metadata.
+  class SdkInternalBetaEasyInputMessageMetadata
+    FIELDS = {
+      role: 'role',
+      content: 'content',
+      phase: 'phase',
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      role
+      content
+    ].freeze
+    DECODERS = {
+      role: lambda do |value|
+        ::OctridevOpenai::BetaEasyInputMessageRole.from_value(value)
+      end,
+      phase: lambda do |value|
+        ::OctridevOpenai::BetaMessagePhase.from_value(value)
+      end,
+      type: lambda do |value|
+        ::OctridevOpenai::BetaEasyInputMessageType.from_value(value)
+      end
+    }.freeze
+  end
+
+  # API model for BetaEasyInputMessage.
+  # A message input to the model with a role indicating instruction following hierarchy. Instructions given with the `developer` or `system` role take precedence over instructions given with the `user` role. Messages with the `assistant` role are presumed to have been generated by the model in previous interactions.
+  class BetaEasyInputMessage
+    include BetaInputItem
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaEasyInputMessageMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaEasyInputMessageMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaEasyInputMessageMetadata::DECODERS
+
+    # @return [BetaEasyInputMessageRole] The role of the message input. One of `user`, `assistant`, `system`, or `developer`.
+    attr_reader :role
+    # @return [Object] Text, image, or audio input to the model, used to generate a response. Can also contain previous assistant responses.
+    attr_reader :content
+    # @return [BetaMessagePhase] Optional API value serialized in the `phase` wire field.
+    attr_reader :phase
+    # @return [BetaEasyInputMessageType] The type of the message input. Always `message`.
+    attr_reader :type
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the BetaEasyInputMessageRole SDK namespace.
+  module BetaEasyInputMessageRole
+    USER = 'user'
+    ASSISTANT = 'assistant'
+    SYSTEM = 'system'
+    DEVELOPER = 'developer'
+    VALUES = %w[user assistant system developer].freeze
+    def self.from_value(value)
+      value
+    end
+  end
+
+  # Defines the BetaEasyInputMessageType SDK namespace.
+  module BetaEasyInputMessageType
+    MESSAGE = 'message'
+    VALUES = ['message'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaEasyInputMessageType', 'enum', "Unknown BetaEasyInputMessageType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalBetaEmptyModelParamMetadata
+    FIELDS = {}.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
+  end
+
+  # API model for BetaEmptyModelParam.
+  # Typed representation of the `BetaEmptyModelParam` API schema.
+  class BetaEmptyModelParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaEmptyModelParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaEmptyModelParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaEmptyModelParamMetadata::DECODERS
+
+    # @return [Hash{String => Object}] Keys the schema admits beside the declared fields.
+    attr_reader :additional_properties
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS, extras: true)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, extras: true)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS, extras: true)
+    end
+  end
+
+  # Defines the BetaFilters SDK namespace.
+  module BetaFilters
+    DISCRIMINATOR_MAPPING = {
+      'eq' => -> { BetaComparisonFilter },
+      'ne' => -> { BetaComparisonFilter },
+      'gt' => -> { BetaComparisonFilter },
+      'gte' => -> { BetaComparisonFilter },
+      'lt' => -> { BetaComparisonFilter },
+      'lte' => -> { BetaComparisonFilter },
+      'in' => -> { BetaComparisonFilter },
+      'nin' => -> { BetaComparisonFilter },
+      'and' => -> { BetaCompoundFilter },
+      'or' => -> { BetaCompoundFilter }
+    }.freeze
+
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('BetaFilters', 'variant', "Unknown BetaFilters discriminator: #{hash['type'].inspect}")
+    end
+  end
+
+  # Defines the BetaGrammarSyntax1 SDK namespace.
+  module BetaGrammarSyntax1
+    LARK = 'lark'
+    REGEX = 'regex'
+    VALUES = %w[lark regex].freeze
+    def self.from_value(value)
+      value
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalBetaHTTPErrorMetadata
+    FIELDS = {
+      type: 'type',
+      code: 'code',
+      message: 'message'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      code
+      message
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaHTTPErrorType.from_value(value)
+      end
+    }.freeze
+  end
+
+  # API model for BetaHTTPError.
+  # Typed representation of the `BetaHTTPError` API schema.
+  class BetaHTTPError
+    include BetaMCPToolCallError
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaHTTPErrorMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaHTTPErrorMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaHTTPErrorMetadata::DECODERS
+
+    # @return [BetaHTTPErrorType] Required enumerated value serialized in the `type` wire field.
+    attr_reader :type
+    # @return [Integer] Required `integer` value serialized in the `code` wire field.
+    attr_reader :code
+    # @return [String] Required `string` value serialized in the `message` wire field.
+    attr_reader :message
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the BetaHTTPErrorType SDK namespace.
+  module BetaHTTPErrorType
+    HTTP_ERROR = 'http_error'
+    VALUES = ['http_error'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaHTTPErrorType', 'enum', "Unknown BetaHTTPErrorType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalBetaHybridSearchOptionsMetadata
+    FIELDS = {
+      embedding_weight: 'embedding_weight',
+      text_weight: 'text_weight'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      embedding_weight
+      text_weight
+    ].freeze
+    DECODERS = {}.freeze
+  end
+
+  # API model for BetaHybridSearchOptions.
+  # Typed representation of the `BetaHybridSearchOptions` API schema.
+  class BetaHybridSearchOptions
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaHybridSearchOptionsMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaHybridSearchOptionsMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaHybridSearchOptionsMetadata::DECODERS
+
+    # @return [Float] The weight of the embedding in the reciprocal ranking fusion.
+    attr_reader :embedding_weight
+    # @return [Float] The weight of the text in the reciprocal ranking fusion.
+    attr_reader :text_weight
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
 end

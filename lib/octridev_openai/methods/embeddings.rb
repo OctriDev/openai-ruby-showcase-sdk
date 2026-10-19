@@ -39,25 +39,24 @@ module OctridevOpenai
         user: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.if_given(dimensions) { Validation.validate_range('dimensions', dimensions, min: 1) }
 
         SdkClient.request(
           'POST',
-          "/embeddings",
+          '/embeddings',
           config: config,
           body: {
             'input' => input,
             'model' => model,
             'encoding_format' => encoding_format,
             'dimensions' => dimensions,
-            'user' => user,
+            'user' => user
           },
           return_type: ::OctridevOpenai::CreateEmbeddingResponse,
           decoder: :json,
           operation_id: 'create_embedding',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '401' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '401' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
     end

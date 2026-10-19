@@ -5,413 +5,418 @@
 
 # vaults_rotate domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalRotateMcpOauthRefreshParamMetadata
-  FIELDS = {
-    refresh_token: "refresh_token",
-    scope: "scope",
-    token_endpoint_auth: "token_endpoint_auth",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    token_endpoint_auth: lambda do |value|
-      ::OctridevOpenai::RotateMcpOauthTokenEndpointAuthParam.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for RotateMcpOauthRefreshParam.
-# Updates to an MCP credential's existing OAuth refresh configuration.
-class RotateMcpOauthRefreshParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRotateMcpOauthRefreshParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRotateMcpOauthRefreshParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRotateMcpOauthRefreshParamMetadata::DECODERS
-
-  # @return [String] The replacement refresh token. Omit or pass `null` to keep the stored token. This secret is never returned in resources.
-  attr_reader :refresh_token
-  # @return [String] Replacement space-separated OAuth scopes for refresh requests. Omit to keep the scopes, or pass `null` to stop sending a scope parameter.
-  attr_reader :scope
-  # @return [RotateMcpOauthTokenEndpointAuthParam] Client-secret updates for the existing token endpoint authentication method.
-  attr_reader :token_endpoint_auth
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalRotateMcpOauthRefreshParamMetadata
+    FIELDS = {
+      refresh_token: 'refresh_token',
+      scope: 'scope',
+      token_endpoint_auth: 'token_endpoint_auth'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      token_endpoint_auth: lambda do |value|
+        ::OctridevOpenai::RotateMcpOauthTokenEndpointAuthParam.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for RotateMcpOauthRefreshParam.
+  # Updates to an MCP credential's existing OAuth refresh configuration.
+  class RotateMcpOauthRefreshParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRotateMcpOauthRefreshParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRotateMcpOauthRefreshParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRotateMcpOauthRefreshParamMetadata::DECODERS
+
+    # @return [String] The replacement refresh token. Omit or pass `null` to keep the stored token. This secret is never returned in resources.
+    attr_reader :refresh_token
+    # @return [String] Replacement space-separated OAuth scopes for refresh requests. Omit to keep the scopes, or pass `null` to stop sending a scope parameter.
+    attr_reader :scope
+    # @return [RotateMcpOauthTokenEndpointAuthParam] Client-secret updates for the existing token endpoint authentication method.
+    attr_reader :token_endpoint_auth
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the RotateMcpOauthTokenEndpointAuthParam SDK namespace.
+  module RotateMcpOauthTokenEndpointAuthParam
+    DISCRIMINATOR_MAPPING = {
+      'client_secret_basic' => -> { RotateMcpOauthTokenEndpointAuthParamClientSecretBasic },
+      'client_secret_post' => -> { RotateMcpOauthTokenEndpointAuthParamClientSecretPost }
+    }.freeze
 
-# Defines the RotateMcpOauthTokenEndpointAuthParam SDK namespace.
-module RotateMcpOauthTokenEndpointAuthParam
-  DISCRIMINATOR_MAPPING = {
-    "client_secret_basic" => -> { RotateMcpOauthTokenEndpointAuthParamClientSecretBasic },
-    "client_secret_post" => -> { RotateMcpOauthTokenEndpointAuthParamClientSecretPost },
-  }.freeze
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
 
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
 
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
 
-    raise SdkValidationError.new('RotateMcpOauthTokenEndpointAuthParam', 'variant', "Unknown RotateMcpOauthTokenEndpointAuthParam discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRotateMcpOauthTokenEndpointAuthParamClientSecretBasicMetadata
-  FIELDS = {
-    type: "type",
-    client_secret: "client_secret",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RotateMcpOauthTokenEndpointAuthParamClientSecretBasicType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for RotateMcpOauthTokenEndpointAuthParamClientSecretBasic.
-# Updates credentials sent using HTTP Basic authentication.
-class RotateMcpOauthTokenEndpointAuthParamClientSecretBasic
-  include RotateMcpOauthTokenEndpointAuthParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRotateMcpOauthTokenEndpointAuthParamClientSecretBasicMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRotateMcpOauthTokenEndpointAuthParamClientSecretBasicMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRotateMcpOauthTokenEndpointAuthParamClientSecretBasicMetadata::DECODERS
-
-  # @return [RotateMcpOauthTokenEndpointAuthParamClientSecretBasicType] The type of the object. Always `client_secret_basic`.
-  attr_reader :type
-  # @return [String] The replacement OAuth client secret. Omit or pass `null` to keep the stored secret. This secret is never returned in resources.
-  attr_reader :client_secret
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('RotateMcpOauthTokenEndpointAuthParam', 'variant', "Unknown RotateMcpOauthTokenEndpointAuthParam discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalRotateMcpOauthTokenEndpointAuthParamClientSecretBasicMetadata
+    FIELDS = {
+      type: 'type',
+      client_secret: 'client_secret'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RotateMcpOauthTokenEndpointAuthParamClientSecretBasicType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for RotateMcpOauthTokenEndpointAuthParamClientSecretBasic.
+  # Updates credentials sent using HTTP Basic authentication.
+  class RotateMcpOauthTokenEndpointAuthParamClientSecretBasic
+    include RotateMcpOauthTokenEndpointAuthParam
 
-# Defines the RotateMcpOauthTokenEndpointAuthParamClientSecretBasicType SDK namespace.
-module RotateMcpOauthTokenEndpointAuthParamClientSecretBasicType
-  CLIENT_SECRET_BASIC = 'client_secret_basic'
-  VALUES = ['client_secret_basic'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRotateMcpOauthTokenEndpointAuthParamClientSecretBasicMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRotateMcpOauthTokenEndpointAuthParamClientSecretBasicMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRotateMcpOauthTokenEndpointAuthParamClientSecretBasicMetadata::DECODERS
 
-    raise SdkValidationError.new('RotateMcpOauthTokenEndpointAuthParamClientSecretBasicType', 'enum', "Unknown RotateMcpOauthTokenEndpointAuthParamClientSecretBasicType: #{value}")
-  end
-end
+    # @return [RotateMcpOauthTokenEndpointAuthParamClientSecretBasicType] The type of the object. Always `client_secret_basic`.
+    attr_reader :type
+    # @return [String] The replacement OAuth client secret. Omit or pass `null` to keep the stored secret. This secret is never returned in resources.
+    attr_reader :client_secret
 
-# Internal model hydration metadata.
-class SdkInternalRotateMcpOauthTokenEndpointAuthParamClientSecretPostMetadata
-  FIELDS = {
-    type: "type",
-    client_secret: "client_secret",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RotateMcpOauthTokenEndpointAuthParamClientSecretPostType.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for RotateMcpOauthTokenEndpointAuthParamClientSecretPost.
-# Updates credentials sent in the token request body.
-class RotateMcpOauthTokenEndpointAuthParamClientSecretPost
-  include RotateMcpOauthTokenEndpointAuthParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRotateMcpOauthTokenEndpointAuthParamClientSecretPostMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRotateMcpOauthTokenEndpointAuthParamClientSecretPostMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRotateMcpOauthTokenEndpointAuthParamClientSecretPostMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [RotateMcpOauthTokenEndpointAuthParamClientSecretPostType] The type of the object. Always `client_secret_post`.
-  attr_reader :type
-  # @return [String] The replacement OAuth client secret. Omit or pass `null` to keep the stored secret. This secret is never returned in resources.
-  attr_reader :client_secret
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the RotateMcpOauthTokenEndpointAuthParamClientSecretBasicType SDK namespace.
+  module RotateMcpOauthTokenEndpointAuthParamClientSecretBasicType
+    CLIENT_SECRET_BASIC = 'client_secret_basic'
+    VALUES = ['client_secret_basic'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('RotateMcpOauthTokenEndpointAuthParamClientSecretBasicType', 'enum', "Unknown RotateMcpOauthTokenEndpointAuthParamClientSecretBasicType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the RotateMcpOauthTokenEndpointAuthParamClientSecretPostType SDK namespace.
-module RotateMcpOauthTokenEndpointAuthParamClientSecretPostType
-  CLIENT_SECRET_POST = 'client_secret_post'
-  VALUES = ['client_secret_post'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('RotateMcpOauthTokenEndpointAuthParamClientSecretPostType', 'enum', "Unknown RotateMcpOauthTokenEndpointAuthParamClientSecretPostType: #{value}")
-  end
-end
-
-# Defines the RotateVaultCredentialAuthParam SDK namespace.
-module RotateVaultCredentialAuthParam
-  DISCRIMINATOR_MAPPING = {
-    "mcp_oauth" => -> { RotateVaultCredentialAuthParamMcpOauth },
-    "static_bearer" => -> { RotateVaultCredentialAuthParamStaticBearer },
-    "environment_variable" => -> { RotateVaultCredentialAuthParamEnvironmentVariable },
-  }.freeze
-
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('RotateVaultCredentialAuthParam', 'variant', "Unknown RotateVaultCredentialAuthParam discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRotateVaultCredentialAuthParamEnvironmentVariableMetadata
-  FIELDS = {
-    type: "type",
-    secret_value: "secret_value",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    secret_value
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RotateVaultCredentialAuthParamEnvironmentVariableType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for RotateVaultCredentialAuthParamEnvironmentVariable.
-# Replace the secret for an OpenAI-hosted environment credential. The environment variable name and networking configuration remain unchanged.
-class RotateVaultCredentialAuthParamEnvironmentVariable
-  include RotateVaultCredentialAuthParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRotateVaultCredentialAuthParamEnvironmentVariableMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRotateVaultCredentialAuthParamEnvironmentVariableMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRotateVaultCredentialAuthParamEnvironmentVariableMetadata::DECODERS
-
-  # @return [RotateVaultCredentialAuthParamEnvironmentVariableType] The type of the object. Always `environment_variable`.
-  attr_reader :type
-  # @return [String] The write-only replacement secret. Never returned in credential resources or supplied directly to sandbox code. Must be nonempty and must not contain carriage returns, newlines, or NUL bytes.
-  attr_reader :secret_value
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalRotateMcpOauthTokenEndpointAuthParamClientSecretPostMetadata
+    FIELDS = {
+      type: 'type',
+      client_secret: 'client_secret'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RotateMcpOauthTokenEndpointAuthParamClientSecretPostType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for RotateMcpOauthTokenEndpointAuthParamClientSecretPost.
+  # Updates credentials sent in the token request body.
+  class RotateMcpOauthTokenEndpointAuthParamClientSecretPost
+    include RotateMcpOauthTokenEndpointAuthParam
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRotateMcpOauthTokenEndpointAuthParamClientSecretPostMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRotateMcpOauthTokenEndpointAuthParamClientSecretPostMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRotateMcpOauthTokenEndpointAuthParamClientSecretPostMetadata::DECODERS
+
+    # @return [RotateMcpOauthTokenEndpointAuthParamClientSecretPostType] The type of the object. Always `client_secret_post`.
+    attr_reader :type
+    # @return [String] The replacement OAuth client secret. Omit or pass `null` to keep the stored secret. This secret is never returned in resources.
+    attr_reader :client_secret
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the RotateMcpOauthTokenEndpointAuthParamClientSecretPostType SDK namespace.
+  module RotateMcpOauthTokenEndpointAuthParamClientSecretPostType
+    CLIENT_SECRET_POST = 'client_secret_post'
+    VALUES = ['client_secret_post'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the RotateVaultCredentialAuthParamEnvironmentVariableType SDK namespace.
-module RotateVaultCredentialAuthParamEnvironmentVariableType
-  ENVIRONMENT_VARIABLE = 'environment_variable'
-  VALUES = ['environment_variable'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('RotateVaultCredentialAuthParamEnvironmentVariableType', 'enum', "Unknown RotateVaultCredentialAuthParamEnvironmentVariableType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRotateVaultCredentialAuthParamMcpOauthMetadata
-  FIELDS = {
-    type: "type",
-    access_token: "access_token",
-    expires_at: "expires_at",
-    refresh: "refresh",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RotateVaultCredentialAuthParamMcpOauthType.from_value(value)
-    end,
-    refresh: lambda do |value|
-      ::OctridevOpenai::RotateMcpOauthRefreshParam.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for RotateVaultCredentialAuthParamMcpOauth.
-# Rotate an OAuth credential for an HTTPS MCP destination.
-class RotateVaultCredentialAuthParamMcpOauth
-  include RotateVaultCredentialAuthParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRotateVaultCredentialAuthParamMcpOauthMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRotateVaultCredentialAuthParamMcpOauthMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRotateVaultCredentialAuthParamMcpOauthMetadata::DECODERS
-
-  # @return [RotateVaultCredentialAuthParamMcpOauthType] The type of the object. Always `mcp_oauth`.
-  attr_reader :type
-  # @return [String] A write-only replacement OAuth access token.
-  attr_reader :access_token
-  # @return [String] The replacement expiry as an RFC 3339 timestamp, or `null` to clear it. Omitting this field preserves the expiry unless a new access token is supplied, in which case the expiry is cleared.
-  attr_reader :expires_at
-  # @return [RotateMcpOauthRefreshParam] Optional write-only refresh-token and client-secret updates.
-  attr_reader :refresh
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('RotateMcpOauthTokenEndpointAuthParamClientSecretPostType', 'enum', "Unknown RotateMcpOauthTokenEndpointAuthParamClientSecretPostType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the RotateVaultCredentialAuthParam SDK namespace.
+  module RotateVaultCredentialAuthParam
+    DISCRIMINATOR_MAPPING = {
+      'mcp_oauth' => -> { RotateVaultCredentialAuthParamMcpOauth },
+      'static_bearer' => -> { RotateVaultCredentialAuthParamStaticBearer },
+      'environment_variable' => -> { RotateVaultCredentialAuthParamEnvironmentVariable }
+    }.freeze
+
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('RotateVaultCredentialAuthParam', 'variant', "Unknown RotateVaultCredentialAuthParam discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the RotateVaultCredentialAuthParamMcpOauthType SDK namespace.
-module RotateVaultCredentialAuthParamMcpOauthType
-  MCP_OAUTH = 'mcp_oauth'
-  VALUES = ['mcp_oauth'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('RotateVaultCredentialAuthParamMcpOauthType', 'enum', "Unknown RotateVaultCredentialAuthParamMcpOauthType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRotateVaultCredentialAuthParamStaticBearerMetadata
-  FIELDS = {
-    type: "type",
-    token: "token",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    token
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RotateVaultCredentialAuthParamStaticBearerType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for RotateVaultCredentialAuthParamStaticBearer.
-# Replace the bearer token for the credential's MCP server.
-class RotateVaultCredentialAuthParamStaticBearer
-  include RotateVaultCredentialAuthParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRotateVaultCredentialAuthParamStaticBearerMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRotateVaultCredentialAuthParamStaticBearerMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRotateVaultCredentialAuthParamStaticBearerMetadata::DECODERS
-
-  # @return [RotateVaultCredentialAuthParamStaticBearerType] The type of the object. Always `static_bearer`.
-  attr_reader :type
-  # @return [String] The replacement bearer token. This secret is never returned in credential resources.
-  attr_reader :token
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalRotateVaultCredentialAuthParamEnvironmentVariableMetadata
+    FIELDS = {
+      type: 'type',
+      secret_value: 'secret_value'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      secret_value
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RotateVaultCredentialAuthParamEnvironmentVariableType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for RotateVaultCredentialAuthParamEnvironmentVariable.
+  # Replace the secret for an OpenAI-hosted environment credential. The environment variable name and networking configuration remain unchanged.
+  class RotateVaultCredentialAuthParamEnvironmentVariable
+    include RotateVaultCredentialAuthParam
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRotateVaultCredentialAuthParamEnvironmentVariableMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRotateVaultCredentialAuthParamEnvironmentVariableMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRotateVaultCredentialAuthParamEnvironmentVariableMetadata::DECODERS
+
+    # @return [RotateVaultCredentialAuthParamEnvironmentVariableType] The type of the object. Always `environment_variable`.
+    attr_reader :type
+    # @return [String] The write-only replacement secret. Never returned in credential resources or supplied directly to sandbox code. Must be nonempty and must not contain carriage returns, newlines, or NUL bytes.
+    attr_reader :secret_value
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the RotateVaultCredentialAuthParamEnvironmentVariableType SDK namespace.
+  module RotateVaultCredentialAuthParamEnvironmentVariableType
+    ENVIRONMENT_VARIABLE = 'environment_variable'
+    VALUES = ['environment_variable'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the RotateVaultCredentialAuthParamStaticBearerType SDK namespace.
-module RotateVaultCredentialAuthParamStaticBearerType
-  STATIC_BEARER = 'static_bearer'
-  VALUES = ['static_bearer'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('RotateVaultCredentialAuthParamStaticBearerType', 'enum', "Unknown RotateVaultCredentialAuthParamStaticBearerType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRotateVaultCredentialParamsMetadata
-  FIELDS = {
-    auth: "auth",
-    metadata: "metadata",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    auth: lambda do |value|
-      ::OctridevOpenai::RotateVaultCredentialAuthParam.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for RotateVaultCredentialParams.
-# Metadata, secret, expiry, and OAuth refresh scope updates for an existing vault credential. Supply at least one of `auth` or `metadata`.
-class RotateVaultCredentialParams
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRotateVaultCredentialParamsMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRotateVaultCredentialParamsMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRotateVaultCredentialParamsMetadata::DECODERS
-
-  # @return [RotateVaultCredentialAuthParam] Replacement values for the credential's existing authentication method.
-  attr_reader :auth
-  # @return [Hash] Replaces all metadata. Omit to preserve it, or pass {} to clear it. Up to 16 string key-value pairs, with keys up to 64 and values up to 512 characters.
-  attr_reader :metadata
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('RotateVaultCredentialAuthParamEnvironmentVariableType', 'enum', "Unknown RotateVaultCredentialAuthParamEnvironmentVariableType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalRotateVaultCredentialAuthParamMcpOauthMetadata
+    FIELDS = {
+      type: 'type',
+      access_token: 'access_token',
+      expires_at: 'expires_at',
+      refresh: 'refresh'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RotateVaultCredentialAuthParamMcpOauthType.from_value(value)
+      end,
+      refresh: lambda do |value|
+        ::OctridevOpenai::RotateMcpOauthRefreshParam.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # API model for RotateVaultCredentialAuthParamMcpOauth.
+  # Rotate an OAuth credential for an HTTPS MCP destination.
+  class RotateVaultCredentialAuthParamMcpOauth
+    include RotateVaultCredentialAuthParam
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRotateVaultCredentialAuthParamMcpOauthMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRotateVaultCredentialAuthParamMcpOauthMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRotateVaultCredentialAuthParamMcpOauthMetadata::DECODERS
+
+    # @return [RotateVaultCredentialAuthParamMcpOauthType] The type of the object. Always `mcp_oauth`.
+    attr_reader :type
+    # @return [String] A write-only replacement OAuth access token.
+    attr_reader :access_token
+    # @return [String] The replacement expiry as an RFC 3339 timestamp, or `null` to clear it. Omitting this field preserves the expiry unless a new access token is supplied, in which case the expiry is cleared.
+    attr_reader :expires_at
+    # @return [RotateMcpOauthRefreshParam] Optional write-only refresh-token and client-secret updates.
+    attr_reader :refresh
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
+
+  # Defines the RotateVaultCredentialAuthParamMcpOauthType SDK namespace.
+  module RotateVaultCredentialAuthParamMcpOauthType
+    MCP_OAUTH = 'mcp_oauth'
+    VALUES = ['mcp_oauth'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('RotateVaultCredentialAuthParamMcpOauthType', 'enum', "Unknown RotateVaultCredentialAuthParamMcpOauthType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalRotateVaultCredentialAuthParamStaticBearerMetadata
+    FIELDS = {
+      type: 'type',
+      token: 'token'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      token
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RotateVaultCredentialAuthParamStaticBearerType.from_value(value)
+      end
+    }.freeze
+  end
+
+  # API model for RotateVaultCredentialAuthParamStaticBearer.
+  # Replace the bearer token for the credential's MCP server.
+  class RotateVaultCredentialAuthParamStaticBearer
+    include RotateVaultCredentialAuthParam
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRotateVaultCredentialAuthParamStaticBearerMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRotateVaultCredentialAuthParamStaticBearerMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRotateVaultCredentialAuthParamStaticBearerMetadata::DECODERS
+
+    # @return [RotateVaultCredentialAuthParamStaticBearerType] The type of the object. Always `static_bearer`.
+    attr_reader :type
+    # @return [String] The replacement bearer token. This secret is never returned in credential resources.
+    attr_reader :token
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the RotateVaultCredentialAuthParamStaticBearerType SDK namespace.
+  module RotateVaultCredentialAuthParamStaticBearerType
+    STATIC_BEARER = 'static_bearer'
+    VALUES = ['static_bearer'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('RotateVaultCredentialAuthParamStaticBearerType', 'enum', "Unknown RotateVaultCredentialAuthParamStaticBearerType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalRotateVaultCredentialParamsMetadata
+    FIELDS = {
+      auth: 'auth',
+      metadata: 'metadata'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      auth: lambda do |value|
+        ::OctridevOpenai::RotateVaultCredentialAuthParam.from_hash(value)
+      end
+    }.freeze
+  end
+
+  # API model for RotateVaultCredentialParams.
+  # Metadata, secret, expiry, and OAuth refresh scope updates for an existing vault credential. Supply at least one of `auth` or `metadata`.
+  class RotateVaultCredentialParams
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRotateVaultCredentialParamsMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRotateVaultCredentialParamsMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRotateVaultCredentialParamsMetadata::DECODERS
+
+    # @return [RotateVaultCredentialAuthParam] Replacement values for the credential's existing authentication method.
+    attr_reader :auth
+    # @return [Hash] Replaces all metadata. Omit to preserve it, or pass {} to clear it. Up to 16 string key-value pairs, with keys up to 64 and values up to 512 characters.
+    attr_reader :metadata
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
 end

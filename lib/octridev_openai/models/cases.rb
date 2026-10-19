@@ -5,128 +5,128 @@
 
 # cases domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalSafetyCaseNoticeMetadata
-  FIELDS = {
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::SafetyCaseNoticeType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for SafetyCaseNotice.
-# Typed representation of the `SafetyCaseNotice` API schema.
-class SafetyCaseNotice
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalSafetyCaseNoticeMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalSafetyCaseNoticeMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalSafetyCaseNoticeMetadata::DECODERS
-
-  # @return [SafetyCaseNoticeType] Required enumerated value serialized in the `type` wire field.
-  attr_reader :type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalSafetyCaseNoticeMetadata
+    FIELDS = {
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::SafetyCaseNoticeType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for SafetyCaseNotice.
+  # Typed representation of the `SafetyCaseNotice` API schema.
+  class SafetyCaseNotice
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalSafetyCaseNoticeMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalSafetyCaseNoticeMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalSafetyCaseNoticeMetadata::DECODERS
+
+    # @return [SafetyCaseNoticeType] Required enumerated value serialized in the `type` wire field.
+    attr_reader :type
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the SafetyCaseNoticeType SDK namespace.
-module SafetyCaseNoticeType
-  WARNING = 'warning'
-  DEACTIVATION = 'deactivation'
-  VALUES = ['warning', 'deactivation'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalSafetyCaseResourceMetadata
-  FIELDS = {
-    id: "id",
-    object: "object",
-    created_at: "created_at",
-    entity_identifier: "entity_identifier",
-    reason: "reason",
-    notice: "notice",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    object
-    created_at
-    entity_identifier
-    reason
-    notice
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::SafetyCaseResourceObject.from_value(value)
-    end,
-    notice: lambda do |value|
-      ::OctridevOpenai::SafetyCaseNotice.from_hash(value)
-    end,
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    reason
-  ].freeze
-end
-
-# API model for SafetyCaseResource.
-# Typed representation of the `SafetyCaseResource` API schema.
-class SafetyCaseResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalSafetyCaseResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalSafetyCaseResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalSafetyCaseResourceMetadata::DECODERS
-
-  # @return [String] Required `string` value serialized in the `id` wire field.
-  attr_reader :id
-  # @return [SafetyCaseResourceObject] Required enumerated value serialized in the `object` wire field.
-  attr_reader :object
-  # @return [Integer] Required `unixtime`-formatted value serialized in the `created_at` wire field.
-  attr_reader :created_at
-  # @return [String] Required `string` value serialized in the `entity_identifier` wire field.
-  attr_reader :entity_identifier
-  # @return [String] Required `string` value serialized in the `reason` wire field.
-  attr_reader :reason
-  # @return [SafetyCaseNotice] Required object value serialized in the `notice` wire field.
-  attr_reader :notice
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the SafetyCaseNoticeType SDK namespace.
+  module SafetyCaseNoticeType
+    WARNING = 'warning'
+    DEACTIVATION = 'deactivation'
+    VALUES = %w[warning deactivation].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalSafetyCaseResourceMetadata::NULLABLE_FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalSafetyCaseResourceMetadata
+    FIELDS = {
+      id: 'id',
+      object: 'object',
+      created_at: 'created_at',
+      entity_identifier: 'entity_identifier',
+      reason: 'reason',
+      notice: 'notice'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      object
+      created_at
+      entity_identifier
+      reason
+      notice
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::SafetyCaseResourceObject.from_value(value)
+      end,
+      notice: lambda do |value|
+        ::OctridevOpenai::SafetyCaseNotice.from_hash(value)
+      end
+    }.freeze
+    NULLABLE_FIELDS = %i[
+      reason
+    ].freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for SafetyCaseResource.
+  # Typed representation of the `SafetyCaseResource` API schema.
+  class SafetyCaseResource
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalSafetyCaseResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalSafetyCaseResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalSafetyCaseResourceMetadata::DECODERS
 
-# Defines the SafetyCaseResourceObject SDK namespace.
-module SafetyCaseResourceObject
-  SAFETY_CASE = 'safety.case'
-  VALUES = ['safety.case'].freeze
-  def self.from_value(value)
-    value
+    # @return [String] Required `string` value serialized in the `id` wire field.
+    attr_reader :id
+    # @return [SafetyCaseResourceObject] Required enumerated value serialized in the `object` wire field.
+    attr_reader :object
+    # @return [Integer] Required `unixtime`-formatted value serialized in the `created_at` wire field.
+    attr_reader :created_at
+    # @return [String] Required `string` value serialized in the `entity_identifier` wire field.
+    attr_reader :entity_identifier
+    # @return [String] Required `string` value serialized in the `reason` wire field.
+    attr_reader :reason
+    # @return [SafetyCaseNotice] Required object value serialized in the `notice` wire field.
+    attr_reader :notice
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalSafetyCaseResourceMetadata::NULLABLE_FIELDS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
+
+  # Defines the SafetyCaseResourceObject SDK namespace.
+  module SafetyCaseResourceObject
+    SAFETY_CASE = 'safety.case'
+    VALUES = ['safety.case'].freeze
+    def self.from_value(value)
+      value
+    end
+  end
 end
