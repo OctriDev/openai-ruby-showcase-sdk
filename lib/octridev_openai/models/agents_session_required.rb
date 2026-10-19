@@ -5,220 +5,216 @@
 
 # agents_session_required domain models
 module OctridevOpenai
-  # Defines the SessionRequiredActionResource SDK namespace.
-  module SessionRequiredActionResource
-    DISCRIMINATOR_MAPPING = {
-      'computer_use_approval_request' => -> { SessionRequiredActionResourceComputerUseApprovalRequest },
-      'function_call' => -> { SessionRequiredActionResourceFunctionCall },
-      'environment_connection' => -> { SessionRequiredActionResourceEnvironmentConnection }
-    }.freeze
+# Defines the SessionRequiredActionResource SDK namespace.
+module SessionRequiredActionResource
+  DISCRIMINATOR_MAPPING = {
+    "computer_use_approval_request" => -> { SessionRequiredActionResourceComputerUseApprovalRequest },
+    "function_call" => -> { SessionRequiredActionResourceFunctionCall },
+    "environment_connection" => -> { SessionRequiredActionResourceEnvironmentConnection },
+  }.freeze
 
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
 
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
 
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+    raise SdkValidationError.new('SessionRequiredActionResource', 'variant', "Unknown SessionRequiredActionResource discriminator: #{hash["type"].inspect}")
+  end
+end
 
-      raise SdkValidationError.new('SessionRequiredActionResource', 'variant', "Unknown SessionRequiredActionResource discriminator: #{hash['type'].inspect}")
-    end
+# Internal model hydration metadata.
+class SdkInternalSessionRequiredActionResourceComputerUseApprovalRequestMetadata
+  FIELDS = {
+    type: "type",
+    turn_id: "turn_id",
+    request_id: "request_id",
+    request: "request",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    turn_id
+    request_id
+    request
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::SessionRequiredActionResourceComputerUseApprovalRequestType.from_value(value)
+    end,
+    request: lambda do |value|
+      ::OctridevOpenai::ComputerUseApprovalRequestKindResource.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for SessionRequiredActionResourceComputerUseApprovalRequest.
+# Respond to a computer-use request.
+class SessionRequiredActionResourceComputerUseApprovalRequest
+  include SessionRequiredActionResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalSessionRequiredActionResourceComputerUseApprovalRequestMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalSessionRequiredActionResourceComputerUseApprovalRequestMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalSessionRequiredActionResourceComputerUseApprovalRequestMetadata::DECODERS
+
+  # @return [SessionRequiredActionResourceComputerUseApprovalRequestType] The type of the object. Always `computer_use_approval_request`.
+  attr_reader :type
+  # @return [String] The turn that requested approval.
+  attr_reader :turn_id
+  # @return [String] The registered request ID to echo when responding.
+  attr_reader :request_id
+  # @return [ComputerUseApprovalRequestKindResource] The information needed to render the request.
+  attr_reader :request
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalSessionRequiredActionResourceComputerUseApprovalRequestMetadata
-    FIELDS = {
-      type: 'type',
-      turn_id: 'turn_id',
-      request_id: 'request_id',
-      request: 'request'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      turn_id
-      request_id
-      request
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::SessionRequiredActionResourceComputerUseApprovalRequestType.from_value(value)
-      end,
-      request: lambda do |value|
-        ::OctridevOpenai::ComputerUseApprovalRequestKindResource.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for SessionRequiredActionResourceComputerUseApprovalRequest.
-  # Respond to a computer-use request.
-  class SessionRequiredActionResourceComputerUseApprovalRequest
-    include SessionRequiredActionResource
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalSessionRequiredActionResourceComputerUseApprovalRequestMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalSessionRequiredActionResourceComputerUseApprovalRequestMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalSessionRequiredActionResourceComputerUseApprovalRequestMetadata::DECODERS
+# Defines the SessionRequiredActionResourceComputerUseApprovalRequestType SDK namespace.
+module SessionRequiredActionResourceComputerUseApprovalRequestType
+  COMPUTER_USE_APPROVAL_REQUEST = 'computer_use_approval_request'
+  VALUES = ['computer_use_approval_request'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    # @return [SessionRequiredActionResourceComputerUseApprovalRequestType] The type of the object. Always `computer_use_approval_request`.
-    attr_reader :type
-    # @return [String] The turn that requested approval.
-    attr_reader :turn_id
-    # @return [String] The registered request ID to echo when responding.
-    attr_reader :request_id
-    # @return [ComputerUseApprovalRequestKindResource] The information needed to render the request.
-    attr_reader :request
+    raise SdkValidationError.new('SessionRequiredActionResourceComputerUseApprovalRequestType', 'enum', "Unknown SessionRequiredActionResourceComputerUseApprovalRequestType: #{value}")
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalSessionRequiredActionResourceEnvironmentConnectionMetadata
+  FIELDS = {
+    type: "type",
+    environment_id: "environment_id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    environment_id
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::SessionRequiredActionResourceEnvironmentConnectionType.from_value(value)
+    end,
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for SessionRequiredActionResourceEnvironmentConnection.
+# Reconnect a session environment.
+class SessionRequiredActionResourceEnvironmentConnection
+  include SessionRequiredActionResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalSessionRequiredActionResourceEnvironmentConnectionMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalSessionRequiredActionResourceEnvironmentConnectionMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalSessionRequiredActionResourceEnvironmentConnectionMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [SessionRequiredActionResourceEnvironmentConnectionType] The type of the object. Always `environment_connection`.
+  attr_reader :type
+  # @return [String] The ID of the environment to reconnect.
+  attr_reader :environment_id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the SessionRequiredActionResourceComputerUseApprovalRequestType SDK namespace.
-  module SessionRequiredActionResourceComputerUseApprovalRequestType
-    COMPUTER_USE_APPROVAL_REQUEST = 'computer_use_approval_request'
-    VALUES = ['computer_use_approval_request'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('SessionRequiredActionResourceComputerUseApprovalRequestType', 'enum', "Unknown SessionRequiredActionResourceComputerUseApprovalRequestType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalSessionRequiredActionResourceEnvironmentConnectionMetadata
-    FIELDS = {
-      type: 'type',
-      environment_id: 'environment_id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      environment_id
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::SessionRequiredActionResourceEnvironmentConnectionType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the SessionRequiredActionResourceEnvironmentConnectionType SDK namespace.
+module SessionRequiredActionResourceEnvironmentConnectionType
+  ENVIRONMENT_CONNECTION = 'environment_connection'
+  VALUES = ['environment_connection'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('SessionRequiredActionResourceEnvironmentConnectionType', 'enum', "Unknown SessionRequiredActionResourceEnvironmentConnectionType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalSessionRequiredActionResourceFunctionCallMetadata
+  FIELDS = {
+    type: "type",
+    turn_id: "turn_id",
+    call_id: "call_id",
+    name: "name",
+    arguments: "arguments",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    turn_id
+    call_id
+    name
+    arguments
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::SessionRequiredActionResourceFunctionCallType.from_value(value)
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    arguments
+  ].freeze
+end
+
+# API model for SessionRequiredActionResourceFunctionCall.
+# Run a function tool and submit its result.
+class SessionRequiredActionResourceFunctionCall
+  include SessionRequiredActionResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalSessionRequiredActionResourceFunctionCallMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalSessionRequiredActionResourceFunctionCallMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalSessionRequiredActionResourceFunctionCallMetadata::DECODERS
+
+  # @return [SessionRequiredActionResourceFunctionCallType] The type of the object. Always `function_call`.
+  attr_reader :type
+  # @return [String] The ID of the turn that requested the function call.
+  attr_reader :turn_id
+  # @return [String] The ID to include when submitting the function result.
+  attr_reader :call_id
+  # @return [String] The function name.
+  attr_reader :name
+  # @return [Object] The arguments supplied by the model.
+  attr_reader :arguments
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for SessionRequiredActionResourceEnvironmentConnection.
-  # Reconnect a session environment.
-  class SessionRequiredActionResourceEnvironmentConnection
-    include SessionRequiredActionResource
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalSessionRequiredActionResourceEnvironmentConnectionMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalSessionRequiredActionResourceEnvironmentConnectionMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalSessionRequiredActionResourceEnvironmentConnectionMetadata::DECODERS
-
-    # @return [SessionRequiredActionResourceEnvironmentConnectionType] The type of the object. Always `environment_connection`.
-    attr_reader :type
-    # @return [String] The ID of the environment to reconnect.
-    attr_reader :environment_id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalSessionRequiredActionResourceFunctionCallMetadata::NULLABLE_FIELDS)
   end
 
-  # Defines the SessionRequiredActionResourceEnvironmentConnectionType SDK namespace.
-  module SessionRequiredActionResourceEnvironmentConnectionType
-    ENVIRONMENT_CONNECTION = 'environment_connection'
-    VALUES = ['environment_connection'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('SessionRequiredActionResourceEnvironmentConnectionType', 'enum', "Unknown SessionRequiredActionResourceEnvironmentConnectionType: #{value}")
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Internal model hydration metadata.
-  class SdkInternalSessionRequiredActionResourceFunctionCallMetadata
-    FIELDS = {
-      type: 'type',
-      turn_id: 'turn_id',
-      call_id: 'call_id',
-      name: 'name',
-      arguments: 'arguments'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      turn_id
-      call_id
-      name
-      arguments
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::SessionRequiredActionResourceFunctionCallType.from_value(value)
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      arguments
-    ].freeze
+# Defines the SessionRequiredActionResourceFunctionCallType SDK namespace.
+module SessionRequiredActionResourceFunctionCallType
+  FUNCTION_CALL = 'function_call'
+  VALUES = ['function_call'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('SessionRequiredActionResourceFunctionCallType', 'enum', "Unknown SessionRequiredActionResourceFunctionCallType: #{value}")
   end
-
-  # API model for SessionRequiredActionResourceFunctionCall.
-  # Run a function tool and submit its result.
-  class SessionRequiredActionResourceFunctionCall
-    include SessionRequiredActionResource
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalSessionRequiredActionResourceFunctionCallMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalSessionRequiredActionResourceFunctionCallMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalSessionRequiredActionResourceFunctionCallMetadata::DECODERS
-
-    # @return [SessionRequiredActionResourceFunctionCallType] The type of the object. Always `function_call`.
-    attr_reader :type
-    # @return [String] The ID of the turn that requested the function call.
-    attr_reader :turn_id
-    # @return [String] The ID to include when submitting the function result.
-    attr_reader :call_id
-    # @return [String] The function name.
-    attr_reader :name
-    # @return [Object] The arguments supplied by the model.
-    attr_reader :arguments
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalSessionRequiredActionResourceFunctionCallMetadata::NULLABLE_FIELDS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the SessionRequiredActionResourceFunctionCallType SDK namespace.
-  module SessionRequiredActionResourceFunctionCallType
-    FUNCTION_CALL = 'function_call'
-    VALUES = ['function_call'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('SessionRequiredActionResourceFunctionCallType', 'enum', "Unknown SessionRequiredActionResourceFunctionCallType: #{value}")
-    end
-  end
+end
 end

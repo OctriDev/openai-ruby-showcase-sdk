@@ -5,118 +5,119 @@
 
 # webhook_fine_tuning_job_failed domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalWebhookFineTuningJobFailedDataMetadata
-    FIELDS = {
-      id: 'id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-    ].freeze
-    DECODERS = {}.freeze
+# Internal model hydration metadata.
+class SdkInternalWebhookFineTuningJobFailedDataMetadata
+  FIELDS = {
+    id: "id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for WebhookFineTuningJobFailedData.
+# Event data payload.
+class WebhookFineTuningJobFailedData
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalWebhookFineTuningJobFailedDataMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalWebhookFineTuningJobFailedDataMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalWebhookFineTuningJobFailedDataMetadata::DECODERS
+
+  # @return [String] The unique ID of the fine-tuning job.
+  attr_reader :id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for WebhookFineTuningJobFailedData.
-  # Event data payload.
-  class WebhookFineTuningJobFailedData
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalWebhookFineTuningJobFailedDataMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalWebhookFineTuningJobFailedDataMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalWebhookFineTuningJobFailedDataMetadata::DECODERS
-
-    # @return [String] The unique ID of the fine-tuning job.
-    attr_reader :id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalWebhookFineTuningJobFailedMetadata
-    FIELDS = {
-      created_at: 'created_at',
-      id: 'id',
-      data: 'data',
-      object: 'object',
-      type: 'type'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      created_at
-      id
-      data
-      type
-    ].freeze
-    DECODERS = {
-      data: lambda do |value|
-        ::OctridevOpenai::WebhookFineTuningJobFailedData.from_hash(value)
-      end,
-      object: lambda do |value|
-        ::OctridevOpenai::WebhookFineTuningJobFailedObject.from_value(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::WebhookFineTuningJobFailedType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalWebhookFineTuningJobFailedMetadata
+  FIELDS = {
+    created_at: "created_at",
+    id: "id",
+    data: "data",
+    object: "object",
+    type: "type",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    created_at
+    id
+    data
+    type
+  ].freeze
+  DECODERS = {
+    data: lambda do |value|
+      ::OctridevOpenai::WebhookFineTuningJobFailedData.from_hash(value)
+    end,
+    object: lambda do |value|
+      ::OctridevOpenai::WebhookFineTuningJobFailedObject.from_value(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::WebhookFineTuningJobFailedType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for WebhookFineTuningJobFailed.
+# Sent when a fine-tuning job has failed.
+class WebhookFineTuningJobFailed
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalWebhookFineTuningJobFailedMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalWebhookFineTuningJobFailedMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalWebhookFineTuningJobFailedMetadata::DECODERS
+
+  # @return [Integer] The Unix timestamp (in seconds) of when the fine-tuning job failed.
+  attr_reader :created_at
+  # @return [String] The unique ID of the event.
+  attr_reader :id
+  # @return [WebhookFineTuningJobFailedData] Event data payload.
+  attr_reader :data
+  # @return [WebhookFineTuningJobFailedObject] The object of the event. Always `event`.
+  attr_reader :object
+  # @return [WebhookFineTuningJobFailedType] The type of the event. Always `fine_tuning.job.failed`.
+  attr_reader :type
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for WebhookFineTuningJobFailed.
-  # Sent when a fine-tuning job has failed.
-  class WebhookFineTuningJobFailed
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalWebhookFineTuningJobFailedMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalWebhookFineTuningJobFailedMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalWebhookFineTuningJobFailedMetadata::DECODERS
-
-    # @return [Integer] The Unix timestamp (in seconds) of when the fine-tuning job failed.
-    attr_reader :created_at
-    # @return [String] The unique ID of the event.
-    attr_reader :id
-    # @return [WebhookFineTuningJobFailedData] Event data payload.
-    attr_reader :data
-    # @return [WebhookFineTuningJobFailedObject] The object of the event. Always `event`.
-    attr_reader :object
-    # @return [WebhookFineTuningJobFailedType] The type of the event. Always `fine_tuning.job.failed`.
-    attr_reader :type
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the WebhookFineTuningJobFailedObject SDK namespace.
-  module WebhookFineTuningJobFailedObject
-    EVENT = 'event'
-    VALUES = ['event'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the WebhookFineTuningJobFailedType SDK namespace.
-  module WebhookFineTuningJobFailedType
-    FINE_TUNING_JOB_FAILED = 'fine_tuning.job.failed'
-    VALUES = ['fine_tuning.job.failed'].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the WebhookFineTuningJobFailedObject SDK namespace.
+module WebhookFineTuningJobFailedObject
+  EVENT = 'event'
+  VALUES = ['event'].freeze
+  def self.from_value(value)
+    value
   end
+end
+
+# Defines the WebhookFineTuningJobFailedType SDK namespace.
+module WebhookFineTuningJobFailedType
+  FINE_TUNING_JOB_FAILED = 'fine_tuning.job.failed'
+  VALUES = ['fine_tuning.job.failed'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 end

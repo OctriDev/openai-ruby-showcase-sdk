@@ -5,303 +5,304 @@
 
 # webhook_endpoints domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalDeletedWebhookEndpointResourceMetadata
-    FIELDS = {
-      id: 'id',
-      object: 'object',
-      deleted: 'deleted'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-      object
-      deleted
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::DeletedWebhookEndpointResourceObject.from_value(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalDeletedWebhookEndpointResourceMetadata
+  FIELDS = {
+    id: "id",
+    object: "object",
+    deleted: "deleted",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+    object
+    deleted
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::DeletedWebhookEndpointResourceObject.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for DeletedWebhookEndpointResource.
+# Typed representation of the `DeletedWebhookEndpointResource` API schema.
+class DeletedWebhookEndpointResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalDeletedWebhookEndpointResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalDeletedWebhookEndpointResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalDeletedWebhookEndpointResourceMetadata::DECODERS
+
+  # @return [String] The ID of the deleted webhook endpoint.
+  attr_reader :id
+  # @return [DeletedWebhookEndpointResourceObject] The object type, which is always webhook_endpoint.deleted.
+  attr_reader :object
+  # @return [Boolean] Whether the endpoint was deleted.
+  attr_reader :deleted
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for DeletedWebhookEndpointResource.
-  # Typed representation of the `DeletedWebhookEndpointResource` API schema.
-  class DeletedWebhookEndpointResource
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalDeletedWebhookEndpointResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalDeletedWebhookEndpointResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalDeletedWebhookEndpointResourceMetadata::DECODERS
-
-    # @return [String] The ID of the deleted webhook endpoint.
-    attr_reader :id
-    # @return [DeletedWebhookEndpointResourceObject] The object type, which is always webhook_endpoint.deleted.
-    attr_reader :object
-    # @return [Boolean] Whether the endpoint was deleted.
-    attr_reader :deleted
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the DeletedWebhookEndpointResourceObject SDK namespace.
-  module DeletedWebhookEndpointResourceObject
-    WEBHOOK_ENDPOINT_DELETED = 'webhook_endpoint.deleted'
-    VALUES = ['webhook_endpoint.deleted'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the DeletedWebhookEndpointResourceObject SDK namespace.
+module DeletedWebhookEndpointResourceObject
+  WEBHOOK_ENDPOINT_DELETED = 'webhook_endpoint.deleted'
+  VALUES = ['webhook_endpoint.deleted'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalPublicCreateEndpointBodyMetadata
+  FIELDS = {
+    name: "name",
+    url: "url",
+    event_types: "event_types",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    name
+    url
+    event_types
+  ].freeze
+  DECODERS = {
+    event_types: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::ProjectEventTypeEnum.from_value(item) }
+    end,
+  }.freeze
+end
+
+# API model for PublicCreateEndpointBody.
+# Typed representation of the `PublicCreateEndpointBody` API schema.
+class PublicCreateEndpointBody
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalPublicCreateEndpointBodyMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalPublicCreateEndpointBodyMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalPublicCreateEndpointBodyMetadata::DECODERS
+
+  # @return [String] A human-readable name for the webhook endpoint.
+  attr_reader :name
+  # @return [String] The HTTPS URL that receives webhook deliveries.
+  attr_reader :url
+  # @return [Array_of_ProjectEventTypeEnum] The event types that trigger deliveries to this endpoint.
+  attr_reader :event_types
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalPublicCreateEndpointBodyMetadata
-    FIELDS = {
-      name: 'name',
-      url: 'url',
-      event_types: 'event_types'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      name
-      url
-      event_types
-    ].freeze
-    DECODERS = {
-      event_types: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::ProjectEventTypeEnum.from_value(item) }
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for PublicCreateEndpointBody.
-  # Typed representation of the `PublicCreateEndpointBody` API schema.
-  class PublicCreateEndpointBody
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalPublicCreateEndpointBodyMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalPublicCreateEndpointBodyMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalPublicCreateEndpointBodyMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] A human-readable name for the webhook endpoint.
-    attr_reader :name
-    # @return [String] The HTTPS URL that receives webhook deliveries.
-    attr_reader :url
-    # @return [Array_of_ProjectEventTypeEnum] The event types that trigger deliveries to this endpoint.
-    attr_reader :event_types
+# Internal model hydration metadata.
+class SdkInternalPublicUpdateEndpointBodyMetadata
+  FIELDS = {
+    name: "name",
+    url: "url",
+    event_types: "event_types",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+    event_types: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::ProjectEventTypeEnum.from_value(item) }
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for PublicUpdateEndpointBody.
+# Typed representation of the `PublicUpdateEndpointBody` API schema.
+class PublicUpdateEndpointBody
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalPublicUpdateEndpointBodyMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalPublicUpdateEndpointBodyMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalPublicUpdateEndpointBodyMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [String] A new human-readable name for the webhook endpoint.
+  attr_reader :name
+  # @return [String] A new HTTPS URL that receives webhook deliveries.
+  attr_reader :url
+  # @return [Array_of_ProjectEventTypeEnum] The complete set of event types that should trigger deliveries.
+  attr_reader :event_types
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalPublicUpdateEndpointBodyMetadata
-    FIELDS = {
-      name: 'name',
-      url: 'url',
-      event_types: 'event_types'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {
-      event_types: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::ProjectEventTypeEnum.from_value(item) }
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for PublicUpdateEndpointBody.
-  # Typed representation of the `PublicUpdateEndpointBody` API schema.
-  class PublicUpdateEndpointBody
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalPublicUpdateEndpointBodyMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalPublicUpdateEndpointBodyMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalPublicUpdateEndpointBodyMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] A new human-readable name for the webhook endpoint.
-    attr_reader :name
-    # @return [String] A new HTTPS URL that receives webhook deliveries.
-    attr_reader :url
-    # @return [Array_of_ProjectEventTypeEnum] The complete set of event types that should trigger deliveries.
-    attr_reader :event_types
+# Internal model hydration metadata.
+class SdkInternalWebhookEndpointBodyMetadata
+  FIELDS = {
+    id: "id",
+    object: "object",
+    created_at: "created_at",
+    updated_at: "updated_at",
+    name: "name",
+    url: "url",
+    event_types: "event_types",
+    signing_secret_hint: "signing_secret_hint",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+    object
+    created_at
+    name
+    url
+    event_types
+    signing_secret_hint
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::WebhookEndpointBodyObject.from_value(value)
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    signing_secret_hint
+  ].freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for WebhookEndpointBody.
+# Typed representation of the `WebhookEndpointBody` API schema.
+class WebhookEndpointBody
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalWebhookEndpointBodyMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalWebhookEndpointBodyMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalWebhookEndpointBodyMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [String] The unique ID of the webhook endpoint.
+  attr_reader :id
+  # @return [WebhookEndpointBodyObject] The object type, which is always webhook_endpoint.
+  attr_reader :object
+  # @return [Integer] The Unix timestamp when the endpoint was created.
+  attr_reader :created_at
+  # @return [Integer] The Unix timestamp of the last endpoint configuration or signing-secret change. Initialized at creation; tests and unchanged updates do not advance it.
+  attr_reader :updated_at
+  # @return [String] The human-readable name of the endpoint.
+  attr_reader :name
+  # @return [String] The HTTPS URL that receives webhook deliveries.
+  attr_reader :url
+  # @return [Array_of_String] The event types that trigger deliveries to this endpoint.
+  attr_reader :event_types
+  # @return [String] Required `string` value serialized in the `signing_secret_hint` wire field.
+  attr_reader :signing_secret_hint
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalWebhookEndpointBodyMetadata
-    FIELDS = {
-      id: 'id',
-      object: 'object',
-      created_at: 'created_at',
-      updated_at: 'updated_at',
-      name: 'name',
-      url: 'url',
-      event_types: 'event_types',
-      signing_secret_hint: 'signing_secret_hint'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-      object
-      created_at
-      name
-      url
-      event_types
-      signing_secret_hint
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::WebhookEndpointBodyObject.from_value(value)
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      signing_secret_hint
-    ].freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalWebhookEndpointBodyMetadata::NULLABLE_FIELDS)
   end
 
-  # API model for WebhookEndpointBody.
-  # Typed representation of the `WebhookEndpointBody` API schema.
-  class WebhookEndpointBody
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalWebhookEndpointBodyMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalWebhookEndpointBodyMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalWebhookEndpointBodyMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] The unique ID of the webhook endpoint.
-    attr_reader :id
-    # @return [WebhookEndpointBodyObject] The object type, which is always webhook_endpoint.
-    attr_reader :object
-    # @return [Integer] The Unix timestamp when the endpoint was created.
-    attr_reader :created_at
-    # @return [Integer] The Unix timestamp of the last endpoint configuration or signing-secret change. Initialized at creation; tests and unchanged updates do not advance it.
-    attr_reader :updated_at
-    # @return [String] The human-readable name of the endpoint.
-    attr_reader :name
-    # @return [String] The HTTPS URL that receives webhook deliveries.
-    attr_reader :url
-    # @return [Array_of_String] The event types that trigger deliveries to this endpoint.
-    attr_reader :event_types
-    # @return [String] Required `string` value serialized in the `signing_secret_hint` wire field.
-    attr_reader :signing_secret_hint
+# Defines the WebhookEndpointBodyObject SDK namespace.
+module WebhookEndpointBodyObject
+  WEBHOOK_ENDPOINT = 'webhook_endpoint'
+  VALUES = ['webhook_endpoint'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalWebhookEndpointListResourceMetadata
+  FIELDS = {
+    object: "object",
+    data: "data",
+    first_id: "first_id",
+    last_id: "last_id",
+    has_more: "has_more",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    data
+    first_id
+    last_id
+    has_more
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::WebhookEndpointListResourceObject.from_value(value)
+    end,
+    data: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::WebhookEndpointBody.from_hash(item) }
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    first_id
+    last_id
+  ].freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalWebhookEndpointBodyMetadata::NULLABLE_FIELDS)
-    end
+# API model for WebhookEndpointListResource.
+# Typed representation of the `WebhookEndpointListResource` API schema.
+class WebhookEndpointListResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalWebhookEndpointListResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalWebhookEndpointListResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalWebhookEndpointListResourceMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [WebhookEndpointListResourceObject] The object type, which is always list.
+  attr_reader :object
+  # @return [Array_of_WebhookEndpointBody] The webhook endpoints in this page.
+  attr_reader :data
+  # @return [String] Required `string` value serialized in the `first_id` wire field.
+  attr_reader :first_id
+  # @return [String] Required `string` value serialized in the `last_id` wire field.
+  attr_reader :last_id
+  # @return [Boolean] Whether more webhook endpoints are available.
+  attr_reader :has_more
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the WebhookEndpointBodyObject SDK namespace.
-  module WebhookEndpointBodyObject
-    WEBHOOK_ENDPOINT = 'webhook_endpoint'
-    VALUES = ['webhook_endpoint'].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalWebhookEndpointListResourceMetadata::NULLABLE_FIELDS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalWebhookEndpointListResourceMetadata
-    FIELDS = {
-      object: 'object',
-      data: 'data',
-      first_id: 'first_id',
-      last_id: 'last_id',
-      has_more: 'has_more'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      data
-      first_id
-      last_id
-      has_more
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::WebhookEndpointListResourceObject.from_value(value)
-      end,
-      data: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::WebhookEndpointBody.from_hash(item) }
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      first_id
-      last_id
-    ].freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # API model for WebhookEndpointListResource.
-  # Typed representation of the `WebhookEndpointListResource` API schema.
-  class WebhookEndpointListResource
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalWebhookEndpointListResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalWebhookEndpointListResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalWebhookEndpointListResourceMetadata::DECODERS
-
-    # @return [WebhookEndpointListResourceObject] The object type, which is always list.
-    attr_reader :object
-    # @return [Array_of_WebhookEndpointBody] The webhook endpoints in this page.
-    attr_reader :data
-    # @return [String] Required `string` value serialized in the `first_id` wire field.
-    attr_reader :first_id
-    # @return [String] Required `string` value serialized in the `last_id` wire field.
-    attr_reader :last_id
-    # @return [Boolean] Whether more webhook endpoints are available.
-    attr_reader :has_more
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalWebhookEndpointListResourceMetadata::NULLABLE_FIELDS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+# Defines the WebhookEndpointListResourceObject SDK namespace.
+module WebhookEndpointListResourceObject
+  LIST = 'list'
+  VALUES = ['list'].freeze
+  def self.from_value(value)
+    value
   end
-
-  # Defines the WebhookEndpointListResourceObject SDK namespace.
-  module WebhookEndpointListResourceObject
-    LIST = 'list'
-    VALUES = ['list'].freeze
-    def self.from_value(value)
-      value
-    end
-  end
+end
 end

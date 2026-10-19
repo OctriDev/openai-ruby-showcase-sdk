@@ -5,118 +5,115 @@
 
 # responses_beta_response_format domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalBetaResponseFormatJsonObjectMetadata
-    FIELDS = {
-      type: 'type'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::BetaResponseFormatJsonObjectType.from_value(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalBetaResponseFormatJsonObjectMetadata
+  FIELDS = {
+    type: "type",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::BetaResponseFormatJsonObjectType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaResponseFormatJsonObject.
+# JSON object response format. An older method of generating JSON responses. Using `json_schema` is recommended for models that support it. Note that the model will not generate JSON without a system or user message instructing it to do so.
+class BetaResponseFormatJsonObject
+  include BetaTextResponseFormatConfiguration
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaResponseFormatJsonObjectMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaResponseFormatJsonObjectMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaResponseFormatJsonObjectMetadata::DECODERS
+
+  # @return [BetaResponseFormatJsonObjectType] The type of response format being defined. Always `json_object`.
+  attr_reader :type
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BetaResponseFormatJsonObject.
-  # JSON object response format. An older method of generating JSON responses. Using `json_schema` is recommended for models that support it. Note that the model will not generate JSON without a system or user message instructing it to do so.
-  class BetaResponseFormatJsonObject
-    include BetaTextResponseFormatConfiguration
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaResponseFormatJsonObjectMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaResponseFormatJsonObjectMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaResponseFormatJsonObjectMetadata::DECODERS
-
-    # @return [BetaResponseFormatJsonObjectType] The type of response format being defined. Always `json_object`.
-    attr_reader :type
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the BetaResponseFormatJsonObjectType SDK namespace.
-  module BetaResponseFormatJsonObjectType
-    JSON_OBJECT = 'json_object'
-    VALUES = ['json_object'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('BetaResponseFormatJsonObjectType', 'enum', "Unknown BetaResponseFormatJsonObjectType: #{value}")
-    end
+# Defines the BetaResponseFormatJsonObjectType SDK namespace.
+module BetaResponseFormatJsonObjectType
+  JSON_OBJECT = 'json_object'
+  VALUES = ['json_object'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('BetaResponseFormatJsonObjectType', 'enum', "Unknown BetaResponseFormatJsonObjectType: #{value}")
+  end
+end
+
+# Defines the BetaResponseFormatJsonSchemaSchema SDK value decoder.
+module BetaResponseFormatJsonSchemaSchema
+  def self.from_hash(value)
+    return nil if value.nil?
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaResponseFormatTextMetadata
+  FIELDS = {
+    type: "type",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::BetaResponseFormatTextType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaResponseFormatText.
+# Default response format. Used to generate text responses.
+class BetaResponseFormatText
+  include BetaTextResponseFormatConfiguration
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaResponseFormatTextMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaResponseFormatTextMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaResponseFormatTextMetadata::DECODERS
+
+  # @return [BetaResponseFormatTextType] The type of response format being defined. Always `text`.
+  attr_reader :type
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the BetaResponseFormatJsonSchemaSchema SDK value decoder.
-  module BetaResponseFormatJsonSchemaSchema
-    def self.from_hash(value)
-      return nil if value.nil?
-
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaResponseFormatTextMetadata
-    FIELDS = {
-      type: 'type'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::BetaResponseFormatTextType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # API model for BetaResponseFormatText.
-  # Default response format. Used to generate text responses.
-  class BetaResponseFormatText
-    include BetaTextResponseFormatConfiguration
+# Defines the BetaResponseFormatTextType SDK namespace.
+module BetaResponseFormatTextType
+  TEXT = 'text'
+  VALUES = ['text'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaResponseFormatTextMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaResponseFormatTextMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaResponseFormatTextMetadata::DECODERS
-
-    # @return [BetaResponseFormatTextType] The type of response format being defined. Always `text`.
-    attr_reader :type
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+    raise SdkValidationError.new('BetaResponseFormatTextType', 'enum', "Unknown BetaResponseFormatTextType: #{value}")
   end
-
-  # Defines the BetaResponseFormatTextType SDK namespace.
-  module BetaResponseFormatTextType
-    TEXT = 'text'
-    VALUES = ['text'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('BetaResponseFormatTextType', 'enum', "Unknown BetaResponseFormatTextType: #{value}")
-    end
-  end
+end
 end

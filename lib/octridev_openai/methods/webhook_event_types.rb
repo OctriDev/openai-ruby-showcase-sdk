@@ -14,15 +14,16 @@ module OctridevOpenai
         config:,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
-          '/webhook_event_types',
+          "/webhook_event_types",
           config: config,
           return_type: ::OctridevOpenai::WebhookEventTypeListResource,
           decoder: :json,
           operation_id: 'list_webhook_event_types',
           request_options: request_options,
-          errors: { '401' => ::OctridevOpenai::ErrorResponse }
+          errors: { '401' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
     end

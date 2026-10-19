@@ -5,88 +5,86 @@
 
 # responses_beta_auto domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalBetaAutoCodeInterpreterToolParamMetadata
-    FIELDS = {
-      type: 'type',
-      file_ids: 'file_ids',
-      memory_limit: 'memory_limit',
-      network_policy: 'network_policy'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::BetaAutoCodeInterpreterToolParamType.from_value(value)
-      end,
-      memory_limit: lambda do |value|
-        ::OctridevOpenai::BetaContainerMemoryLimit.from_value(value)
-      end,
-      network_policy: lambda do |value|
-        ::OctridevOpenai::BetaAutoCodeInterpreterToolParamNetworkPolicy.from_hash(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalBetaAutoCodeInterpreterToolParamMetadata
+  FIELDS = {
+    type: "type",
+    file_ids: "file_ids",
+    memory_limit: "memory_limit",
+    network_policy: "network_policy",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::BetaAutoCodeInterpreterToolParamType.from_value(value)
+    end,
+    memory_limit: lambda do |value|
+      ::OctridevOpenai::BetaContainerMemoryLimit.from_value(value)
+    end,
+    network_policy: lambda do |value|
+      ::OctridevOpenai::BetaAutoCodeInterpreterToolParamNetworkPolicy.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaAutoCodeInterpreterToolParam.
+# Configuration for a code interpreter container. Optionally specify the IDs of the files to run the code on.
+class BetaAutoCodeInterpreterToolParam
+  include BetaCodeInterpreterToolContainer
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaAutoCodeInterpreterToolParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaAutoCodeInterpreterToolParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaAutoCodeInterpreterToolParamMetadata::DECODERS
+
+  # @return [BetaAutoCodeInterpreterToolParamType] Always `auto`.
+  attr_reader :type
+  # @return [Array_of_String] An optional list of uploaded files to make available to your code.
+  attr_reader :file_ids
+  # @return [BetaContainerMemoryLimit] Optional API value serialized in the `memory_limit` wire field.
+  attr_reader :memory_limit
+  # @return [BetaAutoCodeInterpreterToolParamNetworkPolicy] Network access policy for the container.
+  attr_reader :network_policy
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BetaAutoCodeInterpreterToolParam.
-  # Configuration for a code interpreter container. Optionally specify the IDs of the files to run the code on.
-  class BetaAutoCodeInterpreterToolParam
-    include BetaCodeInterpreterToolContainer
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaAutoCodeInterpreterToolParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaAutoCodeInterpreterToolParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaAutoCodeInterpreterToolParamMetadata::DECODERS
-
-    # @return [BetaAutoCodeInterpreterToolParamType] Always `auto`.
-    attr_reader :type
-    # @return [Array_of_String] An optional list of uploaded files to make available to your code.
-    attr_reader :file_ids
-    # @return [BetaContainerMemoryLimit] Optional API value serialized in the `memory_limit` wire field.
-    attr_reader :memory_limit
-    # @return [BetaAutoCodeInterpreterToolParamNetworkPolicy] Network access policy for the container.
-    attr_reader :network_policy
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the BetaAutoCodeInterpreterToolParamType SDK namespace.
-  module BetaAutoCodeInterpreterToolParamType
-    AUTO = 'auto'
-    VALUES = ['auto'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the BetaAutoCodeInterpreterToolParamNetworkPolicy SDK namespace.
-  module BetaAutoCodeInterpreterToolParamNetworkPolicy
-    DISCRIMINATOR_MAPPING = {
-      'disabled' => -> { BetaContainerNetworkPolicyDisabledParam },
-      'allowlist' => -> { BetaContainerNetworkPolicyAllowlistParam }
-    }.freeze
-
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
-
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
-
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
-
-      raise SdkValidationError.new('BetaAutoCodeInterpreterToolParamNetworkPolicy', 'variant', "Unknown BetaAutoCodeInterpreterToolParamNetworkPolicy discriminator: #{hash['type'].inspect}")
-    end
+# Defines the BetaAutoCodeInterpreterToolParamType SDK namespace.
+module BetaAutoCodeInterpreterToolParamType
+  AUTO = 'auto'
+  VALUES = ['auto'].freeze
+  def self.from_value(value)
+    value
   end
+end
+
+# Defines the BetaAutoCodeInterpreterToolParamNetworkPolicy SDK namespace.
+module BetaAutoCodeInterpreterToolParamNetworkPolicy
+  DISCRIMINATOR_MAPPING = {
+    "disabled" => -> { BetaContainerNetworkPolicyDisabledParam },
+    "allowlist" => -> { BetaContainerNetworkPolicyAllowlistParam },
+  }.freeze
+
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
+
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+
+    raise SdkValidationError.new('BetaAutoCodeInterpreterToolParamNetworkPolicy', 'variant', "Unknown BetaAutoCodeInterpreterToolParamNetworkPolicy discriminator: #{hash["type"].inspect}")
+  end
+end
 end

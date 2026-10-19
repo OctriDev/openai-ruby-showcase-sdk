@@ -5,227 +5,227 @@
 
 # assistants_list domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalListAssistantsResponseMetadata
-    FIELDS = {
-      object: 'object',
-      data: 'data',
-      first_id: 'first_id',
-      last_id: 'last_id',
-      has_more: 'has_more'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      data
-      first_id
-      last_id
-      has_more
-    ].freeze
-    DECODERS = {
-      data: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::AssistantObject.from_hash(item) }
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalListAssistantsResponseMetadata
+  FIELDS = {
+    object: "object",
+    data: "data",
+    first_id: "first_id",
+    last_id: "last_id",
+    has_more: "has_more",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    data
+    first_id
+    last_id
+    has_more
+  ].freeze
+  DECODERS = {
+    data: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::AssistantObject.from_hash(item) }
+    end,
+  }.freeze
+end
+
+# API model for ListAssistantsResponse.
+# Typed representation of the `ListAssistantsResponse` API schema.
+class ListAssistantsResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalListAssistantsResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalListAssistantsResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalListAssistantsResponseMetadata::DECODERS
+
+  # @return [String] Required `string` value serialized in the `object` wire field.
+  attr_reader :object
+  # @return [Array_of_AssistantObject] Required array value serialized in the `data` wire field.
+  attr_reader :data
+  # @return [String] Required `string` value serialized in the `first_id` wire field.
+  attr_reader :first_id
+  # @return [String] Required `string` value serialized in the `last_id` wire field.
+  attr_reader :last_id
+  # @return [Boolean] Required `boolean` value serialized in the `has_more` wire field.
+  attr_reader :has_more
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ListAssistantsResponse.
-  # Typed representation of the `ListAssistantsResponse` API schema.
-  class ListAssistantsResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalListAssistantsResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalListAssistantsResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalListAssistantsResponseMetadata::DECODERS
-
-    # @return [String] Required `string` value serialized in the `object` wire field.
-    attr_reader :object
-    # @return [Array_of_AssistantObject] Required array value serialized in the `data` wire field.
-    attr_reader :data
-    # @return [String] Required `string` value serialized in the `first_id` wire field.
-    attr_reader :first_id
-    # @return [String] Required `string` value serialized in the `last_id` wire field.
-    attr_reader :last_id
-    # @return [Boolean] Required `boolean` value serialized in the `has_more` wire field.
-    attr_reader :has_more
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalListMessagesResponseMetadata
-    FIELDS = {
-      object: 'object',
-      data: 'data',
-      first_id: 'first_id',
-      last_id: 'last_id',
-      has_more: 'has_more'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      data
-      first_id
-      last_id
-      has_more
-    ].freeze
-    DECODERS = {
-      data: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::MessageObject.from_hash(item) }
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalListMessagesResponseMetadata
+  FIELDS = {
+    object: "object",
+    data: "data",
+    first_id: "first_id",
+    last_id: "last_id",
+    has_more: "has_more",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    data
+    first_id
+    last_id
+    has_more
+  ].freeze
+  DECODERS = {
+    data: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::MessageObject.from_hash(item) }
+    end,
+  }.freeze
+end
+
+# API model for ListMessagesResponse.
+# Typed representation of the `ListMessagesResponse` API schema.
+class ListMessagesResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalListMessagesResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalListMessagesResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalListMessagesResponseMetadata::DECODERS
+
+  # @return [String] Required `string` value serialized in the `object` wire field.
+  attr_reader :object
+  # @return [Array_of_MessageObject] Required array value serialized in the `data` wire field.
+  attr_reader :data
+  # @return [String] Required `string` value serialized in the `first_id` wire field.
+  attr_reader :first_id
+  # @return [String] Required `string` value serialized in the `last_id` wire field.
+  attr_reader :last_id
+  # @return [Boolean] Required `boolean` value serialized in the `has_more` wire field.
+  attr_reader :has_more
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ListMessagesResponse.
-  # Typed representation of the `ListMessagesResponse` API schema.
-  class ListMessagesResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalListMessagesResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalListMessagesResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalListMessagesResponseMetadata::DECODERS
-
-    # @return [String] Required `string` value serialized in the `object` wire field.
-    attr_reader :object
-    # @return [Array_of_MessageObject] Required array value serialized in the `data` wire field.
-    attr_reader :data
-    # @return [String] Required `string` value serialized in the `first_id` wire field.
-    attr_reader :first_id
-    # @return [String] Required `string` value serialized in the `last_id` wire field.
-    attr_reader :last_id
-    # @return [Boolean] Required `boolean` value serialized in the `has_more` wire field.
-    attr_reader :has_more
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalListRunsResponseMetadata
-    FIELDS = {
-      object: 'object',
-      data: 'data',
-      first_id: 'first_id',
-      last_id: 'last_id',
-      has_more: 'has_more'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      data
-      first_id
-      last_id
-      has_more
-    ].freeze
-    DECODERS = {
-      data: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::RunObject.from_hash(item) }
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalListRunsResponseMetadata
+  FIELDS = {
+    object: "object",
+    data: "data",
+    first_id: "first_id",
+    last_id: "last_id",
+    has_more: "has_more",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    data
+    first_id
+    last_id
+    has_more
+  ].freeze
+  DECODERS = {
+    data: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::RunObject.from_hash(item) }
+    end,
+  }.freeze
+end
+
+# API model for ListRunsResponse.
+# Typed representation of the `ListRunsResponse` API schema.
+class ListRunsResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalListRunsResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalListRunsResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalListRunsResponseMetadata::DECODERS
+
+  # @return [String] Required `string` value serialized in the `object` wire field.
+  attr_reader :object
+  # @return [Array_of_RunObject] Required array value serialized in the `data` wire field.
+  attr_reader :data
+  # @return [String] Required `string` value serialized in the `first_id` wire field.
+  attr_reader :first_id
+  # @return [String] Required `string` value serialized in the `last_id` wire field.
+  attr_reader :last_id
+  # @return [Boolean] Required `boolean` value serialized in the `has_more` wire field.
+  attr_reader :has_more
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ListRunsResponse.
-  # Typed representation of the `ListRunsResponse` API schema.
-  class ListRunsResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalListRunsResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalListRunsResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalListRunsResponseMetadata::DECODERS
-
-    # @return [String] Required `string` value serialized in the `object` wire field.
-    attr_reader :object
-    # @return [Array_of_RunObject] Required array value serialized in the `data` wire field.
-    attr_reader :data
-    # @return [String] Required `string` value serialized in the `first_id` wire field.
-    attr_reader :first_id
-    # @return [String] Required `string` value serialized in the `last_id` wire field.
-    attr_reader :last_id
-    # @return [Boolean] Required `boolean` value serialized in the `has_more` wire field.
-    attr_reader :has_more
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalListRunStepsResponseMetadata
-    FIELDS = {
-      object: 'object',
-      data: 'data',
-      first_id: 'first_id',
-      last_id: 'last_id',
-      has_more: 'has_more'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      data
-      first_id
-      last_id
-      has_more
-    ].freeze
-    DECODERS = {
-      data: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::RunStepObject.from_hash(item) }
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalListRunStepsResponseMetadata
+  FIELDS = {
+    object: "object",
+    data: "data",
+    first_id: "first_id",
+    last_id: "last_id",
+    has_more: "has_more",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    data
+    first_id
+    last_id
+    has_more
+  ].freeze
+  DECODERS = {
+    data: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::RunStepObject.from_hash(item) }
+    end,
+  }.freeze
+end
+
+# API model for ListRunStepsResponse.
+# Typed representation of the `ListRunStepsResponse` API schema.
+class ListRunStepsResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalListRunStepsResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalListRunStepsResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalListRunStepsResponseMetadata::DECODERS
+
+  # @return [String] Required `string` value serialized in the `object` wire field.
+  attr_reader :object
+  # @return [Array_of_RunStepObject] Required array value serialized in the `data` wire field.
+  attr_reader :data
+  # @return [String] Required `string` value serialized in the `first_id` wire field.
+  attr_reader :first_id
+  # @return [String] Required `string` value serialized in the `last_id` wire field.
+  attr_reader :last_id
+  # @return [Boolean] Required `boolean` value serialized in the `has_more` wire field.
+  attr_reader :has_more
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ListRunStepsResponse.
-  # Typed representation of the `ListRunStepsResponse` API schema.
-  class ListRunStepsResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalListRunStepsResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalListRunStepsResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalListRunStepsResponseMetadata::DECODERS
-
-    # @return [String] Required `string` value serialized in the `object` wire field.
-    attr_reader :object
-    # @return [Array_of_RunStepObject] Required array value serialized in the `data` wire field.
-    attr_reader :data
-    # @return [String] Required `string` value serialized in the `first_id` wire field.
-    attr_reader :first_id
-    # @return [String] Required `string` value serialized in the `last_id` wire field.
-    attr_reader :last_id
-    # @return [Boolean] Required `boolean` value serialized in the `has_more` wire field.
-    attr_reader :has_more
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
+
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 end

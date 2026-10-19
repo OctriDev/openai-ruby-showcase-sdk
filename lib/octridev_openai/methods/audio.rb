@@ -44,6 +44,7 @@ module OctridevOpenai
         stream_format: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.validate_length('input', input, max: 4096)
 
         Validation.if_given(instructions) { Validation.validate_length('instructions', instructions, max: 4096) }
@@ -52,7 +53,7 @@ module OctridevOpenai
 
         SdkClient.request(
           'POST',
-          '/audio/speech',
+          "/audio/speech",
           config: config,
           body: {
             'model' => model,
@@ -61,12 +62,12 @@ module OctridevOpenai
             'instructions' => instructions,
             'response_format' => response_format,
             'speed' => speed,
-            'stream_format' => stream_format
+            'stream_format' => stream_format,
           },
           decoder: :bytes,
           operation_id: 'create_speech',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '401' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '401' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -106,22 +107,20 @@ module OctridevOpenai
         request_options: nil,
         &block
       )
-        unless block
-          return enum_for(
-            __method__,
-            config: config,
-            model: model,
-            input: input,
-            voice: voice,
-            instructions: instructions,
-            response_format: response_format,
-            speed: speed,
-            stream_format: stream_format,
-            request_options: request_options
-          )
-        end
+    return enum_for(
+          __method__,
+          config: config,
+          model: model,
+          input: input,
+          voice: voice,
+          instructions: instructions,
+          response_format: response_format,
+          speed: speed,
+          stream_format: stream_format,
+          request_options: request_options,
+        ) unless block
         SdkClient.stream(
-          'POST', '/audio/speech',
+          'POST', "/audio/speech",
           config: config,
           body: {
             'model' => model,
@@ -130,17 +129,16 @@ module OctridevOpenai
             'instructions' => instructions,
             'response_format' => response_format,
             'speed' => speed,
-            'stream_format' => stream_format
+            'stream_format' => stream_format,
           },
           content_type: 'application/json',
           operation_id: 'create_speech_stream',
           stream_format: :sse,
-          stream_media_type: 'text/event-stream',
+          stream_media_type: "text/event-stream",
           request_options: request_options,
           errors: { '400' => ::OctridevOpenai::ErrorResponse, '401' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
         ).each do |ev|
           break if ev.data == '[DONE]'
-
           decoded = JSON.parse(ev.data)
           block.call(SdkClient.decode_event(decoded, ::OctridevOpenai::CreateSpeechResponseStreamEvent))
         end
@@ -231,6 +229,7 @@ module OctridevOpenai
         known_speaker_references: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.if_given(languages) { Validation.validate_items('languages', languages, min: 1) }
 
         Validation.if_given(known_speaker_names) do
@@ -243,7 +242,7 @@ module OctridevOpenai
 
         SdkClient.request(
           'POST',
-          '/audio/transcriptions',
+          "/audio/transcriptions",
           config: config,
           body: {
             'file' => SdkClient.upload(file, 'file'),
@@ -259,14 +258,14 @@ module OctridevOpenai
             'stream' => stream,
             'chunking_strategy' => MultipartPart.new(chunking_strategy, content_type: 'application/json'),
             'known_speaker_names' => known_speaker_names,
-            'known_speaker_references' => known_speaker_references
+            'known_speaker_references' => known_speaker_references,
           },
           content_type: 'multipart/form-data',
           return_type: ::OctridevOpenai::CreateTranscriptionResponse,
           decoder: :json,
           operation_id: 'create_transcription',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '401' => ::OctridevOpenai::ErrorResponse, '413' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '502' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '401' => ::OctridevOpenai::ErrorResponse, '413' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '502' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -356,29 +355,27 @@ module OctridevOpenai
         request_options: nil,
         &block
       )
-        unless block
-          return enum_for(
-            __method__,
-            config: config,
-            file: file,
-            model: model,
-            stream: stream,
-            language: language,
-            languages: languages,
-            keywords: keywords,
-            prompt: prompt,
-            response_format: response_format,
-            temperature: temperature,
-            include: include,
-            timestamp_granularities: timestamp_granularities,
-            chunking_strategy: chunking_strategy,
-            known_speaker_names: known_speaker_names,
-            known_speaker_references: known_speaker_references,
-            request_options: request_options
-          )
-        end
+    return enum_for(
+          __method__,
+          config: config,
+          file: file,
+          model: model,
+          stream: stream,
+          language: language,
+          languages: languages,
+          keywords: keywords,
+          prompt: prompt,
+          response_format: response_format,
+          temperature: temperature,
+          include: include,
+          timestamp_granularities: timestamp_granularities,
+          chunking_strategy: chunking_strategy,
+          known_speaker_names: known_speaker_names,
+          known_speaker_references: known_speaker_references,
+          request_options: request_options,
+        ) unless block
         SdkClient.stream(
-          'POST', '/audio/transcriptions',
+          'POST', "/audio/transcriptions",
           config: config,
           body: {
             'file' => SdkClient.upload(file, 'file'),
@@ -394,17 +391,16 @@ module OctridevOpenai
             'timestamp_granularities' => timestamp_granularities,
             'chunking_strategy' => MultipartPart.new(chunking_strategy, content_type: 'application/json'),
             'known_speaker_names' => known_speaker_names,
-            'known_speaker_references' => known_speaker_references
+            'known_speaker_references' => known_speaker_references,
           },
           content_type: 'multipart/form-data',
           operation_id: 'create_transcription_stream',
           stream_format: :sse,
-          stream_media_type: 'text/event-stream',
+          stream_media_type: "text/event-stream",
           request_options: request_options,
           errors: { '400' => ::OctridevOpenai::ErrorResponse, '401' => ::OctridevOpenai::ErrorResponse, '413' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '502' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
         ).each do |ev|
           break if ev.data == '[DONE]'
-
           decoded = JSON.parse(ev.data)
           block.call(SdkClient.decode_event(decoded, ::OctridevOpenai::CreateTranscriptionResponseStreamEvent))
         end
@@ -440,23 +436,24 @@ module OctridevOpenai
         temperature: NOT_GIVEN,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
-          '/audio/translations',
+          "/audio/translations",
           config: config,
           body: {
             'file' => SdkClient.upload(file, 'file'),
             'model' => model,
             'prompt' => prompt,
             'response_format' => response_format,
-            'temperature' => temperature
+            'temperature' => temperature,
           },
           content_type: 'multipart/form-data',
           return_type: ::OctridevOpenai::CreateTranslationResponse,
           decoder: :json,
           operation_id: 'create_translation',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '401' => ::OctridevOpenai::ErrorResponse, '413' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '502' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '401' => ::OctridevOpenai::ErrorResponse, '413' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '502' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -477,21 +474,22 @@ module OctridevOpenai
         language:,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
-          '/audio/voice_consents',
+          "/audio/voice_consents",
           config: config,
           body: {
             'name' => name,
             'recording' => SdkClient.upload(recording, 'recording'),
-            'language' => language
+            'language' => language,
           },
           content_type: 'multipart/form-data',
           return_type: ::OctridevOpenai::VoiceConsentResource,
           decoder: :json,
           operation_id: 'create_voice_consent',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
     end

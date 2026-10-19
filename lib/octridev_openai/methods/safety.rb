@@ -19,12 +19,13 @@ module OctridevOpenai
         id:,
         request_options: nil
       )
+
         Validation.validate_length('id', id, max: 128)
 
         SdkClient.request(
           'GET',
           [
-            '/safety/cases/',
+            "/safety/cases/",
             SdkClient.encode_path_segment(id)
           ].join,
           config: config,
@@ -32,7 +33,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'retrieve_safety_case',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -44,12 +45,13 @@ module OctridevOpenai
         id:,
         request_options: nil
       )
+
         Validation.validate_length('id', id, max: 38)
 
         SdkClient.request(
           'GET',
           [
-            '/safety/alerts/',
+            "/safety/alerts/",
             SdkClient.encode_path_segment(id)
           ].join,
           config: config,
@@ -57,7 +59,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'retrieve_safety_alert',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
     end

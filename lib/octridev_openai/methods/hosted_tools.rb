@@ -19,19 +19,20 @@ module OctridevOpenai
         project_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
           [
-            '/organization/projects/',
+            "/organization/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/hosted_tool_permissions'
+            "/hosted_tool_permissions"
           ].join,
           config: config,
           return_type: ::OctridevOpenai::ProjectHostedToolPermissions,
           decoder: :json,
           operation_id: 'retrieve_project_hosted_tool_permissions',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -59,12 +60,13 @@ module OctridevOpenai
         code_interpreter: NOT_GIVEN,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
           [
-            '/organization/projects/',
+            "/organization/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/hosted_tool_permissions'
+            "/hosted_tool_permissions"
           ].join,
           config: config,
           body: {
@@ -72,13 +74,13 @@ module OctridevOpenai
             'web_search' => web_search,
             'image_generation' => image_generation,
             'mcp' => mcp,
-            'code_interpreter' => code_interpreter
+            'code_interpreter' => code_interpreter,
           },
           return_type: ::OctridevOpenai::ProjectHostedToolPermissions,
           decoder: :json,
           operation_id: 'update_project_hosted_tool_permissions',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '409' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '409' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
     end

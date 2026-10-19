@@ -5,566 +5,559 @@
 
 # agents_session_event domain models (part 4)
 module OctridevOpenai
-  # API model for SessionEventAgentSessionTurnOutputTextDelta.
-  # Emitted when text is appended to an output text content part.
-  class SessionEventAgentSessionTurnOutputTextDelta
-    include SessionEvent
+# API model for SessionEventAgentSessionTurnOutputTextDelta.
+# Emitted when text is appended to an output text content part.
+class SessionEventAgentSessionTurnOutputTextDelta
+  include SessionEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalSessionEventAgentSessionTurnOutputTextDeltaMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalSessionEventAgentSessionTurnOutputTextDeltaMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalSessionEventAgentSessionTurnOutputTextDeltaMetadata::DECODERS
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalSessionEventAgentSessionTurnOutputTextDeltaMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalSessionEventAgentSessionTurnOutputTextDeltaMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalSessionEventAgentSessionTurnOutputTextDeltaMetadata::DECODERS
+  # @return [SessionEventAgentSessionTurnOutputTextDeltaType] The type of the object. Always `agent.session.turn.output_text.delta`.
+  attr_reader :type
+  # @return [String] The unique ID of the event.
+  attr_reader :event_id
+  # @return [String] The ID of the session associated with the event.
+  attr_reader :session_id
+  # @return [String] The ID of the turn associated with the event, when applicable.
+  attr_reader :turn_id
+  # @return [String] The ID of the message item.
+  attr_reader :item_id
+  # @return [Integer] The index of the item in the turn output.
+  attr_reader :output_index
+  # @return [Integer] The index of the content part in the message.
+  attr_reader :content_index
+  # @return [String] The text that was appended.
+  attr_reader :delta
 
-    # @return [SessionEventAgentSessionTurnOutputTextDeltaType] The type of the object. Always `agent.session.turn.output_text.delta`.
-    attr_reader :type
-    # @return [String] The unique ID of the event.
-    attr_reader :event_id
-    # @return [String] The ID of the session associated with the event.
-    attr_reader :session_id
-    # @return [String] The ID of the turn associated with the event, when applicable.
-    attr_reader :turn_id
-    # @return [String] The ID of the message item.
-    attr_reader :item_id
-    # @return [Integer] The index of the item in the turn output.
-    attr_reader :output_index
-    # @return [Integer] The index of the content part in the message.
-    attr_reader :content_index
-    # @return [String] The text that was appended.
-    attr_reader :delta
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalSessionEventAgentSessionTurnOutputTextDeltaMetadata::NULLABLE_FIELDS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the SessionEventAgentSessionTurnOutputTextDeltaType SDK namespace.
-  module SessionEventAgentSessionTurnOutputTextDeltaType
-    AGENT_SESSION_TURN_OUTPUT_TEXT_DELTA = 'agent.session.turn.output_text.delta'
-    VALUES = ['agent.session.turn.output_text.delta'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('SessionEventAgentSessionTurnOutputTextDeltaType', 'enum', "Unknown SessionEventAgentSessionTurnOutputTextDeltaType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalSessionEventAgentSessionTurnOutputTextDeltaMetadata::NULLABLE_FIELDS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalSessionEventAgentSessionTurnOutputTextDoneMetadata
-    FIELDS = {
-      type: 'type',
-      event_id: 'event_id',
-      session_id: 'session_id',
-      turn_id: 'turn_id',
-      item_id: 'item_id',
-      output_index: 'output_index',
-      content_index: 'content_index',
-      text: 'text'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      event_id
-      session_id
-      turn_id
-      item_id
-      output_index
-      content_index
-      text
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::SessionEventAgentSessionTurnOutputTextDoneType.from_value(value)
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      turn_id
-    ].freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the SessionEventAgentSessionTurnOutputTextDeltaType SDK namespace.
+module SessionEventAgentSessionTurnOutputTextDeltaType
+  AGENT_SESSION_TURN_OUTPUT_TEXT_DELTA = 'agent.session.turn.output_text.delta'
+  VALUES = ['agent.session.turn.output_text.delta'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('SessionEventAgentSessionTurnOutputTextDeltaType', 'enum', "Unknown SessionEventAgentSessionTurnOutputTextDeltaType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalSessionEventAgentSessionTurnOutputTextDoneMetadata
+  FIELDS = {
+    type: "type",
+    event_id: "event_id",
+    session_id: "session_id",
+    turn_id: "turn_id",
+    item_id: "item_id",
+    output_index: "output_index",
+    content_index: "content_index",
+    text: "text",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    event_id
+    session_id
+    turn_id
+    item_id
+    output_index
+    content_index
+    text
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::SessionEventAgentSessionTurnOutputTextDoneType.from_value(value)
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    turn_id
+  ].freeze
+end
+
+# API model for SessionEventAgentSessionTurnOutputTextDone.
+# Emitted when an output text content part is complete.
+class SessionEventAgentSessionTurnOutputTextDone
+  include SessionEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalSessionEventAgentSessionTurnOutputTextDoneMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalSessionEventAgentSessionTurnOutputTextDoneMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalSessionEventAgentSessionTurnOutputTextDoneMetadata::DECODERS
+
+  # @return [SessionEventAgentSessionTurnOutputTextDoneType] The type of the object. Always `agent.session.turn.output_text.done`.
+  attr_reader :type
+  # @return [String] The unique ID of the event.
+  attr_reader :event_id
+  # @return [String] The ID of the session associated with the event.
+  attr_reader :session_id
+  # @return [String] The ID of the turn associated with the event, when applicable.
+  attr_reader :turn_id
+  # @return [String] The ID of the message item.
+  attr_reader :item_id
+  # @return [Integer] The index of the item in the turn output.
+  attr_reader :output_index
+  # @return [Integer] The index of the content part in the message.
+  attr_reader :content_index
+  # @return [String] The complete output text.
+  attr_reader :text
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for SessionEventAgentSessionTurnOutputTextDone.
-  # Emitted when an output text content part is complete.
-  class SessionEventAgentSessionTurnOutputTextDone
-    include SessionEvent
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalSessionEventAgentSessionTurnOutputTextDoneMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalSessionEventAgentSessionTurnOutputTextDoneMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalSessionEventAgentSessionTurnOutputTextDoneMetadata::DECODERS
-
-    # @return [SessionEventAgentSessionTurnOutputTextDoneType] The type of the object. Always `agent.session.turn.output_text.done`.
-    attr_reader :type
-    # @return [String] The unique ID of the event.
-    attr_reader :event_id
-    # @return [String] The ID of the session associated with the event.
-    attr_reader :session_id
-    # @return [String] The ID of the turn associated with the event, when applicable.
-    attr_reader :turn_id
-    # @return [String] The ID of the message item.
-    attr_reader :item_id
-    # @return [Integer] The index of the item in the turn output.
-    attr_reader :output_index
-    # @return [Integer] The index of the content part in the message.
-    attr_reader :content_index
-    # @return [String] The complete output text.
-    attr_reader :text
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalSessionEventAgentSessionTurnOutputTextDoneMetadata::NULLABLE_FIELDS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalSessionEventAgentSessionTurnOutputTextDoneMetadata::NULLABLE_FIELDS)
   end
 
-  # Defines the SessionEventAgentSessionTurnOutputTextDoneType SDK namespace.
-  module SessionEventAgentSessionTurnOutputTextDoneType
-    AGENT_SESSION_TURN_OUTPUT_TEXT_DONE = 'agent.session.turn.output_text.done'
-    VALUES = ['agent.session.turn.output_text.done'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('SessionEventAgentSessionTurnOutputTextDoneType', 'enum', "Unknown SessionEventAgentSessionTurnOutputTextDoneType: #{value}")
-    end
+# Defines the SessionEventAgentSessionTurnOutputTextDoneType SDK namespace.
+module SessionEventAgentSessionTurnOutputTextDoneType
+  AGENT_SESSION_TURN_OUTPUT_TEXT_DONE = 'agent.session.turn.output_text.done'
+  VALUES = ['agent.session.turn.output_text.done'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('SessionEventAgentSessionTurnOutputTextDoneType', 'enum', "Unknown SessionEventAgentSessionTurnOutputTextDoneType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalSessionEventAgentSessionTurnReasoningSummaryPartAddedMetadata
+  FIELDS = {
+    type: "type",
+    event_id: "event_id",
+    session_id: "session_id",
+    turn_id: "turn_id",
+    item_id: "item_id",
+    output_index: "output_index",
+    summary_index: "summary_index",
+    part: "part",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    event_id
+    session_id
+    turn_id
+    item_id
+    output_index
+    summary_index
+    part
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::SessionEventAgentSessionTurnReasoningSummaryPartAddedType.from_value(value)
+    end,
+    part: lambda do |value|
+      ::OctridevOpenai::SummaryTextResource.from_hash(value)
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    turn_id
+  ].freeze
+end
+
+# API model for SessionEventAgentSessionTurnReasoningSummaryPartAdded.
+# Emitted when a reasoning summary content part is added.
+class SessionEventAgentSessionTurnReasoningSummaryPartAdded
+  include SessionEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalSessionEventAgentSessionTurnReasoningSummaryPartAddedMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalSessionEventAgentSessionTurnReasoningSummaryPartAddedMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalSessionEventAgentSessionTurnReasoningSummaryPartAddedMetadata::DECODERS
+
+  # @return [SessionEventAgentSessionTurnReasoningSummaryPartAddedType] The type of the object. Always `agent.session.turn.reasoning_summary_part.added`.
+  attr_reader :type
+  # @return [String] The unique ID of the event.
+  attr_reader :event_id
+  # @return [String] The ID of the session associated with the event.
+  attr_reader :session_id
+  # @return [String] The ID of the turn associated with the event, when applicable.
+  attr_reader :turn_id
+  # @return [String] The ID of the reasoning item.
+  attr_reader :item_id
+  # @return [Integer] The index of the item in the turn output.
+  attr_reader :output_index
+  # @return [Integer] The index of the summary content part.
+  attr_reader :summary_index
+  # @return [SummaryTextResource] The initial summary part.
+  attr_reader :part
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalSessionEventAgentSessionTurnReasoningSummaryPartAddedMetadata
-    FIELDS = {
-      type: 'type',
-      event_id: 'event_id',
-      session_id: 'session_id',
-      turn_id: 'turn_id',
-      item_id: 'item_id',
-      output_index: 'output_index',
-      summary_index: 'summary_index',
-      part: 'part'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      event_id
-      session_id
-      turn_id
-      item_id
-      output_index
-      summary_index
-      part
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::SessionEventAgentSessionTurnReasoningSummaryPartAddedType.from_value(value)
-      end,
-      part: lambda do |value|
-        ::OctridevOpenai::SummaryTextResource.from_hash(value)
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      turn_id
-    ].freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalSessionEventAgentSessionTurnReasoningSummaryPartAddedMetadata::NULLABLE_FIELDS)
   end
 
-  # API model for SessionEventAgentSessionTurnReasoningSummaryPartAdded.
-  # Emitted when a reasoning summary content part is added.
-  class SessionEventAgentSessionTurnReasoningSummaryPartAdded
-    include SessionEvent
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalSessionEventAgentSessionTurnReasoningSummaryPartAddedMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalSessionEventAgentSessionTurnReasoningSummaryPartAddedMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalSessionEventAgentSessionTurnReasoningSummaryPartAddedMetadata::DECODERS
+# Defines the SessionEventAgentSessionTurnReasoningSummaryPartAddedType SDK namespace.
+module SessionEventAgentSessionTurnReasoningSummaryPartAddedType
+  AGENT_SESSION_TURN_REASONING_SUMMARY_PART_ADDED = 'agent.session.turn.reasoning_summary_part.added'
+  VALUES = ['agent.session.turn.reasoning_summary_part.added'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    # @return [SessionEventAgentSessionTurnReasoningSummaryPartAddedType] The type of the object. Always `agent.session.turn.reasoning_summary_part.added`.
-    attr_reader :type
-    # @return [String] The unique ID of the event.
-    attr_reader :event_id
-    # @return [String] The ID of the session associated with the event.
-    attr_reader :session_id
-    # @return [String] The ID of the turn associated with the event, when applicable.
-    attr_reader :turn_id
-    # @return [String] The ID of the reasoning item.
-    attr_reader :item_id
-    # @return [Integer] The index of the item in the turn output.
-    attr_reader :output_index
-    # @return [Integer] The index of the summary content part.
-    attr_reader :summary_index
-    # @return [SummaryTextResource] The initial summary part.
-    attr_reader :part
+    raise SdkValidationError.new('SessionEventAgentSessionTurnReasoningSummaryPartAddedType', 'enum', "Unknown SessionEventAgentSessionTurnReasoningSummaryPartAddedType: #{value}")
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalSessionEventAgentSessionTurnReasoningSummaryPartDoneMetadata
+  FIELDS = {
+    type: "type",
+    event_id: "event_id",
+    session_id: "session_id",
+    turn_id: "turn_id",
+    item_id: "item_id",
+    output_index: "output_index",
+    summary_index: "summary_index",
+    part: "part",
+    status: "status",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    event_id
+    session_id
+    turn_id
+    item_id
+    output_index
+    summary_index
+    part
+    status
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::SessionEventAgentSessionTurnReasoningSummaryPartDoneType.from_value(value)
+    end,
+    part: lambda do |value|
+      ::OctridevOpenai::SummaryTextResource.from_hash(value)
+    end,
+    status: lambda do |value|
+      ::OctridevOpenai::SessionEventAgentSessionTurnReasoningSummaryPartDoneStatus.from_value(value)
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    turn_id
+    status
+  ].freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalSessionEventAgentSessionTurnReasoningSummaryPartAddedMetadata::NULLABLE_FIELDS)
-    end
+# API model for SessionEventAgentSessionTurnReasoningSummaryPartDone.
+# Emitted when a reasoning summary part is complete.
+class SessionEventAgentSessionTurnReasoningSummaryPartDone
+  include SessionEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalSessionEventAgentSessionTurnReasoningSummaryPartDoneMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalSessionEventAgentSessionTurnReasoningSummaryPartDoneMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalSessionEventAgentSessionTurnReasoningSummaryPartDoneMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [SessionEventAgentSessionTurnReasoningSummaryPartDoneType] The type of the object. Always `agent.session.turn.reasoning_summary_part.done`.
+  attr_reader :type
+  # @return [String] The unique ID of the event.
+  attr_reader :event_id
+  # @return [String] The ID of the session associated with the event.
+  attr_reader :session_id
+  # @return [String] The ID of the turn associated with the event, when applicable.
+  attr_reader :turn_id
+  # @return [String] The ID of the reasoning item.
+  attr_reader :item_id
+  # @return [Integer] The index of the item in the turn output.
+  attr_reader :output_index
+  # @return [Integer] The index of the summary part.
+  attr_reader :summary_index
+  # @return [SummaryTextResource] The completed summary part.
+  attr_reader :part
+  # @return [SessionEventAgentSessionTurnReasoningSummaryPartDoneStatus] Present as `incomplete` when summary generation was interrupted.
+  attr_reader :status
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the SessionEventAgentSessionTurnReasoningSummaryPartAddedType SDK namespace.
-  module SessionEventAgentSessionTurnReasoningSummaryPartAddedType
-    AGENT_SESSION_TURN_REASONING_SUMMARY_PART_ADDED = 'agent.session.turn.reasoning_summary_part.added'
-    VALUES = ['agent.session.turn.reasoning_summary_part.added'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('SessionEventAgentSessionTurnReasoningSummaryPartAddedType', 'enum', "Unknown SessionEventAgentSessionTurnReasoningSummaryPartAddedType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalSessionEventAgentSessionTurnReasoningSummaryPartDoneMetadata::NULLABLE_FIELDS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalSessionEventAgentSessionTurnReasoningSummaryPartDoneMetadata
-    FIELDS = {
-      type: 'type',
-      event_id: 'event_id',
-      session_id: 'session_id',
-      turn_id: 'turn_id',
-      item_id: 'item_id',
-      output_index: 'output_index',
-      summary_index: 'summary_index',
-      part: 'part',
-      status: 'status'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      event_id
-      session_id
-      turn_id
-      item_id
-      output_index
-      summary_index
-      part
-      status
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::SessionEventAgentSessionTurnReasoningSummaryPartDoneType.from_value(value)
-      end,
-      part: lambda do |value|
-        ::OctridevOpenai::SummaryTextResource.from_hash(value)
-      end,
-      status: lambda do |value|
-        ::OctridevOpenai::SessionEventAgentSessionTurnReasoningSummaryPartDoneStatus.from_value(value)
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      turn_id
-      status
-    ].freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the SessionEventAgentSessionTurnReasoningSummaryPartDoneStatus SDK namespace.
+module SessionEventAgentSessionTurnReasoningSummaryPartDoneStatus
+  INCOMPLETE = 'incomplete'
+  VALUES = ['incomplete'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the SessionEventAgentSessionTurnReasoningSummaryPartDoneType SDK namespace.
+module SessionEventAgentSessionTurnReasoningSummaryPartDoneType
+  AGENT_SESSION_TURN_REASONING_SUMMARY_PART_DONE = 'agent.session.turn.reasoning_summary_part.done'
+  VALUES = ['agent.session.turn.reasoning_summary_part.done'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('SessionEventAgentSessionTurnReasoningSummaryPartDoneType', 'enum', "Unknown SessionEventAgentSessionTurnReasoningSummaryPartDoneType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalSessionEventAgentSessionTurnReasoningSummaryTextDeltaMetadata
+  FIELDS = {
+    type: "type",
+    event_id: "event_id",
+    session_id: "session_id",
+    turn_id: "turn_id",
+    item_id: "item_id",
+    output_index: "output_index",
+    summary_index: "summary_index",
+    delta: "delta",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    event_id
+    session_id
+    turn_id
+    item_id
+    output_index
+    summary_index
+    delta
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::SessionEventAgentSessionTurnReasoningSummaryTextDeltaType.from_value(value)
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    turn_id
+  ].freeze
+end
+
+# API model for SessionEventAgentSessionTurnReasoningSummaryTextDelta.
+# Emitted when text is appended to a reasoning summary.
+class SessionEventAgentSessionTurnReasoningSummaryTextDelta
+  include SessionEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalSessionEventAgentSessionTurnReasoningSummaryTextDeltaMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalSessionEventAgentSessionTurnReasoningSummaryTextDeltaMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalSessionEventAgentSessionTurnReasoningSummaryTextDeltaMetadata::DECODERS
+
+  # @return [SessionEventAgentSessionTurnReasoningSummaryTextDeltaType] The type of the object. Always `agent.session.turn.reasoning_summary_text.delta`.
+  attr_reader :type
+  # @return [String] The unique ID of the event.
+  attr_reader :event_id
+  # @return [String] The ID of the session associated with the event.
+  attr_reader :session_id
+  # @return [String] The ID of the turn associated with the event, when applicable.
+  attr_reader :turn_id
+  # @return [String] The ID of the reasoning item.
+  attr_reader :item_id
+  # @return [Integer] The index of the item in the turn output.
+  attr_reader :output_index
+  # @return [Integer] The index of the summary content part.
+  attr_reader :summary_index
+  # @return [String] The summary text that was appended.
+  attr_reader :delta
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for SessionEventAgentSessionTurnReasoningSummaryPartDone.
-  # Emitted when a reasoning summary part is complete.
-  class SessionEventAgentSessionTurnReasoningSummaryPartDone
-    include SessionEvent
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalSessionEventAgentSessionTurnReasoningSummaryPartDoneMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalSessionEventAgentSessionTurnReasoningSummaryPartDoneMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalSessionEventAgentSessionTurnReasoningSummaryPartDoneMetadata::DECODERS
-
-    # @return [SessionEventAgentSessionTurnReasoningSummaryPartDoneType] The type of the object. Always `agent.session.turn.reasoning_summary_part.done`.
-    attr_reader :type
-    # @return [String] The unique ID of the event.
-    attr_reader :event_id
-    # @return [String] The ID of the session associated with the event.
-    attr_reader :session_id
-    # @return [String] The ID of the turn associated with the event, when applicable.
-    attr_reader :turn_id
-    # @return [String] The ID of the reasoning item.
-    attr_reader :item_id
-    # @return [Integer] The index of the item in the turn output.
-    attr_reader :output_index
-    # @return [Integer] The index of the summary part.
-    attr_reader :summary_index
-    # @return [SummaryTextResource] The completed summary part.
-    attr_reader :part
-    # @return [SessionEventAgentSessionTurnReasoningSummaryPartDoneStatus] Present as `incomplete` when summary generation was interrupted.
-    attr_reader :status
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalSessionEventAgentSessionTurnReasoningSummaryPartDoneMetadata::NULLABLE_FIELDS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalSessionEventAgentSessionTurnReasoningSummaryTextDeltaMetadata::NULLABLE_FIELDS)
   end
 
-  # Defines the SessionEventAgentSessionTurnReasoningSummaryPartDoneStatus SDK namespace.
-  module SessionEventAgentSessionTurnReasoningSummaryPartDoneStatus
-    INCOMPLETE = 'incomplete'
-    VALUES = ['incomplete'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the SessionEventAgentSessionTurnReasoningSummaryTextDeltaType SDK namespace.
+module SessionEventAgentSessionTurnReasoningSummaryTextDeltaType
+  AGENT_SESSION_TURN_REASONING_SUMMARY_TEXT_DELTA = 'agent.session.turn.reasoning_summary_text.delta'
+  VALUES = ['agent.session.turn.reasoning_summary_text.delta'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('SessionEventAgentSessionTurnReasoningSummaryTextDeltaType', 'enum', "Unknown SessionEventAgentSessionTurnReasoningSummaryTextDeltaType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalSessionEventAgentSessionTurnReasoningSummaryTextDoneMetadata
+  FIELDS = {
+    type: "type",
+    event_id: "event_id",
+    session_id: "session_id",
+    turn_id: "turn_id",
+    item_id: "item_id",
+    output_index: "output_index",
+    summary_index: "summary_index",
+    text: "text",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    event_id
+    session_id
+    turn_id
+    item_id
+    output_index
+    summary_index
+    text
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::SessionEventAgentSessionTurnReasoningSummaryTextDoneType.from_value(value)
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    turn_id
+  ].freeze
+end
+
+# API model for SessionEventAgentSessionTurnReasoningSummaryTextDone.
+# Emitted when a reasoning summary content part is complete.
+class SessionEventAgentSessionTurnReasoningSummaryTextDone
+  include SessionEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalSessionEventAgentSessionTurnReasoningSummaryTextDoneMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalSessionEventAgentSessionTurnReasoningSummaryTextDoneMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalSessionEventAgentSessionTurnReasoningSummaryTextDoneMetadata::DECODERS
+
+  # @return [SessionEventAgentSessionTurnReasoningSummaryTextDoneType] The type of the object. Always `agent.session.turn.reasoning_summary_text.done`.
+  attr_reader :type
+  # @return [String] The unique ID of the event.
+  attr_reader :event_id
+  # @return [String] The ID of the session associated with the event.
+  attr_reader :session_id
+  # @return [String] The ID of the turn associated with the event, when applicable.
+  attr_reader :turn_id
+  # @return [String] The ID of the reasoning item.
+  attr_reader :item_id
+  # @return [Integer] The index of the item in the turn output.
+  attr_reader :output_index
+  # @return [Integer] The index of the summary content part.
+  attr_reader :summary_index
+  # @return [String] The complete reasoning summary text.
+  attr_reader :text
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the SessionEventAgentSessionTurnReasoningSummaryPartDoneType SDK namespace.
-  module SessionEventAgentSessionTurnReasoningSummaryPartDoneType
-    AGENT_SESSION_TURN_REASONING_SUMMARY_PART_DONE = 'agent.session.turn.reasoning_summary_part.done'
-    VALUES = ['agent.session.turn.reasoning_summary_part.done'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('SessionEventAgentSessionTurnReasoningSummaryPartDoneType', 'enum', "Unknown SessionEventAgentSessionTurnReasoningSummaryPartDoneType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalSessionEventAgentSessionTurnReasoningSummaryTextDoneMetadata::NULLABLE_FIELDS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalSessionEventAgentSessionTurnReasoningSummaryTextDeltaMetadata
-    FIELDS = {
-      type: 'type',
-      event_id: 'event_id',
-      session_id: 'session_id',
-      turn_id: 'turn_id',
-      item_id: 'item_id',
-      output_index: 'output_index',
-      summary_index: 'summary_index',
-      delta: 'delta'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      event_id
-      session_id
-      turn_id
-      item_id
-      output_index
-      summary_index
-      delta
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::SessionEventAgentSessionTurnReasoningSummaryTextDeltaType.from_value(value)
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      turn_id
-    ].freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the SessionEventAgentSessionTurnReasoningSummaryTextDoneType SDK namespace.
+module SessionEventAgentSessionTurnReasoningSummaryTextDoneType
+  AGENT_SESSION_TURN_REASONING_SUMMARY_TEXT_DONE = 'agent.session.turn.reasoning_summary_text.done'
+  VALUES = ['agent.session.turn.reasoning_summary_text.done'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('SessionEventAgentSessionTurnReasoningSummaryTextDoneType', 'enum', "Unknown SessionEventAgentSessionTurnReasoningSummaryTextDoneType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalSessionEventErrorMetadata
+  FIELDS = {
+    type: "type",
+    event_id: "event_id",
+    session_id: "session_id",
+    error: "error",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    event_id
+    session_id
+    error
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::SessionEventErrorType.from_value(value)
+    end,
+    error: lambda do |value|
+      ::OctridevOpenai::SessionErrorResource.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for SessionEventError.
+# Emitted when a turn or session fails.
+class SessionEventError
+  include SessionEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalSessionEventErrorMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalSessionEventErrorMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalSessionEventErrorMetadata::DECODERS
+
+  # @return [SessionEventErrorType] The type of the object. Always `error`.
+  attr_reader :type
+  # @return [String] The unique ID of the event.
+  attr_reader :event_id
+  # @return [String] The ID of the session associated with the event.
+  attr_reader :session_id
+  # @return [SessionErrorResource] The error that occurred.
+  attr_reader :error
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for SessionEventAgentSessionTurnReasoningSummaryTextDelta.
-  # Emitted when text is appended to a reasoning summary.
-  class SessionEventAgentSessionTurnReasoningSummaryTextDelta
-    include SessionEvent
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalSessionEventAgentSessionTurnReasoningSummaryTextDeltaMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalSessionEventAgentSessionTurnReasoningSummaryTextDeltaMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalSessionEventAgentSessionTurnReasoningSummaryTextDeltaMetadata::DECODERS
-
-    # @return [SessionEventAgentSessionTurnReasoningSummaryTextDeltaType] The type of the object. Always `agent.session.turn.reasoning_summary_text.delta`.
-    attr_reader :type
-    # @return [String] The unique ID of the event.
-    attr_reader :event_id
-    # @return [String] The ID of the session associated with the event.
-    attr_reader :session_id
-    # @return [String] The ID of the turn associated with the event, when applicable.
-    attr_reader :turn_id
-    # @return [String] The ID of the reasoning item.
-    attr_reader :item_id
-    # @return [Integer] The index of the item in the turn output.
-    attr_reader :output_index
-    # @return [Integer] The index of the summary content part.
-    attr_reader :summary_index
-    # @return [String] The summary text that was appended.
-    attr_reader :delta
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalSessionEventAgentSessionTurnReasoningSummaryTextDeltaMetadata::NULLABLE_FIELDS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the SessionEventAgentSessionTurnReasoningSummaryTextDeltaType SDK namespace.
-  module SessionEventAgentSessionTurnReasoningSummaryTextDeltaType
-    AGENT_SESSION_TURN_REASONING_SUMMARY_TEXT_DELTA = 'agent.session.turn.reasoning_summary_text.delta'
-    VALUES = ['agent.session.turn.reasoning_summary_text.delta'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('SessionEventAgentSessionTurnReasoningSummaryTextDeltaType', 'enum', "Unknown SessionEventAgentSessionTurnReasoningSummaryTextDeltaType: #{value}")
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Internal model hydration metadata.
-  class SdkInternalSessionEventAgentSessionTurnReasoningSummaryTextDoneMetadata
-    FIELDS = {
-      type: 'type',
-      event_id: 'event_id',
-      session_id: 'session_id',
-      turn_id: 'turn_id',
-      item_id: 'item_id',
-      output_index: 'output_index',
-      summary_index: 'summary_index',
-      text: 'text'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      event_id
-      session_id
-      turn_id
-      item_id
-      output_index
-      summary_index
-      text
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::SessionEventAgentSessionTurnReasoningSummaryTextDoneType.from_value(value)
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      turn_id
-    ].freeze
+# Defines the SessionEventErrorType SDK namespace.
+module SessionEventErrorType
+  ERROR = 'error'
+  VALUES = ['error'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('SessionEventErrorType', 'enum', "Unknown SessionEventErrorType: #{value}")
   end
-
-  # API model for SessionEventAgentSessionTurnReasoningSummaryTextDone.
-  # Emitted when a reasoning summary content part is complete.
-  class SessionEventAgentSessionTurnReasoningSummaryTextDone
-    include SessionEvent
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalSessionEventAgentSessionTurnReasoningSummaryTextDoneMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalSessionEventAgentSessionTurnReasoningSummaryTextDoneMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalSessionEventAgentSessionTurnReasoningSummaryTextDoneMetadata::DECODERS
-
-    # @return [SessionEventAgentSessionTurnReasoningSummaryTextDoneType] The type of the object. Always `agent.session.turn.reasoning_summary_text.done`.
-    attr_reader :type
-    # @return [String] The unique ID of the event.
-    attr_reader :event_id
-    # @return [String] The ID of the session associated with the event.
-    attr_reader :session_id
-    # @return [String] The ID of the turn associated with the event, when applicable.
-    attr_reader :turn_id
-    # @return [String] The ID of the reasoning item.
-    attr_reader :item_id
-    # @return [Integer] The index of the item in the turn output.
-    attr_reader :output_index
-    # @return [Integer] The index of the summary content part.
-    attr_reader :summary_index
-    # @return [String] The complete reasoning summary text.
-    attr_reader :text
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalSessionEventAgentSessionTurnReasoningSummaryTextDoneMetadata::NULLABLE_FIELDS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the SessionEventAgentSessionTurnReasoningSummaryTextDoneType SDK namespace.
-  module SessionEventAgentSessionTurnReasoningSummaryTextDoneType
-    AGENT_SESSION_TURN_REASONING_SUMMARY_TEXT_DONE = 'agent.session.turn.reasoning_summary_text.done'
-    VALUES = ['agent.session.turn.reasoning_summary_text.done'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('SessionEventAgentSessionTurnReasoningSummaryTextDoneType', 'enum', "Unknown SessionEventAgentSessionTurnReasoningSummaryTextDoneType: #{value}")
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalSessionEventErrorMetadata
-    FIELDS = {
-      type: 'type',
-      event_id: 'event_id',
-      session_id: 'session_id',
-      error: 'error'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      event_id
-      session_id
-      error
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::SessionEventErrorType.from_value(value)
-      end,
-      error: lambda do |value|
-        ::OctridevOpenai::SessionErrorResource.from_hash(value)
-      end
-    }.freeze
-  end
-
-  # API model for SessionEventError.
-  # Emitted when a turn or session fails.
-  class SessionEventError
-    include SessionEvent
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalSessionEventErrorMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalSessionEventErrorMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalSessionEventErrorMetadata::DECODERS
-
-    # @return [SessionEventErrorType] The type of the object. Always `error`.
-    attr_reader :type
-    # @return [String] The unique ID of the event.
-    attr_reader :event_id
-    # @return [String] The ID of the session associated with the event.
-    attr_reader :session_id
-    # @return [SessionErrorResource] The error that occurred.
-    attr_reader :error
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the SessionEventErrorType SDK namespace.
-  module SessionEventErrorType
-    ERROR = 'error'
-    VALUES = ['error'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('SessionEventErrorType', 'enum', "Unknown SessionEventErrorType: #{value}")
-    end
-  end
+end
 end

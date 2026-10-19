@@ -13,7 +13,7 @@ module OctridevOpenai
       module ListGroupUsersParameter
         ASC = 'asc'
         DESC = 'desc'
-        VALUES = %w[asc desc].freeze
+        VALUES = ['asc', 'desc'].freeze
         def self.from_value(value)
           value
         end
@@ -38,30 +38,31 @@ module OctridevOpenai
         order: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 0, max: 1000) }
 
         SdkClient.request(
           'GET',
           [
-            '/organization/groups/',
+            "/organization/groups/",
             SdkClient.encode_path_segment(group_id),
-            '/users'
+            "/users"
           ].join,
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
-            'order' => QueryValue.new(order, style: 'form', explode: true)
+            'order' => QueryValue.new(order, style: 'form', explode: true),
           },
           return_type: ::OctridevOpenai::UserListResource,
           decoder: :json,
           operation_id: 'list_group_users',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '502' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '502' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
-      ListGroupUsersPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+    ListGroupUsersPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists the users assigned to a group. Use `after` to continue from the last user's identifier in a previous response, and use `limit` and `order` to control the page size and sort order. The response indicates whether more users are available and provides the cursor for the next page.
       #
@@ -95,13 +96,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             items.each { |item| y << item }
             break unless page.has_more
-
             next_cursor = page.next_
             break if next_cursor.nil?
-
             cursor = next_cursor
           end
         end
@@ -128,12 +126,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             next_cursor = page.next_
             has_more = page.has_more && !next_cursor.nil?
             y << ListGroupUsersPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
-
             cursor = next_cursor
           end
         end
@@ -151,22 +147,23 @@ module OctridevOpenai
         user_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
           [
-            '/organization/groups/',
+            "/organization/groups/",
             SdkClient.encode_path_segment(group_id),
-            '/users'
+            "/users"
           ].join,
           config: config,
           body: {
-            'user_id' => user_id
+            'user_id' => user_id,
           },
           return_type: ::OctridevOpenai::GroupUserAssignment,
           decoder: :json,
           operation_id: 'add_group_user',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '409' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '409' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -182,12 +179,13 @@ module OctridevOpenai
         user_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
           [
-            '/organization/groups/',
+            "/organization/groups/",
             SdkClient.encode_path_segment(group_id),
-            '/users/',
+            "/users/",
             SdkClient.encode_path_segment(user_id)
           ].join,
           config: config,
@@ -195,7 +193,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'retrieve_group_user',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -211,12 +209,13 @@ module OctridevOpenai
         user_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'DELETE',
           [
-            '/organization/groups/',
+            "/organization/groups/",
             SdkClient.encode_path_segment(group_id),
-            '/users/',
+            "/users/",
             SdkClient.encode_path_segment(user_id)
           ].join,
           config: config,
@@ -224,7 +223,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'remove_group_user',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '409' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '409' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
     end

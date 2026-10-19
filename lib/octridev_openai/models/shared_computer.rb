@@ -5,660 +5,654 @@
 
 # shared_computer domain models
 module OctridevOpenai
-  # Defines the ComputerAction SDK namespace.
-  module ComputerAction
-    DISCRIMINATOR_MAPPING = {
-      'click' => -> { ClickParam },
-      'double_click' => -> { DoubleClickAction },
-      'drag' => -> { DragParam },
-      'keypress' => -> { KeyPressAction },
-      'move' => -> { MoveParam },
-      'screenshot' => -> { ScreenshotParam },
-      'scroll' => -> { ScrollParam },
-      'type' => -> { TypeParam },
-      'wait' => -> { WaitParam }
-    }.freeze
+# Defines the ComputerAction SDK namespace.
+module ComputerAction
+  DISCRIMINATOR_MAPPING = {
+    "click" => -> { ClickParam },
+    "double_click" => -> { DoubleClickAction },
+    "drag" => -> { DragParam },
+    "keypress" => -> { KeyPressAction },
+    "move" => -> { MoveParam },
+    "screenshot" => -> { ScreenshotParam },
+    "scroll" => -> { ScrollParam },
+    "type" => -> { TypeParam },
+    "wait" => -> { WaitParam },
+  }.freeze
 
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
 
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
 
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+    raise SdkValidationError.new('ComputerAction', 'variant', "Unknown ComputerAction discriminator: #{hash["type"].inspect}")
+  end
+end
 
-      raise SdkValidationError.new('ComputerAction', 'variant', "Unknown ComputerAction discriminator: #{hash['type'].inspect}")
-    end
+# Defines the ComputerActionList SDK value decoder.
+module ComputerActionList
+  def self.from_hash(value)
+    return nil if value.nil?
+    value&.map { |item| ::OctridevOpenai::ComputerAction.from_hash(item) }
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalComputerCallOutputItemParamMetadata
+  FIELDS = {
+    id: "id",
+    call_id: "call_id",
+    type: "type",
+    output: "output",
+    acknowledged_safety_checks: "acknowledged_safety_checks",
+    status: "status",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    call_id
+    type
+    output
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ComputerCallOutputItemParamType.from_value(value)
+    end,
+    output: lambda do |value|
+      ::OctridevOpenai::ComputerScreenshotImage.from_hash(value)
+    end,
+    acknowledged_safety_checks: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::ComputerCallSafetyCheckParam.from_hash(item) }
+    end,
+    status: lambda do |value|
+      ::OctridevOpenai::FunctionCallItemStatus.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for ComputerCallOutputItemParam.
+# The output of a computer tool call.
+class ComputerCallOutputItemParam
+  include Item
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalComputerCallOutputItemParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalComputerCallOutputItemParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalComputerCallOutputItemParamMetadata::DECODERS
+
+  # @return [String] Optional `string` value serialized in the `id` wire field.
+  attr_reader :id
+  # @return [String] The ID of the computer tool call that produced the output.
+  attr_reader :call_id
+  # @return [ComputerCallOutputItemParamType] The type of the computer tool call output. Always `computer_call_output`.
+  attr_reader :type
+  # @return [ComputerScreenshotImage] A computer screenshot image used with the computer use tool.
+  attr_reader :output
+  # @return [Array_of_ComputerCallSafetyCheckParam] The safety checks reported by the API that have been acknowledged by the developer.
+  attr_reader :acknowledged_safety_checks
+  # @return [FunctionCallItemStatus] Optional API value serialized in the `status` wire field.
+  attr_reader :status
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the ComputerActionList SDK value decoder.
-  module ComputerActionList
-    def self.from_hash(value)
-      return nil if value.nil?
-
-      value&.map { |item| ::OctridevOpenai::ComputerAction.from_hash(item) }
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalComputerCallOutputItemParamMetadata
-    FIELDS = {
-      id: 'id',
-      call_id: 'call_id',
-      type: 'type',
-      output: 'output',
-      acknowledged_safety_checks: 'acknowledged_safety_checks',
-      status: 'status'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      call_id
-      type
-      output
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ComputerCallOutputItemParamType.from_value(value)
-      end,
-      output: lambda do |value|
-        ::OctridevOpenai::ComputerScreenshotImage.from_hash(value)
-      end,
-      acknowledged_safety_checks: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::ComputerCallSafetyCheckParam.from_hash(item) }
-      end,
-      status: lambda do |value|
-        ::OctridevOpenai::FunctionCallItemStatus.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the ComputerCallOutputItemParamType SDK namespace.
+module ComputerCallOutputItemParamType
+  COMPUTER_CALL_OUTPUT = 'computer_call_output'
+  VALUES = ['computer_call_output'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('ComputerCallOutputItemParamType', 'enum', "Unknown ComputerCallOutputItemParamType: #{value}")
+  end
+end
+
+# Defines the ComputerCallOutputStatus SDK namespace.
+module ComputerCallOutputStatus
+  COMPLETED = 'completed'
+  INCOMPLETE = 'incomplete'
+  FAILED = 'failed'
+  VALUES = ['completed', 'incomplete', 'failed'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalComputerCallSafetyCheckParamMetadata
+  FIELDS = {
+    id: "id",
+    code: "code",
+    message: "message",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for ComputerCallSafetyCheckParam.
+# A pending safety check for the computer call.
+class ComputerCallSafetyCheckParam
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalComputerCallSafetyCheckParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalComputerCallSafetyCheckParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalComputerCallSafetyCheckParamMetadata::DECODERS
+
+  # @return [String] The ID of the pending safety check.
+  attr_reader :id
+  # @return [String] Optional `string` value serialized in the `code` wire field.
+  attr_reader :code
+  # @return [String] Optional `string` value serialized in the `message` wire field.
+  attr_reader :message
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ComputerCallOutputItemParam.
-  # The output of a computer tool call.
-  class ComputerCallOutputItemParam
-    include Item
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalComputerCallOutputItemParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalComputerCallOutputItemParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalComputerCallOutputItemParamMetadata::DECODERS
-
-    # @return [String] Optional `string` value serialized in the `id` wire field.
-    attr_reader :id
-    # @return [String] The ID of the computer tool call that produced the output.
-    attr_reader :call_id
-    # @return [ComputerCallOutputItemParamType] The type of the computer tool call output. Always `computer_call_output`.
-    attr_reader :type
-    # @return [ComputerScreenshotImage] A computer screenshot image used with the computer use tool.
-    attr_reader :output
-    # @return [Array_of_ComputerCallSafetyCheckParam] The safety checks reported by the API that have been acknowledged by the developer.
-    attr_reader :acknowledged_safety_checks
-    # @return [FunctionCallItemStatus] Optional API value serialized in the `status` wire field.
-    attr_reader :status
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the ComputerCallOutputItemParamType SDK namespace.
-  module ComputerCallOutputItemParamType
-    COMPUTER_CALL_OUTPUT = 'computer_call_output'
-    VALUES = ['computer_call_output'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('ComputerCallOutputItemParamType', 'enum', "Unknown ComputerCallOutputItemParamType: #{value}")
-    end
+# Defines the ComputerEnvironment SDK namespace.
+module ComputerEnvironment
+  WINDOWS = 'windows'
+  MAC = 'mac'
+  LINUX = 'linux'
+  UBUNTU = 'ubuntu'
+  BROWSER = 'browser'
+  VALUES = ['windows', 'mac', 'linux', 'ubuntu', 'browser'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalComputerScreenshotContentMetadata
+  FIELDS = {
+    type: "type",
+    image_url: "image_url",
+    file_id: "file_id",
+    detail: "detail",
+    prompt_cache_breakpoint: "prompt_cache_breakpoint",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    image_url
+    file_id
+    detail
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ComputerScreenshotContentType.from_value(value)
+    end,
+    detail: lambda do |value|
+      ::OctridevOpenai::ImageDetail.from_value(value)
+    end,
+    prompt_cache_breakpoint: lambda do |value|
+      ::OctridevOpenai::PromptCacheBreakpointConfig.from_hash(value)
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    image_url
+    file_id
+  ].freeze
+end
+
+# API model for ComputerScreenshotContent.
+# A screenshot of a computer.
+class ComputerScreenshotContent
+  include MessageContentItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalComputerScreenshotContentMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalComputerScreenshotContentMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalComputerScreenshotContentMetadata::DECODERS
+
+  # @return [ComputerScreenshotContentType] Specifies the event type. For a computer screenshot, this property is always set to `computer_screenshot`.
+  attr_reader :type
+  # @return [String] Required API value serialized in the `image_url` wire field.
+  attr_reader :image_url
+  # @return [String] Required `string` value serialized in the `file_id` wire field.
+  attr_reader :file_id
+  # @return [ImageDetail] The detail level of the screenshot image to be sent to the model. One of `high`, `low`, `auto`, or `original`. Defaults to `auto`.
+  attr_reader :detail
+  # @return [PromptCacheBreakpointConfig] Marks the exact end of a reusable prompt prefix. The breakpoint inherits its TTL from the request's `prompt_cache_options.ttl`; the boundary is not rounded to a token block.
+  attr_reader :prompt_cache_breakpoint
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the ComputerCallOutputStatus SDK namespace.
-  module ComputerCallOutputStatus
-    COMPLETED = 'completed'
-    INCOMPLETE = 'incomplete'
-    FAILED = 'failed'
-    VALUES = %w[completed incomplete failed].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalComputerScreenshotContentMetadata::NULLABLE_FIELDS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalComputerCallSafetyCheckParamMetadata
-    FIELDS = {
-      id: 'id',
-      code: 'code',
-      message: 'message'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-    ].freeze
-    DECODERS = {}.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the ComputerScreenshotContentType SDK namespace.
+module ComputerScreenshotContentType
+  COMPUTER_SCREENSHOT = 'computer_screenshot'
+  VALUES = ['computer_screenshot'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('ComputerScreenshotContentType', 'enum', "Unknown ComputerScreenshotContentType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalComputerScreenshotImageMetadata
+  FIELDS = {
+    type: "type",
+    image_url: "image_url",
+    file_id: "file_id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ComputerScreenshotImageType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for ComputerScreenshotImage.
+# A computer screenshot image used with the computer use tool.
+class ComputerScreenshotImage
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalComputerScreenshotImageMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalComputerScreenshotImageMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalComputerScreenshotImageMetadata::DECODERS
+
+  # @return [ComputerScreenshotImageType] Specifies the event type. For a computer screenshot, this property is always set to `computer_screenshot`.
+  attr_reader :type
+  # @return [String] The URL of the screenshot image.
+  attr_reader :image_url
+  # @return [String] The identifier of an uploaded file that contains the screenshot.
+  attr_reader :file_id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ComputerCallSafetyCheckParam.
-  # A pending safety check for the computer call.
-  class ComputerCallSafetyCheckParam
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalComputerCallSafetyCheckParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalComputerCallSafetyCheckParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalComputerCallSafetyCheckParamMetadata::DECODERS
-
-    # @return [String] The ID of the pending safety check.
-    attr_reader :id
-    # @return [String] Optional `string` value serialized in the `code` wire field.
-    attr_reader :code
-    # @return [String] Optional `string` value serialized in the `message` wire field.
-    attr_reader :message
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the ComputerEnvironment SDK namespace.
-  module ComputerEnvironment
-    WINDOWS = 'windows'
-    MAC = 'mac'
-    LINUX = 'linux'
-    UBUNTU = 'ubuntu'
-    BROWSER = 'browser'
-    VALUES = %w[windows mac linux ubuntu browser].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the ComputerScreenshotImageType SDK namespace.
+module ComputerScreenshotImageType
+  COMPUTER_SCREENSHOT = 'computer_screenshot'
+  VALUES = ['computer_screenshot'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalComputerToolMetadata
+  FIELDS = {
+    type: "type",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ComputerToolType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for ComputerTool.
+# A tool that controls a virtual computer. Learn more about the computer tool.
+class ComputerTool
+  include Tool
+  include ToolSearchOutputTool
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalComputerToolMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalComputerToolMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalComputerToolMetadata::DECODERS
+
+  # @return [ComputerToolType] The type of the computer tool. Always `computer`.
+  attr_reader :type
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalComputerScreenshotContentMetadata
-    FIELDS = {
-      type: 'type',
-      image_url: 'image_url',
-      file_id: 'file_id',
-      detail: 'detail',
-      prompt_cache_breakpoint: 'prompt_cache_breakpoint'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      image_url
-      file_id
-      detail
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ComputerScreenshotContentType.from_value(value)
-      end,
-      detail: lambda do |value|
-        ::OctridevOpenai::ImageDetail.from_value(value)
-      end,
-      prompt_cache_breakpoint: lambda do |value|
-        ::OctridevOpenai::PromptCacheBreakpointConfig.from_hash(value)
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      image_url
-      file_id
-    ].freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ComputerScreenshotContent.
-  # A screenshot of a computer.
-  class ComputerScreenshotContent
-    include MessageContentItem
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalComputerScreenshotContentMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalComputerScreenshotContentMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalComputerScreenshotContentMetadata::DECODERS
+# Defines the ComputerToolType SDK namespace.
+module ComputerToolType
+  COMPUTER = 'computer'
+  VALUES = ['computer'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    # @return [ComputerScreenshotContentType] Specifies the event type. For a computer screenshot, this property is always set to `computer_screenshot`.
-    attr_reader :type
-    # @return [String] Required API value serialized in the `image_url` wire field.
-    attr_reader :image_url
-    # @return [String] Required `string` value serialized in the `file_id` wire field.
-    attr_reader :file_id
-    # @return [ImageDetail] The detail level of the screenshot image to be sent to the model. One of `high`, `low`, `auto`, or `original`. Defaults to `auto`.
-    attr_reader :detail
-    # @return [PromptCacheBreakpointConfig] Marks the exact end of a reusable prompt prefix. The breakpoint inherits its TTL from the request's `prompt_cache_options.ttl`; the boundary is not rounded to a token block.
-    attr_reader :prompt_cache_breakpoint
+    raise SdkValidationError.new('ComputerToolType', 'enum', "Unknown ComputerToolType: #{value}")
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalComputerToolCallMetadata
+  FIELDS = {
+    type: "type",
+    id: "id",
+    call_id: "call_id",
+    action: "action",
+    actions: "actions",
+    pending_safety_checks: "pending_safety_checks",
+    status: "status",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    id
+    call_id
+    pending_safety_checks
+    status
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ComputerToolCallType.from_value(value)
+    end,
+    action: lambda do |value|
+      ::OctridevOpenai::ComputerAction.from_hash(value)
+    end,
+    actions: lambda do |value|
+      ::OctridevOpenai::ComputerActionList.from_hash(value)
+    end,
+    pending_safety_checks: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::ComputerCallSafetyCheckParam.from_hash(item) }
+    end,
+    status: lambda do |value|
+      ::OctridevOpenai::ComputerToolCallStatus.from_value(value)
+    end,
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalComputerScreenshotContentMetadata::NULLABLE_FIELDS)
-    end
+# API model for ComputerToolCall.
+# A tool call to a computer use tool. See the computer use guide for more information.
+class ComputerToolCall
+  include ConversationItem
+  include Item
+  include ItemResource
+  include OutputItem
+  include ItemField
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalComputerToolCallMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalComputerToolCallMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalComputerToolCallMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [ComputerToolCallType] The type of the computer call. Always `computer_call`.
+  attr_reader :type
+  # @return [String] The unique ID of the computer call.
+  attr_reader :id
+  # @return [String] An identifier used when responding to the tool call with output.
+  attr_reader :call_id
+  # @return [ComputerAction] Optional API value serialized in the `action` wire field.
+  attr_reader :action
+  # @return [ComputerActionList] Flattened batched actions for `computer_use`. Each action includes an `type` discriminator and action-specific fields.
+  attr_reader :actions
+  # @return [Array_of_ComputerCallSafetyCheckParam] The pending safety checks for the computer call.
+  attr_reader :pending_safety_checks
+  # @return [ComputerToolCallStatus] The status of the item. One of `in_progress`, `completed`, or `incomplete`. Populated when items are returned via API.
+  attr_reader :status
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the ComputerScreenshotContentType SDK namespace.
-  module ComputerScreenshotContentType
-    COMPUTER_SCREENSHOT = 'computer_screenshot'
-    VALUES = ['computer_screenshot'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('ComputerScreenshotContentType', 'enum', "Unknown ComputerScreenshotContentType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalComputerScreenshotImageMetadata
-    FIELDS = {
-      type: 'type',
-      image_url: 'image_url',
-      file_id: 'file_id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ComputerScreenshotImageType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the ComputerToolCallStatus SDK namespace.
+module ComputerToolCallStatus
+  IN_PROGRESS = 'in_progress'
+  COMPLETED = 'completed'
+  INCOMPLETE = 'incomplete'
+  VALUES = ['in_progress', 'completed', 'incomplete'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the ComputerToolCallType SDK namespace.
+module ComputerToolCallType
+  COMPUTER_CALL = 'computer_call'
+  VALUES = ['computer_call'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('ComputerToolCallType', 'enum', "Unknown ComputerToolCallType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalComputerToolCallOutputMetadata
+  FIELDS = {
+    type: "type",
+    id: "id",
+    call_id: "call_id",
+    acknowledged_safety_checks: "acknowledged_safety_checks",
+    output: "output",
+    status: "status",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    call_id
+    output
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ComputerToolCallOutputType.from_value(value)
+    end,
+    acknowledged_safety_checks: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::ComputerCallSafetyCheckParam.from_hash(item) }
+    end,
+    output: lambda do |value|
+      ::OctridevOpenai::ComputerScreenshotImage.from_hash(value)
+    end,
+    status: lambda do |value|
+      ::OctridevOpenai::ComputerToolCallOutputStatus.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for ComputerToolCallOutput.
+# The output of a computer tool call.
+class ComputerToolCallOutput
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalComputerToolCallOutputMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalComputerToolCallOutputMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalComputerToolCallOutputMetadata::DECODERS
+
+  # @return [ComputerToolCallOutputType] The type of the computer tool call output. Always `computer_call_output`.
+  attr_reader :type
+  # @return [String] The ID of the computer tool call output.
+  attr_reader :id
+  # @return [String] The ID of the computer tool call that produced the output.
+  attr_reader :call_id
+  # @return [Array_of_ComputerCallSafetyCheckParam] The safety checks reported by the API that have been acknowledged by the developer.
+  attr_reader :acknowledged_safety_checks
+  # @return [ComputerScreenshotImage] A computer screenshot image used with the computer use tool.
+  attr_reader :output
+  # @return [ComputerToolCallOutputStatus] The status of the message input. One of `in_progress`, `completed`, or `incomplete`. Populated when input items are returned via API.
+  attr_reader :status
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ComputerScreenshotImage.
-  # A computer screenshot image used with the computer use tool.
-  class ComputerScreenshotImage
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalComputerScreenshotImageMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalComputerScreenshotImageMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalComputerScreenshotImageMetadata::DECODERS
-
-    # @return [ComputerScreenshotImageType] Specifies the event type. For a computer screenshot, this property is always set to `computer_screenshot`.
-    attr_reader :type
-    # @return [String] The URL of the screenshot image.
-    attr_reader :image_url
-    # @return [String] The identifier of an uploaded file that contains the screenshot.
-    attr_reader :file_id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the ComputerScreenshotImageType SDK namespace.
-  module ComputerScreenshotImageType
-    COMPUTER_SCREENSHOT = 'computer_screenshot'
-    VALUES = ['computer_screenshot'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the ComputerToolCallOutputStatus SDK namespace.
+module ComputerToolCallOutputStatus
+  IN_PROGRESS = 'in_progress'
+  COMPLETED = 'completed'
+  INCOMPLETE = 'incomplete'
+  VALUES = ['in_progress', 'completed', 'incomplete'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the ComputerToolCallOutputType SDK namespace.
+module ComputerToolCallOutputType
+  COMPUTER_CALL_OUTPUT = 'computer_call_output'
+  VALUES = ['computer_call_output'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('ComputerToolCallOutputType', 'enum', "Unknown ComputerToolCallOutputType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalComputerToolCallOutputResourceMetadata
+  FIELDS = {
+    type: "type",
+    id: "id",
+    call_id: "call_id",
+    acknowledged_safety_checks: "acknowledged_safety_checks",
+    output: "output",
+    status: "status",
+    created_by: "created_by",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    id
+    call_id
+    output
+    status
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ComputerToolCallOutputType.from_value(value)
+    end,
+    acknowledged_safety_checks: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::ComputerCallSafetyCheckParam.from_hash(item) }
+    end,
+    output: lambda do |value|
+      ::OctridevOpenai::ComputerScreenshotImage.from_hash(value)
+    end,
+    status: lambda do |value|
+      ::OctridevOpenai::ComputerCallOutputStatus.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for ComputerToolCallOutputResource.
+# Typed representation of the `ComputerToolCallOutputResource` API schema.
+class ComputerToolCallOutputResource
+  include ConversationItem
+  include ItemResource
+  include OutputItem
+  include ItemField
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalComputerToolCallOutputResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalComputerToolCallOutputResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalComputerToolCallOutputResourceMetadata::DECODERS
+
+  # @return [ComputerToolCallOutputType] The type of the computer tool call output. Always `computer_call_output`.
+  attr_reader :type
+  # @return [String] The ID of the computer tool call output.
+  attr_reader :id
+  # @return [String] The ID of the computer tool call that produced the output.
+  attr_reader :call_id
+  # @return [Array_of_ComputerCallSafetyCheckParam] The safety checks reported by the API that have been acknowledged by the developer.
+  attr_reader :acknowledged_safety_checks
+  # @return [ComputerScreenshotImage] A computer screenshot image used with the computer use tool.
+  attr_reader :output
+  # @return [ComputerCallOutputStatus] The status of the message input. One of `in_progress`, `completed`, or `incomplete`. Populated when input items are returned via API.
+  attr_reader :status
+  # @return [String] The identifier of the actor that created the item.
+  attr_reader :created_by
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalComputerToolMetadata
-    FIELDS = {
-      type: 'type'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ComputerToolType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ComputerTool.
-  # A tool that controls a virtual computer. Learn more about the computer tool.
-  class ComputerTool
-    include Tool
-    include ToolSearchOutputTool
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalComputerToolMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalComputerToolMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalComputerToolMetadata::DECODERS
-
-    # @return [ComputerToolType] The type of the computer tool. Always `computer`.
-    attr_reader :type
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the ComputerToolType SDK namespace.
-  module ComputerToolType
-    COMPUTER = 'computer'
-    VALUES = ['computer'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('ComputerToolType', 'enum', "Unknown ComputerToolType: #{value}")
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalComputerToolCallMetadata
-    FIELDS = {
-      type: 'type',
-      id: 'id',
-      call_id: 'call_id',
-      action: 'action',
-      actions: 'actions',
-      pending_safety_checks: 'pending_safety_checks',
-      status: 'status'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      id
-      call_id
-      pending_safety_checks
-      status
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ComputerToolCallType.from_value(value)
-      end,
-      action: lambda do |value|
-        ::OctridevOpenai::ComputerAction.from_hash(value)
-      end,
-      actions: lambda do |value|
-        ::OctridevOpenai::ComputerActionList.from_hash(value)
-      end,
-      pending_safety_checks: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::ComputerCallSafetyCheckParam.from_hash(item) }
-      end,
-      status: lambda do |value|
-        ::OctridevOpenai::ComputerToolCallStatus.from_value(value)
-      end
-    }.freeze
-  end
-
-  # API model for ComputerToolCall.
-  # A tool call to a computer use tool. See the computer use guide for more information.
-  class ComputerToolCall
-    include ConversationItem
-    include Item
-    include ItemResource
-    include OutputItem
-    include ItemField
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalComputerToolCallMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalComputerToolCallMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalComputerToolCallMetadata::DECODERS
-
-    # @return [ComputerToolCallType] The type of the computer call. Always `computer_call`.
-    attr_reader :type
-    # @return [String] The unique ID of the computer call.
-    attr_reader :id
-    # @return [String] An identifier used when responding to the tool call with output.
-    attr_reader :call_id
-    # @return [ComputerAction] Optional API value serialized in the `action` wire field.
-    attr_reader :action
-    # @return [ComputerActionList] Flattened batched actions for `computer_use`. Each action includes an `type` discriminator and action-specific fields.
-    attr_reader :actions
-    # @return [Array_of_ComputerCallSafetyCheckParam] The pending safety checks for the computer call.
-    attr_reader :pending_safety_checks
-    # @return [ComputerToolCallStatus] The status of the item. One of `in_progress`, `completed`, or `incomplete`. Populated when items are returned via API.
-    attr_reader :status
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the ComputerToolCallStatus SDK namespace.
-  module ComputerToolCallStatus
-    IN_PROGRESS = 'in_progress'
-    COMPLETED = 'completed'
-    INCOMPLETE = 'incomplete'
-    VALUES = %w[in_progress completed incomplete].freeze
-    def self.from_value(value)
-      value
-    end
-  end
-
-  # Defines the ComputerToolCallType SDK namespace.
-  module ComputerToolCallType
-    COMPUTER_CALL = 'computer_call'
-    VALUES = ['computer_call'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('ComputerToolCallType', 'enum', "Unknown ComputerToolCallType: #{value}")
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalComputerToolCallOutputMetadata
-    FIELDS = {
-      type: 'type',
-      id: 'id',
-      call_id: 'call_id',
-      acknowledged_safety_checks: 'acknowledged_safety_checks',
-      output: 'output',
-      status: 'status'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      call_id
-      output
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ComputerToolCallOutputType.from_value(value)
-      end,
-      acknowledged_safety_checks: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::ComputerCallSafetyCheckParam.from_hash(item) }
-      end,
-      output: lambda do |value|
-        ::OctridevOpenai::ComputerScreenshotImage.from_hash(value)
-      end,
-      status: lambda do |value|
-        ::OctridevOpenai::ComputerToolCallOutputStatus.from_value(value)
-      end
-    }.freeze
-  end
-
-  # API model for ComputerToolCallOutput.
-  # The output of a computer tool call.
-  class ComputerToolCallOutput
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalComputerToolCallOutputMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalComputerToolCallOutputMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalComputerToolCallOutputMetadata::DECODERS
-
-    # @return [ComputerToolCallOutputType] The type of the computer tool call output. Always `computer_call_output`.
-    attr_reader :type
-    # @return [String] The ID of the computer tool call output.
-    attr_reader :id
-    # @return [String] The ID of the computer tool call that produced the output.
-    attr_reader :call_id
-    # @return [Array_of_ComputerCallSafetyCheckParam] The safety checks reported by the API that have been acknowledged by the developer.
-    attr_reader :acknowledged_safety_checks
-    # @return [ComputerScreenshotImage] A computer screenshot image used with the computer use tool.
-    attr_reader :output
-    # @return [ComputerToolCallOutputStatus] The status of the message input. One of `in_progress`, `completed`, or `incomplete`. Populated when input items are returned via API.
-    attr_reader :status
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the ComputerToolCallOutputStatus SDK namespace.
-  module ComputerToolCallOutputStatus
-    IN_PROGRESS = 'in_progress'
-    COMPLETED = 'completed'
-    INCOMPLETE = 'incomplete'
-    VALUES = %w[in_progress completed incomplete].freeze
-    def self.from_value(value)
-      value
-    end
-  end
-
-  # Defines the ComputerToolCallOutputType SDK namespace.
-  module ComputerToolCallOutputType
-    COMPUTER_CALL_OUTPUT = 'computer_call_output'
-    VALUES = ['computer_call_output'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('ComputerToolCallOutputType', 'enum', "Unknown ComputerToolCallOutputType: #{value}")
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalComputerToolCallOutputResourceMetadata
-    FIELDS = {
-      type: 'type',
-      id: 'id',
-      call_id: 'call_id',
-      acknowledged_safety_checks: 'acknowledged_safety_checks',
-      output: 'output',
-      status: 'status',
-      created_by: 'created_by'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      id
-      call_id
-      output
-      status
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ComputerToolCallOutputType.from_value(value)
-      end,
-      acknowledged_safety_checks: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::ComputerCallSafetyCheckParam.from_hash(item) }
-      end,
-      output: lambda do |value|
-        ::OctridevOpenai::ComputerScreenshotImage.from_hash(value)
-      end,
-      status: lambda do |value|
-        ::OctridevOpenai::ComputerCallOutputStatus.from_value(value)
-      end
-    }.freeze
-  end
-
-  # API model for ComputerToolCallOutputResource.
-  # Typed representation of the `ComputerToolCallOutputResource` API schema.
-  class ComputerToolCallOutputResource
-    include ConversationItem
-    include ItemResource
-    include OutputItem
-    include ItemField
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalComputerToolCallOutputResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalComputerToolCallOutputResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalComputerToolCallOutputResourceMetadata::DECODERS
-
-    # @return [ComputerToolCallOutputType] The type of the computer tool call output. Always `computer_call_output`.
-    attr_reader :type
-    # @return [String] The ID of the computer tool call output.
-    attr_reader :id
-    # @return [String] The ID of the computer tool call that produced the output.
-    attr_reader :call_id
-    # @return [Array_of_ComputerCallSafetyCheckParam] The safety checks reported by the API that have been acknowledged by the developer.
-    attr_reader :acknowledged_safety_checks
-    # @return [ComputerScreenshotImage] A computer screenshot image used with the computer use tool.
-    attr_reader :output
-    # @return [ComputerCallOutputStatus] The status of the message input. One of `in_progress`, `completed`, or `incomplete`. Populated when input items are returned via API.
-    attr_reader :status
-    # @return [String] The identifier of the actor that created the item.
-    attr_reader :created_by
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalComputerUsePreviewToolMetadata
-    FIELDS = {
-      type: 'type',
-      environment: 'environment',
-      display_width: 'display_width',
-      display_height: 'display_height'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      environment
-      display_width
-      display_height
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ComputerUsePreviewToolType.from_value(value)
-      end,
-      environment: lambda do |value|
-        ::OctridevOpenai::ComputerEnvironment.from_value(value)
-      end
-    }.freeze
-  end
+# Internal model hydration metadata.
+class SdkInternalComputerUsePreviewToolMetadata
+  FIELDS = {
+    type: "type",
+    environment: "environment",
+    display_width: "display_width",
+    display_height: "display_height",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    environment
+    display_width
+    display_height
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ComputerUsePreviewToolType.from_value(value)
+    end,
+    environment: lambda do |value|
+      ::OctridevOpenai::ComputerEnvironment.from_value(value)
+    end,
+  }.freeze
+end
 end

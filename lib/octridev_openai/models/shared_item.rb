@@ -5,112 +5,110 @@
 
 # shared_item domain models
 module OctridevOpenai
-  # Defines the Item SDK namespace.
-  module Item
-    DISCRIMINATOR_MAPPING = {
-      'file_search_call' => -> { FileSearchToolCall },
-      'computer_call' => -> { ComputerToolCall },
-      'computer_call_output' => -> { ComputerCallOutputItemParam },
-      'web_search_call' => -> { WebSearchToolCall },
-      'function_call' => -> { FunctionToolCall },
-      'function_call_output' => -> { FunctionCallOutputItemParam },
-      'tool_search_call' => -> { ToolSearchCallItemParam },
-      'tool_search_output' => -> { ToolSearchOutputItemParam },
-      'additional_tools' => -> { AdditionalToolsItemParam },
-      'configuration_update' => -> { ResponseConfigurationUpdateItemParam },
-      'reasoning' => -> { ReasoningItem },
-      'compaction' => -> { CompactionSummaryItemParam },
-      'image_generation_call' => -> { ImageGenToolCall },
-      'code_interpreter_call' => -> { CodeInterpreterToolCall },
-      'local_shell_call' => -> { LocalShellToolCall },
-      'local_shell_call_output' => -> { LocalShellToolCallOutput },
-      'shell_call' => -> { FunctionShellCallItemParam },
-      'shell_call_output' => -> { FunctionShellCallOutputItemParam },
-      'apply_patch_call' => -> { ApplyPatchToolCallItemParam },
-      'apply_patch_call_output' => -> { ApplyPatchToolCallOutputItemParam },
-      'mcp_list_tools' => -> { MCPListTools },
-      'mcp_approval_request' => -> { MCPApprovalRequest },
-      'mcp_approval_response' => -> { MCPApprovalResponse },
-      'mcp_call' => -> { MCPToolCall },
-      'custom_tool_call_output' => -> { CustomToolCallOutput },
-      'custom_tool_call' => -> { CustomToolCall }
-    }.freeze
+# Defines the Item SDK namespace.
+module Item
+  DISCRIMINATOR_MAPPING = {
+    "file_search_call" => -> { FileSearchToolCall },
+    "computer_call" => -> { ComputerToolCall },
+    "computer_call_output" => -> { ComputerCallOutputItemParam },
+    "web_search_call" => -> { WebSearchToolCall },
+    "function_call" => -> { FunctionToolCall },
+    "function_call_output" => -> { FunctionCallOutputItemParam },
+    "tool_search_call" => -> { ToolSearchCallItemParam },
+    "tool_search_output" => -> { ToolSearchOutputItemParam },
+    "additional_tools" => -> { AdditionalToolsItemParam },
+    "configuration_update" => -> { ResponseConfigurationUpdateItemParam },
+    "reasoning" => -> { ReasoningItem },
+    "compaction" => -> { CompactionSummaryItemParam },
+    "image_generation_call" => -> { ImageGenToolCall },
+    "code_interpreter_call" => -> { CodeInterpreterToolCall },
+    "local_shell_call" => -> { LocalShellToolCall },
+    "local_shell_call_output" => -> { LocalShellToolCallOutput },
+    "shell_call" => -> { FunctionShellCallItemParam },
+    "shell_call_output" => -> { FunctionShellCallOutputItemParam },
+    "apply_patch_call" => -> { ApplyPatchToolCallItemParam },
+    "apply_patch_call_output" => -> { ApplyPatchToolCallOutputItemParam },
+    "mcp_list_tools" => -> { MCPListTools },
+    "mcp_approval_request" => -> { MCPApprovalRequest },
+    "mcp_approval_response" => -> { MCPApprovalResponse },
+    "mcp_call" => -> { MCPToolCall },
+    "custom_tool_call_output" => -> { CustomToolCallOutput },
+    "custom_tool_call" => -> { CustomToolCall },
+  }.freeze
 
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
 
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
+    # Several branches claim one type, which then names none of
+    # them. The role they pin does.
+    secondary_mapping = {
+      'user' => InputMessage,
+      'system' => InputMessage,
+      'developer' => InputMessage,
+      'assistant' => OutputMessage,
+    }
+    type = secondary_mapping[hash["role"]]
+    decoded = type&.from_hash(hash)
+    return decoded unless type.nil?
 
-      # Several branches claim one type, which then names none of
-      # them. The role they pin does.
-      secondary_mapping = {
-        'user' => InputMessage,
-        'system' => InputMessage,
-        'developer' => InputMessage,
-        'assistant' => OutputMessage
-      }
-      type = secondary_mapping[hash['role']]
-      decoded = type&.from_hash(hash)
-      return decoded unless type.nil?
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
 
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+    raise SdkValidationError.new('Item', 'variant', "Unknown Item discriminator: #{hash["type"].inspect}")
+  end
+end
 
-      raise SdkValidationError.new('Item', 'variant', "Unknown Item discriminator: #{hash['type'].inspect}")
-    end
+# Defines the ItemReferenceParamTypeVariant0 SDK namespace.
+module ItemReferenceParamTypeVariant0
+  ITEM_REFERENCE = 'item_reference'
+  VALUES = ['item_reference'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalItemReferenceParamMetadata
+  FIELDS = {
+    type: "type",
+    id: "id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ItemReferenceParamTypeVariant0.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for ItemReferenceParam.
+# An internal identifier for an item to reference.
+class ItemReferenceParam
+  include InputItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalItemReferenceParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalItemReferenceParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalItemReferenceParamMetadata::DECODERS
+
+  # @return [ItemReferenceParamTypeVariant0] Optional API value serialized in the `type` wire field.
+  attr_reader :type
+  # @return [String] The ID of the item to reference.
+  attr_reader :id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the ItemReferenceParamTypeVariant0 SDK namespace.
-  module ItemReferenceParamTypeVariant0
-    ITEM_REFERENCE = 'item_reference'
-    VALUES = ['item_reference'].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalItemReferenceParamMetadata
-    FIELDS = {
-      type: 'type',
-      id: 'id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ItemReferenceParamTypeVariant0.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
-
-  # API model for ItemReferenceParam.
-  # An internal identifier for an item to reference.
-  class ItemReferenceParam
-    include InputItem
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalItemReferenceParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalItemReferenceParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalItemReferenceParamMetadata::DECODERS
-
-    # @return [ItemReferenceParamTypeVariant0] Optional API value serialized in the `type` wire field.
-    attr_reader :type
-    # @return [String] The ID of the item to reference.
-    attr_reader :id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
+end
 end

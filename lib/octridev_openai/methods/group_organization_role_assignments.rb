@@ -13,7 +13,7 @@ module OctridevOpenai
       module ListGroupRoleAssignmentsParameter
         ASC = 'asc'
         DESC = 'desc'
-        VALUES = %w[asc desc].freeze
+        VALUES = ['asc', 'desc'].freeze
         def self.from_value(value)
           value
         end
@@ -37,30 +37,31 @@ module OctridevOpenai
         order: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 0, max: 1000) }
 
         SdkClient.request(
           'GET',
           [
-            '/organization/groups/',
+            "/organization/groups/",
             SdkClient.encode_path_segment(group_id),
-            '/roles'
+            "/roles"
           ].join,
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
-            'order' => QueryValue.new(order, style: 'form', explode: true)
+            'order' => QueryValue.new(order, style: 'form', explode: true),
           },
           return_type: ::OctridevOpenai::RoleListResource,
           decoder: :json,
           operation_id: 'list_group_role_assignments',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
-      ListGroupRoleAssignmentsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+    ListGroupRoleAssignmentsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists the organization roles assigned to a group within the organization.
       #
@@ -93,13 +94,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             items.each { |item| y << item }
             break unless page.has_more
-
             next_cursor = page.next_
             break if next_cursor.nil?
-
             cursor = next_cursor
           end
         end
@@ -126,12 +124,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             next_cursor = page.next_
             has_more = page.has_more && !next_cursor.nil?
             y << ListGroupRoleAssignmentsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
-
             cursor = next_cursor
           end
         end
@@ -148,22 +144,23 @@ module OctridevOpenai
         role_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
           [
-            '/organization/groups/',
+            "/organization/groups/",
             SdkClient.encode_path_segment(group_id),
-            '/roles'
+            "/roles"
           ].join,
           config: config,
           body: {
-            'role_id' => role_id
+            'role_id' => role_id,
           },
           return_type: ::OctridevOpenai::GroupRoleAssignment,
           decoder: :json,
           operation_id: 'assign_group_role',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -178,12 +175,13 @@ module OctridevOpenai
         role_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
           [
-            '/organization/groups/',
+            "/organization/groups/",
             SdkClient.encode_path_segment(group_id),
-            '/roles/',
+            "/roles/",
             SdkClient.encode_path_segment(role_id)
           ].join,
           config: config,
@@ -191,7 +189,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'retrieve_group_role',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -206,12 +204,13 @@ module OctridevOpenai
         role_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'DELETE',
           [
-            '/organization/groups/',
+            "/organization/groups/",
             SdkClient.encode_path_segment(group_id),
-            '/roles/',
+            "/roles/",
             SdkClient.encode_path_segment(role_id)
           ].join,
           config: config,
@@ -219,7 +218,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'unassign_group_role',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
     end

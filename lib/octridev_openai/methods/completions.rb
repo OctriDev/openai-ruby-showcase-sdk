@@ -107,6 +107,7 @@ module OctridevOpenai
         user: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.if_given(best_of) { Validation.validate_range('best_of', best_of, min: 0, max: 20) }
 
         Validation.if_given(frequency_penalty) do
@@ -129,7 +130,7 @@ module OctridevOpenai
 
         SdkClient.request(
           'POST',
-          '/completions',
+          "/completions",
           config: config,
           body: {
             'model' => model,
@@ -149,13 +150,13 @@ module OctridevOpenai
             'suffix' => suffix,
             'temperature' => temperature,
             'top_p' => top_p,
-            'user' => user
+            'user' => user,
           },
           return_type: ::OctridevOpenai::CreateCompletionResponse,
           decoder: :json,
           operation_id: 'create_completion',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '401' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '401' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -258,33 +259,31 @@ module OctridevOpenai
         request_options: nil,
         &block
       )
-        unless block
-          return enum_for(
-            __method__,
-            config: config,
-            model: model,
-            prompt: prompt,
-            stream: stream,
-            best_of: best_of,
-            echo: echo,
-            frequency_penalty: frequency_penalty,
-            logit_bias: logit_bias,
-            logprobs: logprobs,
-            max_tokens: max_tokens,
-            count: count,
-            presence_penalty: presence_penalty,
-            seed: seed,
-            stop: stop,
-            stream_options: stream_options,
-            suffix: suffix,
-            temperature: temperature,
-            top_p: top_p,
-            user: user,
-            request_options: request_options
-          )
-        end
+    return enum_for(
+          __method__,
+          config: config,
+          model: model,
+          prompt: prompt,
+          stream: stream,
+          best_of: best_of,
+          echo: echo,
+          frequency_penalty: frequency_penalty,
+          logit_bias: logit_bias,
+          logprobs: logprobs,
+          max_tokens: max_tokens,
+          count: count,
+          presence_penalty: presence_penalty,
+          seed: seed,
+          stop: stop,
+          stream_options: stream_options,
+          suffix: suffix,
+          temperature: temperature,
+          top_p: top_p,
+          user: user,
+          request_options: request_options,
+        ) unless block
         SdkClient.stream(
-          'POST', '/completions',
+          'POST', "/completions",
           config: config,
           body: {
             'model' => model,
@@ -304,17 +303,16 @@ module OctridevOpenai
             'suffix' => suffix,
             'temperature' => temperature,
             'top_p' => top_p,
-            'user' => user
+            'user' => user,
           },
           content_type: 'application/json',
           operation_id: 'create_completion_stream',
           stream_format: :sse,
-          stream_media_type: 'text/event-stream',
+          stream_media_type: "text/event-stream",
           request_options: request_options,
           errors: { '400' => ::OctridevOpenai::ErrorResponse, '401' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
         ).each do |ev|
           break if ev.data == '[DONE]'
-
           decoded = JSON.parse(ev.data)
           block.call(SdkClient.decode_event(decoded, ::OctridevOpenai::CreateCompletionResponse))
         end

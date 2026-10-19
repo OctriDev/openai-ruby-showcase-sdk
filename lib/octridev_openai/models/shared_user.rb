@@ -5,335 +5,337 @@
 
 # shared_user domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalUserUserMetadata
-    FIELDS = {
-      object: 'object',
-      id: 'id',
-      email: 'email',
-      name: 'name',
-      picture: 'picture',
-      enabled: 'enabled',
-      banned: 'banned',
-      banned_at: 'banned_at'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      id
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::UserUserObject.from_value(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalUserUserMetadata
+  FIELDS = {
+    object: "object",
+    id: "id",
+    email: "email",
+    name: "name",
+    picture: "picture",
+    enabled: "enabled",
+    banned: "banned",
+    banned_at: "banned_at",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    id
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::UserUserObject.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for UserUser.
+# Nested user details.
+class UserUser
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalUserUserMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalUserUserMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalUserUserMetadata::DECODERS
+
+  # @return [UserUserObject] Required enumerated value serialized in the `object` wire field.
+  attr_reader :object
+  # @return [String] Required `string` value serialized in the `id` wire field.
+  attr_reader :id
+  # @return [String] Optional `string` value serialized in the `email` wire field.
+  attr_reader :email
+  # @return [String] Optional `string` value serialized in the `name` wire field.
+  attr_reader :name
+  # @return [String] Optional `string` value serialized in the `picture` wire field.
+  attr_reader :picture
+  # @return [Boolean] Optional `boolean` value serialized in the `enabled` wire field.
+  attr_reader :enabled
+  # @return [Boolean] Optional `boolean` value serialized in the `banned` wire field.
+  attr_reader :banned
+  # @return [Integer] Optional API value serialized in the `banned_at` wire field.
+  attr_reader :banned_at
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for UserUser.
-  # Nested user details.
-  class UserUser
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalUserUserMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalUserUserMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalUserUserMetadata::DECODERS
-
-    # @return [UserUserObject] Required enumerated value serialized in the `object` wire field.
-    attr_reader :object
-    # @return [String] Required `string` value serialized in the `id` wire field.
-    attr_reader :id
-    # @return [String] Optional `string` value serialized in the `email` wire field.
-    attr_reader :email
-    # @return [String] Optional `string` value serialized in the `name` wire field.
-    attr_reader :name
-    # @return [String] Optional `string` value serialized in the `picture` wire field.
-    attr_reader :picture
-    # @return [Boolean] Optional `boolean` value serialized in the `enabled` wire field.
-    attr_reader :enabled
-    # @return [Boolean] Optional `boolean` value serialized in the `banned` wire field.
-    attr_reader :banned
-    # @return [Integer] Optional API value serialized in the `banned_at` wire field.
-    attr_reader :banned_at
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalUserProjectsDataItemMetadata
-    FIELDS = {
-      id: 'id',
-      name: 'name',
-      role: 'role'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {}.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalUserProjectsDataItemMetadata
+  FIELDS = {
+    id: "id",
+    name: "name",
+    role: "role",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for UserProjectsDataItem.
+# Required object value serialized in the `data[]` wire field.
+class UserProjectsDataItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalUserProjectsDataItemMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalUserProjectsDataItemMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalUserProjectsDataItemMetadata::DECODERS
+
+  # @return [String] Optional `string` value serialized in the `id` wire field.
+  attr_reader :id
+  # @return [String] Optional `string` value serialized in the `name` wire field.
+  attr_reader :name
+  # @return [String] Optional `string` value serialized in the `role` wire field.
+  attr_reader :role
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for UserProjectsDataItem.
-  # Required object value serialized in the `data[]` wire field.
-  class UserProjectsDataItem
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalUserProjectsDataItemMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalUserProjectsDataItemMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalUserProjectsDataItemMetadata::DECODERS
-
-    # @return [String] Optional `string` value serialized in the `id` wire field.
-    attr_reader :id
-    # @return [String] Optional `string` value serialized in the `name` wire field.
-    attr_reader :name
-    # @return [String] Optional `string` value serialized in the `role` wire field.
-    attr_reader :role
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalUserProjectsMetadata
-    FIELDS = {
-      object: 'object',
-      data: 'data'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      data
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::UserProjectsObject.from_value(value)
-      end,
-      data: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::UserProjectsDataItem.from_hash(item) }
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalUserProjectsMetadata
+  FIELDS = {
+    object: "object",
+    data: "data",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    data
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::UserProjectsObject.from_value(value)
+    end,
+    data: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::UserProjectsDataItem.from_hash(item) }
+    end,
+  }.freeze
+end
+
+# API model for UserProjects.
+# Projects associated with the user, if included.
+class UserProjects
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalUserProjectsMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalUserProjectsMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalUserProjectsMetadata::DECODERS
+
+  # @return [UserProjectsObject] Required enumerated value serialized in the `object` wire field.
+  attr_reader :object
+  # @return [Array_of_UserProjectsDataItem] Required array value serialized in the `data` wire field.
+  attr_reader :data
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for UserProjects.
-  # Projects associated with the user, if included.
-  class UserProjects
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalUserProjectsMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalUserProjectsMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalUserProjectsMetadata::DECODERS
-
-    # @return [UserProjectsObject] Required enumerated value serialized in the `object` wire field.
-    attr_reader :object
-    # @return [Array_of_UserProjectsDataItem] Required array value serialized in the `data` wire field.
-    attr_reader :data
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalUserMetadata
-    FIELDS = {
-      object: 'object',
-      id: 'id',
-      name: 'name',
-      email: 'email',
-      role: 'role',
-      added_at: 'added_at',
-      is_default: 'is_default',
-      created: 'created',
-      user: 'user',
-      is_service_account: 'is_service_account',
-      is_scale_tier_authorized_purchaser: 'is_scale_tier_authorized_purchaser',
-      is_scim_managed: 'is_scim_managed',
-      api_key_last_used_at: 'api_key_last_used_at',
-      technical_level: 'technical_level',
-      developer_persona: 'developer_persona',
-      projects: 'projects'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      id
-      added_at
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::UserObject.from_value(value)
-      end,
-      user: lambda do |value|
-        ::OctridevOpenai::UserUser.from_hash(value)
-      end,
-      projects: lambda do |value|
-        ::OctridevOpenai::UserProjects.from_hash(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalUserMetadata
+  FIELDS = {
+    object: "object",
+    id: "id",
+    name: "name",
+    email: "email",
+    role: "role",
+    added_at: "added_at",
+    is_default: "is_default",
+    created: "created",
+    user: "user",
+    is_service_account: "is_service_account",
+    is_scale_tier_authorized_purchaser: "is_scale_tier_authorized_purchaser",
+    is_scim_managed: "is_scim_managed",
+    api_key_last_used_at: "api_key_last_used_at",
+    technical_level: "technical_level",
+    developer_persona: "developer_persona",
+    projects: "projects",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    id
+    added_at
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::UserObject.from_value(value)
+    end,
+    user: lambda do |value|
+      ::OctridevOpenai::UserUser.from_hash(value)
+    end,
+    projects: lambda do |value|
+      ::OctridevOpenai::UserProjects.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for User.
+# Represents an individual `user` within an organization.
+class User
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalUserMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalUserMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalUserMetadata::DECODERS
+
+  # @return [UserObject] The object type, which is always `organization.user`
+  attr_reader :object
+  # @return [String] The identifier, which can be referenced in API endpoints
+  attr_reader :id
+  # @return [String] The name of the user
+  attr_reader :name
+  # @return [String] The email address of the user
+  attr_reader :email
+  # @return [String] `owner` or `reader`
+  attr_reader :role
+  # @return [Integer] The Unix timestamp (in seconds) of when the user was added.
+  attr_reader :added_at
+  # @return [Boolean] Whether this is the organization's default user.
+  attr_reader :is_default
+  # @return [Integer] The Unix timestamp (in seconds) of when the user was created.
+  attr_reader :created
+  # @return [UserUser] Nested user details.
+  attr_reader :user
+  # @return [Boolean] Whether the user is a service account.
+  attr_reader :is_service_account
+  # @return [Boolean] Whether the user is an authorized purchaser for Scale Tier.
+  attr_reader :is_scale_tier_authorized_purchaser
+  # @return [Boolean] Whether the user is managed through SCIM.
+  attr_reader :is_scim_managed
+  # @return [Integer] The Unix timestamp (in seconds) of the user's last API key usage.
+  attr_reader :api_key_last_used_at
+  # @return [String] The technical level metadata for the user.
+  attr_reader :technical_level
+  # @return [String] The developer persona metadata for the user.
+  attr_reader :developer_persona
+  # @return [UserProjects] Projects associated with the user, if included.
+  attr_reader :projects
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for User.
-  # Represents an individual `user` within an organization.
-  class User
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalUserMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalUserMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalUserMetadata::DECODERS
-
-    # @return [UserObject] The object type, which is always `organization.user`
-    attr_reader :object
-    # @return [String] The identifier, which can be referenced in API endpoints
-    attr_reader :id
-    # @return [String] The name of the user
-    attr_reader :name
-    # @return [String] The email address of the user
-    attr_reader :email
-    # @return [String] `owner` or `reader`
-    attr_reader :role
-    # @return [Integer] The Unix timestamp (in seconds) of when the user was added.
-    attr_reader :added_at
-    # @return [Boolean] Whether this is the organization's default user.
-    attr_reader :is_default
-    # @return [Integer] The Unix timestamp (in seconds) of when the user was created.
-    attr_reader :created
-    # @return [UserUser] Nested user details.
-    attr_reader :user
-    # @return [Boolean] Whether the user is a service account.
-    attr_reader :is_service_account
-    # @return [Boolean] Whether the user is an authorized purchaser for Scale Tier.
-    attr_reader :is_scale_tier_authorized_purchaser
-    # @return [Boolean] Whether the user is managed through SCIM.
-    attr_reader :is_scim_managed
-    # @return [Integer] The Unix timestamp (in seconds) of the user's last API key usage.
-    attr_reader :api_key_last_used_at
-    # @return [String] The technical level metadata for the user.
-    attr_reader :technical_level
-    # @return [String] The developer persona metadata for the user.
-    attr_reader :developer_persona
-    # @return [UserProjects] Projects associated with the user, if included.
-    attr_reader :projects
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the UserObject SDK namespace.
-  module UserObject
-    ORGANIZATION_USER = 'organization.user'
-    VALUES = ['organization.user'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the UserObject SDK namespace.
+module UserObject
+  ORGANIZATION_USER = 'organization.user'
+  VALUES = ['organization.user'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the UserProjectsObject SDK namespace.
+module UserProjectsObject
+  LIST = 'list'
+  VALUES = ['list'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the UserUserObject SDK namespace.
+module UserUserObject
+  USER = 'user'
+  VALUES = ['user'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalUserRoleAssignmentMetadata
+  FIELDS = {
+    object: "object",
+    user: "user",
+    role: "role",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    user
+    role
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::UserRoleAssignmentObject.from_value(value)
+    end,
+    user: lambda do |value|
+      ::OctridevOpenai::User.from_hash(value)
+    end,
+    role: lambda do |value|
+      ::OctridevOpenai::Role.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for UserRoleAssignment.
+# Role assignment linking a user to a role.
+class UserRoleAssignment
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalUserRoleAssignmentMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalUserRoleAssignmentMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalUserRoleAssignmentMetadata::DECODERS
+
+  # @return [UserRoleAssignmentObject] Always `user.role`.
+  attr_reader :object
+  # @return [User] Represents an individual `user` within an organization.
+  attr_reader :user
+  # @return [Role] Details about a role that can be assigned through the public Roles API.
+  attr_reader :role
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the UserProjectsObject SDK namespace.
-  module UserProjectsObject
-    LIST = 'list'
-    VALUES = ['list'].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the UserUserObject SDK namespace.
-  module UserUserObject
-    USER = 'user'
-    VALUES = ['user'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Internal model hydration metadata.
-  class SdkInternalUserRoleAssignmentMetadata
-    FIELDS = {
-      object: 'object',
-      user: 'user',
-      role: 'role'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      user
-      role
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::UserRoleAssignmentObject.from_value(value)
-      end,
-      user: lambda do |value|
-        ::OctridevOpenai::User.from_hash(value)
-      end,
-      role: lambda do |value|
-        ::OctridevOpenai::Role.from_hash(value)
-      end
-    }.freeze
+# Defines the UserRoleAssignmentObject SDK namespace.
+module UserRoleAssignmentObject
+  USER_ROLE = 'user.role'
+  VALUES = ['user.role'].freeze
+  def self.from_value(value)
+    value
   end
-
-  # API model for UserRoleAssignment.
-  # Role assignment linking a user to a role.
-  class UserRoleAssignment
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalUserRoleAssignmentMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalUserRoleAssignmentMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalUserRoleAssignmentMetadata::DECODERS
-
-    # @return [UserRoleAssignmentObject] Always `user.role`.
-    attr_reader :object
-    # @return [User] Represents an individual `user` within an organization.
-    attr_reader :user
-    # @return [Role] Details about a role that can be assigned through the public Roles API.
-    attr_reader :role
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the UserRoleAssignmentObject SDK namespace.
-  module UserRoleAssignmentObject
-    USER_ROLE = 'user.role'
-    VALUES = ['user.role'].freeze
-    def self.from_value(value)
-      value
-    end
-  end
+end
 end

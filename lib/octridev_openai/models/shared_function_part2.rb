@@ -5,686 +5,675 @@
 
 # shared_function domain models (part 2)
 module OctridevOpenai
-  # Defines the FunctionShellCallOutputContentOutcome SDK namespace.
-  module FunctionShellCallOutputContentOutcome
-    DISCRIMINATOR_MAPPING = {
-      'timeout' => -> { FunctionShellCallOutputTimeoutOutcome },
-      'exit' => -> { FunctionShellCallOutputExitOutcome }
-    }.freeze
+# Defines the FunctionShellCallOutputContentOutcome SDK namespace.
+module FunctionShellCallOutputContentOutcome
+  DISCRIMINATOR_MAPPING = {
+    "timeout" => -> { FunctionShellCallOutputTimeoutOutcome },
+    "exit" => -> { FunctionShellCallOutputExitOutcome },
+  }.freeze
 
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
 
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
 
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+    raise SdkValidationError.new('FunctionShellCallOutputContentOutcome', 'variant', "Unknown FunctionShellCallOutputContentOutcome discriminator: #{hash["type"].inspect}")
+  end
+end
 
-      raise SdkValidationError.new('FunctionShellCallOutputContentOutcome', 'variant', "Unknown FunctionShellCallOutputContentOutcome discriminator: #{hash['type'].inspect}")
-    end
+# Internal model hydration metadata.
+class SdkInternalFunctionShellCallOutputContentParamMetadata
+  FIELDS = {
+    stdout: "stdout",
+    stderr: "stderr",
+    outcome: "outcome",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    stdout
+    stderr
+    outcome
+  ].freeze
+  DECODERS = {
+    outcome: lambda do |value|
+      ::OctridevOpenai::FunctionShellCallOutputOutcomeParam.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for FunctionShellCallOutputContentParam.
+# Captured stdout and stderr for a portion of a shell tool call output.
+class FunctionShellCallOutputContentParam
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalFunctionShellCallOutputContentParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalFunctionShellCallOutputContentParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalFunctionShellCallOutputContentParamMetadata::DECODERS
+
+  # @return [String] Captured stdout output for the shell call.
+  attr_reader :stdout
+  # @return [String] Captured stderr output for the shell call.
+  attr_reader :stderr
+  # @return [FunctionShellCallOutputOutcomeParam] The exit or timeout outcome associated with this shell call.
+  attr_reader :outcome
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalFunctionShellCallOutputContentParamMetadata
-    FIELDS = {
-      stdout: 'stdout',
-      stderr: 'stderr',
-      outcome: 'outcome'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      stdout
-      stderr
-      outcome
-    ].freeze
-    DECODERS = {
-      outcome: lambda do |value|
-        ::OctridevOpenai::FunctionShellCallOutputOutcomeParam.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for FunctionShellCallOutputContentParam.
-  # Captured stdout and stderr for a portion of a shell tool call output.
-  class FunctionShellCallOutputContentParam
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalFunctionShellCallOutputContentParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalFunctionShellCallOutputContentParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalFunctionShellCallOutputContentParamMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] Captured stdout output for the shell call.
-    attr_reader :stdout
-    # @return [String] Captured stderr output for the shell call.
-    attr_reader :stderr
-    # @return [FunctionShellCallOutputOutcomeParam] The exit or timeout outcome associated with this shell call.
-    attr_reader :outcome
+# Internal model hydration metadata.
+class SdkInternalFunctionShellCallOutputExitOutcomeMetadata
+  FIELDS = {
+    type: "type",
+    exit_code: "exit_code",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    exit_code
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::FunctionShellCallOutputExitOutcomeType.from_value(value)
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for FunctionShellCallOutputExitOutcome.
+# Indicates that the shell commands finished and returned an exit code.
+class FunctionShellCallOutputExitOutcome
+  include FunctionShellCallOutputContentOutcome
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalFunctionShellCallOutputExitOutcomeMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalFunctionShellCallOutputExitOutcomeMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalFunctionShellCallOutputExitOutcomeMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [FunctionShellCallOutputExitOutcomeType] The outcome type. Always `exit`.
+  attr_reader :type
+  # @return [Integer] Exit code from the shell process.
+  attr_reader :exit_code
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalFunctionShellCallOutputExitOutcomeMetadata
-    FIELDS = {
-      type: 'type',
-      exit_code: 'exit_code'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      exit_code
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::FunctionShellCallOutputExitOutcomeType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for FunctionShellCallOutputExitOutcome.
-  # Indicates that the shell commands finished and returned an exit code.
-  class FunctionShellCallOutputExitOutcome
-    include FunctionShellCallOutputContentOutcome
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalFunctionShellCallOutputExitOutcomeMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalFunctionShellCallOutputExitOutcomeMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalFunctionShellCallOutputExitOutcomeMetadata::DECODERS
+# Defines the FunctionShellCallOutputExitOutcomeType SDK namespace.
+module FunctionShellCallOutputExitOutcomeType
+  EXIT = 'exit'
+  VALUES = ['exit'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    # @return [FunctionShellCallOutputExitOutcomeType] The outcome type. Always `exit`.
-    attr_reader :type
-    # @return [Integer] Exit code from the shell process.
-    attr_reader :exit_code
+    raise SdkValidationError.new('FunctionShellCallOutputExitOutcomeType', 'enum', "Unknown FunctionShellCallOutputExitOutcomeType: #{value}")
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalFunctionShellCallOutputExitOutcomeParamMetadata
+  FIELDS = {
+    type: "type",
+    exit_code: "exit_code",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    exit_code
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::FunctionShellCallOutputExitOutcomeParamType.from_value(value)
+    end,
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for FunctionShellCallOutputExitOutcomeParam.
+# Indicates that the shell commands finished and returned an exit code.
+class FunctionShellCallOutputExitOutcomeParam
+  include FunctionShellCallOutputOutcomeParam
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalFunctionShellCallOutputExitOutcomeParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalFunctionShellCallOutputExitOutcomeParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalFunctionShellCallOutputExitOutcomeParamMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [FunctionShellCallOutputExitOutcomeParamType] The outcome type. Always `exit`.
+  attr_reader :type
+  # @return [Integer] The exit code returned by the shell process.
+  attr_reader :exit_code
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the FunctionShellCallOutputExitOutcomeType SDK namespace.
-  module FunctionShellCallOutputExitOutcomeType
-    EXIT = 'exit'
-    VALUES = ['exit'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('FunctionShellCallOutputExitOutcomeType', 'enum', "Unknown FunctionShellCallOutputExitOutcomeType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalFunctionShellCallOutputExitOutcomeParamMetadata
-    FIELDS = {
-      type: 'type',
-      exit_code: 'exit_code'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      exit_code
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::FunctionShellCallOutputExitOutcomeParamType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the FunctionShellCallOutputExitOutcomeParamType SDK namespace.
+module FunctionShellCallOutputExitOutcomeParamType
+  EXIT = 'exit'
+  VALUES = ['exit'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('FunctionShellCallOutputExitOutcomeParamType', 'enum', "Unknown FunctionShellCallOutputExitOutcomeParamType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalFunctionShellCallOutputItemParamMetadata
+  FIELDS = {
+    id: "id",
+    call_id: "call_id",
+    caller: "caller",
+    type: "type",
+    output: "output",
+    status: "status",
+    max_output_length: "max_output_length",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    call_id
+    type
+    output
+  ].freeze
+  DECODERS = {
+    caller: lambda do |value|
+      ::OctridevOpenai::ToolCallCallerParam.from_hash(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::FunctionShellCallOutputItemParamType.from_value(value)
+    end,
+    output: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::FunctionShellCallOutputContentParam.from_hash(item) }
+    end,
+    status: lambda do |value|
+      ::OctridevOpenai::FunctionShellCallItemStatus.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for FunctionShellCallOutputItemParam.
+# The streamed output items emitted by a shell tool call.
+class FunctionShellCallOutputItemParam
+  include Item
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalFunctionShellCallOutputItemParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalFunctionShellCallOutputItemParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalFunctionShellCallOutputItemParamMetadata::DECODERS
+
+  # @return [String] Optional `string` value serialized in the `id` wire field.
+  attr_reader :id
+  # @return [String] The unique ID of the shell tool call generated by the model.
+  attr_reader :call_id
+  # @return [ToolCallCallerParam] Optional API value serialized in the `caller` wire field.
+  attr_reader :caller
+  # @return [FunctionShellCallOutputItemParamType] The type of the item. Always `shell_call_output`.
+  attr_reader :type
+  # @return [Array_of_FunctionShellCallOutputContentParam] Captured chunks of stdout and stderr output, along with their associated outcomes.
+  attr_reader :output
+  # @return [FunctionShellCallItemStatus] Optional API value serialized in the `status` wire field.
+  attr_reader :status
+  # @return [Integer] Optional `integer` value serialized in the `max_output_length` wire field.
+  attr_reader :max_output_length
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for FunctionShellCallOutputExitOutcomeParam.
-  # Indicates that the shell commands finished and returned an exit code.
-  class FunctionShellCallOutputExitOutcomeParam
-    include FunctionShellCallOutputOutcomeParam
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalFunctionShellCallOutputExitOutcomeParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalFunctionShellCallOutputExitOutcomeParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalFunctionShellCallOutputExitOutcomeParamMetadata::DECODERS
-
-    # @return [FunctionShellCallOutputExitOutcomeParamType] The outcome type. Always `exit`.
-    attr_reader :type
-    # @return [Integer] The exit code returned by the shell process.
-    attr_reader :exit_code
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the FunctionShellCallOutputExitOutcomeParamType SDK namespace.
-  module FunctionShellCallOutputExitOutcomeParamType
-    EXIT = 'exit'
-    VALUES = ['exit'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('FunctionShellCallOutputExitOutcomeParamType', 'enum', "Unknown FunctionShellCallOutputExitOutcomeParamType: #{value}")
-    end
+# Defines the FunctionShellCallOutputItemParamType SDK namespace.
+module FunctionShellCallOutputItemParamType
+  SHELL_CALL_OUTPUT = 'shell_call_output'
+  VALUES = ['shell_call_output'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('FunctionShellCallOutputItemParamType', 'enum', "Unknown FunctionShellCallOutputItemParamType: #{value}")
+  end
+end
+
+# Defines the FunctionShellCallOutputOutcomeParam SDK namespace.
+module FunctionShellCallOutputOutcomeParam
+  DISCRIMINATOR_MAPPING = {
+    "timeout" => -> { FunctionShellCallOutputTimeoutOutcomeParam },
+    "exit" => -> { FunctionShellCallOutputExitOutcomeParam },
+  }.freeze
+
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
+
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+
+    raise SdkValidationError.new('FunctionShellCallOutputOutcomeParam', 'variant', "Unknown FunctionShellCallOutputOutcomeParam discriminator: #{hash["type"].inspect}")
+  end
+end
+
+# Defines the FunctionShellCallOutputStatusEnum SDK namespace.
+module FunctionShellCallOutputStatusEnum
+  IN_PROGRESS = 'in_progress'
+  COMPLETED = 'completed'
+  INCOMPLETE = 'incomplete'
+  VALUES = ['in_progress', 'completed', 'incomplete'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalFunctionShellCallOutputTimeoutOutcomeMetadata
+  FIELDS = {
+    type: "type",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::FunctionShellCallOutputTimeoutOutcomeType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for FunctionShellCallOutputTimeoutOutcome.
+# Indicates that the shell call exceeded its configured time limit.
+class FunctionShellCallOutputTimeoutOutcome
+  include FunctionShellCallOutputContentOutcome
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalFunctionShellCallOutputTimeoutOutcomeMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalFunctionShellCallOutputTimeoutOutcomeMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalFunctionShellCallOutputTimeoutOutcomeMetadata::DECODERS
+
+  # @return [FunctionShellCallOutputTimeoutOutcomeType] The outcome type. Always `timeout`.
+  attr_reader :type
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalFunctionShellCallOutputItemParamMetadata
-    FIELDS = {
-      id: 'id',
-      call_id: 'call_id',
-      caller: 'caller',
-      type: 'type',
-      output: 'output',
-      status: 'status',
-      max_output_length: 'max_output_length'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      call_id
-      type
-      output
-    ].freeze
-    DECODERS = {
-      caller: lambda do |value|
-        ::OctridevOpenai::ToolCallCallerParam.from_hash(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::FunctionShellCallOutputItemParamType.from_value(value)
-      end,
-      output: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::FunctionShellCallOutputContentParam.from_hash(item) }
-      end,
-      status: lambda do |value|
-        ::OctridevOpenai::FunctionShellCallItemStatus.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for FunctionShellCallOutputItemParam.
-  # The streamed output items emitted by a shell tool call.
-  class FunctionShellCallOutputItemParam
-    include Item
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalFunctionShellCallOutputItemParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalFunctionShellCallOutputItemParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalFunctionShellCallOutputItemParamMetadata::DECODERS
+# Defines the FunctionShellCallOutputTimeoutOutcomeType SDK namespace.
+module FunctionShellCallOutputTimeoutOutcomeType
+  TIMEOUT = 'timeout'
+  VALUES = ['timeout'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    # @return [String] Optional `string` value serialized in the `id` wire field.
-    attr_reader :id
-    # @return [String] The unique ID of the shell tool call generated by the model.
-    attr_reader :call_id
-    # @return [ToolCallCallerParam] Optional API value serialized in the `caller` wire field.
-    attr_reader :caller
-    # @return [FunctionShellCallOutputItemParamType] The type of the item. Always `shell_call_output`.
-    attr_reader :type
-    # @return [Array_of_FunctionShellCallOutputContentParam] Captured chunks of stdout and stderr output, along with their associated outcomes.
-    attr_reader :output
-    # @return [FunctionShellCallItemStatus] Optional API value serialized in the `status` wire field.
-    attr_reader :status
-    # @return [Integer] Optional `integer` value serialized in the `max_output_length` wire field.
-    attr_reader :max_output_length
+    raise SdkValidationError.new('FunctionShellCallOutputTimeoutOutcomeType', 'enum', "Unknown FunctionShellCallOutputTimeoutOutcomeType: #{value}")
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalFunctionShellCallOutputTimeoutOutcomeParamMetadata
+  FIELDS = {
+    type: "type",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::FunctionShellCallOutputTimeoutOutcomeParamType.from_value(value)
+    end,
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for FunctionShellCallOutputTimeoutOutcomeParam.
+# Indicates that the shell call exceeded its configured time limit.
+class FunctionShellCallOutputTimeoutOutcomeParam
+  include FunctionShellCallOutputOutcomeParam
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalFunctionShellCallOutputTimeoutOutcomeParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalFunctionShellCallOutputTimeoutOutcomeParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalFunctionShellCallOutputTimeoutOutcomeParamMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [FunctionShellCallOutputTimeoutOutcomeParamType] The outcome type. Always `timeout`.
+  attr_reader :type
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the FunctionShellCallOutputItemParamType SDK namespace.
-  module FunctionShellCallOutputItemParamType
-    SHELL_CALL_OUTPUT = 'shell_call_output'
-    VALUES = ['shell_call_output'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('FunctionShellCallOutputItemParamType', 'enum', "Unknown FunctionShellCallOutputItemParamType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the FunctionShellCallOutputOutcomeParam SDK namespace.
-  module FunctionShellCallOutputOutcomeParam
-    DISCRIMINATOR_MAPPING = {
-      'timeout' => -> { FunctionShellCallOutputTimeoutOutcomeParam },
-      'exit' => -> { FunctionShellCallOutputExitOutcomeParam }
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
+# Defines the FunctionShellCallOutputTimeoutOutcomeParamType SDK namespace.
+module FunctionShellCallOutputTimeoutOutcomeParamType
+  TIMEOUT = 'timeout'
+  VALUES = ['timeout'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
+    raise SdkValidationError.new('FunctionShellCallOutputTimeoutOutcomeParamType', 'enum', "Unknown FunctionShellCallOutputTimeoutOutcomeParamType: #{value}")
+  end
+end
 
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+# Defines the FunctionShellCallStatus SDK namespace.
+module FunctionShellCallStatus
+  IN_PROGRESS = 'in_progress'
+  COMPLETED = 'completed'
+  INCOMPLETE = 'incomplete'
+  VALUES = ['in_progress', 'completed', 'incomplete'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-      raise SdkValidationError.new('FunctionShellCallOutputOutcomeParam', 'variant', "Unknown FunctionShellCallOutputOutcomeParam discriminator: #{hash['type'].inspect}")
-    end
+# Internal model hydration metadata.
+class SdkInternalFunctionShellToolParamMetadata
+  FIELDS = {
+    type: "type",
+    environment: "environment",
+    allowed_callers: "allowed_callers",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::FunctionShellToolParamType.from_value(value)
+    end,
+    environment: lambda do |value|
+      ::OctridevOpenai::FunctionShellToolParamEnvironment.from_hash(value)
+    end,
+    allowed_callers: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::CallableToolAllowedCaller.from_value(item) }
+    end,
+  }.freeze
+end
+
+# API model for FunctionShellToolParam.
+# A tool that allows the model to execute shell commands.
+class FunctionShellToolParam
+  include Tool
+  include ToolSearchOutputTool
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalFunctionShellToolParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalFunctionShellToolParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalFunctionShellToolParamMetadata::DECODERS
+
+  # @return [FunctionShellToolParamType] The type of the shell tool. Always `shell`.
+  attr_reader :type
+  # @return [FunctionShellToolParamEnvironment] Optional API value serialized in the `environment` wire field.
+  attr_reader :environment
+  # @return [Array_of_CallableToolAllowedCaller] The tool invocation context(s).
+  attr_reader :allowed_callers
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the FunctionShellCallOutputStatusEnum SDK namespace.
-  module FunctionShellCallOutputStatusEnum
-    IN_PROGRESS = 'in_progress'
-    COMPLETED = 'completed'
-    INCOMPLETE = 'incomplete'
-    VALUES = %w[in_progress completed incomplete].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalFunctionShellCallOutputTimeoutOutcomeMetadata
-    FIELDS = {
-      type: 'type'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::FunctionShellCallOutputTimeoutOutcomeType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the FunctionShellToolParamType SDK namespace.
+module FunctionShellToolParamType
+  SHELL = 'shell'
+  VALUES = ['shell'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('FunctionShellToolParamType', 'enum', "Unknown FunctionShellToolParamType: #{value}")
+  end
+end
+
+# Defines the FunctionShellToolParamEnvironment SDK namespace.
+module FunctionShellToolParamEnvironment
+  DISCRIMINATOR_MAPPING = {
+    "container_auto" => -> { ContainerAutoParam },
+    "local" => -> { LocalEnvironmentParam },
+    "container_reference" => -> { ContainerReferenceParam },
+  }.freeze
+
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
+
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+
+    raise SdkValidationError.new('FunctionShellToolParamEnvironment', 'variant', "Unknown FunctionShellToolParamEnvironment discriminator: #{hash["type"].inspect}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalFunctionToolMetadata
+  FIELDS = {
+    type: "type",
+    name: "name",
+    async: "async",
+    description: "description",
+    parameters: "parameters",
+    output_schema: "output_schema",
+    strict: "strict",
+    defer_loading: "defer_loading",
+    allowed_callers: "allowed_callers",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    name
+    parameters
+    strict
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::FunctionToolType.from_value(value)
+    end,
+    allowed_callers: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::CallableToolAllowedCaller.from_value(item) }
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    parameters
+    strict
+  ].freeze
+end
+
+# API model for FunctionTool.
+# Defines a function in your own code the model can choose to call. Learn more about function calling.
+class FunctionTool
+  include Tool
+  include ToolSearchOutputTool
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalFunctionToolMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalFunctionToolMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalFunctionToolMetadata::DECODERS
+
+  # @return [FunctionToolType] The type of the function tool. Always `function`.
+  attr_reader :type
+  # @return [String] The name of the function to call.
+  attr_reader :name
+  # @return [Boolean] Optional `boolean` value serialized in the `async` wire field.
+  attr_reader :async
+  # @return [String] Optional `string` value serialized in the `description` wire field.
+  attr_reader :description
+  # @return [Hash] A JSON schema object describing the parameters of the function.
+  attr_reader :parameters
+  # @return [Hash] A JSON schema object describing the JSON value encoded in string outputs for this function.
+  attr_reader :output_schema
+  # @return [Boolean] Required `boolean` value serialized in the `strict` wire field.
+  attr_reader :strict
+  # @return [Boolean] Whether this function is deferred and loaded via tool search.
+  attr_reader :defer_loading
+  # @return [Array_of_CallableToolAllowedCaller] The tool invocation context(s).
+  attr_reader :allowed_callers
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for FunctionShellCallOutputTimeoutOutcome.
-  # Indicates that the shell call exceeded its configured time limit.
-  class FunctionShellCallOutputTimeoutOutcome
-    include FunctionShellCallOutputContentOutcome
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalFunctionShellCallOutputTimeoutOutcomeMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalFunctionShellCallOutputTimeoutOutcomeMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalFunctionShellCallOutputTimeoutOutcomeMetadata::DECODERS
-
-    # @return [FunctionShellCallOutputTimeoutOutcomeType] The outcome type. Always `timeout`.
-    attr_reader :type
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalFunctionToolMetadata::NULLABLE_FIELDS)
   end
 
-  # Defines the FunctionShellCallOutputTimeoutOutcomeType SDK namespace.
-  module FunctionShellCallOutputTimeoutOutcomeType
-    TIMEOUT = 'timeout'
-    VALUES = ['timeout'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('FunctionShellCallOutputTimeoutOutcomeType', 'enum', "Unknown FunctionShellCallOutputTimeoutOutcomeType: #{value}")
-    end
+# Defines the FunctionToolType SDK namespace.
+module FunctionToolType
+  FUNCTION = 'function'
+  VALUES = ['function'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('FunctionToolType', 'enum', "Unknown FunctionToolType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalFunctionToolCallMetadata
+  FIELDS = {
+    id: "id",
+    type: "type",
+    call_id: "call_id",
+    caller: "caller",
+    namespace: "namespace",
+    name: "name",
+    arguments: "arguments",
+    status: "status",
+    async: "async",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    call_id
+    name
+    arguments
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::FunctionToolCallType.from_value(value)
+    end,
+    caller: lambda do |value|
+      ::OctridevOpenai::ToolCallCaller.from_hash(value)
+    end,
+    status: lambda do |value|
+      ::OctridevOpenai::FunctionToolCallStatus.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for FunctionToolCall.
+# A tool call to run a function. See the function calling guide for more information.
+class FunctionToolCall
+  include Item
+  include OutputItem
+  include ItemField
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalFunctionToolCallMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalFunctionToolCallMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalFunctionToolCallMetadata::DECODERS
+
+  # @return [String] The unique ID of the function tool call.
+  attr_reader :id
+  # @return [FunctionToolCallType] The type of the function tool call. Always `function_call`.
+  attr_reader :type
+  # @return [String] The unique ID of the function tool call generated by the model.
+  attr_reader :call_id
+  # @return [ToolCallCaller] Optional API value serialized in the `caller` wire field.
+  attr_reader :caller
+  # @return [String] The namespace of the function to run.
+  attr_reader :namespace
+  # @return [String] The name of the function to run.
+  attr_reader :name
+  # @return [String] A JSON string of the arguments to pass to the function.
+  attr_reader :arguments
+  # @return [FunctionToolCallStatus] The status of the item. One of `in_progress`, `completed`, or `incomplete`. Populated when items are returned via API.
+  attr_reader :status
+  # @return [Boolean] Whether the function tool call runs asynchronously.
+  attr_reader :async
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalFunctionShellCallOutputTimeoutOutcomeParamMetadata
-    FIELDS = {
-      type: 'type'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::FunctionShellCallOutputTimeoutOutcomeParamType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for FunctionShellCallOutputTimeoutOutcomeParam.
-  # Indicates that the shell call exceeded its configured time limit.
-  class FunctionShellCallOutputTimeoutOutcomeParam
-    include FunctionShellCallOutputOutcomeParam
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalFunctionShellCallOutputTimeoutOutcomeParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalFunctionShellCallOutputTimeoutOutcomeParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalFunctionShellCallOutputTimeoutOutcomeParamMetadata::DECODERS
-
-    # @return [FunctionShellCallOutputTimeoutOutcomeParamType] The outcome type. Always `timeout`.
-    attr_reader :type
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the FunctionShellCallOutputTimeoutOutcomeParamType SDK namespace.
-  module FunctionShellCallOutputTimeoutOutcomeParamType
-    TIMEOUT = 'timeout'
-    VALUES = ['timeout'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('FunctionShellCallOutputTimeoutOutcomeParamType', 'enum', "Unknown FunctionShellCallOutputTimeoutOutcomeParamType: #{value}")
-    end
+# Defines the FunctionToolCallStatus SDK namespace.
+module FunctionToolCallStatus
+  IN_PROGRESS = 'in_progress'
+  COMPLETED = 'completed'
+  INCOMPLETE = 'incomplete'
+  VALUES = ['in_progress', 'completed', 'incomplete'].freeze
+  def self.from_value(value)
+    value
   end
+end
 
-  # Defines the FunctionShellCallStatus SDK namespace.
-  module FunctionShellCallStatus
-    IN_PROGRESS = 'in_progress'
-    COMPLETED = 'completed'
-    INCOMPLETE = 'incomplete'
-    VALUES = %w[in_progress completed incomplete].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the FunctionToolCallType SDK namespace.
+module FunctionToolCallType
+  FUNCTION_CALL = 'function_call'
+  VALUES = ['function_call'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('FunctionToolCallType', 'enum', "Unknown FunctionToolCallType: #{value}")
   end
-
-  # Internal model hydration metadata.
-  class SdkInternalFunctionShellToolParamMetadata
-    FIELDS = {
-      type: 'type',
-      environment: 'environment',
-      allowed_callers: 'allowed_callers'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::FunctionShellToolParamType.from_value(value)
-      end,
-      environment: lambda do |value|
-        ::OctridevOpenai::FunctionShellToolParamEnvironment.from_hash(value)
-      end,
-      allowed_callers: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::CallableToolAllowedCaller.from_value(item) }
-      end
-    }.freeze
-  end
-
-  # API model for FunctionShellToolParam.
-  # A tool that allows the model to execute shell commands.
-  class FunctionShellToolParam
-    include Tool
-    include ToolSearchOutputTool
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalFunctionShellToolParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalFunctionShellToolParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalFunctionShellToolParamMetadata::DECODERS
-
-    # @return [FunctionShellToolParamType] The type of the shell tool. Always `shell`.
-    attr_reader :type
-    # @return [FunctionShellToolParamEnvironment] Optional API value serialized in the `environment` wire field.
-    attr_reader :environment
-    # @return [Array_of_CallableToolAllowedCaller] The tool invocation context(s).
-    attr_reader :allowed_callers
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the FunctionShellToolParamType SDK namespace.
-  module FunctionShellToolParamType
-    SHELL = 'shell'
-    VALUES = ['shell'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('FunctionShellToolParamType', 'enum', "Unknown FunctionShellToolParamType: #{value}")
-    end
-  end
-
-  # Defines the FunctionShellToolParamEnvironment SDK namespace.
-  module FunctionShellToolParamEnvironment
-    DISCRIMINATOR_MAPPING = {
-      'container_auto' => -> { ContainerAutoParam },
-      'local' => -> { LocalEnvironmentParam },
-      'container_reference' => -> { ContainerReferenceParam }
-    }.freeze
-
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
-
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
-
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
-
-      raise SdkValidationError.new('FunctionShellToolParamEnvironment', 'variant', "Unknown FunctionShellToolParamEnvironment discriminator: #{hash['type'].inspect}")
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalFunctionToolMetadata
-    FIELDS = {
-      type: 'type',
-      name: 'name',
-      async: 'async',
-      description: 'description',
-      parameters: 'parameters',
-      output_schema: 'output_schema',
-      strict: 'strict',
-      defer_loading: 'defer_loading',
-      allowed_callers: 'allowed_callers'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      name
-      parameters
-      strict
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::FunctionToolType.from_value(value)
-      end,
-      allowed_callers: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::CallableToolAllowedCaller.from_value(item) }
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      parameters
-      strict
-    ].freeze
-  end
-
-  # API model for FunctionTool.
-  # Defines a function in your own code the model can choose to call. Learn more about function calling.
-  class FunctionTool
-    include Tool
-    include ToolSearchOutputTool
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalFunctionToolMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalFunctionToolMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalFunctionToolMetadata::DECODERS
-
-    # @return [FunctionToolType] The type of the function tool. Always `function`.
-    attr_reader :type
-    # @return [String] The name of the function to call.
-    attr_reader :name
-    # @return [Boolean] Optional `boolean` value serialized in the `async` wire field.
-    attr_reader :async
-    # @return [String] Optional `string` value serialized in the `description` wire field.
-    attr_reader :description
-    # @return [Hash] A JSON schema object describing the parameters of the function.
-    attr_reader :parameters
-    # @return [Hash] A JSON schema object describing the JSON value encoded in string outputs for this function.
-    attr_reader :output_schema
-    # @return [Boolean] Required `boolean` value serialized in the `strict` wire field.
-    attr_reader :strict
-    # @return [Boolean] Whether this function is deferred and loaded via tool search.
-    attr_reader :defer_loading
-    # @return [Array_of_CallableToolAllowedCaller] The tool invocation context(s).
-    attr_reader :allowed_callers
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalFunctionToolMetadata::NULLABLE_FIELDS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the FunctionToolType SDK namespace.
-  module FunctionToolType
-    FUNCTION = 'function'
-    VALUES = ['function'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('FunctionToolType', 'enum', "Unknown FunctionToolType: #{value}")
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalFunctionToolCallMetadata
-    FIELDS = {
-      id: 'id',
-      type: 'type',
-      call_id: 'call_id',
-      caller: 'caller',
-      namespace: 'namespace',
-      name: 'name',
-      arguments: 'arguments',
-      status: 'status',
-      async: 'async'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      call_id
-      name
-      arguments
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::FunctionToolCallType.from_value(value)
-      end,
-      caller: lambda do |value|
-        ::OctridevOpenai::ToolCallCaller.from_hash(value)
-      end,
-      status: lambda do |value|
-        ::OctridevOpenai::FunctionToolCallStatus.from_value(value)
-      end
-    }.freeze
-  end
-
-  # API model for FunctionToolCall.
-  # A tool call to run a function. See the function calling guide for more information.
-  class FunctionToolCall
-    include Item
-    include OutputItem
-    include ItemField
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalFunctionToolCallMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalFunctionToolCallMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalFunctionToolCallMetadata::DECODERS
-
-    # @return [String] The unique ID of the function tool call.
-    attr_reader :id
-    # @return [FunctionToolCallType] The type of the function tool call. Always `function_call`.
-    attr_reader :type
-    # @return [String] The unique ID of the function tool call generated by the model.
-    attr_reader :call_id
-    # @return [ToolCallCaller] Optional API value serialized in the `caller` wire field.
-    attr_reader :caller
-    # @return [String] The namespace of the function to run.
-    attr_reader :namespace
-    # @return [String] The name of the function to run.
-    attr_reader :name
-    # @return [String] A JSON string of the arguments to pass to the function.
-    attr_reader :arguments
-    # @return [FunctionToolCallStatus] The status of the item. One of `in_progress`, `completed`, or `incomplete`. Populated when items are returned via API.
-    attr_reader :status
-    # @return [Boolean] Whether the function tool call runs asynchronously.
-    attr_reader :async
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the FunctionToolCallStatus SDK namespace.
-  module FunctionToolCallStatus
-    IN_PROGRESS = 'in_progress'
-    COMPLETED = 'completed'
-    INCOMPLETE = 'incomplete'
-    VALUES = %w[in_progress completed incomplete].freeze
-    def self.from_value(value)
-      value
-    end
-  end
-
-  # Defines the FunctionToolCallType SDK namespace.
-  module FunctionToolCallType
-    FUNCTION_CALL = 'function_call'
-    VALUES = ['function_call'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('FunctionToolCallType', 'enum', "Unknown FunctionToolCallType: #{value}")
-    end
-  end
+end
 end

@@ -5,246 +5,241 @@
 
 # responses_beta domain models (part 3)
 module OctridevOpenai
-  # API model for BetaSummaryTextContent.
-  # A summary text from the model.
-  class BetaSummaryTextContent
-    include BetaAgentMessageContentItem
-    include BetaMessageContentItem
+# API model for BetaSummaryTextContent.
+# A summary text from the model.
+class BetaSummaryTextContent
+  include BetaAgentMessageContentItem
+  include BetaMessageContentItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaSummaryTextContentMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaSummaryTextContentMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaSummaryTextContentMetadata::DECODERS
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaSummaryTextContentMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaSummaryTextContentMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaSummaryTextContentMetadata::DECODERS
+  # @return [BetaSummaryTextContentType] The type of the object. Always `summary_text`.
+  attr_reader :type
+  # @return [String] A summary of the reasoning output from the model so far.
+  attr_reader :text
 
-    # @return [BetaSummaryTextContentType] The type of the object. Always `summary_text`.
-    attr_reader :type
-    # @return [String] A summary of the reasoning output from the model so far.
-    attr_reader :text
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the BetaSummaryTextContentType SDK namespace.
-  module BetaSummaryTextContentType
-    SUMMARY_TEXT = 'summary_text'
-    VALUES = ['summary_text'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('BetaSummaryTextContentType', 'enum', "Unknown BetaSummaryTextContentType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the BetaToolsArray SDK value decoder.
-  module BetaToolsArray
-    def self.from_hash(value)
-      return nil if value.nil?
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      value&.map { |item| ::OctridevOpenai::BetaTool.from_hash(item) }
-    end
+# Defines the BetaSummaryTextContentType SDK namespace.
+module BetaSummaryTextContentType
+  SUMMARY_TEXT = 'summary_text'
+  VALUES = ['summary_text'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('BetaSummaryTextContentType', 'enum', "Unknown BetaSummaryTextContentType: #{value}")
+  end
+end
+
+# Defines the BetaToolsArray SDK value decoder.
+module BetaToolsArray
+  def self.from_hash(value)
+    return nil if value.nil?
+    value&.map { |item| ::OctridevOpenai::BetaTool.from_hash(item) }
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaTopLogProbMetadata
+  FIELDS = {
+    token: "token",
+    logprob: "logprob",
+    bytes: "bytes",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    token
+    logprob
+    bytes
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for BetaTopLogProb.
+# The top log probability of a token.
+class BetaTopLogProb
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaTopLogProbMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaTopLogProbMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaTopLogProbMetadata::DECODERS
+
+  # @return [String] Required `string` value serialized in the `token` wire field.
+  attr_reader :token
+  # @return [Float] Required `number` value serialized in the `logprob` wire field.
+  attr_reader :logprob
+  # @return [Array_of_Integer] Required array value serialized in the `bytes` wire field.
+  attr_reader :bytes
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaTopLogProbMetadata
-    FIELDS = {
-      token: 'token',
-      logprob: 'logprob',
-      bytes: 'bytes'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      token
-      logprob
-      bytes
-    ].freeze
-    DECODERS = {}.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for BetaTopLogProb.
-  # The top log probability of a token.
-  class BetaTopLogProb
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaTopLogProbMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaTopLogProbMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaTopLogProbMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] Required `string` value serialized in the `token` wire field.
-    attr_reader :token
-    # @return [Float] Required `number` value serialized in the `logprob` wire field.
-    attr_reader :logprob
-    # @return [Array_of_Integer] Required array value serialized in the `bytes` wire field.
-    attr_reader :bytes
+# Defines the BetaTruncationEnum SDK namespace.
+module BetaTruncationEnum
+  AUTO = 'auto'
+  DISABLED = 'disabled'
+  VALUES = ['auto', 'disabled'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalBetaTypeParamMetadata
+  FIELDS = {
+    type: "type",
+    text: "text",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    text
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::BetaTypeParamType.from_value(value)
+    end,
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for BetaTypeParam.
+# An action to type in text.
+class BetaTypeParam
+  include BetaComputerAction
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaTypeParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaTypeParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaTypeParamMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [BetaTypeParamType] Specifies the event type. For a type action, this property is always set to `type`.
+  attr_reader :type
+  # @return [String] The text to type.
+  attr_reader :text
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the BetaTruncationEnum SDK namespace.
-  module BetaTruncationEnum
-    AUTO = 'auto'
-    DISABLED = 'disabled'
-    VALUES = %w[auto disabled].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaTypeParamMetadata
-    FIELDS = {
-      type: 'type',
-      text: 'text'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      text
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::BetaTypeParamType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the BetaTypeParamType SDK namespace.
+module BetaTypeParamType
+  TYPE = 'type'
+  VALUES = ['type'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('BetaTypeParamType', 'enum', "Unknown BetaTypeParamType: #{value}")
+  end
+end
+
+# Defines the BetaVectorStoreFileAttributes SDK value decoder.
+module BetaVectorStoreFileAttributes
+  def self.from_hash(value)
+    return nil if value.nil?
+    value&.transform_values { |item| item }
+  end
+end
+
+# Defines the BetaVerbosity SDK namespace.
+module BetaVerbosity
+  def self.from_hash(hash)
+    return BetaVerbosityVariant0.from_value(hash) if hash.is_a?(::String)
+    hash
+  end
+end
+
+# Defines the BetaVerbosityVariant0 SDK namespace.
+module BetaVerbosityVariant0
+  LOW = 'low'
+  MEDIUM = 'medium'
+  HIGH = 'high'
+  VALUES = ['low', 'medium', 'high'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaWaitParamMetadata
+  FIELDS = {
+    type: "type",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::BetaWaitParamType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaWaitParam.
+# A wait action.
+class BetaWaitParam
+  include BetaComputerAction
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaWaitParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaWaitParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaWaitParamMetadata::DECODERS
+
+  # @return [BetaWaitParamType] Specifies the event type. For a wait action, this property is always set to `wait`.
+  attr_reader :type
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BetaTypeParam.
-  # An action to type in text.
-  class BetaTypeParam
-    include BetaComputerAction
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaTypeParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaTypeParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaTypeParamMetadata::DECODERS
-
-    # @return [BetaTypeParamType] Specifies the event type. For a type action, this property is always set to `type`.
-    attr_reader :type
-    # @return [String] The text to type.
-    attr_reader :text
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the BetaTypeParamType SDK namespace.
-  module BetaTypeParamType
-    TYPE = 'type'
-    VALUES = ['type'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('BetaTypeParamType', 'enum', "Unknown BetaTypeParamType: #{value}")
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the BetaVectorStoreFileAttributes SDK value decoder.
-  module BetaVectorStoreFileAttributes
-    def self.from_hash(value)
-      return nil if value.nil?
+# Defines the BetaWaitParamType SDK namespace.
+module BetaWaitParamType
+  WAIT = 'wait'
+  VALUES = ['wait'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-      value&.transform_values { |item| item }
-    end
+    raise SdkValidationError.new('BetaWaitParamType', 'enum', "Unknown BetaWaitParamType: #{value}")
   end
-
-  # Defines the BetaVerbosity SDK namespace.
-  module BetaVerbosity
-    def self.from_hash(hash)
-      return BetaVerbosityVariant0.from_value(hash) if hash.is_a?(::String)
-
-      hash
-    end
-  end
-
-  # Defines the BetaVerbosityVariant0 SDK namespace.
-  module BetaVerbosityVariant0
-    LOW = 'low'
-    MEDIUM = 'medium'
-    HIGH = 'high'
-    VALUES = %w[low medium high].freeze
-    def self.from_value(value)
-      value
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalBetaWaitParamMetadata
-    FIELDS = {
-      type: 'type'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::BetaWaitParamType.from_value(value)
-      end
-    }.freeze
-  end
-
-  # API model for BetaWaitParam.
-  # A wait action.
-  class BetaWaitParam
-    include BetaComputerAction
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaWaitParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaWaitParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaWaitParamMetadata::DECODERS
-
-    # @return [BetaWaitParamType] Specifies the event type. For a wait action, this property is always set to `wait`.
-    attr_reader :type
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the BetaWaitParamType SDK namespace.
-  module BetaWaitParamType
-    WAIT = 'wait'
-    VALUES = ['wait'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('BetaWaitParamType', 'enum', "Unknown BetaWaitParamType: #{value}")
-    end
-  end
+end
 end

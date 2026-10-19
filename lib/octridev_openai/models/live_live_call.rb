@@ -5,211 +5,212 @@
 
 # live_live_call domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalLiveCallAcceptRequestMetadata
-    FIELDS = {
-      session: 'session'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      session
-    ].freeze
-    DECODERS = {
-      session: lambda do |value|
-        ::OctridevOpenai::LiveCallAcceptSession.from_hash(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalLiveCallAcceptRequestMetadata
+  FIELDS = {
+    session: "session",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    session
+  ].freeze
+  DECODERS = {
+    session: lambda do |value|
+      ::OctridevOpenai::LiveCallAcceptSession.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for LiveCallAcceptRequest.
+# Accept an incoming SIP call with Live startup configuration.
+class LiveCallAcceptRequest
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalLiveCallAcceptRequestMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalLiveCallAcceptRequestMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalLiveCallAcceptRequestMetadata::DECODERS
+
+  # @return [LiveCallAcceptSession] Model and startup configuration for the Live session that answers the incoming SIP call.
+  attr_reader :session
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for LiveCallAcceptRequest.
-  # Accept an incoming SIP call with Live startup configuration.
-  class LiveCallAcceptRequest
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalLiveCallAcceptRequestMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalLiveCallAcceptRequestMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalLiveCallAcceptRequestMetadata::DECODERS
-
-    # @return [LiveCallAcceptSession] Model and startup configuration for the Live session that answers the incoming SIP call.
-    attr_reader :session
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalLiveCallAcceptSessionMetadata
-    FIELDS = {
-      model: 'model',
-      instructions: 'instructions',
-      audio: 'audio',
-      delegation: 'delegation',
-      triggers: 'triggers',
-      store: 'store',
-      input: 'input',
-      type: 'type'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      model
-      type
-    ].freeze
-    DECODERS = {
-      model: lambda do |value|
-        ::OctridevOpenai::ModelIdsLive.from_value(value)
-      end,
-      instructions: lambda do |value|
-        ::OctridevOpenai::Instructions.from_value(value)
-      end,
-      audio: lambda do |value|
-        ::OctridevOpenai::LiveMediaSessionAudioParam.from_hash(value)
-      end,
-      delegation: lambda do |value|
-        ::OctridevOpenai::Delegation.from_hash(value)
-      end,
-      triggers: lambda do |value|
-        ::OctridevOpenai::Triggers.from_hash(value)
-      end,
-      store: lambda do |value|
-        ::OctridevOpenai::Store.from_value(value)
-      end,
-      input: lambda do |value|
-        ::OctridevOpenai::Input.from_hash(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::LiveCallAcceptSessionType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalLiveCallAcceptSessionMetadata
+  FIELDS = {
+    model: "model",
+    instructions: "instructions",
+    audio: "audio",
+    delegation: "delegation",
+    triggers: "triggers",
+    store: "store",
+    input: "input",
+    type: "type",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    model
+    type
+  ].freeze
+  DECODERS = {
+    model: lambda do |value|
+      ::OctridevOpenai::ModelIdsLive.from_value(value)
+    end,
+    instructions: lambda do |value|
+      ::OctridevOpenai::Instructions.from_value(value)
+    end,
+    audio: lambda do |value|
+      ::OctridevOpenai::LiveMediaSessionAudioParam.from_hash(value)
+    end,
+    delegation: lambda do |value|
+      ::OctridevOpenai::Delegation.from_hash(value)
+    end,
+    triggers: lambda do |value|
+      ::OctridevOpenai::Triggers.from_hash(value)
+    end,
+    store: lambda do |value|
+      ::OctridevOpenai::Store.from_value(value)
+    end,
+    input: lambda do |value|
+      ::OctridevOpenai::Input.from_hash(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::LiveCallAcceptSessionType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for LiveCallAcceptSession.
+# Startup configuration for accepting an incoming Live SIP call. Follow the Live prompting guide when writing frontend and backend instructions.
+class LiveCallAcceptSession
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalLiveCallAcceptSessionMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalLiveCallAcceptSessionMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalLiveCallAcceptSessionMetadata::DECODERS
+
+  # @return [ModelIdsLive] The Live model to use for the accepted call.
+  attr_reader :model
+  # @return [Instructions] Optional `string` value serialized in the `instructions` wire field.
+  attr_reader :instructions
+  # @return [LiveMediaSessionAudioParam] Startup audio output configuration. SIP negotiates the media format; audio.format is only accepted for primary WebSockets. Voice cannot change after startup.
+  attr_reader :audio
+  # @return [Delegation] Who handles tasks delegated by the Live model. Omitted or null selects your application; use `responses` or `decisions` to delegate to the corresponding API.
+  attr_reader :delegation
+  # @return [Triggers] At most one Decisions trigger per transcript event type. Triggers run independently of delegation. On update, omit triggers to keep the current configuration, send a list to replace it, or send an empty list to disable triggers.
+  attr_reader :triggers
+  # @return [Store] Whether to store the session for later forking and recording download. Defaults to false for new sessions.
+  attr_reader :store
+  # @return [Input] Ordered text-only history supplied before startup. Supports developer, user, and assistant messages with one text part each; at most 128 messages and a configured rendered-token limit (8,192 by default).
+  attr_reader :input
+  # @return [LiveCallAcceptSessionType] The session type. Always `live`.
+  attr_reader :type
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for LiveCallAcceptSession.
-  # Startup configuration for accepting an incoming Live SIP call. Follow the Live prompting guide when writing frontend and backend instructions.
-  class LiveCallAcceptSession
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalLiveCallAcceptSessionMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalLiveCallAcceptSessionMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalLiveCallAcceptSessionMetadata::DECODERS
-
-    # @return [ModelIdsLive] The Live model to use for the accepted call.
-    attr_reader :model
-    # @return [Instructions] Optional `string` value serialized in the `instructions` wire field.
-    attr_reader :instructions
-    # @return [LiveMediaSessionAudioParam] Startup audio output configuration. SIP negotiates the media format; audio.format is only accepted for primary WebSockets. Voice cannot change after startup.
-    attr_reader :audio
-    # @return [Delegation] Who handles tasks delegated by the Live model. Omitted or null selects your application; use `responses` or `decisions` to delegate to the corresponding API.
-    attr_reader :delegation
-    # @return [Triggers] At most one Decisions trigger per transcript event type. Triggers run independently of delegation. On update, omit triggers to keep the current configuration, send a list to replace it, or send an empty list to disable triggers.
-    attr_reader :triggers
-    # @return [Store] Whether to store the session for later forking and recording download. Defaults to false for new sessions.
-    attr_reader :store
-    # @return [Input] Ordered text-only history supplied before startup. Supports developer, user, and assistant messages with one text part each; at most 128 messages and a configured rendered-token limit (8,192 by default).
-    attr_reader :input
-    # @return [LiveCallAcceptSessionType] The session type. Always `live`.
-    attr_reader :type
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the LiveCallAcceptSessionType SDK namespace.
-  module LiveCallAcceptSessionType
-    LIVE = 'live'
-    VALUES = ['live'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the LiveCallAcceptSessionType SDK namespace.
+module LiveCallAcceptSessionType
+  LIVE = 'live'
+  VALUES = ['live'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalLiveCallReferRequestMetadata
+  FIELDS = {
+    target_uri: "target_uri",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    target_uri
+  ].freeze
+  DECODERS = {
+    target_uri: lambda do |value|
+      ::OctridevOpenai::TargetUri.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for LiveCallReferRequest.
+# Parameters used to transfer a Live SIP call to another destination.
+class LiveCallReferRequest
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalLiveCallReferRequestMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalLiveCallReferRequestMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalLiveCallReferRequestMetadata::DECODERS
+
+  # @return [TargetUri] Nonblank URI for the SIP Refer-To header, such as tel:+14155550123 or sip:agent@example.com.
+  attr_reader :target_uri
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalLiveCallReferRequestMetadata
-    FIELDS = {
-      target_uri: 'target_uri'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      target_uri
-    ].freeze
-    DECODERS = {
-      target_uri: lambda do |value|
-        ::OctridevOpenai::TargetUri.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for LiveCallReferRequest.
-  # Parameters used to transfer a Live SIP call to another destination.
-  class LiveCallReferRequest
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalLiveCallReferRequestMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalLiveCallReferRequestMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalLiveCallReferRequestMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [TargetUri] Nonblank URI for the SIP Refer-To header, such as tel:+14155550123 or sip:agent@example.com.
-    attr_reader :target_uri
+# Internal model hydration metadata.
+class SdkInternalLiveCallRejectRequestMetadata
+  FIELDS = {
+    status_code: "status_code",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    status_code
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for LiveCallRejectRequest.
+# Parameters used to reject an incoming Live SIP call.
+class LiveCallRejectRequest
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalLiveCallRejectRequestMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalLiveCallRejectRequestMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalLiveCallRejectRequestMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [Integer] SIP rejection status sent to the caller. This field is required.
+  attr_reader :status_code
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalLiveCallRejectRequestMetadata
-    FIELDS = {
-      status_code: 'status_code'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      status_code
-    ].freeze
-    DECODERS = {}.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for LiveCallRejectRequest.
-  # Parameters used to reject an incoming Live SIP call.
-  class LiveCallRejectRequest
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalLiveCallRejectRequestMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalLiveCallRejectRequestMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalLiveCallRejectRequestMetadata::DECODERS
-
-    # @return [Integer] SIP rejection status sent to the caller. This field is required.
-    attr_reader :status_code
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 end

@@ -5,118 +5,119 @@
 
 # webhook_eval_run_succeeded domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalWebhookEvalRunSucceededDataMetadata
-    FIELDS = {
-      id: 'id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-    ].freeze
-    DECODERS = {}.freeze
+# Internal model hydration metadata.
+class SdkInternalWebhookEvalRunSucceededDataMetadata
+  FIELDS = {
+    id: "id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for WebhookEvalRunSucceededData.
+# Event data payload.
+class WebhookEvalRunSucceededData
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalWebhookEvalRunSucceededDataMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalWebhookEvalRunSucceededDataMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalWebhookEvalRunSucceededDataMetadata::DECODERS
+
+  # @return [String] The unique ID of the eval run.
+  attr_reader :id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for WebhookEvalRunSucceededData.
-  # Event data payload.
-  class WebhookEvalRunSucceededData
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalWebhookEvalRunSucceededDataMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalWebhookEvalRunSucceededDataMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalWebhookEvalRunSucceededDataMetadata::DECODERS
-
-    # @return [String] The unique ID of the eval run.
-    attr_reader :id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalWebhookEvalRunSucceededMetadata
-    FIELDS = {
-      created_at: 'created_at',
-      id: 'id',
-      data: 'data',
-      object: 'object',
-      type: 'type'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      created_at
-      id
-      data
-      type
-    ].freeze
-    DECODERS = {
-      data: lambda do |value|
-        ::OctridevOpenai::WebhookEvalRunSucceededData.from_hash(value)
-      end,
-      object: lambda do |value|
-        ::OctridevOpenai::WebhookEvalRunSucceededObject.from_value(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::WebhookEvalRunSucceededType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalWebhookEvalRunSucceededMetadata
+  FIELDS = {
+    created_at: "created_at",
+    id: "id",
+    data: "data",
+    object: "object",
+    type: "type",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    created_at
+    id
+    data
+    type
+  ].freeze
+  DECODERS = {
+    data: lambda do |value|
+      ::OctridevOpenai::WebhookEvalRunSucceededData.from_hash(value)
+    end,
+    object: lambda do |value|
+      ::OctridevOpenai::WebhookEvalRunSucceededObject.from_value(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::WebhookEvalRunSucceededType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for WebhookEvalRunSucceeded.
+# Sent when an eval run has succeeded.
+class WebhookEvalRunSucceeded
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalWebhookEvalRunSucceededMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalWebhookEvalRunSucceededMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalWebhookEvalRunSucceededMetadata::DECODERS
+
+  # @return [Integer] The Unix timestamp (in seconds) of when the eval run succeeded.
+  attr_reader :created_at
+  # @return [String] The unique ID of the event.
+  attr_reader :id
+  # @return [WebhookEvalRunSucceededData] Event data payload.
+  attr_reader :data
+  # @return [WebhookEvalRunSucceededObject] The object of the event. Always `event`.
+  attr_reader :object
+  # @return [WebhookEvalRunSucceededType] The type of the event. Always `eval.run.succeeded`.
+  attr_reader :type
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for WebhookEvalRunSucceeded.
-  # Sent when an eval run has succeeded.
-  class WebhookEvalRunSucceeded
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalWebhookEvalRunSucceededMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalWebhookEvalRunSucceededMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalWebhookEvalRunSucceededMetadata::DECODERS
-
-    # @return [Integer] The Unix timestamp (in seconds) of when the eval run succeeded.
-    attr_reader :created_at
-    # @return [String] The unique ID of the event.
-    attr_reader :id
-    # @return [WebhookEvalRunSucceededData] Event data payload.
-    attr_reader :data
-    # @return [WebhookEvalRunSucceededObject] The object of the event. Always `event`.
-    attr_reader :object
-    # @return [WebhookEvalRunSucceededType] The type of the event. Always `eval.run.succeeded`.
-    attr_reader :type
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the WebhookEvalRunSucceededObject SDK namespace.
-  module WebhookEvalRunSucceededObject
-    EVENT = 'event'
-    VALUES = ['event'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the WebhookEvalRunSucceededType SDK namespace.
-  module WebhookEvalRunSucceededType
-    EVAL_RUN_SUCCEEDED = 'eval.run.succeeded'
-    VALUES = ['eval.run.succeeded'].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the WebhookEvalRunSucceededObject SDK namespace.
+module WebhookEvalRunSucceededObject
+  EVENT = 'event'
+  VALUES = ['event'].freeze
+  def self.from_value(value)
+    value
   end
+end
+
+# Defines the WebhookEvalRunSucceededType SDK namespace.
+module WebhookEvalRunSucceededType
+  EVAL_RUN_SUCCEEDED = 'eval.run.succeeded'
+  VALUES = ['eval.run.succeeded'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 end

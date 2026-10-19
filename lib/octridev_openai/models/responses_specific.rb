@@ -5,162 +5,159 @@
 
 # responses_specific domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalSpecificApplyPatchParamMetadata
-    FIELDS = {
-      type: 'type'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::SpecificApplyPatchParamType.from_value(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalSpecificApplyPatchParamMetadata
+  FIELDS = {
+    type: "type",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::SpecificApplyPatchParamType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for SpecificApplyPatchParam.
+# Forces the model to call the apply_patch tool when executing a tool call.
+class SpecificApplyPatchParam
+  include ToolChoiceParam
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalSpecificApplyPatchParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalSpecificApplyPatchParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalSpecificApplyPatchParamMetadata::DECODERS
+
+  # @return [SpecificApplyPatchParamType] The tool to call. Always `apply_patch`.
+  attr_reader :type
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for SpecificApplyPatchParam.
-  # Forces the model to call the apply_patch tool when executing a tool call.
-  class SpecificApplyPatchParam
-    include ToolChoiceParam
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalSpecificApplyPatchParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalSpecificApplyPatchParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalSpecificApplyPatchParamMetadata::DECODERS
-
-    # @return [SpecificApplyPatchParamType] The tool to call. Always `apply_patch`.
-    attr_reader :type
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the SpecificApplyPatchParamType SDK namespace.
-  module SpecificApplyPatchParamType
-    APPLY_PATCH = 'apply_patch'
-    VALUES = ['apply_patch'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('SpecificApplyPatchParamType', 'enum', "Unknown SpecificApplyPatchParamType: #{value}")
-    end
+# Defines the SpecificApplyPatchParamType SDK namespace.
+module SpecificApplyPatchParamType
+  APPLY_PATCH = 'apply_patch'
+  VALUES = ['apply_patch'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('SpecificApplyPatchParamType', 'enum', "Unknown SpecificApplyPatchParamType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalSpecificFunctionShellParamMetadata
+  FIELDS = {
+    type: "type",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::SpecificFunctionShellParamType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for SpecificFunctionShellParam.
+# Forces the model to call the shell tool when a tool call is required.
+class SpecificFunctionShellParam
+  include ToolChoiceParam
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalSpecificFunctionShellParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalSpecificFunctionShellParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalSpecificFunctionShellParamMetadata::DECODERS
+
+  # @return [SpecificFunctionShellParamType] The tool to call. Always `shell`.
+  attr_reader :type
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalSpecificFunctionShellParamMetadata
-    FIELDS = {
-      type: 'type'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::SpecificFunctionShellParamType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for SpecificFunctionShellParam.
-  # Forces the model to call the shell tool when a tool call is required.
-  class SpecificFunctionShellParam
-    include ToolChoiceParam
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalSpecificFunctionShellParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalSpecificFunctionShellParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalSpecificFunctionShellParamMetadata::DECODERS
+# Defines the SpecificFunctionShellParamType SDK namespace.
+module SpecificFunctionShellParamType
+  SHELL = 'shell'
+  VALUES = ['shell'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    # @return [SpecificFunctionShellParamType] The tool to call. Always `shell`.
-    attr_reader :type
+    raise SdkValidationError.new('SpecificFunctionShellParamType', 'enum', "Unknown SpecificFunctionShellParamType: #{value}")
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalSpecificProgrammaticToolCallingParamMetadata
+  FIELDS = {
+    type: "type",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::SpecificProgrammaticToolCallingParamType.from_value(value)
+    end,
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for SpecificProgrammaticToolCallingParam.
+# Typed representation of the `SpecificProgrammaticToolCallingParam` API schema.
+class SpecificProgrammaticToolCallingParam
+  include ToolChoiceParam
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalSpecificProgrammaticToolCallingParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalSpecificProgrammaticToolCallingParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalSpecificProgrammaticToolCallingParamMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [SpecificProgrammaticToolCallingParamType] The tool to call. Always `programmatic_tool_calling`.
+  attr_reader :type
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the SpecificFunctionShellParamType SDK namespace.
-  module SpecificFunctionShellParamType
-    SHELL = 'shell'
-    VALUES = ['shell'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('SpecificFunctionShellParamType', 'enum', "Unknown SpecificFunctionShellParamType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalSpecificProgrammaticToolCallingParamMetadata
-    FIELDS = {
-      type: 'type'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::SpecificProgrammaticToolCallingParamType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # API model for SpecificProgrammaticToolCallingParam.
-  # Typed representation of the `SpecificProgrammaticToolCallingParam` API schema.
-  class SpecificProgrammaticToolCallingParam
-    include ToolChoiceParam
+# Defines the SpecificProgrammaticToolCallingParamType SDK namespace.
+module SpecificProgrammaticToolCallingParamType
+  PROGRAMMATIC_TOOL_CALLING = 'programmatic_tool_calling'
+  VALUES = ['programmatic_tool_calling'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalSpecificProgrammaticToolCallingParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalSpecificProgrammaticToolCallingParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalSpecificProgrammaticToolCallingParamMetadata::DECODERS
-
-    # @return [SpecificProgrammaticToolCallingParamType] The tool to call. Always `programmatic_tool_calling`.
-    attr_reader :type
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+    raise SdkValidationError.new('SpecificProgrammaticToolCallingParamType', 'enum', "Unknown SpecificProgrammaticToolCallingParamType: #{value}")
   end
-
-  # Defines the SpecificProgrammaticToolCallingParamType SDK namespace.
-  module SpecificProgrammaticToolCallingParamType
-    PROGRAMMATIC_TOOL_CALLING = 'programmatic_tool_calling'
-    VALUES = ['programmatic_tool_calling'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('SpecificProgrammaticToolCallingParamType', 'enum', "Unknown SpecificProgrammaticToolCallingParamType: #{value}")
-    end
-  end
+end
 end

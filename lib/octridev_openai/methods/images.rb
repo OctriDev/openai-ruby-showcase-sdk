@@ -23,17 +23,18 @@ module OctridevOpenai
         content_type: NOT_GIVEN,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
-          '/images/edits',
+          "/images/edits",
           config: config,
-          body: SdkClient.form_value(body, { CreateImageEditRequest => %w[image mask] }),
+          body: SdkClient.form_value(body, { CreateImageEditRequest => ['image', 'mask'] }),
           content_type: SdkClient.body_content_type(content_type, body, 'application/json'),
           return_type: ::OctridevOpenai::ImagesResponse,
           decoder: :json,
           operation_id: 'create_image_edit',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::ErrorResponse, '410' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::ErrorResponse, '410' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -52,28 +53,25 @@ module OctridevOpenai
         request_options: nil,
         &block
       )
-        unless block
-          return enum_for(
-            __method__,
-            config: config,
-            body: body,
-            content_type: content_type,
-            request_options: request_options
-          )
-        end
-        SdkClient.stream(
-          'POST', '/images/edits',
+    return enum_for(
+          __method__,
           config: config,
-          body: SdkClient.form_value(body, { CreateImageEditRequest => %w[image mask] }),
+          body: body,
+          content_type: content_type,
+          request_options: request_options,
+        ) unless block
+        SdkClient.stream(
+          'POST', "/images/edits",
+          config: config,
+          body: SdkClient.form_value(body, { CreateImageEditRequest => ['image', 'mask'] }),
           content_type: SdkClient.body_content_type(content_type, body, 'application/json'),
           operation_id: 'create_image_edit_stream',
           stream_format: :sse,
-          stream_media_type: 'text/event-stream',
+          stream_media_type: "text/event-stream",
           request_options: request_options,
           errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::ErrorResponse, '410' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
         ).each do |ev|
           break if ev.data == '[DONE]'
-
           decoded = JSON.parse(ev.data)
           block.call(SdkClient.decode_event(decoded, ::OctridevOpenai::ImageEditStreamEvent))
         end
@@ -162,6 +160,7 @@ module OctridevOpenai
         user: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.if_given(count) { Validation.validate_range('n', count, min: 1, max: 10) }
 
         Validation.if_given(safety_identifier) do
@@ -170,7 +169,7 @@ module OctridevOpenai
 
         SdkClient.request(
           'POST',
-          '/images/generations',
+          "/images/generations",
           config: config,
           body: {
             'prompt' => prompt,
@@ -187,13 +186,13 @@ module OctridevOpenai
             'background' => background,
             'style' => style,
             'safety_identifier' => safety_identifier,
-            'user' => user
+            'user' => user,
           },
           return_type: ::OctridevOpenai::ImagesResponse,
           decoder: :json,
           operation_id: 'create_image',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::ErrorResponse, '410' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::ErrorResponse, '410' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -281,30 +280,28 @@ module OctridevOpenai
         request_options: nil,
         &block
       )
-        unless block
-          return enum_for(
-            __method__,
-            config: config,
-            prompt: prompt,
-            model: model,
-            stream: stream,
-            count: count,
-            quality: quality,
-            response_format: response_format,
-            output_format: output_format,
-            output_compression: output_compression,
-            partial_images: partial_images,
-            size: size,
-            moderation: moderation,
-            background: background,
-            style: style,
-            safety_identifier: safety_identifier,
-            user: user,
-            request_options: request_options
-          )
-        end
+    return enum_for(
+          __method__,
+          config: config,
+          prompt: prompt,
+          model: model,
+          stream: stream,
+          count: count,
+          quality: quality,
+          response_format: response_format,
+          output_format: output_format,
+          output_compression: output_compression,
+          partial_images: partial_images,
+          size: size,
+          moderation: moderation,
+          background: background,
+          style: style,
+          safety_identifier: safety_identifier,
+          user: user,
+          request_options: request_options,
+        ) unless block
         SdkClient.stream(
-          'POST', '/images/generations',
+          'POST', "/images/generations",
           config: config,
           body: {
             'prompt' => prompt,
@@ -321,17 +318,16 @@ module OctridevOpenai
             'background' => background,
             'style' => style,
             'safety_identifier' => safety_identifier,
-            'user' => user
+            'user' => user,
           },
           content_type: 'application/json',
           operation_id: 'create_image_stream',
           stream_format: :sse,
-          stream_media_type: 'text/event-stream',
+          stream_media_type: "text/event-stream",
           request_options: request_options,
           errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::ErrorResponse, '410' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
         ).each do |ev|
           break if ev.data == '[DONE]'
-
           decoded = JSON.parse(ev.data)
           block.call(SdkClient.decode_event(decoded, ::OctridevOpenai::ImageGenStreamEvent))
         end
@@ -367,11 +363,12 @@ module OctridevOpenai
         user: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.if_given(count) { Validation.validate_range('n', count, min: 1, max: 10) }
 
         SdkClient.request(
           'POST',
-          '/images/variations',
+          "/images/variations",
           config: config,
           body: {
             'image' => SdkClient.upload(image, 'image'),
@@ -379,14 +376,14 @@ module OctridevOpenai
             'n' => count,
             'response_format' => response_format,
             'size' => size,
-            'user' => user
+            'user' => user,
           },
           content_type: 'multipart/form-data',
           return_type: ::OctridevOpenai::ImagesResponse,
           decoder: :json,
           operation_id: 'create_image_variation',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::ErrorResponse, '410' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::ErrorResponse, '410' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
     end

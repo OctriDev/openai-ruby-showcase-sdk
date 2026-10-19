@@ -5,108 +5,106 @@
 
 # beta_user_message domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalBetaUserMessageItemParamMetadata
-    FIELDS = {
-      agent: 'agent',
-      id: 'id',
-      type: 'type',
-      role: 'role',
-      content: 'content',
-      status: 'status'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      role
-      content
-    ].freeze
-    DECODERS = {
-      agent: lambda do |value|
-        ::OctridevOpenai::BetaAgentTagParam.from_hash(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::BetaUserMessageItemParamType.from_value(value)
-      end,
-      role: lambda do |value|
-        ::OctridevOpenai::BetaUserMessageItemParamRole.from_value(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalBetaUserMessageItemParamMetadata
+  FIELDS = {
+    agent: "agent",
+    id: "id",
+    type: "type",
+    role: "role",
+    content: "content",
+    status: "status",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    role
+    content
+  ].freeze
+  DECODERS = {
+    agent: lambda do |value|
+      ::OctridevOpenai::BetaAgentTagParam.from_hash(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::BetaUserMessageItemParamType.from_value(value)
+    end,
+    role: lambda do |value|
+      ::OctridevOpenai::BetaUserMessageItemParamRole.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaUserMessageItemParam.
+# Typed representation of the `BetaUserMessageItemParam` API schema.
+class BetaUserMessageItemParam
+  include BetaResponseSteerInputItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaUserMessageItemParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaUserMessageItemParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaUserMessageItemParamMetadata::DECODERS
+
+  # @return [BetaAgentTagParam] Optional API value serialized in the `agent` wire field.
+  attr_reader :agent
+  # @return [String] Optional `string` value serialized in the `id` wire field.
+  attr_reader :id
+  # @return [BetaUserMessageItemParamType] The item type. Always `message`.
+  attr_reader :type
+  # @return [BetaUserMessageItemParamRole] The message role. Always `user`.
+  attr_reader :role
+  # @return [Object] The message content, as an array of content parts.
+  attr_reader :content
+  # @return [String] Optional `string` value serialized in the `status` wire field.
+  attr_reader :status
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BetaUserMessageItemParam.
-  # Typed representation of the `BetaUserMessageItemParam` API schema.
-  class BetaUserMessageItemParam
-    include BetaResponseSteerInputItem
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaUserMessageItemParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaUserMessageItemParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaUserMessageItemParamMetadata::DECODERS
-
-    # @return [BetaAgentTagParam] Optional API value serialized in the `agent` wire field.
-    attr_reader :agent
-    # @return [String] Optional `string` value serialized in the `id` wire field.
-    attr_reader :id
-    # @return [BetaUserMessageItemParamType] The item type. Always `message`.
-    attr_reader :type
-    # @return [BetaUserMessageItemParamRole] The message role. Always `user`.
-    attr_reader :role
-    # @return [Object] The message content, as an array of content parts.
-    attr_reader :content
-    # @return [String] Optional `string` value serialized in the `status` wire field.
-    attr_reader :status
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the BetaUserMessageItemParamRole SDK namespace.
-  module BetaUserMessageItemParamRole
-    USER = 'user'
-    VALUES = ['user'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the BetaUserMessageItemParamType SDK namespace.
-  module BetaUserMessageItemParamType
-    MESSAGE = 'message'
-    VALUES = ['message'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('BetaUserMessageItemParamType', 'enum', "Unknown BetaUserMessageItemParamType: #{value}")
-    end
+# Defines the BetaUserMessageItemParamRole SDK namespace.
+module BetaUserMessageItemParamRole
+  USER = 'user'
+  VALUES = ['user'].freeze
+  def self.from_value(value)
+    value
   end
+end
 
-  # Defines the BetaUserMessageItemParamContentItem SDK namespace.
-  module BetaUserMessageItemParamContentItem
-    DISCRIMINATOR_MAPPING = {
-      'input_text' => -> { BetaInputTextContentParam },
-      'input_image' => -> { BetaInputImageContentParamAutoParam },
-      'input_file' => -> { BetaInputFileContentParam }
-    }.freeze
+# Defines the BetaUserMessageItemParamType SDK namespace.
+module BetaUserMessageItemParamType
+  MESSAGE = 'message'
+  VALUES = ['message'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
-
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
-
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
-
-      raise SdkValidationError.new('BetaUserMessageItemParamContentItem', 'variant', "Unknown BetaUserMessageItemParamContentItem discriminator: #{hash['type'].inspect}")
-    end
+    raise SdkValidationError.new('BetaUserMessageItemParamType', 'enum', "Unknown BetaUserMessageItemParamType: #{value}")
   end
+end
+
+# Defines the BetaUserMessageItemParamContentItem SDK namespace.
+module BetaUserMessageItemParamContentItem
+  DISCRIMINATOR_MAPPING = {
+    "input_text" => -> { BetaInputTextContentParam },
+    "input_image" => -> { BetaInputImageContentParamAutoParam },
+    "input_file" => -> { BetaInputFileContentParam },
+  }.freeze
+
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
+
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+
+    raise SdkValidationError.new('BetaUserMessageItemParamContentItem', 'variant', "Unknown BetaUserMessageItemParamContentItem discriminator: #{hash["type"].inspect}")
+  end
+end
 end

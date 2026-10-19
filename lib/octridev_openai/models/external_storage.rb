@@ -5,475 +5,470 @@
 
 # external_storage domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalAwsExternalStorageProviderParamsMetadata
-    FIELDS = {
-      type: 'type',
-      bucket: 'bucket',
-      role_arn: 'role_arn'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      bucket
-      role_arn
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::AwsExternalStorageProviderParamsType.from_value(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalAwsExternalStorageProviderParamsMetadata
+  FIELDS = {
+    type: "type",
+    bucket: "bucket",
+    role_arn: "role_arn",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    bucket
+    role_arn
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::AwsExternalStorageProviderParamsType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for AwsExternalStorageProviderParams.
+# Typed representation of the `AwsExternalStorageProviderParams` API schema.
+class AwsExternalStorageProviderParams
+  include CreateExternalStorageBodyProvider
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalAwsExternalStorageProviderParamsMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalAwsExternalStorageProviderParamsMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalAwsExternalStorageProviderParamsMetadata::DECODERS
+
+  # @return [AwsExternalStorageProviderParamsType] Required enumerated value serialized in the `type` wire field.
+  attr_reader :type
+  # @return [String] Required `string` value serialized in the `bucket` wire field.
+  attr_reader :bucket
+  # @return [String] Required `string` value serialized in the `role_arn` wire field.
+  attr_reader :role_arn
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for AwsExternalStorageProviderParams.
-  # Typed representation of the `AwsExternalStorageProviderParams` API schema.
-  class AwsExternalStorageProviderParams
-    include CreateExternalStorageBodyProvider
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalAwsExternalStorageProviderParamsMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalAwsExternalStorageProviderParamsMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalAwsExternalStorageProviderParamsMetadata::DECODERS
-
-    # @return [AwsExternalStorageProviderParamsType] Required enumerated value serialized in the `type` wire field.
-    attr_reader :type
-    # @return [String] Required `string` value serialized in the `bucket` wire field.
-    attr_reader :bucket
-    # @return [String] Required `string` value serialized in the `role_arn` wire field.
-    attr_reader :role_arn
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the AwsExternalStorageProviderParamsType SDK namespace.
-  module AwsExternalStorageProviderParamsType
-    AWS = 'aws'
-    VALUES = ['aws'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('AwsExternalStorageProviderParamsType', 'enum', "Unknown AwsExternalStorageProviderParamsType: #{value}")
-    end
+# Defines the AwsExternalStorageProviderParamsType SDK namespace.
+module AwsExternalStorageProviderParamsType
+  AWS = 'aws'
+  VALUES = ['aws'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('AwsExternalStorageProviderParamsType', 'enum', "Unknown AwsExternalStorageProviderParamsType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalAzureExternalStorageProviderParamsMetadata
+  FIELDS = {
+    type: "type",
+    tenant_id: "tenant_id",
+    subscription_id: "subscription_id",
+    resource_group: "resource_group",
+    account_name: "account_name",
+    container: "container",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    tenant_id
+    subscription_id
+    resource_group
+    account_name
+    container
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::AzureExternalStorageProviderParamsType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for AzureExternalStorageProviderParams.
+# Typed representation of the `AzureExternalStorageProviderParams` API schema.
+class AzureExternalStorageProviderParams
+  include CreateExternalStorageBodyProvider
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalAzureExternalStorageProviderParamsMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalAzureExternalStorageProviderParamsMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalAzureExternalStorageProviderParamsMetadata::DECODERS
+
+  # @return [AzureExternalStorageProviderParamsType] Required enumerated value serialized in the `type` wire field.
+  attr_reader :type
+  # @return [String] Required `string` value serialized in the `tenant_id` wire field.
+  attr_reader :tenant_id
+  # @return [String] Required `string` value serialized in the `subscription_id` wire field.
+  attr_reader :subscription_id
+  # @return [String] Required `string` value serialized in the `resource_group` wire field.
+  attr_reader :resource_group
+  # @return [String] Required `string` value serialized in the `account_name` wire field.
+  attr_reader :account_name
+  # @return [String] Required `string` value serialized in the `container` wire field.
+  attr_reader :container
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalAzureExternalStorageProviderParamsMetadata
-    FIELDS = {
-      type: 'type',
-      tenant_id: 'tenant_id',
-      subscription_id: 'subscription_id',
-      resource_group: 'resource_group',
-      account_name: 'account_name',
-      container: 'container'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      tenant_id
-      subscription_id
-      resource_group
-      account_name
-      container
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::AzureExternalStorageProviderParamsType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for AzureExternalStorageProviderParams.
-  # Typed representation of the `AzureExternalStorageProviderParams` API schema.
-  class AzureExternalStorageProviderParams
-    include CreateExternalStorageBodyProvider
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalAzureExternalStorageProviderParamsMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalAzureExternalStorageProviderParamsMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalAzureExternalStorageProviderParamsMetadata::DECODERS
+# Defines the AzureExternalStorageProviderParamsType SDK namespace.
+module AzureExternalStorageProviderParamsType
+  AZURE = 'azure'
+  VALUES = ['azure'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    # @return [AzureExternalStorageProviderParamsType] Required enumerated value serialized in the `type` wire field.
-    attr_reader :type
-    # @return [String] Required `string` value serialized in the `tenant_id` wire field.
-    attr_reader :tenant_id
-    # @return [String] Required `string` value serialized in the `subscription_id` wire field.
-    attr_reader :subscription_id
-    # @return [String] Required `string` value serialized in the `resource_group` wire field.
-    attr_reader :resource_group
-    # @return [String] Required `string` value serialized in the `account_name` wire field.
-    attr_reader :account_name
-    # @return [String] Required `string` value serialized in the `container` wire field.
-    attr_reader :container
+    raise SdkValidationError.new('AzureExternalStorageProviderParamsType', 'enum', "Unknown AzureExternalStorageProviderParamsType: #{value}")
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalCreateExternalStorageBodyMetadata
+  FIELDS = {
+    project_id: "project_id",
+    provider: "provider",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    project_id
+    provider
+  ].freeze
+  DECODERS = {
+    provider: lambda do |value|
+      ::OctridevOpenai::CreateExternalStorageBodyProvider.from_hash(value)
+    end,
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for CreateExternalStorageBody.
+# Typed representation of the `CreateExternalStorageBody` API schema.
+class CreateExternalStorageBody
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCreateExternalStorageBodyMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCreateExternalStorageBodyMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCreateExternalStorageBodyMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [String] Required `string` value serialized in the `project_id` wire field.
+  attr_reader :project_id
+  # @return [CreateExternalStorageBodyProvider] Required API value serialized in the `provider` wire field.
+  attr_reader :provider
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the AzureExternalStorageProviderParamsType SDK namespace.
-  module AzureExternalStorageProviderParamsType
-    AZURE = 'azure'
-    VALUES = ['azure'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('AzureExternalStorageProviderParamsType', 'enum', "Unknown AzureExternalStorageProviderParamsType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalCreateExternalStorageBodyMetadata
-    FIELDS = {
-      project_id: 'project_id',
-      provider: 'provider'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      project_id
-      provider
-    ].freeze
-    DECODERS = {
-      provider: lambda do |value|
-        ::OctridevOpenai::CreateExternalStorageBodyProvider.from_hash(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the CreateExternalStorageBodyProvider SDK namespace.
+module CreateExternalStorageBodyProvider
+  DISCRIMINATOR_MAPPING = {
+    "aws" => -> { AwsExternalStorageProviderParams },
+    "azure" => -> { AzureExternalStorageProviderParams },
+    "gcp" => -> { GcpExternalStorageProviderParams },
+    "oci" => -> { OciExternalStorageProviderParams },
+  }.freeze
+
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
+
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+
+    raise SdkValidationError.new('CreateExternalStorageBodyProvider', 'variant', "Unknown CreateExternalStorageBodyProvider discriminator: #{hash["type"].inspect}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalExternalStorageDeletedResourceMetadata
+  FIELDS = {
+    object: "object",
+    id: "id",
+    deleted: "deleted",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    id
+    deleted
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::ExternalStorageDeletedResourceObject.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for ExternalStorageDeletedResource.
+# Typed representation of the `ExternalStorageDeletedResource` API schema.
+class ExternalStorageDeletedResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalExternalStorageDeletedResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalExternalStorageDeletedResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalExternalStorageDeletedResourceMetadata::DECODERS
+
+  # @return [ExternalStorageDeletedResourceObject] Required enumerated value serialized in the `object` wire field.
+  attr_reader :object
+  # @return [String] Required `string` value serialized in the `id` wire field.
+  attr_reader :id
+  # @return [Boolean] Required `boolean` value serialized in the `deleted` wire field.
+  attr_reader :deleted
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for CreateExternalStorageBody.
-  # Typed representation of the `CreateExternalStorageBody` API schema.
-  class CreateExternalStorageBody
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCreateExternalStorageBodyMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCreateExternalStorageBodyMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCreateExternalStorageBodyMetadata::DECODERS
-
-    # @return [String] Required `string` value serialized in the `project_id` wire field.
-    attr_reader :project_id
-    # @return [CreateExternalStorageBodyProvider] Required API value serialized in the `provider` wire field.
-    attr_reader :provider
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the CreateExternalStorageBodyProvider SDK namespace.
-  module CreateExternalStorageBodyProvider
-    DISCRIMINATOR_MAPPING = {
-      'aws' => -> { AwsExternalStorageProviderParams },
-      'azure' => -> { AzureExternalStorageProviderParams },
-      'gcp' => -> { GcpExternalStorageProviderParams },
-      'oci' => -> { OciExternalStorageProviderParams }
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
+# Defines the ExternalStorageDeletedResourceObject SDK namespace.
+module ExternalStorageDeletedResourceObject
+  ORGANIZATION_EXTERNAL_STORAGE_DELETED = 'organization.external_storage.deleted'
+  VALUES = ['organization.external_storage.deleted'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
+# Internal model hydration metadata.
+class SdkInternalExternalStorageListResourceMetadata
+  FIELDS = {
+    object: "object",
+    data: "data",
+    first_id: "first_id",
+    last_id: "last_id",
+    has_more: "has_more",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    data
+    first_id
+    last_id
+    has_more
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::ExternalStorageListResourceObject.from_value(value)
+    end,
+    data: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::ExternalStorageResponse.from_hash(item) }
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    first_id
+    last_id
+  ].freeze
+end
 
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+# API model for ExternalStorageListResource.
+# Typed representation of the `ExternalStorageListResource` API schema.
+class ExternalStorageListResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalExternalStorageListResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalExternalStorageListResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalExternalStorageListResourceMetadata::DECODERS
 
-      raise SdkValidationError.new('CreateExternalStorageBodyProvider', 'variant', "Unknown CreateExternalStorageBodyProvider discriminator: #{hash['type'].inspect}")
-    end
+  # @return [ExternalStorageListResourceObject] Required enumerated value serialized in the `object` wire field.
+  attr_reader :object
+  # @return [Array_of_ExternalStorageResponse] Required array value serialized in the `data` wire field.
+  attr_reader :data
+  # @return [String] Required `string` value serialized in the `first_id` wire field.
+  attr_reader :first_id
+  # @return [String] Required `string` value serialized in the `last_id` wire field.
+  attr_reader :last_id
+  # @return [Boolean] Required `boolean` value serialized in the `has_more` wire field.
+  attr_reader :has_more
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalExternalStorageDeletedResourceMetadata
-    FIELDS = {
-      object: 'object',
-      id: 'id',
-      deleted: 'deleted'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      id
-      deleted
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::ExternalStorageDeletedResourceObject.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalExternalStorageListResourceMetadata::NULLABLE_FIELDS)
   end
 
-  # API model for ExternalStorageDeletedResource.
-  # Typed representation of the `ExternalStorageDeletedResource` API schema.
-  class ExternalStorageDeletedResource
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalExternalStorageDeletedResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalExternalStorageDeletedResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalExternalStorageDeletedResourceMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [ExternalStorageDeletedResourceObject] Required enumerated value serialized in the `object` wire field.
-    attr_reader :object
-    # @return [String] Required `string` value serialized in the `id` wire field.
-    attr_reader :id
-    # @return [Boolean] Required `boolean` value serialized in the `deleted` wire field.
-    attr_reader :deleted
+# Defines the ExternalStorageListResourceObject SDK namespace.
+module ExternalStorageListResourceObject
+  LIST = 'list'
+  VALUES = ['list'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Defines the ExternalStorageOrder SDK namespace.
+module ExternalStorageOrder
+  ASC = 'asc'
+  DESC = 'desc'
+  VALUES = ['asc', 'desc'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# Internal model hydration metadata.
+class SdkInternalGcpExternalStorageProviderParamsMetadata
+  FIELDS = {
+    type: "type",
+    bucket: "bucket",
+    workload_identity_project_number: "workload_identity_project_number",
+    workload_identity_pool_id: "workload_identity_pool_id",
+    workload_identity_provider_id: "workload_identity_provider_id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    bucket
+    workload_identity_project_number
+    workload_identity_pool_id
+    workload_identity_provider_id
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::GcpExternalStorageProviderParamsType.from_value(value)
+    end,
+  }.freeze
+end
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+# API model for GcpExternalStorageProviderParams.
+# Typed representation of the `GcpExternalStorageProviderParams` API schema.
+class GcpExternalStorageProviderParams
+  include CreateExternalStorageBodyProvider
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalGcpExternalStorageProviderParamsMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalGcpExternalStorageProviderParamsMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalGcpExternalStorageProviderParamsMetadata::DECODERS
+
+  # @return [GcpExternalStorageProviderParamsType] Required enumerated value serialized in the `type` wire field.
+  attr_reader :type
+  # @return [String] Required `string` value serialized in the `bucket` wire field.
+  attr_reader :bucket
+  # @return [String] Required `string` value serialized in the `workload_identity_project_number` wire field.
+  attr_reader :workload_identity_project_number
+  # @return [String] Required `string` value serialized in the `workload_identity_pool_id` wire field.
+  attr_reader :workload_identity_pool_id
+  # @return [String] Required `string` value serialized in the `workload_identity_provider_id` wire field.
+  attr_reader :workload_identity_provider_id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the ExternalStorageDeletedResourceObject SDK namespace.
-  module ExternalStorageDeletedResourceObject
-    ORGANIZATION_EXTERNAL_STORAGE_DELETED = 'organization.external_storage.deleted'
-    VALUES = ['organization.external_storage.deleted'].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalExternalStorageListResourceMetadata
-    FIELDS = {
-      object: 'object',
-      data: 'data',
-      first_id: 'first_id',
-      last_id: 'last_id',
-      has_more: 'has_more'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      data
-      first_id
-      last_id
-      has_more
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::ExternalStorageListResourceObject.from_value(value)
-      end,
-      data: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::ExternalStorageResponse.from_hash(item) }
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      first_id
-      last_id
-    ].freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the GcpExternalStorageProviderParamsType SDK namespace.
+module GcpExternalStorageProviderParamsType
+  GCP = 'gcp'
+  VALUES = ['gcp'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('GcpExternalStorageProviderParamsType', 'enum', "Unknown GcpExternalStorageProviderParamsType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalOciExternalStorageProviderParamsMetadata
+  FIELDS = {
+    type: "type",
+    tenancy_ocid: "tenancy_ocid",
+    region: "region",
+    bucket: "bucket",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    tenancy_ocid
+    region
+    bucket
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::OciExternalStorageProviderParamsType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for OciExternalStorageProviderParams.
+# Typed representation of the `OciExternalStorageProviderParams` API schema.
+class OciExternalStorageProviderParams
+  include CreateExternalStorageBodyProvider
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalOciExternalStorageProviderParamsMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalOciExternalStorageProviderParamsMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalOciExternalStorageProviderParamsMetadata::DECODERS
+
+  # @return [OciExternalStorageProviderParamsType] Required enumerated value serialized in the `type` wire field.
+  attr_reader :type
+  # @return [String] Required `string` value serialized in the `tenancy_ocid` wire field.
+  attr_reader :tenancy_ocid
+  # @return [String] Required `string` value serialized in the `region` wire field.
+  attr_reader :region
+  # @return [String] Required `string` value serialized in the `bucket` wire field.
+  attr_reader :bucket
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ExternalStorageListResource.
-  # Typed representation of the `ExternalStorageListResource` API schema.
-  class ExternalStorageListResource
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalExternalStorageListResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalExternalStorageListResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalExternalStorageListResourceMetadata::DECODERS
-
-    # @return [ExternalStorageListResourceObject] Required enumerated value serialized in the `object` wire field.
-    attr_reader :object
-    # @return [Array_of_ExternalStorageResponse] Required array value serialized in the `data` wire field.
-    attr_reader :data
-    # @return [String] Required `string` value serialized in the `first_id` wire field.
-    attr_reader :first_id
-    # @return [String] Required `string` value serialized in the `last_id` wire field.
-    attr_reader :last_id
-    # @return [Boolean] Required `boolean` value serialized in the `has_more` wire field.
-    attr_reader :has_more
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalExternalStorageListResourceMetadata::NULLABLE_FIELDS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the ExternalStorageListResourceObject SDK namespace.
-  module ExternalStorageListResourceObject
-    LIST = 'list'
-    VALUES = ['list'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the ExternalStorageOrder SDK namespace.
-  module ExternalStorageOrder
-    ASC = 'asc'
-    DESC = 'desc'
-    VALUES = %w[asc desc].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the OciExternalStorageProviderParamsType SDK namespace.
+module OciExternalStorageProviderParamsType
+  OCI = 'oci'
+  VALUES = ['oci'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('OciExternalStorageProviderParamsType', 'enum', "Unknown OciExternalStorageProviderParamsType: #{value}")
   end
-
-  # Internal model hydration metadata.
-  class SdkInternalGcpExternalStorageProviderParamsMetadata
-    FIELDS = {
-      type: 'type',
-      bucket: 'bucket',
-      workload_identity_project_number: 'workload_identity_project_number',
-      workload_identity_pool_id: 'workload_identity_pool_id',
-      workload_identity_provider_id: 'workload_identity_provider_id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      bucket
-      workload_identity_project_number
-      workload_identity_pool_id
-      workload_identity_provider_id
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::GcpExternalStorageProviderParamsType.from_value(value)
-      end
-    }.freeze
-  end
-
-  # API model for GcpExternalStorageProviderParams.
-  # Typed representation of the `GcpExternalStorageProviderParams` API schema.
-  class GcpExternalStorageProviderParams
-    include CreateExternalStorageBodyProvider
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalGcpExternalStorageProviderParamsMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalGcpExternalStorageProviderParamsMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalGcpExternalStorageProviderParamsMetadata::DECODERS
-
-    # @return [GcpExternalStorageProviderParamsType] Required enumerated value serialized in the `type` wire field.
-    attr_reader :type
-    # @return [String] Required `string` value serialized in the `bucket` wire field.
-    attr_reader :bucket
-    # @return [String] Required `string` value serialized in the `workload_identity_project_number` wire field.
-    attr_reader :workload_identity_project_number
-    # @return [String] Required `string` value serialized in the `workload_identity_pool_id` wire field.
-    attr_reader :workload_identity_pool_id
-    # @return [String] Required `string` value serialized in the `workload_identity_provider_id` wire field.
-    attr_reader :workload_identity_provider_id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the GcpExternalStorageProviderParamsType SDK namespace.
-  module GcpExternalStorageProviderParamsType
-    GCP = 'gcp'
-    VALUES = ['gcp'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('GcpExternalStorageProviderParamsType', 'enum', "Unknown GcpExternalStorageProviderParamsType: #{value}")
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalOciExternalStorageProviderParamsMetadata
-    FIELDS = {
-      type: 'type',
-      tenancy_ocid: 'tenancy_ocid',
-      region: 'region',
-      bucket: 'bucket'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      tenancy_ocid
-      region
-      bucket
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::OciExternalStorageProviderParamsType.from_value(value)
-      end
-    }.freeze
-  end
-
-  # API model for OciExternalStorageProviderParams.
-  # Typed representation of the `OciExternalStorageProviderParams` API schema.
-  class OciExternalStorageProviderParams
-    include CreateExternalStorageBodyProvider
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalOciExternalStorageProviderParamsMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalOciExternalStorageProviderParamsMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalOciExternalStorageProviderParamsMetadata::DECODERS
-
-    # @return [OciExternalStorageProviderParamsType] Required enumerated value serialized in the `type` wire field.
-    attr_reader :type
-    # @return [String] Required `string` value serialized in the `tenancy_ocid` wire field.
-    attr_reader :tenancy_ocid
-    # @return [String] Required `string` value serialized in the `region` wire field.
-    attr_reader :region
-    # @return [String] Required `string` value serialized in the `bucket` wire field.
-    attr_reader :bucket
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the OciExternalStorageProviderParamsType SDK namespace.
-  module OciExternalStorageProviderParamsType
-    OCI = 'oci'
-    VALUES = ['oci'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('OciExternalStorageProviderParamsType', 'enum', "Unknown OciExternalStorageProviderParamsType: #{value}")
-    end
-  end
+end
 end

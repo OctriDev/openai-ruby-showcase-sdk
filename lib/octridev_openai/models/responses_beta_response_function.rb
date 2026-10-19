@@ -5,153 +5,151 @@
 
 # responses_beta_response_function domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalBetaResponseFunctionCallArgumentsDeltaEventMetadata
-    FIELDS = {
-      agent: 'agent',
-      type: 'type',
-      item_id: 'item_id',
-      output_index: 'output_index',
-      sequence_number: 'sequence_number',
-      delta: 'delta'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      item_id
-      output_index
-      sequence_number
-      delta
-    ].freeze
-    DECODERS = {
-      agent: lambda do |value|
-        ::OctridevOpenai::BetaAgentTag.from_hash(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::BetaResponseFunctionCallArgumentsDeltaEventType.from_value(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalBetaResponseFunctionCallArgumentsDeltaEventMetadata
+  FIELDS = {
+    agent: "agent",
+    type: "type",
+    item_id: "item_id",
+    output_index: "output_index",
+    sequence_number: "sequence_number",
+    delta: "delta",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    item_id
+    output_index
+    sequence_number
+    delta
+  ].freeze
+  DECODERS = {
+    agent: lambda do |value|
+      ::OctridevOpenai::BetaAgentTag.from_hash(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::BetaResponseFunctionCallArgumentsDeltaEventType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaResponseFunctionCallArgumentsDeltaEvent.
+# Emitted when there is a partial function-call arguments delta.
+class BetaResponseFunctionCallArgumentsDeltaEvent
+  include BetaResponseStreamEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaResponseFunctionCallArgumentsDeltaEventMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaResponseFunctionCallArgumentsDeltaEventMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaResponseFunctionCallArgumentsDeltaEventMetadata::DECODERS
+
+  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+  attr_reader :agent
+  # @return [BetaResponseFunctionCallArgumentsDeltaEventType] The type of the event. Always `response.function_call_arguments.delta`.
+  attr_reader :type
+  # @return [String] The ID of the output item that the function-call arguments delta is added to.
+  attr_reader :item_id
+  # @return [Integer] The index of the output item that the function-call arguments delta is added to.
+  attr_reader :output_index
+  # @return [Integer] The sequence number of this event.
+  attr_reader :sequence_number
+  # @return [String] The function-call arguments delta that is added.
+  attr_reader :delta
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BetaResponseFunctionCallArgumentsDeltaEvent.
-  # Emitted when there is a partial function-call arguments delta.
-  class BetaResponseFunctionCallArgumentsDeltaEvent
-    include BetaResponseStreamEvent
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaResponseFunctionCallArgumentsDeltaEventMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaResponseFunctionCallArgumentsDeltaEventMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaResponseFunctionCallArgumentsDeltaEventMetadata::DECODERS
-
-    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-    attr_reader :agent
-    # @return [BetaResponseFunctionCallArgumentsDeltaEventType] The type of the event. Always `response.function_call_arguments.delta`.
-    attr_reader :type
-    # @return [String] The ID of the output item that the function-call arguments delta is added to.
-    attr_reader :item_id
-    # @return [Integer] The index of the output item that the function-call arguments delta is added to.
-    attr_reader :output_index
-    # @return [Integer] The sequence number of this event.
-    attr_reader :sequence_number
-    # @return [String] The function-call arguments delta that is added.
-    attr_reader :delta
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the BetaResponseFunctionCallArgumentsDeltaEventType SDK namespace.
-  module BetaResponseFunctionCallArgumentsDeltaEventType
-    RESPONSE_FUNCTION_CALL_ARGUMENTS_DELTA = 'response.function_call_arguments.delta'
-    VALUES = ['response.function_call_arguments.delta'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('BetaResponseFunctionCallArgumentsDeltaEventType', 'enum', "Unknown BetaResponseFunctionCallArgumentsDeltaEventType: #{value}")
-    end
+# Defines the BetaResponseFunctionCallArgumentsDeltaEventType SDK namespace.
+module BetaResponseFunctionCallArgumentsDeltaEventType
+  RESPONSE_FUNCTION_CALL_ARGUMENTS_DELTA = 'response.function_call_arguments.delta'
+  VALUES = ['response.function_call_arguments.delta'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('BetaResponseFunctionCallArgumentsDeltaEventType', 'enum', "Unknown BetaResponseFunctionCallArgumentsDeltaEventType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaResponseFunctionCallArgumentsDoneEventMetadata
+  FIELDS = {
+    agent: "agent",
+    type: "type",
+    item_id: "item_id",
+    output_index: "output_index",
+    sequence_number: "sequence_number",
+    arguments: "arguments",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    item_id
+    output_index
+    sequence_number
+    arguments
+  ].freeze
+  DECODERS = {
+    agent: lambda do |value|
+      ::OctridevOpenai::BetaAgentTag.from_hash(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::BetaResponseFunctionCallArgumentsDoneEventType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaResponseFunctionCallArgumentsDoneEvent.
+# Emitted when function-call arguments are finalized.
+class BetaResponseFunctionCallArgumentsDoneEvent
+  include BetaResponseStreamEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaResponseFunctionCallArgumentsDoneEventMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaResponseFunctionCallArgumentsDoneEventMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaResponseFunctionCallArgumentsDoneEventMetadata::DECODERS
+
+  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+  attr_reader :agent
+  # @return [BetaResponseFunctionCallArgumentsDoneEventType] Required enumerated value serialized in the `type` wire field.
+  attr_reader :type
+  # @return [String] The ID of the item.
+  attr_reader :item_id
+  # @return [Integer] The index of the output item.
+  attr_reader :output_index
+  # @return [Integer] The sequence number of this event.
+  attr_reader :sequence_number
+  # @return [String] The function-call arguments.
+  attr_reader :arguments
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaResponseFunctionCallArgumentsDoneEventMetadata
-    FIELDS = {
-      agent: 'agent',
-      type: 'type',
-      item_id: 'item_id',
-      output_index: 'output_index',
-      sequence_number: 'sequence_number',
-      arguments: 'arguments'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      item_id
-      output_index
-      sequence_number
-      arguments
-    ].freeze
-    DECODERS = {
-      agent: lambda do |value|
-        ::OctridevOpenai::BetaAgentTag.from_hash(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::BetaResponseFunctionCallArgumentsDoneEventType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for BetaResponseFunctionCallArgumentsDoneEvent.
-  # Emitted when function-call arguments are finalized.
-  class BetaResponseFunctionCallArgumentsDoneEvent
-    include BetaResponseStreamEvent
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaResponseFunctionCallArgumentsDoneEventMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaResponseFunctionCallArgumentsDoneEventMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaResponseFunctionCallArgumentsDoneEventMetadata::DECODERS
-
-    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-    attr_reader :agent
-    # @return [BetaResponseFunctionCallArgumentsDoneEventType] Required enumerated value serialized in the `type` wire field.
-    attr_reader :type
-    # @return [String] The ID of the item.
-    attr_reader :item_id
-    # @return [Integer] The index of the output item.
-    attr_reader :output_index
-    # @return [Integer] The sequence number of this event.
-    attr_reader :sequence_number
-    # @return [String] The function-call arguments.
-    attr_reader :arguments
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the BetaResponseFunctionCallArgumentsDoneEventType SDK namespace.
-  module BetaResponseFunctionCallArgumentsDoneEventType
-    RESPONSE_FUNCTION_CALL_ARGUMENTS_DONE = 'response.function_call_arguments.done'
-    VALUES = ['response.function_call_arguments.done'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+# Defines the BetaResponseFunctionCallArgumentsDoneEventType SDK namespace.
+module BetaResponseFunctionCallArgumentsDoneEventType
+  RESPONSE_FUNCTION_CALL_ARGUMENTS_DONE = 'response.function_call_arguments.done'
+  VALUES = ['response.function_call_arguments.done'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-      raise SdkValidationError.new('BetaResponseFunctionCallArgumentsDoneEventType', 'enum', "Unknown BetaResponseFunctionCallArgumentsDoneEventType: #{value}")
-    end
+    raise SdkValidationError.new('BetaResponseFunctionCallArgumentsDoneEventType', 'enum', "Unknown BetaResponseFunctionCallArgumentsDoneEventType: #{value}")
   end
+end
 end

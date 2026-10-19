@@ -5,167 +5,165 @@
 
 # responses_beta_response_content domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalBetaResponseContentPartAddedEventMetadata
-    FIELDS = {
-      agent: 'agent',
-      type: 'type',
-      item_id: 'item_id',
-      output_index: 'output_index',
-      content_index: 'content_index',
-      part: 'part',
-      sequence_number: 'sequence_number'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      item_id
-      output_index
-      content_index
-      part
-      sequence_number
-    ].freeze
-    DECODERS = {
-      agent: lambda do |value|
-        ::OctridevOpenai::BetaAgentTag.from_hash(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::BetaResponseContentPartAddedEventType.from_value(value)
-      end,
-      part: lambda do |value|
-        ::OctridevOpenai::BetaOutputContent.from_hash(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalBetaResponseContentPartAddedEventMetadata
+  FIELDS = {
+    agent: "agent",
+    type: "type",
+    item_id: "item_id",
+    output_index: "output_index",
+    content_index: "content_index",
+    part: "part",
+    sequence_number: "sequence_number",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    item_id
+    output_index
+    content_index
+    part
+    sequence_number
+  ].freeze
+  DECODERS = {
+    agent: lambda do |value|
+      ::OctridevOpenai::BetaAgentTag.from_hash(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::BetaResponseContentPartAddedEventType.from_value(value)
+    end,
+    part: lambda do |value|
+      ::OctridevOpenai::BetaOutputContent.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaResponseContentPartAddedEvent.
+# Emitted when a new content part is added.
+class BetaResponseContentPartAddedEvent
+  include BetaResponseStreamEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaResponseContentPartAddedEventMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaResponseContentPartAddedEventMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaResponseContentPartAddedEventMetadata::DECODERS
+
+  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+  attr_reader :agent
+  # @return [BetaResponseContentPartAddedEventType] The type of the event. Always `response.content_part.added`.
+  attr_reader :type
+  # @return [String] The ID of the output item that the content part was added to.
+  attr_reader :item_id
+  # @return [Integer] The index of the output item that the content part was added to.
+  attr_reader :output_index
+  # @return [Integer] The index of the content part that was added.
+  attr_reader :content_index
+  # @return [BetaOutputContent] The content part that was added.
+  attr_reader :part
+  # @return [Integer] The sequence number of this event.
+  attr_reader :sequence_number
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BetaResponseContentPartAddedEvent.
-  # Emitted when a new content part is added.
-  class BetaResponseContentPartAddedEvent
-    include BetaResponseStreamEvent
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaResponseContentPartAddedEventMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaResponseContentPartAddedEventMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaResponseContentPartAddedEventMetadata::DECODERS
-
-    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-    attr_reader :agent
-    # @return [BetaResponseContentPartAddedEventType] The type of the event. Always `response.content_part.added`.
-    attr_reader :type
-    # @return [String] The ID of the output item that the content part was added to.
-    attr_reader :item_id
-    # @return [Integer] The index of the output item that the content part was added to.
-    attr_reader :output_index
-    # @return [Integer] The index of the content part that was added.
-    attr_reader :content_index
-    # @return [BetaOutputContent] The content part that was added.
-    attr_reader :part
-    # @return [Integer] The sequence number of this event.
-    attr_reader :sequence_number
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the BetaResponseContentPartAddedEventType SDK namespace.
-  module BetaResponseContentPartAddedEventType
-    RESPONSE_CONTENT_PART_ADDED = 'response.content_part.added'
-    VALUES = ['response.content_part.added'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('BetaResponseContentPartAddedEventType', 'enum', "Unknown BetaResponseContentPartAddedEventType: #{value}")
-    end
+# Defines the BetaResponseContentPartAddedEventType SDK namespace.
+module BetaResponseContentPartAddedEventType
+  RESPONSE_CONTENT_PART_ADDED = 'response.content_part.added'
+  VALUES = ['response.content_part.added'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('BetaResponseContentPartAddedEventType', 'enum', "Unknown BetaResponseContentPartAddedEventType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaResponseContentPartDoneEventMetadata
+  FIELDS = {
+    agent: "agent",
+    type: "type",
+    item_id: "item_id",
+    output_index: "output_index",
+    content_index: "content_index",
+    sequence_number: "sequence_number",
+    part: "part",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    item_id
+    output_index
+    content_index
+    sequence_number
+    part
+  ].freeze
+  DECODERS = {
+    agent: lambda do |value|
+      ::OctridevOpenai::BetaAgentTag.from_hash(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::BetaResponseContentPartDoneEventType.from_value(value)
+    end,
+    part: lambda do |value|
+      ::OctridevOpenai::BetaOutputContent.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaResponseContentPartDoneEvent.
+# Emitted when a content part is done.
+class BetaResponseContentPartDoneEvent
+  include BetaResponseStreamEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaResponseContentPartDoneEventMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaResponseContentPartDoneEventMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaResponseContentPartDoneEventMetadata::DECODERS
+
+  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+  attr_reader :agent
+  # @return [BetaResponseContentPartDoneEventType] The type of the event. Always `response.content_part.done`.
+  attr_reader :type
+  # @return [String] The ID of the output item that the content part was added to.
+  attr_reader :item_id
+  # @return [Integer] The index of the output item that the content part was added to.
+  attr_reader :output_index
+  # @return [Integer] The index of the content part that is done.
+  attr_reader :content_index
+  # @return [Integer] The sequence number of this event.
+  attr_reader :sequence_number
+  # @return [BetaOutputContent] The content part that is done.
+  attr_reader :part
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaResponseContentPartDoneEventMetadata
-    FIELDS = {
-      agent: 'agent',
-      type: 'type',
-      item_id: 'item_id',
-      output_index: 'output_index',
-      content_index: 'content_index',
-      sequence_number: 'sequence_number',
-      part: 'part'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      item_id
-      output_index
-      content_index
-      sequence_number
-      part
-    ].freeze
-    DECODERS = {
-      agent: lambda do |value|
-        ::OctridevOpenai::BetaAgentTag.from_hash(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::BetaResponseContentPartDoneEventType.from_value(value)
-      end,
-      part: lambda do |value|
-        ::OctridevOpenai::BetaOutputContent.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for BetaResponseContentPartDoneEvent.
-  # Emitted when a content part is done.
-  class BetaResponseContentPartDoneEvent
-    include BetaResponseStreamEvent
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaResponseContentPartDoneEventMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaResponseContentPartDoneEventMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaResponseContentPartDoneEventMetadata::DECODERS
-
-    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-    attr_reader :agent
-    # @return [BetaResponseContentPartDoneEventType] The type of the event. Always `response.content_part.done`.
-    attr_reader :type
-    # @return [String] The ID of the output item that the content part was added to.
-    attr_reader :item_id
-    # @return [Integer] The index of the output item that the content part was added to.
-    attr_reader :output_index
-    # @return [Integer] The index of the content part that is done.
-    attr_reader :content_index
-    # @return [Integer] The sequence number of this event.
-    attr_reader :sequence_number
-    # @return [BetaOutputContent] The content part that is done.
-    attr_reader :part
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the BetaResponseContentPartDoneEventType SDK namespace.
-  module BetaResponseContentPartDoneEventType
-    RESPONSE_CONTENT_PART_DONE = 'response.content_part.done'
-    VALUES = ['response.content_part.done'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+# Defines the BetaResponseContentPartDoneEventType SDK namespace.
+module BetaResponseContentPartDoneEventType
+  RESPONSE_CONTENT_PART_DONE = 'response.content_part.done'
+  VALUES = ['response.content_part.done'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-      raise SdkValidationError.new('BetaResponseContentPartDoneEventType', 'enum', "Unknown BetaResponseContentPartDoneEventType: #{value}")
-    end
+    raise SdkValidationError.new('BetaResponseContentPartDoneEventType', 'enum', "Unknown BetaResponseContentPartDoneEventType: #{value}")
   end
+end
 end

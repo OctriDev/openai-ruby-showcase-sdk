@@ -5,686 +5,676 @@
 
 # responses_beta_apply domain models
 module OctridevOpenai
-  # Defines the BetaApplyPatchCallOutputStatus SDK namespace.
-  module BetaApplyPatchCallOutputStatus
-    COMPLETED = 'completed'
-    FAILED = 'failed'
-    VALUES = %w[completed failed].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the BetaApplyPatchCallOutputStatus SDK namespace.
+module BetaApplyPatchCallOutputStatus
+  COMPLETED = 'completed'
+  FAILED = 'failed'
+  VALUES = ['completed', 'failed'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the BetaApplyPatchCallOutputStatusParam SDK namespace.
+module BetaApplyPatchCallOutputStatusParam
+  COMPLETED = 'completed'
+  FAILED = 'failed'
+  VALUES = ['completed', 'failed'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the BetaApplyPatchCallStatus SDK namespace.
+module BetaApplyPatchCallStatus
+  IN_PROGRESS = 'in_progress'
+  COMPLETED = 'completed'
+  VALUES = ['in_progress', 'completed'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the BetaApplyPatchCallStatusParam SDK namespace.
+module BetaApplyPatchCallStatusParam
+  IN_PROGRESS = 'in_progress'
+  COMPLETED = 'completed'
+  VALUES = ['in_progress', 'completed'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaApplyPatchCreateFileOperationMetadata
+  FIELDS = {
+    type: "type",
+    path: "path",
+    diff: "diff",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    path
+    diff
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::BetaApplyPatchCreateFileOperationType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaApplyPatchCreateFileOperation.
+# Instruction describing how to create a file via the apply_patch tool.
+class BetaApplyPatchCreateFileOperation
+  include BetaApplyPatchToolCallOperation
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaApplyPatchCreateFileOperationMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaApplyPatchCreateFileOperationMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaApplyPatchCreateFileOperationMetadata::DECODERS
+
+  # @return [BetaApplyPatchCreateFileOperationType] Create a new file with the provided diff.
+  attr_reader :type
+  # @return [String] Path of the file to create.
+  attr_reader :path
+  # @return [String] Diff to apply.
+  attr_reader :diff
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the BetaApplyPatchCallOutputStatusParam SDK namespace.
-  module BetaApplyPatchCallOutputStatusParam
-    COMPLETED = 'completed'
-    FAILED = 'failed'
-    VALUES = %w[completed failed].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the BetaApplyPatchCallStatus SDK namespace.
-  module BetaApplyPatchCallStatus
-    IN_PROGRESS = 'in_progress'
-    COMPLETED = 'completed'
-    VALUES = %w[in_progress completed].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the BetaApplyPatchCreateFileOperationType SDK namespace.
+module BetaApplyPatchCreateFileOperationType
+  CREATE_FILE = 'create_file'
+  VALUES = ['create_file'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('BetaApplyPatchCreateFileOperationType', 'enum', "Unknown BetaApplyPatchCreateFileOperationType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaApplyPatchCreateFileOperationParamMetadata
+  FIELDS = {
+    type: "type",
+    path: "path",
+    diff: "diff",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    path
+    diff
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::BetaApplyPatchCreateFileOperationParamType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaApplyPatchCreateFileOperationParam.
+# Instruction for creating a new file via the apply_patch tool.
+class BetaApplyPatchCreateFileOperationParam
+  include BetaApplyPatchOperationParam
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaApplyPatchCreateFileOperationParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaApplyPatchCreateFileOperationParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaApplyPatchCreateFileOperationParamMetadata::DECODERS
+
+  # @return [BetaApplyPatchCreateFileOperationParamType] The operation type. Always `create_file`.
+  attr_reader :type
+  # @return [String] Path of the file to create relative to the workspace root.
+  attr_reader :path
+  # @return [String] Unified diff content to apply when creating the file.
+  attr_reader :diff
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the BetaApplyPatchCallStatusParam SDK namespace.
-  module BetaApplyPatchCallStatusParam
-    IN_PROGRESS = 'in_progress'
-    COMPLETED = 'completed'
-    VALUES = %w[in_progress completed].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaApplyPatchCreateFileOperationMetadata
-    FIELDS = {
-      type: 'type',
-      path: 'path',
-      diff: 'diff'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      path
-      diff
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::BetaApplyPatchCreateFileOperationType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the BetaApplyPatchCreateFileOperationParamType SDK namespace.
+module BetaApplyPatchCreateFileOperationParamType
+  CREATE_FILE = 'create_file'
+  VALUES = ['create_file'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('BetaApplyPatchCreateFileOperationParamType', 'enum', "Unknown BetaApplyPatchCreateFileOperationParamType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaApplyPatchDeleteFileOperationMetadata
+  FIELDS = {
+    type: "type",
+    path: "path",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    path
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::BetaApplyPatchDeleteFileOperationType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaApplyPatchDeleteFileOperation.
+# Instruction describing how to delete a file via the apply_patch tool.
+class BetaApplyPatchDeleteFileOperation
+  include BetaApplyPatchToolCallOperation
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaApplyPatchDeleteFileOperationMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaApplyPatchDeleteFileOperationMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaApplyPatchDeleteFileOperationMetadata::DECODERS
+
+  # @return [BetaApplyPatchDeleteFileOperationType] Delete the specified file.
+  attr_reader :type
+  # @return [String] Path of the file to delete.
+  attr_reader :path
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BetaApplyPatchCreateFileOperation.
-  # Instruction describing how to create a file via the apply_patch tool.
-  class BetaApplyPatchCreateFileOperation
-    include BetaApplyPatchToolCallOperation
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaApplyPatchCreateFileOperationMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaApplyPatchCreateFileOperationMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaApplyPatchCreateFileOperationMetadata::DECODERS
-
-    # @return [BetaApplyPatchCreateFileOperationType] Create a new file with the provided diff.
-    attr_reader :type
-    # @return [String] Path of the file to create.
-    attr_reader :path
-    # @return [String] Diff to apply.
-    attr_reader :diff
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the BetaApplyPatchCreateFileOperationType SDK namespace.
-  module BetaApplyPatchCreateFileOperationType
-    CREATE_FILE = 'create_file'
-    VALUES = ['create_file'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('BetaApplyPatchCreateFileOperationType', 'enum', "Unknown BetaApplyPatchCreateFileOperationType: #{value}")
-    end
+# Defines the BetaApplyPatchDeleteFileOperationType SDK namespace.
+module BetaApplyPatchDeleteFileOperationType
+  DELETE_FILE = 'delete_file'
+  VALUES = ['delete_file'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('BetaApplyPatchDeleteFileOperationType', 'enum', "Unknown BetaApplyPatchDeleteFileOperationType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaApplyPatchDeleteFileOperationParamMetadata
+  FIELDS = {
+    type: "type",
+    path: "path",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    path
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::BetaApplyPatchDeleteFileOperationParamType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaApplyPatchDeleteFileOperationParam.
+# Instruction for deleting an existing file via the apply_patch tool.
+class BetaApplyPatchDeleteFileOperationParam
+  include BetaApplyPatchOperationParam
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaApplyPatchDeleteFileOperationParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaApplyPatchDeleteFileOperationParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaApplyPatchDeleteFileOperationParamMetadata::DECODERS
+
+  # @return [BetaApplyPatchDeleteFileOperationParamType] The operation type. Always `delete_file`.
+  attr_reader :type
+  # @return [String] Path of the file to delete relative to the workspace root.
+  attr_reader :path
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaApplyPatchCreateFileOperationParamMetadata
-    FIELDS = {
-      type: 'type',
-      path: 'path',
-      diff: 'diff'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      path
-      diff
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::BetaApplyPatchCreateFileOperationParamType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for BetaApplyPatchCreateFileOperationParam.
-  # Instruction for creating a new file via the apply_patch tool.
-  class BetaApplyPatchCreateFileOperationParam
-    include BetaApplyPatchOperationParam
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaApplyPatchCreateFileOperationParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaApplyPatchCreateFileOperationParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaApplyPatchCreateFileOperationParamMetadata::DECODERS
+# Defines the BetaApplyPatchDeleteFileOperationParamType SDK namespace.
+module BetaApplyPatchDeleteFileOperationParamType
+  DELETE_FILE = 'delete_file'
+  VALUES = ['delete_file'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    # @return [BetaApplyPatchCreateFileOperationParamType] The operation type. Always `create_file`.
-    attr_reader :type
-    # @return [String] Path of the file to create relative to the workspace root.
-    attr_reader :path
-    # @return [String] Unified diff content to apply when creating the file.
-    attr_reader :diff
+    raise SdkValidationError.new('BetaApplyPatchDeleteFileOperationParamType', 'enum', "Unknown BetaApplyPatchDeleteFileOperationParamType: #{value}")
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Defines the BetaApplyPatchOperationParam SDK namespace.
+module BetaApplyPatchOperationParam
+  DISCRIMINATOR_MAPPING = {
+    "create_file" => -> { BetaApplyPatchCreateFileOperationParam },
+    "delete_file" => -> { BetaApplyPatchDeleteFileOperationParam },
+    "update_file" => -> { BetaApplyPatchUpdateFileOperationParam },
+  }.freeze
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+
+    raise SdkValidationError.new('BetaApplyPatchOperationParam', 'variant', "Unknown BetaApplyPatchOperationParam discriminator: #{hash["type"].inspect}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaApplyPatchToolCallMetadata
+  FIELDS = {
+    agent: "agent",
+    type: "type",
+    id: "id",
+    call_id: "call_id",
+    caller: "caller",
+    status: "status",
+    operation: "operation",
+    created_by: "created_by",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    id
+    call_id
+    status
+    operation
+  ].freeze
+  DECODERS = {
+    agent: lambda do |value|
+      ::OctridevOpenai::BetaAgentTag.from_hash(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::BetaApplyPatchToolCallType.from_value(value)
+    end,
+    caller: lambda do |value|
+      ::OctridevOpenai::BetaToolCallCaller.from_hash(value)
+    end,
+    status: lambda do |value|
+      ::OctridevOpenai::BetaApplyPatchCallStatus.from_value(value)
+    end,
+    operation: lambda do |value|
+      ::OctridevOpenai::BetaApplyPatchToolCallOperation.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaApplyPatchToolCall.
+# A tool call that applies file diffs by creating, deleting, or updating files.
+class BetaApplyPatchToolCall
+  include BetaItemResource
+  include BetaItemField
+  include BetaOutputItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaApplyPatchToolCallMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaApplyPatchToolCallMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaApplyPatchToolCallMetadata::DECODERS
+
+  # @return [BetaAgentTag] The agent that produced this item.
+  attr_reader :agent
+  # @return [BetaApplyPatchToolCallType] The type of the item. Always `apply_patch_call`.
+  attr_reader :type
+  # @return [String] The unique ID of the apply patch tool call. Populated when this item is returned via API.
+  attr_reader :id
+  # @return [String] The unique ID of the apply patch tool call generated by the model.
+  attr_reader :call_id
+  # @return [BetaToolCallCaller] Optional API value serialized in the `caller` wire field.
+  attr_reader :caller
+  # @return [BetaApplyPatchCallStatus] The status of the apply patch tool call. One of `in_progress` or `completed`.
+  attr_reader :status
+  # @return [BetaApplyPatchToolCallOperation] One of the create_file, delete_file, or update_file operations applied via apply_patch.
+  attr_reader :operation
+  # @return [String] The ID of the entity that created this tool call.
+  attr_reader :created_by
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the BetaApplyPatchCreateFileOperationParamType SDK namespace.
-  module BetaApplyPatchCreateFileOperationParamType
-    CREATE_FILE = 'create_file'
-    VALUES = ['create_file'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('BetaApplyPatchCreateFileOperationParamType', 'enum', "Unknown BetaApplyPatchCreateFileOperationParamType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaApplyPatchDeleteFileOperationMetadata
-    FIELDS = {
-      type: 'type',
-      path: 'path'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      path
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::BetaApplyPatchDeleteFileOperationType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the BetaApplyPatchToolCallType SDK namespace.
+module BetaApplyPatchToolCallType
+  APPLY_PATCH_CALL = 'apply_patch_call'
+  VALUES = ['apply_patch_call'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('BetaApplyPatchToolCallType', 'enum', "Unknown BetaApplyPatchToolCallType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaApplyPatchToolCallItemParamMetadata
+  FIELDS = {
+    agent: "agent",
+    type: "type",
+    id: "id",
+    call_id: "call_id",
+    caller: "caller",
+    status: "status",
+    operation: "operation",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    call_id
+    status
+    operation
+  ].freeze
+  DECODERS = {
+    agent: lambda do |value|
+      ::OctridevOpenai::BetaAgentTagParam.from_hash(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::BetaApplyPatchToolCallItemParamType.from_value(value)
+    end,
+    caller: lambda do |value|
+      ::OctridevOpenai::BetaToolCallCallerParam.from_hash(value)
+    end,
+    status: lambda do |value|
+      ::OctridevOpenai::BetaApplyPatchCallStatusParam.from_value(value)
+    end,
+    operation: lambda do |value|
+      ::OctridevOpenai::BetaApplyPatchOperationParam.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaApplyPatchToolCallItemParam.
+# A tool call representing a request to create, delete, or update files using diff patches.
+class BetaApplyPatchToolCallItemParam
+  include BetaItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaApplyPatchToolCallItemParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaApplyPatchToolCallItemParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaApplyPatchToolCallItemParamMetadata::DECODERS
+
+  # @return [BetaAgentTagParam] Optional API value serialized in the `agent` wire field.
+  attr_reader :agent
+  # @return [BetaApplyPatchToolCallItemParamType] The type of the item. Always `apply_patch_call`.
+  attr_reader :type
+  # @return [String] Optional `string` value serialized in the `id` wire field.
+  attr_reader :id
+  # @return [String] The unique ID of the apply patch tool call generated by the model.
+  attr_reader :call_id
+  # @return [BetaToolCallCallerParam] Optional API value serialized in the `caller` wire field.
+  attr_reader :caller
+  # @return [BetaApplyPatchCallStatusParam] The status of the apply patch tool call. One of `in_progress` or `completed`.
+  attr_reader :status
+  # @return [BetaApplyPatchOperationParam] The specific create, delete, or update instruction for the apply_patch tool call.
+  attr_reader :operation
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BetaApplyPatchDeleteFileOperation.
-  # Instruction describing how to delete a file via the apply_patch tool.
-  class BetaApplyPatchDeleteFileOperation
-    include BetaApplyPatchToolCallOperation
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaApplyPatchDeleteFileOperationMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaApplyPatchDeleteFileOperationMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaApplyPatchDeleteFileOperationMetadata::DECODERS
-
-    # @return [BetaApplyPatchDeleteFileOperationType] Delete the specified file.
-    attr_reader :type
-    # @return [String] Path of the file to delete.
-    attr_reader :path
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the BetaApplyPatchDeleteFileOperationType SDK namespace.
-  module BetaApplyPatchDeleteFileOperationType
-    DELETE_FILE = 'delete_file'
-    VALUES = ['delete_file'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('BetaApplyPatchDeleteFileOperationType', 'enum', "Unknown BetaApplyPatchDeleteFileOperationType: #{value}")
-    end
+# Defines the BetaApplyPatchToolCallItemParamType SDK namespace.
+module BetaApplyPatchToolCallItemParamType
+  APPLY_PATCH_CALL = 'apply_patch_call'
+  VALUES = ['apply_patch_call'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('BetaApplyPatchToolCallItemParamType', 'enum', "Unknown BetaApplyPatchToolCallItemParamType: #{value}")
+  end
+end
+
+# Defines the BetaApplyPatchToolCallOperation SDK namespace.
+module BetaApplyPatchToolCallOperation
+  DISCRIMINATOR_MAPPING = {
+    "create_file" => -> { BetaApplyPatchCreateFileOperation },
+    "delete_file" => -> { BetaApplyPatchDeleteFileOperation },
+    "update_file" => -> { BetaApplyPatchUpdateFileOperation },
+  }.freeze
+
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
+
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+
+    raise SdkValidationError.new('BetaApplyPatchToolCallOperation', 'variant', "Unknown BetaApplyPatchToolCallOperation discriminator: #{hash["type"].inspect}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaApplyPatchToolCallOutputMetadata
+  FIELDS = {
+    agent: "agent",
+    type: "type",
+    id: "id",
+    call_id: "call_id",
+    caller: "caller",
+    status: "status",
+    output: "output",
+    created_by: "created_by",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    id
+    call_id
+    status
+  ].freeze
+  DECODERS = {
+    agent: lambda do |value|
+      ::OctridevOpenai::BetaAgentTag.from_hash(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::BetaApplyPatchToolCallOutputType.from_value(value)
+    end,
+    caller: lambda do |value|
+      ::OctridevOpenai::BetaToolCallCaller.from_hash(value)
+    end,
+    status: lambda do |value|
+      ::OctridevOpenai::BetaApplyPatchCallOutputStatus.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaApplyPatchToolCallOutput.
+# The output emitted by an apply patch tool call.
+class BetaApplyPatchToolCallOutput
+  include BetaItemResource
+  include BetaItemField
+  include BetaOutputItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaApplyPatchToolCallOutputMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaApplyPatchToolCallOutputMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaApplyPatchToolCallOutputMetadata::DECODERS
+
+  # @return [BetaAgentTag] The agent that produced this item.
+  attr_reader :agent
+  # @return [BetaApplyPatchToolCallOutputType] The type of the item. Always `apply_patch_call_output`.
+  attr_reader :type
+  # @return [String] The unique ID of the apply patch tool call output. Populated when this item is returned via API.
+  attr_reader :id
+  # @return [String] The unique ID of the apply patch tool call generated by the model.
+  attr_reader :call_id
+  # @return [BetaToolCallCaller] Optional API value serialized in the `caller` wire field.
+  attr_reader :caller
+  # @return [BetaApplyPatchCallOutputStatus] The status of the apply patch tool call output. One of `completed` or `failed`.
+  attr_reader :status
+  # @return [String] Optional `string` value serialized in the `output` wire field.
+  attr_reader :output
+  # @return [String] The ID of the entity that created this tool call output.
+  attr_reader :created_by
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaApplyPatchDeleteFileOperationParamMetadata
-    FIELDS = {
-      type: 'type',
-      path: 'path'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      path
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::BetaApplyPatchDeleteFileOperationParamType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for BetaApplyPatchDeleteFileOperationParam.
-  # Instruction for deleting an existing file via the apply_patch tool.
-  class BetaApplyPatchDeleteFileOperationParam
-    include BetaApplyPatchOperationParam
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaApplyPatchDeleteFileOperationParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaApplyPatchDeleteFileOperationParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaApplyPatchDeleteFileOperationParamMetadata::DECODERS
+# Defines the BetaApplyPatchToolCallOutputType SDK namespace.
+module BetaApplyPatchToolCallOutputType
+  APPLY_PATCH_CALL_OUTPUT = 'apply_patch_call_output'
+  VALUES = ['apply_patch_call_output'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    # @return [BetaApplyPatchDeleteFileOperationParamType] The operation type. Always `delete_file`.
-    attr_reader :type
-    # @return [String] Path of the file to delete relative to the workspace root.
-    attr_reader :path
+    raise SdkValidationError.new('BetaApplyPatchToolCallOutputType', 'enum', "Unknown BetaApplyPatchToolCallOutputType: #{value}")
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalBetaApplyPatchToolCallOutputItemParamMetadata
+  FIELDS = {
+    agent: "agent",
+    type: "type",
+    id: "id",
+    call_id: "call_id",
+    caller: "caller",
+    status: "status",
+    output: "output",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    call_id
+    status
+  ].freeze
+  DECODERS = {
+    agent: lambda do |value|
+      ::OctridevOpenai::BetaAgentTagParam.from_hash(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::BetaApplyPatchToolCallOutputItemParamType.from_value(value)
+    end,
+    caller: lambda do |value|
+      ::OctridevOpenai::BetaToolCallCallerParam.from_hash(value)
+    end,
+    status: lambda do |value|
+      ::OctridevOpenai::BetaApplyPatchCallOutputStatusParam.from_value(value)
+    end,
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for BetaApplyPatchToolCallOutputItemParam.
+# The streamed output emitted by an apply patch tool call.
+class BetaApplyPatchToolCallOutputItemParam
+  include BetaItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaApplyPatchToolCallOutputItemParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaApplyPatchToolCallOutputItemParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaApplyPatchToolCallOutputItemParamMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [BetaAgentTagParam] Optional API value serialized in the `agent` wire field.
+  attr_reader :agent
+  # @return [BetaApplyPatchToolCallOutputItemParamType] The type of the item. Always `apply_patch_call_output`.
+  attr_reader :type
+  # @return [String] Optional `string` value serialized in the `id` wire field.
+  attr_reader :id
+  # @return [String] The unique ID of the apply patch tool call generated by the model.
+  attr_reader :call_id
+  # @return [BetaToolCallCallerParam] Optional API value serialized in the `caller` wire field.
+  attr_reader :caller
+  # @return [BetaApplyPatchCallOutputStatusParam] The status of the apply patch tool call output. One of `completed` or `failed`.
+  attr_reader :status
+  # @return [String] Optional API value serialized in the `output` wire field.
+  attr_reader :output
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the BetaApplyPatchDeleteFileOperationParamType SDK namespace.
-  module BetaApplyPatchDeleteFileOperationParamType
-    DELETE_FILE = 'delete_file'
-    VALUES = ['delete_file'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('BetaApplyPatchDeleteFileOperationParamType', 'enum', "Unknown BetaApplyPatchDeleteFileOperationParamType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the BetaApplyPatchOperationParam SDK namespace.
-  module BetaApplyPatchOperationParam
-    DISCRIMINATOR_MAPPING = {
-      'create_file' => -> { BetaApplyPatchCreateFileOperationParam },
-      'delete_file' => -> { BetaApplyPatchDeleteFileOperationParam },
-      'update_file' => -> { BetaApplyPatchUpdateFileOperationParam }
-    }.freeze
-
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
-
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
-
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
-
-      raise SdkValidationError.new('BetaApplyPatchOperationParam', 'variant', "Unknown BetaApplyPatchOperationParam discriminator: #{hash['type'].inspect}")
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaApplyPatchToolCallMetadata
-    FIELDS = {
-      agent: 'agent',
-      type: 'type',
-      id: 'id',
-      call_id: 'call_id',
-      caller: 'caller',
-      status: 'status',
-      operation: 'operation',
-      created_by: 'created_by'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      id
-      call_id
-      status
-      operation
-    ].freeze
-    DECODERS = {
-      agent: lambda do |value|
-        ::OctridevOpenai::BetaAgentTag.from_hash(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::BetaApplyPatchToolCallType.from_value(value)
-      end,
-      caller: lambda do |value|
-        ::OctridevOpenai::BetaToolCallCaller.from_hash(value)
-      end,
-      status: lambda do |value|
-        ::OctridevOpenai::BetaApplyPatchCallStatus.from_value(value)
-      end,
-      operation: lambda do |value|
-        ::OctridevOpenai::BetaApplyPatchToolCallOperation.from_hash(value)
-      end
-    }.freeze
+# Defines the BetaApplyPatchToolCallOutputItemParamType SDK namespace.
+module BetaApplyPatchToolCallOutputItemParamType
+  APPLY_PATCH_CALL_OUTPUT = 'apply_patch_call_output'
+  VALUES = ['apply_patch_call_output'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('BetaApplyPatchToolCallOutputItemParamType', 'enum', "Unknown BetaApplyPatchToolCallOutputItemParamType: #{value}")
   end
+end
 
-  # API model for BetaApplyPatchToolCall.
-  # A tool call that applies file diffs by creating, deleting, or updating files.
-  class BetaApplyPatchToolCall
-    include BetaItemResource
-    include BetaItemField
-    include BetaOutputItem
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaApplyPatchToolCallMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaApplyPatchToolCallMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaApplyPatchToolCallMetadata::DECODERS
-
-    # @return [BetaAgentTag] The agent that produced this item.
-    attr_reader :agent
-    # @return [BetaApplyPatchToolCallType] The type of the item. Always `apply_patch_call`.
-    attr_reader :type
-    # @return [String] The unique ID of the apply patch tool call. Populated when this item is returned via API.
-    attr_reader :id
-    # @return [String] The unique ID of the apply patch tool call generated by the model.
-    attr_reader :call_id
-    # @return [BetaToolCallCaller] Optional API value serialized in the `caller` wire field.
-    attr_reader :caller
-    # @return [BetaApplyPatchCallStatus] The status of the apply patch tool call. One of `in_progress` or `completed`.
-    attr_reader :status
-    # @return [BetaApplyPatchToolCallOperation] One of the create_file, delete_file, or update_file operations applied via apply_patch.
-    attr_reader :operation
-    # @return [String] The ID of the entity that created this tool call.
-    attr_reader :created_by
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the BetaApplyPatchToolCallType SDK namespace.
-  module BetaApplyPatchToolCallType
-    APPLY_PATCH_CALL = 'apply_patch_call'
-    VALUES = ['apply_patch_call'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('BetaApplyPatchToolCallType', 'enum', "Unknown BetaApplyPatchToolCallType: #{value}")
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalBetaApplyPatchToolCallItemParamMetadata
-    FIELDS = {
-      agent: 'agent',
-      type: 'type',
-      id: 'id',
-      call_id: 'call_id',
-      caller: 'caller',
-      status: 'status',
-      operation: 'operation'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      call_id
-      status
-      operation
-    ].freeze
-    DECODERS = {
-      agent: lambda do |value|
-        ::OctridevOpenai::BetaAgentTagParam.from_hash(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::BetaApplyPatchToolCallItemParamType.from_value(value)
-      end,
-      caller: lambda do |value|
-        ::OctridevOpenai::BetaToolCallCallerParam.from_hash(value)
-      end,
-      status: lambda do |value|
-        ::OctridevOpenai::BetaApplyPatchCallStatusParam.from_value(value)
-      end,
-      operation: lambda do |value|
-        ::OctridevOpenai::BetaApplyPatchOperationParam.from_hash(value)
-      end
-    }.freeze
-  end
-
-  # API model for BetaApplyPatchToolCallItemParam.
-  # A tool call representing a request to create, delete, or update files using diff patches.
-  class BetaApplyPatchToolCallItemParam
-    include BetaItem
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaApplyPatchToolCallItemParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaApplyPatchToolCallItemParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaApplyPatchToolCallItemParamMetadata::DECODERS
-
-    # @return [BetaAgentTagParam] Optional API value serialized in the `agent` wire field.
-    attr_reader :agent
-    # @return [BetaApplyPatchToolCallItemParamType] The type of the item. Always `apply_patch_call`.
-    attr_reader :type
-    # @return [String] Optional `string` value serialized in the `id` wire field.
-    attr_reader :id
-    # @return [String] The unique ID of the apply patch tool call generated by the model.
-    attr_reader :call_id
-    # @return [BetaToolCallCallerParam] Optional API value serialized in the `caller` wire field.
-    attr_reader :caller
-    # @return [BetaApplyPatchCallStatusParam] The status of the apply patch tool call. One of `in_progress` or `completed`.
-    attr_reader :status
-    # @return [BetaApplyPatchOperationParam] The specific create, delete, or update instruction for the apply_patch tool call.
-    attr_reader :operation
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the BetaApplyPatchToolCallItemParamType SDK namespace.
-  module BetaApplyPatchToolCallItemParamType
-    APPLY_PATCH_CALL = 'apply_patch_call'
-    VALUES = ['apply_patch_call'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('BetaApplyPatchToolCallItemParamType', 'enum', "Unknown BetaApplyPatchToolCallItemParamType: #{value}")
-    end
-  end
-
-  # Defines the BetaApplyPatchToolCallOperation SDK namespace.
-  module BetaApplyPatchToolCallOperation
-    DISCRIMINATOR_MAPPING = {
-      'create_file' => -> { BetaApplyPatchCreateFileOperation },
-      'delete_file' => -> { BetaApplyPatchDeleteFileOperation },
-      'update_file' => -> { BetaApplyPatchUpdateFileOperation }
-    }.freeze
-
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
-
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
-
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
-
-      raise SdkValidationError.new('BetaApplyPatchToolCallOperation', 'variant', "Unknown BetaApplyPatchToolCallOperation discriminator: #{hash['type'].inspect}")
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalBetaApplyPatchToolCallOutputMetadata
-    FIELDS = {
-      agent: 'agent',
-      type: 'type',
-      id: 'id',
-      call_id: 'call_id',
-      caller: 'caller',
-      status: 'status',
-      output: 'output',
-      created_by: 'created_by'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      id
-      call_id
-      status
-    ].freeze
-    DECODERS = {
-      agent: lambda do |value|
-        ::OctridevOpenai::BetaAgentTag.from_hash(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::BetaApplyPatchToolCallOutputType.from_value(value)
-      end,
-      caller: lambda do |value|
-        ::OctridevOpenai::BetaToolCallCaller.from_hash(value)
-      end,
-      status: lambda do |value|
-        ::OctridevOpenai::BetaApplyPatchCallOutputStatus.from_value(value)
-      end
-    }.freeze
-  end
-
-  # API model for BetaApplyPatchToolCallOutput.
-  # The output emitted by an apply patch tool call.
-  class BetaApplyPatchToolCallOutput
-    include BetaItemResource
-    include BetaItemField
-    include BetaOutputItem
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaApplyPatchToolCallOutputMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaApplyPatchToolCallOutputMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaApplyPatchToolCallOutputMetadata::DECODERS
-
-    # @return [BetaAgentTag] The agent that produced this item.
-    attr_reader :agent
-    # @return [BetaApplyPatchToolCallOutputType] The type of the item. Always `apply_patch_call_output`.
-    attr_reader :type
-    # @return [String] The unique ID of the apply patch tool call output. Populated when this item is returned via API.
-    attr_reader :id
-    # @return [String] The unique ID of the apply patch tool call generated by the model.
-    attr_reader :call_id
-    # @return [BetaToolCallCaller] Optional API value serialized in the `caller` wire field.
-    attr_reader :caller
-    # @return [BetaApplyPatchCallOutputStatus] The status of the apply patch tool call output. One of `completed` or `failed`.
-    attr_reader :status
-    # @return [String] Optional `string` value serialized in the `output` wire field.
-    attr_reader :output
-    # @return [String] The ID of the entity that created this tool call output.
-    attr_reader :created_by
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the BetaApplyPatchToolCallOutputType SDK namespace.
-  module BetaApplyPatchToolCallOutputType
-    APPLY_PATCH_CALL_OUTPUT = 'apply_patch_call_output'
-    VALUES = ['apply_patch_call_output'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('BetaApplyPatchToolCallOutputType', 'enum', "Unknown BetaApplyPatchToolCallOutputType: #{value}")
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalBetaApplyPatchToolCallOutputItemParamMetadata
-    FIELDS = {
-      agent: 'agent',
-      type: 'type',
-      id: 'id',
-      call_id: 'call_id',
-      caller: 'caller',
-      status: 'status',
-      output: 'output'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      call_id
-      status
-    ].freeze
-    DECODERS = {
-      agent: lambda do |value|
-        ::OctridevOpenai::BetaAgentTagParam.from_hash(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::BetaApplyPatchToolCallOutputItemParamType.from_value(value)
-      end,
-      caller: lambda do |value|
-        ::OctridevOpenai::BetaToolCallCallerParam.from_hash(value)
-      end,
-      status: lambda do |value|
-        ::OctridevOpenai::BetaApplyPatchCallOutputStatusParam.from_value(value)
-      end
-    }.freeze
-  end
-
-  # API model for BetaApplyPatchToolCallOutputItemParam.
-  # The streamed output emitted by an apply patch tool call.
-  class BetaApplyPatchToolCallOutputItemParam
-    include BetaItem
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaApplyPatchToolCallOutputItemParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaApplyPatchToolCallOutputItemParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaApplyPatchToolCallOutputItemParamMetadata::DECODERS
-
-    # @return [BetaAgentTagParam] Optional API value serialized in the `agent` wire field.
-    attr_reader :agent
-    # @return [BetaApplyPatchToolCallOutputItemParamType] The type of the item. Always `apply_patch_call_output`.
-    attr_reader :type
-    # @return [String] Optional `string` value serialized in the `id` wire field.
-    attr_reader :id
-    # @return [String] The unique ID of the apply patch tool call generated by the model.
-    attr_reader :call_id
-    # @return [BetaToolCallCallerParam] Optional API value serialized in the `caller` wire field.
-    attr_reader :caller
-    # @return [BetaApplyPatchCallOutputStatusParam] The status of the apply patch tool call output. One of `completed` or `failed`.
-    attr_reader :status
-    # @return [String] Optional API value serialized in the `output` wire field.
-    attr_reader :output
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the BetaApplyPatchToolCallOutputItemParamType SDK namespace.
-  module BetaApplyPatchToolCallOutputItemParamType
-    APPLY_PATCH_CALL_OUTPUT = 'apply_patch_call_output'
-    VALUES = ['apply_patch_call_output'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('BetaApplyPatchToolCallOutputItemParamType', 'enum', "Unknown BetaApplyPatchToolCallOutputItemParamType: #{value}")
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalBetaApplyPatchToolParamMetadata
-    FIELDS = {
-      type: 'type',
-      allowed_callers: 'allowed_callers'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::BetaApplyPatchToolParamType.from_value(value)
-      end,
-      allowed_callers: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::BetaCallableToolAllowedCaller.from_value(item) }
-      end
-    }.freeze
-  end
+# Internal model hydration metadata.
+class SdkInternalBetaApplyPatchToolParamMetadata
+  FIELDS = {
+    type: "type",
+    allowed_callers: "allowed_callers",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::BetaApplyPatchToolParamType.from_value(value)
+    end,
+    allowed_callers: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::BetaCallableToolAllowedCaller.from_value(item) }
+    end,
+  }.freeze
+end
 end

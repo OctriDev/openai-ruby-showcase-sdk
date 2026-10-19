@@ -43,22 +43,23 @@ module OctridevOpenai
         output_expires_after: NOT_GIVEN,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
-          '/batches',
+          "/batches",
           config: config,
           body: {
             'input_file_id' => input_file_id,
             'endpoint' => endpoint,
             'completion_window' => completion_window,
             'metadata' => metadata,
-            'output_expires_after' => output_expires_after
+            'output_expires_after' => output_expires_after,
           },
           return_type: ::OctridevOpenai::Batch,
           decoder: :json,
           operation_id: 'create_batch',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -78,23 +79,24 @@ module OctridevOpenai
         limit: NOT_GIVEN,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
-          '/batches',
+          "/batches",
           config: config,
           query: {
             'after' => QueryValue.new(after, style: 'form', explode: true),
-            'limit' => QueryValue.new(limit, style: 'form', explode: true)
+            'limit' => QueryValue.new(limit, style: 'form', explode: true),
           },
           return_type: ::OctridevOpenai::ListBatchesResponse,
           decoder: :json,
           operation_id: 'list_batch',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
-      ListBatchPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+    ListBatchPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists batches created by your organization. Use `after` to continue from a batch ID and `limit` to set the number of results, from 1 to 100.
       #
@@ -123,13 +125,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             items.each { |item| y << item }
             break unless page.has_more
-
             next_cursor = page.last_id
             break if next_cursor.nil?
-
             cursor = next_cursor
           end
         end
@@ -152,12 +151,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListBatchPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
-
             cursor = next_cursor
           end
         end
@@ -173,10 +170,11 @@ module OctridevOpenai
         batch_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
           [
-            '/batches/',
+            "/batches/",
             SdkClient.encode_path_segment(batch_id)
           ].join,
           config: config,
@@ -184,7 +182,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'retrieve_batch',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -196,19 +194,20 @@ module OctridevOpenai
         batch_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
           [
-            '/batches/',
+            "/batches/",
             SdkClient.encode_path_segment(batch_id),
-            '/cancel'
+            "/cancel"
           ].join,
           config: config,
           return_type: ::OctridevOpenai::Batch,
           decoder: :json,
           operation_id: 'cancel_batch',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '409' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '409' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
     end

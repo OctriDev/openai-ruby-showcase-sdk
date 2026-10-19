@@ -5,576 +5,567 @@
 
 # shared domain models (part 4)
 module OctridevOpenai
-  # API model for ScreenshotParam.
-  # A screenshot action.
-  class ScreenshotParam
-    include ComputerAction
+# API model for ScreenshotParam.
+# A screenshot action.
+class ScreenshotParam
+  include ComputerAction
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalScreenshotParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalScreenshotParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalScreenshotParamMetadata::DECODERS
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalScreenshotParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalScreenshotParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalScreenshotParamMetadata::DECODERS
+  # @return [ScreenshotParamType] Specifies the event type. For a screenshot action, this property is always set to `screenshot`.
+  attr_reader :type
 
-    # @return [ScreenshotParamType] Specifies the event type. For a screenshot action, this property is always set to `screenshot`.
-    attr_reader :type
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the ScreenshotParamType SDK namespace.
-  module ScreenshotParamType
-    SCREENSHOT = 'screenshot'
-    VALUES = ['screenshot'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('ScreenshotParamType', 'enum', "Unknown ScreenshotParamType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalScrollParamMetadata
-    FIELDS = {
-      type: 'type',
-      x_coordinate: 'x',
-      y_coordinate: 'y',
-      scroll_x: 'scroll_x',
-      scroll_y: 'scroll_y',
-      keys: 'keys'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      x_coordinate
-      y_coordinate
-      scroll_x
-      scroll_y
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ScrollParamType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the ScreenshotParamType SDK namespace.
+module ScreenshotParamType
+  SCREENSHOT = 'screenshot'
+  VALUES = ['screenshot'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('ScreenshotParamType', 'enum', "Unknown ScreenshotParamType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalScrollParamMetadata
+  FIELDS = {
+    type: "type",
+    x_coordinate: "x",
+    y_coordinate: "y",
+    scroll_x: "scroll_x",
+    scroll_y: "scroll_y",
+    keys: "keys",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    x_coordinate
+    y_coordinate
+    scroll_x
+    scroll_y
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ScrollParamType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for ScrollParam.
+# A scroll action.
+class ScrollParam
+  include ComputerAction
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalScrollParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalScrollParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalScrollParamMetadata::DECODERS
+
+  # @return [ScrollParamType] Specifies the event type. For a scroll action, this property is always set to `scroll`.
+  attr_reader :type
+  # @return [Integer] The x-coordinate where the scroll occurred.
+  attr_reader :x_coordinate
+  # @return [Integer] The y-coordinate where the scroll occurred.
+  attr_reader :y_coordinate
+  # @return [Integer] The horizontal scroll distance.
+  attr_reader :scroll_x
+  # @return [Integer] The vertical scroll distance.
+  attr_reader :scroll_y
+  # @return [Array_of_String] The keys being held while scrolling.
+  attr_reader :keys
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ScrollParam.
-  # A scroll action.
-  class ScrollParam
-    include ComputerAction
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalScrollParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalScrollParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalScrollParamMetadata::DECODERS
-
-    # @return [ScrollParamType] Specifies the event type. For a scroll action, this property is always set to `scroll`.
-    attr_reader :type
-    # @return [Integer] The x-coordinate where the scroll occurred.
-    attr_reader :x_coordinate
-    # @return [Integer] The y-coordinate where the scroll occurred.
-    attr_reader :y_coordinate
-    # @return [Integer] The horizontal scroll distance.
-    attr_reader :scroll_x
-    # @return [Integer] The vertical scroll distance.
-    attr_reader :scroll_y
-    # @return [Array_of_String] The keys being held while scrolling.
-    attr_reader :keys
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the ScrollParamType SDK namespace.
-  module ScrollParamType
-    SCROLL = 'scroll'
-    VALUES = ['scroll'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('ScrollParamType', 'enum', "Unknown ScrollParamType: #{value}")
-    end
+# Defines the ScrollParamType SDK namespace.
+module ScrollParamType
+  SCROLL = 'scroll'
+  VALUES = ['scroll'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('ScrollParamType', 'enum', "Unknown ScrollParamType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalSkillReferenceParamMetadata
+  FIELDS = {
+    type: "type",
+    skill_id: "skill_id",
+    version: "version",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    skill_id
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::SkillReferenceParamType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for SkillReferenceParam.
+# Typed representation of the `SkillReferenceParam` API schema.
+class SkillReferenceParam
+  include ContainerAutoParamSkillsItem
+  include CreateContainerBodySkillsItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalSkillReferenceParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalSkillReferenceParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalSkillReferenceParamMetadata::DECODERS
+
+  # @return [SkillReferenceParamType] References a skill created with the /v1/skills endpoint.
+  attr_reader :type
+  # @return [String] The ID of the referenced skill.
+  attr_reader :skill_id
+  # @return [String] Optional skill version. Use a positive integer or 'latest'. Omit for default.
+  attr_reader :version
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalSkillReferenceParamMetadata
-    FIELDS = {
-      type: 'type',
-      skill_id: 'skill_id',
-      version: 'version'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      skill_id
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::SkillReferenceParamType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for SkillReferenceParam.
-  # Typed representation of the `SkillReferenceParam` API schema.
-  class SkillReferenceParam
-    include ContainerAutoParamSkillsItem
-    include CreateContainerBodySkillsItem
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalSkillReferenceParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalSkillReferenceParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalSkillReferenceParamMetadata::DECODERS
+# Defines the SkillReferenceParamType SDK namespace.
+module SkillReferenceParamType
+  SKILL_REFERENCE = 'skill_reference'
+  VALUES = ['skill_reference'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    # @return [SkillReferenceParamType] References a skill created with the /v1/skills endpoint.
-    attr_reader :type
-    # @return [String] The ID of the referenced skill.
-    attr_reader :skill_id
-    # @return [String] Optional skill version. Use a positive integer or 'latest'. Omit for default.
-    attr_reader :version
+    raise SdkValidationError.new('SkillReferenceParamType', 'enum', "Unknown SkillReferenceParamType: #{value}")
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Defines the StopConfiguration SDK namespace.
+module StopConfiguration
+  def self.from_hash(hash)
+    return hash if hash.is_a?(::String)
+    return hash if hash.is_a?(::Array)
+    hash
+  end
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# Internal model hydration metadata.
+class SdkInternalSummaryTextContentMetadata
+  FIELDS = {
+    type: "type",
+    text: "text",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    text
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::SummaryTextContentType.from_value(value)
+    end,
+  }.freeze
+end
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+# API model for SummaryTextContent.
+# A summary text from the model.
+class SummaryTextContent
+  include MessageContentItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalSummaryTextContentMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalSummaryTextContentMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalSummaryTextContentMetadata::DECODERS
+
+  # @return [SummaryTextContentType] The type of the object. Always `summary_text`.
+  attr_reader :type
+  # @return [String] A summary of the reasoning output from the model so far.
+  attr_reader :text
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the SkillReferenceParamType SDK namespace.
-  module SkillReferenceParamType
-    SKILL_REFERENCE = 'skill_reference'
-    VALUES = ['skill_reference'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('SkillReferenceParamType', 'enum', "Unknown SkillReferenceParamType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the StopConfiguration SDK namespace.
-  module StopConfiguration
-    def self.from_hash(hash)
-      return hash if hash.is_a?(::String)
-      return hash if hash.is_a?(::Array)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      hash
-    end
+# Defines the SummaryTextContentType SDK namespace.
+module SummaryTextContentType
+  SUMMARY_TEXT = 'summary_text'
+  VALUES = ['summary_text'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('SummaryTextContentType', 'enum', "Unknown SummaryTextContentType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalTopLogProbMetadata
+  FIELDS = {
+    token: "token",
+    logprob: "logprob",
+    bytes: "bytes",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    token
+    logprob
+    bytes
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for TopLogProb.
+# The top log probability of a token.
+class TopLogProb
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalTopLogProbMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalTopLogProbMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalTopLogProbMetadata::DECODERS
+
+  # @return [String] Required `string` value serialized in the `token` wire field.
+  attr_reader :token
+  # @return [Float] Required `number` value serialized in the `logprob` wire field.
+  attr_reader :logprob
+  # @return [Array_of_Integer] Required array value serialized in the `bytes` wire field.
+  attr_reader :bytes
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalSummaryTextContentMetadata
-    FIELDS = {
-      type: 'type',
-      text: 'text'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      text
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::SummaryTextContentType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for SummaryTextContent.
-  # A summary text from the model.
-  class SummaryTextContent
-    include MessageContentItem
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalSummaryTextContentMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalSummaryTextContentMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalSummaryTextContentMetadata::DECODERS
+# Internal model hydration metadata.
+class SdkInternalTypeParamMetadata
+  FIELDS = {
+    type: "type",
+    text: "text",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    text
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::TypeParamType.from_value(value)
+    end,
+  }.freeze
+end
 
-    # @return [SummaryTextContentType] The type of the object. Always `summary_text`.
-    attr_reader :type
-    # @return [String] A summary of the reasoning output from the model so far.
-    attr_reader :text
+# API model for TypeParam.
+# An action to type in text.
+class TypeParam
+  include ComputerAction
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalTypeParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalTypeParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalTypeParamMetadata::DECODERS
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+  # @return [TypeParamType] Specifies the event type. For a type action, this property is always set to `type`.
+  attr_reader :type
+  # @return [String] The text to type.
+  attr_reader :text
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the SummaryTextContentType SDK namespace.
-  module SummaryTextContentType
-    SUMMARY_TEXT = 'summary_text'
-    VALUES = ['summary_text'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('SummaryTextContentType', 'enum', "Unknown SummaryTextContentType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalTopLogProbMetadata
-    FIELDS = {
-      token: 'token',
-      logprob: 'logprob',
-      bytes: 'bytes'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      token
-      logprob
-      bytes
-    ].freeze
-    DECODERS = {}.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the TypeParamType SDK namespace.
+module TypeParamType
+  TYPE = 'type'
+  VALUES = ['type'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('TypeParamType', 'enum', "Unknown TypeParamType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalUrlCitationBodyMetadata
+  FIELDS = {
+    type: "type",
+    url: "url",
+    start_index: "start_index",
+    end_index: "end_index",
+    title: "title",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    url
+    start_index
+    end_index
+    title
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::UrlCitationBodyType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for UrlCitationBody.
+# A citation for a web resource used to generate a model response.
+class UrlCitationBody
+  include Annotation
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalUrlCitationBodyMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalUrlCitationBodyMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalUrlCitationBodyMetadata::DECODERS
+
+  # @return [UrlCitationBodyType] The type of the URL citation. Always `url_citation`.
+  attr_reader :type
+  # @return [String] The URL of the web resource.
+  attr_reader :url
+  # @return [Integer] The index of the first character of the URL citation in the message.
+  attr_reader :start_index
+  # @return [Integer] The index of the last character of the URL citation in the message.
+  attr_reader :end_index
+  # @return [String] The title of the web resource.
+  attr_reader :title
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for TopLogProb.
-  # The top log probability of a token.
-  class TopLogProb
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalTopLogProbMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalTopLogProbMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalTopLogProbMetadata::DECODERS
-
-    # @return [String] Required `string` value serialized in the `token` wire field.
-    attr_reader :token
-    # @return [Float] Required `number` value serialized in the `logprob` wire field.
-    attr_reader :logprob
-    # @return [Array_of_Integer] Required array value serialized in the `bytes` wire field.
-    attr_reader :bytes
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalTypeParamMetadata
-    FIELDS = {
-      type: 'type',
-      text: 'text'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      text
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::TypeParamType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the UrlCitationBodyType SDK namespace.
+module UrlCitationBodyType
+  URL_CITATION = 'url_citation'
+  VALUES = ['url_citation'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('UrlCitationBodyType', 'enum', "Unknown UrlCitationBodyType: #{value}")
+  end
+end
+
+# Defines the VectorStoreFileAttributes SDK value decoder.
+module VectorStoreFileAttributes
+  def self.from_hash(value)
+    return nil if value.nil?
+    value&.transform_values { |item| item }
+  end
+end
+
+# Defines the Verbosity SDK namespace.
+module Verbosity
+  def self.from_hash(hash)
+    return VerbosityVariant0.from_value(hash) if hash.is_a?(::String)
+    hash
+  end
+end
+
+# Defines the VerbosityVariant0 SDK namespace.
+module VerbosityVariant0
+  LOW = 'low'
+  MEDIUM = 'medium'
+  HIGH = 'high'
+  VALUES = ['low', 'medium', 'high'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalWaitParamMetadata
+  FIELDS = {
+    type: "type",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::WaitParamType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for WaitParam.
+# A wait action.
+class WaitParam
+  include ComputerAction
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalWaitParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalWaitParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalWaitParamMetadata::DECODERS
+
+  # @return [WaitParamType] Specifies the event type. For a wait action, this property is always set to `wait`.
+  attr_reader :type
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for TypeParam.
-  # An action to type in text.
-  class TypeParam
-    include ComputerAction
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalTypeParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalTypeParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalTypeParamMetadata::DECODERS
-
-    # @return [TypeParamType] Specifies the event type. For a type action, this property is always set to `type`.
-    attr_reader :type
-    # @return [String] The text to type.
-    attr_reader :text
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the TypeParamType SDK namespace.
-  module TypeParamType
-    TYPE = 'type'
-    VALUES = ['type'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('TypeParamType', 'enum', "Unknown TypeParamType: #{value}")
-    end
+# Defines the WaitParamType SDK namespace.
+module WaitParamType
+  WAIT = 'wait'
+  VALUES = ['wait'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('WaitParamType', 'enum', "Unknown WaitParamType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalWebhookEndpointWithSecretResourceMetadata
+  FIELDS = {
+    id: "id",
+    object: "object",
+    created_at: "created_at",
+    updated_at: "updated_at",
+    name: "name",
+    url: "url",
+    event_types: "event_types",
+    signing_secret_hint: "signing_secret_hint",
+    signing_secret: "signing_secret",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+    object
+    created_at
+    name
+    url
+    event_types
+    signing_secret_hint
+    signing_secret
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::WebhookEndpointWithSecretResourceObject.from_value(value)
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    signing_secret_hint
+  ].freeze
+end
+
+# API model for WebhookEndpointWithSecretResource.
+# Typed representation of the `WebhookEndpointWithSecretResource` API schema.
+class WebhookEndpointWithSecretResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalWebhookEndpointWithSecretResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalWebhookEndpointWithSecretResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalWebhookEndpointWithSecretResourceMetadata::DECODERS
+
+  # @return [String] The unique ID of the webhook endpoint.
+  attr_reader :id
+  # @return [WebhookEndpointWithSecretResourceObject] The object type, which is always webhook_endpoint.
+  attr_reader :object
+  # @return [Integer] The Unix timestamp when the endpoint was created.
+  attr_reader :created_at
+  # @return [Integer] The Unix timestamp of the last endpoint configuration or signing-secret change. Initialized at creation; tests and unchanged updates do not advance it.
+  attr_reader :updated_at
+  # @return [String] The human-readable name of the endpoint.
+  attr_reader :name
+  # @return [String] The HTTPS URL that receives webhook deliveries.
+  attr_reader :url
+  # @return [Array_of_String] The event types that trigger deliveries to this endpoint.
+  attr_reader :event_types
+  # @return [String] Required `string` value serialized in the `signing_secret_hint` wire field.
+  attr_reader :signing_secret_hint
+  # @return [String] The endpoint's signing secret. This is returned only when the endpoint is created or the secret is rotated.
+  attr_reader :signing_secret
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalUrlCitationBodyMetadata
-    FIELDS = {
-      type: 'type',
-      url: 'url',
-      start_index: 'start_index',
-      end_index: 'end_index',
-      title: 'title'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      url
-      start_index
-      end_index
-      title
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::UrlCitationBodyType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalWebhookEndpointWithSecretResourceMetadata::NULLABLE_FIELDS)
   end
 
-  # API model for UrlCitationBody.
-  # A citation for a web resource used to generate a model response.
-  class UrlCitationBody
-    include Annotation
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalUrlCitationBodyMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalUrlCitationBodyMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalUrlCitationBodyMetadata::DECODERS
-
-    # @return [UrlCitationBodyType] The type of the URL citation. Always `url_citation`.
-    attr_reader :type
-    # @return [String] The URL of the web resource.
-    attr_reader :url
-    # @return [Integer] The index of the first character of the URL citation in the message.
-    attr_reader :start_index
-    # @return [Integer] The index of the last character of the URL citation in the message.
-    attr_reader :end_index
-    # @return [String] The title of the web resource.
-    attr_reader :title
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the UrlCitationBodyType SDK namespace.
-  module UrlCitationBodyType
-    URL_CITATION = 'url_citation'
-    VALUES = ['url_citation'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('UrlCitationBodyType', 'enum', "Unknown UrlCitationBodyType: #{value}")
-    end
+# Defines the WebhookEndpointWithSecretResourceObject SDK namespace.
+module WebhookEndpointWithSecretResourceObject
+  WEBHOOK_ENDPOINT = 'webhook_endpoint'
+  VALUES = ['webhook_endpoint'].freeze
+  def self.from_value(value)
+    value
   end
-
-  # Defines the VectorStoreFileAttributes SDK value decoder.
-  module VectorStoreFileAttributes
-    def self.from_hash(value)
-      return nil if value.nil?
-
-      value&.transform_values { |item| item }
-    end
-  end
-
-  # Defines the Verbosity SDK namespace.
-  module Verbosity
-    def self.from_hash(hash)
-      return VerbosityVariant0.from_value(hash) if hash.is_a?(::String)
-
-      hash
-    end
-  end
-
-  # Defines the VerbosityVariant0 SDK namespace.
-  module VerbosityVariant0
-    LOW = 'low'
-    MEDIUM = 'medium'
-    HIGH = 'high'
-    VALUES = %w[low medium high].freeze
-    def self.from_value(value)
-      value
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalWaitParamMetadata
-    FIELDS = {
-      type: 'type'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::WaitParamType.from_value(value)
-      end
-    }.freeze
-  end
-
-  # API model for WaitParam.
-  # A wait action.
-  class WaitParam
-    include ComputerAction
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalWaitParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalWaitParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalWaitParamMetadata::DECODERS
-
-    # @return [WaitParamType] Specifies the event type. For a wait action, this property is always set to `wait`.
-    attr_reader :type
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the WaitParamType SDK namespace.
-  module WaitParamType
-    WAIT = 'wait'
-    VALUES = ['wait'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('WaitParamType', 'enum', "Unknown WaitParamType: #{value}")
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalWebhookEndpointWithSecretResourceMetadata
-    FIELDS = {
-      id: 'id',
-      object: 'object',
-      created_at: 'created_at',
-      updated_at: 'updated_at',
-      name: 'name',
-      url: 'url',
-      event_types: 'event_types',
-      signing_secret_hint: 'signing_secret_hint',
-      signing_secret: 'signing_secret'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-      object
-      created_at
-      name
-      url
-      event_types
-      signing_secret_hint
-      signing_secret
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::WebhookEndpointWithSecretResourceObject.from_value(value)
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      signing_secret_hint
-    ].freeze
-  end
-
-  # API model for WebhookEndpointWithSecretResource.
-  # Typed representation of the `WebhookEndpointWithSecretResource` API schema.
-  class WebhookEndpointWithSecretResource
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalWebhookEndpointWithSecretResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalWebhookEndpointWithSecretResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalWebhookEndpointWithSecretResourceMetadata::DECODERS
-
-    # @return [String] The unique ID of the webhook endpoint.
-    attr_reader :id
-    # @return [WebhookEndpointWithSecretResourceObject] The object type, which is always webhook_endpoint.
-    attr_reader :object
-    # @return [Integer] The Unix timestamp when the endpoint was created.
-    attr_reader :created_at
-    # @return [Integer] The Unix timestamp of the last endpoint configuration or signing-secret change. Initialized at creation; tests and unchanged updates do not advance it.
-    attr_reader :updated_at
-    # @return [String] The human-readable name of the endpoint.
-    attr_reader :name
-    # @return [String] The HTTPS URL that receives webhook deliveries.
-    attr_reader :url
-    # @return [Array_of_String] The event types that trigger deliveries to this endpoint.
-    attr_reader :event_types
-    # @return [String] Required `string` value serialized in the `signing_secret_hint` wire field.
-    attr_reader :signing_secret_hint
-    # @return [String] The endpoint's signing secret. This is returned only when the endpoint is created or the secret is rotated.
-    attr_reader :signing_secret
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalWebhookEndpointWithSecretResourceMetadata::NULLABLE_FIELDS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the WebhookEndpointWithSecretResourceObject SDK namespace.
-  module WebhookEndpointWithSecretResourceObject
-    WEBHOOK_ENDPOINT = 'webhook_endpoint'
-    VALUES = ['webhook_endpoint'].freeze
-    def self.from_value(value)
-      value
-    end
-  end
+end
 end

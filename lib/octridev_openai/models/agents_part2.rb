@@ -5,219 +5,218 @@
 
 # agents domain models (part 2)
 module OctridevOpenai
-  # API model for SetupCommandParam.
-  # A confidential setup command executed before the hosted agent starts.
-  class SetupCommandParam
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalSetupCommandParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalSetupCommandParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalSetupCommandParamMetadata::DECODERS
+# API model for SetupCommandParam.
+# A confidential setup command executed before the hosted agent starts.
+class SetupCommandParam
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalSetupCommandParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalSetupCommandParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalSetupCommandParamMetadata::DECODERS
 
-    # @return [String] The shell command to execute.
-    attr_reader :command
-    # @return [String] The absolute working directory. Defaults to `/workspace`.
-    attr_reader :cwd
+  # @return [String] The shell command to execute.
+  attr_reader :command
+  # @return [String] The absolute working directory. Defaults to `/workspace`.
+  attr_reader :cwd
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalSummaryTextResourceMetadata
-    FIELDS = {
-      type: 'type',
-      text: 'text'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      text
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::SummaryTextResourceType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for SummaryTextResource.
-  # A reasoning summary content part.
-  class SummaryTextResource
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalSummaryTextResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalSummaryTextResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalSummaryTextResourceMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [SummaryTextResourceType] The content type. Always `summary_text`.
-    attr_reader :type
-    # @return [String] The reasoning summary text.
-    attr_reader :text
+# Internal model hydration metadata.
+class SdkInternalSummaryTextResourceMetadata
+  FIELDS = {
+    type: "type",
+    text: "text",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    text
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::SummaryTextResourceType.from_value(value)
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for SummaryTextResource.
+# A reasoning summary content part.
+class SummaryTextResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalSummaryTextResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalSummaryTextResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalSummaryTextResourceMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [SummaryTextResourceType] The content type. Always `summary_text`.
+  attr_reader :type
+  # @return [String] The reasoning summary text.
+  attr_reader :text
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the SummaryTextResourceType SDK namespace.
-  module SummaryTextResourceType
-    SUMMARY_TEXT = 'summary_text'
-    VALUES = ['summary_text'].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalTokenUsageResourceMetadata
-    FIELDS = {
-      input_tokens: 'input_tokens',
-      input_tokens_details: 'input_tokens_details',
-      output_tokens: 'output_tokens',
-      output_tokens_details: 'output_tokens_details',
-      total_tokens: 'total_tokens'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      input_tokens
-      input_tokens_details
-      output_tokens
-      output_tokens_details
-      total_tokens
-    ].freeze
-    DECODERS = {
-      input_tokens_details: lambda do |value|
-        ::OctridevOpenai::InputTokensDetailsResource2.from_hash(value)
-      end,
-      output_tokens_details: lambda do |value|
-        ::OctridevOpenai::OutputTokensDetailsResource2.from_hash(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the SummaryTextResourceType SDK namespace.
+module SummaryTextResourceType
+  SUMMARY_TEXT = 'summary_text'
+  VALUES = ['summary_text'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalTokenUsageResourceMetadata
+  FIELDS = {
+    input_tokens: "input_tokens",
+    input_tokens_details: "input_tokens_details",
+    output_tokens: "output_tokens",
+    output_tokens_details: "output_tokens_details",
+    total_tokens: "total_tokens",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    input_tokens
+    input_tokens_details
+    output_tokens
+    output_tokens_details
+    total_tokens
+  ].freeze
+  DECODERS = {
+    input_tokens_details: lambda do |value|
+      ::OctridevOpenai::InputTokensDetailsResource2.from_hash(value)
+    end,
+    output_tokens_details: lambda do |value|
+      ::OctridevOpenai::OutputTokensDetailsResource2.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for TokenUsageResource.
+# Recorded token usage for a session or turn. Usage is best effort and may change.
+class TokenUsageResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalTokenUsageResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalTokenUsageResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalTokenUsageResourceMetadata::DECODERS
+
+  # @return [Integer] The number of input tokens used by the agent.
+  attr_reader :input_tokens
+  # @return [InputTokensDetailsResource2] A breakdown of the agent's input token usage.
+  attr_reader :input_tokens_details
+  # @return [Integer] The number of output tokens generated by the agent.
+  attr_reader :output_tokens
+  # @return [OutputTokensDetailsResource2] A breakdown of the agent's output token usage.
+  attr_reader :output_tokens_details
+  # @return [Integer] The total number of input and output tokens used by the agent.
+  attr_reader :total_tokens
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for TokenUsageResource.
-  # Recorded token usage for a session or turn. Usage is best effort and may change.
-  class TokenUsageResource
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalTokenUsageResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalTokenUsageResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalTokenUsageResourceMetadata::DECODERS
-
-    # @return [Integer] The number of input tokens used by the agent.
-    attr_reader :input_tokens
-    # @return [InputTokensDetailsResource2] A breakdown of the agent's input token usage.
-    attr_reader :input_tokens_details
-    # @return [Integer] The number of output tokens generated by the agent.
-    attr_reader :output_tokens
-    # @return [OutputTokensDetailsResource2] A breakdown of the agent's output token usage.
-    attr_reader :output_tokens_details
-    # @return [Integer] The total number of input and output tokens used by the agent.
-    attr_reader :total_tokens
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalWaitForSubagentsCallItemResourceMetadata
-    FIELDS = {
-      type: 'type',
-      id: 'id',
-      turn_id: 'turn_id',
-      status: 'status',
-      sender_agent_id: 'sender_agent_id',
-      recipient_agent_ids: 'recipient_agent_ids'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      id
-      turn_id
-      status
-      sender_agent_id
-      recipient_agent_ids
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::WaitForSubagentsCallItemResourceType.from_value(value)
-      end,
-      status: lambda do |value|
-        ::OctridevOpenai::FunctionCallStatusResource.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalWaitForSubagentsCallItemResourceMetadata
+  FIELDS = {
+    type: "type",
+    id: "id",
+    turn_id: "turn_id",
+    status: "status",
+    sender_agent_id: "sender_agent_id",
+    recipient_agent_ids: "recipient_agent_ids",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    id
+    turn_id
+    status
+    sender_agent_id
+    recipient_agent_ids
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::WaitForSubagentsCallItemResourceType.from_value(value)
+    end,
+    status: lambda do |value|
+      ::OctridevOpenai::FunctionCallStatusResource.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for WaitForSubagentsCallItemResource.
+# A request to wait for one or more subagents.
+class WaitForSubagentsCallItemResource
+  include SessionTurnItemResource
+  include AgentOutputItemResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalWaitForSubagentsCallItemResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalWaitForSubagentsCallItemResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalWaitForSubagentsCallItemResourceMetadata::DECODERS
+
+  # @return [WaitForSubagentsCallItemResourceType] The item type. Always `wait_for_subagents_call`.
+  attr_reader :type
+  # @return [String] The ID of the tool call item.
+  attr_reader :id
+  # @return [String] The ID of the turn that contains this item.
+  attr_reader :turn_id
+  # @return [FunctionCallStatusResource] The status of the tool call.
+  attr_reader :status
+  # @return [String] The ID of the agent waiting for results.
+  attr_reader :sender_agent_id
+  # @return [Array_of_String] The IDs of the agents to wait for.
+  attr_reader :recipient_agent_ids
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for WaitForSubagentsCallItemResource.
-  # A request to wait for one or more subagents.
-  class WaitForSubagentsCallItemResource
-    include SessionTurnItemResource
-    include AgentOutputItemResource
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalWaitForSubagentsCallItemResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalWaitForSubagentsCallItemResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalWaitForSubagentsCallItemResourceMetadata::DECODERS
-
-    # @return [WaitForSubagentsCallItemResourceType] The item type. Always `wait_for_subagents_call`.
-    attr_reader :type
-    # @return [String] The ID of the tool call item.
-    attr_reader :id
-    # @return [String] The ID of the turn that contains this item.
-    attr_reader :turn_id
-    # @return [FunctionCallStatusResource] The status of the tool call.
-    attr_reader :status
-    # @return [String] The ID of the agent waiting for results.
-    attr_reader :sender_agent_id
-    # @return [Array_of_String] The IDs of the agents to wait for.
-    attr_reader :recipient_agent_ids
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the WaitForSubagentsCallItemResourceType SDK namespace.
-  module WaitForSubagentsCallItemResourceType
-    WAIT_FOR_SUBAGENTS_CALL = 'wait_for_subagents_call'
-    VALUES = ['wait_for_subagents_call'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('WaitForSubagentsCallItemResourceType', 'enum', "Unknown WaitForSubagentsCallItemResourceType: #{value}")
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
+
+# Defines the WaitForSubagentsCallItemResourceType SDK namespace.
+module WaitForSubagentsCallItemResourceType
+  WAIT_FOR_SUBAGENTS_CALL = 'wait_for_subagents_call'
+  VALUES = ['wait_for_subagents_call'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('WaitForSubagentsCallItemResourceType', 'enum', "Unknown WaitForSubagentsCallItemResourceType: #{value}")
+  end
+end
 end

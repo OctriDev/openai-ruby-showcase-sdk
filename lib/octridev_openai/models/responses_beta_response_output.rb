@@ -5,240 +5,237 @@
 
 # responses_beta_response_output domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalBetaResponseOutputItemAddedEventMetadata
-    FIELDS = {
-      agent: 'agent',
-      type: 'type',
-      output_index: 'output_index',
-      sequence_number: 'sequence_number',
-      item: 'item'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      output_index
-      sequence_number
-      item
-    ].freeze
-    DECODERS = {
-      agent: lambda do |value|
-        ::OctridevOpenai::BetaAgentTag.from_hash(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::BetaResponseOutputItemAddedEventType.from_value(value)
-      end,
-      item: lambda do |value|
-        ::OctridevOpenai::BetaOutputItem.from_hash(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalBetaResponseOutputItemAddedEventMetadata
+  FIELDS = {
+    agent: "agent",
+    type: "type",
+    output_index: "output_index",
+    sequence_number: "sequence_number",
+    item: "item",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    output_index
+    sequence_number
+    item
+  ].freeze
+  DECODERS = {
+    agent: lambda do |value|
+      ::OctridevOpenai::BetaAgentTag.from_hash(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::BetaResponseOutputItemAddedEventType.from_value(value)
+    end,
+    item: lambda do |value|
+      ::OctridevOpenai::BetaOutputItem.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaResponseOutputItemAddedEvent.
+# Emitted when a new output item is added.
+class BetaResponseOutputItemAddedEvent
+  include BetaResponseStreamEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaResponseOutputItemAddedEventMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaResponseOutputItemAddedEventMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaResponseOutputItemAddedEventMetadata::DECODERS
+
+  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+  attr_reader :agent
+  # @return [BetaResponseOutputItemAddedEventType] The type of the event. Always `response.output_item.added`.
+  attr_reader :type
+  # @return [Integer] The index of the output item that was added.
+  attr_reader :output_index
+  # @return [Integer] The sequence number of this event.
+  attr_reader :sequence_number
+  # @return [BetaOutputItem] The output item that was added. For reasoning items, `encrypted_content` may be incomplete while the item is in progress. Use the reasoning item from the corresponding `response.output_item.done` event when passing it as input to a subsequent request.
+  attr_reader :item
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BetaResponseOutputItemAddedEvent.
-  # Emitted when a new output item is added.
-  class BetaResponseOutputItemAddedEvent
-    include BetaResponseStreamEvent
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaResponseOutputItemAddedEventMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaResponseOutputItemAddedEventMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaResponseOutputItemAddedEventMetadata::DECODERS
-
-    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-    attr_reader :agent
-    # @return [BetaResponseOutputItemAddedEventType] The type of the event. Always `response.output_item.added`.
-    attr_reader :type
-    # @return [Integer] The index of the output item that was added.
-    attr_reader :output_index
-    # @return [Integer] The sequence number of this event.
-    attr_reader :sequence_number
-    # @return [BetaOutputItem] The output item that was added. For reasoning items, `encrypted_content` may be incomplete while the item is in progress. Use the reasoning item from the corresponding `response.output_item.done` event when passing it as input to a subsequent request.
-    attr_reader :item
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the BetaResponseOutputItemAddedEventType SDK namespace.
-  module BetaResponseOutputItemAddedEventType
-    RESPONSE_OUTPUT_ITEM_ADDED = 'response.output_item.added'
-    VALUES = ['response.output_item.added'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('BetaResponseOutputItemAddedEventType', 'enum', "Unknown BetaResponseOutputItemAddedEventType: #{value}")
-    end
+# Defines the BetaResponseOutputItemAddedEventType SDK namespace.
+module BetaResponseOutputItemAddedEventType
+  RESPONSE_OUTPUT_ITEM_ADDED = 'response.output_item.added'
+  VALUES = ['response.output_item.added'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('BetaResponseOutputItemAddedEventType', 'enum', "Unknown BetaResponseOutputItemAddedEventType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaResponseOutputItemDoneEventMetadata
+  FIELDS = {
+    agent: "agent",
+    type: "type",
+    output_index: "output_index",
+    sequence_number: "sequence_number",
+    item: "item",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    output_index
+    sequence_number
+    item
+  ].freeze
+  DECODERS = {
+    agent: lambda do |value|
+      ::OctridevOpenai::BetaAgentTag.from_hash(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::BetaResponseOutputItemDoneEventType.from_value(value)
+    end,
+    item: lambda do |value|
+      ::OctridevOpenai::BetaOutputItem.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaResponseOutputItemDoneEvent.
+# Emitted when an output item is marked done.
+class BetaResponseOutputItemDoneEvent
+  include BetaResponseStreamEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaResponseOutputItemDoneEventMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaResponseOutputItemDoneEventMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaResponseOutputItemDoneEventMetadata::DECODERS
+
+  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+  attr_reader :agent
+  # @return [BetaResponseOutputItemDoneEventType] The type of the event. Always `response.output_item.done`.
+  attr_reader :type
+  # @return [Integer] The index of the output item that was marked done.
+  attr_reader :output_index
+  # @return [Integer] The sequence number of this event.
+  attr_reader :sequence_number
+  # @return [BetaOutputItem] The output item that was marked done.
+  attr_reader :item
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaResponseOutputItemDoneEventMetadata
-    FIELDS = {
-      agent: 'agent',
-      type: 'type',
-      output_index: 'output_index',
-      sequence_number: 'sequence_number',
-      item: 'item'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      output_index
-      sequence_number
-      item
-    ].freeze
-    DECODERS = {
-      agent: lambda do |value|
-        ::OctridevOpenai::BetaAgentTag.from_hash(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::BetaResponseOutputItemDoneEventType.from_value(value)
-      end,
-      item: lambda do |value|
-        ::OctridevOpenai::BetaOutputItem.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for BetaResponseOutputItemDoneEvent.
-  # Emitted when an output item is marked done.
-  class BetaResponseOutputItemDoneEvent
-    include BetaResponseStreamEvent
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaResponseOutputItemDoneEventMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaResponseOutputItemDoneEventMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaResponseOutputItemDoneEventMetadata::DECODERS
+# Defines the BetaResponseOutputItemDoneEventType SDK namespace.
+module BetaResponseOutputItemDoneEventType
+  RESPONSE_OUTPUT_ITEM_DONE = 'response.output_item.done'
+  VALUES = ['response.output_item.done'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-    attr_reader :agent
-    # @return [BetaResponseOutputItemDoneEventType] The type of the event. Always `response.output_item.done`.
-    attr_reader :type
-    # @return [Integer] The index of the output item that was marked done.
-    attr_reader :output_index
-    # @return [Integer] The sequence number of this event.
-    attr_reader :sequence_number
-    # @return [BetaOutputItem] The output item that was marked done.
-    attr_reader :item
+    raise SdkValidationError.new('BetaResponseOutputItemDoneEventType', 'enum', "Unknown BetaResponseOutputItemDoneEventType: #{value}")
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalBetaResponseOutputTextAnnotationAddedEventMetadata
+  FIELDS = {
+    agent: "agent",
+    type: "type",
+    item_id: "item_id",
+    output_index: "output_index",
+    content_index: "content_index",
+    annotation_index: "annotation_index",
+    sequence_number: "sequence_number",
+    annotation: "annotation",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    item_id
+    output_index
+    content_index
+    annotation_index
+    sequence_number
+    annotation
+  ].freeze
+  DECODERS = {
+    agent: lambda do |value|
+      ::OctridevOpenai::BetaAgentTag.from_hash(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::BetaResponseOutputTextAnnotationAddedEventType.from_value(value)
+    end,
+    annotation: lambda do |value|
+      ::OctridevOpenai::BetaAnnotation.from_hash(value)
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    annotation
+  ].freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for BetaResponseOutputTextAnnotationAddedEvent.
+# Emitted when an annotation is added to output text content.
+class BetaResponseOutputTextAnnotationAddedEvent
+  include BetaResponseStreamEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaResponseOutputTextAnnotationAddedEventMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaResponseOutputTextAnnotationAddedEventMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaResponseOutputTextAnnotationAddedEventMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+  attr_reader :agent
+  # @return [BetaResponseOutputTextAnnotationAddedEventType] The type of the event. Always 'response.output_text.annotation.added'.
+  attr_reader :type
+  # @return [String] The unique identifier of the item to which the annotation is being added.
+  attr_reader :item_id
+  # @return [Integer] The index of the output item in the response's output array.
+  attr_reader :output_index
+  # @return [Integer] The index of the content part within the output item.
+  attr_reader :content_index
+  # @return [Integer] The index of the annotation within the content part.
+  attr_reader :annotation_index
+  # @return [Integer] The sequence number of this event.
+  attr_reader :sequence_number
+  # @return [BetaAnnotation] The annotation object being added. (See annotation schema for details.)
+  attr_reader :annotation
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the BetaResponseOutputItemDoneEventType SDK namespace.
-  module BetaResponseOutputItemDoneEventType
-    RESPONSE_OUTPUT_ITEM_DONE = 'response.output_item.done'
-    VALUES = ['response.output_item.done'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('BetaResponseOutputItemDoneEventType', 'enum', "Unknown BetaResponseOutputItemDoneEventType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalBetaResponseOutputTextAnnotationAddedEventMetadata::NULLABLE_FIELDS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaResponseOutputTextAnnotationAddedEventMetadata
-    FIELDS = {
-      agent: 'agent',
-      type: 'type',
-      item_id: 'item_id',
-      output_index: 'output_index',
-      content_index: 'content_index',
-      annotation_index: 'annotation_index',
-      sequence_number: 'sequence_number',
-      annotation: 'annotation'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      item_id
-      output_index
-      content_index
-      annotation_index
-      sequence_number
-      annotation
-    ].freeze
-    DECODERS = {
-      agent: lambda do |value|
-        ::OctridevOpenai::BetaAgentTag.from_hash(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::BetaResponseOutputTextAnnotationAddedEventType.from_value(value)
-      end,
-      annotation: lambda do |value|
-        ::OctridevOpenai::BetaAnnotation.from_hash(value)
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      annotation
-    ].freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # API model for BetaResponseOutputTextAnnotationAddedEvent.
-  # Emitted when an annotation is added to output text content.
-  class BetaResponseOutputTextAnnotationAddedEvent
-    include BetaResponseStreamEvent
+# Defines the BetaResponseOutputTextAnnotationAddedEventType SDK namespace.
+module BetaResponseOutputTextAnnotationAddedEventType
+  RESPONSE_OUTPUT_TEXT_ANNOTATION_ADDED = 'response.output_text.annotation.added'
+  VALUES = ['response.output_text.annotation.added'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaResponseOutputTextAnnotationAddedEventMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaResponseOutputTextAnnotationAddedEventMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaResponseOutputTextAnnotationAddedEventMetadata::DECODERS
-
-    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-    attr_reader :agent
-    # @return [BetaResponseOutputTextAnnotationAddedEventType] The type of the event. Always 'response.output_text.annotation.added'.
-    attr_reader :type
-    # @return [String] The unique identifier of the item to which the annotation is being added.
-    attr_reader :item_id
-    # @return [Integer] The index of the output item in the response's output array.
-    attr_reader :output_index
-    # @return [Integer] The index of the content part within the output item.
-    attr_reader :content_index
-    # @return [Integer] The index of the annotation within the content part.
-    attr_reader :annotation_index
-    # @return [Integer] The sequence number of this event.
-    attr_reader :sequence_number
-    # @return [BetaAnnotation] The annotation object being added. (See annotation schema for details.)
-    attr_reader :annotation
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalBetaResponseOutputTextAnnotationAddedEventMetadata::NULLABLE_FIELDS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+    raise SdkValidationError.new('BetaResponseOutputTextAnnotationAddedEventType', 'enum', "Unknown BetaResponseOutputTextAnnotationAddedEventType: #{value}")
   end
-
-  # Defines the BetaResponseOutputTextAnnotationAddedEventType SDK namespace.
-  module BetaResponseOutputTextAnnotationAddedEventType
-    RESPONSE_OUTPUT_TEXT_ANNOTATION_ADDED = 'response.output_text.annotation.added'
-    VALUES = ['response.output_text.annotation.added'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('BetaResponseOutputTextAnnotationAddedEventType', 'enum', "Unknown BetaResponseOutputTextAnnotationAddedEventType: #{value}")
-    end
-  end
+end
 end

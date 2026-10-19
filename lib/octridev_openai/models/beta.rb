@@ -5,248 +5,248 @@
 
 # beta domain models
 module OctridevOpenai
-  # Defines the BetaContent SDK namespace.
-  module BetaContent
-    def self.from_hash(hash)
-      lossy = nil
-      [BetaInputContent, BetaOutputContent].each do |type|
-        decoded = type.from_hash(hash)
-        return decoded if SdkModel.keeps_every_key?(hash, decoded)
+# Defines the BetaContent SDK namespace.
+module BetaContent
+  def self.from_hash(hash)
+    lossy = nil
+    [BetaInputContent, BetaOutputContent].each do |type|
+      decoded = type.from_hash(hash)
+      return decoded if SdkModel.keeps_every_key?(hash, decoded)
 
-        lossy ||= decoded
-      rescue ::StandardError
-        next
-      end
-      lossy unless lossy.nil?
+      lossy ||= decoded
+    rescue ::StandardError
+      next
     end
+    return lossy unless lossy.nil?
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaErrorPayloadMetadata
+  FIELDS = {
+    type: "type",
+    code: "code",
+    message: "message",
+    param: "param",
+    headers: "headers",
+    misalignment: "misalignment",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    code
+    message
+    param
+  ].freeze
+  DECODERS = {
+    misalignment: lambda do |value|
+      ::OctridevOpenai::BetaMisalignmentErrorDetailsResource.from_hash(value)
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    code
+    param
+  ].freeze
+end
+
+# API model for BetaErrorPayload.
+# An error payload that was emitted for a streaming error event.
+class BetaErrorPayload
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaErrorPayloadMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaErrorPayloadMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaErrorPayloadMetadata::DECODERS
+
+  # @return [String] The error type that was emitted.
+  attr_reader :type
+  # @return [String] Required `string` value serialized in the `code` wire field.
+  attr_reader :code
+  # @return [String] The human-readable error message that was emitted.
+  attr_reader :message
+  # @return [String] Required `string` value serialized in the `param` wire field.
+  attr_reader :param
+  # @return [Hash] The response headers that were emitted with the error, if any.
+  attr_reader :headers
+  # @return [BetaMisalignmentErrorDetailsResource] Optional object value serialized in the `misalignment` wire field.
+  attr_reader :misalignment
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaErrorPayloadMetadata
-    FIELDS = {
-      type: 'type',
-      code: 'code',
-      message: 'message',
-      param: 'param',
-      headers: 'headers',
-      misalignment: 'misalignment'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      code
-      message
-      param
-    ].freeze
-    DECODERS = {
-      misalignment: lambda do |value|
-        ::OctridevOpenai::BetaMisalignmentErrorDetailsResource.from_hash(value)
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      code
-      param
-    ].freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalBetaErrorPayloadMetadata::NULLABLE_FIELDS)
   end
 
-  # API model for BetaErrorPayload.
-  # An error payload that was emitted for a streaming error event.
-  class BetaErrorPayload
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaErrorPayloadMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaErrorPayloadMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaErrorPayloadMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] The error type that was emitted.
-    attr_reader :type
-    # @return [String] Required `string` value serialized in the `code` wire field.
-    attr_reader :code
-    # @return [String] The human-readable error message that was emitted.
-    attr_reader :message
-    # @return [String] Required `string` value serialized in the `param` wire field.
-    attr_reader :param
-    # @return [Hash] The response headers that were emitted with the error, if any.
-    attr_reader :headers
-    # @return [BetaMisalignmentErrorDetailsResource] Optional object value serialized in the `misalignment` wire field.
-    attr_reader :misalignment
+# Internal model hydration metadata.
+class SdkInternalBetaInputAudioInputAudioMetadata
+  FIELDS = {
+    data: "data",
+    format: "format",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    data
+    format
+  ].freeze
+  DECODERS = {
+    format: lambda do |value|
+      ::OctridevOpenai::BetaInputAudioInputAudioFormat.from_value(value)
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for BetaInputAudioInputAudio.
+# Required object value serialized in the `input_audio` wire field.
+class BetaInputAudioInputAudio
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaInputAudioInputAudioMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaInputAudioInputAudioMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaInputAudioInputAudioMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalBetaErrorPayloadMetadata::NULLABLE_FIELDS)
-    end
+  # @return [String] Base64-encoded audio data.
+  attr_reader :data
+  # @return [BetaInputAudioInputAudioFormat] The format of the audio data. Currently supported formats are `mp3` and `wav`.
+  attr_reader :format
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaInputAudioInputAudioMetadata
-    FIELDS = {
-      data: 'data',
-      format: 'format'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      data
-      format
-    ].freeze
-    DECODERS = {
-      format: lambda do |value|
-        ::OctridevOpenai::BetaInputAudioInputAudioFormat.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for BetaInputAudioInputAudio.
-  # Required object value serialized in the `input_audio` wire field.
-  class BetaInputAudioInputAudio
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaInputAudioInputAudioMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaInputAudioInputAudioMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaInputAudioInputAudioMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] Base64-encoded audio data.
-    attr_reader :data
-    # @return [BetaInputAudioInputAudioFormat] The format of the audio data. Currently supported formats are `mp3` and `wav`.
-    attr_reader :format
+# Internal model hydration metadata.
+class SdkInternalBetaInputAudioMetadata
+  FIELDS = {
+    type: "type",
+    input_audio: "input_audio",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    input_audio
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::BetaInputAudioType.from_value(value)
+    end,
+    input_audio: lambda do |value|
+      ::OctridevOpenai::BetaInputAudioInputAudio.from_hash(value)
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for BetaInputAudio.
+# An audio input to the model.
+class BetaInputAudio
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaInputAudioMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaInputAudioMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaInputAudioMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [BetaInputAudioType] The type of the input item. Always `input_audio`.
+  attr_reader :type
+  # @return [BetaInputAudioInputAudio] Required object value serialized in the `input_audio` wire field.
+  attr_reader :input_audio
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaInputAudioMetadata
-    FIELDS = {
-      type: 'type',
-      input_audio: 'input_audio'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      input_audio
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::BetaInputAudioType.from_value(value)
-      end,
-      input_audio: lambda do |value|
-        ::OctridevOpenai::BetaInputAudioInputAudio.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for BetaInputAudio.
-  # An audio input to the model.
-  class BetaInputAudio
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaInputAudioMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaInputAudioMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaInputAudioMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [BetaInputAudioType] The type of the input item. Always `input_audio`.
-    attr_reader :type
-    # @return [BetaInputAudioInputAudio] Required object value serialized in the `input_audio` wire field.
-    attr_reader :input_audio
+# Defines the BetaInputAudioInputAudioFormat SDK namespace.
+module BetaInputAudioInputAudioFormat
+  MP3 = 'mp3'
+  WAV = 'wav'
+  VALUES = ['mp3', 'wav'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Defines the BetaInputAudioType SDK namespace.
+module BetaInputAudioType
+  INPUT_AUDIO = 'input_audio'
+  VALUES = ['input_audio'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# Internal model hydration metadata.
+class SdkInternalBetaOutputAudioMetadata
+  FIELDS = {
+    type: "type",
+    data: "data",
+    transcript: "transcript",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    data
+    transcript
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::BetaOutputAudioType.from_value(value)
+    end,
+  }.freeze
+end
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+# API model for BetaOutputAudio.
+# An audio output from the model.
+class BetaOutputAudio
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaOutputAudioMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaOutputAudioMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaOutputAudioMetadata::DECODERS
+
+  # @return [BetaOutputAudioType] The type of the output audio. Always `output_audio`.
+  attr_reader :type
+  # @return [String] Base64-encoded audio data from the model.
+  attr_reader :data
+  # @return [String] The transcript of the audio data from the model.
+  attr_reader :transcript
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the BetaInputAudioInputAudioFormat SDK namespace.
-  module BetaInputAudioInputAudioFormat
-    MP3 = 'mp3'
-    WAV = 'wav'
-    VALUES = %w[mp3 wav].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the BetaInputAudioType SDK namespace.
-  module BetaInputAudioType
-    INPUT_AUDIO = 'input_audio'
-    VALUES = ['input_audio'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaOutputAudioMetadata
-    FIELDS = {
-      type: 'type',
-      data: 'data',
-      transcript: 'transcript'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      data
-      transcript
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::BetaOutputAudioType.from_value(value)
-      end
-    }.freeze
+# Defines the BetaOutputAudioType SDK namespace.
+module BetaOutputAudioType
+  OUTPUT_AUDIO = 'output_audio'
+  VALUES = ['output_audio'].freeze
+  def self.from_value(value)
+    value
   end
-
-  # API model for BetaOutputAudio.
-  # An audio output from the model.
-  class BetaOutputAudio
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaOutputAudioMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaOutputAudioMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaOutputAudioMetadata::DECODERS
-
-    # @return [BetaOutputAudioType] The type of the output audio. Always `output_audio`.
-    attr_reader :type
-    # @return [String] Base64-encoded audio data from the model.
-    attr_reader :data
-    # @return [String] The transcript of the audio data from the model.
-    attr_reader :transcript
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the BetaOutputAudioType SDK namespace.
-  module BetaOutputAudioType
-    OUTPUT_AUDIO = 'output_audio'
-    VALUES = ['output_audio'].freeze
-    def self.from_value(value)
-      value
-    end
-  end
+end
 end

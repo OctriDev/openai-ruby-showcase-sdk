@@ -5,118 +5,119 @@
 
 # webhook_fine_tuning_job_succeeded domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalWebhookFineTuningJobSucceededDataMetadata
-    FIELDS = {
-      id: 'id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-    ].freeze
-    DECODERS = {}.freeze
+# Internal model hydration metadata.
+class SdkInternalWebhookFineTuningJobSucceededDataMetadata
+  FIELDS = {
+    id: "id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for WebhookFineTuningJobSucceededData.
+# Event data payload.
+class WebhookFineTuningJobSucceededData
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalWebhookFineTuningJobSucceededDataMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalWebhookFineTuningJobSucceededDataMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalWebhookFineTuningJobSucceededDataMetadata::DECODERS
+
+  # @return [String] The unique ID of the fine-tuning job.
+  attr_reader :id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for WebhookFineTuningJobSucceededData.
-  # Event data payload.
-  class WebhookFineTuningJobSucceededData
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalWebhookFineTuningJobSucceededDataMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalWebhookFineTuningJobSucceededDataMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalWebhookFineTuningJobSucceededDataMetadata::DECODERS
-
-    # @return [String] The unique ID of the fine-tuning job.
-    attr_reader :id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalWebhookFineTuningJobSucceededMetadata
-    FIELDS = {
-      created_at: 'created_at',
-      id: 'id',
-      data: 'data',
-      object: 'object',
-      type: 'type'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      created_at
-      id
-      data
-      type
-    ].freeze
-    DECODERS = {
-      data: lambda do |value|
-        ::OctridevOpenai::WebhookFineTuningJobSucceededData.from_hash(value)
-      end,
-      object: lambda do |value|
-        ::OctridevOpenai::WebhookFineTuningJobSucceededObject.from_value(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::WebhookFineTuningJobSucceededType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalWebhookFineTuningJobSucceededMetadata
+  FIELDS = {
+    created_at: "created_at",
+    id: "id",
+    data: "data",
+    object: "object",
+    type: "type",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    created_at
+    id
+    data
+    type
+  ].freeze
+  DECODERS = {
+    data: lambda do |value|
+      ::OctridevOpenai::WebhookFineTuningJobSucceededData.from_hash(value)
+    end,
+    object: lambda do |value|
+      ::OctridevOpenai::WebhookFineTuningJobSucceededObject.from_value(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::WebhookFineTuningJobSucceededType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for WebhookFineTuningJobSucceeded.
+# Sent when a fine-tuning job has succeeded.
+class WebhookFineTuningJobSucceeded
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalWebhookFineTuningJobSucceededMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalWebhookFineTuningJobSucceededMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalWebhookFineTuningJobSucceededMetadata::DECODERS
+
+  # @return [Integer] The Unix timestamp (in seconds) of when the fine-tuning job succeeded.
+  attr_reader :created_at
+  # @return [String] The unique ID of the event.
+  attr_reader :id
+  # @return [WebhookFineTuningJobSucceededData] Event data payload.
+  attr_reader :data
+  # @return [WebhookFineTuningJobSucceededObject] The object of the event. Always `event`.
+  attr_reader :object
+  # @return [WebhookFineTuningJobSucceededType] The type of the event. Always `fine_tuning.job.succeeded`.
+  attr_reader :type
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for WebhookFineTuningJobSucceeded.
-  # Sent when a fine-tuning job has succeeded.
-  class WebhookFineTuningJobSucceeded
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalWebhookFineTuningJobSucceededMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalWebhookFineTuningJobSucceededMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalWebhookFineTuningJobSucceededMetadata::DECODERS
-
-    # @return [Integer] The Unix timestamp (in seconds) of when the fine-tuning job succeeded.
-    attr_reader :created_at
-    # @return [String] The unique ID of the event.
-    attr_reader :id
-    # @return [WebhookFineTuningJobSucceededData] Event data payload.
-    attr_reader :data
-    # @return [WebhookFineTuningJobSucceededObject] The object of the event. Always `event`.
-    attr_reader :object
-    # @return [WebhookFineTuningJobSucceededType] The type of the event. Always `fine_tuning.job.succeeded`.
-    attr_reader :type
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the WebhookFineTuningJobSucceededObject SDK namespace.
-  module WebhookFineTuningJobSucceededObject
-    EVENT = 'event'
-    VALUES = ['event'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the WebhookFineTuningJobSucceededType SDK namespace.
-  module WebhookFineTuningJobSucceededType
-    FINE_TUNING_JOB_SUCCEEDED = 'fine_tuning.job.succeeded'
-    VALUES = ['fine_tuning.job.succeeded'].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the WebhookFineTuningJobSucceededObject SDK namespace.
+module WebhookFineTuningJobSucceededObject
+  EVENT = 'event'
+  VALUES = ['event'].freeze
+  def self.from_value(value)
+    value
   end
+end
+
+# Defines the WebhookFineTuningJobSucceededType SDK namespace.
+module WebhookFineTuningJobSucceededType
+  FINE_TUNING_JOB_SUCCEEDED = 'fine_tuning.job.succeeded'
+  VALUES = ['fine_tuning.job.succeeded'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 end

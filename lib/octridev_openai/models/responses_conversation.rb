@@ -5,50 +5,49 @@
 
 # responses_conversation domain models
 module OctridevOpenai
-  # Defines the ConversationParam SDK namespace.
-  module ConversationParam
-    def self.from_hash(hash)
-      return hash if hash.is_a?(::String)
+# Defines the ConversationParam SDK namespace.
+module ConversationParam
+  def self.from_hash(hash)
+    return hash if hash.is_a?(::String)
+    return ConversationParam2.from_hash(hash)
+  end
+end
 
-      ConversationParam2.from_hash(hash)
-    end
+# Internal model hydration metadata.
+class SdkInternalConversationParam2Metadata
+  FIELDS = {
+    id: "id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for ConversationParam2.
+# The conversation that this response belongs to.
+class ConversationParam2
+  include ConversationParam
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalConversationParam2Metadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalConversationParam2Metadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalConversationParam2Metadata::DECODERS
+
+  # @return [String] The unique ID of the conversation.
+  attr_reader :id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalConversationParam2Metadata
-    FIELDS = {
-      id: 'id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-    ].freeze
-    DECODERS = {}.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ConversationParam2.
-  # The conversation that this response belongs to.
-  class ConversationParam2
-    include ConversationParam
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalConversationParam2Metadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalConversationParam2Metadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalConversationParam2Metadata::DECODERS
-
-    # @return [String] The unique ID of the conversation.
-    attr_reader :id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 end

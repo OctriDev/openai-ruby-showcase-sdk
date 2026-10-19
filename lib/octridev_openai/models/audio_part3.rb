@@ -5,682 +5,681 @@
 
 # audio domain models (part 3)
 module OctridevOpenai
-  # API model for TranscriptTextDeltaEvent.
-  # Emitted when there is an additional text delta. This is also the first event emitted when the transcription starts. Only emitted when you create a transcription with the `Stream` parameter set to `true`.
-  class TranscriptTextDeltaEvent
-    include CreateTranscriptionResponseStreamEvent
+# API model for TranscriptTextDeltaEvent.
+# Emitted when there is an additional text delta. This is also the first event emitted when the transcription starts. Only emitted when you create a transcription with the `Stream` parameter set to `true`.
+class TranscriptTextDeltaEvent
+  include CreateTranscriptionResponseStreamEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalTranscriptTextDeltaEventMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalTranscriptTextDeltaEventMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalTranscriptTextDeltaEventMetadata::DECODERS
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalTranscriptTextDeltaEventMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalTranscriptTextDeltaEventMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalTranscriptTextDeltaEventMetadata::DECODERS
+  # @return [TranscriptTextDeltaEventType] The type of the event. Always `transcript.text.delta`.
+  attr_reader :type
+  # @return [String] The text delta that was additionally transcribed.
+  attr_reader :delta
+  # @return [Array_of_TranscriptTextDeltaEventLogprobsItem] The log probabilities of the delta. Only included if you create a transcription with the `include[]` parameter set to `logprobs`.
+  attr_reader :logprobs
+  # @return [String] Identifier of the diarized segment that this delta belongs to. Only present when using `gpt-4o-transcribe-diarize`.
+  attr_reader :segment_id
 
-    # @return [TranscriptTextDeltaEventType] The type of the event. Always `transcript.text.delta`.
-    attr_reader :type
-    # @return [String] The text delta that was additionally transcribed.
-    attr_reader :delta
-    # @return [Array_of_TranscriptTextDeltaEventLogprobsItem] The log probabilities of the delta. Only included if you create a transcription with the `include[]` parameter set to `logprobs`.
-    attr_reader :logprobs
-    # @return [String] Identifier of the diarized segment that this delta belongs to. Only present when using `gpt-4o-transcribe-diarize`.
-    attr_reader :segment_id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the TranscriptTextDeltaEventType SDK namespace.
-  module TranscriptTextDeltaEventType
-    TRANSCRIPT_TEXT_DELTA = 'transcript.text.delta'
-    VALUES = ['transcript.text.delta'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('TranscriptTextDeltaEventType', 'enum', "Unknown TranscriptTextDeltaEventType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalTranscriptTextDoneEventLogprobsItemMetadata
-    FIELDS = {
-      token: 'token',
-      logprob: 'logprob',
-      bytes: 'bytes'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {}.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the TranscriptTextDeltaEventType SDK namespace.
+module TranscriptTextDeltaEventType
+  TRANSCRIPT_TEXT_DELTA = 'transcript.text.delta'
+  VALUES = ['transcript.text.delta'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('TranscriptTextDeltaEventType', 'enum', "Unknown TranscriptTextDeltaEventType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalTranscriptTextDoneEventLogprobsItemMetadata
+  FIELDS = {
+    token: "token",
+    logprob: "logprob",
+    bytes: "bytes",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for TranscriptTextDoneEventLogprobsItem.
+# Required object value serialized in the `logprobs[]` wire field.
+class TranscriptTextDoneEventLogprobsItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalTranscriptTextDoneEventLogprobsItemMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalTranscriptTextDoneEventLogprobsItemMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalTranscriptTextDoneEventLogprobsItemMetadata::DECODERS
+
+  # @return [String] The token that was used to generate the log probability.
+  attr_reader :token
+  # @return [Float] The log probability of the token.
+  attr_reader :logprob
+  # @return [Array_of_Integer] The bytes that were used to generate the log probability.
+  attr_reader :bytes
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for TranscriptTextDoneEventLogprobsItem.
-  # Required object value serialized in the `logprobs[]` wire field.
-  class TranscriptTextDoneEventLogprobsItem
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalTranscriptTextDoneEventLogprobsItemMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalTranscriptTextDoneEventLogprobsItemMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalTranscriptTextDoneEventLogprobsItemMetadata::DECODERS
-
-    # @return [String] The token that was used to generate the log probability.
-    attr_reader :token
-    # @return [Float] The log probability of the token.
-    attr_reader :logprob
-    # @return [Array_of_Integer] The bytes that were used to generate the log probability.
-    attr_reader :bytes
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalTranscriptTextDoneEventMetadata
-    FIELDS = {
-      type: 'type',
-      text: 'text',
-      languages: 'languages',
-      logprobs: 'logprobs',
-      usage: 'usage'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      text
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::TranscriptTextDoneEventType.from_value(value)
-      end,
-      languages: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::TranscriptionLanguage.from_hash(item) }
-      end,
-      logprobs: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::TranscriptTextDoneEventLogprobsItem.from_hash(item) }
-      end,
-      usage: lambda do |value|
-        ::OctridevOpenai::TranscriptTextUsageTokens.from_hash(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalTranscriptTextDoneEventMetadata
+  FIELDS = {
+    type: "type",
+    text: "text",
+    languages: "languages",
+    logprobs: "logprobs",
+    usage: "usage",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    text
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::TranscriptTextDoneEventType.from_value(value)
+    end,
+    languages: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::TranscriptionLanguage.from_hash(item) }
+    end,
+    logprobs: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::TranscriptTextDoneEventLogprobsItem.from_hash(item) }
+    end,
+    usage: lambda do |value|
+      ::OctridevOpenai::TranscriptTextUsageTokens.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for TranscriptTextDoneEvent.
+# Emitted when the transcription is complete. Contains the complete transcription text. Only emitted when you create a transcription with the `Stream` parameter set to `true`.
+class TranscriptTextDoneEvent
+  include CreateTranscriptionResponseStreamEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalTranscriptTextDoneEventMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalTranscriptTextDoneEventMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalTranscriptTextDoneEventMetadata::DECODERS
+
+  # @return [TranscriptTextDoneEventType] The type of the event. Always `transcript.text.done`.
+  attr_reader :type
+  # @return [String] The text that was transcribed.
+  attr_reader :text
+  # @return [Array_of_TranscriptionLanguage] The languages detected in the audio. Returned by `gpt-transcribe`. An empty array indicates that no language could be reliably detected.
+  attr_reader :languages
+  # @return [Array_of_TranscriptTextDoneEventLogprobsItem] The log probabilities of the individual tokens in the transcription. Only included if you create a transcription with the `include[]` parameter set to `logprobs`.
+  attr_reader :logprobs
+  # @return [TranscriptTextUsageTokens] Usage statistics for models billed by token usage.
+  attr_reader :usage
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for TranscriptTextDoneEvent.
-  # Emitted when the transcription is complete. Contains the complete transcription text. Only emitted when you create a transcription with the `Stream` parameter set to `true`.
-  class TranscriptTextDoneEvent
-    include CreateTranscriptionResponseStreamEvent
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalTranscriptTextDoneEventMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalTranscriptTextDoneEventMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalTranscriptTextDoneEventMetadata::DECODERS
-
-    # @return [TranscriptTextDoneEventType] The type of the event. Always `transcript.text.done`.
-    attr_reader :type
-    # @return [String] The text that was transcribed.
-    attr_reader :text
-    # @return [Array_of_TranscriptionLanguage] The languages detected in the audio. Returned by `gpt-transcribe`. An empty array indicates that no language could be reliably detected.
-    attr_reader :languages
-    # @return [Array_of_TranscriptTextDoneEventLogprobsItem] The log probabilities of the individual tokens in the transcription. Only included if you create a transcription with the `include[]` parameter set to `logprobs`.
-    attr_reader :logprobs
-    # @return [TranscriptTextUsageTokens] Usage statistics for models billed by token usage.
-    attr_reader :usage
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the TranscriptTextDoneEventType SDK namespace.
-  module TranscriptTextDoneEventType
-    TRANSCRIPT_TEXT_DONE = 'transcript.text.done'
-    VALUES = ['transcript.text.done'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('TranscriptTextDoneEventType', 'enum', "Unknown TranscriptTextDoneEventType: #{value}")
-    end
+# Defines the TranscriptTextDoneEventType SDK namespace.
+module TranscriptTextDoneEventType
+  TRANSCRIPT_TEXT_DONE = 'transcript.text.done'
+  VALUES = ['transcript.text.done'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('TranscriptTextDoneEventType', 'enum', "Unknown TranscriptTextDoneEventType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalTranscriptTextSegmentEventMetadata
+  FIELDS = {
+    type: "type",
+    id: "id",
+    start: "start",
+    end_: "end",
+    text: "text",
+    speaker: "speaker",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    id
+    start
+    end_
+    text
+    speaker
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::TranscriptTextSegmentEventType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for TranscriptTextSegmentEvent.
+# Emitted when a diarized transcription returns a completed segment with speaker information. Only emitted when you create a transcription with `stream` set to `true` and `response_format` set to `diarized_json`.
+class TranscriptTextSegmentEvent
+  include CreateTranscriptionResponseStreamEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalTranscriptTextSegmentEventMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalTranscriptTextSegmentEventMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalTranscriptTextSegmentEventMetadata::DECODERS
+
+  # @return [TranscriptTextSegmentEventType] The type of the event. Always `transcript.text.segment`.
+  attr_reader :type
+  # @return [String] Unique identifier for the segment.
+  attr_reader :id
+  # @return [Float] Start timestamp of the segment in seconds.
+  attr_reader :start
+  # @return [Float] End timestamp of the segment in seconds.
+  attr_reader :end_
+  # @return [String] Transcript text for this segment.
+  attr_reader :text
+  # @return [String] Speaker label for this segment.
+  attr_reader :speaker
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalTranscriptTextSegmentEventMetadata
-    FIELDS = {
-      type: 'type',
-      id: 'id',
-      start: 'start',
-      end_: 'end',
-      text: 'text',
-      speaker: 'speaker'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      id
-      start
-      end_
-      text
-      speaker
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::TranscriptTextSegmentEventType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for TranscriptTextSegmentEvent.
-  # Emitted when a diarized transcription returns a completed segment with speaker information. Only emitted when you create a transcription with `stream` set to `true` and `response_format` set to `diarized_json`.
-  class TranscriptTextSegmentEvent
-    include CreateTranscriptionResponseStreamEvent
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalTranscriptTextSegmentEventMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalTranscriptTextSegmentEventMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalTranscriptTextSegmentEventMetadata::DECODERS
+# Defines the TranscriptTextSegmentEventType SDK namespace.
+module TranscriptTextSegmentEventType
+  TRANSCRIPT_TEXT_SEGMENT = 'transcript.text.segment'
+  VALUES = ['transcript.text.segment'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    # @return [TranscriptTextSegmentEventType] The type of the event. Always `transcript.text.segment`.
-    attr_reader :type
-    # @return [String] Unique identifier for the segment.
-    attr_reader :id
-    # @return [Float] Start timestamp of the segment in seconds.
-    attr_reader :start
-    # @return [Float] End timestamp of the segment in seconds.
-    attr_reader :end_
-    # @return [String] Transcript text for this segment.
-    attr_reader :text
-    # @return [String] Speaker label for this segment.
-    attr_reader :speaker
+    raise SdkValidationError.new('TranscriptTextSegmentEventType', 'enum', "Unknown TranscriptTextSegmentEventType: #{value}")
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalTranscriptTextUsageDurationMetadata
+  FIELDS = {
+    type: "type",
+    seconds: "seconds",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    seconds
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::TranscriptTextUsageDurationType.from_value(value)
+    end,
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for TranscriptTextUsageDuration.
+# Usage statistics for models billed by audio input duration.
+class TranscriptTextUsageDuration
+  include CreateTranscriptionResponseDiarizedJsonUsage
+  include CreateTranscriptionResponseJsonUsage
+  include RealtimeBetaServerEventConversationItemInputAudioTranscriptioX6aec14c56b
+  include RealtimeServerEventConversationItemInputAudioTranscriptionCompletedUsage
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalTranscriptTextUsageDurationMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalTranscriptTextUsageDurationMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalTranscriptTextUsageDurationMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [TranscriptTextUsageDurationType] The type of the usage object. Always `duration` for this variant.
+  attr_reader :type
+  # @return [Float] Duration of the input audio in seconds.
+  attr_reader :seconds
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the TranscriptTextSegmentEventType SDK namespace.
-  module TranscriptTextSegmentEventType
-    TRANSCRIPT_TEXT_SEGMENT = 'transcript.text.segment'
-    VALUES = ['transcript.text.segment'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('TranscriptTextSegmentEventType', 'enum', "Unknown TranscriptTextSegmentEventType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalTranscriptTextUsageDurationMetadata
-    FIELDS = {
-      type: 'type',
-      seconds: 'seconds'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      seconds
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::TranscriptTextUsageDurationType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the TranscriptTextUsageDurationType SDK namespace.
+module TranscriptTextUsageDurationType
+  DURATION = 'duration'
+  VALUES = ['duration'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('TranscriptTextUsageDurationType', 'enum', "Unknown TranscriptTextUsageDurationType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalTranscriptTextUsageTokensInputTokenDetailsMetadata
+  FIELDS = {
+    text_tokens: "text_tokens",
+    audio_tokens: "audio_tokens",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for TranscriptTextUsageTokensInputTokenDetails.
+# Details about the input tokens billed for this request.
+class TranscriptTextUsageTokensInputTokenDetails
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalTranscriptTextUsageTokensInputTokenDetailsMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalTranscriptTextUsageTokensInputTokenDetailsMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalTranscriptTextUsageTokensInputTokenDetailsMetadata::DECODERS
+
+  # @return [Integer] Number of text tokens billed for this request.
+  attr_reader :text_tokens
+  # @return [Integer] Number of audio tokens billed for this request.
+  attr_reader :audio_tokens
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for TranscriptTextUsageDuration.
-  # Usage statistics for models billed by audio input duration.
-  class TranscriptTextUsageDuration
-    include CreateTranscriptionResponseDiarizedJsonUsage
-    include CreateTranscriptionResponseJsonUsage
-    include RealtimeBetaServerEventConversationItemInputAudioTranscriptioX6aec14c56b
-    include RealtimeServerEventConversationItemInputAudioTranscriptionCompletedUsage
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalTranscriptTextUsageDurationMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalTranscriptTextUsageDurationMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalTranscriptTextUsageDurationMetadata::DECODERS
-
-    # @return [TranscriptTextUsageDurationType] The type of the usage object. Always `duration` for this variant.
-    attr_reader :type
-    # @return [Float] Duration of the input audio in seconds.
-    attr_reader :seconds
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the TranscriptTextUsageDurationType SDK namespace.
-  module TranscriptTextUsageDurationType
-    DURATION = 'duration'
-    VALUES = ['duration'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('TranscriptTextUsageDurationType', 'enum', "Unknown TranscriptTextUsageDurationType: #{value}")
-    end
+# Internal model hydration metadata.
+class SdkInternalTranscriptTextUsageTokensMetadata
+  FIELDS = {
+    type: "type",
+    input_tokens: "input_tokens",
+    input_token_details: "input_token_details",
+    output_tokens: "output_tokens",
+    total_tokens: "total_tokens",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    input_tokens
+    output_tokens
+    total_tokens
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::TranscriptTextUsageTokensType.from_value(value)
+    end,
+    input_token_details: lambda do |value|
+      ::OctridevOpenai::TranscriptTextUsageTokensInputTokenDetails.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for TranscriptTextUsageTokens.
+# Usage statistics for models billed by token usage.
+class TranscriptTextUsageTokens
+  include CreateTranscriptionResponseDiarizedJsonUsage
+  include CreateTranscriptionResponseJsonUsage
+  include RealtimeBetaServerEventConversationItemInputAudioTranscriptioX6aec14c56b
+  include RealtimeServerEventConversationItemInputAudioTranscriptionCompletedUsage
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalTranscriptTextUsageTokensMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalTranscriptTextUsageTokensMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalTranscriptTextUsageTokensMetadata::DECODERS
+
+  # @return [TranscriptTextUsageTokensType] The type of the usage object. Always `tokens` for this variant.
+  attr_reader :type
+  # @return [Integer] Number of input tokens billed for this request.
+  attr_reader :input_tokens
+  # @return [TranscriptTextUsageTokensInputTokenDetails] Details about the input tokens billed for this request.
+  attr_reader :input_token_details
+  # @return [Integer] Number of output tokens generated.
+  attr_reader :output_tokens
+  # @return [Integer] Total number of tokens used (input + output).
+  attr_reader :total_tokens
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalTranscriptTextUsageTokensInputTokenDetailsMetadata
-    FIELDS = {
-      text_tokens: 'text_tokens',
-      audio_tokens: 'audio_tokens'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {}.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for TranscriptTextUsageTokensInputTokenDetails.
-  # Details about the input tokens billed for this request.
-  class TranscriptTextUsageTokensInputTokenDetails
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalTranscriptTextUsageTokensInputTokenDetailsMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalTranscriptTextUsageTokensInputTokenDetailsMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalTranscriptTextUsageTokensInputTokenDetailsMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [Integer] Number of text tokens billed for this request.
-    attr_reader :text_tokens
-    # @return [Integer] Number of audio tokens billed for this request.
-    attr_reader :audio_tokens
+# Defines the TranscriptTextUsageTokensType SDK namespace.
+module TranscriptTextUsageTokensType
+  TOKENS = 'tokens'
+  VALUES = ['tokens'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+    raise SdkValidationError.new('TranscriptTextUsageTokensType', 'enum', "Unknown TranscriptTextUsageTokensType: #{value}")
+  end
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# Internal model hydration metadata.
+class SdkInternalUpdateVoiceConsentRequestMetadata
+  FIELDS = {
+    name: "name",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    name
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+# API model for UpdateVoiceConsentRequest.
+# Typed representation of the `UpdateVoiceConsentRequest` API schema.
+class UpdateVoiceConsentRequest
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalUpdateVoiceConsentRequestMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalUpdateVoiceConsentRequestMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalUpdateVoiceConsentRequestMetadata::DECODERS
+
+  # @return [String] The updated label for this consent recording.
+  attr_reader :name
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalTranscriptTextUsageTokensMetadata
-    FIELDS = {
-      type: 'type',
-      input_tokens: 'input_tokens',
-      input_token_details: 'input_token_details',
-      output_tokens: 'output_tokens',
-      total_tokens: 'total_tokens'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      input_tokens
-      output_tokens
-      total_tokens
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::TranscriptTextUsageTokensType.from_value(value)
-      end,
-      input_token_details: lambda do |value|
-        ::OctridevOpenai::TranscriptTextUsageTokensInputTokenDetails.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for TranscriptTextUsageTokens.
-  # Usage statistics for models billed by token usage.
-  class TranscriptTextUsageTokens
-    include CreateTranscriptionResponseDiarizedJsonUsage
-    include CreateTranscriptionResponseJsonUsage
-    include RealtimeBetaServerEventConversationItemInputAudioTranscriptioX6aec14c56b
-    include RealtimeServerEventConversationItemInputAudioTranscriptionCompletedUsage
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalTranscriptTextUsageTokensMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalTranscriptTextUsageTokensMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalTranscriptTextUsageTokensMetadata::DECODERS
+# Internal model hydration metadata.
+class SdkInternalVadConfigMetadata
+  FIELDS = {
+    type: "type",
+    prefix_padding_ms: "prefix_padding_ms",
+    silence_duration_ms: "silence_duration_ms",
+    threshold: "threshold",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::VadConfigType.from_value(value)
+    end,
+  }.freeze
+end
 
-    # @return [TranscriptTextUsageTokensType] The type of the usage object. Always `tokens` for this variant.
-    attr_reader :type
-    # @return [Integer] Number of input tokens billed for this request.
-    attr_reader :input_tokens
-    # @return [TranscriptTextUsageTokensInputTokenDetails] Details about the input tokens billed for this request.
-    attr_reader :input_token_details
-    # @return [Integer] Number of output tokens generated.
-    attr_reader :output_tokens
-    # @return [Integer] Total number of tokens used (input + output).
-    attr_reader :total_tokens
+# API model for VadConfig.
+# Typed representation of the `VadConfig` API schema.
+class VadConfig
+  include TranscriptionChunkingStrategy
+  include CreateTranscriptionRequestChunkingStrategy
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalVadConfigMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalVadConfigMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalVadConfigMetadata::DECODERS
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+  # @return [VadConfigType] Must be set to `server_vad` to enable manual chunking using server side VAD.
+  attr_reader :type
+  # @return [Integer] Amount of audio to include before the VAD detected speech (in milliseconds).
+  attr_reader :prefix_padding_ms
+  # @return [Integer] Duration of silence to detect speech stop (in milliseconds). With shorter values the model will respond more quickly, but may jump in on short pauses from the user.
+  attr_reader :silence_duration_ms
+  # @return [Float] Sensitivity threshold (0.0 to 1.0) for voice activity detection. A higher threshold will require louder audio to activate the model, and thus might perform better in noisy environments.
+  attr_reader :threshold
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the TranscriptTextUsageTokensType SDK namespace.
-  module TranscriptTextUsageTokensType
-    TOKENS = 'tokens'
-    VALUES = ['tokens'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('TranscriptTextUsageTokensType', 'enum', "Unknown TranscriptTextUsageTokensType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalUpdateVoiceConsentRequestMetadata
-    FIELDS = {
-      name: 'name'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      name
-    ].freeze
-    DECODERS = {}.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the VadConfigType SDK namespace.
+module VadConfigType
+  SERVER_VAD = 'server_vad'
+  VALUES = ['server_vad'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalVoiceConsentDeletedResourceMetadata
+  FIELDS = {
+    id: "id",
+    object: "object",
+    deleted: "deleted",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+    object
+    deleted
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::VoiceConsentDeletedResourceObject.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for VoiceConsentDeletedResource.
+# Typed representation of the `VoiceConsentDeletedResource` API schema.
+class VoiceConsentDeletedResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalVoiceConsentDeletedResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalVoiceConsentDeletedResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalVoiceConsentDeletedResourceMetadata::DECODERS
+
+  # @return [String] The consent recording identifier.
+  attr_reader :id
+  # @return [VoiceConsentDeletedResourceObject] Required enumerated value serialized in the `object` wire field.
+  attr_reader :object
+  # @return [Boolean] Required `boolean` value serialized in the `deleted` wire field.
+  attr_reader :deleted
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for UpdateVoiceConsentRequest.
-  # Typed representation of the `UpdateVoiceConsentRequest` API schema.
-  class UpdateVoiceConsentRequest
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalUpdateVoiceConsentRequestMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalUpdateVoiceConsentRequestMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalUpdateVoiceConsentRequestMetadata::DECODERS
-
-    # @return [String] The updated label for this consent recording.
-    attr_reader :name
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalVadConfigMetadata
-    FIELDS = {
-      type: 'type',
-      prefix_padding_ms: 'prefix_padding_ms',
-      silence_duration_ms: 'silence_duration_ms',
-      threshold: 'threshold'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::VadConfigType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the VoiceConsentDeletedResourceObject SDK namespace.
+module VoiceConsentDeletedResourceObject
+  AUDIO_VOICE_CONSENT = 'audio.voice_consent'
+  VALUES = ['audio.voice_consent'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalVoiceConsentListResourceMetadata
+  FIELDS = {
+    object: "object",
+    data: "data",
+    first_id: "first_id",
+    last_id: "last_id",
+    has_more: "has_more",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    data
+    has_more
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::VoiceConsentListResourceObject.from_value(value)
+    end,
+    data: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::VoiceConsentResource.from_hash(item) }
+    end,
+  }.freeze
+end
+
+# API model for VoiceConsentListResource.
+# Typed representation of the `VoiceConsentListResource` API schema.
+class VoiceConsentListResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalVoiceConsentListResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalVoiceConsentListResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalVoiceConsentListResourceMetadata::DECODERS
+
+  # @return [VoiceConsentListResourceObject] Required enumerated value serialized in the `object` wire field.
+  attr_reader :object
+  # @return [Array_of_VoiceConsentResource] Required array value serialized in the `data` wire field.
+  attr_reader :data
+  # @return [String] Optional `string` value serialized in the `first_id` wire field.
+  attr_reader :first_id
+  # @return [String] Optional `string` value serialized in the `last_id` wire field.
+  attr_reader :last_id
+  # @return [Boolean] Required `boolean` value serialized in the `has_more` wire field.
+  attr_reader :has_more
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for VadConfig.
-  # Typed representation of the `VadConfig` API schema.
-  class VadConfig
-    include TranscriptionChunkingStrategy
-    include CreateTranscriptionRequestChunkingStrategy
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalVadConfigMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalVadConfigMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalVadConfigMetadata::DECODERS
-
-    # @return [VadConfigType] Must be set to `server_vad` to enable manual chunking using server side VAD.
-    attr_reader :type
-    # @return [Integer] Amount of audio to include before the VAD detected speech (in milliseconds).
-    attr_reader :prefix_padding_ms
-    # @return [Integer] Duration of silence to detect speech stop (in milliseconds). With shorter values the model will respond more quickly, but may jump in on short pauses from the user.
-    attr_reader :silence_duration_ms
-    # @return [Float] Sensitivity threshold (0.0 to 1.0) for voice activity detection. A higher threshold will require louder audio to activate the model, and thus might perform better in noisy environments.
-    attr_reader :threshold
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the VadConfigType SDK namespace.
-  module VadConfigType
-    SERVER_VAD = 'server_vad'
-    VALUES = ['server_vad'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the VoiceConsentListResourceObject SDK namespace.
+module VoiceConsentListResourceObject
+  LIST = 'list'
+  VALUES = ['list'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalVoiceConsentResourceMetadata
+  FIELDS = {
+    object: "object",
+    id: "id",
+    name: "name",
+    language: "language",
+    created_at: "created_at",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    id
+    name
+    language
+    created_at
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::VoiceConsentResourceObject.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for VoiceConsentResource.
+# A consent recording used to authorize creation of a custom voice.
+class VoiceConsentResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalVoiceConsentResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalVoiceConsentResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalVoiceConsentResourceMetadata::DECODERS
+
+  # @return [VoiceConsentResourceObject] The object type, which is always `audio.voice_consent`.
+  attr_reader :object
+  # @return [String] The consent recording identifier.
+  attr_reader :id
+  # @return [String] The label provided when the consent recording was uploaded.
+  attr_reader :name
+  # @return [String] The BCP 47 language tag for the consent phrase (for example, `en-US`).
+  attr_reader :language
+  # @return [Integer] The Unix timestamp (in seconds) for when the consent recording was created.
+  attr_reader :created_at
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalVoiceConsentDeletedResourceMetadata
-    FIELDS = {
-      id: 'id',
-      object: 'object',
-      deleted: 'deleted'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-      object
-      deleted
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::VoiceConsentDeletedResourceObject.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for VoiceConsentDeletedResource.
-  # Typed representation of the `VoiceConsentDeletedResource` API schema.
-  class VoiceConsentDeletedResource
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalVoiceConsentDeletedResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalVoiceConsentDeletedResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalVoiceConsentDeletedResourceMetadata::DECODERS
-
-    # @return [String] The consent recording identifier.
-    attr_reader :id
-    # @return [VoiceConsentDeletedResourceObject] Required enumerated value serialized in the `object` wire field.
-    attr_reader :object
-    # @return [Boolean] Required `boolean` value serialized in the `deleted` wire field.
-    attr_reader :deleted
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
-
-  # Defines the VoiceConsentDeletedResourceObject SDK namespace.
-  module VoiceConsentDeletedResourceObject
-    AUDIO_VOICE_CONSENT = 'audio.voice_consent'
-    VALUES = ['audio.voice_consent'].freeze
-    def self.from_value(value)
-      value
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalVoiceConsentListResourceMetadata
-    FIELDS = {
-      object: 'object',
-      data: 'data',
-      first_id: 'first_id',
-      last_id: 'last_id',
-      has_more: 'has_more'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      data
-      has_more
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::VoiceConsentListResourceObject.from_value(value)
-      end,
-      data: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::VoiceConsentResource.from_hash(item) }
-      end
-    }.freeze
-  end
-
-  # API model for VoiceConsentListResource.
-  # Typed representation of the `VoiceConsentListResource` API schema.
-  class VoiceConsentListResource
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalVoiceConsentListResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalVoiceConsentListResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalVoiceConsentListResourceMetadata::DECODERS
-
-    # @return [VoiceConsentListResourceObject] Required enumerated value serialized in the `object` wire field.
-    attr_reader :object
-    # @return [Array_of_VoiceConsentResource] Required array value serialized in the `data` wire field.
-    attr_reader :data
-    # @return [String] Optional `string` value serialized in the `first_id` wire field.
-    attr_reader :first_id
-    # @return [String] Optional `string` value serialized in the `last_id` wire field.
-    attr_reader :last_id
-    # @return [Boolean] Required `boolean` value serialized in the `has_more` wire field.
-    attr_reader :has_more
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the VoiceConsentListResourceObject SDK namespace.
-  module VoiceConsentListResourceObject
-    LIST = 'list'
-    VALUES = ['list'].freeze
-    def self.from_value(value)
-      value
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalVoiceConsentResourceMetadata
-    FIELDS = {
-      object: 'object',
-      id: 'id',
-      name: 'name',
-      language: 'language',
-      created_at: 'created_at'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      id
-      name
-      language
-      created_at
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::VoiceConsentResourceObject.from_value(value)
-      end
-    }.freeze
-  end
-
-  # API model for VoiceConsentResource.
-  # A consent recording used to authorize creation of a custom voice.
-  class VoiceConsentResource
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalVoiceConsentResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalVoiceConsentResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalVoiceConsentResourceMetadata::DECODERS
-
-    # @return [VoiceConsentResourceObject] The object type, which is always `audio.voice_consent`.
-    attr_reader :object
-    # @return [String] The consent recording identifier.
-    attr_reader :id
-    # @return [String] The label provided when the consent recording was uploaded.
-    attr_reader :name
-    # @return [String] The BCP 47 language tag for the consent phrase (for example, `en-US`).
-    attr_reader :language
-    # @return [Integer] The Unix timestamp (in seconds) for when the consent recording was created.
-    attr_reader :created_at
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
+end
 end

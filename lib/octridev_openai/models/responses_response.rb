@@ -5,674 +5,671 @@
 
 # responses_response domain models
 module OctridevOpenai
-  # Defines the ResponseVariant2TruncationVariant0 SDK namespace.
-  module ResponseVariant2TruncationVariant0
-    AUTO = 'auto'
-    DISABLED = 'disabled'
-    VALUES = %w[auto disabled].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the ResponseVariant2TruncationVariant0 SDK namespace.
+module ResponseVariant2TruncationVariant0
+  AUTO = 'auto'
+  DISABLED = 'disabled'
+  VALUES = ['auto', 'disabled'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalResponseVariant2IncompleteDetailsMetadata
+  FIELDS = {
+    reason: "reason",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+    reason: lambda do |value|
+      ::OctridevOpenai::ResponseVariant2IncompleteDetailsReason.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for ResponseVariant2IncompleteDetails.
+# Details about why the response is incomplete.
+class ResponseVariant2IncompleteDetails
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalResponseVariant2IncompleteDetailsMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalResponseVariant2IncompleteDetailsMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalResponseVariant2IncompleteDetailsMetadata::DECODERS
+
+  # @return [ResponseVariant2IncompleteDetailsReason] The reason why the response is incomplete. `steered` means the response stopped at a safe output boundary after a WebSocket `response.steer` event. The server can then create a successor response automatically with the queued input.
+  attr_reader :reason
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalResponseVariant2IncompleteDetailsMetadata
-    FIELDS = {
-      reason: 'reason'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {
-      reason: lambda do |value|
-        ::OctridevOpenai::ResponseVariant2IncompleteDetailsReason.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ResponseVariant2IncompleteDetails.
-  # Details about why the response is incomplete.
-  class ResponseVariant2IncompleteDetails
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalResponseVariant2IncompleteDetailsMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalResponseVariant2IncompleteDetailsMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalResponseVariant2IncompleteDetailsMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [ResponseVariant2IncompleteDetailsReason] The reason why the response is incomplete. `steered` means the response stopped at a safe output boundary after a WebSocket `response.steer` event. The server can then create a successor response automatically with the queued input.
-    attr_reader :reason
+# Internal model hydration metadata.
+class SdkInternalResponseMetadata
+  FIELDS = {
+    metadata: "metadata",
+    top_logprobs: "top_logprobs",
+    temperature: "temperature",
+    top_p: "top_p",
+    user: "user",
+    safety_identifier: "safety_identifier",
+    prompt_cache_key: "prompt_cache_key",
+    prompt_cache_retention: "prompt_cache_retention",
+    previous_response_id: "previous_response_id",
+    model: "model",
+    background: "background",
+    max_tool_calls: "max_tool_calls",
+    text: "text",
+    tools: "tools",
+    tool_choice: "tool_choice",
+    prompt: "prompt",
+    service_tier: "service_tier",
+    truncation: "truncation",
+    id: "id",
+    object: "object",
+    status: "status",
+    access_programs: "access_programs",
+    created_at: "created_at",
+    completed_at: "completed_at",
+    error: "error",
+    incomplete_details: "incomplete_details",
+    output: "output",
+    reasoning: "reasoning",
+    instructions: "instructions",
+    output_text: "output_text",
+    usage: "usage",
+    prompt_cache_options: "prompt_cache_options",
+    prompt_cache_diagnostics: "prompt_cache_diagnostics",
+    moderation: "moderation",
+    parallel_tool_calls: "parallel_tool_calls",
+    conversation: "conversation",
+    max_output_tokens: "max_output_tokens",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    metadata
+    temperature
+    top_p
+    model
+    tools
+    tool_choice
+    id
+    object
+    access_programs
+    created_at
+    error
+    incomplete_details
+    output
+    instructions
+    parallel_tool_calls
+  ].freeze
+  DECODERS = {
+    metadata: lambda do |value|
+      ::OctridevOpenai::Metadata.from_hash(value)
+    end,
+    prompt_cache_retention: lambda do |value|
+      ::OctridevOpenai::ModelResponsePropertiesPromptCacheRetentionVariant0.from_value(value)
+    end,
+    model: lambda do |value|
+      ::OctridevOpenai::ModelIdsResponses.from_hash(value)
+    end,
+    text: lambda do |value|
+      ::OctridevOpenai::ResponseTextParam.from_hash(value)
+    end,
+    tools: lambda do |value|
+      ::OctridevOpenai::ToolsArray.from_hash(value)
+    end,
+    tool_choice: lambda do |value|
+      ::OctridevOpenai::ToolChoiceParam.from_hash(value)
+    end,
+    prompt: lambda do |value|
+      ::OctridevOpenai::Prompt.from_hash(value)
+    end,
+    service_tier: lambda do |value|
+      ::OctridevOpenai::ServiceTierResponses.from_hash(value)
+    end,
+    truncation: lambda do |value|
+      ::OctridevOpenai::ResponseVariant2TruncationVariant0.from_value(value)
+    end,
+    object: lambda do |value|
+      ::OctridevOpenai::ResponseVariant2Object.from_value(value)
+    end,
+    status: lambda do |value|
+      ::OctridevOpenai::ResponseVariant2Status.from_value(value)
+    end,
+    access_programs: lambda do |value|
+      ::OctridevOpenai::AccessProgramsBody.from_hash(value)
+    end,
+    error: lambda do |value|
+      ::OctridevOpenai::ResponseError.from_hash(value)
+    end,
+    incomplete_details: lambda do |value|
+      ::OctridevOpenai::ResponseVariant2IncompleteDetails.from_hash(value)
+    end,
+    output: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::OutputItem.from_hash(item) }
+    end,
+    reasoning: lambda do |value|
+      ::OctridevOpenai::Reasoning.from_hash(value)
+    end,
+    usage: lambda do |value|
+      ::OctridevOpenai::ResponseUsage.from_hash(value)
+    end,
+    prompt_cache_options: lambda do |value|
+      ::OctridevOpenai::PromptCacheOptions.from_hash(value)
+    end,
+    prompt_cache_diagnostics: lambda do |value|
+      ::OctridevOpenai::PromptCacheDiagnostics.from_hash(value)
+    end,
+    moderation: lambda do |value|
+      ::OctridevOpenai::Moderation.from_hash(value)
+    end,
+    conversation: lambda do |value|
+      ::OctridevOpenai::ResponseConversation.from_hash(value)
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    metadata
+    temperature
+    top_p
+    access_programs
+    error
+    incomplete_details
+    instructions
+  ].freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for Response.
+# Typed representation of the `Response` API schema.
+class Response
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalResponseMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [Metadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
+  attr_reader :metadata
+  # @return [Integer] Optional API value serialized in the `top_logprobs` wire field.
+  attr_reader :top_logprobs
+  # @return [Float] Optional API value serialized in the `temperature` wire field.
+  attr_reader :temperature
+  # @return [Float] Optional API value serialized in the `top_p` wire field.
+  attr_reader :top_p
+  # @return [String] This field is being replaced by `safety_identifier` and `prompt_cache_key`. Use `prompt_cache_key` instead to maintain caching optimizations. A stable identifier for your end-users. Used to boost cache hit rates by better bucketing similar requests and to help OpenAI detect and prevent abuse. Learn more.
+  attr_reader :user
+  # @return [String] Optional API value serialized in the `safety_identifier` wire field.
+  attr_reader :safety_identifier
+  # @return [String] Optional `string` value serialized in the `prompt_cache_key` wire field.
+  attr_reader :prompt_cache_key
+  # @return [ModelResponsePropertiesPromptCacheRetentionVariant0] Optional API value serialized in the `prompt_cache_retention` wire field.
+  attr_reader :prompt_cache_retention
+  # @return [String] Optional `string` value serialized in the `previous_response_id` wire field.
+  attr_reader :previous_response_id
+  # @return [ModelIdsResponses] Model ID used to generate the response, like `gpt-6-astra`. OpenAI offers a wide range of models with different capabilities, performance characteristics, and price points. Refer to the model guide to browse and compare available models.
+  attr_reader :model
+  # @return [Boolean] Optional `boolean` value serialized in the `background` wire field.
+  attr_reader :background
+  # @return [Integer] Optional `integer` value serialized in the `max_tool_calls` wire field.
+  attr_reader :max_tool_calls
+  # @return [ResponseTextParam] Configuration options for a text response from the model. Can be plain text or structured JSON data. Learn more: - Text inputs and outputs - Structured Outputs
+  attr_reader :text
+  # @return [ToolsArray] An array of tools the model may call while generating a response. You can specify which tool to use by setting the `tool_choice` parameter. We support the following categories of tools: - **Built-in tools**: Tools that are provided by OpenAI that extend the model's capabilities, like web search or file search. Learn more about built-in tools. - **MCP Tools**: Integrations with third-party systems via custom MCP servers or predefined connectors such as Google Drive and…
+  attr_reader :tools
+  # @return [ToolChoiceParam] How the model should select which tool (or tools) to use when generating a response. See the `tools` parameter to see how to specify which tools the model can call.
+  attr_reader :tool_choice
+  # @return [Prompt] Reference to a prompt template and its variables. Learn more.
+  attr_reader :prompt
+  # @return [ServiceTierResponses] Optional API value serialized in the `service_tier` wire field.
+  attr_reader :service_tier
+  # @return [ResponseVariant2TruncationVariant0] Optional API value serialized in the `truncation` wire field.
+  attr_reader :truncation
+  # @return [String] Unique identifier for this Response.
+  attr_reader :id
+  # @return [ResponseVariant2Object] The object type of this resource - always set to `response`.
+  attr_reader :object
+  # @return [ResponseVariant2Status] The status of the response generation. One of `completed`, `failed`, `in_progress`, `cancelled`, `queued`, or `incomplete`.
+  attr_reader :status
+  # @return [AccessProgramsBody] Required API value serialized in the `access_programs` wire field.
+  attr_reader :access_programs
+  # @return [Float] Unix timestamp (in seconds) of when this Response was created.
+  attr_reader :created_at
+  # @return [Float] Optional API value serialized in the `completed_at` wire field.
+  attr_reader :completed_at
+  # @return [ResponseError] An error object returned when the model fails to generate a Response.
+  attr_reader :error
+  # @return [ResponseVariant2IncompleteDetails] Details about why the response is incomplete.
+  attr_reader :incomplete_details
+  # @return [Array_of_OutputItem] An array of content items generated by the model. - The length and order of items in the `output` array is dependent on the model's response. - Rather than accessing the first item in the `output` array and assuming it's an `assistant` message with the content generated by the model, you might consider using the `output_text` property where supported in SDKs.
+  attr_reader :output
+  # @return [Reasoning] Optional API value serialized in the `reasoning` wire field.
+  attr_reader :reasoning
+  # @return [Object] A system (or developer) message inserted into the model's context. When using along with `previous_response_id`, the instructions from a previous response will not be carried over to the next response. This makes it simple to swap out system (or developer) messages in new responses.
+  attr_reader :instructions
+  # @return [String] Optional API value serialized in the `output_text` wire field.
+  attr_reader :output_text
+  # @return [ResponseUsage] Optional API value serialized in the `usage` wire field.
+  attr_reader :usage
+  # @return [PromptCacheOptions] The prompt-caching options that were applied to the response. Supported for `gpt-5.6` and later models.
+  attr_reader :prompt_cache_options
+  # @return [PromptCacheDiagnostics] Prompt cache diagnostics requested for this response.
+  attr_reader :prompt_cache_diagnostics
+  # @return [Moderation] Optional API value serialized in the `moderation` wire field.
+  attr_reader :moderation
+  # @return [Boolean] Whether to allow the model to run tool calls in parallel.
+  attr_reader :parallel_tool_calls
+  # @return [ResponseConversation] Optional API value serialized in the `conversation` wire field.
+  attr_reader :conversation
+  # @return [Integer] Optional `integer` value serialized in the `max_output_tokens` wire field.
+  attr_reader :max_output_tokens
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalResponseMetadata
-    FIELDS = {
-      metadata: 'metadata',
-      top_logprobs: 'top_logprobs',
-      temperature: 'temperature',
-      top_p: 'top_p',
-      user: 'user',
-      safety_identifier: 'safety_identifier',
-      prompt_cache_key: 'prompt_cache_key',
-      prompt_cache_retention: 'prompt_cache_retention',
-      previous_response_id: 'previous_response_id',
-      model: 'model',
-      background: 'background',
-      max_tool_calls: 'max_tool_calls',
-      text: 'text',
-      tools: 'tools',
-      tool_choice: 'tool_choice',
-      prompt: 'prompt',
-      service_tier: 'service_tier',
-      truncation: 'truncation',
-      id: 'id',
-      object: 'object',
-      status: 'status',
-      access_programs: 'access_programs',
-      created_at: 'created_at',
-      completed_at: 'completed_at',
-      error: 'error',
-      incomplete_details: 'incomplete_details',
-      output: 'output',
-      reasoning: 'reasoning',
-      instructions: 'instructions',
-      output_text: 'output_text',
-      usage: 'usage',
-      prompt_cache_options: 'prompt_cache_options',
-      prompt_cache_diagnostics: 'prompt_cache_diagnostics',
-      moderation: 'moderation',
-      parallel_tool_calls: 'parallel_tool_calls',
-      conversation: 'conversation',
-      max_output_tokens: 'max_output_tokens'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      metadata
-      temperature
-      top_p
-      model
-      tools
-      tool_choice
-      id
-      object
-      access_programs
-      created_at
-      error
-      incomplete_details
-      output
-      instructions
-      parallel_tool_calls
-    ].freeze
-    DECODERS = {
-      metadata: lambda do |value|
-        ::OctridevOpenai::Metadata.from_hash(value)
-      end,
-      prompt_cache_retention: lambda do |value|
-        ::OctridevOpenai::ModelResponsePropertiesPromptCacheRetentionVariant0.from_value(value)
-      end,
-      model: lambda do |value|
-        ::OctridevOpenai::ModelIdsResponses.from_hash(value)
-      end,
-      text: lambda do |value|
-        ::OctridevOpenai::ResponseTextParam.from_hash(value)
-      end,
-      tools: lambda do |value|
-        ::OctridevOpenai::ToolsArray.from_hash(value)
-      end,
-      tool_choice: lambda do |value|
-        ::OctridevOpenai::ToolChoiceParam.from_hash(value)
-      end,
-      prompt: lambda do |value|
-        ::OctridevOpenai::Prompt.from_hash(value)
-      end,
-      service_tier: lambda do |value|
-        ::OctridevOpenai::ServiceTierResponses.from_hash(value)
-      end,
-      truncation: lambda do |value|
-        ::OctridevOpenai::ResponseVariant2TruncationVariant0.from_value(value)
-      end,
-      object: lambda do |value|
-        ::OctridevOpenai::ResponseVariant2Object.from_value(value)
-      end,
-      status: lambda do |value|
-        ::OctridevOpenai::ResponseVariant2Status.from_value(value)
-      end,
-      access_programs: lambda do |value|
-        ::OctridevOpenai::AccessProgramsBody.from_hash(value)
-      end,
-      error: lambda do |value|
-        ::OctridevOpenai::ResponseError.from_hash(value)
-      end,
-      incomplete_details: lambda do |value|
-        ::OctridevOpenai::ResponseVariant2IncompleteDetails.from_hash(value)
-      end,
-      output: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::OutputItem.from_hash(item) }
-      end,
-      reasoning: lambda do |value|
-        ::OctridevOpenai::Reasoning.from_hash(value)
-      end,
-      usage: lambda do |value|
-        ::OctridevOpenai::ResponseUsage.from_hash(value)
-      end,
-      prompt_cache_options: lambda do |value|
-        ::OctridevOpenai::PromptCacheOptions.from_hash(value)
-      end,
-      prompt_cache_diagnostics: lambda do |value|
-        ::OctridevOpenai::PromptCacheDiagnostics.from_hash(value)
-      end,
-      moderation: lambda do |value|
-        ::OctridevOpenai::Moderation.from_hash(value)
-      end,
-      conversation: lambda do |value|
-        ::OctridevOpenai::ResponseConversation.from_hash(value)
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      metadata
-      temperature
-      top_p
-      access_programs
-      error
-      incomplete_details
-      instructions
-    ].freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalResponseMetadata::NULLABLE_FIELDS)
   end
 
-  # API model for Response.
-  # Typed representation of the `Response` API schema.
-  class Response
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalResponseMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [Metadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
-    attr_reader :metadata
-    # @return [Integer] Optional API value serialized in the `top_logprobs` wire field.
-    attr_reader :top_logprobs
-    # @return [Float] Optional API value serialized in the `temperature` wire field.
-    attr_reader :temperature
-    # @return [Float] Optional API value serialized in the `top_p` wire field.
-    attr_reader :top_p
-    # @return [String] This field is being replaced by `safety_identifier` and `prompt_cache_key`. Use `prompt_cache_key` instead to maintain caching optimizations. A stable identifier for your end-users. Used to boost cache hit rates by better bucketing similar requests and to help OpenAI detect and prevent abuse. Learn more.
-    attr_reader :user
-    # @return [String] Optional API value serialized in the `safety_identifier` wire field.
-    attr_reader :safety_identifier
-    # @return [String] Optional `string` value serialized in the `prompt_cache_key` wire field.
-    attr_reader :prompt_cache_key
-    # @return [ModelResponsePropertiesPromptCacheRetentionVariant0] Optional API value serialized in the `prompt_cache_retention` wire field.
-    attr_reader :prompt_cache_retention
-    # @return [String] Optional `string` value serialized in the `previous_response_id` wire field.
-    attr_reader :previous_response_id
-    # @return [ModelIdsResponses] Model ID used to generate the response, like `gpt-6-astra`. OpenAI offers a wide range of models with different capabilities, performance characteristics, and price points. Refer to the model guide to browse and compare available models.
-    attr_reader :model
-    # @return [Boolean] Optional `boolean` value serialized in the `background` wire field.
-    attr_reader :background
-    # @return [Integer] Optional `integer` value serialized in the `max_tool_calls` wire field.
-    attr_reader :max_tool_calls
-    # @return [ResponseTextParam] Configuration options for a text response from the model. Can be plain text or structured JSON data. Learn more: - Text inputs and outputs - Structured Outputs
-    attr_reader :text
-    # @return [ToolsArray] An array of tools the model may call while generating a response. You can specify which tool to use by setting the `tool_choice` parameter. We support the following categories of tools: - **Built-in tools**: Tools that are provided by OpenAI that extend the model's capabilities, like web search or file search. Learn more about built-in tools. - **MCP Tools**: Integrations with third-party systems via custom MCP servers or predefined connectors such as Google Drive and…
-    attr_reader :tools
-    # @return [ToolChoiceParam] How the model should select which tool (or tools) to use when generating a response. See the `tools` parameter to see how to specify which tools the model can call.
-    attr_reader :tool_choice
-    # @return [Prompt] Reference to a prompt template and its variables. Learn more.
-    attr_reader :prompt
-    # @return [ServiceTierResponses] Optional API value serialized in the `service_tier` wire field.
-    attr_reader :service_tier
-    # @return [ResponseVariant2TruncationVariant0] Optional API value serialized in the `truncation` wire field.
-    attr_reader :truncation
-    # @return [String] Unique identifier for this Response.
-    attr_reader :id
-    # @return [ResponseVariant2Object] The object type of this resource - always set to `response`.
-    attr_reader :object
-    # @return [ResponseVariant2Status] The status of the response generation. One of `completed`, `failed`, `in_progress`, `cancelled`, `queued`, or `incomplete`.
-    attr_reader :status
-    # @return [AccessProgramsBody] Required API value serialized in the `access_programs` wire field.
-    attr_reader :access_programs
-    # @return [Float] Unix timestamp (in seconds) of when this Response was created.
-    attr_reader :created_at
-    # @return [Float] Optional API value serialized in the `completed_at` wire field.
-    attr_reader :completed_at
-    # @return [ResponseError] An error object returned when the model fails to generate a Response.
-    attr_reader :error
-    # @return [ResponseVariant2IncompleteDetails] Details about why the response is incomplete.
-    attr_reader :incomplete_details
-    # @return [Array_of_OutputItem] An array of content items generated by the model. - The length and order of items in the `output` array is dependent on the model's response. - Rather than accessing the first item in the `output` array and assuming it's an `assistant` message with the content generated by the model, you might consider using the `output_text` property where supported in SDKs.
-    attr_reader :output
-    # @return [Reasoning] Optional API value serialized in the `reasoning` wire field.
-    attr_reader :reasoning
-    # @return [Object] A system (or developer) message inserted into the model's context. When using along with `previous_response_id`, the instructions from a previous response will not be carried over to the next response. This makes it simple to swap out system (or developer) messages in new responses.
-    attr_reader :instructions
-    # @return [String] Optional API value serialized in the `output_text` wire field.
-    attr_reader :output_text
-    # @return [ResponseUsage] Optional API value serialized in the `usage` wire field.
-    attr_reader :usage
-    # @return [PromptCacheOptions] The prompt-caching options that were applied to the response. Supported for `gpt-5.6` and later models.
-    attr_reader :prompt_cache_options
-    # @return [PromptCacheDiagnostics] Prompt cache diagnostics requested for this response.
-    attr_reader :prompt_cache_diagnostics
-    # @return [Moderation] Optional API value serialized in the `moderation` wire field.
-    attr_reader :moderation
-    # @return [Boolean] Whether to allow the model to run tool calls in parallel.
-    attr_reader :parallel_tool_calls
-    # @return [ResponseConversation] Optional API value serialized in the `conversation` wire field.
-    attr_reader :conversation
-    # @return [Integer] Optional `integer` value serialized in the `max_output_tokens` wire field.
-    attr_reader :max_output_tokens
+# Defines the ResponseVariant2IncompleteDetailsReason SDK namespace.
+module ResponseVariant2IncompleteDetailsReason
+  MAX_OUTPUT_TOKENS = 'max_output_tokens'
+  MAX_MESSAGES = 'max_messages'
+  CONTENT_FILTER = 'content_filter'
+  STEERED = 'steered'
+  VALUES = ['max_output_tokens', 'max_messages', 'content_filter', 'steered'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Defines the ResponseVariant2Object SDK namespace.
+module ResponseVariant2Object
+  RESPONSE = 'response'
+  VALUES = ['response'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalResponseMetadata::NULLABLE_FIELDS)
-    end
+# Defines the ResponseVariant2Status SDK namespace.
+module ResponseVariant2Status
+  COMPLETED = 'completed'
+  FAILED = 'failed'
+  IN_PROGRESS = 'in_progress'
+  CANCELLED = 'cancelled'
+  QUEUED = 'queued'
+  INCOMPLETE = 'incomplete'
+  VALUES = ['completed', 'failed', 'in_progress', 'cancelled', 'queued', 'incomplete'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+# Internal model hydration metadata.
+class SdkInternalResponseCompactionCompactingStreamingEventMetadata
+  FIELDS = {
+    type: "type",
+    sequence_number: "sequence_number",
+    output_index: "output_index",
+    item_id: "item_id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    sequence_number
+    output_index
+    item_id
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ResponseCompactionCompactingStreamingEventType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for ResponseCompactionCompactingStreamingEvent.
+# Emitted when new summary content is sampled for a compaction trigger. Contains no summary content.
+class ResponseCompactionCompactingStreamingEvent
+  include ResponseStreamEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalResponseCompactionCompactingStreamingEventMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalResponseCompactionCompactingStreamingEventMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalResponseCompactionCompactingStreamingEventMetadata::DECODERS
+
+  # @return [ResponseCompactionCompactingStreamingEventType] The type of the event, always `response.compaction.compacting`.
+  attr_reader :type
+  # @return [Integer] The sequence number of the event that was emitted.
+  attr_reader :sequence_number
+  # @return [Integer] The index of the compaction output item.
+  attr_reader :output_index
+  # @return [String] The ID of the compaction output item.
+  attr_reader :item_id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the ResponseVariant2IncompleteDetailsReason SDK namespace.
-  module ResponseVariant2IncompleteDetailsReason
-    MAX_OUTPUT_TOKENS = 'max_output_tokens'
-    MAX_MESSAGES = 'max_messages'
-    CONTENT_FILTER = 'content_filter'
-    STEERED = 'steered'
-    VALUES = %w[max_output_tokens max_messages content_filter steered].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the ResponseVariant2Object SDK namespace.
-  module ResponseVariant2Object
-    RESPONSE = 'response'
-    VALUES = ['response'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the ResponseCompactionCompactingStreamingEventType SDK namespace.
+module ResponseCompactionCompactingStreamingEventType
+  RESPONSE_COMPACTION_COMPACTING = 'response.compaction.compacting'
+  VALUES = ['response.compaction.compacting'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('ResponseCompactionCompactingStreamingEventType', 'enum', "Unknown ResponseCompactionCompactingStreamingEventType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalResponseCompletedEventMetadata
+  FIELDS = {
+    type: "type",
+    response: "response",
+    sequence_number: "sequence_number",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    response
+    sequence_number
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ResponseCompletedEventType.from_value(value)
+    end,
+    response: lambda do |value|
+      ::OctridevOpenai::Response.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for ResponseCompletedEvent.
+# Emitted when the model response is complete.
+class ResponseCompletedEvent
+  include ResponseStreamEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalResponseCompletedEventMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalResponseCompletedEventMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalResponseCompletedEventMetadata::DECODERS
+
+  # @return [ResponseCompletedEventType] The type of the event. Always `response.completed`.
+  attr_reader :type
+  # @return [Response] Properties of the completed response.
+  attr_reader :response
+  # @return [Integer] The sequence number for this event.
+  attr_reader :sequence_number
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the ResponseVariant2Status SDK namespace.
-  module ResponseVariant2Status
-    COMPLETED = 'completed'
-    FAILED = 'failed'
-    IN_PROGRESS = 'in_progress'
-    CANCELLED = 'cancelled'
-    QUEUED = 'queued'
-    INCOMPLETE = 'incomplete'
-    VALUES = %w[completed failed in_progress cancelled queued incomplete].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalResponseCompactionCompactingStreamingEventMetadata
-    FIELDS = {
-      type: 'type',
-      sequence_number: 'sequence_number',
-      output_index: 'output_index',
-      item_id: 'item_id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      sequence_number
-      output_index
-      item_id
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ResponseCompactionCompactingStreamingEventType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the ResponseCompletedEventType SDK namespace.
+module ResponseCompletedEventType
+  RESPONSE_COMPLETED = 'response.completed'
+  VALUES = ['response.completed'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('ResponseCompletedEventType', 'enum', "Unknown ResponseCompletedEventType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalResponseConversationMetadata
+  FIELDS = {
+    id: "id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for ResponseConversation.
+# The conversation that this response belonged to. Input items and output items from this response were automatically added to this conversation.
+class ResponseConversation
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalResponseConversationMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalResponseConversationMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalResponseConversationMetadata::DECODERS
+
+  # @return [String] The unique ID of the conversation that this response was associated with.
+  attr_reader :id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ResponseCompactionCompactingStreamingEvent.
-  # Emitted when new summary content is sampled for a compaction trigger. Contains no summary content.
-  class ResponseCompactionCompactingStreamingEvent
-    include ResponseStreamEvent
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalResponseCompactionCompactingStreamingEventMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalResponseCompactionCompactingStreamingEventMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalResponseCompactionCompactingStreamingEventMetadata::DECODERS
-
-    # @return [ResponseCompactionCompactingStreamingEventType] The type of the event, always `response.compaction.compacting`.
-    attr_reader :type
-    # @return [Integer] The sequence number of the event that was emitted.
-    attr_reader :sequence_number
-    # @return [Integer] The index of the compaction output item.
-    attr_reader :output_index
-    # @return [String] The ID of the compaction output item.
-    attr_reader :item_id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the ResponseCompactionCompactingStreamingEventType SDK namespace.
-  module ResponseCompactionCompactingStreamingEventType
-    RESPONSE_COMPACTION_COMPACTING = 'response.compaction.compacting'
-    VALUES = ['response.compaction.compacting'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('ResponseCompactionCompactingStreamingEventType', 'enum', "Unknown ResponseCompactionCompactingStreamingEventType: #{value}")
-    end
+# Internal model hydration metadata.
+class SdkInternalResponseCreatedEventMetadata
+  FIELDS = {
+    type: "type",
+    response: "response",
+    sequence_number: "sequence_number",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    response
+    sequence_number
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ResponseCreatedEventType.from_value(value)
+    end,
+    response: lambda do |value|
+      ::OctridevOpenai::Response.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for ResponseCreatedEvent.
+# An event that is emitted when a response is created.
+class ResponseCreatedEvent
+  include ResponseStreamEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalResponseCreatedEventMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalResponseCreatedEventMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalResponseCreatedEventMetadata::DECODERS
+
+  # @return [ResponseCreatedEventType] The type of the event. Always `response.created`.
+  attr_reader :type
+  # @return [Response] The response that was created.
+  attr_reader :response
+  # @return [Integer] The sequence number for this event.
+  attr_reader :sequence_number
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalResponseCompletedEventMetadata
-    FIELDS = {
-      type: 'type',
-      response: 'response',
-      sequence_number: 'sequence_number'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      response
-      sequence_number
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ResponseCompletedEventType.from_value(value)
-      end,
-      response: lambda do |value|
-        ::OctridevOpenai::Response.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ResponseCompletedEvent.
-  # Emitted when the model response is complete.
-  class ResponseCompletedEvent
-    include ResponseStreamEvent
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalResponseCompletedEventMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalResponseCompletedEventMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalResponseCompletedEventMetadata::DECODERS
+# Defines the ResponseCreatedEventType SDK namespace.
+module ResponseCreatedEventType
+  RESPONSE_CREATED = 'response.created'
+  VALUES = ['response.created'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    # @return [ResponseCompletedEventType] The type of the event. Always `response.completed`.
-    attr_reader :type
-    # @return [Response] Properties of the completed response.
-    attr_reader :response
-    # @return [Integer] The sequence number for this event.
-    attr_reader :sequence_number
+    raise SdkValidationError.new('ResponseCreatedEventType', 'enum', "Unknown ResponseCreatedEventType: #{value}")
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalResponseFailedEventMetadata
+  FIELDS = {
+    type: "type",
+    sequence_number: "sequence_number",
+    response: "response",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    sequence_number
+    response
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ResponseFailedEventType.from_value(value)
+    end,
+    response: lambda do |value|
+      ::OctridevOpenai::Response.from_hash(value)
+    end,
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for ResponseFailedEvent.
+# An event that is emitted when a response fails.
+class ResponseFailedEvent
+  include ResponseStreamEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalResponseFailedEventMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalResponseFailedEventMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalResponseFailedEventMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [ResponseFailedEventType] The type of the event. Always `response.failed`.
+  attr_reader :type
+  # @return [Integer] The sequence number of this event.
+  attr_reader :sequence_number
+  # @return [Response] The response that failed.
+  attr_reader :response
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the ResponseCompletedEventType SDK namespace.
-  module ResponseCompletedEventType
-    RESPONSE_COMPLETED = 'response.completed'
-    VALUES = ['response.completed'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('ResponseCompletedEventType', 'enum', "Unknown ResponseCompletedEventType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalResponseConversationMetadata
-    FIELDS = {
-      id: 'id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-    ].freeze
-    DECODERS = {}.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the ResponseFailedEventType SDK namespace.
+module ResponseFailedEventType
+  RESPONSE_FAILED = 'response.failed'
+  VALUES = ['response.failed'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('ResponseFailedEventType', 'enum', "Unknown ResponseFailedEventType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalResponseIncompleteEventMetadata
+  FIELDS = {
+    type: "type",
+    response: "response",
+    sequence_number: "sequence_number",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    response
+    sequence_number
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ResponseIncompleteEventType.from_value(value)
+    end,
+    response: lambda do |value|
+      ::OctridevOpenai::Response.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for ResponseIncompleteEvent.
+# An event that is emitted when a response finishes as incomplete. Over WebSocket, steering can finish a response with `response.incomplete_details.reason` set to `steered`, followed automatically by a successor `response.created` that commits the queued steering input.
+class ResponseIncompleteEvent
+  include ResponseStreamEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalResponseIncompleteEventMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalResponseIncompleteEventMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalResponseIncompleteEventMetadata::DECODERS
+
+  # @return [ResponseIncompleteEventType] The type of the event. Always `response.incomplete`.
+  attr_reader :type
+  # @return [Response] The response that was incomplete.
+  attr_reader :response
+  # @return [Integer] The sequence number of this event.
+  attr_reader :sequence_number
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ResponseConversation.
-  # The conversation that this response belonged to. Input items and output items from this response were automatically added to this conversation.
-  class ResponseConversation
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalResponseConversationMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalResponseConversationMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalResponseConversationMetadata::DECODERS
-
-    # @return [String] The unique ID of the conversation that this response was associated with.
-    attr_reader :id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalResponseCreatedEventMetadata
-    FIELDS = {
-      type: 'type',
-      response: 'response',
-      sequence_number: 'sequence_number'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      response
-      sequence_number
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ResponseCreatedEventType.from_value(value)
-      end,
-      response: lambda do |value|
-        ::OctridevOpenai::Response.from_hash(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # API model for ResponseCreatedEvent.
-  # An event that is emitted when a response is created.
-  class ResponseCreatedEvent
-    include ResponseStreamEvent
+# Defines the ResponseIncompleteEventType SDK namespace.
+module ResponseIncompleteEventType
+  RESPONSE_INCOMPLETE = 'response.incomplete'
+  VALUES = ['response.incomplete'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalResponseCreatedEventMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalResponseCreatedEventMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalResponseCreatedEventMetadata::DECODERS
-
-    # @return [ResponseCreatedEventType] The type of the event. Always `response.created`.
-    attr_reader :type
-    # @return [Response] The response that was created.
-    attr_reader :response
-    # @return [Integer] The sequence number for this event.
-    attr_reader :sequence_number
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+    raise SdkValidationError.new('ResponseIncompleteEventType', 'enum', "Unknown ResponseIncompleteEventType: #{value}")
   end
-
-  # Defines the ResponseCreatedEventType SDK namespace.
-  module ResponseCreatedEventType
-    RESPONSE_CREATED = 'response.created'
-    VALUES = ['response.created'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('ResponseCreatedEventType', 'enum', "Unknown ResponseCreatedEventType: #{value}")
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalResponseFailedEventMetadata
-    FIELDS = {
-      type: 'type',
-      sequence_number: 'sequence_number',
-      response: 'response'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      sequence_number
-      response
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ResponseFailedEventType.from_value(value)
-      end,
-      response: lambda do |value|
-        ::OctridevOpenai::Response.from_hash(value)
-      end
-    }.freeze
-  end
-
-  # API model for ResponseFailedEvent.
-  # An event that is emitted when a response fails.
-  class ResponseFailedEvent
-    include ResponseStreamEvent
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalResponseFailedEventMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalResponseFailedEventMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalResponseFailedEventMetadata::DECODERS
-
-    # @return [ResponseFailedEventType] The type of the event. Always `response.failed`.
-    attr_reader :type
-    # @return [Integer] The sequence number of this event.
-    attr_reader :sequence_number
-    # @return [Response] The response that failed.
-    attr_reader :response
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the ResponseFailedEventType SDK namespace.
-  module ResponseFailedEventType
-    RESPONSE_FAILED = 'response.failed'
-    VALUES = ['response.failed'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('ResponseFailedEventType', 'enum', "Unknown ResponseFailedEventType: #{value}")
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalResponseIncompleteEventMetadata
-    FIELDS = {
-      type: 'type',
-      response: 'response',
-      sequence_number: 'sequence_number'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      response
-      sequence_number
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ResponseIncompleteEventType.from_value(value)
-      end,
-      response: lambda do |value|
-        ::OctridevOpenai::Response.from_hash(value)
-      end
-    }.freeze
-  end
-
-  # API model for ResponseIncompleteEvent.
-  # An event that is emitted when a response finishes as incomplete. Over WebSocket, steering can finish a response with `response.incomplete_details.reason` set to `steered`, followed automatically by a successor `response.created` that commits the queued steering input.
-  class ResponseIncompleteEvent
-    include ResponseStreamEvent
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalResponseIncompleteEventMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalResponseIncompleteEventMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalResponseIncompleteEventMetadata::DECODERS
-
-    # @return [ResponseIncompleteEventType] The type of the event. Always `response.incomplete`.
-    attr_reader :type
-    # @return [Response] The response that was incomplete.
-    attr_reader :response
-    # @return [Integer] The sequence number of this event.
-    attr_reader :sequence_number
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the ResponseIncompleteEventType SDK namespace.
-  module ResponseIncompleteEventType
-    RESPONSE_INCOMPLETE = 'response.incomplete'
-    VALUES = ['response.incomplete'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('ResponseIncompleteEventType', 'enum', "Unknown ResponseIncompleteEventType: #{value}")
-    end
-  end
+end
 end

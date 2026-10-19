@@ -5,345 +5,348 @@
 
 # files domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalContainerFileListResourceMetadata
-    FIELDS = {
-      object: 'object',
-      data: 'data',
-      first_id: 'first_id',
-      last_id: 'last_id',
-      has_more: 'has_more'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      data
-      first_id
-      last_id
-      has_more
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::ContainerFileListResourceObject.from_value(value)
-      end,
-      data: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::ContainerFileResource.from_hash(item) }
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalContainerFileListResourceMetadata
+  FIELDS = {
+    object: "object",
+    data: "data",
+    first_id: "first_id",
+    last_id: "last_id",
+    has_more: "has_more",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    data
+    first_id
+    last_id
+    has_more
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::ContainerFileListResourceObject.from_value(value)
+    end,
+    data: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::ContainerFileResource.from_hash(item) }
+    end,
+  }.freeze
+end
+
+# API model for ContainerFileListResource.
+# Typed representation of the `ContainerFileListResource` API schema.
+class ContainerFileListResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalContainerFileListResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalContainerFileListResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalContainerFileListResourceMetadata::DECODERS
+
+  # @return [ContainerFileListResourceObject] The type of object returned, must be 'list'.
+  attr_reader :object
+  # @return [Array_of_ContainerFileResource] A list of container files.
+  attr_reader :data
+  # @return [String] The ID of the first file in the list.
+  attr_reader :first_id
+  # @return [String] The ID of the last file in the list.
+  attr_reader :last_id
+  # @return [Boolean] Whether there are more files available.
+  attr_reader :has_more
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ContainerFileListResource.
-  # Typed representation of the `ContainerFileListResource` API schema.
-  class ContainerFileListResource
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalContainerFileListResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalContainerFileListResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalContainerFileListResourceMetadata::DECODERS
-
-    # @return [ContainerFileListResourceObject] The type of object returned, must be 'list'.
-    attr_reader :object
-    # @return [Array_of_ContainerFileResource] A list of container files.
-    attr_reader :data
-    # @return [String] The ID of the first file in the list.
-    attr_reader :first_id
-    # @return [String] The ID of the last file in the list.
-    attr_reader :last_id
-    # @return [Boolean] Whether there are more files available.
-    attr_reader :has_more
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the ContainerFileListResourceObject SDK namespace.
-  module ContainerFileListResourceObject
-    LIST = 'list'
-    VALUES = ['list'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the ContainerFileListResourceObject SDK namespace.
+module ContainerFileListResourceObject
+  LIST = 'list'
+  VALUES = ['list'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalContainerFileResourceMetadata
+  FIELDS = {
+    id: "id",
+    object: "object",
+    container_id: "container_id",
+    created_at: "created_at",
+    bytes: "bytes",
+    path: "path",
+    source: "source",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+    object
+    container_id
+    created_at
+    bytes
+    path
+    source
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for ContainerFileResource.
+# Typed representation of the `ContainerFileResource` API schema.
+class ContainerFileResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalContainerFileResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalContainerFileResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalContainerFileResourceMetadata::DECODERS
+
+  # @return [String] Unique identifier for the file.
+  attr_reader :id
+  # @return [String] The type of this object (`container.file`).
+  attr_reader :object
+  # @return [String] The container this file belongs to.
+  attr_reader :container_id
+  # @return [Integer] Unix timestamp (in seconds) when the file was created.
+  attr_reader :created_at
+  # @return [Integer] Size of the file in bytes.
+  attr_reader :bytes
+  # @return [String] Path of the file in the container.
+  attr_reader :path
+  # @return [String] Source of the file (e.g., `user`, `assistant`).
+  attr_reader :source
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalContainerFileResourceMetadata
-    FIELDS = {
-      id: 'id',
-      object: 'object',
-      container_id: 'container_id',
-      created_at: 'created_at',
-      bytes: 'bytes',
-      path: 'path',
-      source: 'source'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-      object
-      container_id
-      created_at
-      bytes
-      path
-      source
-    ].freeze
-    DECODERS = {}.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ContainerFileResource.
-  # Typed representation of the `ContainerFileResource` API schema.
-  class ContainerFileResource
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalContainerFileResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalContainerFileResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalContainerFileResourceMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] Unique identifier for the file.
-    attr_reader :id
-    # @return [String] The type of this object (`container.file`).
-    attr_reader :object
-    # @return [String] The container this file belongs to.
-    attr_reader :container_id
-    # @return [Integer] Unix timestamp (in seconds) when the file was created.
-    attr_reader :created_at
-    # @return [Integer] Size of the file in bytes.
-    attr_reader :bytes
-    # @return [String] Path of the file in the container.
-    attr_reader :path
-    # @return [String] Source of the file (e.g., `user`, `assistant`).
-    attr_reader :source
+# Internal model hydration metadata.
+class SdkInternalCreateContainerFileBodyMetadata
+  FIELDS = {
+    file_id: "file_id",
+    file: "file",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for CreateContainerFileBody.
+# Typed representation of the `CreateContainerFileBody` API schema.
+class CreateContainerFileBody
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCreateContainerFileBodyMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCreateContainerFileBodyMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCreateContainerFileBodyMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [String] Name of the file to create.
+  attr_reader :file_id
+  # @return [String] The File object (not file name) to be uploaded.
+  attr_reader :file
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalCreateContainerFileBodyMetadata
-    FIELDS = {
-      file_id: 'file_id',
-      file: 'file'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {}.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for CreateContainerFileBody.
-  # Typed representation of the `CreateContainerFileBody` API schema.
-  class CreateContainerFileBody
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCreateContainerFileBodyMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCreateContainerFileBodyMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCreateContainerFileBodyMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] Name of the file to create.
-    attr_reader :file_id
-    # @return [String] The File object (not file name) to be uploaded.
-    attr_reader :file
+# Internal model hydration metadata.
+class SdkInternalCreateFileRequestMetadata
+  FIELDS = {
+    file: "file",
+    purpose: "purpose",
+    expires_after: "expires_after",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    file
+    purpose
+  ].freeze
+  DECODERS = {
+    purpose: lambda do |value|
+      ::OctridevOpenai::CreateFileRequestPurpose.from_value(value)
+    end,
+    expires_after: lambda do |value|
+      ::OctridevOpenai::FileExpirationAfter.from_hash(value)
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for CreateFileRequest.
+# Typed representation of the `CreateFileRequest` API schema.
+class CreateFileRequest
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCreateFileRequestMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCreateFileRequestMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCreateFileRequestMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [String] The File object (not file name) to be uploaded.
+  attr_reader :file
+  # @return [CreateFileRequestPurpose] The intended purpose of the uploaded file. One of: - `assistants`: Used in the Assistants API - `batch`: Used in the Batch API - `fine-tune`: Used for fine-tuning - `vision`: Images used for vision fine-tuning - `user_data`: Flexible file type for any purpose - `evals`: Used for eval data sets
+  attr_reader :purpose
+  # @return [FileExpirationAfter] The expiration policy for a file. By default, files with `purpose=batch` expire after 30 days and all other files are persisted until they are manually deleted.
+  attr_reader :expires_after
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalCreateFileRequestMetadata
-    FIELDS = {
-      file: 'file',
-      purpose: 'purpose',
-      expires_after: 'expires_after'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      file
-      purpose
-    ].freeze
-    DECODERS = {
-      purpose: lambda do |value|
-        ::OctridevOpenai::CreateFileRequestPurpose.from_value(value)
-      end,
-      expires_after: lambda do |value|
-        ::OctridevOpenai::FileExpirationAfter.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for CreateFileRequest.
-  # Typed representation of the `CreateFileRequest` API schema.
-  class CreateFileRequest
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCreateFileRequestMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCreateFileRequestMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCreateFileRequestMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] The File object (not file name) to be uploaded.
-    attr_reader :file
-    # @return [CreateFileRequestPurpose] The intended purpose of the uploaded file. One of: - `assistants`: Used in the Assistants API - `batch`: Used in the Batch API - `fine-tune`: Used for fine-tuning - `vision`: Images used for vision fine-tuning - `user_data`: Flexible file type for any purpose - `evals`: Used for eval data sets
-    attr_reader :purpose
-    # @return [FileExpirationAfter] The expiration policy for a file. By default, files with `purpose=batch` expire after 30 days and all other files are persisted until they are manually deleted.
-    attr_reader :expires_after
+# Defines the CreateFileRequestPurpose SDK namespace.
+module CreateFileRequestPurpose
+  ASSISTANTS = 'assistants'
+  BATCH = 'batch'
+  FINE_TUNE = 'fine-tune'
+  VISION = 'vision'
+  USER_DATA = 'user_data'
+  EVALS = 'evals'
+  VALUES = ['assistants', 'batch', 'fine-tune', 'vision', 'user_data', 'evals'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalDeleteFileResponseMetadata
+  FIELDS = {
+    id: "id",
+    object: "object",
+    deleted: "deleted",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+    object
+    deleted
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::DeleteFileResponseObject.from_value(value)
+    end,
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for DeleteFileResponse.
+# Typed representation of the `DeleteFileResponse` API schema.
+class DeleteFileResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalDeleteFileResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalDeleteFileResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalDeleteFileResponseMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [String] Required `string` value serialized in the `id` wire field.
+  attr_reader :id
+  # @return [DeleteFileResponseObject] Required enumerated value serialized in the `object` wire field.
+  attr_reader :object
+  # @return [Boolean] Required `boolean` value serialized in the `deleted` wire field.
+  attr_reader :deleted
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the CreateFileRequestPurpose SDK namespace.
-  module CreateFileRequestPurpose
-    ASSISTANTS = 'assistants'
-    BATCH = 'batch'
-    FINE_TUNE = 'fine-tune'
-    VISION = 'vision'
-    USER_DATA = 'user_data'
-    EVALS = 'evals'
-    VALUES = %w[assistants batch fine-tune vision user_data evals].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalDeleteFileResponseMetadata
-    FIELDS = {
-      id: 'id',
-      object: 'object',
-      deleted: 'deleted'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-      object
-      deleted
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::DeleteFileResponseObject.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the DeleteFileResponseObject SDK namespace.
+module DeleteFileResponseObject
+  FILE = 'file'
+  VALUES = ['file'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalListFilesResponseMetadata
+  FIELDS = {
+    object: "object",
+    data: "data",
+    first_id: "first_id",
+    last_id: "last_id",
+    has_more: "has_more",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    data
+    first_id
+    last_id
+    has_more
+  ].freeze
+  DECODERS = {
+    data: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::OpenAIFile.from_hash(item) }
+    end,
+  }.freeze
+end
+
+# API model for ListFilesResponse.
+# Typed representation of the `ListFilesResponse` API schema.
+class ListFilesResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalListFilesResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalListFilesResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalListFilesResponseMetadata::DECODERS
+
+  # @return [String] Required `string` value serialized in the `object` wire field.
+  attr_reader :object
+  # @return [Array_of_OpenAIFile] Required array value serialized in the `data` wire field.
+  attr_reader :data
+  # @return [String] Required `string` value serialized in the `first_id` wire field.
+  attr_reader :first_id
+  # @return [String] Required `string` value serialized in the `last_id` wire field.
+  attr_reader :last_id
+  # @return [Boolean] Required `boolean` value serialized in the `has_more` wire field.
+  attr_reader :has_more
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for DeleteFileResponse.
-  # Typed representation of the `DeleteFileResponse` API schema.
-  class DeleteFileResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalDeleteFileResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalDeleteFileResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalDeleteFileResponseMetadata::DECODERS
-
-    # @return [String] Required `string` value serialized in the `id` wire field.
-    attr_reader :id
-    # @return [DeleteFileResponseObject] Required enumerated value serialized in the `object` wire field.
-    attr_reader :object
-    # @return [Boolean] Required `boolean` value serialized in the `deleted` wire field.
-    attr_reader :deleted
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the DeleteFileResponseObject SDK namespace.
-  module DeleteFileResponseObject
-    FILE = 'file'
-    VALUES = ['file'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
-
-  # Internal model hydration metadata.
-  class SdkInternalListFilesResponseMetadata
-    FIELDS = {
-      object: 'object',
-      data: 'data',
-      first_id: 'first_id',
-      last_id: 'last_id',
-      has_more: 'has_more'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      data
-      first_id
-      last_id
-      has_more
-    ].freeze
-    DECODERS = {
-      data: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::OpenAIFile.from_hash(item) }
-      end
-    }.freeze
-  end
-
-  # API model for ListFilesResponse.
-  # Typed representation of the `ListFilesResponse` API schema.
-  class ListFilesResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalListFilesResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalListFilesResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalListFilesResponseMetadata::DECODERS
-
-    # @return [String] Required `string` value serialized in the `object` wire field.
-    attr_reader :object
-    # @return [Array_of_OpenAIFile] Required array value serialized in the `data` wire field.
-    attr_reader :data
-    # @return [String] Required `string` value serialized in the `first_id` wire field.
-    attr_reader :first_id
-    # @return [String] Required `string` value serialized in the `last_id` wire field.
-    attr_reader :last_id
-    # @return [Boolean] Required `boolean` value serialized in the `has_more` wire field.
-    attr_reader :has_more
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
+end
 end

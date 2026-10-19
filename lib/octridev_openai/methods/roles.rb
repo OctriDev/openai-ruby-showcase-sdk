@@ -13,7 +13,7 @@ module OctridevOpenai
       module ListRolesParameter
         ASC = 'asc'
         DESC = 'desc'
-        VALUES = %w[asc desc].freeze
+        VALUES = ['asc', 'desc'].freeze
         def self.from_value(value)
           value
         end
@@ -23,7 +23,7 @@ module OctridevOpenai
       module ListRolesProjectRolesParameter
         ASC = 'asc'
         DESC = 'desc'
-        VALUES = %w[asc desc].freeze
+        VALUES = ['asc', 'desc'].freeze
         def self.from_value(value)
           value
         end
@@ -45,26 +45,27 @@ module OctridevOpenai
         order: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 0, max: 1000) }
 
         SdkClient.request(
           'GET',
-          '/organization/roles',
+          "/organization/roles",
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
-            'order' => QueryValue.new(order, style: 'form', explode: true)
+            'order' => QueryValue.new(order, style: 'form', explode: true),
           },
           return_type: ::OctridevOpenai::PublicRoleListResource,
           decoder: :json,
           operation_id: 'list_roles',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
-      ListRolesPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+    ListRolesPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists roles configured for the organization. Use `limit` to control the number of roles returned and `order` to choose the sort direction. Continue through the results with the `after` cursor from the previous response's `next` field.
       #
@@ -94,13 +95,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             items.each { |item| y << item }
             break unless page.has_more
-
             next_cursor = page.next_
             break if next_cursor.nil?
-
             cursor = next_cursor
           end
         end
@@ -125,12 +123,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             next_cursor = page.next_
             has_more = page.has_more && !next_cursor.nil?
             y << ListRolesPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
-
             cursor = next_cursor
           end
         end
@@ -150,20 +146,21 @@ module OctridevOpenai
         description: NOT_GIVEN,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
-          '/organization/roles',
+          "/organization/roles",
           config: config,
           body: {
             'role_name' => role_name,
             'permissions' => permissions,
-            'description' => description
+            'description' => description,
           },
           return_type: ::OctridevOpenai::Role,
           decoder: :json,
           operation_id: 'create_role',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -177,10 +174,11 @@ module OctridevOpenai
         role_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
           [
-            '/organization/roles/',
+            "/organization/roles/",
             SdkClient.encode_path_segment(role_id)
           ].join,
           config: config,
@@ -188,7 +186,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'retrieve_role',
           request_options: request_options,
-          errors: { '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -209,23 +207,24 @@ module OctridevOpenai
         role_name: NOT_GIVEN,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
           [
-            '/organization/roles/',
+            "/organization/roles/",
             SdkClient.encode_path_segment(role_id)
           ].join,
           config: config,
           body: {
             'permissions' => permissions,
             'description' => description,
-            'role_name' => role_name
+            'role_name' => role_name,
           },
           return_type: ::OctridevOpenai::Role,
           decoder: :json,
           operation_id: 'update_role',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -239,10 +238,11 @@ module OctridevOpenai
         role_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'DELETE',
           [
-            '/organization/roles/',
+            "/organization/roles/",
             SdkClient.encode_path_segment(role_id)
           ].join,
           config: config,
@@ -250,7 +250,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_role',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -273,30 +273,31 @@ module OctridevOpenai
         order: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 0, max: 1000) }
 
         SdkClient.request(
           'GET',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/roles'
+            "/roles"
           ].join,
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
-            'order' => QueryValue.new(order, style: 'form', explode: true)
+            'order' => QueryValue.new(order, style: 'form', explode: true),
           },
           return_type: ::OctridevOpenai::PublicRoleListResource,
           decoder: :json,
           operation_id: 'list_roles_project_roles',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
-      ListRolesProjectRolesPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+    ListRolesProjectRolesPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists the roles configured for a project in a paginated response. Use `limit` to set the page size, `after` to continue from a cursor, and `order` to choose the sort direction.
       #
@@ -330,13 +331,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             items.each { |item| y << item }
             break unless page.has_more
-
             next_cursor = page.next_
             break if next_cursor.nil?
-
             cursor = next_cursor
           end
         end
@@ -363,12 +361,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             next_cursor = page.next_
             has_more = page.has_more && !next_cursor.nil?
             y << ListRolesProjectRolesPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
-
             cursor = next_cursor
           end
         end
@@ -390,24 +386,25 @@ module OctridevOpenai
         description: NOT_GIVEN,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/roles'
+            "/roles"
           ].join,
           config: config,
           body: {
             'role_name' => role_name,
             'permissions' => permissions,
-            'description' => description
+            'description' => description,
           },
           return_type: ::OctridevOpenai::Role,
           decoder: :json,
           operation_id: 'create_roles_project_role',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -423,12 +420,13 @@ module OctridevOpenai
         role_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/roles/',
+            "/roles/",
             SdkClient.encode_path_segment(role_id)
           ].join,
           config: config,
@@ -436,7 +434,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'retrieve_roles_project_role',
           request_options: request_options,
-          errors: { '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -459,25 +457,26 @@ module OctridevOpenai
         role_name: NOT_GIVEN,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/roles/',
+            "/roles/",
             SdkClient.encode_path_segment(role_id)
           ].join,
           config: config,
           body: {
             'permissions' => permissions,
             'description' => description,
-            'role_name' => role_name
+            'role_name' => role_name,
           },
           return_type: ::OctridevOpenai::Role,
           decoder: :json,
           operation_id: 'update_roles_project_role',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -493,12 +492,13 @@ module OctridevOpenai
         role_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'DELETE',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/roles/',
+            "/roles/",
             SdkClient.encode_path_segment(role_id)
           ].join,
           config: config,
@@ -506,7 +506,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_roles_project_role',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
     end

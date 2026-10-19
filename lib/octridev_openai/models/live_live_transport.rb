@@ -5,381 +5,376 @@
 
 # live_live_transport domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalLiveTransportAnsweredMetadata
-    FIELDS = {
-      event_id: 'event_id',
-      session_id: 'session_id',
-      type: 'type'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      event_id
-      session_id
-      type
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::LiveTransportAnsweredType.from_value(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalLiveTransportAnsweredMetadata
+  FIELDS = {
+    event_id: "event_id",
+    session_id: "session_id",
+    type: "type",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    event_id
+    session_id
+    type
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::LiveTransportAnsweredType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for LiveTransportAnswered.
+# The outbound SIP provider leg answered and media is established. Delivered only to sideband observers.
+class LiveTransportAnswered
+  include LiveSidebandServerEvent
+  include LiveServerEvent2
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalLiveTransportAnsweredMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalLiveTransportAnsweredMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalLiveTransportAnsweredMetadata::DECODERS
+
+  # @return [String] Required `string` value serialized in the `event_id` wire field.
+  attr_reader :event_id
+  # @return [String] The canonical Live session ID.
+  attr_reader :session_id
+  # @return [LiveTransportAnsweredType] Required enumerated value serialized in the `type` wire field.
+  attr_reader :type
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for LiveTransportAnswered.
-  # The outbound SIP provider leg answered and media is established. Delivered only to sideband observers.
-  class LiveTransportAnswered
-    include LiveSidebandServerEvent
-    include LiveServerEvent2
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalLiveTransportAnsweredMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalLiveTransportAnsweredMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalLiveTransportAnsweredMetadata::DECODERS
-
-    # @return [String] Required `string` value serialized in the `event_id` wire field.
-    attr_reader :event_id
-    # @return [String] The canonical Live session ID.
-    attr_reader :session_id
-    # @return [LiveTransportAnsweredType] Required enumerated value serialized in the `type` wire field.
-    attr_reader :type
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the LiveTransportAnsweredType SDK namespace.
-  module LiveTransportAnsweredType
-    TRANSPORT_ANSWERED = 'transport.answered'
-    VALUES = ['transport.answered'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('LiveTransportAnsweredType', 'enum', "Unknown LiveTransportAnsweredType: #{value}")
-    end
+# Defines the LiveTransportAnsweredType SDK namespace.
+module LiveTransportAnsweredType
+  TRANSPORT_ANSWERED = 'transport.answered'
+  VALUES = ['transport.answered'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('LiveTransportAnsweredType', 'enum', "Unknown LiveTransportAnsweredType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalLiveTransportCallErrorMetadata
+  FIELDS = {
+    type: "type",
+    code: "code",
+    message: "message",
+    param: "param",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    code
+    message
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::LiveTransportCallErrorType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for LiveTransportCallError.
+# Typed representation of the `LiveTransportCallError` API schema.
+class LiveTransportCallError
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalLiveTransportCallErrorMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalLiveTransportCallErrorMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalLiveTransportCallErrorMetadata::DECODERS
+
+  # @return [LiveTransportCallErrorType] Required enumerated value serialized in the `type` wire field.
+  attr_reader :type
+  # @return [String] The call setup failure code.
+  attr_reader :code
+  # @return [String] Required `string` value serialized in the `message` wire field.
+  attr_reader :message
+  # @return [String] The parameter related to the error, if any. Empty when no parameter applies.
+  attr_reader :param
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalLiveTransportCallErrorMetadata
-    FIELDS = {
-      type: 'type',
-      code: 'code',
-      message: 'message',
-      param: 'param'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      code
-      message
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::LiveTransportCallErrorType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for LiveTransportCallError.
-  # Typed representation of the `LiveTransportCallError` API schema.
-  class LiveTransportCallError
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalLiveTransportCallErrorMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalLiveTransportCallErrorMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalLiveTransportCallErrorMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [LiveTransportCallErrorType] Required enumerated value serialized in the `type` wire field.
-    attr_reader :type
-    # @return [String] The call setup failure code.
-    attr_reader :code
-    # @return [String] Required `string` value serialized in the `message` wire field.
-    attr_reader :message
-    # @return [String] The parameter related to the error, if any. Empty when no parameter applies.
-    attr_reader :param
+# Defines the LiveTransportCallErrorType SDK namespace.
+module LiveTransportCallErrorType
+  CALL_ERROR = 'call_error'
+  VALUES = ['call_error'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalLiveTransportDTMFReceivedMetadata
+  FIELDS = {
+    type: "type",
+    event_id: "event_id",
+    event: "event",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    event_id
+    event
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::LiveTransportDTMFReceivedType.from_value(value)
+    end,
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for LiveTransportDTMFReceived.
+# A SIP DTMF keypress received from the caller. Delivered only to sideband observers.
+class LiveTransportDTMFReceived
+  include LiveServerEvent2
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalLiveTransportDTMFReceivedMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalLiveTransportDTMFReceivedMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalLiveTransportDTMFReceivedMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [LiveTransportDTMFReceivedType] Required enumerated value serialized in the `type` wire field.
+  attr_reader :type
+  # @return [String] Required `string` value serialized in the `event_id` wire field.
+  attr_reader :event_id
+  # @return [String] Required `string` value serialized in the `event` wire field.
+  attr_reader :event
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the LiveTransportCallErrorType SDK namespace.
-  module LiveTransportCallErrorType
-    CALL_ERROR = 'call_error'
-    VALUES = ['call_error'].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalLiveTransportDTMFReceivedMetadata
-    FIELDS = {
-      type: 'type',
-      event_id: 'event_id',
-      event: 'event'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      event_id
-      event
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::LiveTransportDTMFReceivedType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the LiveTransportDTMFReceivedType SDK namespace.
+module LiveTransportDTMFReceivedType
+  TRANSPORT_DTMF_RECEIVED = 'transport.dtmf.received'
+  VALUES = ['transport.dtmf.received'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('LiveTransportDTMFReceivedType', 'enum', "Unknown LiveTransportDTMFReceivedType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalLiveTransportDTMFSendMetadata
+  FIELDS = {
+    type: "type",
+    event_id: "event_id",
+    event: "event",
+    client_event_id: "client_event_id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    event_id
+    event
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::LiveTransportDTMFSendType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for LiveTransportDTMFSend.
+# A SIP DTMF keypress successfully sent to the SIP trunk. Delivered only to sideband observers; this is not a client command.
+class LiveTransportDTMFSend
+  include LiveServerEvent2
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalLiveTransportDTMFSendMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalLiveTransportDTMFSendMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalLiveTransportDTMFSendMetadata::DECODERS
+
+  # @return [LiveTransportDTMFSendType] Required enumerated value serialized in the `type` wire field.
+  attr_reader :type
+  # @return [String] Required `string` value serialized in the `event_id` wire field.
+  attr_reader :event_id
+  # @return [String] Required `string` value serialized in the `event` wire field.
+  attr_reader :event
+  # @return [String] The event_id of the client command, when supplied.
+  attr_reader :client_event_id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for LiveTransportDTMFReceived.
-  # A SIP DTMF keypress received from the caller. Delivered only to sideband observers.
-  class LiveTransportDTMFReceived
-    include LiveServerEvent2
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalLiveTransportDTMFReceivedMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalLiveTransportDTMFReceivedMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalLiveTransportDTMFReceivedMetadata::DECODERS
-
-    # @return [LiveTransportDTMFReceivedType] Required enumerated value serialized in the `type` wire field.
-    attr_reader :type
-    # @return [String] Required `string` value serialized in the `event_id` wire field.
-    attr_reader :event_id
-    # @return [String] Required `string` value serialized in the `event` wire field.
-    attr_reader :event
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the LiveTransportDTMFReceivedType SDK namespace.
-  module LiveTransportDTMFReceivedType
-    TRANSPORT_DTMF_RECEIVED = 'transport.dtmf.received'
-    VALUES = ['transport.dtmf.received'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('LiveTransportDTMFReceivedType', 'enum', "Unknown LiveTransportDTMFReceivedType: #{value}")
-    end
+# Defines the LiveTransportDTMFSendType SDK namespace.
+module LiveTransportDTMFSendType
+  TRANSPORT_DTMF_SEND = 'transport.dtmf.send'
+  VALUES = ['transport.dtmf.send'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('LiveTransportDTMFSendType', 'enum', "Unknown LiveTransportDTMFSendType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalLiveTransportFailedMetadata
+  FIELDS = {
+    event_id: "event_id",
+    session_id: "session_id",
+    type: "type",
+    error: "error",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    event_id
+    session_id
+    type
+    error
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::LiveTransportFailedType.from_value(value)
+    end,
+    error: lambda do |value|
+      ::OctridevOpenai::LiveTransportCallError.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for LiveTransportFailed.
+# An asynchronous outbound SIP setup failure. Delivered only to sideband observers.
+class LiveTransportFailed
+  include LiveSidebandServerEvent
+  include LiveServerEvent2
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalLiveTransportFailedMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalLiveTransportFailedMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalLiveTransportFailedMetadata::DECODERS
+
+  # @return [String] Required `string` value serialized in the `event_id` wire field.
+  attr_reader :event_id
+  # @return [String] The canonical Live session ID.
+  attr_reader :session_id
+  # @return [LiveTransportFailedType] Required enumerated value serialized in the `type` wire field.
+  attr_reader :type
+  # @return [LiveTransportCallError] Required object value serialized in the `error` wire field.
+  attr_reader :error
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalLiveTransportDTMFSendMetadata
-    FIELDS = {
-      type: 'type',
-      event_id: 'event_id',
-      event: 'event',
-      client_event_id: 'client_event_id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      event_id
-      event
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::LiveTransportDTMFSendType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for LiveTransportDTMFSend.
-  # A SIP DTMF keypress successfully sent to the SIP trunk. Delivered only to sideband observers; this is not a client command.
-  class LiveTransportDTMFSend
-    include LiveServerEvent2
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalLiveTransportDTMFSendMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalLiveTransportDTMFSendMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalLiveTransportDTMFSendMetadata::DECODERS
+# Defines the LiveTransportFailedType SDK namespace.
+module LiveTransportFailedType
+  TRANSPORT_FAILED = 'transport.failed'
+  VALUES = ['transport.failed'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    # @return [LiveTransportDTMFSendType] Required enumerated value serialized in the `type` wire field.
-    attr_reader :type
-    # @return [String] Required `string` value serialized in the `event_id` wire field.
-    attr_reader :event_id
-    # @return [String] Required `string` value serialized in the `event` wire field.
-    attr_reader :event
-    # @return [String] The event_id of the client command, when supplied.
-    attr_reader :client_event_id
+    raise SdkValidationError.new('LiveTransportFailedType', 'enum', "Unknown LiveTransportFailedType: #{value}")
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalLiveTransportRingingMetadata
+  FIELDS = {
+    event_id: "event_id",
+    session_id: "session_id",
+    type: "type",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    event_id
+    session_id
+    type
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::LiveTransportRingingType.from_value(value)
+    end,
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for LiveTransportRinging.
+# The outbound SIP provider leg is ringing or providing early media. Delivered only to sideband observers.
+class LiveTransportRinging
+  include LiveSidebandServerEvent
+  include LiveServerEvent2
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalLiveTransportRingingMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalLiveTransportRingingMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalLiveTransportRingingMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [String] Required `string` value serialized in the `event_id` wire field.
+  attr_reader :event_id
+  # @return [String] The canonical Live session ID.
+  attr_reader :session_id
+  # @return [LiveTransportRingingType] Required enumerated value serialized in the `type` wire field.
+  attr_reader :type
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the LiveTransportDTMFSendType SDK namespace.
-  module LiveTransportDTMFSendType
-    TRANSPORT_DTMF_SEND = 'transport.dtmf.send'
-    VALUES = ['transport.dtmf.send'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('LiveTransportDTMFSendType', 'enum', "Unknown LiveTransportDTMFSendType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalLiveTransportFailedMetadata
-    FIELDS = {
-      event_id: 'event_id',
-      session_id: 'session_id',
-      type: 'type',
-      error: 'error'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      event_id
-      session_id
-      type
-      error
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::LiveTransportFailedType.from_value(value)
-      end,
-      error: lambda do |value|
-        ::OctridevOpenai::LiveTransportCallError.from_hash(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # API model for LiveTransportFailed.
-  # An asynchronous outbound SIP setup failure. Delivered only to sideband observers.
-  class LiveTransportFailed
-    include LiveSidebandServerEvent
-    include LiveServerEvent2
+# Defines the LiveTransportRingingType SDK namespace.
+module LiveTransportRingingType
+  TRANSPORT_RINGING = 'transport.ringing'
+  VALUES = ['transport.ringing'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalLiveTransportFailedMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalLiveTransportFailedMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalLiveTransportFailedMetadata::DECODERS
-
-    # @return [String] Required `string` value serialized in the `event_id` wire field.
-    attr_reader :event_id
-    # @return [String] The canonical Live session ID.
-    attr_reader :session_id
-    # @return [LiveTransportFailedType] Required enumerated value serialized in the `type` wire field.
-    attr_reader :type
-    # @return [LiveTransportCallError] Required object value serialized in the `error` wire field.
-    attr_reader :error
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+    raise SdkValidationError.new('LiveTransportRingingType', 'enum', "Unknown LiveTransportRingingType: #{value}")
   end
-
-  # Defines the LiveTransportFailedType SDK namespace.
-  module LiveTransportFailedType
-    TRANSPORT_FAILED = 'transport.failed'
-    VALUES = ['transport.failed'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('LiveTransportFailedType', 'enum', "Unknown LiveTransportFailedType: #{value}")
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalLiveTransportRingingMetadata
-    FIELDS = {
-      event_id: 'event_id',
-      session_id: 'session_id',
-      type: 'type'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      event_id
-      session_id
-      type
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::LiveTransportRingingType.from_value(value)
-      end
-    }.freeze
-  end
-
-  # API model for LiveTransportRinging.
-  # The outbound SIP provider leg is ringing or providing early media. Delivered only to sideband observers.
-  class LiveTransportRinging
-    include LiveSidebandServerEvent
-    include LiveServerEvent2
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalLiveTransportRingingMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalLiveTransportRingingMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalLiveTransportRingingMetadata::DECODERS
-
-    # @return [String] Required `string` value serialized in the `event_id` wire field.
-    attr_reader :event_id
-    # @return [String] The canonical Live session ID.
-    attr_reader :session_id
-    # @return [LiveTransportRingingType] Required enumerated value serialized in the `type` wire field.
-    attr_reader :type
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the LiveTransportRingingType SDK namespace.
-  module LiveTransportRingingType
-    TRANSPORT_RINGING = 'transport.ringing'
-    VALUES = ['transport.ringing'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('LiveTransportRingingType', 'enum', "Unknown LiveTransportRingingType: #{value}")
-    end
-  end
+end
 end

@@ -5,536 +5,533 @@
 
 # agents_create domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalCreateAgentEnvironmentParamsMetadata
-    FIELDS = {
-      environment: 'environment',
-      vault_ids: 'vault_ids'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      environment
-    ].freeze
-    DECODERS = {
-      environment: lambda do |value|
-        ::OctridevOpenai::CreateEnvironmentParam.from_hash(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalCreateAgentEnvironmentParamsMetadata
+  FIELDS = {
+    environment: "environment",
+    vault_ids: "vault_ids",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    environment
+  ].freeze
+  DECODERS = {
+    environment: lambda do |value|
+      ::OctridevOpenai::CreateEnvironmentParam.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for CreateAgentEnvironmentParams.
+# Parameters for creating an execution environment before its sessions.
+class CreateAgentEnvironmentParams
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCreateAgentEnvironmentParamsMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCreateAgentEnvironmentParamsMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCreateAgentEnvironmentParamsMetadata::DECODERS
+
+  # @return [CreateEnvironmentParam] The required hosting type and its configuration.
+  attr_reader :environment
+  # @return [Array_of_String] The IDs of up to 10 vaults made available to an OpenAI-hosted environment.
+  attr_reader :vault_ids
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for CreateAgentEnvironmentParams.
-  # Parameters for creating an execution environment before its sessions.
-  class CreateAgentEnvironmentParams
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCreateAgentEnvironmentParamsMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCreateAgentEnvironmentParamsMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCreateAgentEnvironmentParamsMetadata::DECODERS
-
-    # @return [CreateEnvironmentParam] The required hosting type and its configuration.
-    attr_reader :environment
-    # @return [Array_of_String] The IDs of up to 10 vaults made available to an OpenAI-hosted environment.
-    attr_reader :vault_ids
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalCreateAgentParamsMetadata
-    FIELDS = {
-      metadata: 'metadata',
-      name: 'name',
-      model: 'model',
-      reasoning: 'reasoning',
-      text: 'text',
-      service_tier: 'service_tier',
-      instructions: 'instructions',
-      tools: 'tools',
-      multi_agent: 'multi_agent'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      model
-    ].freeze
-    DECODERS = {
-      reasoning: lambda do |value|
-        ::OctridevOpenai::ReasoningParam.from_hash(value)
-      end,
-      text: lambda do |value|
-        ::OctridevOpenai::TextParam.from_hash(value)
-      end,
-      service_tier: lambda do |value|
-        ::OctridevOpenai::ServiceTierParam.from_value(value)
-      end,
-      tools: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::PersistedAgentToolConfigParam.from_hash(item) }
-      end,
-      multi_agent: lambda do |value|
-        ::OctridevOpenai::MultiAgentConfigCurrentParam.from_hash(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalCreateAgentParamsMetadata
+  FIELDS = {
+    metadata: "metadata",
+    name: "name",
+    model: "model",
+    reasoning: "reasoning",
+    text: "text",
+    service_tier: "service_tier",
+    instructions: "instructions",
+    tools: "tools",
+    multi_agent: "multi_agent",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    model
+  ].freeze
+  DECODERS = {
+    reasoning: lambda do |value|
+      ::OctridevOpenai::ReasoningParam.from_hash(value)
+    end,
+    text: lambda do |value|
+      ::OctridevOpenai::TextParam.from_hash(value)
+    end,
+    service_tier: lambda do |value|
+      ::OctridevOpenai::ServiceTierParam.from_value(value)
+    end,
+    tools: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::PersistedAgentToolConfigParam.from_hash(item) }
+    end,
+    multi_agent: lambda do |value|
+      ::OctridevOpenai::MultiAgentConfigCurrentParam.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for CreateAgentParams.
+# Parameters for creating a reusable agent.
+class CreateAgentParams
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCreateAgentParamsMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCreateAgentParamsMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCreateAgentParamsMetadata::DECODERS
+
+  # @return [Hash] Up to 16 string key-value pairs, with keys up to 64 and values up to 512 characters. Omission or null defaults to an empty map.
+  attr_reader :metadata
+  # @return [String] A human-readable name for the agent. Omission or null leaves the agent unnamed.
+  attr_reader :name
+  # @return [String] The model to use for the agent. The requested model name is preserved.
+  attr_reader :model
+  # @return [ReasoningParam] Configuration for model reasoning. Omission uses the model's default effort.
+  attr_reader :reasoning
+  # @return [TextParam] Configuration for generated text. Defaults to the `text` format and medium verbosity.
+  attr_reader :text
+  # @return [ServiceTierParam] The service tier used for model requests. Defaults to `auto`.
+  attr_reader :service_tier
+  # @return [String] Additional instructions appended to the agent's default base instructions. Omit or set to null to add no custom instructions.
+  attr_reader :instructions
+  # @return [Array_of_PersistedAgentToolConfigParam] Tools available to the agent. Defaults to an empty list. The tool list must fit within 3 MiB (3,145,728 bytes) of compact UTF-8 JSON.
+  attr_reader :tools
+  # @return [MultiAgentConfigCurrentParam] Configuration for creating and coordinating subagents. Subagent tools are disabled by default.
+  attr_reader :multi_agent
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for CreateAgentParams.
-  # Parameters for creating a reusable agent.
-  class CreateAgentParams
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCreateAgentParamsMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCreateAgentParamsMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCreateAgentParamsMetadata::DECODERS
-
-    # @return [Hash] Up to 16 string key-value pairs, with keys up to 64 and values up to 512 characters. Omission or null defaults to an empty map.
-    attr_reader :metadata
-    # @return [String] A human-readable name for the agent. Omission or null leaves the agent unnamed.
-    attr_reader :name
-    # @return [String] The model to use for the agent. The requested model name is preserved.
-    attr_reader :model
-    # @return [ReasoningParam] Configuration for model reasoning. Omission uses the model's default effort.
-    attr_reader :reasoning
-    # @return [TextParam] Configuration for generated text. Defaults to the `text` format and medium verbosity.
-    attr_reader :text
-    # @return [ServiceTierParam] The service tier used for model requests. Defaults to `auto`.
-    attr_reader :service_tier
-    # @return [String] Additional instructions appended to the agent's default base instructions. Omit or set to null to add no custom instructions.
-    attr_reader :instructions
-    # @return [Array_of_PersistedAgentToolConfigParam] Tools available to the agent. Defaults to an empty list. The tool list must fit within 3 MiB (3,145,728 bytes) of compact UTF-8 JSON.
-    attr_reader :tools
-    # @return [MultiAgentConfigCurrentParam] Configuration for creating and coordinating subagents. Subagent tools are disabled by default.
-    attr_reader :multi_agent
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalCreateAgentSessionParamsMetadata
-    FIELDS = {
-      spend_control: 'spend_control',
-      metadata: 'metadata',
-      agent: 'agent',
-      agent_id: 'agent_id',
-      environment: 'environment',
-      vault_ids: 'vault_ids',
-      input: 'input',
-      stream: 'stream'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      environment
-    ].freeze
-    DECODERS = {
-      spend_control: lambda do |value|
-        ::OctridevOpenai::SessionSpendControlParam.from_hash(value)
-      end,
-      agent: lambda do |value|
-        ::OctridevOpenai::SessionAgentConfigParam.from_hash(value)
-      end,
-      environment: lambda do |value|
-        ::OctridevOpenai::EnvironmentParam.from_hash(value)
-      end,
-      input: lambda do |value|
-        ::OctridevOpenai::CreateSessionInputParam.from_hash(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalCreateAgentSessionParamsMetadata
+  FIELDS = {
+    spend_control: "spend_control",
+    metadata: "metadata",
+    agent: "agent",
+    agent_id: "agent_id",
+    environment: "environment",
+    vault_ids: "vault_ids",
+    input: "input",
+    stream: "stream",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    environment
+  ].freeze
+  DECODERS = {
+    spend_control: lambda do |value|
+      ::OctridevOpenai::SessionSpendControlParam.from_hash(value)
+    end,
+    agent: lambda do |value|
+      ::OctridevOpenai::SessionAgentConfigParam.from_hash(value)
+    end,
+    environment: lambda do |value|
+      ::OctridevOpenai::EnvironmentParam.from_hash(value)
+    end,
+    input: lambda do |value|
+      ::OctridevOpenai::CreateSessionInputParam.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for CreateAgentSessionParams.
+# Parameters for creating a Managed Agents session.
+class CreateAgentSessionParams
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCreateAgentSessionParamsMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCreateAgentSessionParamsMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCreateAgentSessionParamsMetadata::DECODERS
+
+  # @return [SessionSpendControlParam] Optional spending limit in USD cents. Omission or null creates an unlimited session.
+  attr_reader :spend_control
+  # @return [Hash] Up to 16 string key-value pairs, with keys up to 64 and values up to 512 characters. Omission or null defaults to an empty map.
+  attr_reader :metadata
+  # @return [SessionAgentConfigParam] Agent configuration. With `agent_id`, supplied fields override the saved agent for this session. Without `agent_id`, `model` is required.
+  attr_reader :agent
+  # @return [String] The ID of a saved reusable agent. Omit `agent` to use its configuration unchanged.
+  attr_reader :agent_id
+  # @return [EnvironmentParam] An inline execution environment or a reference to an environment template.
+  attr_reader :environment
+  # @return [Array_of_String] The IDs of vaults made available to the session.
+  attr_reader :vault_ids
+  # @return [CreateSessionInputParam] Initial input to submit when the session is created. A string is shorthand for a single user message. Required when `environment.type` is `none`, or when `stream` is `true` for an environment that is not `self_hosted`; optional for self-hosted and non-streaming execution environments.
+  attr_reader :input
+  # @return [Boolean] Whether to stream session events as server-sent events. Defaults to `false`.
+  attr_reader :stream
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for CreateAgentSessionParams.
-  # Parameters for creating a Managed Agents session.
-  class CreateAgentSessionParams
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCreateAgentSessionParamsMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCreateAgentSessionParamsMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCreateAgentSessionParamsMetadata::DECODERS
-
-    # @return [SessionSpendControlParam] Optional spending limit in USD cents. Omission or null creates an unlimited session.
-    attr_reader :spend_control
-    # @return [Hash] Up to 16 string key-value pairs, with keys up to 64 and values up to 512 characters. Omission or null defaults to an empty map.
-    attr_reader :metadata
-    # @return [SessionAgentConfigParam] Agent configuration. With `agent_id`, supplied fields override the saved agent for this session. Without `agent_id`, `model` is required.
-    attr_reader :agent
-    # @return [String] The ID of a saved reusable agent. Omit `agent` to use its configuration unchanged.
-    attr_reader :agent_id
-    # @return [EnvironmentParam] An inline execution environment or a reference to an environment template.
-    attr_reader :environment
-    # @return [Array_of_String] The IDs of vaults made available to the session.
-    attr_reader :vault_ids
-    # @return [CreateSessionInputParam] Initial input to submit when the session is created. A string is shorthand for a single user message. Required when `environment.type` is `none`, or when `stream` is `true` for an environment that is not `self_hosted`; optional for self-hosted and non-streaming execution environments.
-    attr_reader :input
-    # @return [Boolean] Whether to stream session events as server-sent events. Defaults to `false`.
-    attr_reader :stream
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the CreateEnvironmentParam SDK namespace.
-  module CreateEnvironmentParam
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      mapping = { 'openai_hosted' => CreateEnvironmentParamOpenaiHosted }
-      type = mapping[hash['type']]
-      return type.from_hash(hash) if type
+# Defines the CreateEnvironmentParam SDK namespace.
+module CreateEnvironmentParam
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    mapping = { "openai_hosted" => CreateEnvironmentParamOpenaiHosted }
+    type = mapping[hash["type"]]
+    return type.from_hash(hash) if type
 
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
 
-      raise SdkValidationError.new('CreateEnvironmentParam', 'variant', "Unknown CreateEnvironmentParam discriminator: #{hash['type'].inspect}")
-    end
+    raise SdkValidationError.new('CreateEnvironmentParam', 'variant', "Unknown CreateEnvironmentParam discriminator: #{hash["type"].inspect}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalCreateEnvironmentParamOpenaiHostedMetadata
+  FIELDS = {
+    type: "type",
+    packages: "packages",
+    setup_commands: "setup_commands",
+    network: "network",
+    desktop: "desktop",
+    env: "env",
+    capability_directories: "capability_directories",
+    skills: "skills",
+    plugins: "plugins",
+    files: "files",
+    environment_template_id: "environment_template_id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::CreateEnvironmentParamOpenaiHostedType.from_value(value)
+    end,
+    packages: lambda do |value|
+      ::OctridevOpenai::EnvironmentPackagesParam.from_hash(value)
+    end,
+    setup_commands: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::SetupCommandParam.from_hash(item) }
+    end,
+    network: lambda do |value|
+      ::OctridevOpenai::NetworkPolicyParam.from_hash(value)
+    end,
+    desktop: lambda do |value|
+      ::OctridevOpenai::DesktopParam.from_hash(value)
+    end,
+    skills: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::HostedSkillParam.from_hash(item) }
+    end,
+    plugins: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::HostedPluginParam.from_hash(item) }
+    end,
+    files: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::HostedEnvironmentFileParam.from_hash(item) }
+    end,
+  }.freeze
+end
+
+# API model for CreateEnvironmentParamOpenaiHosted.
+# Provision an OpenAI-hosted environment from inline configuration or a template.
+class CreateEnvironmentParamOpenaiHosted
+  include CreateEnvironmentParam
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCreateEnvironmentParamOpenaiHostedMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCreateEnvironmentParamOpenaiHostedMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCreateEnvironmentParamOpenaiHostedMetadata::DECODERS
+
+  # @return [CreateEnvironmentParamOpenaiHostedType] The type of the object. Always `openai_hosted`.
+  attr_reader :type
+  # @return [EnvironmentPackagesParam] Packages to install in the environment. Defaults to empty package lists.
+  attr_reader :packages
+  # @return [Array_of_SetupCommandParam] Ordered, confidential setup commands. Command bodies are never returned.
+  attr_reader :setup_commands
+  # @return [NetworkPolicyParam] Network access policy for the environment. If omitted, the API version determines whether network access is enabled or disabled.
+  attr_reader :network
+  # @return [DesktopParam] Desktop provisioning. Omission or null inherits the template setting, or defaults to disabled.
+  attr_reader :desktop
+  # @return [Hash] Environment variables made available to the agent.
+  attr_reader :env
+  # @return [Array_of_String] Directories that contain capabilities exposed to the agent. Defaults to an empty list.
+  attr_reader :capability_directories
+  # @return [Array_of_HostedSkillParam] Skills referenced by ID or provided as inline ZIP archives. Defaults to an empty list.
+  attr_reader :skills
+  # @return [Array_of_HostedPluginParam] Plugins provided as inline ZIP archives. Defaults to an empty list.
+  attr_reader :plugins
+  # @return [Array_of_HostedEnvironmentFileParam] Files available before the agent starts. Defaults to an empty list.
+  attr_reader :files
+  # @return [String] A reusable hosted template applied before inline configuration. Omitted fields inherit the template; network overrides cannot broaden its policy.
+  attr_reader :environment_template_id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalCreateEnvironmentParamOpenaiHostedMetadata
-    FIELDS = {
-      type: 'type',
-      packages: 'packages',
-      setup_commands: 'setup_commands',
-      network: 'network',
-      desktop: 'desktop',
-      env: 'env',
-      capability_directories: 'capability_directories',
-      skills: 'skills',
-      plugins: 'plugins',
-      files: 'files',
-      environment_template_id: 'environment_template_id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::CreateEnvironmentParamOpenaiHostedType.from_value(value)
-      end,
-      packages: lambda do |value|
-        ::OctridevOpenai::EnvironmentPackagesParam.from_hash(value)
-      end,
-      setup_commands: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::SetupCommandParam.from_hash(item) }
-      end,
-      network: lambda do |value|
-        ::OctridevOpenai::NetworkPolicyParam.from_hash(value)
-      end,
-      desktop: lambda do |value|
-        ::OctridevOpenai::DesktopParam.from_hash(value)
-      end,
-      skills: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::HostedSkillParam.from_hash(item) }
-      end,
-      plugins: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::HostedPluginParam.from_hash(item) }
-      end,
-      files: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::HostedEnvironmentFileParam.from_hash(item) }
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for CreateEnvironmentParamOpenaiHosted.
-  # Provision an OpenAI-hosted environment from inline configuration or a template.
-  class CreateEnvironmentParamOpenaiHosted
-    include CreateEnvironmentParam
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCreateEnvironmentParamOpenaiHostedMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCreateEnvironmentParamOpenaiHostedMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCreateEnvironmentParamOpenaiHostedMetadata::DECODERS
+# Defines the CreateEnvironmentParamOpenaiHostedType SDK namespace.
+module CreateEnvironmentParamOpenaiHostedType
+  OPENAI_HOSTED = 'openai_hosted'
+  VALUES = ['openai_hosted'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    # @return [CreateEnvironmentParamOpenaiHostedType] The type of the object. Always `openai_hosted`.
-    attr_reader :type
-    # @return [EnvironmentPackagesParam] Packages to install in the environment. Defaults to empty package lists.
-    attr_reader :packages
-    # @return [Array_of_SetupCommandParam] Ordered, confidential setup commands. Command bodies are never returned.
-    attr_reader :setup_commands
-    # @return [NetworkPolicyParam] Network access policy for the environment. If omitted, the API version determines whether network access is enabled or disabled.
-    attr_reader :network
-    # @return [DesktopParam] Desktop provisioning. Omission or null inherits the template setting, or defaults to disabled.
-    attr_reader :desktop
-    # @return [Hash] Environment variables made available to the agent.
-    attr_reader :env
-    # @return [Array_of_String] Directories that contain capabilities exposed to the agent. Defaults to an empty list.
-    attr_reader :capability_directories
-    # @return [Array_of_HostedSkillParam] Skills referenced by ID or provided as inline ZIP archives. Defaults to an empty list.
-    attr_reader :skills
-    # @return [Array_of_HostedPluginParam] Plugins provided as inline ZIP archives. Defaults to an empty list.
-    attr_reader :plugins
-    # @return [Array_of_HostedEnvironmentFileParam] Files available before the agent starts. Defaults to an empty list.
-    attr_reader :files
-    # @return [String] A reusable hosted template applied before inline configuration. Omitted fields inherit the template; network overrides cannot broaden its policy.
-    attr_reader :environment_template_id
+    raise SdkValidationError.new('CreateEnvironmentParamOpenaiHostedType', 'enum', "Unknown CreateEnvironmentParamOpenaiHostedType: #{value}")
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalCreateEnvironmentTemplateParamsMetadata
+  FIELDS = {
+    packages: "packages",
+    setup_commands: "setup_commands",
+    network: "network",
+    desktop: "desktop",
+    env: "env",
+    capability_directories: "capability_directories",
+    skills: "skills",
+    plugins: "plugins",
+    files: "files",
+    name: "name",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+    packages: lambda do |value|
+      ::OctridevOpenai::EnvironmentPackagesParam.from_hash(value)
+    end,
+    setup_commands: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::SetupCommandParam.from_hash(item) }
+    end,
+    network: lambda do |value|
+      ::OctridevOpenai::NetworkPolicyParam.from_hash(value)
+    end,
+    desktop: lambda do |value|
+      ::OctridevOpenai::DesktopParam.from_hash(value)
+    end,
+    skills: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::HostedSkillParam.from_hash(item) }
+    end,
+    plugins: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::HostedPluginParam.from_hash(item) }
+    end,
+    files: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::HostedEnvironmentFileParam.from_hash(item) }
+    end,
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for CreateEnvironmentTemplateParams.
+# Parameters for creating a reusable, project-scoped OpenAI-hosted environment template.
+class CreateEnvironmentTemplateParams
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCreateEnvironmentTemplateParamsMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCreateEnvironmentTemplateParamsMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCreateEnvironmentTemplateParamsMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [EnvironmentPackagesParam] Packages to install in the environment. Defaults to empty package lists.
+  attr_reader :packages
+  # @return [Array_of_SetupCommandParam] Ordered, confidential setup commands. Command bodies are never returned.
+  attr_reader :setup_commands
+  # @return [NetworkPolicyParam] Network access policy for the environment. If omitted, the API version determines whether network access is enabled or disabled.
+  attr_reader :network
+  # @return [DesktopParam] Desktop provisioning. Omission or null inherits the template setting, or defaults to disabled.
+  attr_reader :desktop
+  # @return [Hash] Environment variables made available to the agent.
+  attr_reader :env
+  # @return [Array_of_String] Directories that contain capabilities exposed to the agent. Defaults to an empty list.
+  attr_reader :capability_directories
+  # @return [Array_of_HostedSkillParam] Skills referenced by ID or provided as inline ZIP archives. Defaults to an empty list.
+  attr_reader :skills
+  # @return [Array_of_HostedPluginParam] Plugins provided as inline ZIP archives. Defaults to an empty list.
+  attr_reader :plugins
+  # @return [Array_of_HostedEnvironmentFileParam] Files available before the agent starts. Defaults to an empty list.
+  attr_reader :files
+  # @return [String] An optional human-readable display name for the template.
+  attr_reader :name
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the CreateEnvironmentParamOpenaiHostedType SDK namespace.
-  module CreateEnvironmentParamOpenaiHostedType
-    OPENAI_HOSTED = 'openai_hosted'
-    VALUES = ['openai_hosted'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('CreateEnvironmentParamOpenaiHostedType', 'enum', "Unknown CreateEnvironmentParamOpenaiHostedType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalCreateEnvironmentTemplateParamsMetadata
-    FIELDS = {
-      packages: 'packages',
-      setup_commands: 'setup_commands',
-      network: 'network',
-      desktop: 'desktop',
-      env: 'env',
-      capability_directories: 'capability_directories',
-      skills: 'skills',
-      plugins: 'plugins',
-      files: 'files',
-      name: 'name'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {
-      packages: lambda do |value|
-        ::OctridevOpenai::EnvironmentPackagesParam.from_hash(value)
-      end,
-      setup_commands: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::SetupCommandParam.from_hash(item) }
-      end,
-      network: lambda do |value|
-        ::OctridevOpenai::NetworkPolicyParam.from_hash(value)
-      end,
-      desktop: lambda do |value|
-        ::OctridevOpenai::DesktopParam.from_hash(value)
-      end,
-      skills: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::HostedSkillParam.from_hash(item) }
-      end,
-      plugins: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::HostedPluginParam.from_hash(item) }
-      end,
-      files: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::HostedEnvironmentFileParam.from_hash(item) }
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalCreateSessionEventsParamsMetadata
+  FIELDS = {
+    events: "events",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    events
+  ].freeze
+  DECODERS = {
+    events: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::SessionInputParam.from_hash(item) }
+    end,
+  }.freeze
+end
+
+# API model for CreateSessionEventsParams.
+# Input events submitted to an existing session.
+class CreateSessionEventsParams
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCreateSessionEventsParamsMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCreateSessionEventsParamsMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCreateSessionEventsParamsMetadata::DECODERS
+
+  # @return [Array_of_SessionInputParam] The input events to submit to the session.
+  attr_reader :events
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for CreateEnvironmentTemplateParams.
-  # Parameters for creating a reusable, project-scoped OpenAI-hosted environment template.
-  class CreateEnvironmentTemplateParams
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCreateEnvironmentTemplateParamsMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCreateEnvironmentTemplateParamsMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCreateEnvironmentTemplateParamsMetadata::DECODERS
-
-    # @return [EnvironmentPackagesParam] Packages to install in the environment. Defaults to empty package lists.
-    attr_reader :packages
-    # @return [Array_of_SetupCommandParam] Ordered, confidential setup commands. Command bodies are never returned.
-    attr_reader :setup_commands
-    # @return [NetworkPolicyParam] Network access policy for the environment. If omitted, the API version determines whether network access is enabled or disabled.
-    attr_reader :network
-    # @return [DesktopParam] Desktop provisioning. Omission or null inherits the template setting, or defaults to disabled.
-    attr_reader :desktop
-    # @return [Hash] Environment variables made available to the agent.
-    attr_reader :env
-    # @return [Array_of_String] Directories that contain capabilities exposed to the agent. Defaults to an empty list.
-    attr_reader :capability_directories
-    # @return [Array_of_HostedSkillParam] Skills referenced by ID or provided as inline ZIP archives. Defaults to an empty list.
-    attr_reader :skills
-    # @return [Array_of_HostedPluginParam] Plugins provided as inline ZIP archives. Defaults to an empty list.
-    attr_reader :plugins
-    # @return [Array_of_HostedEnvironmentFileParam] Files available before the agent starts. Defaults to an empty list.
-    attr_reader :files
-    # @return [String] An optional human-readable display name for the template.
-    attr_reader :name
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalCreateSessionEventsParamsMetadata
-    FIELDS = {
-      events: 'events'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      events
-    ].freeze
-    DECODERS = {
-      events: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::SessionInputParam.from_hash(item) }
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the CreateSessionInputParam SDK namespace.
+module CreateSessionInputParam
+  def self.from_hash(hash)
+    return hash if hash.is_a?(::String)
+    return hash.map { |item| InputMessageParam.from_hash(item) } if hash.is_a?(::Array)
+    raise "Could not deserialize CreateSessionInputParam from #{hash.inspect}"
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalCreateSubagentCallItemResourceMetadata
+  FIELDS = {
+    type: "type",
+    id: "id",
+    turn_id: "turn_id",
+    status: "status",
+    agent_id: "agent_id",
+    content: "content",
+    model: "model",
+    reasoning_effort: "reasoning_effort",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    id
+    turn_id
+    status
+    agent_id
+    content
+    model
+    reasoning_effort
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::CreateSubagentCallItemResourceType.from_value(value)
+    end,
+    status: lambda do |value|
+      ::OctridevOpenai::FunctionCallStatusResource.from_value(value)
+    end,
+    content: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::AgentContentResource.from_hash(item) }
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    model
+    reasoning_effort
+  ].freeze
+end
+
+# API model for CreateSubagentCallItemResource.
+# A request to spawn a subagent.
+class CreateSubagentCallItemResource
+  include SessionTurnItemResource
+  include AgentOutputItemResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCreateSubagentCallItemResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCreateSubagentCallItemResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCreateSubagentCallItemResourceMetadata::DECODERS
+
+  # @return [CreateSubagentCallItemResourceType] The item type. Always `create_subagent_call`.
+  attr_reader :type
+  # @return [String] The ID of the tool call item.
+  attr_reader :id
+  # @return [String] The ID of the turn that contains this item.
+  attr_reader :turn_id
+  # @return [FunctionCallStatusResource] The status of the tool call.
+  attr_reader :status
+  # @return [String] The ID of the agent that requested the subagent.
+  attr_reader :agent_id
+  # @return [Array_of_AgentContentResource] The task given to the spawned agent.
+  attr_reader :content
+  # @return [String] The model requested for the spawned agent.
+  attr_reader :model
+  # @return [String] The reasoning effort requested for the spawned agent.
+  attr_reader :reasoning_effort
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for CreateSessionEventsParams.
-  # Input events submitted to an existing session.
-  class CreateSessionEventsParams
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCreateSessionEventsParamsMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCreateSessionEventsParamsMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCreateSessionEventsParamsMetadata::DECODERS
-
-    # @return [Array_of_SessionInputParam] The input events to submit to the session.
-    attr_reader :events
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalCreateSubagentCallItemResourceMetadata::NULLABLE_FIELDS)
   end
 
-  # Defines the CreateSessionInputParam SDK namespace.
-  module CreateSessionInputParam
-    def self.from_hash(hash)
-      return hash if hash.is_a?(::String)
-      return hash.map { |item| InputMessageParam.from_hash(item) } if hash.is_a?(::Array)
-
-      raise "Could not deserialize CreateSessionInputParam from #{hash.inspect}"
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Internal model hydration metadata.
-  class SdkInternalCreateSubagentCallItemResourceMetadata
-    FIELDS = {
-      type: 'type',
-      id: 'id',
-      turn_id: 'turn_id',
-      status: 'status',
-      agent_id: 'agent_id',
-      content: 'content',
-      model: 'model',
-      reasoning_effort: 'reasoning_effort'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      id
-      turn_id
-      status
-      agent_id
-      content
-      model
-      reasoning_effort
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::CreateSubagentCallItemResourceType.from_value(value)
-      end,
-      status: lambda do |value|
-        ::OctridevOpenai::FunctionCallStatusResource.from_value(value)
-      end,
-      content: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::AgentContentResource.from_hash(item) }
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      model
-      reasoning_effort
-    ].freeze
+# Defines the CreateSubagentCallItemResourceType SDK namespace.
+module CreateSubagentCallItemResourceType
+  CREATE_SUBAGENT_CALL = 'create_subagent_call'
+  VALUES = ['create_subagent_call'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('CreateSubagentCallItemResourceType', 'enum', "Unknown CreateSubagentCallItemResourceType: #{value}")
   end
-
-  # API model for CreateSubagentCallItemResource.
-  # A request to spawn a subagent.
-  class CreateSubagentCallItemResource
-    include SessionTurnItemResource
-    include AgentOutputItemResource
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCreateSubagentCallItemResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCreateSubagentCallItemResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCreateSubagentCallItemResourceMetadata::DECODERS
-
-    # @return [CreateSubagentCallItemResourceType] The item type. Always `create_subagent_call`.
-    attr_reader :type
-    # @return [String] The ID of the tool call item.
-    attr_reader :id
-    # @return [String] The ID of the turn that contains this item.
-    attr_reader :turn_id
-    # @return [FunctionCallStatusResource] The status of the tool call.
-    attr_reader :status
-    # @return [String] The ID of the agent that requested the subagent.
-    attr_reader :agent_id
-    # @return [Array_of_AgentContentResource] The task given to the spawned agent.
-    attr_reader :content
-    # @return [String] The model requested for the spawned agent.
-    attr_reader :model
-    # @return [String] The reasoning effort requested for the spawned agent.
-    attr_reader :reasoning_effort
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalCreateSubagentCallItemResourceMetadata::NULLABLE_FIELDS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the CreateSubagentCallItemResourceType SDK namespace.
-  module CreateSubagentCallItemResourceType
-    CREATE_SUBAGENT_CALL = 'create_subagent_call'
-    VALUES = ['create_subagent_call'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('CreateSubagentCallItemResourceType', 'enum', "Unknown CreateSubagentCallItemResourceType: #{value}")
-    end
-  end
+end
 end

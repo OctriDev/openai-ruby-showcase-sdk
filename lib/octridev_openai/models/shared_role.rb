@@ -5,146 +5,146 @@
 
 # shared_role domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalRoleMetadata
-    FIELDS = {
-      object: 'object',
-      id: 'id',
-      name: 'name',
-      description: 'description',
-      permissions: 'permissions',
-      resource_type: 'resource_type',
-      predefined_role: 'predefined_role'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      id
-      name
-      description
-      permissions
-      resource_type
-      predefined_role
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::RoleObject.from_value(value)
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      description
-    ].freeze
+# Internal model hydration metadata.
+class SdkInternalRoleMetadata
+  FIELDS = {
+    object: "object",
+    id: "id",
+    name: "name",
+    description: "description",
+    permissions: "permissions",
+    resource_type: "resource_type",
+    predefined_role: "predefined_role",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    id
+    name
+    description
+    permissions
+    resource_type
+    predefined_role
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::RoleObject.from_value(value)
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    description
+  ].freeze
+end
+
+# API model for Role.
+# Details about a role that can be assigned through the public Roles API.
+class Role
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRoleMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRoleMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRoleMetadata::DECODERS
+
+  # @return [RoleObject] Always `role`.
+  attr_reader :object
+  # @return [String] Identifier for the role.
+  attr_reader :id
+  # @return [String] Unique name for the role.
+  attr_reader :name
+  # @return [String] Optional description of the role.
+  attr_reader :description
+  # @return [Array_of_String] Permissions granted by the role.
+  attr_reader :permissions
+  # @return [String] Resource type the role is bound to (for example `api.organization` or `api.project`).
+  attr_reader :resource_type
+  # @return [Boolean] Whether the role is predefined and managed by OpenAI.
+  attr_reader :predefined_role
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for Role.
-  # Details about a role that can be assigned through the public Roles API.
-  class Role
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRoleMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRoleMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRoleMetadata::DECODERS
-
-    # @return [RoleObject] Always `role`.
-    attr_reader :object
-    # @return [String] Identifier for the role.
-    attr_reader :id
-    # @return [String] Unique name for the role.
-    attr_reader :name
-    # @return [String] Optional description of the role.
-    attr_reader :description
-    # @return [Array_of_String] Permissions granted by the role.
-    attr_reader :permissions
-    # @return [String] Resource type the role is bound to (for example `api.organization` or `api.project`).
-    attr_reader :resource_type
-    # @return [Boolean] Whether the role is predefined and managed by OpenAI.
-    attr_reader :predefined_role
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalRoleMetadata::NULLABLE_FIELDS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalRoleMetadata::NULLABLE_FIELDS)
   end
 
-  # Defines the RoleObject SDK namespace.
-  module RoleObject
-    ROLE = 'role'
-    VALUES = ['role'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the RoleObject SDK namespace.
+module RoleObject
+  ROLE = 'role'
+  VALUES = ['role'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalRoleListResourceMetadata
+  FIELDS = {
+    object: "object",
+    data: "data",
+    has_more: "has_more",
+    next_: "next",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    data
+    has_more
+    next_
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::RoleListResourceObject.from_value(value)
+    end,
+    data: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::AssignedRoleDetails.from_hash(item) }
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    next_
+  ].freeze
+end
+
+# API model for RoleListResource.
+# Paginated list of roles assigned to a principal.
+class RoleListResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRoleListResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRoleListResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRoleListResourceMetadata::DECODERS
+
+  # @return [RoleListResourceObject] Always `list`.
+  attr_reader :object
+  # @return [Array_of_AssignedRoleDetails] Role assignments returned in the current page.
+  attr_reader :data
+  # @return [Boolean] Whether additional assignments are available when paginating.
+  attr_reader :has_more
+  # @return [String] Cursor to fetch the next page of results, or `null` when there are no more assignments.
+  attr_reader :next_
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalRoleListResourceMetadata
-    FIELDS = {
-      object: 'object',
-      data: 'data',
-      has_more: 'has_more',
-      next_: 'next'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      data
-      has_more
-      next_
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::RoleListResourceObject.from_value(value)
-      end,
-      data: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::AssignedRoleDetails.from_hash(item) }
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      next_
-    ].freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalRoleListResourceMetadata::NULLABLE_FIELDS)
   end
 
-  # API model for RoleListResource.
-  # Paginated list of roles assigned to a principal.
-  class RoleListResource
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRoleListResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRoleListResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRoleListResourceMetadata::DECODERS
-
-    # @return [RoleListResourceObject] Always `list`.
-    attr_reader :object
-    # @return [Array_of_AssignedRoleDetails] Role assignments returned in the current page.
-    attr_reader :data
-    # @return [Boolean] Whether additional assignments are available when paginating.
-    attr_reader :has_more
-    # @return [String] Cursor to fetch the next page of results, or `null` when there are no more assignments.
-    attr_reader :next_
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalRoleListResourceMetadata::NULLABLE_FIELDS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the RoleListResourceObject SDK namespace.
-  module RoleListResourceObject
-    LIST = 'list'
-    VALUES = ['list'].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the RoleListResourceObject SDK namespace.
+module RoleListResourceObject
+  LIST = 'list'
+  VALUES = ['list'].freeze
+  def self.from_value(value)
+    value
   end
+end
 end

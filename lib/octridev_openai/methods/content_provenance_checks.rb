@@ -18,19 +18,20 @@ module OctridevOpenai
         file:,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
-          '/content_provenance_checks',
+          "/content_provenance_checks",
           config: config,
           body: {
-            'file' => SdkClient.upload(file, 'file')
+            'file' => SdkClient.upload(file, 'file'),
           },
           content_type: 'multipart/form-data',
           return_type: ::OctridevOpenai::ProvenanceResource,
           decoder: :json,
           operation_id: 'create_content_provenance_checks',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
     end

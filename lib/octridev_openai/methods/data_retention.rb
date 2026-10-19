@@ -16,15 +16,16 @@ module OctridevOpenai
         config:,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
-          '/organization/data_retention',
+          "/organization/data_retention",
           config: config,
           return_type: ::OctridevOpenai::OrganizationDataRetention,
           decoder: :json,
           operation_id: 'retrieve_organization_data_retention',
           request_options: request_options,
-          errors: { '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
+          errors: { '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -39,18 +40,19 @@ module OctridevOpenai
         retention_type:,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
-          '/organization/data_retention',
+          "/organization/data_retention",
           config: config,
           body: {
-            'retention_type' => retention_type
+            'retention_type' => retention_type,
           },
           return_type: ::OctridevOpenai::OrganizationDataRetention,
           decoder: :json,
           operation_id: 'update_organization_data_retention',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -64,19 +66,20 @@ module OctridevOpenai
         project_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
           [
-            '/organization/projects/',
+            "/organization/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/data_retention'
+            "/data_retention"
           ].join,
           config: config,
           return_type: ::OctridevOpenai::ProjectDataRetention,
           decoder: :json,
           operation_id: 'retrieve_project_data_retention',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -93,22 +96,23 @@ module OctridevOpenai
         retention_type:,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
           [
-            '/organization/projects/',
+            "/organization/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/data_retention'
+            "/data_retention"
           ].join,
           config: config,
           body: {
-            'retention_type' => retention_type
+            'retention_type' => retention_type,
           },
           return_type: ::OctridevOpenai::ProjectDataRetention,
           decoder: :json,
           operation_id: 'update_project_data_retention',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
     end

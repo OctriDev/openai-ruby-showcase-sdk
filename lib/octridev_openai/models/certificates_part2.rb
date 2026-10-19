@@ -5,234 +5,236 @@
 
 # certificates domain models (part 2)
 module OctridevOpenai
-  # API model for OrganizationProjectCertificate.
-  # Represents an individual certificate configured at the project level.
-  class OrganizationProjectCertificate
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalOrganizationProjectCertificateMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalOrganizationProjectCertificateMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalOrganizationProjectCertificateMetadata::DECODERS
+# API model for OrganizationProjectCertificate.
+# Represents an individual certificate configured at the project level.
+class OrganizationProjectCertificate
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalOrganizationProjectCertificateMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalOrganizationProjectCertificateMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalOrganizationProjectCertificateMetadata::DECODERS
 
-    # @return [OrganizationProjectCertificateObject] The object type, which is always `organization.project.certificate`.
-    attr_reader :object
-    # @return [String] The identifier, which can be referenced in API endpoints
-    attr_reader :id
-    # @return [String] The name of the certificate.
-    attr_reader :name
-    # @return [Integer] The Unix timestamp (in seconds) of when the certificate was uploaded.
-    attr_reader :created_at
-    # @return [OrganizationProjectCertificateCertificateDetails] Required object value serialized in the `certificate_details` wire field.
-    attr_reader :certificate_details
-    # @return [Boolean] Whether the certificate is currently active at the project level.
-    attr_reader :active
+  # @return [OrganizationProjectCertificateObject] The object type, which is always `organization.project.certificate`.
+  attr_reader :object
+  # @return [String] The identifier, which can be referenced in API endpoints
+  attr_reader :id
+  # @return [String] The name of the certificate.
+  attr_reader :name
+  # @return [Integer] The Unix timestamp (in seconds) of when the certificate was uploaded.
+  attr_reader :created_at
+  # @return [OrganizationProjectCertificateCertificateDetails] Required object value serialized in the `certificate_details` wire field.
+  attr_reader :certificate_details
+  # @return [Boolean] Whether the certificate is currently active at the project level.
+  attr_reader :active
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalOrganizationProjectCertificateMetadata::NULLABLE_FIELDS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the OrganizationProjectCertificateObject SDK namespace.
-  module OrganizationProjectCertificateObject
-    ORGANIZATION_PROJECT_CERTIFICATE = 'organization.project.certificate'
-    VALUES = ['organization.project.certificate'].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalOrganizationProjectCertificateMetadata::NULLABLE_FIELDS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalOrganizationProjectCertificateActivationResponseMetadata
-    FIELDS = {
-      object: 'object',
-      data: 'data'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      data
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::OrganizationProjectCertificateActivationResponseObject.from_value(value)
-      end,
-      data: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::OrganizationProjectCertificate.from_hash(item) }
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the OrganizationProjectCertificateObject SDK namespace.
+module OrganizationProjectCertificateObject
+  ORGANIZATION_PROJECT_CERTIFICATE = 'organization.project.certificate'
+  VALUES = ['organization.project.certificate'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalOrganizationProjectCertificateActivationResponseMetadata
+  FIELDS = {
+    object: "object",
+    data: "data",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    data
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::OrganizationProjectCertificateActivationResponseObject.from_value(value)
+    end,
+    data: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::OrganizationProjectCertificate.from_hash(item) }
+    end,
+  }.freeze
+end
+
+# API model for OrganizationProjectCertificateActivationResponse.
+# Typed representation of the `OrganizationProjectCertificateActivationResponse` API schema.
+class OrganizationProjectCertificateActivationResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalOrganizationProjectCertificateActivationResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalOrganizationProjectCertificateActivationResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalOrganizationProjectCertificateActivationResponseMetadata::DECODERS
+
+  # @return [OrganizationProjectCertificateActivationResponseObject] The project certificate activation result type.
+  attr_reader :object
+  # @return [Array_of_OrganizationProjectCertificate] Required array value serialized in the `data` wire field.
+  attr_reader :data
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for OrganizationProjectCertificateActivationResponse.
-  # Typed representation of the `OrganizationProjectCertificateActivationResponse` API schema.
-  class OrganizationProjectCertificateActivationResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalOrganizationProjectCertificateActivationResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalOrganizationProjectCertificateActivationResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalOrganizationProjectCertificateActivationResponseMetadata::DECODERS
-
-    # @return [OrganizationProjectCertificateActivationResponseObject] The project certificate activation result type.
-    attr_reader :object
-    # @return [Array_of_OrganizationProjectCertificate] Required array value serialized in the `data` wire field.
-    attr_reader :data
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the OrganizationProjectCertificateActivationResponseObject SDK namespace.
-  module OrganizationProjectCertificateActivationResponseObject
-    ORGANIZATION_PROJECT_CERTIFICATE_ACTIVATION = 'organization.project.certificate.activation'
-    VALUES = ['organization.project.certificate.activation'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the OrganizationProjectCertificateActivationResponseObject SDK namespace.
+module OrganizationProjectCertificateActivationResponseObject
+  ORGANIZATION_PROJECT_CERTIFICATE_ACTIVATION = 'organization.project.certificate.activation'
+  VALUES = ['organization.project.certificate.activation'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalOrganizationProjectCertificateDeactivationResponseMetadata
+  FIELDS = {
+    object: "object",
+    data: "data",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    data
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::OrganizationProjectCertificateDeactivationResponseObject.from_value(value)
+    end,
+    data: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::OrganizationProjectCertificate.from_hash(item) }
+    end,
+  }.freeze
+end
+
+# API model for OrganizationProjectCertificateDeactivationResponse.
+# Typed representation of the `OrganizationProjectCertificateDeactivationResponse` API schema.
+class OrganizationProjectCertificateDeactivationResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalOrganizationProjectCertificateDeactivationResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalOrganizationProjectCertificateDeactivationResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalOrganizationProjectCertificateDeactivationResponseMetadata::DECODERS
+
+  # @return [OrganizationProjectCertificateDeactivationResponseObject] The project certificate deactivation result type.
+  attr_reader :object
+  # @return [Array_of_OrganizationProjectCertificate] Required array value serialized in the `data` wire field.
+  attr_reader :data
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalOrganizationProjectCertificateDeactivationResponseMetadata
-    FIELDS = {
-      object: 'object',
-      data: 'data'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      data
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::OrganizationProjectCertificateDeactivationResponseObject.from_value(value)
-      end,
-      data: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::OrganizationProjectCertificate.from_hash(item) }
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for OrganizationProjectCertificateDeactivationResponse.
-  # Typed representation of the `OrganizationProjectCertificateDeactivationResponse` API schema.
-  class OrganizationProjectCertificateDeactivationResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalOrganizationProjectCertificateDeactivationResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalOrganizationProjectCertificateDeactivationResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalOrganizationProjectCertificateDeactivationResponseMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [OrganizationProjectCertificateDeactivationResponseObject] The project certificate deactivation result type.
-    attr_reader :object
-    # @return [Array_of_OrganizationProjectCertificate] Required array value serialized in the `data` wire field.
-    attr_reader :data
+# Defines the OrganizationProjectCertificateDeactivationResponseObject SDK namespace.
+module OrganizationProjectCertificateDeactivationResponseObject
+  ORGANIZATION_PROJECT_CERTIFICATE_DEACTIVATION = 'organization.project.certificate.deactivation'
+  VALUES = ['organization.project.certificate.deactivation'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalToggleCertificatesRequestMetadata
+  FIELDS = {
+    certificate_ids: "certificate_ids",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    certificate_ids
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for ToggleCertificatesRequest.
+# Typed representation of the `ToggleCertificatesRequest` API schema.
+class ToggleCertificatesRequest
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalToggleCertificatesRequestMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalToggleCertificatesRequestMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalToggleCertificatesRequestMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [Array_of_String] Required array value serialized in the `certificate_ids` wire field.
+  attr_reader :certificate_ids
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the OrganizationProjectCertificateDeactivationResponseObject SDK namespace.
-  module OrganizationProjectCertificateDeactivationResponseObject
-    ORGANIZATION_PROJECT_CERTIFICATE_DEACTIVATION = 'organization.project.certificate.deactivation'
-    VALUES = ['organization.project.certificate.deactivation'].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalToggleCertificatesRequestMetadata
-    FIELDS = {
-      certificate_ids: 'certificate_ids'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      certificate_ids
-    ].freeze
-    DECODERS = {}.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalUploadCertificateRequestMetadata
+  FIELDS = {
+    name: "name",
+    certificate: "certificate",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    certificate
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for UploadCertificateRequest.
+# Typed representation of the `UploadCertificateRequest` API schema.
+class UploadCertificateRequest
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalUploadCertificateRequestMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalUploadCertificateRequestMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalUploadCertificateRequestMetadata::DECODERS
+
+  # @return [String] An optional name for the certificate
+  attr_reader :name
+  # @return [String] The certificate content in PEM format
+  attr_reader :certificate
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ToggleCertificatesRequest.
-  # Typed representation of the `ToggleCertificatesRequest` API schema.
-  class ToggleCertificatesRequest
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalToggleCertificatesRequestMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalToggleCertificatesRequestMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalToggleCertificatesRequestMetadata::DECODERS
-
-    # @return [Array_of_String] Required array value serialized in the `certificate_ids` wire field.
-    attr_reader :certificate_ids
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalUploadCertificateRequestMetadata
-    FIELDS = {
-      name: 'name',
-      certificate: 'certificate'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      certificate
-    ].freeze
-    DECODERS = {}.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
-
-  # API model for UploadCertificateRequest.
-  # Typed representation of the `UploadCertificateRequest` API schema.
-  class UploadCertificateRequest
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalUploadCertificateRequestMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalUploadCertificateRequestMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalUploadCertificateRequestMetadata::DECODERS
-
-    # @return [String] An optional name for the certificate
-    attr_reader :name
-    # @return [String] The certificate content in PEM format
-    attr_reader :certificate
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
+end
 end
