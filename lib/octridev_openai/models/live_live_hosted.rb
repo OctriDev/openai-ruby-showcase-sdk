@@ -5,242 +5,248 @@
 
 # live_live_hosted domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalLiveHostedShellContainerAutoParamMetadata
-  FIELDS = {
-    type: "type",
-    file_ids: "file_ids",
-    memory_limit: "memory_limit",
-    network_policy: "network_policy",
-    skills: "skills",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LiveHostedShellContainerAutoParamType.from_value(value)
-    end,
-    memory_limit: lambda do |value|
-      ::OctridevOpenai::LiveContainerMemoryLimit.from_value(value)
-    end,
-    network_policy: lambda do |value|
-      ::OctridevOpenai::LiveHostedShellContainerAutoParamNetworkPolicy.from_hash(value)
-    end,
-    skills: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::LiveHostedShellContainerAutoParamSkillsItem.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for LiveHostedShellContainerAutoParam.
-# Typed representation of the `LiveHostedShellContainerAutoParam` API schema.
-class LiveHostedShellContainerAutoParam
-  include LiveHostedShellToolInputParamEnvironment
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveHostedShellContainerAutoParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveHostedShellContainerAutoParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveHostedShellContainerAutoParamMetadata::DECODERS
-
-  # @return [LiveHostedShellContainerAutoParamType] Automatically creates a container for this request
-  attr_reader :type
-  # @return [Array_of_String] An optional list of uploaded files to make available to your code.
-  attr_reader :file_ids
-  # @return [LiveContainerMemoryLimit] Optional API value serialized in the `memory_limit` wire field.
-  attr_reader :memory_limit
-  # @return [LiveHostedShellContainerAutoParamNetworkPolicy] Network access policy for the container.
-  attr_reader :network_policy
-  # @return [Array_of_LiveHostedShellContainerAutoParamSkillsItem] An optional list of skills referenced by id or inline data.
-  attr_reader :skills
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalLiveHostedShellContainerAutoParamMetadata
+    FIELDS = {
+      type: 'type',
+      file_ids: 'file_ids',
+      memory_limit: 'memory_limit',
+      network_policy: 'network_policy',
+      skills: 'skills'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LiveHostedShellContainerAutoParamType.from_value(value)
+      end,
+      memory_limit: lambda do |value|
+        ::OctridevOpenai::LiveContainerMemoryLimit.from_value(value)
+      end,
+      network_policy: lambda do |value|
+        ::OctridevOpenai::LiveHostedShellContainerAutoParamNetworkPolicy.from_hash(value)
+      end,
+      skills: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::LiveHostedShellContainerAutoParamSkillsItem.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for LiveHostedShellContainerAutoParam.
+  # Typed representation of the `LiveHostedShellContainerAutoParam` API schema.
+  class LiveHostedShellContainerAutoParam
+    include LiveHostedShellToolInputParamEnvironment
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveHostedShellContainerAutoParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveHostedShellContainerAutoParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveHostedShellContainerAutoParamMetadata::DECODERS
+
+    # @return [LiveHostedShellContainerAutoParamType] Automatically creates a container for this request
+    attr_reader :type
+    # @return [Array_of_String] An optional list of uploaded files to make available to your code.
+    attr_reader :file_ids
+    # @return [LiveContainerMemoryLimit] Optional API value serialized in the `memory_limit` wire field.
+    attr_reader :memory_limit
+    # @return [LiveHostedShellContainerAutoParamNetworkPolicy] Network access policy for the container.
+    attr_reader :network_policy
+    # @return [Array_of_LiveHostedShellContainerAutoParamSkillsItem] An optional list of skills referenced by id or inline data.
+    attr_reader :skills
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the LiveHostedShellContainerAutoParamType SDK namespace.
+  module LiveHostedShellContainerAutoParamType
+    CONTAINER_AUTO = 'container_auto'
+    VALUES = ['container_auto'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the LiveHostedShellContainerAutoParamType SDK namespace.
-module LiveHostedShellContainerAutoParamType
-  CONTAINER_AUTO = 'container_auto'
-  VALUES = ['container_auto'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('LiveHostedShellContainerAutoParamType', 'enum', "Unknown LiveHostedShellContainerAutoParamType: #{value}")
-  end
-end
-
-# Defines the LiveHostedShellContainerAutoParamNetworkPolicy SDK namespace.
-module LiveHostedShellContainerAutoParamNetworkPolicy
-  DISCRIMINATOR_MAPPING = {
-    "disabled" => -> { LiveContainerNetworkPolicyDisabledParam },
-    "allowlist" => -> { LiveHostedShellNetworkPolicyAllowlistParam },
-  }.freeze
-
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('LiveHostedShellContainerAutoParamNetworkPolicy', 'variant', "Unknown LiveHostedShellContainerAutoParamNetworkPolicy discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Defines the LiveHostedShellContainerAutoParamSkillsItem SDK namespace.
-module LiveHostedShellContainerAutoParamSkillsItem
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    mapping = { "skill_reference" => LiveSkillReferenceParam, "inline" => LiveInlineSkillParam }
-    type = mapping[hash["type"]]
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('LiveHostedShellContainerAutoParamSkillsItem', 'variant', "Unknown LiveHostedShellContainerAutoParamSkillsItem discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalLiveHostedShellNetworkPolicyAllowlistParamMetadata
-  FIELDS = {
-    type: "type",
-    allowed_domains: "allowed_domains",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    allowed_domains
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LiveHostedShellNetworkPolicyAllowlistParamType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for LiveHostedShellNetworkPolicyAllowlistParam.
-# Typed representation of the `LiveHostedShellNetworkPolicyAllowlistParam` API schema.
-class LiveHostedShellNetworkPolicyAllowlistParam
-  include LiveHostedShellContainerAutoParamNetworkPolicy
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveHostedShellNetworkPolicyAllowlistParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveHostedShellNetworkPolicyAllowlistParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveHostedShellNetworkPolicyAllowlistParamMetadata::DECODERS
-
-  # @return [LiveHostedShellNetworkPolicyAllowlistParamType] Allow outbound network access only to specified domains. Always `allowlist`.
-  attr_reader :type
-  # @return [Array_of_String] A list of allowed domains when type is `allowlist`.
-  attr_reader :allowed_domains
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('LiveHostedShellContainerAutoParamType', 'enum', "Unknown LiveHostedShellContainerAutoParamType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the LiveHostedShellContainerAutoParamNetworkPolicy SDK namespace.
+  module LiveHostedShellContainerAutoParamNetworkPolicy
+    DISCRIMINATOR_MAPPING = {
+      'disabled' => -> { LiveContainerNetworkPolicyDisabledParam },
+      'allowlist' => -> { LiveHostedShellNetworkPolicyAllowlistParam }
+    }.freeze
+
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('LiveHostedShellContainerAutoParamNetworkPolicy', 'variant', "Unknown LiveHostedShellContainerAutoParamNetworkPolicy discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the LiveHostedShellContainerAutoParamSkillsItem SDK namespace.
+  module LiveHostedShellContainerAutoParamSkillsItem
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
 
-# Defines the LiveHostedShellNetworkPolicyAllowlistParamType SDK namespace.
-module LiveHostedShellNetworkPolicyAllowlistParamType
-  ALLOWLIST = 'allowlist'
-  VALUES = ['allowlist'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+      mapping = { 'skill_reference' => LiveSkillReferenceParam, 'inline' => LiveInlineSkillParam }
+      type = mapping[hash['type']]
+      return type.from_hash(hash) if type
 
-    raise SdkValidationError.new('LiveHostedShellNetworkPolicyAllowlistParamType', 'enum', "Unknown LiveHostedShellNetworkPolicyAllowlistParamType: #{value}")
-  end
-end
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
 
-# Internal model hydration metadata.
-class SdkInternalLiveHostedShellToolInputParamMetadata
-  FIELDS = {
-    type: "type",
-    environment: "environment",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LiveHostedShellToolInputParamType.from_value(value)
-    end,
-    environment: lambda do |value|
-      ::OctridevOpenai::LiveHostedShellToolInputParamEnvironment.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for LiveHostedShellToolInputParam.
-# A Responses shell tool. Use a hosted container or return local shell results with response.item.create. Domain secrets are not supported.
-class LiveHostedShellToolInputParam
-  include LiveResponsesDelegationSettingsInputParamToolsItem
-  include LiveResponsesDelegationSettingsUpdateInputParamToolsItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveHostedShellToolInputParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveHostedShellToolInputParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveHostedShellToolInputParamMetadata::DECODERS
-
-  # @return [LiveHostedShellToolInputParamType] Required enumerated value serialized in the `type` wire field.
-  attr_reader :type
-  # @return [LiveHostedShellToolInputParamEnvironment] Optional API value serialized in the `environment` wire field.
-  attr_reader :environment
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('LiveHostedShellContainerAutoParamSkillsItem', 'variant', "Unknown LiveHostedShellContainerAutoParamSkillsItem discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalLiveHostedShellNetworkPolicyAllowlistParamMetadata
+    FIELDS = {
+      type: 'type',
+      allowed_domains: 'allowed_domains'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      allowed_domains
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LiveHostedShellNetworkPolicyAllowlistParamType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # API model for LiveHostedShellNetworkPolicyAllowlistParam.
+  # Typed representation of the `LiveHostedShellNetworkPolicyAllowlistParam` API schema.
+  class LiveHostedShellNetworkPolicyAllowlistParam
+    include LiveHostedShellContainerAutoParamNetworkPolicy
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveHostedShellNetworkPolicyAllowlistParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveHostedShellNetworkPolicyAllowlistParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveHostedShellNetworkPolicyAllowlistParamMetadata::DECODERS
+
+    # @return [LiveHostedShellNetworkPolicyAllowlistParamType] Allow outbound network access only to specified domains. Always `allowlist`.
+    attr_reader :type
+    # @return [Array_of_String] A list of allowed domains when type is `allowlist`.
+    attr_reader :allowed_domains
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
 
-# Defines the LiveHostedShellToolInputParamType SDK namespace.
-module LiveHostedShellToolInputParamType
-  SHELL = 'shell'
-  VALUES = ['shell'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+  # Defines the LiveHostedShellNetworkPolicyAllowlistParamType SDK namespace.
+  module LiveHostedShellNetworkPolicyAllowlistParamType
+    ALLOWLIST = 'allowlist'
+    VALUES = ['allowlist'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-    raise SdkValidationError.new('LiveHostedShellToolInputParamType', 'enum', "Unknown LiveHostedShellToolInputParamType: #{value}")
+      raise SdkValidationError.new('LiveHostedShellNetworkPolicyAllowlistParamType', 'enum', "Unknown LiveHostedShellNetworkPolicyAllowlistParamType: #{value}")
+    end
   end
-end
 
-# Defines the LiveHostedShellToolInputParamEnvironment SDK namespace.
-module LiveHostedShellToolInputParamEnvironment
-  DISCRIMINATOR_MAPPING = {
-    "container_auto" => -> { LiveHostedShellContainerAutoParam },
-    "container_reference" => -> { LiveContainerReferenceParam },
-    "local" => -> { LiveLocalEnvironmentParam },
-  }.freeze
-
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('LiveHostedShellToolInputParamEnvironment', 'variant', "Unknown LiveHostedShellToolInputParamEnvironment discriminator: #{hash["type"].inspect}")
+  # Internal model hydration metadata.
+  class SdkInternalLiveHostedShellToolInputParamMetadata
+    FIELDS = {
+      type: 'type',
+      environment: 'environment'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LiveHostedShellToolInputParamType.from_value(value)
+      end,
+      environment: lambda do |value|
+        ::OctridevOpenai::LiveHostedShellToolInputParamEnvironment.from_hash(value)
+      end
+    }.freeze
   end
-end
+
+  # API model for LiveHostedShellToolInputParam.
+  # A Responses shell tool. Use a hosted container or return local shell results with response.item.create. Domain secrets are not supported.
+  class LiveHostedShellToolInputParam
+    include LiveResponsesDelegationSettingsInputParamToolsItem
+    include LiveResponsesDelegationSettingsUpdateInputParamToolsItem
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveHostedShellToolInputParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveHostedShellToolInputParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveHostedShellToolInputParamMetadata::DECODERS
+
+    # @return [LiveHostedShellToolInputParamType] Required enumerated value serialized in the `type` wire field.
+    attr_reader :type
+    # @return [LiveHostedShellToolInputParamEnvironment] Optional API value serialized in the `environment` wire field.
+    attr_reader :environment
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the LiveHostedShellToolInputParamType SDK namespace.
+  module LiveHostedShellToolInputParamType
+    SHELL = 'shell'
+    VALUES = ['shell'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('LiveHostedShellToolInputParamType', 'enum', "Unknown LiveHostedShellToolInputParamType: #{value}")
+    end
+  end
+
+  # Defines the LiveHostedShellToolInputParamEnvironment SDK namespace.
+  module LiveHostedShellToolInputParamEnvironment
+    DISCRIMINATOR_MAPPING = {
+      'container_auto' => -> { LiveHostedShellContainerAutoParam },
+      'container_reference' => -> { LiveContainerReferenceParam },
+      'local' => -> { LiveLocalEnvironmentParam }
+    }.freeze
+
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('LiveHostedShellToolInputParamEnvironment', 'variant', "Unknown LiveHostedShellToolInputParamEnvironment discriminator: #{hash['type'].inspect}")
+    end
+  end
 end

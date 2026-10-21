@@ -5,107 +5,109 @@
 
 # shared_direct domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalDirectToolCallCallerMetadata
-  FIELDS = {
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::DirectToolCallCallerType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for DirectToolCallCaller.
-# Typed representation of the `DirectToolCallCaller` API schema.
-class DirectToolCallCaller
-  include ToolCallCaller
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalDirectToolCallCallerMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalDirectToolCallCallerMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalDirectToolCallCallerMetadata::DECODERS
-
-  # @return [DirectToolCallCallerType] Required enumerated value serialized in the `type` wire field.
-  attr_reader :type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalDirectToolCallCallerMetadata
+    FIELDS = {
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::DirectToolCallCallerType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for DirectToolCallCaller.
+  # Typed representation of the `DirectToolCallCaller` API schema.
+  class DirectToolCallCaller
+    include ToolCallCaller
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalDirectToolCallCallerMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalDirectToolCallCallerMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalDirectToolCallCallerMetadata::DECODERS
+
+    # @return [DirectToolCallCallerType] Required enumerated value serialized in the `type` wire field.
+    attr_reader :type
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the DirectToolCallCallerType SDK namespace.
+  module DirectToolCallCallerType
+    DIRECT = 'direct'
+    VALUES = ['direct'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the DirectToolCallCallerType SDK namespace.
-module DirectToolCallCallerType
-  DIRECT = 'direct'
-  VALUES = ['direct'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('DirectToolCallCallerType', 'enum', "Unknown DirectToolCallCallerType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalDirectToolCallCallerParamMetadata
-  FIELDS = {
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::DirectToolCallCallerParamType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for DirectToolCallCallerParam.
-# Typed representation of the `DirectToolCallCallerParam` API schema.
-class DirectToolCallCallerParam
-  include ToolCallCallerParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalDirectToolCallCallerParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalDirectToolCallCallerParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalDirectToolCallCallerParamMetadata::DECODERS
-
-  # @return [DirectToolCallCallerParamType] The caller type. Always `direct`.
-  attr_reader :type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('DirectToolCallCallerType', 'enum', "Unknown DirectToolCallCallerType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalDirectToolCallCallerParamMetadata
+    FIELDS = {
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::DirectToolCallCallerParamType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for DirectToolCallCallerParam.
+  # Typed representation of the `DirectToolCallCallerParam` API schema.
+  class DirectToolCallCallerParam
+    include ToolCallCallerParam
 
-# Defines the DirectToolCallCallerParamType SDK namespace.
-module DirectToolCallCallerParamType
-  DIRECT = 'direct'
-  VALUES = ['direct'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalDirectToolCallCallerParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalDirectToolCallCallerParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalDirectToolCallCallerParamMetadata::DECODERS
 
-    raise SdkValidationError.new('DirectToolCallCallerParamType', 'enum', "Unknown DirectToolCallCallerParamType: #{value}")
+    # @return [DirectToolCallCallerParamType] The caller type. Always `direct`.
+    attr_reader :type
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
+
+  # Defines the DirectToolCallCallerParamType SDK namespace.
+  module DirectToolCallCallerParamType
+    DIRECT = 'direct'
+    VALUES = ['direct'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('DirectToolCallCallerParamType', 'enum', "Unknown DirectToolCallCallerParamType: #{value}")
+    end
+  end
 end

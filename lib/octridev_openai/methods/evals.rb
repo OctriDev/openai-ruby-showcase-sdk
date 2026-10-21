@@ -29,26 +29,25 @@ module OctridevOpenai
         order_by: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
-          "/evals",
+          '/evals',
           config: config,
           query: {
             'after' => QueryValue.new(after, style: 'form', explode: true),
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'order' => QueryValue.new(order, style: 'form', explode: true),
-            'order_by' => QueryValue.new(order_by, style: 'form', explode: true),
+            'order_by' => QueryValue.new(order_by, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::EvalList,
           decoder: :json,
           operation_id: 'list_evals',
           request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
-    ListEvalsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      ListEvalsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists evaluations for a project. Use `after` to continue from a previous result and set `order` and `order_by` to control how evaluations are sorted.
       #
@@ -83,10 +82,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.last_id
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -113,10 +115,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListEvalsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end
@@ -148,22 +152,21 @@ module OctridevOpenai
         metadata: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
-          "/evals",
+          '/evals',
           config: config,
           body: {
             'data_source_config' => data_source_config,
             'testing_criteria' => testing_criteria,
             'name' => name,
-            'metadata' => metadata,
+            'metadata' => metadata
           },
           return_type: ::OctridevOpenai::Eval,
           decoder: :json,
           operation_id: 'create_eval',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -172,16 +175,11 @@ module OctridevOpenai
       # Get an evaluation by ID.
       #
       # @param eval_id [String] The ID of the evaluation to retrieve.
-      singleton_class.define_method(:get_eval) do |
-        config:,
-        eval_id:,
-        request_options: nil
-      |
-
+      singleton_class.define_method(:get_eval) do |config:, eval_id:, request_options: nil|
         SdkClient.request(
           'GET',
           [
-            "/evals/",
+            '/evals/',
             SdkClient.encode_path_segment(eval_id)
           ].join,
           config: config,
@@ -189,7 +187,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'get_eval',
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -211,23 +209,22 @@ module OctridevOpenai
         metadata: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
           [
-            "/evals/",
+            '/evals/',
             SdkClient.encode_path_segment(eval_id)
           ].join,
           config: config,
           body: {
             'name' => name,
-            'metadata' => metadata,
+            'metadata' => metadata
           },
           return_type: ::OctridevOpenai::Eval,
           decoder: :json,
           operation_id: 'update_eval',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -241,11 +238,10 @@ module OctridevOpenai
         eval_id:,
         request_options: nil
       )
-
         SdkClient.request(
           'DELETE',
           [
-            "/evals/",
+            '/evals/',
             SdkClient.encode_path_segment(eval_id)
           ].join,
           config: config,
@@ -253,7 +249,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_eval',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
     end

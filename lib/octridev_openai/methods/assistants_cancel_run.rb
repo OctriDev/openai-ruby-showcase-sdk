@@ -21,22 +21,21 @@ module OctridevOpenai
         run_id:,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
           [
-            "/threads/",
+            '/threads/',
             SdkClient.encode_path_segment(thread_id),
-            "/runs/",
+            '/runs/',
             SdkClient.encode_path_segment(run_id),
-            "/cancel"
+            '/cancel'
           ].join,
           config: config,
           return_type: ::OctridevOpenai::RunObject,
           decoder: :json,
           operation_id: 'cancel_run',
           request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
     end

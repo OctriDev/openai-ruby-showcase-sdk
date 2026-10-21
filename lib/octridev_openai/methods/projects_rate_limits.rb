@@ -33,29 +33,28 @@ module OctridevOpenai
         before: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
           [
-            "/organization/projects/",
+            '/organization/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/rate_limits"
+            '/rate_limits'
           ].join,
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
-            'before' => QueryValue.new(before, style: 'form', explode: true),
+            'before' => QueryValue.new(before, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::ProjectRateLimitListResponse,
           decoder: :json,
           operation_id: 'list_project_rate_limits',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
-    ListProjectRateLimitsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      ListProjectRateLimitsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists the rate limits configured for a project, with each result describing limits for a model. Use `limit` to set the number of results and `after` or `before` to navigate the list using cursors.
       #
@@ -94,10 +93,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.last_id
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -124,10 +126,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListProjectRateLimitsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end
@@ -161,13 +165,12 @@ module OctridevOpenai
         batch1_day_max_input_tokens: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
           [
-            "/organization/projects/",
+            '/organization/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/rate_limits/",
+            '/rate_limits/',
             SdkClient.encode_path_segment(rate_limit_id)
           ].join,
           config: config,
@@ -177,13 +180,13 @@ module OctridevOpenai
             'max_images_per_1_minute' => max_images_per1_minute,
             'max_audio_megabytes_per_1_minute' => max_audio_megabytes_per1_minute,
             'max_requests_per_1_day' => max_requests_per1_day,
-            'batch_1_day_max_input_tokens' => batch1_day_max_input_tokens,
+            'batch_1_day_max_input_tokens' => batch1_day_max_input_tokens
           },
           return_type: ::OctridevOpenai::ProjectRateLimit,
           decoder: :json,
           operation_id: 'update_project_rate_limits',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
     end

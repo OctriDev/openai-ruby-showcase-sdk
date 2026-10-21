@@ -5,124 +5,124 @@
 
 # shared_mcplist domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalMCPListToolsMetadata
-  FIELDS = {
-    type: "type",
-    id: "id",
-    server_label: "server_label",
-    tools: "tools",
-    error: "error",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    id
-    server_label
-    tools
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::MCPListToolsType.from_value(value)
-    end,
-    tools: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::MCPListToolsTool.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for MCPListTools.
-# A list of tools available on an MCP server.
-class MCPListTools
-  include ConversationItem
-  include Item
-  include ItemResource
-  include OutputItem
-  include ItemField
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalMCPListToolsMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalMCPListToolsMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalMCPListToolsMetadata::DECODERS
-
-  # @return [MCPListToolsType] The type of the item. Always `mcp_list_tools`.
-  attr_reader :type
-  # @return [String] The unique ID of the list.
-  attr_reader :id
-  # @return [String] The label of the MCP server.
-  attr_reader :server_label
-  # @return [Array_of_MCPListToolsTool] The tools available on the server.
-  attr_reader :tools
-  # @return [String] Optional `string` value serialized in the `error` wire field.
-  attr_reader :error
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalMCPListToolsMetadata
+    FIELDS = {
+      type: 'type',
+      id: 'id',
+      server_label: 'server_label',
+      tools: 'tools',
+      error: 'error'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      id
+      server_label
+      tools
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::MCPListToolsType.from_value(value)
+      end,
+      tools: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::MCPListToolsTool.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for MCPListTools.
+  # A list of tools available on an MCP server.
+  class MCPListTools
+    include ConversationItem
+    include Item
+    include ItemResource
+    include OutputItem
+    include ItemField
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalMCPListToolsMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalMCPListToolsMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalMCPListToolsMetadata::DECODERS
+
+    # @return [MCPListToolsType] The type of the item. Always `mcp_list_tools`.
+    attr_reader :type
+    # @return [String] The unique ID of the list.
+    attr_reader :id
+    # @return [String] The label of the MCP server.
+    attr_reader :server_label
+    # @return [Array_of_MCPListToolsTool] The tools available on the server.
+    attr_reader :tools
+    # @return [String] Optional `string` value serialized in the `error` wire field.
+    attr_reader :error
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the MCPListToolsType SDK namespace.
+  module MCPListToolsType
+    MCP_LIST_TOOLS = 'mcp_list_tools'
+    VALUES = ['mcp_list_tools'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the MCPListToolsType SDK namespace.
-module MCPListToolsType
-  MCP_LIST_TOOLS = 'mcp_list_tools'
-  VALUES = ['mcp_list_tools'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('MCPListToolsType', 'enum', "Unknown MCPListToolsType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalMCPListToolsToolMetadata
-  FIELDS = {
-    name: "name",
-    description: "description",
-    input_schema: "input_schema",
-    annotations: "annotations",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    name
-    input_schema
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for MCPListToolsTool.
-# A tool available on an MCP server.
-class MCPListToolsTool
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalMCPListToolsToolMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalMCPListToolsToolMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalMCPListToolsToolMetadata::DECODERS
-
-  # @return [String] The name of the tool.
-  attr_reader :name
-  # @return [String] Optional `string` value serialized in the `description` wire field.
-  attr_reader :description
-  # @return [Hash] The JSON schema describing the tool's input.
-  attr_reader :input_schema
-  # @return [Hash] Optional object value serialized in the `annotations` wire field.
-  attr_reader :annotations
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('MCPListToolsType', 'enum', "Unknown MCPListToolsType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalMCPListToolsToolMetadata
+    FIELDS = {
+      name: 'name',
+      description: 'description',
+      input_schema: 'input_schema',
+      annotations: 'annotations'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      name
+      input_schema
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # API model for MCPListToolsTool.
+  # A tool available on an MCP server.
+  class MCPListToolsTool
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalMCPListToolsToolMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalMCPListToolsToolMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalMCPListToolsToolMetadata::DECODERS
+
+    # @return [String] The name of the tool.
+    attr_reader :name
+    # @return [String] Optional `string` value serialized in the `description` wire field.
+    attr_reader :description
+    # @return [Hash] The JSON schema describing the tool's input.
+    attr_reader :input_schema
+    # @return [Hash] Optional object value serialized in the `annotations` wire field.
+    attr_reader :annotations
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
 end

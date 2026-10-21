@@ -29,21 +29,20 @@ module OctridevOpenai
         item: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
-          "/fine_tuning/alpha/graders/run",
+          '/fine_tuning/alpha/graders/run',
           config: config,
           body: {
             'grader' => grader,
             'model_sample' => model_sample,
-            'item' => item,
+            'item' => item
           },
           return_type: ::OctridevOpenai::RunGraderResponse,
           decoder: :json,
           operation_id: 'run_grader',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -58,19 +57,18 @@ module OctridevOpenai
         grader:,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
-          "/fine_tuning/alpha/graders/validate",
+          '/fine_tuning/alpha/graders/validate',
           config: config,
           body: {
-            'grader' => grader,
+            'grader' => grader
           },
           return_type: ::OctridevOpenai::ValidateGraderResponse,
           decoder: :json,
           operation_id: 'validate_grader',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
     end

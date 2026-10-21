@@ -39,24 +39,23 @@ module OctridevOpenai
         temperature: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
-          "/audio/translations",
+          '/audio/translations',
           config: config,
           body: {
             'file' => SdkClient.upload(file, 'file'),
             'model' => model,
             'prompt' => prompt,
             'response_format' => response_format,
-            'temperature' => temperature,
+            'temperature' => temperature
           },
           content_type: 'multipart/form-data',
           return_type: ::OctridevOpenai::CreateTranslationResponse,
           decoder: :json,
           operation_id: 'create_translation',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '401' => ::OctridevOpenai::ErrorResponse, '413' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '502' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '401' => ::OctridevOpenai::ErrorResponse, '413' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '502' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
     end

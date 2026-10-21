@@ -5,86 +5,88 @@
 
 # shared_auto domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalAutoCodeInterpreterToolParamMetadata
-  FIELDS = {
-    type: "type",
-    file_ids: "file_ids",
-    memory_limit: "memory_limit",
-    network_policy: "network_policy",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::AutoCodeInterpreterToolParamType.from_value(value)
-    end,
-    memory_limit: lambda do |value|
-      ::OctridevOpenai::ContainerMemoryLimit.from_value(value)
-    end,
-    network_policy: lambda do |value|
-      ::OctridevOpenai::AutoCodeInterpreterToolParamNetworkPolicy.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for AutoCodeInterpreterToolParam.
-# Configuration for a code interpreter container. Optionally specify the IDs of the files to run the code on.
-class AutoCodeInterpreterToolParam
-  include CodeInterpreterToolContainer
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAutoCodeInterpreterToolParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAutoCodeInterpreterToolParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAutoCodeInterpreterToolParamMetadata::DECODERS
-
-  # @return [AutoCodeInterpreterToolParamType] Always `auto`.
-  attr_reader :type
-  # @return [Array_of_String] An optional list of uploaded files to make available to your code.
-  attr_reader :file_ids
-  # @return [ContainerMemoryLimit] Optional API value serialized in the `memory_limit` wire field.
-  attr_reader :memory_limit
-  # @return [AutoCodeInterpreterToolParamNetworkPolicy] Network access policy for the container.
-  attr_reader :network_policy
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalAutoCodeInterpreterToolParamMetadata
+    FIELDS = {
+      type: 'type',
+      file_ids: 'file_ids',
+      memory_limit: 'memory_limit',
+      network_policy: 'network_policy'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::AutoCodeInterpreterToolParamType.from_value(value)
+      end,
+      memory_limit: lambda do |value|
+        ::OctridevOpenai::ContainerMemoryLimit.from_value(value)
+      end,
+      network_policy: lambda do |value|
+        ::OctridevOpenai::AutoCodeInterpreterToolParamNetworkPolicy.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for AutoCodeInterpreterToolParam.
+  # Configuration for a code interpreter container. Optionally specify the IDs of the files to run the code on.
+  class AutoCodeInterpreterToolParam
+    include CodeInterpreterToolContainer
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAutoCodeInterpreterToolParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAutoCodeInterpreterToolParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAutoCodeInterpreterToolParamMetadata::DECODERS
+
+    # @return [AutoCodeInterpreterToolParamType] Always `auto`.
+    attr_reader :type
+    # @return [Array_of_String] An optional list of uploaded files to make available to your code.
+    attr_reader :file_ids
+    # @return [ContainerMemoryLimit] Optional API value serialized in the `memory_limit` wire field.
+    attr_reader :memory_limit
+    # @return [AutoCodeInterpreterToolParamNetworkPolicy] Network access policy for the container.
+    attr_reader :network_policy
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the AutoCodeInterpreterToolParamType SDK namespace.
+  module AutoCodeInterpreterToolParamType
+    AUTO = 'auto'
+    VALUES = ['auto'].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
 
-# Defines the AutoCodeInterpreterToolParamType SDK namespace.
-module AutoCodeInterpreterToolParamType
-  AUTO = 'auto'
-  VALUES = ['auto'].freeze
-  def self.from_value(value)
-    value
+  # Defines the AutoCodeInterpreterToolParamNetworkPolicy SDK namespace.
+  module AutoCodeInterpreterToolParamNetworkPolicy
+    DISCRIMINATOR_MAPPING = {
+      'disabled' => -> { ContainerNetworkPolicyDisabledParam },
+      'allowlist' => -> { ContainerNetworkPolicyAllowlistParam }
+    }.freeze
+
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('AutoCodeInterpreterToolParamNetworkPolicy', 'variant', "Unknown AutoCodeInterpreterToolParamNetworkPolicy discriminator: #{hash['type'].inspect}")
+    end
   end
-end
-
-# Defines the AutoCodeInterpreterToolParamNetworkPolicy SDK namespace.
-module AutoCodeInterpreterToolParamNetworkPolicy
-  DISCRIMINATOR_MAPPING = {
-    "disabled" => -> { ContainerNetworkPolicyDisabledParam },
-    "allowlist" => -> { ContainerNetworkPolicyAllowlistParam },
-  }.freeze
-
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('AutoCodeInterpreterToolParamNetworkPolicy', 'variant', "Unknown AutoCodeInterpreterToolParamNetworkPolicy discriminator: #{hash["type"].inspect}")
-  end
-end
 end

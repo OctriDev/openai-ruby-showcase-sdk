@@ -5,56 +5,56 @@
 
 # assistants_file domain models
 module OctridevOpenai
-# Defines the FileSearchRanker SDK namespace.
-module FileSearchRanker
-  AUTO = 'auto'
-  DEFAULT_2024_08_21 = 'default_2024_08_21'
-  VALUES = ['auto', 'default_2024_08_21'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalFileSearchRankingOptionsMetadata
-  FIELDS = {
-    ranker: "ranker",
-    score_threshold: "score_threshold",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    score_threshold
-  ].freeze
-  DECODERS = {
-    ranker: lambda do |value|
-      ::OctridevOpenai::FileSearchRanker.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for FileSearchRankingOptions.
-# The ranking options for the file search. If not specified, the file search tool will use the `auto` ranker and a score_threshold of 0. See the file search tool documentation for more information.
-class FileSearchRankingOptions
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalFileSearchRankingOptionsMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalFileSearchRankingOptionsMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalFileSearchRankingOptionsMetadata::DECODERS
-
-  # @return [FileSearchRanker] The ranker to use for the file search. If not specified will use the `auto` ranker.
-  attr_reader :ranker
-  # @return [Float] The score threshold for the file search. All values must be a floating point number between 0 and 1.
-  attr_reader :score_threshold
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the FileSearchRanker SDK namespace.
+  module FileSearchRanker
+    AUTO = 'auto'
+    DEFAULT_2024_08_21 = 'default_2024_08_21'
+    VALUES = %w[auto default_2024_08_21].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalFileSearchRankingOptionsMetadata
+    FIELDS = {
+      ranker: 'ranker',
+      score_threshold: 'score_threshold'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      score_threshold
+    ].freeze
+    DECODERS = {
+      ranker: lambda do |value|
+        ::OctridevOpenai::FileSearchRanker.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # API model for FileSearchRankingOptions.
+  # The ranking options for the file search. If not specified, the file search tool will use the `auto` ranker and a score_threshold of 0. See the file search tool documentation for more information.
+  class FileSearchRankingOptions
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalFileSearchRankingOptionsMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalFileSearchRankingOptionsMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalFileSearchRankingOptionsMetadata::DECODERS
+
+    # @return [FileSearchRanker] The ranker to use for the file search. If not specified will use the `auto` ranker.
+    attr_reader :ranker
+    # @return [Float] The score threshold for the file search. All values must be a floating point number between 0 and 1.
+    attr_reader :score_threshold
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
 end

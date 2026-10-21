@@ -94,7 +94,6 @@ module OctridevOpenai
         known_speaker_references: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.if_given(languages) { Validation.validate_items('languages', languages, min: 1) }
 
         Validation.if_given(known_speaker_names) do
@@ -107,7 +106,7 @@ module OctridevOpenai
 
         SdkClient.request(
           'POST',
-          "/audio/transcriptions",
+          '/audio/transcriptions',
           config: config,
           body: {
             'file' => SdkClient.upload(file, 'file'),
@@ -123,14 +122,14 @@ module OctridevOpenai
             'stream' => stream,
             'chunking_strategy' => MultipartPart.new(chunking_strategy, content_type: 'application/json'),
             'known_speaker_names' => known_speaker_names,
-            'known_speaker_references' => known_speaker_references,
+            'known_speaker_references' => known_speaker_references
           },
           content_type: 'multipart/form-data',
           return_type: ::OctridevOpenai::CreateTranscriptionResponse,
           decoder: :json,
           operation_id: 'create_transcription',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '401' => ::OctridevOpenai::ErrorResponse, '413' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '502' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '401' => ::OctridevOpenai::ErrorResponse, '413' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '502' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -220,27 +219,29 @@ module OctridevOpenai
         request_options: nil,
         &block
       )
-    return enum_for(
-          __method__,
-          config: config,
-          file: file,
-          model: model,
-          stream: stream,
-          language: language,
-          languages: languages,
-          keywords: keywords,
-          prompt: prompt,
-          response_format: response_format,
-          temperature: temperature,
-          include: include,
-          timestamp_granularities: timestamp_granularities,
-          chunking_strategy: chunking_strategy,
-          known_speaker_names: known_speaker_names,
-          known_speaker_references: known_speaker_references,
-          request_options: request_options,
-        ) unless block
+        unless block
+          return enum_for(
+            __method__,
+            config: config,
+            file: file,
+            model: model,
+            stream: stream,
+            language: language,
+            languages: languages,
+            keywords: keywords,
+            prompt: prompt,
+            response_format: response_format,
+            temperature: temperature,
+            include: include,
+            timestamp_granularities: timestamp_granularities,
+            chunking_strategy: chunking_strategy,
+            known_speaker_names: known_speaker_names,
+            known_speaker_references: known_speaker_references,
+            request_options: request_options
+          )
+        end
         SdkClient.stream(
-          'POST', "/audio/transcriptions",
+          'POST', '/audio/transcriptions',
           config: config,
           body: {
             'file' => SdkClient.upload(file, 'file'),
@@ -256,16 +257,17 @@ module OctridevOpenai
             'timestamp_granularities' => timestamp_granularities,
             'chunking_strategy' => MultipartPart.new(chunking_strategy, content_type: 'application/json'),
             'known_speaker_names' => known_speaker_names,
-            'known_speaker_references' => known_speaker_references,
+            'known_speaker_references' => known_speaker_references
           },
           content_type: 'multipart/form-data',
           operation_id: 'create_transcription_stream',
           stream_format: :sse,
-          stream_media_type: "text/event-stream",
+          stream_media_type: 'text/event-stream',
           request_options: request_options,
           errors: { '400' => ::OctridevOpenai::ErrorResponse, '401' => ::OctridevOpenai::ErrorResponse, '413' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '502' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
         ).each do |ev|
           break if ev.data == '[DONE]'
+
           decoded = JSON.parse(ev.data)
           block.call(SdkClient.decode_event(decoded, ::OctridevOpenai::CreateTranscriptionResponseStreamEvent))
         end

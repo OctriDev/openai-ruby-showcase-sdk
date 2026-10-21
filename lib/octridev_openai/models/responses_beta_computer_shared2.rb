@@ -5,47 +5,48 @@
 
 # responses_beta_computer domain models
 module OctridevOpenai
-# API model for BetaComputerUsePreviewTool.
-# A tool that controls a virtual computer. Learn more about the computer tool.
-class BetaComputerUsePreviewTool
-  include BetaTool
-  include BetaToolSearchOutputTool
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaComputerUsePreviewToolMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaComputerUsePreviewToolMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaComputerUsePreviewToolMetadata::DECODERS
+  # API model for BetaComputerUsePreviewTool.
+  # A tool that controls a virtual computer. Learn more about the computer tool.
+  class BetaComputerUsePreviewTool
+    include BetaTool
+    include BetaToolSearchOutputTool
 
-  # @return [BetaComputerUsePreviewToolType] The type of the computer use tool. Always `computer_use_preview`.
-  attr_reader :type
-  # @return [BetaComputerEnvironment] The type of computer environment to control.
-  attr_reader :environment
-  # @return [Integer] The width of the computer display.
-  attr_reader :display_width
-  # @return [Integer] The height of the computer display.
-  attr_reader :display_height
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaComputerUsePreviewToolMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaComputerUsePreviewToolMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaComputerUsePreviewToolMetadata::DECODERS
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    # @return [BetaComputerUsePreviewToolType] The type of the computer use tool. Always `computer_use_preview`.
+    attr_reader :type
+    # @return [BetaComputerEnvironment] The type of computer environment to control.
+    attr_reader :environment
+    # @return [Integer] The width of the computer display.
+    attr_reader :display_width
+    # @return [Integer] The height of the computer display.
+    attr_reader :display_height
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
+  # Defines the BetaComputerUsePreviewToolType SDK namespace.
+  module BetaComputerUsePreviewToolType
+    COMPUTER_USE_PREVIEW = 'computer_use_preview'
+    VALUES = ['computer_use_preview'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+      raise SdkValidationError.new('BetaComputerUsePreviewToolType', 'enum', "Unknown BetaComputerUsePreviewToolType: #{value}")
+    end
   end
-end
-
-# Defines the BetaComputerUsePreviewToolType SDK namespace.
-module BetaComputerUsePreviewToolType
-  COMPUTER_USE_PREVIEW = 'computer_use_preview'
-  VALUES = ['computer_use_preview'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('BetaComputerUsePreviewToolType', 'enum', "Unknown BetaComputerUsePreviewToolType: #{value}")
-  end
-end
 end

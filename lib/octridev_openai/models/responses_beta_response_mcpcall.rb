@@ -5,361 +5,366 @@
 
 # responses_beta_response_mcpcall domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalBetaResponseMCPCallArgumentsDeltaEventMetadata
-  FIELDS = {
-    agent: "agent",
-    type: "type",
-    output_index: "output_index",
-    item_id: "item_id",
-    delta: "delta",
-    sequence_number: "sequence_number",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    output_index
-    item_id
-    delta
-    sequence_number
-  ].freeze
-  DECODERS = {
-    agent: lambda do |value|
-      ::OctridevOpenai::BetaAgentTag.from_hash(value)
-    end,
-    type: lambda do |value|
-      ::OctridevOpenai::BetaResponseMCPCallArgumentsDeltaEventType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaResponseMCPCallArgumentsDeltaEvent.
-# Emitted when there is a delta (partial update) to the arguments of an MCP tool call.
-class BetaResponseMCPCallArgumentsDeltaEvent
-  include BetaResponseStreamEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaResponseMCPCallArgumentsDeltaEventMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaResponseMCPCallArgumentsDeltaEventMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaResponseMCPCallArgumentsDeltaEventMetadata::DECODERS
-
-  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-  attr_reader :agent
-  # @return [BetaResponseMCPCallArgumentsDeltaEventType] The type of the event. Always 'response.mcp_call_arguments.delta'.
-  attr_reader :type
-  # @return [Integer] The index of the output item in the response's output array.
-  attr_reader :output_index
-  # @return [String] The unique identifier of the MCP tool call item being processed.
-  attr_reader :item_id
-  # @return [String] A JSON string containing the partial update to the arguments for the MCP tool call.
-  attr_reader :delta
-  # @return [Integer] The sequence number of this event.
-  attr_reader :sequence_number
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalBetaResponseMCPCallArgumentsDeltaEventMetadata
+    FIELDS = {
+      agent: 'agent',
+      type: 'type',
+      output_index: 'output_index',
+      item_id: 'item_id',
+      delta: 'delta',
+      sequence_number: 'sequence_number'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      output_index
+      item_id
+      delta
+      sequence_number
+    ].freeze
+    DECODERS = {
+      agent: lambda do |value|
+        ::OctridevOpenai::BetaAgentTag.from_hash(value)
+      end,
+      type: lambda do |value|
+        ::OctridevOpenai::BetaResponseMCPCallArgumentsDeltaEventType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for BetaResponseMCPCallArgumentsDeltaEvent.
+  # Emitted when there is a delta (partial update) to the arguments of an MCP tool call.
+  class BetaResponseMCPCallArgumentsDeltaEvent
+    include BetaResponseStreamEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaResponseMCPCallArgumentsDeltaEventMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaResponseMCPCallArgumentsDeltaEventMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaResponseMCPCallArgumentsDeltaEventMetadata::DECODERS
+
+    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+    attr_reader :agent
+    # @return [BetaResponseMCPCallArgumentsDeltaEventType] The type of the event. Always 'response.mcp_call_arguments.delta'.
+    attr_reader :type
+    # @return [Integer] The index of the output item in the response's output array.
+    attr_reader :output_index
+    # @return [String] The unique identifier of the MCP tool call item being processed.
+    attr_reader :item_id
+    # @return [String] A JSON string containing the partial update to the arguments for the MCP tool call.
+    attr_reader :delta
+    # @return [Integer] The sequence number of this event.
+    attr_reader :sequence_number
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the BetaResponseMCPCallArgumentsDeltaEventType SDK namespace.
+  module BetaResponseMCPCallArgumentsDeltaEventType
+    RESPONSE_MCP_CALL_ARGUMENTS_DELTA = 'response.mcp_call_arguments.delta'
+    VALUES = ['response.mcp_call_arguments.delta'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the BetaResponseMCPCallArgumentsDeltaEventType SDK namespace.
-module BetaResponseMCPCallArgumentsDeltaEventType
-  RESPONSE_MCP_CALL_ARGUMENTS_DELTA = 'response.mcp_call_arguments.delta'
-  VALUES = ['response.mcp_call_arguments.delta'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('BetaResponseMCPCallArgumentsDeltaEventType', 'enum', "Unknown BetaResponseMCPCallArgumentsDeltaEventType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaResponseMCPCallArgumentsDoneEventMetadata
-  FIELDS = {
-    agent: "agent",
-    type: "type",
-    output_index: "output_index",
-    item_id: "item_id",
-    arguments: "arguments",
-    sequence_number: "sequence_number",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    output_index
-    item_id
-    arguments
-    sequence_number
-  ].freeze
-  DECODERS = {
-    agent: lambda do |value|
-      ::OctridevOpenai::BetaAgentTag.from_hash(value)
-    end,
-    type: lambda do |value|
-      ::OctridevOpenai::BetaResponseMCPCallArgumentsDoneEventType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaResponseMCPCallArgumentsDoneEvent.
-# Emitted when the arguments for an MCP tool call are finalized.
-class BetaResponseMCPCallArgumentsDoneEvent
-  include BetaResponseStreamEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaResponseMCPCallArgumentsDoneEventMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaResponseMCPCallArgumentsDoneEventMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaResponseMCPCallArgumentsDoneEventMetadata::DECODERS
-
-  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-  attr_reader :agent
-  # @return [BetaResponseMCPCallArgumentsDoneEventType] The type of the event. Always 'response.mcp_call_arguments.done'.
-  attr_reader :type
-  # @return [Integer] The index of the output item in the response's output array.
-  attr_reader :output_index
-  # @return [String] The unique identifier of the MCP tool call item being processed.
-  attr_reader :item_id
-  # @return [String] A JSON string containing the finalized arguments for the MCP tool call.
-  attr_reader :arguments
-  # @return [Integer] The sequence number of this event.
-  attr_reader :sequence_number
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('BetaResponseMCPCallArgumentsDeltaEventType', 'enum', "Unknown BetaResponseMCPCallArgumentsDeltaEventType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalBetaResponseMCPCallArgumentsDoneEventMetadata
+    FIELDS = {
+      agent: 'agent',
+      type: 'type',
+      output_index: 'output_index',
+      item_id: 'item_id',
+      arguments: 'arguments',
+      sequence_number: 'sequence_number'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      output_index
+      item_id
+      arguments
+      sequence_number
+    ].freeze
+    DECODERS = {
+      agent: lambda do |value|
+        ::OctridevOpenai::BetaAgentTag.from_hash(value)
+      end,
+      type: lambda do |value|
+        ::OctridevOpenai::BetaResponseMCPCallArgumentsDoneEventType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for BetaResponseMCPCallArgumentsDoneEvent.
+  # Emitted when the arguments for an MCP tool call are finalized.
+  class BetaResponseMCPCallArgumentsDoneEvent
+    include BetaResponseStreamEvent
 
-# Defines the BetaResponseMCPCallArgumentsDoneEventType SDK namespace.
-module BetaResponseMCPCallArgumentsDoneEventType
-  RESPONSE_MCP_CALL_ARGUMENTS_DONE = 'response.mcp_call_arguments.done'
-  VALUES = ['response.mcp_call_arguments.done'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaResponseMCPCallArgumentsDoneEventMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaResponseMCPCallArgumentsDoneEventMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaResponseMCPCallArgumentsDoneEventMetadata::DECODERS
 
-    raise SdkValidationError.new('BetaResponseMCPCallArgumentsDoneEventType', 'enum', "Unknown BetaResponseMCPCallArgumentsDoneEventType: #{value}")
-  end
-end
+    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+    attr_reader :agent
+    # @return [BetaResponseMCPCallArgumentsDoneEventType] The type of the event. Always 'response.mcp_call_arguments.done'.
+    attr_reader :type
+    # @return [Integer] The index of the output item in the response's output array.
+    attr_reader :output_index
+    # @return [String] The unique identifier of the MCP tool call item being processed.
+    attr_reader :item_id
+    # @return [String] A JSON string containing the finalized arguments for the MCP tool call.
+    attr_reader :arguments
+    # @return [Integer] The sequence number of this event.
+    attr_reader :sequence_number
 
-# Internal model hydration metadata.
-class SdkInternalBetaResponseMCPCallCompletedEventMetadata
-  FIELDS = {
-    agent: "agent",
-    type: "type",
-    item_id: "item_id",
-    output_index: "output_index",
-    sequence_number: "sequence_number",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    item_id
-    output_index
-    sequence_number
-  ].freeze
-  DECODERS = {
-    agent: lambda do |value|
-      ::OctridevOpenai::BetaAgentTag.from_hash(value)
-    end,
-    type: lambda do |value|
-      ::OctridevOpenai::BetaResponseMCPCallCompletedEventType.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for BetaResponseMCPCallCompletedEvent.
-# Emitted when an MCP tool call has completed successfully.
-class BetaResponseMCPCallCompletedEvent
-  include BetaResponseStreamEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaResponseMCPCallCompletedEventMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaResponseMCPCallCompletedEventMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaResponseMCPCallCompletedEventMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-  attr_reader :agent
-  # @return [BetaResponseMCPCallCompletedEventType] The type of the event. Always 'response.mcp_call.completed'.
-  attr_reader :type
-  # @return [String] The ID of the MCP tool call item that completed.
-  attr_reader :item_id
-  # @return [Integer] The index of the output item that completed.
-  attr_reader :output_index
-  # @return [Integer] The sequence number of this event.
-  attr_reader :sequence_number
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the BetaResponseMCPCallArgumentsDoneEventType SDK namespace.
+  module BetaResponseMCPCallArgumentsDoneEventType
+    RESPONSE_MCP_CALL_ARGUMENTS_DONE = 'response.mcp_call_arguments.done'
+    VALUES = ['response.mcp_call_arguments.done'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaResponseMCPCallArgumentsDoneEventType', 'enum', "Unknown BetaResponseMCPCallArgumentsDoneEventType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the BetaResponseMCPCallCompletedEventType SDK namespace.
-module BetaResponseMCPCallCompletedEventType
-  RESPONSE_MCP_CALL_COMPLETED = 'response.mcp_call.completed'
-  VALUES = ['response.mcp_call.completed'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('BetaResponseMCPCallCompletedEventType', 'enum', "Unknown BetaResponseMCPCallCompletedEventType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaResponseMCPCallFailedEventMetadata
-  FIELDS = {
-    agent: "agent",
-    type: "type",
-    item_id: "item_id",
-    output_index: "output_index",
-    sequence_number: "sequence_number",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    item_id
-    output_index
-    sequence_number
-  ].freeze
-  DECODERS = {
-    agent: lambda do |value|
-      ::OctridevOpenai::BetaAgentTag.from_hash(value)
-    end,
-    type: lambda do |value|
-      ::OctridevOpenai::BetaResponseMCPCallFailedEventType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaResponseMCPCallFailedEvent.
-# Emitted when an MCP tool call has failed.
-class BetaResponseMCPCallFailedEvent
-  include BetaResponseStreamEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaResponseMCPCallFailedEventMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaResponseMCPCallFailedEventMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaResponseMCPCallFailedEventMetadata::DECODERS
-
-  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-  attr_reader :agent
-  # @return [BetaResponseMCPCallFailedEventType] The type of the event. Always 'response.mcp_call.failed'.
-  attr_reader :type
-  # @return [String] The ID of the MCP tool call item that failed.
-  attr_reader :item_id
-  # @return [Integer] The index of the output item that failed.
-  attr_reader :output_index
-  # @return [Integer] The sequence number of this event.
-  attr_reader :sequence_number
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalBetaResponseMCPCallCompletedEventMetadata
+    FIELDS = {
+      agent: 'agent',
+      type: 'type',
+      item_id: 'item_id',
+      output_index: 'output_index',
+      sequence_number: 'sequence_number'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      item_id
+      output_index
+      sequence_number
+    ].freeze
+    DECODERS = {
+      agent: lambda do |value|
+        ::OctridevOpenai::BetaAgentTag.from_hash(value)
+      end,
+      type: lambda do |value|
+        ::OctridevOpenai::BetaResponseMCPCallCompletedEventType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for BetaResponseMCPCallCompletedEvent.
+  # Emitted when an MCP tool call has completed successfully.
+  class BetaResponseMCPCallCompletedEvent
+    include BetaResponseStreamEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaResponseMCPCallCompletedEventMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaResponseMCPCallCompletedEventMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaResponseMCPCallCompletedEventMetadata::DECODERS
+
+    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+    attr_reader :agent
+    # @return [BetaResponseMCPCallCompletedEventType] The type of the event. Always 'response.mcp_call.completed'.
+    attr_reader :type
+    # @return [String] The ID of the MCP tool call item that completed.
+    attr_reader :item_id
+    # @return [Integer] The index of the output item that completed.
+    attr_reader :output_index
+    # @return [Integer] The sequence number of this event.
+    attr_reader :sequence_number
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the BetaResponseMCPCallCompletedEventType SDK namespace.
+  module BetaResponseMCPCallCompletedEventType
+    RESPONSE_MCP_CALL_COMPLETED = 'response.mcp_call.completed'
+    VALUES = ['response.mcp_call.completed'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the BetaResponseMCPCallFailedEventType SDK namespace.
-module BetaResponseMCPCallFailedEventType
-  RESPONSE_MCP_CALL_FAILED = 'response.mcp_call.failed'
-  VALUES = ['response.mcp_call.failed'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('BetaResponseMCPCallFailedEventType', 'enum', "Unknown BetaResponseMCPCallFailedEventType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaResponseMCPCallInProgressEventMetadata
-  FIELDS = {
-    agent: "agent",
-    type: "type",
-    sequence_number: "sequence_number",
-    output_index: "output_index",
-    item_id: "item_id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    sequence_number
-    output_index
-    item_id
-  ].freeze
-  DECODERS = {
-    agent: lambda do |value|
-      ::OctridevOpenai::BetaAgentTag.from_hash(value)
-    end,
-    type: lambda do |value|
-      ::OctridevOpenai::BetaResponseMCPCallInProgressEventType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaResponseMCPCallInProgressEvent.
-# Emitted when an MCP tool call is in progress.
-class BetaResponseMCPCallInProgressEvent
-  include BetaResponseStreamEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaResponseMCPCallInProgressEventMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaResponseMCPCallInProgressEventMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaResponseMCPCallInProgressEventMetadata::DECODERS
-
-  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-  attr_reader :agent
-  # @return [BetaResponseMCPCallInProgressEventType] The type of the event. Always 'response.mcp_call.in_progress'.
-  attr_reader :type
-  # @return [Integer] The sequence number of this event.
-  attr_reader :sequence_number
-  # @return [Integer] The index of the output item in the response's output array.
-  attr_reader :output_index
-  # @return [String] The unique identifier of the MCP tool call item being processed.
-  attr_reader :item_id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('BetaResponseMCPCallCompletedEventType', 'enum', "Unknown BetaResponseMCPCallCompletedEventType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalBetaResponseMCPCallFailedEventMetadata
+    FIELDS = {
+      agent: 'agent',
+      type: 'type',
+      item_id: 'item_id',
+      output_index: 'output_index',
+      sequence_number: 'sequence_number'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      item_id
+      output_index
+      sequence_number
+    ].freeze
+    DECODERS = {
+      agent: lambda do |value|
+        ::OctridevOpenai::BetaAgentTag.from_hash(value)
+      end,
+      type: lambda do |value|
+        ::OctridevOpenai::BetaResponseMCPCallFailedEventType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for BetaResponseMCPCallFailedEvent.
+  # Emitted when an MCP tool call has failed.
+  class BetaResponseMCPCallFailedEvent
+    include BetaResponseStreamEvent
 
-# Defines the BetaResponseMCPCallInProgressEventType SDK namespace.
-module BetaResponseMCPCallInProgressEventType
-  RESPONSE_MCP_CALL_IN_PROGRESS = 'response.mcp_call.in_progress'
-  VALUES = ['response.mcp_call.in_progress'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaResponseMCPCallFailedEventMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaResponseMCPCallFailedEventMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaResponseMCPCallFailedEventMetadata::DECODERS
 
-    raise SdkValidationError.new('BetaResponseMCPCallInProgressEventType', 'enum', "Unknown BetaResponseMCPCallInProgressEventType: #{value}")
+    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+    attr_reader :agent
+    # @return [BetaResponseMCPCallFailedEventType] The type of the event. Always 'response.mcp_call.failed'.
+    attr_reader :type
+    # @return [String] The ID of the MCP tool call item that failed.
+    attr_reader :item_id
+    # @return [Integer] The index of the output item that failed.
+    attr_reader :output_index
+    # @return [Integer] The sequence number of this event.
+    attr_reader :sequence_number
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
+
+  # Defines the BetaResponseMCPCallFailedEventType SDK namespace.
+  module BetaResponseMCPCallFailedEventType
+    RESPONSE_MCP_CALL_FAILED = 'response.mcp_call.failed'
+    VALUES = ['response.mcp_call.failed'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaResponseMCPCallFailedEventType', 'enum', "Unknown BetaResponseMCPCallFailedEventType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalBetaResponseMCPCallInProgressEventMetadata
+    FIELDS = {
+      agent: 'agent',
+      type: 'type',
+      sequence_number: 'sequence_number',
+      output_index: 'output_index',
+      item_id: 'item_id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      sequence_number
+      output_index
+      item_id
+    ].freeze
+    DECODERS = {
+      agent: lambda do |value|
+        ::OctridevOpenai::BetaAgentTag.from_hash(value)
+      end,
+      type: lambda do |value|
+        ::OctridevOpenai::BetaResponseMCPCallInProgressEventType.from_value(value)
+      end
+    }.freeze
+  end
+
+  # API model for BetaResponseMCPCallInProgressEvent.
+  # Emitted when an MCP tool call is in progress.
+  class BetaResponseMCPCallInProgressEvent
+    include BetaResponseStreamEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaResponseMCPCallInProgressEventMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaResponseMCPCallInProgressEventMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaResponseMCPCallInProgressEventMetadata::DECODERS
+
+    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+    attr_reader :agent
+    # @return [BetaResponseMCPCallInProgressEventType] The type of the event. Always 'response.mcp_call.in_progress'.
+    attr_reader :type
+    # @return [Integer] The sequence number of this event.
+    attr_reader :sequence_number
+    # @return [Integer] The index of the output item in the response's output array.
+    attr_reader :output_index
+    # @return [String] The unique identifier of the MCP tool call item being processed.
+    attr_reader :item_id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the BetaResponseMCPCallInProgressEventType SDK namespace.
+  module BetaResponseMCPCallInProgressEventType
+    RESPONSE_MCP_CALL_IN_PROGRESS = 'response.mcp_call.in_progress'
+    VALUES = ['response.mcp_call.in_progress'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaResponseMCPCallInProgressEventType', 'enum', "Unknown BetaResponseMCPCallInProgressEventType: #{value}")
+    end
+  end
 end

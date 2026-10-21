@@ -5,683 +5,681 @@
 
 # realtime_realtime_beta_server domain models
 module OctridevOpenai
-# API model for RealtimeBetaServerEventResponseAudioDone.
-# Returned when the model-generated audio is done. Also emitted when a Response is interrupted, incomplete, or cancelled.
-class RealtimeBetaServerEventResponseAudioDone
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeBetaServerEventResponseAudioDoneMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseAudioDoneMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeBetaServerEventResponseAudioDoneMetadata::DECODERS
+  # API model for RealtimeBetaServerEventResponseAudioDone.
+  # Returned when the model-generated audio is done. Also emitted when a Response is interrupted, incomplete, or cancelled.
+  class RealtimeBetaServerEventResponseAudioDone
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeBetaServerEventResponseAudioDoneMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseAudioDoneMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeBetaServerEventResponseAudioDoneMetadata::DECODERS
 
-  # @return [String] The unique ID of the server event.
-  attr_reader :event_id
-  # @return [RealtimeBetaServerEventResponseAudioDoneType] The event type, must be `response.output_audio.done`.
-  attr_reader :type
-  # @return [String] The ID of the response.
-  attr_reader :response_id
-  # @return [String] The ID of the item.
-  attr_reader :item_id
-  # @return [Integer] The index of the output item in the response.
-  attr_reader :output_index
-  # @return [Integer] The index of the content part in the item's content array.
-  attr_reader :content_index
+    # @return [String] The unique ID of the server event.
+    attr_reader :event_id
+    # @return [RealtimeBetaServerEventResponseAudioDoneType] The event type, must be `response.output_audio.done`.
+    attr_reader :type
+    # @return [String] The ID of the response.
+    attr_reader :response_id
+    # @return [String] The ID of the item.
+    attr_reader :item_id
+    # @return [Integer] The index of the output item in the response.
+    attr_reader :output_index
+    # @return [Integer] The index of the content part in the item's content array.
+    attr_reader :content_index
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the RealtimeBetaServerEventResponseAudioDoneType SDK namespace.
+  module RealtimeBetaServerEventResponseAudioDoneType
+    RESPONSE_OUTPUT_AUDIO_DONE = 'response.output_audio.done'
+    VALUES = ['response.output_audio.done'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the RealtimeBetaServerEventResponseAudioDoneType SDK namespace.
-module RealtimeBetaServerEventResponseAudioDoneType
-  RESPONSE_OUTPUT_AUDIO_DONE = 'response.output_audio.done'
-  VALUES = ['response.output_audio.done'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeBetaServerEventResponseAudioTranscriptDeltaMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    response_id: "response_id",
-    item_id: "item_id",
-    output_index: "output_index",
-    content_index: "content_index",
-    delta: "delta",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    event_id
-    type
-    response_id
-    item_id
-    output_index
-    content_index
-    delta
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeBetaServerEventResponseAudioTranscriptDeltaType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for RealtimeBetaServerEventResponseAudioTranscriptDelta.
-# Returned when the model-generated transcription of audio output is updated.
-class RealtimeBetaServerEventResponseAudioTranscriptDelta
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeBetaServerEventResponseAudioTranscriptDeltaMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseAudioTranscriptDeltaMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeBetaServerEventResponseAudioTranscriptDeltaMetadata::DECODERS
-
-  # @return [String] The unique ID of the server event.
-  attr_reader :event_id
-  # @return [RealtimeBetaServerEventResponseAudioTranscriptDeltaType] The event type, must be `response.output_audio_transcript.delta`.
-  attr_reader :type
-  # @return [String] The ID of the response.
-  attr_reader :response_id
-  # @return [String] The ID of the item.
-  attr_reader :item_id
-  # @return [Integer] The index of the output item in the response.
-  attr_reader :output_index
-  # @return [Integer] The index of the content part in the item's content array.
-  attr_reader :content_index
-  # @return [String] The transcript delta.
-  attr_reader :delta
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeBetaServerEventResponseAudioTranscriptDeltaMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      response_id: 'response_id',
+      item_id: 'item_id',
+      output_index: 'output_index',
+      content_index: 'content_index',
+      delta: 'delta'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      event_id
+      type
+      response_id
+      item_id
+      output_index
+      content_index
+      delta
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeBetaServerEventResponseAudioTranscriptDeltaType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for RealtimeBetaServerEventResponseAudioTranscriptDelta.
+  # Returned when the model-generated transcription of audio output is updated.
+  class RealtimeBetaServerEventResponseAudioTranscriptDelta
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeBetaServerEventResponseAudioTranscriptDeltaMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseAudioTranscriptDeltaMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeBetaServerEventResponseAudioTranscriptDeltaMetadata::DECODERS
+
+    # @return [String] The unique ID of the server event.
+    attr_reader :event_id
+    # @return [RealtimeBetaServerEventResponseAudioTranscriptDeltaType] The event type, must be `response.output_audio_transcript.delta`.
+    attr_reader :type
+    # @return [String] The ID of the response.
+    attr_reader :response_id
+    # @return [String] The ID of the item.
+    attr_reader :item_id
+    # @return [Integer] The index of the output item in the response.
+    attr_reader :output_index
+    # @return [Integer] The index of the content part in the item's content array.
+    attr_reader :content_index
+    # @return [String] The transcript delta.
+    attr_reader :delta
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the RealtimeBetaServerEventResponseAudioTranscriptDeltaType SDK namespace.
-module RealtimeBetaServerEventResponseAudioTranscriptDeltaType
-  RESPONSE_OUTPUT_AUDIO_TRANSCRIPT_DELTA = 'response.output_audio_transcript.delta'
-  VALUES = ['response.output_audio_transcript.delta'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeBetaServerEventResponseAudioTranscriptDoneMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    response_id: "response_id",
-    item_id: "item_id",
-    output_index: "output_index",
-    content_index: "content_index",
-    transcript: "transcript",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    event_id
-    type
-    response_id
-    item_id
-    output_index
-    content_index
-    transcript
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeBetaServerEventResponseAudioTranscriptDoneType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for RealtimeBetaServerEventResponseAudioTranscriptDone.
-# Returned when the model-generated transcription of audio output is done streaming. Also emitted when a Response is interrupted, incomplete, or cancelled.
-class RealtimeBetaServerEventResponseAudioTranscriptDone
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeBetaServerEventResponseAudioTranscriptDoneMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseAudioTranscriptDoneMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeBetaServerEventResponseAudioTranscriptDoneMetadata::DECODERS
-
-  # @return [String] The unique ID of the server event.
-  attr_reader :event_id
-  # @return [RealtimeBetaServerEventResponseAudioTranscriptDoneType] The event type, must be `response.output_audio_transcript.done`.
-  attr_reader :type
-  # @return [String] The ID of the response.
-  attr_reader :response_id
-  # @return [String] The ID of the item.
-  attr_reader :item_id
-  # @return [Integer] The index of the output item in the response.
-  attr_reader :output_index
-  # @return [Integer] The index of the content part in the item's content array.
-  attr_reader :content_index
-  # @return [String] The final transcript of the audio.
-  attr_reader :transcript
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the RealtimeBetaServerEventResponseAudioTranscriptDeltaType SDK namespace.
+  module RealtimeBetaServerEventResponseAudioTranscriptDeltaType
+    RESPONSE_OUTPUT_AUDIO_TRANSCRIPT_DELTA = 'response.output_audio_transcript.delta'
+    VALUES = ['response.output_audio_transcript.delta'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeBetaServerEventResponseAudioTranscriptDoneMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      response_id: 'response_id',
+      item_id: 'item_id',
+      output_index: 'output_index',
+      content_index: 'content_index',
+      transcript: 'transcript'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      event_id
+      type
+      response_id
+      item_id
+      output_index
+      content_index
+      transcript
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeBetaServerEventResponseAudioTranscriptDoneType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for RealtimeBetaServerEventResponseAudioTranscriptDone.
+  # Returned when the model-generated transcription of audio output is done streaming. Also emitted when a Response is interrupted, incomplete, or cancelled.
+  class RealtimeBetaServerEventResponseAudioTranscriptDone
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeBetaServerEventResponseAudioTranscriptDoneMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseAudioTranscriptDoneMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeBetaServerEventResponseAudioTranscriptDoneMetadata::DECODERS
 
-# Defines the RealtimeBetaServerEventResponseAudioTranscriptDoneType SDK namespace.
-module RealtimeBetaServerEventResponseAudioTranscriptDoneType
-  RESPONSE_OUTPUT_AUDIO_TRANSCRIPT_DONE = 'response.output_audio_transcript.done'
-  VALUES = ['response.output_audio_transcript.done'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    # @return [String] The unique ID of the server event.
+    attr_reader :event_id
+    # @return [RealtimeBetaServerEventResponseAudioTranscriptDoneType] The event type, must be `response.output_audio_transcript.done`.
+    attr_reader :type
+    # @return [String] The ID of the response.
+    attr_reader :response_id
+    # @return [String] The ID of the item.
+    attr_reader :item_id
+    # @return [Integer] The index of the output item in the response.
+    attr_reader :output_index
+    # @return [Integer] The index of the content part in the item's content array.
+    attr_reader :content_index
+    # @return [String] The final transcript of the audio.
+    attr_reader :transcript
 
-# Internal model hydration metadata.
-class SdkInternalRealtimeBetaServerEventResponseContentPartAddedPartMetadata
-  FIELDS = {
-    type: "type",
-    text: "text",
-    audio: "audio",
-    transcript: "transcript",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeBetaServerEventResponseContentPartAddedPartType.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for RealtimeBetaServerEventResponseContentPartAddedPart.
-# The content part that was added.
-class RealtimeBetaServerEventResponseContentPartAddedPart
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeBetaServerEventResponseContentPartAddedPartMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseContentPartAddedPartMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeBetaServerEventResponseContentPartAddedPartMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [RealtimeBetaServerEventResponseContentPartAddedPartType] The content type ("text", "audio").
-  attr_reader :type
-  # @return [String] The text content (if type is "text").
-  attr_reader :text
-  # @return [String] Base64-encoded audio data (if type is "audio").
-  attr_reader :audio
-  # @return [String] The transcript of the audio (if type is "audio").
-  attr_reader :transcript
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the RealtimeBetaServerEventResponseAudioTranscriptDoneType SDK namespace.
+  module RealtimeBetaServerEventResponseAudioTranscriptDoneType
+    RESPONSE_OUTPUT_AUDIO_TRANSCRIPT_DONE = 'response.output_audio_transcript.done'
+    VALUES = ['response.output_audio_transcript.done'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeBetaServerEventResponseContentPartAddedMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    response_id: "response_id",
-    item_id: "item_id",
-    output_index: "output_index",
-    content_index: "content_index",
-    part: "part",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    event_id
-    type
-    response_id
-    item_id
-    output_index
-    content_index
-    part
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeBetaServerEventResponseContentPartAddedType.from_value(value)
-    end,
-    part: lambda do |value|
-      ::OctridevOpenai::RealtimeBetaServerEventResponseContentPartAddedPart.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for RealtimeBetaServerEventResponseContentPartAdded.
-# Returned when a new content part is added to an assistant message item during response generation.
-class RealtimeBetaServerEventResponseContentPartAdded
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeBetaServerEventResponseContentPartAddedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseContentPartAddedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeBetaServerEventResponseContentPartAddedMetadata::DECODERS
-
-  # @return [String] The unique ID of the server event.
-  attr_reader :event_id
-  # @return [RealtimeBetaServerEventResponseContentPartAddedType] The event type, must be `response.content_part.added`.
-  attr_reader :type
-  # @return [String] The ID of the response.
-  attr_reader :response_id
-  # @return [String] The ID of the item to which the content part was added.
-  attr_reader :item_id
-  # @return [Integer] The index of the output item in the response.
-  attr_reader :output_index
-  # @return [Integer] The index of the content part in the item's content array.
-  attr_reader :content_index
-  # @return [RealtimeBetaServerEventResponseContentPartAddedPart] The content part that was added.
-  attr_reader :part
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeBetaServerEventResponseContentPartAddedPartMetadata
+    FIELDS = {
+      type: 'type',
+      text: 'text',
+      audio: 'audio',
+      transcript: 'transcript'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeBetaServerEventResponseContentPartAddedPartType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for RealtimeBetaServerEventResponseContentPartAddedPart.
+  # The content part that was added.
+  class RealtimeBetaServerEventResponseContentPartAddedPart
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeBetaServerEventResponseContentPartAddedPartMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseContentPartAddedPartMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeBetaServerEventResponseContentPartAddedPartMetadata::DECODERS
+
+    # @return [RealtimeBetaServerEventResponseContentPartAddedPartType] The content type ("text", "audio").
+    attr_reader :type
+    # @return [String] The text content (if type is "text").
+    attr_reader :text
+    # @return [String] Base64-encoded audio data (if type is "audio").
+    attr_reader :audio
+    # @return [String] The transcript of the audio (if type is "audio").
+    attr_reader :transcript
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the RealtimeBetaServerEventResponseContentPartAddedPartType SDK namespace.
-module RealtimeBetaServerEventResponseContentPartAddedPartType
-  AUDIO = 'audio'
-  TEXT = 'text'
-  VALUES = ['audio', 'text'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the RealtimeBetaServerEventResponseContentPartAddedType SDK namespace.
-module RealtimeBetaServerEventResponseContentPartAddedType
-  RESPONSE_CONTENT_PART_ADDED = 'response.content_part.added'
-  VALUES = ['response.content_part.added'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeBetaServerEventResponseContentPartDonePartMetadata
-  FIELDS = {
-    type: "type",
-    text: "text",
-    audio: "audio",
-    transcript: "transcript",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeBetaServerEventResponseContentPartDonePartType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for RealtimeBetaServerEventResponseContentPartDonePart.
-# The content part that is done.
-class RealtimeBetaServerEventResponseContentPartDonePart
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeBetaServerEventResponseContentPartDonePartMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseContentPartDonePartMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeBetaServerEventResponseContentPartDonePartMetadata::DECODERS
-
-  # @return [RealtimeBetaServerEventResponseContentPartDonePartType] The content type ("text", "audio").
-  attr_reader :type
-  # @return [String] The text content (if type is "text").
-  attr_reader :text
-  # @return [String] Base64-encoded audio data (if type is "audio").
-  attr_reader :audio
-  # @return [String] The transcript of the audio (if type is "audio").
-  attr_reader :transcript
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeBetaServerEventResponseContentPartAddedMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      response_id: 'response_id',
+      item_id: 'item_id',
+      output_index: 'output_index',
+      content_index: 'content_index',
+      part: 'part'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      event_id
+      type
+      response_id
+      item_id
+      output_index
+      content_index
+      part
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeBetaServerEventResponseContentPartAddedType.from_value(value)
+      end,
+      part: lambda do |value|
+        ::OctridevOpenai::RealtimeBetaServerEventResponseContentPartAddedPart.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for RealtimeBetaServerEventResponseContentPartAdded.
+  # Returned when a new content part is added to an assistant message item during response generation.
+  class RealtimeBetaServerEventResponseContentPartAdded
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeBetaServerEventResponseContentPartAddedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseContentPartAddedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeBetaServerEventResponseContentPartAddedMetadata::DECODERS
+
+    # @return [String] The unique ID of the server event.
+    attr_reader :event_id
+    # @return [RealtimeBetaServerEventResponseContentPartAddedType] The event type, must be `response.content_part.added`.
+    attr_reader :type
+    # @return [String] The ID of the response.
+    attr_reader :response_id
+    # @return [String] The ID of the item to which the content part was added.
+    attr_reader :item_id
+    # @return [Integer] The index of the output item in the response.
+    attr_reader :output_index
+    # @return [Integer] The index of the content part in the item's content array.
+    attr_reader :content_index
+    # @return [RealtimeBetaServerEventResponseContentPartAddedPart] The content part that was added.
+    attr_reader :part
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeBetaServerEventResponseContentPartDoneMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    response_id: "response_id",
-    item_id: "item_id",
-    output_index: "output_index",
-    content_index: "content_index",
-    part: "part",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    event_id
-    type
-    response_id
-    item_id
-    output_index
-    content_index
-    part
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeBetaServerEventResponseContentPartDoneType.from_value(value)
-    end,
-    part: lambda do |value|
-      ::OctridevOpenai::RealtimeBetaServerEventResponseContentPartDonePart.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for RealtimeBetaServerEventResponseContentPartDone.
-# Returned when a content part is done streaming in an assistant message item. Also emitted when a Response is interrupted, incomplete, or cancelled.
-class RealtimeBetaServerEventResponseContentPartDone
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeBetaServerEventResponseContentPartDoneMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseContentPartDoneMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeBetaServerEventResponseContentPartDoneMetadata::DECODERS
-
-  # @return [String] The unique ID of the server event.
-  attr_reader :event_id
-  # @return [RealtimeBetaServerEventResponseContentPartDoneType] The event type, must be `response.content_part.done`.
-  attr_reader :type
-  # @return [String] The ID of the response.
-  attr_reader :response_id
-  # @return [String] The ID of the item.
-  attr_reader :item_id
-  # @return [Integer] The index of the output item in the response.
-  attr_reader :output_index
-  # @return [Integer] The index of the content part in the item's content array.
-  attr_reader :content_index
-  # @return [RealtimeBetaServerEventResponseContentPartDonePart] The content part that is done.
-  attr_reader :part
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the RealtimeBetaServerEventResponseContentPartAddedPartType SDK namespace.
+  module RealtimeBetaServerEventResponseContentPartAddedPartType
+    AUDIO = 'audio'
+    TEXT = 'text'
+    VALUES = %w[audio text].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the RealtimeBetaServerEventResponseContentPartAddedType SDK namespace.
+  module RealtimeBetaServerEventResponseContentPartAddedType
+    RESPONSE_CONTENT_PART_ADDED = 'response.content_part.added'
+    VALUES = ['response.content_part.added'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the RealtimeBetaServerEventResponseContentPartDonePartType SDK namespace.
-module RealtimeBetaServerEventResponseContentPartDonePartType
-  AUDIO = 'audio'
-  TEXT = 'text'
-  VALUES = ['audio', 'text'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the RealtimeBetaServerEventResponseContentPartDoneType SDK namespace.
-module RealtimeBetaServerEventResponseContentPartDoneType
-  RESPONSE_CONTENT_PART_DONE = 'response.content_part.done'
-  VALUES = ['response.content_part.done'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeBetaServerEventResponseCreatedMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    response: "response",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    event_id
-    type
-    response
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeBetaServerEventResponseCreatedType.from_value(value)
-    end,
-    response: lambda do |value|
-      ::OctridevOpenai::RealtimeBetaResponse.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for RealtimeBetaServerEventResponseCreated.
-# Returned when a new Response is created. The first event of response creation, where the response is in an initial state of `in_progress`.
-class RealtimeBetaServerEventResponseCreated
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeBetaServerEventResponseCreatedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseCreatedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeBetaServerEventResponseCreatedMetadata::DECODERS
-
-  # @return [String] The unique ID of the server event.
-  attr_reader :event_id
-  # @return [RealtimeBetaServerEventResponseCreatedType] The event type, must be `response.created`.
-  attr_reader :type
-  # @return [RealtimeBetaResponse] The response resource.
-  attr_reader :response
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeBetaServerEventResponseContentPartDonePartMetadata
+    FIELDS = {
+      type: 'type',
+      text: 'text',
+      audio: 'audio',
+      transcript: 'transcript'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeBetaServerEventResponseContentPartDonePartType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for RealtimeBetaServerEventResponseContentPartDonePart.
+  # The content part that is done.
+  class RealtimeBetaServerEventResponseContentPartDonePart
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeBetaServerEventResponseContentPartDonePartMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseContentPartDonePartMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeBetaServerEventResponseContentPartDonePartMetadata::DECODERS
+
+    # @return [RealtimeBetaServerEventResponseContentPartDonePartType] The content type ("text", "audio").
+    attr_reader :type
+    # @return [String] The text content (if type is "text").
+    attr_reader :text
+    # @return [String] Base64-encoded audio data (if type is "audio").
+    attr_reader :audio
+    # @return [String] The transcript of the audio (if type is "audio").
+    attr_reader :transcript
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the RealtimeBetaServerEventResponseCreatedType SDK namespace.
-module RealtimeBetaServerEventResponseCreatedType
-  RESPONSE_CREATED = 'response.created'
-  VALUES = ['response.created'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeBetaServerEventResponseDoneMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    response: "response",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    event_id
-    type
-    response
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeBetaServerEventResponseDoneType.from_value(value)
-    end,
-    response: lambda do |value|
-      ::OctridevOpenai::RealtimeBetaResponse.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for RealtimeBetaServerEventResponseDone.
-# Returned when a Response is done streaming. Always emitted, no matter the final state. The Response object included in the `response.done` event will include all output Items in the Response but will omit the raw audio data.
-class RealtimeBetaServerEventResponseDone
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeBetaServerEventResponseDoneMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseDoneMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeBetaServerEventResponseDoneMetadata::DECODERS
-
-  # @return [String] The unique ID of the server event.
-  attr_reader :event_id
-  # @return [RealtimeBetaServerEventResponseDoneType] The event type, must be `response.done`.
-  attr_reader :type
-  # @return [RealtimeBetaResponse] The response resource.
-  attr_reader :response
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeBetaServerEventResponseContentPartDoneMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      response_id: 'response_id',
+      item_id: 'item_id',
+      output_index: 'output_index',
+      content_index: 'content_index',
+      part: 'part'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      event_id
+      type
+      response_id
+      item_id
+      output_index
+      content_index
+      part
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeBetaServerEventResponseContentPartDoneType.from_value(value)
+      end,
+      part: lambda do |value|
+        ::OctridevOpenai::RealtimeBetaServerEventResponseContentPartDonePart.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for RealtimeBetaServerEventResponseContentPartDone.
+  # Returned when a content part is done streaming in an assistant message item. Also emitted when a Response is interrupted, incomplete, or cancelled.
+  class RealtimeBetaServerEventResponseContentPartDone
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeBetaServerEventResponseContentPartDoneMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseContentPartDoneMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeBetaServerEventResponseContentPartDoneMetadata::DECODERS
+
+    # @return [String] The unique ID of the server event.
+    attr_reader :event_id
+    # @return [RealtimeBetaServerEventResponseContentPartDoneType] The event type, must be `response.content_part.done`.
+    attr_reader :type
+    # @return [String] The ID of the response.
+    attr_reader :response_id
+    # @return [String] The ID of the item.
+    attr_reader :item_id
+    # @return [Integer] The index of the output item in the response.
+    attr_reader :output_index
+    # @return [Integer] The index of the content part in the item's content array.
+    attr_reader :content_index
+    # @return [RealtimeBetaServerEventResponseContentPartDonePart] The content part that is done.
+    attr_reader :part
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the RealtimeBetaServerEventResponseDoneType SDK namespace.
-module RealtimeBetaServerEventResponseDoneType
-  RESPONSE_DONE = 'response.done'
-  VALUES = ['response.done'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeBetaServerEventResponseFunctionCallArgumentsDeltaMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    response_id: "response_id",
-    item_id: "item_id",
-    output_index: "output_index",
-    call_id: "call_id",
-    delta: "delta",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    event_id
-    type
-    response_id
-    item_id
-    output_index
-    call_id
-    delta
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeBetaServerEventResponseFunctionCallArgumentsDeltaType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for RealtimeBetaServerEventResponseFunctionCallArgumentsDelta.
-# Returned when the model-generated function call arguments are updated.
-class RealtimeBetaServerEventResponseFunctionCallArgumentsDelta
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeBetaServerEventResponseFunctionCallArgumentsDeltaMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseFunctionCallArgumentsDeltaMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeBetaServerEventResponseFunctionCallArgumentsDeltaMetadata::DECODERS
-
-  # @return [String] The unique ID of the server event.
-  attr_reader :event_id
-  # @return [RealtimeBetaServerEventResponseFunctionCallArgumentsDeltaType] The event type, must be `response.function_call_arguments.delta`.
-  attr_reader :type
-  # @return [String] The ID of the response.
-  attr_reader :response_id
-  # @return [String] The ID of the function call item.
-  attr_reader :item_id
-  # @return [Integer] The index of the output item in the response.
-  attr_reader :output_index
-  # @return [String] The ID of the function call.
-  attr_reader :call_id
-  # @return [String] The arguments delta as a JSON string.
-  attr_reader :delta
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the RealtimeBetaServerEventResponseContentPartDonePartType SDK namespace.
+  module RealtimeBetaServerEventResponseContentPartDonePartType
+    AUDIO = 'audio'
+    TEXT = 'text'
+    VALUES = %w[audio text].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the RealtimeBetaServerEventResponseContentPartDoneType SDK namespace.
+  module RealtimeBetaServerEventResponseContentPartDoneType
+    RESPONSE_CONTENT_PART_DONE = 'response.content_part.done'
+    VALUES = ['response.content_part.done'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeBetaServerEventResponseCreatedMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      response: 'response'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      event_id
+      type
+      response
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeBetaServerEventResponseCreatedType.from_value(value)
+      end,
+      response: lambda do |value|
+        ::OctridevOpenai::RealtimeBetaResponse.from_hash(value)
+      end
+    }.freeze
   end
-end
 
-# Defines the RealtimeBetaServerEventResponseFunctionCallArgumentsDeltaType SDK namespace.
-module RealtimeBetaServerEventResponseFunctionCallArgumentsDeltaType
-  RESPONSE_FUNCTION_CALL_ARGUMENTS_DELTA = 'response.function_call_arguments.delta'
-  VALUES = ['response.function_call_arguments.delta'].freeze
-  def self.from_value(value)
-    value
+  # API model for RealtimeBetaServerEventResponseCreated.
+  # Returned when a new Response is created. The first event of response creation, where the response is in an initial state of `in_progress`.
+  class RealtimeBetaServerEventResponseCreated
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeBetaServerEventResponseCreatedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseCreatedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeBetaServerEventResponseCreatedMetadata::DECODERS
+
+    # @return [String] The unique ID of the server event.
+    attr_reader :event_id
+    # @return [RealtimeBetaServerEventResponseCreatedType] The event type, must be `response.created`.
+    attr_reader :type
+    # @return [RealtimeBetaResponse] The response resource.
+    attr_reader :response
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
 
-# Internal model hydration metadata.
-class SdkInternalRealtimeBetaServerEventResponseFunctionCallArgumentsDoneMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    response_id: "response_id",
-    item_id: "item_id",
-    output_index: "output_index",
-    call_id: "call_id",
-    name: "name",
-    arguments: "arguments",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    event_id
-    type
-    response_id
-    item_id
-    output_index
-    call_id
-    name
-    arguments
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeBetaServerEventResponseFunctionCallArgumentsDoneType.from_value(value)
-    end,
-  }.freeze
-end
+  # Defines the RealtimeBetaServerEventResponseCreatedType SDK namespace.
+  module RealtimeBetaServerEventResponseCreatedType
+    RESPONSE_CREATED = 'response.created'
+    VALUES = ['response.created'].freeze
+    def self.from_value(value)
+      value
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeBetaServerEventResponseDoneMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      response: 'response'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      event_id
+      type
+      response
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeBetaServerEventResponseDoneType.from_value(value)
+      end,
+      response: lambda do |value|
+        ::OctridevOpenai::RealtimeBetaResponse.from_hash(value)
+      end
+    }.freeze
+  end
+
+  # API model for RealtimeBetaServerEventResponseDone.
+  # Returned when a Response is done streaming. Always emitted, no matter the final state. The Response object included in the `response.done` event will include all output Items in the Response but will omit the raw audio data.
+  class RealtimeBetaServerEventResponseDone
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeBetaServerEventResponseDoneMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseDoneMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeBetaServerEventResponseDoneMetadata::DECODERS
+
+    # @return [String] The unique ID of the server event.
+    attr_reader :event_id
+    # @return [RealtimeBetaServerEventResponseDoneType] The event type, must be `response.done`.
+    attr_reader :type
+    # @return [RealtimeBetaResponse] The response resource.
+    attr_reader :response
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the RealtimeBetaServerEventResponseDoneType SDK namespace.
+  module RealtimeBetaServerEventResponseDoneType
+    RESPONSE_DONE = 'response.done'
+    VALUES = ['response.done'].freeze
+    def self.from_value(value)
+      value
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeBetaServerEventResponseFunctionCallArgumentsDeltaMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      response_id: 'response_id',
+      item_id: 'item_id',
+      output_index: 'output_index',
+      call_id: 'call_id',
+      delta: 'delta'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      event_id
+      type
+      response_id
+      item_id
+      output_index
+      call_id
+      delta
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeBetaServerEventResponseFunctionCallArgumentsDeltaType.from_value(value)
+      end
+    }.freeze
+  end
+
+  # API model for RealtimeBetaServerEventResponseFunctionCallArgumentsDelta.
+  # Returned when the model-generated function call arguments are updated.
+  class RealtimeBetaServerEventResponseFunctionCallArgumentsDelta
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeBetaServerEventResponseFunctionCallArgumentsDeltaMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseFunctionCallArgumentsDeltaMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeBetaServerEventResponseFunctionCallArgumentsDeltaMetadata::DECODERS
+
+    # @return [String] The unique ID of the server event.
+    attr_reader :event_id
+    # @return [RealtimeBetaServerEventResponseFunctionCallArgumentsDeltaType] The event type, must be `response.function_call_arguments.delta`.
+    attr_reader :type
+    # @return [String] The ID of the response.
+    attr_reader :response_id
+    # @return [String] The ID of the function call item.
+    attr_reader :item_id
+    # @return [Integer] The index of the output item in the response.
+    attr_reader :output_index
+    # @return [String] The ID of the function call.
+    attr_reader :call_id
+    # @return [String] The arguments delta as a JSON string.
+    attr_reader :delta
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the RealtimeBetaServerEventResponseFunctionCallArgumentsDeltaType SDK namespace.
+  module RealtimeBetaServerEventResponseFunctionCallArgumentsDeltaType
+    RESPONSE_FUNCTION_CALL_ARGUMENTS_DELTA = 'response.function_call_arguments.delta'
+    VALUES = ['response.function_call_arguments.delta'].freeze
+    def self.from_value(value)
+      value
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeBetaServerEventResponseFunctionCallArgumentsDoneMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      response_id: 'response_id',
+      item_id: 'item_id',
+      output_index: 'output_index',
+      call_id: 'call_id',
+      name: 'name',
+      arguments: 'arguments'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      event_id
+      type
+      response_id
+      item_id
+      output_index
+      call_id
+      name
+      arguments
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeBetaServerEventResponseFunctionCallArgumentsDoneType.from_value(value)
+      end
+    }.freeze
+  end
 end

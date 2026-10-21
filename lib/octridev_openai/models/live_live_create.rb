@@ -5,134 +5,133 @@
 
 # live_live_create domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalLiveCreateRequestMetadata
-  FIELDS = {
-    session: "session",
-    transport: "transport",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    session
-    transport
-  ].freeze
-  DECODERS = {
-    session: lambda do |value|
-      ::OctridevOpenai::LiveMediaSessionCreateParams.from_hash(value)
-    end,
-    transport: lambda do |value|
-      ::OctridevOpenai::LiveWebRTCTransport.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for LiveCreateRequest.
-# Create a Live WebRTC session with JSON session configuration and an SDP offer. Follow the Live prompting guide before choosing frontend and backend instructions. The request starts the session; do not send session.start on the data channel.
-class LiveCreateRequest
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveCreateRequestMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveCreateRequestMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveCreateRequestMetadata::DECODERS
-
-  # @return [LiveMediaSessionCreateParams] Startup configuration for the Live session.
-  attr_reader :session
-  # @return [LiveWebRTCTransport] WebRTC transport with the browser's SDP offer.
-  attr_reader :transport
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalLiveCreateRequestMetadata
+    FIELDS = {
+      session: 'session',
+      transport: 'transport'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      session
+      transport
+    ].freeze
+    DECODERS = {
+      session: lambda do |value|
+        ::OctridevOpenai::LiveMediaSessionCreateParams.from_hash(value)
+      end,
+      transport: lambda do |value|
+        ::OctridevOpenai::LiveWebRTCTransport.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for LiveCreateRequest.
+  # Create a Live WebRTC session with JSON session configuration and an SDP offer. Follow the Live prompting guide before choosing frontend and backend instructions. The request starts the session; do not send session.start on the data channel.
+  class LiveCreateRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveCreateRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveCreateRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveCreateRequestMetadata::DECODERS
+
+    # @return [LiveMediaSessionCreateParams] Startup configuration for the Live session.
+    attr_reader :session
+    # @return [LiveWebRTCTransport] WebRTC transport with the browser's SDP offer.
+    attr_reader :transport
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalLiveCreateResponseSessionMetadata
-  FIELDS = {
-    id: "id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for LiveCreateResponseSession.
-# The newly created Live session. Use its ID for session controls and sideband connections.
-class LiveCreateResponseSession
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveCreateResponseSessionMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveCreateResponseSessionMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveCreateResponseSessionMetadata::DECODERS
-
-  # @return [String] Opaque session identifier. Preserve the returned value unchanged, including its prefix.
-  attr_reader :id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalLiveCreateResponseSessionMetadata
+    FIELDS = {
+      id: 'id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for LiveCreateResponseSession.
+  # The newly created Live session. Use its ID for session controls and sideband connections.
+  class LiveCreateResponseSession
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveCreateResponseSessionMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveCreateResponseSessionMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveCreateResponseSessionMetadata::DECODERS
+
+    # @return [String] Opaque session identifier. Preserve the returned value unchanged, including its prefix.
+    attr_reader :id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalLiveCreateResponseMetadata
-  FIELDS = {
-    session: "session",
-    transport: "transport",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    session
-    transport
-  ].freeze
-  DECODERS = {
-    session: lambda do |value|
-      ::OctridevOpenai::LiveCreateResponseSession.from_hash(value)
-    end,
-    transport: lambda do |value|
-      ::OctridevOpenai::LiveWebRTCTransport.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for LiveCreateResponse.
-# The created Live session identifier and WebRTC answer. Apply transport.sdp as the peer's remote answer and wait for session.started on the data channel before sending commands.
-class LiveCreateResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveCreateResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveCreateResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveCreateResponseMetadata::DECODERS
-
-  # @return [LiveCreateResponseSession] The newly created Live session. Use its ID for session controls and sideband connections.
-  attr_reader :session
-  # @return [LiveWebRTCTransport] WebRTC transport with the SDP answer.
-  attr_reader :transport
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalLiveCreateResponseMetadata
+    FIELDS = {
+      session: 'session',
+      transport: 'transport'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      session
+      transport
+    ].freeze
+    DECODERS = {
+      session: lambda do |value|
+        ::OctridevOpenai::LiveCreateResponseSession.from_hash(value)
+      end,
+      transport: lambda do |value|
+        ::OctridevOpenai::LiveWebRTCTransport.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
+  # API model for LiveCreateResponse.
+  # The created Live session identifier and WebRTC answer. Apply transport.sdp as the peer's remote answer and wait for session.started on the data channel before sending commands.
+  class LiveCreateResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveCreateResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveCreateResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveCreateResponseMetadata::DECODERS
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+    # @return [LiveCreateResponseSession] The newly created Live session. Use its ID for session controls and sideband connections.
+    attr_reader :session
+    # @return [LiveWebRTCTransport] WebRTC transport with the SDP answer.
+    attr_reader :transport
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
 end

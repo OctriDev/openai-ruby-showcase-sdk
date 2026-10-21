@@ -5,114 +5,115 @@
 
 # shared_external domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalExternalStorageResponseMetadata
-  FIELDS = {
-    object: "object",
-    id: "id",
-    project_id: "project_id",
-    provider: "provider",
-    geography: "geography",
-    status: "status",
-    created_at: "created_at",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    object
-    id
-    project_id
-    provider
-    geography
-    status
-    created_at
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::ExternalStorageResponseObject.from_value(value)
-    end,
-    provider: lambda do |value|
-      ::OctridevOpenai::ExternalStorageResponseProvider.from_hash(value)
-    end,
-    status: lambda do |value|
-      ::OctridevOpenai::ExternalStorageStatus.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for ExternalStorageResponse.
-# Typed representation of the `ExternalStorageResponse` API schema.
-class ExternalStorageResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalExternalStorageResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalExternalStorageResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalExternalStorageResponseMetadata::DECODERS
-
-  # @return [ExternalStorageResponseObject] Required enumerated value serialized in the `object` wire field.
-  attr_reader :object
-  # @return [String] Required `string` value serialized in the `id` wire field.
-  attr_reader :id
-  # @return [String] Required `string` value serialized in the `project_id` wire field.
-  attr_reader :project_id
-  # @return [ExternalStorageResponseProvider] Required API value serialized in the `provider` wire field.
-  attr_reader :provider
-  # @return [String] Required `string` value serialized in the `geography` wire field.
-  attr_reader :geography
-  # @return [ExternalStorageStatus] Required enumerated value serialized in the `status` wire field.
-  attr_reader :status
-  # @return [Integer] Required `unixtime`-formatted value serialized in the `created_at` wire field.
-  attr_reader :created_at
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalExternalStorageResponseMetadata
+    FIELDS = {
+      object: 'object',
+      id: 'id',
+      project_id: 'project_id',
+      provider: 'provider',
+      geography: 'geography',
+      status: 'status',
+      created_at: 'created_at'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      object
+      id
+      project_id
+      provider
+      geography
+      status
+      created_at
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::ExternalStorageResponseObject.from_value(value)
+      end,
+      provider: lambda do |value|
+        ::OctridevOpenai::ExternalStorageResponseProvider.from_hash(value)
+      end,
+      status: lambda do |value|
+        ::OctridevOpenai::ExternalStorageStatus.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ExternalStorageResponse.
+  # Typed representation of the `ExternalStorageResponse` API schema.
+  class ExternalStorageResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalExternalStorageResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalExternalStorageResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalExternalStorageResponseMetadata::DECODERS
+
+    # @return [ExternalStorageResponseObject] Required enumerated value serialized in the `object` wire field.
+    attr_reader :object
+    # @return [String] Required `string` value serialized in the `id` wire field.
+    attr_reader :id
+    # @return [String] Required `string` value serialized in the `project_id` wire field.
+    attr_reader :project_id
+    # @return [ExternalStorageResponseProvider] Required API value serialized in the `provider` wire field.
+    attr_reader :provider
+    # @return [String] Required `string` value serialized in the `geography` wire field.
+    attr_reader :geography
+    # @return [ExternalStorageStatus] Required enumerated value serialized in the `status` wire field.
+    attr_reader :status
+    # @return [Integer] Required `unixtime`-formatted value serialized in the `created_at` wire field.
+    attr_reader :created_at
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the ExternalStorageResponseObject SDK namespace.
+  module ExternalStorageResponseObject
+    ORGANIZATION_EXTERNAL_STORAGE = 'organization.external_storage'
+    VALUES = ['organization.external_storage'].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
 
-# Defines the ExternalStorageResponseObject SDK namespace.
-module ExternalStorageResponseObject
-  ORGANIZATION_EXTERNAL_STORAGE = 'organization.external_storage'
-  VALUES = ['organization.external_storage'].freeze
-  def self.from_value(value)
-    value
+  # Defines the ExternalStorageResponseProvider SDK namespace.
+  module ExternalStorageResponseProvider
+    DISCRIMINATOR_MAPPING = {
+      'aws' => -> { AwsExternalStorageProviderResponse },
+      'azure' => -> { AzureExternalStorageProviderResponse },
+      'gcp' => -> { GcpExternalStorageProviderResponse },
+      'oci' => -> { OciExternalStorageProviderResponse }
+    }.freeze
+
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('ExternalStorageResponseProvider', 'variant', "Unknown ExternalStorageResponseProvider discriminator: #{hash['type'].inspect}")
+    end
   end
-end
 
-# Defines the ExternalStorageResponseProvider SDK namespace.
-module ExternalStorageResponseProvider
-  DISCRIMINATOR_MAPPING = {
-    "aws" => -> { AwsExternalStorageProviderResponse },
-    "azure" => -> { AzureExternalStorageProviderResponse },
-    "gcp" => -> { GcpExternalStorageProviderResponse },
-    "oci" => -> { OciExternalStorageProviderResponse },
-  }.freeze
-
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('ExternalStorageResponseProvider', 'variant', "Unknown ExternalStorageResponseProvider discriminator: #{hash["type"].inspect}")
+  # Defines the ExternalStorageStatus SDK namespace.
+  module ExternalStorageStatus
+    PENDING = 'pending'
+    VALIDATED = 'validated'
+    DEGRADED = 'degraded'
+    UNHEALTHY = 'unhealthy'
+    VALUES = %w[pending validated degraded unhealthy].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
-
-# Defines the ExternalStorageStatus SDK namespace.
-module ExternalStorageStatus
-  PENDING = 'pending'
-  VALIDATED = 'validated'
-  DEGRADED = 'degraded'
-  UNHEALTHY = 'unhealthy'
-  VALUES = ['pending', 'validated', 'degraded', 'unhealthy'].freeze
-  def self.from_value(value)
-    value
-  end
-end
 end

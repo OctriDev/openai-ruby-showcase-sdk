@@ -5,229 +5,227 @@
 
 # agent_session domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalAgentSessionActionRequiredPayloadResourceMetadata
-  FIELDS = {
-    id: "id",
-    required_action: "required_action",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    required_action
-  ].freeze
-  DECODERS = {
-    required_action: lambda do |value|
-      ::OctridevOpenai::AgentSessionRequiredActionPayloadResource.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for AgentSessionActionRequiredPayloadResource.
-# Typed representation of the `AgentSessionActionRequiredPayloadResource` API schema.
-class AgentSessionActionRequiredPayloadResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAgentSessionActionRequiredPayloadResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAgentSessionActionRequiredPayloadResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAgentSessionActionRequiredPayloadResourceMetadata::DECODERS
-
-  # @return [String] The ID of the session.
-  attr_reader :id
-  # @return [AgentSessionRequiredActionPayloadResource] The action type. Retrieve the session for action details.
-  attr_reader :required_action
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalAgentSessionActionRequiredPayloadResourceMetadata
+    FIELDS = {
+      id: 'id',
+      required_action: 'required_action'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      required_action
+    ].freeze
+    DECODERS = {
+      required_action: lambda do |value|
+        ::OctridevOpenai::AgentSessionRequiredActionPayloadResource.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for AgentSessionActionRequiredPayloadResource.
+  # Typed representation of the `AgentSessionActionRequiredPayloadResource` API schema.
+  class AgentSessionActionRequiredPayloadResource
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAgentSessionActionRequiredPayloadResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAgentSessionActionRequiredPayloadResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAgentSessionActionRequiredPayloadResourceMetadata::DECODERS
+
+    # @return [String] The ID of the session.
+    attr_reader :id
+    # @return [AgentSessionRequiredActionPayloadResource] The action type. Retrieve the session for action details.
+    attr_reader :required_action
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAgentSessionConnectPayloadResourceMetadata
-  FIELDS = {
-    remote_url: "remote_url",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    remote_url
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for AgentSessionConnectPayloadResource.
-# Typed representation of the `AgentSessionConnectPayloadResource` API schema.
-class AgentSessionConnectPayloadResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAgentSessionConnectPayloadResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAgentSessionConnectPayloadResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAgentSessionConnectPayloadResourceMetadata::DECODERS
-
-  # @return [String] The URL used to connect the self-hosted environment.
-  attr_reader :remote_url
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalAgentSessionConnectPayloadResourceMetadata
+    FIELDS = {
+      remote_url: 'remote_url'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      remote_url
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for AgentSessionConnectPayloadResource.
+  # Typed representation of the `AgentSessionConnectPayloadResource` API schema.
+  class AgentSessionConnectPayloadResource
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAgentSessionConnectPayloadResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAgentSessionConnectPayloadResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAgentSessionConnectPayloadResourceMetadata::DECODERS
+
+    # @return [String] The URL used to connect the self-hosted environment.
+    attr_reader :remote_url
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAgentSessionCreatedPayloadResourceMetadata
-  FIELDS = {
-    id: "id",
-    environment_id: "environment_id",
-    environment_type: "environment_type",
-    connect: "connect",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    environment_type
-  ].freeze
-  DECODERS = {
-    connect: lambda do |value|
-      ::OctridevOpenai::AgentSessionConnectPayloadResource.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for AgentSessionCreatedPayloadResource.
-# Typed representation of the `AgentSessionCreatedPayloadResource` API schema.
-class AgentSessionCreatedPayloadResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAgentSessionCreatedPayloadResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAgentSessionCreatedPayloadResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAgentSessionCreatedPayloadResourceMetadata::DECODERS
-
-  # @return [String] The ID of the session.
-  attr_reader :id
-  # @return [String] The ID of the environment, when one exists.
-  attr_reader :environment_id
-  # @return [String] The environment type: `none`, `openai_hosted`, or `self_hosted`.
-  attr_reader :environment_type
-  # @return [AgentSessionConnectPayloadResource] Optional object value serialized in the `connect` wire field.
-  attr_reader :connect
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalAgentSessionCreatedPayloadResourceMetadata
+    FIELDS = {
+      id: 'id',
+      environment_id: 'environment_id',
+      environment_type: 'environment_type',
+      connect: 'connect'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      environment_type
+    ].freeze
+    DECODERS = {
+      connect: lambda do |value|
+        ::OctridevOpenai::AgentSessionConnectPayloadResource.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for AgentSessionCreatedPayloadResource.
+  # Typed representation of the `AgentSessionCreatedPayloadResource` API schema.
+  class AgentSessionCreatedPayloadResource
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAgentSessionCreatedPayloadResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAgentSessionCreatedPayloadResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAgentSessionCreatedPayloadResourceMetadata::DECODERS
+
+    # @return [String] The ID of the session.
+    attr_reader :id
+    # @return [String] The ID of the environment, when one exists.
+    attr_reader :environment_id
+    # @return [String] The environment type: `none`, `openai_hosted`, or `self_hosted`.
+    attr_reader :environment_type
+    # @return [AgentSessionConnectPayloadResource] Optional object value serialized in the `connect` wire field.
+    attr_reader :connect
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAgentSessionEnvironmentPayloadResourceMetadata
-  FIELDS = {
-    id: "id",
-    environment_id: "environment_id",
-    environment_type: "environment_type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    environment_type
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for AgentSessionEnvironmentPayloadResource.
-# Typed representation of the `AgentSessionEnvironmentPayloadResource` API schema.
-class AgentSessionEnvironmentPayloadResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAgentSessionEnvironmentPayloadResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAgentSessionEnvironmentPayloadResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAgentSessionEnvironmentPayloadResourceMetadata::DECODERS
-
-  # @return [String] The ID of the session.
-  attr_reader :id
-  # @return [String] The ID of the environment, when one exists.
-  attr_reader :environment_id
-  # @return [String] The environment type: `none`, `openai_hosted`, or `self_hosted`.
-  attr_reader :environment_type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalAgentSessionEnvironmentPayloadResourceMetadata
+    FIELDS = {
+      id: 'id',
+      environment_id: 'environment_id',
+      environment_type: 'environment_type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      environment_type
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for AgentSessionEnvironmentPayloadResource.
+  # Typed representation of the `AgentSessionEnvironmentPayloadResource` API schema.
+  class AgentSessionEnvironmentPayloadResource
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAgentSessionEnvironmentPayloadResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAgentSessionEnvironmentPayloadResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAgentSessionEnvironmentPayloadResourceMetadata::DECODERS
+
+    # @return [String] The ID of the session.
+    attr_reader :id
+    # @return [String] The ID of the environment, when one exists.
+    attr_reader :environment_id
+    # @return [String] The environment type: `none`, `openai_hosted`, or `self_hosted`.
+    attr_reader :environment_type
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAgentSessionRequiredActionPayloadResourceMetadata
-  FIELDS = {
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::AgentSessionRequiredActionTypeResource.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for AgentSessionRequiredActionPayloadResource.
-# Typed representation of the `AgentSessionRequiredActionPayloadResource` API schema.
-class AgentSessionRequiredActionPayloadResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAgentSessionRequiredActionPayloadResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAgentSessionRequiredActionPayloadResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAgentSessionRequiredActionPayloadResourceMetadata::DECODERS
-
-  # @return [AgentSessionRequiredActionTypeResource] Required enumerated value serialized in the `type` wire field.
-  attr_reader :type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalAgentSessionRequiredActionPayloadResourceMetadata
+    FIELDS = {
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::AgentSessionRequiredActionTypeResource.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for AgentSessionRequiredActionPayloadResource.
+  # Typed representation of the `AgentSessionRequiredActionPayloadResource` API schema.
+  class AgentSessionRequiredActionPayloadResource
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAgentSessionRequiredActionPayloadResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAgentSessionRequiredActionPayloadResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAgentSessionRequiredActionPayloadResourceMetadata::DECODERS
+
+    # @return [AgentSessionRequiredActionTypeResource] Required enumerated value serialized in the `type` wire field.
+    attr_reader :type
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the AgentSessionRequiredActionTypeResource SDK namespace.
+  module AgentSessionRequiredActionTypeResource
+    COMPUTER_USE_APPROVAL_REQUEST = 'computer_use_approval_request'
+    FUNCTION_CALL = 'function_call'
+    ENVIRONMENT_CONNECTION = 'environment_connection'
+    VALUES = %w[computer_use_approval_request function_call environment_connection].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
-
-# Defines the AgentSessionRequiredActionTypeResource SDK namespace.
-module AgentSessionRequiredActionTypeResource
-  COMPUTER_USE_APPROVAL_REQUEST = 'computer_use_approval_request'
-  FUNCTION_CALL = 'function_call'
-  ENVIRONMENT_CONNECTION = 'environment_connection'
-  VALUES = ['computer_use_approval_request', 'function_call', 'environment_connection'].freeze
-  def self.from_value(value)
-    value
-  end
-end
 end

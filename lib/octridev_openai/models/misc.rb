@@ -5,559 +5,559 @@
 
 # misc domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalContainerFileCitationParamMetadata
-  FIELDS = {
-    type: "type",
-    start_index: "start_index",
-    end_index: "end_index",
-    container_id: "container_id",
-    file_id: "file_id",
-    filename: "filename",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    start_index
-    end_index
-    container_id
-    file_id
-    filename
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ContainerFileCitationParamType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for ContainerFileCitationParam.
-# Typed representation of the `ContainerFileCitationParam` API schema.
-class ContainerFileCitationParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalContainerFileCitationParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalContainerFileCitationParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalContainerFileCitationParamMetadata::DECODERS
-
-  # @return [ContainerFileCitationParamType] The citation type. Always `container_file_citation`.
-  attr_reader :type
-  # @return [Integer] The index of the first character of the citation in the message.
-  attr_reader :start_index
-  # @return [Integer] The index of the last character of the citation in the message.
-  attr_reader :end_index
-  # @return [String] The ID of the container.
-  attr_reader :container_id
-  # @return [String] The ID of the container file.
-  attr_reader :file_id
-  # @return [String] The filename of the container file cited.
-  attr_reader :filename
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalContainerFileCitationParamMetadata
+    FIELDS = {
+      type: 'type',
+      start_index: 'start_index',
+      end_index: 'end_index',
+      container_id: 'container_id',
+      file_id: 'file_id',
+      filename: 'filename'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      start_index
+      end_index
+      container_id
+      file_id
+      filename
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ContainerFileCitationParamType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ContainerFileCitationParam.
+  # Typed representation of the `ContainerFileCitationParam` API schema.
+  class ContainerFileCitationParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalContainerFileCitationParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalContainerFileCitationParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalContainerFileCitationParamMetadata::DECODERS
+
+    # @return [ContainerFileCitationParamType] The citation type. Always `container_file_citation`.
+    attr_reader :type
+    # @return [Integer] The index of the first character of the citation in the message.
+    attr_reader :start_index
+    # @return [Integer] The index of the last character of the citation in the message.
+    attr_reader :end_index
+    # @return [String] The ID of the container.
+    attr_reader :container_id
+    # @return [String] The ID of the container file.
+    attr_reader :file_id
+    # @return [String] The filename of the container file cited.
+    attr_reader :filename
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the ContainerFileCitationParamType SDK namespace.
-module ContainerFileCitationParamType
-  CONTAINER_FILE_CITATION = 'container_file_citation'
-  VALUES = ['container_file_citation'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalDeletedConversationMetadata
-  FIELDS = {
-    object: "object",
-    deleted: "deleted",
-    id: "id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    object
-    deleted
-    id
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::DeletedConversationResourceObject.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for DeletedConversation.
-# Typed representation of the `DeletedConversation` API schema.
-class DeletedConversation
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalDeletedConversationMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalDeletedConversationMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalDeletedConversationMetadata::DECODERS
-
-  # @return [DeletedConversationResourceObject] Required enumerated value serialized in the `object` wire field.
-  attr_reader :object
-  # @return [Boolean] Required `boolean` value serialized in the `deleted` wire field.
-  attr_reader :deleted
-  # @return [String] Required `string` value serialized in the `id` wire field.
-  attr_reader :id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the ContainerFileCitationParamType SDK namespace.
+  module ContainerFileCitationParamType
+    CONTAINER_FILE_CITATION = 'container_file_citation'
+    VALUES = ['container_file_citation'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalDeletedConversationMetadata
+    FIELDS = {
+      object: 'object',
+      deleted: 'deleted',
+      id: 'id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      object
+      deleted
+      id
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::DeletedConversationResourceObject.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for DeletedConversation.
+  # Typed representation of the `DeletedConversation` API schema.
+  class DeletedConversation
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalDeletedConversationMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalDeletedConversationMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalDeletedConversationMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalDragPointMetadata
-  FIELDS = {
-    x_coordinate: "x",
-    y_coordinate: "y",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    x_coordinate
-    y_coordinate
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
+    # @return [DeletedConversationResourceObject] Required enumerated value serialized in the `object` wire field.
+    attr_reader :object
+    # @return [Boolean] Required `boolean` value serialized in the `deleted` wire field.
+    attr_reader :deleted
+    # @return [String] Required `string` value serialized in the `id` wire field.
+    attr_reader :id
 
-# API model for DragPoint.
-# An x/y coordinate pair, e.g. `{ x: 100, y: 200 }`.
-class DragPoint
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalDragPointMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalDragPointMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalDragPointMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [Integer] The x-coordinate.
-  attr_reader :x_coordinate
-  # @return [Integer] The y-coordinate.
-  attr_reader :y_coordinate
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalDragPointMetadata
+    FIELDS = {
+      x_coordinate: 'x',
+      y_coordinate: 'y'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      x_coordinate
+      y_coordinate
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for DragPoint.
+  # An x/y coordinate pair, e.g. `{ x: 100, y: 200 }`.
+  class DragPoint
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalDragPointMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalDragPointMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalDragPointMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalErrorPayloadMetadata
-  FIELDS = {
-    type: "type",
-    code: "code",
-    message: "message",
-    param: "param",
-    headers: "headers",
-    misalignment: "misalignment",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    code
-    message
-    param
-  ].freeze
-  DECODERS = {
-    misalignment: lambda do |value|
-      ::OctridevOpenai::MisalignmentErrorDetailsResource.from_hash(value)
-    end,
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    code
-    param
-  ].freeze
-end
+    # @return [Integer] The x-coordinate.
+    attr_reader :x_coordinate
+    # @return [Integer] The y-coordinate.
+    attr_reader :y_coordinate
 
-# API model for ErrorPayload.
-# An error payload that was emitted for a streaming error event.
-class ErrorPayload
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalErrorPayloadMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalErrorPayloadMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalErrorPayloadMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [String] The error type that was emitted.
-  attr_reader :type
-  # @return [String] Required `string` value serialized in the `code` wire field.
-  attr_reader :code
-  # @return [String] The human-readable error message that was emitted.
-  attr_reader :message
-  # @return [String] Required `string` value serialized in the `param` wire field.
-  attr_reader :param
-  # @return [Hash] The response headers that were emitted with the error, if any.
-  attr_reader :headers
-  # @return [MisalignmentErrorDetailsResource] Optional object value serialized in the `misalignment` wire field.
-  attr_reader :misalignment
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalErrorPayloadMetadata::NULLABLE_FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalErrorPayloadMetadata
+    FIELDS = {
+      type: 'type',
+      code: 'code',
+      message: 'message',
+      param: 'param',
+      headers: 'headers',
+      misalignment: 'misalignment'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      code
+      message
+      param
+    ].freeze
+    DECODERS = {
+      misalignment: lambda do |value|
+        ::OctridevOpenai::MisalignmentErrorDetailsResource.from_hash(value)
+      end
+    }.freeze
+    NULLABLE_FIELDS = %i[
+      code
+      param
+    ].freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for ErrorPayload.
+  # An error payload that was emitted for a streaming error event.
+  class ErrorPayload
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalErrorPayloadMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalErrorPayloadMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalErrorPayloadMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalFileCitationParamMetadata
-  FIELDS = {
-    type: "type",
-    index: "index",
-    file_id: "file_id",
-    filename: "filename",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    index
-    file_id
-    filename
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::FileCitationParamType.from_value(value)
-    end,
-  }.freeze
-end
+    # @return [String] The error type that was emitted.
+    attr_reader :type
+    # @return [String] Required `string` value serialized in the `code` wire field.
+    attr_reader :code
+    # @return [String] The human-readable error message that was emitted.
+    attr_reader :message
+    # @return [String] Required `string` value serialized in the `param` wire field.
+    attr_reader :param
+    # @return [Hash] The response headers that were emitted with the error, if any.
+    attr_reader :headers
+    # @return [MisalignmentErrorDetailsResource] Optional object value serialized in the `misalignment` wire field.
+    attr_reader :misalignment
 
-# API model for FileCitationParam.
-# Typed representation of the `FileCitationParam` API schema.
-class FileCitationParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalFileCitationParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalFileCitationParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalFileCitationParamMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [FileCitationParamType] The citation type. Always `file_citation`.
-  attr_reader :type
-  # @return [Integer] The index of the file in the list of files.
-  attr_reader :index
-  # @return [String] The ID of the file.
-  attr_reader :file_id
-  # @return [String] The filename of the file cited.
-  attr_reader :filename
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalErrorPayloadMetadata::NULLABLE_FIELDS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalFileCitationParamMetadata
+    FIELDS = {
+      type: 'type',
+      index: 'index',
+      file_id: 'file_id',
+      filename: 'filename'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      index
+      file_id
+      filename
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::FileCitationParamType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for FileCitationParam.
+  # Typed representation of the `FileCitationParam` API schema.
+  class FileCitationParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalFileCitationParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalFileCitationParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalFileCitationParamMetadata::DECODERS
 
-# Defines the FileCitationParamType SDK namespace.
-module FileCitationParamType
-  FILE_CITATION = 'file_citation'
-  VALUES = ['file_citation'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    # @return [FileCitationParamType] The citation type. Always `file_citation`.
+    attr_reader :type
+    # @return [Integer] The index of the file in the list of files.
+    attr_reader :index
+    # @return [String] The ID of the file.
+    attr_reader :file_id
+    # @return [String] The filename of the file cited.
+    attr_reader :filename
 
-# Internal model hydration metadata.
-class SdkInternalFineTuneChatCompletionRequestAssistantMessageMetadata
-  FIELDS = {
-    weight: "weight",
-    content: "content",
-    refusal: "refusal",
-    role: "role",
-    name: "name",
-    audio: "audio",
-    tool_calls: "tool_calls",
-    function_call: "function_call",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    role
-  ].freeze
-  DECODERS = {
-    weight: lambda do |value|
-      ::OctridevOpenai::FineTuneChatCompletionRequestAssistantMessageVariant0Weight.from_value(value)
-    end,
-    role: lambda do |value|
-      ::OctridevOpenai::ChatCompletionRequestAssistantMessageRole.from_value(value)
-    end,
-    audio: lambda do |value|
-      ::OctridevOpenai::ChatCompletionRequestAssistantMessageAudio.from_hash(value)
-    end,
-    tool_calls: lambda do |value|
-      ::OctridevOpenai::ChatCompletionMessageToolCalls.from_hash(value)
-    end,
-    function_call: lambda do |value|
-      ::OctridevOpenai::ChatCompletionRequestAssistantMessageFunctionCall.from_hash(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for FineTuneChatCompletionRequestAssistantMessage.
-# Typed representation of the `FineTuneChatCompletionRequestAssistantMessage` API schema.
-class FineTuneChatCompletionRequestAssistantMessage
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalFineTuneChatCompletionRequestAssistantMessageMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalFineTuneChatCompletionRequestAssistantMessageMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalFineTuneChatCompletionRequestAssistantMessageMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [FineTuneChatCompletionRequestAssistantMessageVariant0Weight] Controls whether the assistant message is trained against (0 or 1)
-  attr_reader :weight
-  # @return [Object] The contents of the assistant message. Required unless `tool_calls` or `function_call` is specified.
-  attr_reader :content
-  # @return [String] Optional `string` value serialized in the `refusal` wire field.
-  attr_reader :refusal
-  # @return [ChatCompletionRequestAssistantMessageRole] The role of the messages author, in this case `assistant`.
-  attr_reader :role
-  # @return [String] An optional name for the participant. Provides the model information to differentiate between participants of the same role.
-  attr_reader :name
-  # @return [ChatCompletionRequestAssistantMessageAudio] Data about a previous audio response from the model. Learn more.
-  attr_reader :audio
-  # @return [ChatCompletionMessageToolCalls] The tool calls generated by the model, such as function calls.
-  attr_reader :tool_calls
-  # @return [ChatCompletionRequestAssistantMessageFunctionCall] Deprecated and replaced by `tool_calls`. The name and arguments of a function that should be called, as generated by the model.
-  attr_reader :function_call
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the FileCitationParamType SDK namespace.
+  module FileCitationParamType
+    FILE_CITATION = 'file_citation'
+    VALUES = ['file_citation'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the FineTuneChatCompletionRequestAssistantMessageVariant0Weight SDK namespace.
-module FineTuneChatCompletionRequestAssistantMessageVariant0Weight
-  V_0 = 0
-  V_1 = 1
-  VALUES = [0, 1].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalLogProbPropertiesMetadata
-  FIELDS = {
-    token: "token",
-    logprob: "logprob",
-    bytes: "bytes",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    token
-    logprob
-    bytes
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for LogProbProperties.
-# A log probability object.
-class LogProbProperties
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLogProbPropertiesMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLogProbPropertiesMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLogProbPropertiesMetadata::DECODERS
-
-  # @return [String] The token that was used to generate the log probability.
-  attr_reader :token
-  # @return [Float] The log probability of the token.
-  attr_reader :logprob
-  # @return [Array_of_Integer] The bytes that were used to generate the log probability.
-  attr_reader :bytes
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalFineTuneChatCompletionRequestAssistantMessageMetadata
+    FIELDS = {
+      weight: 'weight',
+      content: 'content',
+      refusal: 'refusal',
+      role: 'role',
+      name: 'name',
+      audio: 'audio',
+      tool_calls: 'tool_calls',
+      function_call: 'function_call'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      role
+    ].freeze
+    DECODERS = {
+      weight: lambda do |value|
+        ::OctridevOpenai::FineTuneChatCompletionRequestAssistantMessageVariant0Weight.from_value(value)
+      end,
+      role: lambda do |value|
+        ::OctridevOpenai::ChatCompletionRequestAssistantMessageRole.from_value(value)
+      end,
+      audio: lambda do |value|
+        ::OctridevOpenai::ChatCompletionRequestAssistantMessageAudio.from_hash(value)
+      end,
+      tool_calls: lambda do |value|
+        ::OctridevOpenai::ChatCompletionMessageToolCalls.from_hash(value)
+      end,
+      function_call: lambda do |value|
+        ::OctridevOpenai::ChatCompletionRequestAssistantMessageFunctionCall.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for FineTuneChatCompletionRequestAssistantMessage.
+  # Typed representation of the `FineTuneChatCompletionRequestAssistantMessage` API schema.
+  class FineTuneChatCompletionRequestAssistantMessage
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalFineTuneChatCompletionRequestAssistantMessageMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalFineTuneChatCompletionRequestAssistantMessageMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalFineTuneChatCompletionRequestAssistantMessageMetadata::DECODERS
+
+    # @return [FineTuneChatCompletionRequestAssistantMessageVariant0Weight] Controls whether the assistant message is trained against (0 or 1)
+    attr_reader :weight
+    # @return [Object] The contents of the assistant message. Required unless `tool_calls` or `function_call` is specified.
+    attr_reader :content
+    # @return [String] Optional `string` value serialized in the `refusal` wire field.
+    attr_reader :refusal
+    # @return [ChatCompletionRequestAssistantMessageRole] The role of the messages author, in this case `assistant`.
+    attr_reader :role
+    # @return [String] An optional name for the participant. Provides the model information to differentiate between participants of the same role.
+    attr_reader :name
+    # @return [ChatCompletionRequestAssistantMessageAudio] Data about a previous audio response from the model. Learn more.
+    attr_reader :audio
+    # @return [ChatCompletionMessageToolCalls] The tool calls generated by the model, such as function calls.
+    attr_reader :tool_calls
+    # @return [ChatCompletionRequestAssistantMessageFunctionCall] Deprecated and replaced by `tool_calls`. The name and arguments of a function that should be called, as generated by the model.
+    attr_reader :function_call
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the ModelIds SDK namespace.
-module ModelIds
-  def self.from_hash(hash)
-    return ModelIdsShared.from_value(hash) if hash.is_a?(::String)
-    return ModelIdsResponses.from_hash(hash)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalOutputAudioMetadata
-  FIELDS = {
-    type: "type",
-    data: "data",
-    transcript: "transcript",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    data
-    transcript
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::OutputAudioType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for OutputAudio.
-# An audio output from the model.
-class OutputAudio
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalOutputAudioMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalOutputAudioMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalOutputAudioMetadata::DECODERS
-
-  # @return [OutputAudioType] The type of the output audio. Always `output_audio`.
-  attr_reader :type
-  # @return [String] Base64-encoded audio data from the model.
-  attr_reader :data
-  # @return [String] The transcript of the audio data from the model.
-  attr_reader :transcript
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the FineTuneChatCompletionRequestAssistantMessageVariant0Weight SDK namespace.
+  module FineTuneChatCompletionRequestAssistantMessageVariant0Weight
+    V_0 = 0
+    V_1 = 1
+    VALUES = [0, 1].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalLogProbPropertiesMetadata
+    FIELDS = {
+      token: 'token',
+      logprob: 'logprob',
+      bytes: 'bytes'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      token
+      logprob
+      bytes
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for LogProbProperties.
+  # A log probability object.
+  class LogProbProperties
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLogProbPropertiesMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLogProbPropertiesMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLogProbPropertiesMetadata::DECODERS
 
-# Defines the OutputAudioType SDK namespace.
-module OutputAudioType
-  OUTPUT_AUDIO = 'output_audio'
-  VALUES = ['output_audio'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    # @return [String] The token that was used to generate the log probability.
+    attr_reader :token
+    # @return [Float] The log probability of the token.
+    attr_reader :logprob
+    # @return [Array_of_Integer] The bytes that were used to generate the log probability.
+    attr_reader :bytes
 
-# Defines the TranscriptionChunkingStrategy SDK namespace.
-module TranscriptionChunkingStrategy
-  def self.from_hash(hash)
-    return TranscriptionChunkingStrategyVariant0.from_value(hash) if hash.is_a?(::String)
-    return VadConfig.from_hash(hash)
-  end
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# Defines the TranscriptionChunkingStrategyVariant0 SDK namespace.
-module TranscriptionChunkingStrategyVariant0
-  AUTO = 'auto'
-  VALUES = ['auto'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-# Internal model hydration metadata.
-class SdkInternalUrlCitationParamMetadata
-  FIELDS = {
-    type: "type",
-    start_index: "start_index",
-    end_index: "end_index",
-    url: "url",
-    title: "title",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    start_index
-    end_index
-    url
-    title
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::UrlCitationParamType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for UrlCitationParam.
-# Typed representation of the `UrlCitationParam` API schema.
-class UrlCitationParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalUrlCitationParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalUrlCitationParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalUrlCitationParamMetadata::DECODERS
-
-  # @return [UrlCitationParamType] The citation type. Always `url_citation`.
-  attr_reader :type
-  # @return [Integer] The index of the first character of the citation in the message.
-  attr_reader :start_index
-  # @return [Integer] The index of the last character of the citation in the message.
-  attr_reader :end_index
-  # @return [String] The URL of the cited resource.
-  attr_reader :url
-  # @return [String] The title of the cited resource.
-  attr_reader :title
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the ModelIds SDK namespace.
+  module ModelIds
+    def self.from_hash(hash)
+      return ModelIdsShared.from_value(hash) if hash.is_a?(::String)
+
+      ModelIdsResponses.from_hash(hash)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalOutputAudioMetadata
+    FIELDS = {
+      type: 'type',
+      data: 'data',
+      transcript: 'transcript'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      data
+      transcript
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::OutputAudioType.from_value(value)
+      end
+    }.freeze
   end
-end
 
-# Defines the UrlCitationParamType SDK namespace.
-module UrlCitationParamType
-  URL_CITATION = 'url_citation'
-  VALUES = ['url_citation'].freeze
-  def self.from_value(value)
-    value
+  # API model for OutputAudio.
+  # An audio output from the model.
+  class OutputAudio
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalOutputAudioMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalOutputAudioMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalOutputAudioMetadata::DECODERS
+
+    # @return [OutputAudioType] The type of the output audio. Always `output_audio`.
+    attr_reader :type
+    # @return [String] Base64-encoded audio data from the model.
+    attr_reader :data
+    # @return [String] The transcript of the audio data from the model.
+    attr_reader :transcript
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
+
+  # Defines the OutputAudioType SDK namespace.
+  module OutputAudioType
+    OUTPUT_AUDIO = 'output_audio'
+    VALUES = ['output_audio'].freeze
+    def self.from_value(value)
+      value
+    end
+  end
+
+  # Defines the TranscriptionChunkingStrategy SDK namespace.
+  module TranscriptionChunkingStrategy
+    def self.from_hash(hash)
+      return TranscriptionChunkingStrategyVariant0.from_value(hash) if hash.is_a?(::String)
+
+      VadConfig.from_hash(hash)
+    end
+  end
+
+  # Defines the TranscriptionChunkingStrategyVariant0 SDK namespace.
+  module TranscriptionChunkingStrategyVariant0
+    AUTO = 'auto'
+    VALUES = ['auto'].freeze
+    def self.from_value(value)
+      value
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalUrlCitationParamMetadata
+    FIELDS = {
+      type: 'type',
+      start_index: 'start_index',
+      end_index: 'end_index',
+      url: 'url',
+      title: 'title'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      start_index
+      end_index
+      url
+      title
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::UrlCitationParamType.from_value(value)
+      end
+    }.freeze
+  end
+
+  # API model for UrlCitationParam.
+  # Typed representation of the `UrlCitationParam` API schema.
+  class UrlCitationParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalUrlCitationParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalUrlCitationParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalUrlCitationParamMetadata::DECODERS
+
+    # @return [UrlCitationParamType] The citation type. Always `url_citation`.
+    attr_reader :type
+    # @return [Integer] The index of the first character of the citation in the message.
+    attr_reader :start_index
+    # @return [Integer] The index of the last character of the citation in the message.
+    attr_reader :end_index
+    # @return [String] The URL of the cited resource.
+    attr_reader :url
+    # @return [String] The title of the cited resource.
+    attr_reader :title
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the UrlCitationParamType SDK namespace.
+  module UrlCitationParamType
+    URL_CITATION = 'url_citation'
+    VALUES = ['url_citation'].freeze
+    def self.from_value(value)
+      value
+    end
+  end
 end

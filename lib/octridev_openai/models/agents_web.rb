@@ -5,484 +5,487 @@
 
 # agents_web domain models
 module OctridevOpenai
-# Defines the WebSearchActionResource SDK namespace.
-module WebSearchActionResource
-  DISCRIMINATOR_MAPPING = {
-    "search" => -> { WebSearchActionResourceSearch },
-    "open_page" => -> { WebSearchActionResourceOpenPage },
-    "find_in_page" => -> { WebSearchActionResourceFindInPage },
-    "other" => -> { WebSearchActionResourceOther },
-  }.freeze
+  # Defines the WebSearchActionResource SDK namespace.
+  module WebSearchActionResource
+    DISCRIMINATOR_MAPPING = {
+      'search' => -> { WebSearchActionResourceSearch },
+      'open_page' => -> { WebSearchActionResourceOpenPage },
+      'find_in_page' => -> { WebSearchActionResourceFindInPage },
+      'other' => -> { WebSearchActionResourceOther }
+    }.freeze
 
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
 
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
 
-    raise SdkValidationError.new('WebSearchActionResource', 'variant', "Unknown WebSearchActionResource discriminator: #{hash["type"].inspect}")
-  end
-end
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
 
-# Internal model hydration metadata.
-class SdkInternalWebSearchActionResourceFindInPageMetadata
-  FIELDS = {
-    type: "type",
-    url: "url",
-    pattern: "pattern",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    url
-    pattern
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::WebSearchActionResourceFindInPageType.from_value(value)
-    end,
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    url
-    pattern
-  ].freeze
-end
-
-# API model for WebSearchActionResourceFindInPage.
-# Finds text within a web page.
-class WebSearchActionResourceFindInPage
-  include WebSearchActionResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalWebSearchActionResourceFindInPageMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalWebSearchActionResourceFindInPageMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalWebSearchActionResourceFindInPageMetadata::DECODERS
-
-  # @return [WebSearchActionResourceFindInPageType] The type of the object. Always `find_in_page`.
-  attr_reader :type
-  # @return [String] The URL of the page that was searched.
-  attr_reader :url
-  # @return [String] The text pattern that was searched for.
-  attr_reader :pattern
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('WebSearchActionResource', 'variant', "Unknown WebSearchActionResource discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalWebSearchActionResourceFindInPageMetadata::NULLABLE_FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalWebSearchActionResourceFindInPageMetadata
+    FIELDS = {
+      type: 'type',
+      url: 'url',
+      pattern: 'pattern'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      url
+      pattern
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::WebSearchActionResourceFindInPageType.from_value(value)
+      end
+    }.freeze
+    NULLABLE_FIELDS = %i[
+      url
+      pattern
+    ].freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for WebSearchActionResourceFindInPage.
+  # Finds text within a web page.
+  class WebSearchActionResourceFindInPage
+    include WebSearchActionResource
 
-# Defines the WebSearchActionResourceFindInPageType SDK namespace.
-module WebSearchActionResourceFindInPageType
-  FIND_IN_PAGE = 'find_in_page'
-  VALUES = ['find_in_page'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalWebSearchActionResourceFindInPageMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalWebSearchActionResourceFindInPageMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalWebSearchActionResourceFindInPageMetadata::DECODERS
 
-    raise SdkValidationError.new('WebSearchActionResourceFindInPageType', 'enum', "Unknown WebSearchActionResourceFindInPageType: #{value}")
-  end
-end
+    # @return [WebSearchActionResourceFindInPageType] The type of the object. Always `find_in_page`.
+    attr_reader :type
+    # @return [String] The URL of the page that was searched.
+    attr_reader :url
+    # @return [String] The text pattern that was searched for.
+    attr_reader :pattern
 
-# Internal model hydration metadata.
-class SdkInternalWebSearchActionResourceOpenPageMetadata
-  FIELDS = {
-    type: "type",
-    url: "url",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    url
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::WebSearchActionResourceOpenPageType.from_value(value)
-    end,
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    url
-  ].freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for WebSearchActionResourceOpenPage.
-# Opens a web page.
-class WebSearchActionResourceOpenPage
-  include WebSearchActionResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalWebSearchActionResourceOpenPageMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalWebSearchActionResourceOpenPageMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalWebSearchActionResourceOpenPageMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalWebSearchActionResourceFindInPageMetadata::NULLABLE_FIELDS)
+    end
 
-  # @return [WebSearchActionResourceOpenPageType] The type of the object. Always `open_page`.
-  attr_reader :type
-  # @return [String] The URL of the page that was opened.
-  attr_reader :url
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalWebSearchActionResourceOpenPageMetadata::NULLABLE_FIELDS)
+  # Defines the WebSearchActionResourceFindInPageType SDK namespace.
+  module WebSearchActionResourceFindInPageType
+    FIND_IN_PAGE = 'find_in_page'
+    VALUES = ['find_in_page'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('WebSearchActionResourceFindInPageType', 'enum', "Unknown WebSearchActionResourceFindInPageType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the WebSearchActionResourceOpenPageType SDK namespace.
-module WebSearchActionResourceOpenPageType
-  OPEN_PAGE = 'open_page'
-  VALUES = ['open_page'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('WebSearchActionResourceOpenPageType', 'enum', "Unknown WebSearchActionResourceOpenPageType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalWebSearchActionResourceOtherMetadata
-  FIELDS = {
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::WebSearchActionResourceOtherType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for WebSearchActionResourceOther.
-# Another web search action.
-class WebSearchActionResourceOther
-  include WebSearchActionResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalWebSearchActionResourceOtherMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalWebSearchActionResourceOtherMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalWebSearchActionResourceOtherMetadata::DECODERS
-
-  # @return [WebSearchActionResourceOtherType] The type of the object. Always `other`.
-  attr_reader :type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalWebSearchActionResourceOpenPageMetadata
+    FIELDS = {
+      type: 'type',
+      url: 'url'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      url
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::WebSearchActionResourceOpenPageType.from_value(value)
+      end
+    }.freeze
+    NULLABLE_FIELDS = %i[
+      url
+    ].freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for WebSearchActionResourceOpenPage.
+  # Opens a web page.
+  class WebSearchActionResourceOpenPage
+    include WebSearchActionResource
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalWebSearchActionResourceOpenPageMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalWebSearchActionResourceOpenPageMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalWebSearchActionResourceOpenPageMetadata::DECODERS
+
+    # @return [WebSearchActionResourceOpenPageType] The type of the object. Always `open_page`.
+    attr_reader :type
+    # @return [String] The URL of the page that was opened.
+    attr_reader :url
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalWebSearchActionResourceOpenPageMetadata::NULLABLE_FIELDS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the WebSearchActionResourceOpenPageType SDK namespace.
+  module WebSearchActionResourceOpenPageType
+    OPEN_PAGE = 'open_page'
+    VALUES = ['open_page'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the WebSearchActionResourceOtherType SDK namespace.
-module WebSearchActionResourceOtherType
-  OTHER = 'other'
-  VALUES = ['other'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('WebSearchActionResourceOtherType', 'enum', "Unknown WebSearchActionResourceOtherType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalWebSearchActionResourceSearchMetadata
-  FIELDS = {
-    type: "type",
-    query: "query",
-    queries: "queries",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    query
-    queries
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::WebSearchActionResourceSearchType.from_value(value)
-    end,
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    query
-    queries
-  ].freeze
-end
-
-# API model for WebSearchActionResourceSearch.
-# A search query or group of search queries.
-class WebSearchActionResourceSearch
-  include WebSearchActionResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalWebSearchActionResourceSearchMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalWebSearchActionResourceSearchMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalWebSearchActionResourceSearchMetadata::DECODERS
-
-  # @return [WebSearchActionResourceSearchType] The type of the object. Always `search`.
-  attr_reader :type
-  # @return [String] The search query, when a single query was used.
-  attr_reader :query
-  # @return [Array_of_String] The search queries, when multiple queries were used.
-  attr_reader :queries
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('WebSearchActionResourceOpenPageType', 'enum', "Unknown WebSearchActionResourceOpenPageType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalWebSearchActionResourceSearchMetadata::NULLABLE_FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalWebSearchActionResourceOtherMetadata
+    FIELDS = {
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::WebSearchActionResourceOtherType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for WebSearchActionResourceOther.
+  # Another web search action.
+  class WebSearchActionResourceOther
+    include WebSearchActionResource
 
-# Defines the WebSearchActionResourceSearchType SDK namespace.
-module WebSearchActionResourceSearchType
-  SEARCH = 'search'
-  VALUES = ['search'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalWebSearchActionResourceOtherMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalWebSearchActionResourceOtherMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalWebSearchActionResourceOtherMetadata::DECODERS
 
-    raise SdkValidationError.new('WebSearchActionResourceSearchType', 'enum', "Unknown WebSearchActionResourceSearchType: #{value}")
-  end
-end
+    # @return [WebSearchActionResourceOtherType] The type of the object. Always `other`.
+    attr_reader :type
 
-# Internal model hydration metadata.
-class SdkInternalWebSearchCallItemResourceMetadata
-  FIELDS = {
-    type: "type",
-    id: "id",
-    turn_id: "turn_id",
-    status: "status",
-    action: "action",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    id
-    turn_id
-    status
-    action
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::WebSearchCallItemResourceType.from_value(value)
-    end,
-    status: lambda do |value|
-      ::OctridevOpenai::OutputItemStatusResource.from_value(value)
-    end,
-    action: lambda do |value|
-      ::OctridevOpenai::WebSearchActionResource.from_hash(value)
-    end,
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    action
-  ].freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for WebSearchCallItemResource.
-# A web search call produced by the agent.
-class WebSearchCallItemResource
-  include SessionTurnItemResource
-  include AgentOutputItemResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalWebSearchCallItemResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalWebSearchCallItemResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalWebSearchCallItemResourceMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [WebSearchCallItemResourceType] The item type. Always `web_search_call`.
-  attr_reader :type
-  # @return [String] The ID of the web search call.
-  attr_reader :id
-  # @return [String] The ID of the turn that contains this item.
-  attr_reader :turn_id
-  # @return [OutputItemStatusResource] The status of the web search call.
-  attr_reader :status
-  # @return [WebSearchActionResource] The action performed by the web search tool.
-  attr_reader :action
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalWebSearchCallItemResourceMetadata::NULLABLE_FIELDS)
+  # Defines the WebSearchActionResourceOtherType SDK namespace.
+  module WebSearchActionResourceOtherType
+    OTHER = 'other'
+    VALUES = ['other'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('WebSearchActionResourceOtherType', 'enum', "Unknown WebSearchActionResourceOtherType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the WebSearchCallItemResourceType SDK namespace.
-module WebSearchCallItemResourceType
-  WEB_SEARCH_CALL = 'web_search_call'
-  VALUES = ['web_search_call'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('WebSearchCallItemResourceType', 'enum', "Unknown WebSearchCallItemResourceType: #{value}")
-  end
-end
-
-# Defines the WebSearchContextSizeParam SDK namespace.
-module WebSearchContextSizeParam
-  LOW = 'low'
-  MEDIUM = 'medium'
-  HIGH = 'high'
-  VALUES = ['low', 'medium', 'high'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the WebSearchContextSizeResource SDK namespace.
-module WebSearchContextSizeResource
-  LOW = 'low'
-  MEDIUM = 'medium'
-  HIGH = 'high'
-  VALUES = ['low', 'medium', 'high'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalWebSearchLocationParamMetadata
-  FIELDS = {
-    country: "country",
-    region: "region",
-    city: "city",
-    timezone: "timezone",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for WebSearchLocationParam.
-# Approximate user location used to localize web search results.
-class WebSearchLocationParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalWebSearchLocationParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalWebSearchLocationParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalWebSearchLocationParamMetadata::DECODERS
-
-  # @return [String] The two-letter ISO country code, such as `US`.
-  attr_reader :country
-  # @return [String] The region or state name.
-  attr_reader :region
-  # @return [String] The city name.
-  attr_reader :city
-  # @return [String] The IANA timezone, such as `America/Los_Angeles`.
-  attr_reader :timezone
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalWebSearchActionResourceSearchMetadata
+    FIELDS = {
+      type: 'type',
+      query: 'query',
+      queries: 'queries'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      query
+      queries
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::WebSearchActionResourceSearchType.from_value(value)
+      end
+    }.freeze
+    NULLABLE_FIELDS = %i[
+      query
+      queries
+    ].freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for WebSearchActionResourceSearch.
+  # A search query or group of search queries.
+  class WebSearchActionResourceSearch
+    include WebSearchActionResource
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalWebSearchActionResourceSearchMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalWebSearchActionResourceSearchMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalWebSearchActionResourceSearchMetadata::DECODERS
+
+    # @return [WebSearchActionResourceSearchType] The type of the object. Always `search`.
+    attr_reader :type
+    # @return [String] The search query, when a single query was used.
+    attr_reader :query
+    # @return [Array_of_String] The search queries, when multiple queries were used.
+    attr_reader :queries
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalWebSearchActionResourceSearchMetadata::NULLABLE_FIELDS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the WebSearchActionResourceSearchType SDK namespace.
+  module WebSearchActionResourceSearchType
+    SEARCH = 'search'
+    VALUES = ['search'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Internal model hydration metadata.
-class SdkInternalWebSearchLocationResourceMetadata
-  FIELDS = {
-    country: "country",
-    region: "region",
-    city: "city",
-    timezone: "timezone",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    country
-    region
-    city
-    timezone
-  ].freeze
-  DECODERS = {
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    country
-    region
-    city
-    timezone
-  ].freeze
-end
-
-# API model for WebSearchLocationResource.
-# Approximate user location used to localize web search results.
-class WebSearchLocationResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalWebSearchLocationResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalWebSearchLocationResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalWebSearchLocationResourceMetadata::DECODERS
-
-  # @return [String] The two-letter ISO country code, such as `US`.
-  attr_reader :country
-  # @return [String] The region or state name.
-  attr_reader :region
-  # @return [String] The city name.
-  attr_reader :city
-  # @return [String] The IANA timezone, such as `America/Los_Angeles`.
-  attr_reader :timezone
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('WebSearchActionResourceSearchType', 'enum', "Unknown WebSearchActionResourceSearchType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalWebSearchLocationResourceMetadata::NULLABLE_FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalWebSearchCallItemResourceMetadata
+    FIELDS = {
+      type: 'type',
+      id: 'id',
+      turn_id: 'turn_id',
+      status: 'status',
+      action: 'action'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      id
+      turn_id
+      status
+      action
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::WebSearchCallItemResourceType.from_value(value)
+      end,
+      status: lambda do |value|
+        ::OctridevOpenai::OutputItemStatusResource.from_value(value)
+      end,
+      action: lambda do |value|
+        ::OctridevOpenai::WebSearchActionResource.from_hash(value)
+      end
+    }.freeze
+    NULLABLE_FIELDS = %i[
+      action
+    ].freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for WebSearchCallItemResource.
+  # A web search call produced by the agent.
+  class WebSearchCallItemResource
+    include SessionTurnItemResource
+    include AgentOutputItemResource
 
-# Defines the WebSearchModeParam SDK namespace.
-module WebSearchModeParam
-  DISABLED = 'disabled'
-  CACHED = 'cached'
-  LIVE = 'live'
-  VALUES = ['disabled', 'cached', 'live'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalWebSearchCallItemResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalWebSearchCallItemResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalWebSearchCallItemResourceMetadata::DECODERS
 
-# Defines the WebSearchModeResource SDK namespace.
-module WebSearchModeResource
-  DISABLED = 'disabled'
-  CACHED = 'cached'
-  LIVE = 'live'
-  VALUES = ['disabled', 'cached', 'live'].freeze
-  def self.from_value(value)
-    value
+    # @return [WebSearchCallItemResourceType] The item type. Always `web_search_call`.
+    attr_reader :type
+    # @return [String] The ID of the web search call.
+    attr_reader :id
+    # @return [String] The ID of the turn that contains this item.
+    attr_reader :turn_id
+    # @return [OutputItemStatusResource] The status of the web search call.
+    attr_reader :status
+    # @return [WebSearchActionResource] The action performed by the web search tool.
+    attr_reader :action
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalWebSearchCallItemResourceMetadata::NULLABLE_FIELDS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
+
+  # Defines the WebSearchCallItemResourceType SDK namespace.
+  module WebSearchCallItemResourceType
+    WEB_SEARCH_CALL = 'web_search_call'
+    VALUES = ['web_search_call'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('WebSearchCallItemResourceType', 'enum', "Unknown WebSearchCallItemResourceType: #{value}")
+    end
+  end
+
+  # Defines the WebSearchContextSizeParam SDK namespace.
+  module WebSearchContextSizeParam
+    LOW = 'low'
+    MEDIUM = 'medium'
+    HIGH = 'high'
+    VALUES = %w[low medium high].freeze
+    def self.from_value(value)
+      value
+    end
+  end
+
+  # Defines the WebSearchContextSizeResource SDK namespace.
+  module WebSearchContextSizeResource
+    LOW = 'low'
+    MEDIUM = 'medium'
+    HIGH = 'high'
+    VALUES = %w[low medium high].freeze
+    def self.from_value(value)
+      value
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalWebSearchLocationParamMetadata
+    FIELDS = {
+      country: 'country',
+      region: 'region',
+      city: 'city',
+      timezone: 'timezone'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
+  end
+
+  # API model for WebSearchLocationParam.
+  # Approximate user location used to localize web search results.
+  class WebSearchLocationParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalWebSearchLocationParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalWebSearchLocationParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalWebSearchLocationParamMetadata::DECODERS
+
+    # @return [String] The two-letter ISO country code, such as `US`.
+    attr_reader :country
+    # @return [String] The region or state name.
+    attr_reader :region
+    # @return [String] The city name.
+    attr_reader :city
+    # @return [String] The IANA timezone, such as `America/Los_Angeles`.
+    attr_reader :timezone
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalWebSearchLocationResourceMetadata
+    FIELDS = {
+      country: 'country',
+      region: 'region',
+      city: 'city',
+      timezone: 'timezone'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      country
+      region
+      city
+      timezone
+    ].freeze
+    DECODERS = {}.freeze
+    NULLABLE_FIELDS = %i[
+      country
+      region
+      city
+      timezone
+    ].freeze
+  end
+
+  # API model for WebSearchLocationResource.
+  # Approximate user location used to localize web search results.
+  class WebSearchLocationResource
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalWebSearchLocationResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalWebSearchLocationResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalWebSearchLocationResourceMetadata::DECODERS
+
+    # @return [String] The two-letter ISO country code, such as `US`.
+    attr_reader :country
+    # @return [String] The region or state name.
+    attr_reader :region
+    # @return [String] The city name.
+    attr_reader :city
+    # @return [String] The IANA timezone, such as `America/Los_Angeles`.
+    attr_reader :timezone
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalWebSearchLocationResourceMetadata::NULLABLE_FIELDS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the WebSearchModeParam SDK namespace.
+  module WebSearchModeParam
+    DISABLED = 'disabled'
+    CACHED = 'cached'
+    LIVE = 'live'
+    VALUES = %w[disabled cached live].freeze
+    def self.from_value(value)
+      value
+    end
+  end
+
+  # Defines the WebSearchModeResource SDK namespace.
+  module WebSearchModeResource
+    DISABLED = 'disabled'
+    CACHED = 'cached'
+    LIVE = 'live'
+    VALUES = %w[disabled cached live].freeze
+    def self.from_value(value)
+      value
+    end
+  end
 end

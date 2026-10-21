@@ -5,681 +5,689 @@
 
 # agents_agent domain models
 module OctridevOpenai
-# Defines the AgentContentResource SDK namespace.
-module AgentContentResource
-  DISCRIMINATOR_MAPPING = {
-    "output_text" => -> { OutputTextResource },
-    "encrypted_content" => -> { EncryptedContentResource },
-  }.freeze
+  # Defines the AgentContentResource SDK namespace.
+  module AgentContentResource
+    DISCRIMINATOR_MAPPING = {
+      'output_text' => -> { OutputTextResource },
+      'encrypted_content' => -> { EncryptedContentResource }
+    }.freeze
 
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
 
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
 
-    raise SdkValidationError.new('AgentContentResource', 'variant', "Unknown AgentContentResource discriminator: #{hash["type"].inspect}")
-  end
-end
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
 
-# Internal model hydration metadata.
-class SdkInternalAgentEnvironmentListResourceMetadata
-  FIELDS = {
-    object: "object",
-    data: "data",
-    first_id: "first_id",
-    last_id: "last_id",
-    has_more: "has_more",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    object
-    data
-    first_id
-    last_id
-    has_more
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::AgentEnvironmentListResourceObject.from_value(value)
-    end,
-    data: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::PublicEnvironmentResource.from_hash(item) }
-    end,
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    first_id
-    last_id
-  ].freeze
-end
-
-# API model for AgentEnvironmentListResource.
-# A page of Agents API resources, with IDs for retrieving additional pages.
-class AgentEnvironmentListResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAgentEnvironmentListResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAgentEnvironmentListResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAgentEnvironmentListResourceMetadata::DECODERS
-
-  # @return [AgentEnvironmentListResourceObject] The object type, which is always `list`.
-  attr_reader :object
-  # @return [Array_of_PublicEnvironmentResource] The resources returned in this page, in the requested sort order.
-  attr_reader :data
-  # @return [String] The ID of the first resource in `data`, or `null` if the page is empty.
-  attr_reader :first_id
-  # @return [String] The ID of the last resource in `data`, or `null` if the page is empty. Pass this as `after` with the same order and filters.
-  attr_reader :last_id
-  # @return [Boolean] Whether there are more resources to retrieve after this page.
-  attr_reader :has_more
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('AgentContentResource', 'variant', "Unknown AgentContentResource discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalAgentEnvironmentListResourceMetadata::NULLABLE_FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalAgentEnvironmentListResourceMetadata
+    FIELDS = {
+      object: 'object',
+      data: 'data',
+      first_id: 'first_id',
+      last_id: 'last_id',
+      has_more: 'has_more'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      object
+      data
+      first_id
+      last_id
+      has_more
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::AgentEnvironmentListResourceObject.from_value(value)
+      end,
+      data: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::PublicEnvironmentResource.from_hash(item) }
+      end
+    }.freeze
+    NULLABLE_FIELDS = %i[
+      first_id
+      last_id
+    ].freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for AgentEnvironmentListResource.
+  # A page of Agents API resources, with IDs for retrieving additional pages.
+  class AgentEnvironmentListResource
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAgentEnvironmentListResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAgentEnvironmentListResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAgentEnvironmentListResourceMetadata::DECODERS
 
-# Defines the AgentEnvironmentListResourceObject SDK namespace.
-module AgentEnvironmentListResourceObject
-  LIST = 'list'
-  VALUES = ['list'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    # @return [AgentEnvironmentListResourceObject] The object type, which is always `list`.
+    attr_reader :object
+    # @return [Array_of_PublicEnvironmentResource] The resources returned in this page, in the requested sort order.
+    attr_reader :data
+    # @return [String] The ID of the first resource in `data`, or `null` if the page is empty.
+    attr_reader :first_id
+    # @return [String] The ID of the last resource in `data`, or `null` if the page is empty. Pass this as `after` with the same order and filters.
+    attr_reader :last_id
+    # @return [Boolean] Whether there are more resources to retrieve after this page.
+    attr_reader :has_more
 
-# Internal model hydration metadata.
-class SdkInternalAgentListResourceMetadata
-  FIELDS = {
-    object: "object",
-    data: "data",
-    first_id: "first_id",
-    last_id: "last_id",
-    has_more: "has_more",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    object
-    data
-    first_id
-    last_id
-    has_more
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::AgentListResourceObject.from_value(value)
-    end,
-    data: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::AgentResource.from_hash(item) }
-    end,
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    first_id
-    last_id
-  ].freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for AgentListResource.
-# A page of Agents API resources, with IDs for retrieving additional pages.
-class AgentListResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAgentListResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAgentListResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAgentListResourceMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalAgentEnvironmentListResourceMetadata::NULLABLE_FIELDS)
+    end
 
-  # @return [AgentListResourceObject] The object type, which is always `list`.
-  attr_reader :object
-  # @return [Array_of_AgentResource] The resources returned in this page, in the requested sort order.
-  attr_reader :data
-  # @return [String] The ID of the first resource in `data`, or `null` if the page is empty.
-  attr_reader :first_id
-  # @return [String] The ID of the last resource in `data`, or `null` if the page is empty. Pass this as `after` with the same order and filters.
-  attr_reader :last_id
-  # @return [Boolean] Whether there are more resources to retrieve after this page.
-  attr_reader :has_more
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalAgentListResourceMetadata::NULLABLE_FIELDS)
+  # Defines the AgentEnvironmentListResourceObject SDK namespace.
+  module AgentEnvironmentListResourceObject
+    LIST = 'list'
+    VALUES = ['list'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the AgentListResourceObject SDK namespace.
-module AgentListResourceObject
-  LIST = 'list'
-  VALUES = ['list'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAgentMessageItemResourceMetadata
-  FIELDS = {
-    id: "id",
-    turn_id: "turn_id",
-    type: "type",
-    sender_agent_id: "sender_agent_id",
-    recipient_agent_id: "recipient_agent_id",
-    content: "content",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    turn_id
-    type
-    sender_agent_id
-    recipient_agent_id
-    content
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::AgentMessageItemResourceType.from_value(value)
-    end,
-    content: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::AgentContentResource.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for AgentMessageItemResource.
-# A message exchanged between agent threads.
-class AgentMessageItemResource
-  include SessionTurnItemResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAgentMessageItemResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAgentMessageItemResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAgentMessageItemResourceMetadata::DECODERS
-
-  # @return [String] The ID of the message.
-  attr_reader :id
-  # @return [String] The ID of the turn that contains this item.
-  attr_reader :turn_id
-  # @return [AgentMessageItemResourceType] The item type. Always `agent_message`.
-  attr_reader :type
-  # @return [String] The ID or name of the sending agent.
-  attr_reader :sender_agent_id
-  # @return [String] The ID or name of the receiving agent.
-  attr_reader :recipient_agent_id
-  # @return [Array_of_AgentContentResource] The content exchanged between the agents.
-  attr_reader :content
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalAgentListResourceMetadata
+    FIELDS = {
+      object: 'object',
+      data: 'data',
+      first_id: 'first_id',
+      last_id: 'last_id',
+      has_more: 'has_more'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      object
+      data
+      first_id
+      last_id
+      has_more
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::AgentListResourceObject.from_value(value)
+      end,
+      data: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::AgentResource.from_hash(item) }
+      end
+    }.freeze
+    NULLABLE_FIELDS = %i[
+      first_id
+      last_id
+    ].freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for AgentListResource.
+  # A page of Agents API resources, with IDs for retrieving additional pages.
+  class AgentListResource
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAgentListResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAgentListResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAgentListResourceMetadata::DECODERS
+
+    # @return [AgentListResourceObject] The object type, which is always `list`.
+    attr_reader :object
+    # @return [Array_of_AgentResource] The resources returned in this page, in the requested sort order.
+    attr_reader :data
+    # @return [String] The ID of the first resource in `data`, or `null` if the page is empty.
+    attr_reader :first_id
+    # @return [String] The ID of the last resource in `data`, or `null` if the page is empty. Pass this as `after` with the same order and filters.
+    attr_reader :last_id
+    # @return [Boolean] Whether there are more resources to retrieve after this page.
+    attr_reader :has_more
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalAgentListResourceMetadata::NULLABLE_FIELDS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the AgentMessageItemResourceType SDK namespace.
-module AgentMessageItemResourceType
-  AGENT_MESSAGE = 'agent_message'
-  VALUES = ['agent_message'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('AgentMessageItemResourceType', 'enum', "Unknown AgentMessageItemResourceType: #{value}")
-  end
-end
-
-# Defines the AgentOutputItemResource SDK namespace.
-module AgentOutputItemResource
-  DISCRIMINATOR_MAPPING = {
-    "message" => -> { AssistantMessageItemResource },
-    "reasoning" => -> { ReasoningItemResource },
-    "function_call" => -> { FunctionCallItemResource },
-    "mcp_call" => -> { McpCallItemResource },
-    "computer_use_call" => -> { ComputerUseCallItemResource },
-    "computer_use_approval_request" => -> { BrowserAuthenticationRequestItemResource },
-    "web_search_call" => -> { WebSearchCallItemResource },
-    "command_execution" => -> { CommandExecutionItemResource },
-    "interrupt_subagent_call" => -> { InterruptSubagentCallItemResource },
-    "create_subagent_call" => -> { CreateSubagentCallItemResource },
-    "send_subagent_input_call" => -> { SendSubagentInputCallItemResource },
-    "resume_subagent_call" => -> { ResumeSubagentCallItemResource },
-    "wait_for_subagents_call" => -> { WaitForSubagentsCallItemResource },
-    "close_subagent_call" => -> { CloseSubagentCallItemResource },
-  }.freeze
-
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('AgentOutputItemResource', 'variant', "Unknown AgentOutputItemResource discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAgentResourceMetadata
-  FIELDS = {
-    id: "id",
-    object: "object",
-    created_at: "created_at",
-    updated_at: "updated_at",
-    name: "name",
-    metadata: "metadata",
-    model: "model",
-    reasoning: "reasoning",
-    text: "text",
-    service_tier: "service_tier",
-    instructions: "instructions",
-    tools: "tools",
-    multi_agent: "multi_agent",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    object
-    created_at
-    updated_at
-    name
-    metadata
-    model
-    reasoning
-    text
-    service_tier
-    instructions
-    tools
-    multi_agent
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::AgentResourceObject.from_value(value)
-    end,
-    reasoning: lambda do |value|
-      ::OctridevOpenai::ReasoningResource.from_hash(value)
-    end,
-    text: lambda do |value|
-      ::OctridevOpenai::TextResource.from_hash(value)
-    end,
-    service_tier: lambda do |value|
-      ::OctridevOpenai::ServiceTierResource.from_value(value)
-    end,
-    tools: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::PersistedAgentToolResource.from_hash(item) }
-    end,
-    multi_agent: lambda do |value|
-      ::OctridevOpenai::MultiAgentConfigResource.from_hash(value)
-    end,
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    name
-    instructions
-  ].freeze
-end
-
-# API model for AgentResource.
-# A reusable agent scoped to the caller's project.
-class AgentResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAgentResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAgentResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAgentResourceMetadata::DECODERS
-
-  # @return [String] The ID of the reusable agent.
-  attr_reader :id
-  # @return [AgentResourceObject] The object type. Always `agent`.
-  attr_reader :object
-  # @return [Integer] The Unix timestamp, in seconds, when the agent was created.
-  attr_reader :created_at
-  # @return [Integer] The Unix timestamp, in seconds, when the agent was last updated.
-  attr_reader :updated_at
-  # @return [String] A human-readable name for the agent, or null if it is unnamed.
-  attr_reader :name
-  # @return [Hash] Custom string key-value pairs attached to the agent.
-  attr_reader :metadata
-  # @return [String] The requested model name used for inference.
-  attr_reader :model
-  # @return [ReasoningResource] The resolved reasoning configuration, including the model default for an omitted effort.
-  attr_reader :reasoning
-  # @return [TextResource] The resolved configuration for text generated by the agent.
-  attr_reader :text
-  # @return [ServiceTierResource] The resolved service-tier policy used for model requests.
-  attr_reader :service_tier
-  # @return [String] Custom instructions appended to the agent's default base instructions.
-  attr_reader :instructions
-  # @return [Array_of_PersistedAgentToolResource] Tools available to the agent.
-  attr_reader :tools
-  # @return [MultiAgentConfigResource] The resolved configuration for creating and coordinating subagents.
-  attr_reader :multi_agent
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the AgentListResourceObject SDK namespace.
+  module AgentListResourceObject
+    LIST = 'list'
+    VALUES = ['list'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalAgentResourceMetadata::NULLABLE_FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalAgentMessageItemResourceMetadata
+    FIELDS = {
+      id: 'id',
+      turn_id: 'turn_id',
+      type: 'type',
+      sender_agent_id: 'sender_agent_id',
+      recipient_agent_id: 'recipient_agent_id',
+      content: 'content'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      turn_id
+      type
+      sender_agent_id
+      recipient_agent_id
+      content
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::AgentMessageItemResourceType.from_value(value)
+      end,
+      content: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::AgentContentResource.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for AgentMessageItemResource.
+  # A message exchanged between agent threads.
+  class AgentMessageItemResource
+    include SessionTurnItemResource
 
-# Defines the AgentResourceObject SDK namespace.
-module AgentResourceObject
-  AGENT = 'agent'
-  VALUES = ['agent'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAgentMessageItemResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAgentMessageItemResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAgentMessageItemResourceMetadata::DECODERS
 
-# Defines the AgentToolConfigParam SDK namespace.
-module AgentToolConfigParam
-  DISCRIMINATOR_MAPPING = {
-    "function" => -> { AgentToolConfigParamFunction },
-    "tool_search" => -> { AgentToolConfigParamToolSearch },
-    "programmatic_tool_calling" => -> { AgentToolConfigParamProgrammaticToolCalling },
-    "mcp" => -> { AgentToolConfigParamMcp },
-    "web_search" => -> { AgentToolConfigParamWebSearch },
-    "computer_use" => -> { AgentToolConfigParamComputerUse },
-  }.freeze
+    # @return [String] The ID of the message.
+    attr_reader :id
+    # @return [String] The ID of the turn that contains this item.
+    attr_reader :turn_id
+    # @return [AgentMessageItemResourceType] The item type. Always `agent_message`.
+    attr_reader :type
+    # @return [String] The ID or name of the sending agent.
+    attr_reader :sender_agent_id
+    # @return [String] The ID or name of the receiving agent.
+    attr_reader :recipient_agent_id
+    # @return [Array_of_AgentContentResource] The content exchanged between the agents.
+    attr_reader :content
 
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-    raise SdkValidationError.new('AgentToolConfigParam', 'variant', "Unknown AgentToolConfigParam discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAgentToolConfigParamComputerUseMetadata
-  FIELDS = {
-    type: "type",
-    include_screenshots: "include_screenshots",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::AgentToolConfigParamComputerUseType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for AgentToolConfigParamComputerUse.
-# Browser use in an OpenAI-hosted session.
-class AgentToolConfigParamComputerUse
-  include AgentToolConfigParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAgentToolConfigParamComputerUseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAgentToolConfigParamComputerUseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAgentToolConfigParamComputerUseMetadata::DECODERS
-
-  # @return [AgentToolConfigParamComputerUseType] The type of the object. Always `computer_use`.
-  attr_reader :type
-  # @return [Boolean] Whether computer tool outputs include screenshots. Defaults to `false`.
-  attr_reader :include_screenshots
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the AgentMessageItemResourceType SDK namespace.
+  module AgentMessageItemResourceType
+    AGENT_MESSAGE = 'agent_message'
+    VALUES = ['agent_message'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('AgentMessageItemResourceType', 'enum', "Unknown AgentMessageItemResourceType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the AgentOutputItemResource SDK namespace.
+  module AgentOutputItemResource
+    DISCRIMINATOR_MAPPING = {
+      'message' => -> { AssistantMessageItemResource },
+      'reasoning' => -> { ReasoningItemResource },
+      'function_call' => -> { FunctionCallItemResource },
+      'mcp_call' => -> { McpCallItemResource },
+      'computer_use_call' => -> { ComputerUseCallItemResource },
+      'computer_use_approval_request' => -> { BrowserAuthenticationRequestItemResource },
+      'web_search_call' => -> { WebSearchCallItemResource },
+      'command_execution' => -> { CommandExecutionItemResource },
+      'interrupt_subagent_call' => -> { InterruptSubagentCallItemResource },
+      'create_subagent_call' => -> { CreateSubagentCallItemResource },
+      'send_subagent_input_call' => -> { SendSubagentInputCallItemResource },
+      'resume_subagent_call' => -> { ResumeSubagentCallItemResource },
+      'wait_for_subagents_call' => -> { WaitForSubagentsCallItemResource },
+      'close_subagent_call' => -> { CloseSubagentCallItemResource }
+    }.freeze
 
-# Defines the AgentToolConfigParamComputerUseType SDK namespace.
-module AgentToolConfigParamComputerUseType
-  COMPUTER_USE = 'computer_use'
-  VALUES = ['computer_use'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
 
-    raise SdkValidationError.new('AgentToolConfigParamComputerUseType', 'enum', "Unknown AgentToolConfigParamComputerUseType: #{value}")
-  end
-end
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
 
-# Internal model hydration metadata.
-class SdkInternalAgentToolConfigParamFunctionMetadata
-  FIELDS = {
-    type: "type",
-    name: "name",
-    description: "description",
-    parameters: "parameters",
-    defer_loading: "defer_loading",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    name
-    description
-    parameters
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::AgentToolConfigParamFunctionType.from_value(value)
-    end,
-  }.freeze
-end
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
 
-# API model for AgentToolConfigParamFunction.
-# A function defined by the application.
-class AgentToolConfigParamFunction
-  include AgentToolConfigParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAgentToolConfigParamFunctionMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAgentToolConfigParamFunctionMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAgentToolConfigParamFunctionMetadata::DECODERS
-
-  # @return [AgentToolConfigParamFunctionType] The type of the object. Always `function`.
-  attr_reader :type
-  # @return [String] The name of the function.
-  attr_reader :name
-  # @return [String] A description of what the function does.
-  attr_reader :description
-  # @return [Hash] A JSON Schema object describing the function's arguments.
-  attr_reader :parameters
-  # @return [Boolean] Whether this function is deferred and discovered through tool search. Defaults to `false`.
-  attr_reader :defer_loading
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('AgentOutputItemResource', 'variant', "Unknown AgentOutputItemResource discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalAgentResourceMetadata
+    FIELDS = {
+      id: 'id',
+      object: 'object',
+      created_at: 'created_at',
+      updated_at: 'updated_at',
+      name: 'name',
+      metadata: 'metadata',
+      model: 'model',
+      reasoning: 'reasoning',
+      text: 'text',
+      service_tier: 'service_tier',
+      instructions: 'instructions',
+      tools: 'tools',
+      multi_agent: 'multi_agent'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      object
+      created_at
+      updated_at
+      name
+      metadata
+      model
+      reasoning
+      text
+      service_tier
+      instructions
+      tools
+      multi_agent
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::AgentResourceObject.from_value(value)
+      end,
+      reasoning: lambda do |value|
+        ::OctridevOpenai::ReasoningResource.from_hash(value)
+      end,
+      text: lambda do |value|
+        ::OctridevOpenai::TextResource.from_hash(value)
+      end,
+      service_tier: lambda do |value|
+        ::OctridevOpenai::ServiceTierResource.from_value(value)
+      end,
+      tools: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::PersistedAgentToolResource.from_hash(item) }
+      end,
+      multi_agent: lambda do |value|
+        ::OctridevOpenai::MultiAgentConfigResource.from_hash(value)
+      end
+    }.freeze
+    NULLABLE_FIELDS = %i[
+      name
+      instructions
+    ].freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for AgentResource.
+  # A reusable agent scoped to the caller's project.
+  class AgentResource
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAgentResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAgentResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAgentResourceMetadata::DECODERS
 
-# Defines the AgentToolConfigParamFunctionType SDK namespace.
-module AgentToolConfigParamFunctionType
-  FUNCTION = 'function'
-  VALUES = ['function'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    # @return [String] The ID of the reusable agent.
+    attr_reader :id
+    # @return [AgentResourceObject] The object type. Always `agent`.
+    attr_reader :object
+    # @return [Integer] The Unix timestamp, in seconds, when the agent was created.
+    attr_reader :created_at
+    # @return [Integer] The Unix timestamp, in seconds, when the agent was last updated.
+    attr_reader :updated_at
+    # @return [String] A human-readable name for the agent, or null if it is unnamed.
+    attr_reader :name
+    # @return [Hash] Custom string key-value pairs attached to the agent.
+    attr_reader :metadata
+    # @return [String] The requested model name used for inference.
+    attr_reader :model
+    # @return [ReasoningResource] The resolved reasoning configuration, including the model default for an omitted effort.
+    attr_reader :reasoning
+    # @return [TextResource] The resolved configuration for text generated by the agent.
+    attr_reader :text
+    # @return [ServiceTierResource] The resolved service-tier policy used for model requests.
+    attr_reader :service_tier
+    # @return [String] Custom instructions appended to the agent's default base instructions.
+    attr_reader :instructions
+    # @return [Array_of_PersistedAgentToolResource] Tools available to the agent.
+    attr_reader :tools
+    # @return [MultiAgentConfigResource] The resolved configuration for creating and coordinating subagents.
+    attr_reader :multi_agent
 
-    raise SdkValidationError.new('AgentToolConfigParamFunctionType', 'enum', "Unknown AgentToolConfigParamFunctionType: #{value}")
-  end
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# Internal model hydration metadata.
-class SdkInternalAgentToolConfigParamMcpMetadata
-  FIELDS = {
-    type: "type",
-    server_label: "server_label",
-    credential_id: "credential_id",
-    transport: "transport",
-    request_metadata: "request_metadata",
-    allowed_tools: "allowed_tools",
-    required: "required",
-    connection_origin: "connection_origin",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    server_label
-    transport
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::AgentToolConfigParamMcpType.from_value(value)
-    end,
-    transport: lambda do |value|
-      ::OctridevOpenai::McpTransportConfigParam.from_hash(value)
-    end,
-    connection_origin: lambda do |value|
-      ::OctridevOpenai::McpConnectionOriginParam.from_value(value)
-    end,
-  }.freeze
-end
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalAgentResourceMetadata::NULLABLE_FIELDS)
+    end
 
-# API model for AgentToolConfigParamMcp.
-# Tools provided by a remote MCP server.
-class AgentToolConfigParamMcp
-  include AgentToolConfigParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAgentToolConfigParamMcpMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAgentToolConfigParamMcpMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAgentToolConfigParamMcpMetadata::DECODERS
-
-  # @return [AgentToolConfigParamMcpType] The type of the object. Always `mcp`.
-  attr_reader :type
-  # @return [String] A label used to identify the MCP server in tool calls.
-  attr_reader :server_label
-  # @return [String] The attached vault credential used to authenticate this MCP server. Optional when exactly one attached credential matches the server URL.
-  attr_reader :credential_id
-  # @return [McpTransportConfigParam] The transport used to connect to the MCP server.
-  attr_reader :transport
-  # @return [Hash] Metadata included with requests to this MCP server.
-  attr_reader :request_metadata
-  # @return [Array_of_String] The MCP tools the agent may call. All server tools are allowed when omitted.
-  attr_reader :allowed_tools
-  # @return [Boolean] Whether this MCP server must initialize before the first turn. Defaults to `false`.
-  attr_reader :required
-  # @return [McpConnectionOriginParam] Selects where outbound MCP HTTP connections originate. Omitted or `service` uses the Managed Agents service network; `environment` uses the session's selected environment.
-  attr_reader :connection_origin
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the AgentResourceObject SDK namespace.
+  module AgentResourceObject
+    AGENT = 'agent'
+    VALUES = ['agent'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the AgentToolConfigParam SDK namespace.
+  module AgentToolConfigParam
+    DISCRIMINATOR_MAPPING = {
+      'function' => -> { AgentToolConfigParamFunction },
+      'tool_search' => -> { AgentToolConfigParamToolSearch },
+      'programmatic_tool_calling' => -> { AgentToolConfigParamProgrammaticToolCalling },
+      'mcp' => -> { AgentToolConfigParamMcp },
+      'web_search' => -> { AgentToolConfigParamWebSearch },
+      'computer_use' => -> { AgentToolConfigParamComputerUse }
+    }.freeze
 
-# Defines the AgentToolConfigParamMcpType SDK namespace.
-module AgentToolConfigParamMcpType
-  MCP = 'mcp'
-  VALUES = ['mcp'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
 
-    raise SdkValidationError.new('AgentToolConfigParamMcpType', 'enum', "Unknown AgentToolConfigParamMcpType: #{value}")
-  end
-end
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
 
-# Internal model hydration metadata.
-class SdkInternalAgentToolConfigParamProgrammaticToolCallingMetadata
-  FIELDS = {
-    type: "type",
-    enabled: "enabled",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::AgentToolConfigParamProgrammaticToolCallingType.from_value(value)
-    end,
-  }.freeze
-end
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
 
-# API model for AgentToolConfigParamProgrammaticToolCalling.
-# Enables calling tools from model-generated code.
-class AgentToolConfigParamProgrammaticToolCalling
-  include AgentToolConfigParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAgentToolConfigParamProgrammaticToolCallingMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAgentToolConfigParamProgrammaticToolCallingMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAgentToolConfigParamProgrammaticToolCallingMetadata::DECODERS
-
-  # @return [AgentToolConfigParamProgrammaticToolCallingType] The type of the object. Always `programmatic_tool_calling`.
-  attr_reader :type
-  # @return [Boolean] Whether tools can be called from model-generated code. Defaults to `true`.
-  attr_reader :enabled
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('AgentToolConfigParam', 'variant', "Unknown AgentToolConfigParam discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalAgentToolConfigParamComputerUseMetadata
+    FIELDS = {
+      type: 'type',
+      include_screenshots: 'include_screenshots'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::AgentToolConfigParamComputerUseType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # API model for AgentToolConfigParamComputerUse.
+  # Browser use in an OpenAI-hosted session.
+  class AgentToolConfigParamComputerUse
+    include AgentToolConfigParam
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAgentToolConfigParamComputerUseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAgentToolConfigParamComputerUseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAgentToolConfigParamComputerUseMetadata::DECODERS
+
+    # @return [AgentToolConfigParamComputerUseType] The type of the object. Always `computer_use`.
+    attr_reader :type
+    # @return [Boolean] Whether computer tool outputs include screenshots. Defaults to `false`.
+    attr_reader :include_screenshots
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
 
-# Defines the AgentToolConfigParamProgrammaticToolCallingType SDK namespace.
-module AgentToolConfigParamProgrammaticToolCallingType
-  PROGRAMMATIC_TOOL_CALLING = 'programmatic_tool_calling'
-  VALUES = ['programmatic_tool_calling'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+  # Defines the AgentToolConfigParamComputerUseType SDK namespace.
+  module AgentToolConfigParamComputerUseType
+    COMPUTER_USE = 'computer_use'
+    VALUES = ['computer_use'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-    raise SdkValidationError.new('AgentToolConfigParamProgrammaticToolCallingType', 'enum', "Unknown AgentToolConfigParamProgrammaticToolCallingType: #{value}")
+      raise SdkValidationError.new('AgentToolConfigParamComputerUseType', 'enum', "Unknown AgentToolConfigParamComputerUseType: #{value}")
+    end
   end
-end
 
-# Internal model hydration metadata.
-class SdkInternalAgentToolConfigParamToolSearchMetadata
-  FIELDS = {
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::AgentToolConfigParamToolSearchType.from_value(value)
-    end,
-  }.freeze
-end
+  # Internal model hydration metadata.
+  class SdkInternalAgentToolConfigParamFunctionMetadata
+    FIELDS = {
+      type: 'type',
+      name: 'name',
+      description: 'description',
+      parameters: 'parameters',
+      defer_loading: 'defer_loading'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      name
+      description
+      parameters
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::AgentToolConfigParamFunctionType.from_value(value)
+      end
+    }.freeze
+  end
+
+  # API model for AgentToolConfigParamFunction.
+  # A function defined by the application.
+  class AgentToolConfigParamFunction
+    include AgentToolConfigParam
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAgentToolConfigParamFunctionMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAgentToolConfigParamFunctionMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAgentToolConfigParamFunctionMetadata::DECODERS
+
+    # @return [AgentToolConfigParamFunctionType] The type of the object. Always `function`.
+    attr_reader :type
+    # @return [String] The name of the function.
+    attr_reader :name
+    # @return [String] A description of what the function does.
+    attr_reader :description
+    # @return [Hash] A JSON Schema object describing the function's arguments.
+    attr_reader :parameters
+    # @return [Boolean] Whether this function is deferred and discovered through tool search. Defaults to `false`.
+    attr_reader :defer_loading
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the AgentToolConfigParamFunctionType SDK namespace.
+  module AgentToolConfigParamFunctionType
+    FUNCTION = 'function'
+    VALUES = ['function'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('AgentToolConfigParamFunctionType', 'enum', "Unknown AgentToolConfigParamFunctionType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalAgentToolConfigParamMcpMetadata
+    FIELDS = {
+      type: 'type',
+      server_label: 'server_label',
+      credential_id: 'credential_id',
+      transport: 'transport',
+      request_metadata: 'request_metadata',
+      allowed_tools: 'allowed_tools',
+      required: 'required',
+      connection_origin: 'connection_origin'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      server_label
+      transport
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::AgentToolConfigParamMcpType.from_value(value)
+      end,
+      transport: lambda do |value|
+        ::OctridevOpenai::McpTransportConfigParam.from_hash(value)
+      end,
+      connection_origin: lambda do |value|
+        ::OctridevOpenai::McpConnectionOriginParam.from_value(value)
+      end
+    }.freeze
+  end
+
+  # API model for AgentToolConfigParamMcp.
+  # Tools provided by a remote MCP server.
+  class AgentToolConfigParamMcp
+    include AgentToolConfigParam
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAgentToolConfigParamMcpMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAgentToolConfigParamMcpMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAgentToolConfigParamMcpMetadata::DECODERS
+
+    # @return [AgentToolConfigParamMcpType] The type of the object. Always `mcp`.
+    attr_reader :type
+    # @return [String] A label used to identify the MCP server in tool calls.
+    attr_reader :server_label
+    # @return [String] The attached vault credential used to authenticate this MCP server. Optional when exactly one attached credential matches the server URL.
+    attr_reader :credential_id
+    # @return [McpTransportConfigParam] The transport used to connect to the MCP server.
+    attr_reader :transport
+    # @return [Hash] Metadata included with requests to this MCP server.
+    attr_reader :request_metadata
+    # @return [Array_of_String] The MCP tools the agent may call. All server tools are allowed when omitted.
+    attr_reader :allowed_tools
+    # @return [Boolean] Whether this MCP server must initialize before the first turn. Defaults to `false`.
+    attr_reader :required
+    # @return [McpConnectionOriginParam] Selects where outbound MCP HTTP connections originate. Omitted or `service` uses the Managed Agents service network; `environment` uses the session's selected environment.
+    attr_reader :connection_origin
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the AgentToolConfigParamMcpType SDK namespace.
+  module AgentToolConfigParamMcpType
+    MCP = 'mcp'
+    VALUES = ['mcp'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('AgentToolConfigParamMcpType', 'enum', "Unknown AgentToolConfigParamMcpType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalAgentToolConfigParamProgrammaticToolCallingMetadata
+    FIELDS = {
+      type: 'type',
+      enabled: 'enabled'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::AgentToolConfigParamProgrammaticToolCallingType.from_value(value)
+      end
+    }.freeze
+  end
+
+  # API model for AgentToolConfigParamProgrammaticToolCalling.
+  # Enables calling tools from model-generated code.
+  class AgentToolConfigParamProgrammaticToolCalling
+    include AgentToolConfigParam
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAgentToolConfigParamProgrammaticToolCallingMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAgentToolConfigParamProgrammaticToolCallingMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAgentToolConfigParamProgrammaticToolCallingMetadata::DECODERS
+
+    # @return [AgentToolConfigParamProgrammaticToolCallingType] The type of the object. Always `programmatic_tool_calling`.
+    attr_reader :type
+    # @return [Boolean] Whether tools can be called from model-generated code. Defaults to `true`.
+    attr_reader :enabled
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the AgentToolConfigParamProgrammaticToolCallingType SDK namespace.
+  module AgentToolConfigParamProgrammaticToolCallingType
+    PROGRAMMATIC_TOOL_CALLING = 'programmatic_tool_calling'
+    VALUES = ['programmatic_tool_calling'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('AgentToolConfigParamProgrammaticToolCallingType', 'enum', "Unknown AgentToolConfigParamProgrammaticToolCallingType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalAgentToolConfigParamToolSearchMetadata
+    FIELDS = {
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::AgentToolConfigParamToolSearchType.from_value(value)
+      end
+    }.freeze
+  end
 end

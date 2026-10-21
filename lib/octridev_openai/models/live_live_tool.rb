@@ -5,78 +5,79 @@
 
 # live_live_tool domain models
 module OctridevOpenai
-# Defines the LiveToolChoiceEnum SDK namespace.
-module LiveToolChoiceEnum
-  AUTO = 'auto'
-  NONE = 'none'
-  REQUIRED = 'required'
-  VALUES = ['auto', 'none', 'required'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the LiveToolChoiceValueEnum SDK namespace.
-module LiveToolChoiceValueEnum
-  NONE = 'none'
-  AUTO = 'auto'
-  REQUIRED = 'required'
-  VALUES = ['none', 'auto', 'required'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalLiveToolSearchToolInputParamMetadata
-  FIELDS = {
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LiveToolSearchToolInputParamType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for LiveToolSearchToolInputParam.
-# Typed representation of the `LiveToolSearchToolInputParam` API schema.
-class LiveToolSearchToolInputParam
-  include LiveResponsesDelegationSettingsInputParamToolsItem
-  include LiveResponsesDelegationSettingsUpdateInputParamToolsItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveToolSearchToolInputParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveToolSearchToolInputParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveToolSearchToolInputParamMetadata::DECODERS
-
-  # @return [LiveToolSearchToolInputParamType] Required enumerated value serialized in the `type` wire field.
-  attr_reader :type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the LiveToolChoiceEnum SDK namespace.
+  module LiveToolChoiceEnum
+    AUTO = 'auto'
+    NONE = 'none'
+    REQUIRED = 'required'
+    VALUES = %w[auto none required].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the LiveToolChoiceValueEnum SDK namespace.
+  module LiveToolChoiceValueEnum
+    NONE = 'none'
+    AUTO = 'auto'
+    REQUIRED = 'required'
+    VALUES = %w[none auto required].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalLiveToolSearchToolInputParamMetadata
+    FIELDS = {
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LiveToolSearchToolInputParamType.from_value(value)
+      end
+    }.freeze
   end
-end
 
-# Defines the LiveToolSearchToolInputParamType SDK namespace.
-module LiveToolSearchToolInputParamType
-  TOOL_SEARCH = 'tool_search'
-  VALUES = ['tool_search'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+  # API model for LiveToolSearchToolInputParam.
+  # Typed representation of the `LiveToolSearchToolInputParam` API schema.
+  class LiveToolSearchToolInputParam
+    include LiveResponsesDelegationSettingsInputParamToolsItem
+    include LiveResponsesDelegationSettingsUpdateInputParamToolsItem
 
-    raise SdkValidationError.new('LiveToolSearchToolInputParamType', 'enum', "Unknown LiveToolSearchToolInputParamType: #{value}")
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveToolSearchToolInputParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveToolSearchToolInputParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveToolSearchToolInputParamMetadata::DECODERS
+
+    # @return [LiveToolSearchToolInputParamType] Required enumerated value serialized in the `type` wire field.
+    attr_reader :type
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
+
+  # Defines the LiveToolSearchToolInputParamType SDK namespace.
+  module LiveToolSearchToolInputParamType
+    TOOL_SEARCH = 'tool_search'
+    VALUES = ['tool_search'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('LiveToolSearchToolInputParamType', 'enum', "Unknown LiveToolSearchToolInputParamType: #{value}")
+    end
+  end
 end

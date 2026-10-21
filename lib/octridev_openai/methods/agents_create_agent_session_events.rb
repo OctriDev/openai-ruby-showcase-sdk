@@ -23,10 +23,9 @@ module OctridevOpenai
         idempotency_key: NOT_GIVEN,
         request_options: nil
       )
+        Validation.validate_length('session_id', session_id, min: 0, max: 1_048_576)
 
-        Validation.validate_length('session_id', session_id, min: 0, max: 1048576)
-
-        Validation.validate_items('events', events, min: 0, max: 16384)
+        Validation.validate_items('events', events, min: 0, max: 16_384)
 
         Validation.if_given(idempotency_key) do
           Validation.validate_length('Idempotency-Key', idempotency_key, min: 1, max: 256)
@@ -35,21 +34,21 @@ module OctridevOpenai
         SdkClient.request(
           'POST',
           [
-            "/agents/sessions/",
+            '/agents/sessions/',
             SdkClient.encode_path_segment(session_id),
-            "/events"
+            '/events'
           ].join,
           config: config,
           body: {
-            'events' => events,
+            'events' => events
           },
           decoder: :empty,
           operation_id: 'create_agent_session_events',
           extra_headers: SdkClient.serialize_headers({
-            'Idempotency-Key' => SdkClient.header_value(idempotency_key),
-          }),
+                                                       'Idempotency-Key' => SdkClient.header_value(idempotency_key)
+                                                     }),
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).data
       end
     end
