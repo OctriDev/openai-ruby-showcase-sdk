@@ -28,23 +28,24 @@ module OctridevOpenai
         metadata: NOT_GIVEN,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
           [
-            '/threads/',
+            "/threads/",
             SdkClient.encode_path_segment(thread_id),
-            '/messages/',
+            "/messages/",
             SdkClient.encode_path_segment(message_id)
           ].join,
           config: config,
           body: {
-            'metadata' => metadata
+            'metadata' => metadata,
           },
           return_type: ::OctridevOpenai::MessageObject,
           decoder: :json,
           operation_id: 'modify_message',
           request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
     end

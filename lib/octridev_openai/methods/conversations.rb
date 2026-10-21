@@ -12,7 +12,7 @@ module OctridevOpenai
       # Internal model hydration metadata.
       class SdkInternalCreateConversationItemsMetadata
         FIELDS = {
-          items: 'items'
+          items: "items",
         }.freeze
         REQUIRED_FIELDS = %i[
           items
@@ -20,7 +20,7 @@ module OctridevOpenai
         DECODERS = {
           items: lambda do |value|
             value&.map { |item| ::OctridevOpenai::InputItem.from_hash(item) }
-          end
+          end,
         }.freeze
       end
 
@@ -52,7 +52,7 @@ module OctridevOpenai
       module ListConversationItemsParameter
         ASC = 'asc'
         DESC = 'desc'
-        VALUES = %w[asc desc].freeze
+        VALUES = ['asc', 'desc'].freeze
         def self.from_value(value)
           value
         end
@@ -76,27 +76,28 @@ module OctridevOpenai
         include: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.validate_items('items', items, max: 20)
 
         SdkClient.request(
           'POST',
           [
-            '/conversations/',
+            "/conversations/",
             SdkClient.encode_path_segment(conversation_id),
-            '/items'
+            "/items"
           ].join,
           config: config,
           query: {
-            'include' => QueryValue.new(include, style: 'form', explode: true)
+            'include' => QueryValue.new(include, style: 'form', explode: true),
           },
           body: {
-            'items' => items
+            'items' => items,
           },
           return_type: ::OctridevOpenai::ConversationItemList,
           decoder: :json,
           operation_id: 'create_conversation_items',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -129,29 +130,30 @@ module OctridevOpenai
         include: NOT_GIVEN,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
           [
-            '/conversations/',
+            "/conversations/",
             SdkClient.encode_path_segment(conversation_id),
-            '/items'
+            "/items"
           ].join,
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'order' => QueryValue.new(order, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
-            'include' => QueryValue.new(include, style: 'form', explode: true)
+            'include' => QueryValue.new(include, style: 'form', explode: true),
           },
           return_type: ::OctridevOpenai::ConversationItemList,
           decoder: :json,
           operation_id: 'list_conversation_items',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
-      ListConversationItemsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+    ListConversationItemsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists the items in a conversation. Use `after` to continue from an item ID, `limit` to control the number of results, and `order` to choose the direction of the results.
       #
@@ -196,13 +198,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             items.each { |item| y << item }
             break unless page.has_more
-
             next_cursor = page.last_id
             break if next_cursor.nil?
-
             cursor = next_cursor
           end
         end
@@ -231,12 +230,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListConversationItemsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
-
             cursor = next_cursor
           end
         end
@@ -252,24 +249,31 @@ module OctridevOpenai
       # @param include [Array_of_IncludeEnum] Additional fields to include in the
       #   response. See the `include` parameter for listing Conversation items above
       #   for more information.
-      singleton_class.define_method(:get_conversation_item) do |config:, conversation_id:, item_id:, include: NOT_GIVEN, request_options: nil|
+      singleton_class.define_method(:get_conversation_item) do |
+        config:,
+        conversation_id:,
+        item_id:,
+        include: NOT_GIVEN,
+        request_options: nil
+      |
+
         SdkClient.request(
           'GET',
           [
-            '/conversations/',
+            "/conversations/",
             SdkClient.encode_path_segment(conversation_id),
-            '/items/',
+            "/items/",
             SdkClient.encode_path_segment(item_id)
           ].join,
           config: config,
           query: {
-            'include' => QueryValue.new(include, style: 'form', explode: true)
+            'include' => QueryValue.new(include, style: 'form', explode: true),
           },
           return_type: ::OctridevOpenai::ConversationItem,
           decoder: :json,
           operation_id: 'get_conversation_item',
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -286,12 +290,13 @@ module OctridevOpenai
         item_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'DELETE',
           [
-            '/conversations/',
+            "/conversations/",
             SdkClient.encode_path_segment(conversation_id),
-            '/items/',
+            "/items/",
             SdkClient.encode_path_segment(item_id)
           ].join,
           config: config,
@@ -299,7 +304,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_conversation_item',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -317,21 +322,22 @@ module OctridevOpenai
         items: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.if_given(items) { Validation.validate_items('items', items, max: 20) }
 
         SdkClient.request(
           'POST',
-          '/conversations',
+          "/conversations",
           config: config,
           body: {
             'metadata' => metadata,
-            'items' => items
+            'items' => items,
           },
           return_type: ::OctridevOpenai::ConversationResource,
           decoder: :json,
           operation_id: 'create_conversation',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -340,11 +346,16 @@ module OctridevOpenai
       # Get a conversation
       #
       # @param conversation_id [String] The ID of the conversation to retrieve.
-      singleton_class.define_method(:get_conversation) do |config:, conversation_id:, request_options: nil|
+      singleton_class.define_method(:get_conversation) do |
+        config:,
+        conversation_id:,
+        request_options: nil
+      |
+
         SdkClient.request(
           'GET',
           [
-            '/conversations/',
+            "/conversations/",
             SdkClient.encode_path_segment(conversation_id)
           ].join,
           config: config,
@@ -352,7 +363,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'get_conversation',
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -364,10 +375,11 @@ module OctridevOpenai
         conversation_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'DELETE',
           [
-            '/conversations/',
+            "/conversations/",
             SdkClient.encode_path_segment(conversation_id)
           ].join,
           config: config,
@@ -375,7 +387,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_conversation',
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -395,21 +407,22 @@ module OctridevOpenai
         metadata:,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
           [
-            '/conversations/',
+            "/conversations/",
             SdkClient.encode_path_segment(conversation_id)
           ].join,
           config: config,
           body: {
-            'metadata' => metadata
+            'metadata' => metadata,
           },
           return_type: ::OctridevOpenai::ConversationResource,
           decoder: :json,
           operation_id: 'update_conversation',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
     end

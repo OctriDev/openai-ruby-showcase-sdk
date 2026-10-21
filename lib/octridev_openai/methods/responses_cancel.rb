@@ -19,19 +19,20 @@ module OctridevOpenai
         response_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
           [
-            '/responses/',
+            "/responses/",
             SdkClient.encode_path_segment(response_id),
-            '/cancel'
+            "/cancel"
           ].join,
           config: config,
           return_type: ::OctridevOpenai::Response,
           decoder: :json,
           operation_id: 'cancel_response',
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -48,22 +49,23 @@ module OctridevOpenai
         openai_beta: NOT_GIVEN,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
           [
-            '/responses/',
+            "/responses/",
             SdkClient.encode_path_segment(response_id),
-            '/cancel?beta=true'
+            "/cancel?beta=true"
           ].join,
           config: config,
           return_type: ::OctridevOpenai::BetaResponse,
           decoder: :json,
           operation_id: 'beta_cancel_response',
           extra_headers: SdkClient.serialize_headers({
-                                                       'openai-beta' => SdkClient.header_value(openai_beta)
-                                                     }),
+            'openai-beta' => SdkClient.header_value(openai_beta),
+          }),
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::BetaErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '404' => ::OctridevOpenai::BetaErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
     end

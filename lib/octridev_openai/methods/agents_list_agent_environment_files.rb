@@ -29,33 +29,34 @@ module OctridevOpenai
         page: NOT_GIVEN,
         request_options: nil
       )
-        Validation.validate_length('environment_id', environment_id, min: 0, max: 1_048_576)
 
-        Validation.if_given(path) { Validation.validate_length('path', path, min: 0, max: 1_048_576) }
+        Validation.validate_length('environment_id', environment_id, min: 0, max: 1048576)
+
+        Validation.if_given(path) { Validation.validate_length('path', path, min: 0, max: 1048576) }
 
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 1, max: 100) }
 
-        Validation.if_given(page) { Validation.validate_length('page', page, min: 0, max: 1_048_576) }
+        Validation.if_given(page) { Validation.validate_length('page', page, min: 0, max: 1048576) }
 
         SdkClient.request(
           'GET',
           [
-            '/agents/environments/',
+            "/agents/environments/",
             SdkClient.encode_path_segment(environment_id),
-            '/files'
+            "/files"
           ].join,
           config: config,
           query: {
             'path' => QueryValue.new(path, style: 'form', explode: true),
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'order' => QueryValue.new(order, style: 'form', explode: true),
-            'page' => QueryValue.new(page, style: 'form', explode: true)
+            'page' => QueryValue.new(page, style: 'form', explode: true),
           },
           return_type: ::OctridevOpenai::EnvironmentFileListResource,
           decoder: :json,
           operation_id: 'list_agent_environment_files',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
         ).data
       end
     end

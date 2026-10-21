@@ -5,336 +5,331 @@
 
 # responses_response_mcpcall domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalResponseMCPCallArgumentsDeltaEventMetadata
-    FIELDS = {
-      type: 'type',
-      output_index: 'output_index',
-      item_id: 'item_id',
-      delta: 'delta',
-      sequence_number: 'sequence_number'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      output_index
-      item_id
-      delta
-      sequence_number
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ResponseMCPCallArgumentsDeltaEventType.from_value(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalResponseMCPCallArgumentsDeltaEventMetadata
+  FIELDS = {
+    type: "type",
+    output_index: "output_index",
+    item_id: "item_id",
+    delta: "delta",
+    sequence_number: "sequence_number",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    output_index
+    item_id
+    delta
+    sequence_number
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ResponseMCPCallArgumentsDeltaEventType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for ResponseMCPCallArgumentsDeltaEvent.
+# Emitted when there is a delta (partial update) to the arguments of an MCP tool call.
+class ResponseMCPCallArgumentsDeltaEvent
+  include ResponseStreamEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalResponseMCPCallArgumentsDeltaEventMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalResponseMCPCallArgumentsDeltaEventMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalResponseMCPCallArgumentsDeltaEventMetadata::DECODERS
+
+  # @return [ResponseMCPCallArgumentsDeltaEventType] The type of the event. Always 'response.mcp_call_arguments.delta'.
+  attr_reader :type
+  # @return [Integer] The index of the output item in the response's output array.
+  attr_reader :output_index
+  # @return [String] The unique identifier of the MCP tool call item being processed.
+  attr_reader :item_id
+  # @return [String] A JSON string containing the partial update to the arguments for the MCP tool call.
+  attr_reader :delta
+  # @return [Integer] The sequence number of this event.
+  attr_reader :sequence_number
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ResponseMCPCallArgumentsDeltaEvent.
-  # Emitted when there is a delta (partial update) to the arguments of an MCP tool call.
-  class ResponseMCPCallArgumentsDeltaEvent
-    include ResponseStreamEvent
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalResponseMCPCallArgumentsDeltaEventMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalResponseMCPCallArgumentsDeltaEventMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalResponseMCPCallArgumentsDeltaEventMetadata::DECODERS
-
-    # @return [ResponseMCPCallArgumentsDeltaEventType] The type of the event. Always 'response.mcp_call_arguments.delta'.
-    attr_reader :type
-    # @return [Integer] The index of the output item in the response's output array.
-    attr_reader :output_index
-    # @return [String] The unique identifier of the MCP tool call item being processed.
-    attr_reader :item_id
-    # @return [String] A JSON string containing the partial update to the arguments for the MCP tool call.
-    attr_reader :delta
-    # @return [Integer] The sequence number of this event.
-    attr_reader :sequence_number
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the ResponseMCPCallArgumentsDeltaEventType SDK namespace.
-  module ResponseMCPCallArgumentsDeltaEventType
-    RESPONSE_MCP_CALL_ARGUMENTS_DELTA = 'response.mcp_call_arguments.delta'
-    VALUES = ['response.mcp_call_arguments.delta'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('ResponseMCPCallArgumentsDeltaEventType', 'enum', "Unknown ResponseMCPCallArgumentsDeltaEventType: #{value}")
-    end
+# Defines the ResponseMCPCallArgumentsDeltaEventType SDK namespace.
+module ResponseMCPCallArgumentsDeltaEventType
+  RESPONSE_MCP_CALL_ARGUMENTS_DELTA = 'response.mcp_call_arguments.delta'
+  VALUES = ['response.mcp_call_arguments.delta'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('ResponseMCPCallArgumentsDeltaEventType', 'enum', "Unknown ResponseMCPCallArgumentsDeltaEventType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalResponseMCPCallArgumentsDoneEventMetadata
+  FIELDS = {
+    type: "type",
+    output_index: "output_index",
+    item_id: "item_id",
+    arguments: "arguments",
+    sequence_number: "sequence_number",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    output_index
+    item_id
+    arguments
+    sequence_number
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ResponseMCPCallArgumentsDoneEventType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for ResponseMCPCallArgumentsDoneEvent.
+# Emitted when the arguments for an MCP tool call are finalized.
+class ResponseMCPCallArgumentsDoneEvent
+  include ResponseStreamEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalResponseMCPCallArgumentsDoneEventMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalResponseMCPCallArgumentsDoneEventMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalResponseMCPCallArgumentsDoneEventMetadata::DECODERS
+
+  # @return [ResponseMCPCallArgumentsDoneEventType] The type of the event. Always 'response.mcp_call_arguments.done'.
+  attr_reader :type
+  # @return [Integer] The index of the output item in the response's output array.
+  attr_reader :output_index
+  # @return [String] The unique identifier of the MCP tool call item being processed.
+  attr_reader :item_id
+  # @return [String] A JSON string containing the finalized arguments for the MCP tool call.
+  attr_reader :arguments
+  # @return [Integer] The sequence number of this event.
+  attr_reader :sequence_number
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalResponseMCPCallArgumentsDoneEventMetadata
-    FIELDS = {
-      type: 'type',
-      output_index: 'output_index',
-      item_id: 'item_id',
-      arguments: 'arguments',
-      sequence_number: 'sequence_number'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      output_index
-      item_id
-      arguments
-      sequence_number
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ResponseMCPCallArgumentsDoneEventType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ResponseMCPCallArgumentsDoneEvent.
-  # Emitted when the arguments for an MCP tool call are finalized.
-  class ResponseMCPCallArgumentsDoneEvent
-    include ResponseStreamEvent
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalResponseMCPCallArgumentsDoneEventMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalResponseMCPCallArgumentsDoneEventMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalResponseMCPCallArgumentsDoneEventMetadata::DECODERS
+# Defines the ResponseMCPCallArgumentsDoneEventType SDK namespace.
+module ResponseMCPCallArgumentsDoneEventType
+  RESPONSE_MCP_CALL_ARGUMENTS_DONE = 'response.mcp_call_arguments.done'
+  VALUES = ['response.mcp_call_arguments.done'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    # @return [ResponseMCPCallArgumentsDoneEventType] The type of the event. Always 'response.mcp_call_arguments.done'.
-    attr_reader :type
-    # @return [Integer] The index of the output item in the response's output array.
-    attr_reader :output_index
-    # @return [String] The unique identifier of the MCP tool call item being processed.
-    attr_reader :item_id
-    # @return [String] A JSON string containing the finalized arguments for the MCP tool call.
-    attr_reader :arguments
-    # @return [Integer] The sequence number of this event.
-    attr_reader :sequence_number
+    raise SdkValidationError.new('ResponseMCPCallArgumentsDoneEventType', 'enum', "Unknown ResponseMCPCallArgumentsDoneEventType: #{value}")
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalResponseMCPCallCompletedEventMetadata
+  FIELDS = {
+    type: "type",
+    item_id: "item_id",
+    output_index: "output_index",
+    sequence_number: "sequence_number",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    item_id
+    output_index
+    sequence_number
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ResponseMCPCallCompletedEventType.from_value(value)
+    end,
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for ResponseMCPCallCompletedEvent.
+# Emitted when an MCP tool call has completed successfully.
+class ResponseMCPCallCompletedEvent
+  include ResponseStreamEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalResponseMCPCallCompletedEventMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalResponseMCPCallCompletedEventMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalResponseMCPCallCompletedEventMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [ResponseMCPCallCompletedEventType] The type of the event. Always 'response.mcp_call.completed'.
+  attr_reader :type
+  # @return [String] The ID of the MCP tool call item that completed.
+  attr_reader :item_id
+  # @return [Integer] The index of the output item that completed.
+  attr_reader :output_index
+  # @return [Integer] The sequence number of this event.
+  attr_reader :sequence_number
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the ResponseMCPCallArgumentsDoneEventType SDK namespace.
-  module ResponseMCPCallArgumentsDoneEventType
-    RESPONSE_MCP_CALL_ARGUMENTS_DONE = 'response.mcp_call_arguments.done'
-    VALUES = ['response.mcp_call_arguments.done'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('ResponseMCPCallArgumentsDoneEventType', 'enum', "Unknown ResponseMCPCallArgumentsDoneEventType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalResponseMCPCallCompletedEventMetadata
-    FIELDS = {
-      type: 'type',
-      item_id: 'item_id',
-      output_index: 'output_index',
-      sequence_number: 'sequence_number'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      item_id
-      output_index
-      sequence_number
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ResponseMCPCallCompletedEventType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the ResponseMCPCallCompletedEventType SDK namespace.
+module ResponseMCPCallCompletedEventType
+  RESPONSE_MCP_CALL_COMPLETED = 'response.mcp_call.completed'
+  VALUES = ['response.mcp_call.completed'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('ResponseMCPCallCompletedEventType', 'enum', "Unknown ResponseMCPCallCompletedEventType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalResponseMCPCallFailedEventMetadata
+  FIELDS = {
+    type: "type",
+    item_id: "item_id",
+    output_index: "output_index",
+    sequence_number: "sequence_number",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    item_id
+    output_index
+    sequence_number
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ResponseMCPCallFailedEventType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for ResponseMCPCallFailedEvent.
+# Emitted when an MCP tool call has failed.
+class ResponseMCPCallFailedEvent
+  include ResponseStreamEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalResponseMCPCallFailedEventMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalResponseMCPCallFailedEventMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalResponseMCPCallFailedEventMetadata::DECODERS
+
+  # @return [ResponseMCPCallFailedEventType] The type of the event. Always 'response.mcp_call.failed'.
+  attr_reader :type
+  # @return [String] The ID of the MCP tool call item that failed.
+  attr_reader :item_id
+  # @return [Integer] The index of the output item that failed.
+  attr_reader :output_index
+  # @return [Integer] The sequence number of this event.
+  attr_reader :sequence_number
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ResponseMCPCallCompletedEvent.
-  # Emitted when an MCP tool call has completed successfully.
-  class ResponseMCPCallCompletedEvent
-    include ResponseStreamEvent
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalResponseMCPCallCompletedEventMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalResponseMCPCallCompletedEventMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalResponseMCPCallCompletedEventMetadata::DECODERS
-
-    # @return [ResponseMCPCallCompletedEventType] The type of the event. Always 'response.mcp_call.completed'.
-    attr_reader :type
-    # @return [String] The ID of the MCP tool call item that completed.
-    attr_reader :item_id
-    # @return [Integer] The index of the output item that completed.
-    attr_reader :output_index
-    # @return [Integer] The sequence number of this event.
-    attr_reader :sequence_number
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the ResponseMCPCallCompletedEventType SDK namespace.
-  module ResponseMCPCallCompletedEventType
-    RESPONSE_MCP_CALL_COMPLETED = 'response.mcp_call.completed'
-    VALUES = ['response.mcp_call.completed'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('ResponseMCPCallCompletedEventType', 'enum', "Unknown ResponseMCPCallCompletedEventType: #{value}")
-    end
+# Defines the ResponseMCPCallFailedEventType SDK namespace.
+module ResponseMCPCallFailedEventType
+  RESPONSE_MCP_CALL_FAILED = 'response.mcp_call.failed'
+  VALUES = ['response.mcp_call.failed'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('ResponseMCPCallFailedEventType', 'enum', "Unknown ResponseMCPCallFailedEventType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalResponseMCPCallInProgressEventMetadata
+  FIELDS = {
+    type: "type",
+    sequence_number: "sequence_number",
+    output_index: "output_index",
+    item_id: "item_id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    sequence_number
+    output_index
+    item_id
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ResponseMCPCallInProgressEventType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for ResponseMCPCallInProgressEvent.
+# Emitted when an MCP tool call is in progress.
+class ResponseMCPCallInProgressEvent
+  include ResponseStreamEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalResponseMCPCallInProgressEventMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalResponseMCPCallInProgressEventMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalResponseMCPCallInProgressEventMetadata::DECODERS
+
+  # @return [ResponseMCPCallInProgressEventType] The type of the event. Always 'response.mcp_call.in_progress'.
+  attr_reader :type
+  # @return [Integer] The sequence number of this event.
+  attr_reader :sequence_number
+  # @return [Integer] The index of the output item in the response's output array.
+  attr_reader :output_index
+  # @return [String] The unique identifier of the MCP tool call item being processed.
+  attr_reader :item_id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalResponseMCPCallFailedEventMetadata
-    FIELDS = {
-      type: 'type',
-      item_id: 'item_id',
-      output_index: 'output_index',
-      sequence_number: 'sequence_number'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      item_id
-      output_index
-      sequence_number
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ResponseMCPCallFailedEventType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ResponseMCPCallFailedEvent.
-  # Emitted when an MCP tool call has failed.
-  class ResponseMCPCallFailedEvent
-    include ResponseStreamEvent
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalResponseMCPCallFailedEventMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalResponseMCPCallFailedEventMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalResponseMCPCallFailedEventMetadata::DECODERS
-
-    # @return [ResponseMCPCallFailedEventType] The type of the event. Always 'response.mcp_call.failed'.
-    attr_reader :type
-    # @return [String] The ID of the MCP tool call item that failed.
-    attr_reader :item_id
-    # @return [Integer] The index of the output item that failed.
-    attr_reader :output_index
-    # @return [Integer] The sequence number of this event.
-    attr_reader :sequence_number
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the ResponseMCPCallFailedEventType SDK namespace.
-  module ResponseMCPCallFailedEventType
-    RESPONSE_MCP_CALL_FAILED = 'response.mcp_call.failed'
-    VALUES = ['response.mcp_call.failed'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+# Defines the ResponseMCPCallInProgressEventType SDK namespace.
+module ResponseMCPCallInProgressEventType
+  RESPONSE_MCP_CALL_IN_PROGRESS = 'response.mcp_call.in_progress'
+  VALUES = ['response.mcp_call.in_progress'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-      raise SdkValidationError.new('ResponseMCPCallFailedEventType', 'enum', "Unknown ResponseMCPCallFailedEventType: #{value}")
-    end
+    raise SdkValidationError.new('ResponseMCPCallInProgressEventType', 'enum', "Unknown ResponseMCPCallInProgressEventType: #{value}")
   end
-
-  # Internal model hydration metadata.
-  class SdkInternalResponseMCPCallInProgressEventMetadata
-    FIELDS = {
-      type: 'type',
-      sequence_number: 'sequence_number',
-      output_index: 'output_index',
-      item_id: 'item_id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      sequence_number
-      output_index
-      item_id
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ResponseMCPCallInProgressEventType.from_value(value)
-      end
-    }.freeze
-  end
-
-  # API model for ResponseMCPCallInProgressEvent.
-  # Emitted when an MCP tool call is in progress.
-  class ResponseMCPCallInProgressEvent
-    include ResponseStreamEvent
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalResponseMCPCallInProgressEventMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalResponseMCPCallInProgressEventMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalResponseMCPCallInProgressEventMetadata::DECODERS
-
-    # @return [ResponseMCPCallInProgressEventType] The type of the event. Always 'response.mcp_call.in_progress'.
-    attr_reader :type
-    # @return [Integer] The sequence number of this event.
-    attr_reader :sequence_number
-    # @return [Integer] The index of the output item in the response's output array.
-    attr_reader :output_index
-    # @return [String] The unique identifier of the MCP tool call item being processed.
-    attr_reader :item_id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the ResponseMCPCallInProgressEventType SDK namespace.
-  module ResponseMCPCallInProgressEventType
-    RESPONSE_MCP_CALL_IN_PROGRESS = 'response.mcp_call.in_progress'
-    VALUES = ['response.mcp_call.in_progress'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('ResponseMCPCallInProgressEventType', 'enum', "Unknown ResponseMCPCallInProgressEventType: #{value}")
-    end
-  end
+end
 end

@@ -15,7 +15,7 @@ module OctridevOpenai
         COMPLETED = 'completed'
         FAILED = 'failed'
         CANCELLED = 'cancelled'
-        VALUES = %w[in_progress completed failed cancelled].freeze
+        VALUES = ['in_progress', 'completed', 'failed', 'cancelled'].freeze
         def self.from_value(value)
           value
         end
@@ -25,7 +25,7 @@ module OctridevOpenai
       module ListFilesInVectorStoreBatchParameter
         ASC = 'asc'
         DESC = 'desc'
-        VALUES = %w[asc desc].freeze
+        VALUES = ['asc', 'desc'].freeze
         def self.from_value(value)
           value
         end
@@ -35,7 +35,7 @@ module OctridevOpenai
       module ListVectorStoresParameter
         ASC = 'asc'
         DESC = 'desc'
-        VALUES = %w[asc desc].freeze
+        VALUES = ['asc', 'desc'].freeze
         def self.from_value(value)
           value
         end
@@ -47,7 +47,7 @@ module OctridevOpenai
         COMPLETED = 'completed'
         FAILED = 'failed'
         CANCELLED = 'cancelled'
-        VALUES = %w[in_progress completed failed cancelled].freeze
+        VALUES = ['in_progress', 'completed', 'failed', 'cancelled'].freeze
         def self.from_value(value)
           value
         end
@@ -57,7 +57,7 @@ module OctridevOpenai
       module ListVectorStoreFilesParameter
         ASC = 'asc'
         DESC = 'desc'
-        VALUES = %w[asc desc].freeze
+        VALUES = ['asc', 'desc'].freeze
         def self.from_value(value)
           value
         end

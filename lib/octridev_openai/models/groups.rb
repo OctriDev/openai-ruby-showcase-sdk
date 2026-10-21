@@ -5,313 +5,316 @@
 
 # groups domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalCreateGroupBodyMetadata
-    FIELDS = {
-      name: 'name'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      name
-    ].freeze
-    DECODERS = {}.freeze
+# Internal model hydration metadata.
+class SdkInternalCreateGroupBodyMetadata
+  FIELDS = {
+    name: "name",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    name
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for CreateGroupBody.
+# Request payload for creating a new group in the organization.
+class CreateGroupBody
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCreateGroupBodyMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCreateGroupBodyMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCreateGroupBodyMetadata::DECODERS
+
+  # @return [String] Human readable name for the group.
+  attr_reader :name
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for CreateGroupBody.
-  # Request payload for creating a new group in the organization.
-  class CreateGroupBody
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCreateGroupBodyMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCreateGroupBodyMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCreateGroupBodyMetadata::DECODERS
-
-    # @return [String] Human readable name for the group.
-    attr_reader :name
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalGroupDeletedResourceMetadata
-    FIELDS = {
-      object: 'object',
-      id: 'id',
-      deleted: 'deleted'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      id
-      deleted
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::GroupDeletedResourceObject.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalGroupDeletedResourceMetadata
+  FIELDS = {
+    object: "object",
+    id: "id",
+    deleted: "deleted",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    id
+    deleted
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::GroupDeletedResourceObject.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for GroupDeletedResource.
+# Confirmation payload returned after deleting a group.
+class GroupDeletedResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalGroupDeletedResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalGroupDeletedResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalGroupDeletedResourceMetadata::DECODERS
+
+  # @return [GroupDeletedResourceObject] Always `group.deleted`.
+  attr_reader :object
+  # @return [String] Identifier of the deleted group.
+  attr_reader :id
+  # @return [Boolean] Whether the group was deleted.
+  attr_reader :deleted
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for GroupDeletedResource.
-  # Confirmation payload returned after deleting a group.
-  class GroupDeletedResource
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalGroupDeletedResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalGroupDeletedResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalGroupDeletedResourceMetadata::DECODERS
-
-    # @return [GroupDeletedResourceObject] Always `group.deleted`.
-    attr_reader :object
-    # @return [String] Identifier of the deleted group.
-    attr_reader :id
-    # @return [Boolean] Whether the group was deleted.
-    attr_reader :deleted
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the GroupDeletedResourceObject SDK namespace.
-  module GroupDeletedResourceObject
-    GROUP_DELETED = 'group.deleted'
-    VALUES = ['group.deleted'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the GroupDeletedResourceObject SDK namespace.
+module GroupDeletedResourceObject
+  GROUP_DELETED = 'group.deleted'
+  VALUES = ['group.deleted'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalGroupListResourceMetadata
+  FIELDS = {
+    object: "object",
+    data: "data",
+    has_more: "has_more",
+    next_: "next",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    data
+    has_more
+    next_
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::GroupListResourceObject.from_value(value)
+    end,
+    data: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::GroupResponse.from_hash(item) }
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    next_
+  ].freeze
+end
+
+# API model for GroupListResource.
+# Paginated list of organization groups.
+class GroupListResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalGroupListResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalGroupListResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalGroupListResourceMetadata::DECODERS
+
+  # @return [GroupListResourceObject] Always `list`.
+  attr_reader :object
+  # @return [Array_of_GroupResponse] Groups returned in the current page.
+  attr_reader :data
+  # @return [Boolean] Whether additional groups are available when paginating.
+  attr_reader :has_more
+  # @return [String] Cursor to fetch the next page of results, or `null` if there are no more results.
+  attr_reader :next_
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalGroupListResourceMetadata
-    FIELDS = {
-      object: 'object',
-      data: 'data',
-      has_more: 'has_more',
-      next_: 'next'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      data
-      has_more
-      next_
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::GroupListResourceObject.from_value(value)
-      end,
-      data: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::GroupResponse.from_hash(item) }
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      next_
-    ].freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalGroupListResourceMetadata::NULLABLE_FIELDS)
   end
 
-  # API model for GroupListResource.
-  # Paginated list of organization groups.
-  class GroupListResource
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalGroupListResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalGroupListResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalGroupListResourceMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [GroupListResourceObject] Always `list`.
-    attr_reader :object
-    # @return [Array_of_GroupResponse] Groups returned in the current page.
-    attr_reader :data
-    # @return [Boolean] Whether additional groups are available when paginating.
-    attr_reader :has_more
-    # @return [String] Cursor to fetch the next page of results, or `null` if there are no more results.
-    attr_reader :next_
+# Defines the GroupListResourceObject SDK namespace.
+module GroupListResourceObject
+  LIST = 'list'
+  VALUES = ['list'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalGroupResourceWithSuccessMetadata
+  FIELDS = {
+    id: "id",
+    name: "name",
+    created_at: "created_at",
+    is_scim_managed: "is_scim_managed",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+    name
+    created_at
+    is_scim_managed
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalGroupListResourceMetadata::NULLABLE_FIELDS)
-    end
+# API model for GroupResourceWithSuccess.
+# Response returned after updating a group.
+class GroupResourceWithSuccess
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalGroupResourceWithSuccessMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalGroupResourceWithSuccessMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalGroupResourceWithSuccessMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [String] Identifier for the group.
+  attr_reader :id
+  # @return [String] Updated display name for the group.
+  attr_reader :name
+  # @return [Integer] Unix timestamp (in seconds) when the group was created.
+  attr_reader :created_at
+  # @return [Boolean] Whether the group is managed through SCIM and controlled by your identity provider.
+  attr_reader :is_scim_managed
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the GroupListResourceObject SDK namespace.
-  module GroupListResourceObject
-    LIST = 'list'
-    VALUES = ['list'].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalGroupResourceWithSuccessMetadata
-    FIELDS = {
-      id: 'id',
-      name: 'name',
-      created_at: 'created_at',
-      is_scim_managed: 'is_scim_managed'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-      name
-      created_at
-      is_scim_managed
-    ].freeze
-    DECODERS = {}.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalGroupResponseMetadata
+  FIELDS = {
+    id: "id",
+    name: "name",
+    created_at: "created_at",
+    is_scim_managed: "is_scim_managed",
+    group_type: "group_type",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+    name
+    created_at
+    is_scim_managed
+    group_type
+  ].freeze
+  DECODERS = {
+    group_type: lambda do |value|
+      ::OctridevOpenai::GroupResponseGroupType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for GroupResponse.
+# Details about an organization group.
+class GroupResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalGroupResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalGroupResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalGroupResponseMetadata::DECODERS
+
+  # @return [String] Identifier for the group.
+  attr_reader :id
+  # @return [String] Display name of the group.
+  attr_reader :name
+  # @return [Integer] Unix timestamp (in seconds) when the group was created.
+  attr_reader :created_at
+  # @return [Boolean] Whether the group is managed through SCIM and controlled by your identity provider.
+  attr_reader :is_scim_managed
+  # @return [GroupResponseGroupType] The type of the group.
+  attr_reader :group_type
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for GroupResourceWithSuccess.
-  # Response returned after updating a group.
-  class GroupResourceWithSuccess
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalGroupResourceWithSuccessMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalGroupResourceWithSuccessMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalGroupResourceWithSuccessMetadata::DECODERS
-
-    # @return [String] Identifier for the group.
-    attr_reader :id
-    # @return [String] Updated display name for the group.
-    attr_reader :name
-    # @return [Integer] Unix timestamp (in seconds) when the group was created.
-    attr_reader :created_at
-    # @return [Boolean] Whether the group is managed through SCIM and controlled by your identity provider.
-    attr_reader :is_scim_managed
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalGroupResponseMetadata
-    FIELDS = {
-      id: 'id',
-      name: 'name',
-      created_at: 'created_at',
-      is_scim_managed: 'is_scim_managed',
-      group_type: 'group_type'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-      name
-      created_at
-      is_scim_managed
-      group_type
-    ].freeze
-    DECODERS = {
-      group_type: lambda do |value|
-        ::OctridevOpenai::GroupResponseGroupType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the GroupResponseGroupType SDK namespace.
+module GroupResponseGroupType
+  GROUP = 'group'
+  TENANT_GROUP = 'tenant_group'
+  VALUES = ['group', 'tenant_group'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalUpdateGroupBodyMetadata
+  FIELDS = {
+    name: "name",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    name
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for UpdateGroupBody.
+# Request payload for updating the details of an existing group.
+class UpdateGroupBody
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalUpdateGroupBodyMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalUpdateGroupBodyMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalUpdateGroupBodyMetadata::DECODERS
+
+  # @return [String] New display name for the group.
+  attr_reader :name
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for GroupResponse.
-  # Details about an organization group.
-  class GroupResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalGroupResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalGroupResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalGroupResponseMetadata::DECODERS
-
-    # @return [String] Identifier for the group.
-    attr_reader :id
-    # @return [String] Display name of the group.
-    attr_reader :name
-    # @return [Integer] Unix timestamp (in seconds) when the group was created.
-    attr_reader :created_at
-    # @return [Boolean] Whether the group is managed through SCIM and controlled by your identity provider.
-    attr_reader :is_scim_managed
-    # @return [GroupResponseGroupType] The type of the group.
-    attr_reader :group_type
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the GroupResponseGroupType SDK namespace.
-  module GroupResponseGroupType
-    GROUP = 'group'
-    TENANT_GROUP = 'tenant_group'
-    VALUES = %w[group tenant_group].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
-
-  # Internal model hydration metadata.
-  class SdkInternalUpdateGroupBodyMetadata
-    FIELDS = {
-      name: 'name'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      name
-    ].freeze
-    DECODERS = {}.freeze
-  end
-
-  # API model for UpdateGroupBody.
-  # Request payload for updating the details of an existing group.
-  class UpdateGroupBody
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalUpdateGroupBodyMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalUpdateGroupBodyMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalUpdateGroupBodyMetadata::DECODERS
-
-    # @return [String] New display name for the group.
-    attr_reader :name
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
+end
 end

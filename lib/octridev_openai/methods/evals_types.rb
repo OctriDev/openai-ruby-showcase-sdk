@@ -12,14 +12,15 @@ module OctridevOpenai
       # Internal model hydration metadata.
       class SdkInternalUpdateEvalMetadata
         FIELDS = {
-          name: 'name',
-          metadata: 'metadata'
+          name: "name",
+          metadata: "metadata",
         }.freeze
-        REQUIRED_FIELDS = %i[].freeze
+        REQUIRED_FIELDS = %i[
+        ].freeze
         DECODERS = {
           metadata: lambda do |value|
             ::OctridevOpenai::Metadata.from_hash(value)
-          end
+          end,
         }.freeze
       end
 
@@ -52,16 +53,17 @@ module OctridevOpenai
       # Internal model hydration metadata.
       class SdkInternalDeleteEvalResponseMetadata
         FIELDS = {
-          object: 'object',
-          deleted: 'deleted',
-          eval_id: 'eval_id'
+          object: "object",
+          deleted: "deleted",
+          eval_id: "eval_id",
         }.freeze
         REQUIRED_FIELDS = %i[
           object
           deleted
           eval_id
         ].freeze
-        DECODERS = {}.freeze
+        DECODERS = {
+        }.freeze
       end
 
       # API model for DeleteEvalResponse.
@@ -90,12 +92,14 @@ module OctridevOpenai
       # Internal model hydration metadata.
       class SdkInternalDeleteEvalRunResponseMetadata
         FIELDS = {
-          object: 'object',
-          deleted: 'deleted',
-          run_id: 'run_id'
+          object: "object",
+          deleted: "deleted",
+          run_id: "run_id",
         }.freeze
-        REQUIRED_FIELDS = %i[].freeze
-        DECODERS = {}.freeze
+        REQUIRED_FIELDS = %i[
+        ].freeze
+        DECODERS = {
+        }.freeze
       end
 
       # API model for DeleteEvalRunResponse.
@@ -125,7 +129,7 @@ module OctridevOpenai
       module GetEvalRunsParameter
         ASC = 'asc'
         DESC = 'desc'
-        VALUES = %w[asc desc].freeze
+        VALUES = ['asc', 'desc'].freeze
         def self.from_value(value)
           value
         end
@@ -135,7 +139,7 @@ module OctridevOpenai
       module GetEvalRunOutputItemsParameter
         FAIL = 'fail'
         PASS = 'pass'
-        VALUES = %w[fail pass].freeze
+        VALUES = ['fail', 'pass'].freeze
         def self.from_value(value)
           value
         end
@@ -145,7 +149,7 @@ module OctridevOpenai
       module ListEvalsParameterFa29acc2
         CREATED_AT = 'created_at'
         UPDATED_AT = 'updated_at'
-        VALUES = %w[created_at updated_at].freeze
+        VALUES = ['created_at', 'updated_at'].freeze
         def self.from_value(value)
           value
         end
@@ -155,7 +159,7 @@ module OctridevOpenai
       module ListEvalsParameter
         ASC = 'asc'
         DESC = 'desc'
-        VALUES = %w[asc desc].freeze
+        VALUES = ['asc', 'desc'].freeze
         def self.from_value(value)
           value
         end
@@ -165,7 +169,7 @@ module OctridevOpenai
       module GetEvalRunOutputItemsParameter10b7ed83
         ASC = 'asc'
         DESC = 'desc'
-        VALUES = %w[asc desc].freeze
+        VALUES = ['asc', 'desc'].freeze
         def self.from_value(value)
           value
         end
@@ -178,7 +182,7 @@ module OctridevOpenai
         COMPLETED = 'completed'
         CANCELED = 'canceled'
         FAILED = 'failed'
-        VALUES = %w[queued in_progress completed canceled failed].freeze
+        VALUES = ['queued', 'in_progress', 'completed', 'canceled', 'failed'].freeze
         def self.from_value(value)
           value
         end

@@ -31,25 +31,26 @@ module OctridevOpenai
         name: NOT_GIVEN,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
-          '/containers',
+          "/containers",
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'order' => QueryValue.new(order, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
-            'name' => QueryValue.new(name, style: 'form', explode: true)
+            'name' => QueryValue.new(name, style: 'form', explode: true),
           },
           return_type: ::OctridevOpenai::ContainerListResource,
           decoder: :json,
           operation_id: 'list_containers',
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
-      ListContainersPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+    ListContainersPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists containers available to the authenticated user. Filter the results by `name` and use `after` to continue from a container ID returned in a previous page. Results are ordered by creation time, descending by default.
       #
@@ -86,13 +87,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             items.each { |item| y << item }
             break unless page.has_more
-
             next_cursor = page.last_id
             break if next_cursor.nil?
-
             cursor = next_cursor
           end
         end
@@ -119,12 +117,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListContainersPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
-
             cursor = next_cursor
           end
         end
@@ -154,9 +150,10 @@ module OctridevOpenai
         network_policy: NOT_GIVEN,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
-          '/containers',
+          "/containers",
           config: config,
           body: {
             'name' => name,
@@ -164,13 +161,13 @@ module OctridevOpenai
             'expires_after' => expires_after,
             'skills' => skills,
             'memory_limit' => memory_limit,
-            'network_policy' => network_policy
+            'network_policy' => network_policy,
           },
           return_type: ::OctridevOpenai::ContainerResource,
           decoder: :json,
           operation_id: 'create_container',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -182,10 +179,11 @@ module OctridevOpenai
         container_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
           [
-            '/containers/',
+            "/containers/",
             SdkClient.encode_path_segment(container_id)
           ].join,
           config: config,
@@ -193,7 +191,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'retrieve_container',
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -207,10 +205,11 @@ module OctridevOpenai
         container_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'DELETE',
           [
-            '/containers/',
+            "/containers/",
             SdkClient.encode_path_segment(container_id)
           ].join,
           config: config,
@@ -218,7 +217,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_container',
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
     end

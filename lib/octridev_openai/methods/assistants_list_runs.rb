@@ -35,29 +35,30 @@ module OctridevOpenai
         before: NOT_GIVEN,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
           [
-            '/threads/',
+            "/threads/",
             SdkClient.encode_path_segment(thread_id),
-            '/runs'
+            "/runs"
           ].join,
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'order' => QueryValue.new(order, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
-            'before' => QueryValue.new(before, style: 'form', explode: true)
+            'before' => QueryValue.new(before, style: 'form', explode: true),
           },
           return_type: ::OctridevOpenai::ListRunsResponse,
           decoder: :json,
           operation_id: 'list_runs',
           request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
-      ListRunsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+    ListRunsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists runs belonging to a thread. Use `order` to sort runs by creation time and `after` or `before` to navigate through the results. The returned run statuses show whether each run is queued, active, completed, or in another state.
       #
@@ -99,13 +100,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             items.each { |item| y << item }
             break unless page.has_more
-
             next_cursor = page.last_id
             break if next_cursor.nil?
-
             cursor = next_cursor
           end
         end
@@ -134,12 +132,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListRunsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
-
             cursor = next_cursor
           end
         end

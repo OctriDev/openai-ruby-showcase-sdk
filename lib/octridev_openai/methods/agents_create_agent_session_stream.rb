@@ -44,23 +44,21 @@ module OctridevOpenai
         request_options: nil,
         &block
       )
-        unless block
-          return enum_for(
-            __method__,
-            config: config,
-            environment: environment,
-            stream: stream,
-            spend_control: spend_control,
-            metadata: metadata,
-            agent: agent,
-            agent_id: agent_id,
-            vault_ids: vault_ids,
-            input: input,
-            request_options: request_options
-          )
-        end
+    return enum_for(
+          __method__,
+          config: config,
+          environment: environment,
+          stream: stream,
+          spend_control: spend_control,
+          metadata: metadata,
+          agent: agent,
+          agent_id: agent_id,
+          vault_ids: vault_ids,
+          input: input,
+          request_options: request_options,
+        ) unless block
         SdkClient.stream(
-          'POST', '/agents/sessions',
+          'POST', "/agents/sessions",
           config: config,
           body: {
             'environment' => environment,
@@ -70,17 +68,16 @@ module OctridevOpenai
             'agent' => agent,
             'agent_id' => agent_id,
             'vault_ids' => vault_ids,
-            'input' => input
+            'input' => input,
           },
           content_type: 'application/json',
           operation_id: 'create_agent_session_stream',
           stream_format: :sse,
-          stream_media_type: 'text/event-stream',
+          stream_media_type: "text/event-stream",
           request_options: request_options,
           errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '429' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).each do |ev|
           break if ev.data == '[DONE]'
-
           decoded = JSON.parse(ev.data)
           block.call(SdkClient.decode_event(decoded, ::OctridevOpenai::SessionEvent))
         end

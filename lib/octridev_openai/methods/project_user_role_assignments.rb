@@ -13,7 +13,7 @@ module OctridevOpenai
       module ListProjectUserRoleAssignmentsParameter
         ASC = 'asc'
         DESC = 'desc'
-        VALUES = %w[asc desc].freeze
+        VALUES = ['asc', 'desc'].freeze
         def self.from_value(value)
           value
         end
@@ -38,32 +38,33 @@ module OctridevOpenai
         order: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 0, max: 1000) }
 
         SdkClient.request(
           'GET',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/users/',
+            "/users/",
             SdkClient.encode_path_segment(user_id),
-            '/roles'
+            "/roles"
           ].join,
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
-            'order' => QueryValue.new(order, style: 'form', explode: true)
+            'order' => QueryValue.new(order, style: 'form', explode: true),
           },
           return_type: ::OctridevOpenai::RoleListResource,
           decoder: :json,
           operation_id: 'list_project_user_role_assignments',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
-      ListProjectUserRoleAssignmentsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+    ListProjectUserRoleAssignmentsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists the project roles assigned to a user within a project.
       #
@@ -98,13 +99,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             items.each { |item| y << item }
             break unless page.has_more
-
             next_cursor = page.next_
             break if next_cursor.nil?
-
             cursor = next_cursor
           end
         end
@@ -133,12 +131,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             next_cursor = page.next_
             has_more = page.has_more && !next_cursor.nil?
             y << ListProjectUserRoleAssignmentsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
-
             cursor = next_cursor
           end
         end
@@ -157,24 +153,25 @@ module OctridevOpenai
         role_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/users/',
+            "/users/",
             SdkClient.encode_path_segment(user_id),
-            '/roles'
+            "/roles"
           ].join,
           config: config,
           body: {
-            'role_id' => role_id
+            'role_id' => role_id,
           },
           return_type: ::OctridevOpenai::UserRoleAssignment,
           decoder: :json,
           operation_id: 'assign_project_user_role',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -192,14 +189,15 @@ module OctridevOpenai
         role_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/users/',
+            "/users/",
             SdkClient.encode_path_segment(user_id),
-            '/roles/',
+            "/roles/",
             SdkClient.encode_path_segment(role_id)
           ].join,
           config: config,
@@ -207,7 +205,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'retrieve_project_user_role',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -224,14 +222,15 @@ module OctridevOpenai
         role_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'DELETE',
           [
-            '/projects/',
+            "/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/users/',
+            "/users/",
             SdkClient.encode_path_segment(user_id),
-            '/roles/',
+            "/roles/",
             SdkClient.encode_path_segment(role_id)
           ].join,
           config: config,
@@ -239,7 +238,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'unassign_project_user_role',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
     end

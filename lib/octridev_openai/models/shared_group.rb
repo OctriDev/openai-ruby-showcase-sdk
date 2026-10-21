@@ -5,131 +5,131 @@
 
 # shared_group domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalGroupMetadata
-    FIELDS = {
-      object: 'object',
-      id: 'id',
-      name: 'name',
-      created_at: 'created_at',
-      scim_managed: 'scim_managed'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      id
-      name
-      created_at
-      scim_managed
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::GroupObject.from_value(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalGroupMetadata
+  FIELDS = {
+    object: "object",
+    id: "id",
+    name: "name",
+    created_at: "created_at",
+    scim_managed: "scim_managed",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    id
+    name
+    created_at
+    scim_managed
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::GroupObject.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for Group.
+# Summary information about a group returned in role assignment responses.
+class Group
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalGroupMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalGroupMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalGroupMetadata::DECODERS
+
+  # @return [GroupObject] Always `group`.
+  attr_reader :object
+  # @return [String] Identifier for the group.
+  attr_reader :id
+  # @return [String] Display name of the group.
+  attr_reader :name
+  # @return [Integer] Unix timestamp (in seconds) when the group was created.
+  attr_reader :created_at
+  # @return [Boolean] Whether the group is managed through SCIM.
+  attr_reader :scim_managed
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for Group.
-  # Summary information about a group returned in role assignment responses.
-  class Group
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalGroupMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalGroupMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalGroupMetadata::DECODERS
-
-    # @return [GroupObject] Always `group`.
-    attr_reader :object
-    # @return [String] Identifier for the group.
-    attr_reader :id
-    # @return [String] Display name of the group.
-    attr_reader :name
-    # @return [Integer] Unix timestamp (in seconds) when the group was created.
-    attr_reader :created_at
-    # @return [Boolean] Whether the group is managed through SCIM.
-    attr_reader :scim_managed
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the GroupObject SDK namespace.
-  module GroupObject
-    GROUP = 'group'
-    VALUES = ['group'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the GroupObject SDK namespace.
+module GroupObject
+  GROUP = 'group'
+  VALUES = ['group'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalGroupRoleAssignmentMetadata
+  FIELDS = {
+    object: "object",
+    group: "group",
+    role: "role",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    group
+    role
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::GroupRoleAssignmentObject.from_value(value)
+    end,
+    group: lambda do |value|
+      ::OctridevOpenai::Group.from_hash(value)
+    end,
+    role: lambda do |value|
+      ::OctridevOpenai::Role.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for GroupRoleAssignment.
+# Role assignment linking a group to a role.
+class GroupRoleAssignment
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalGroupRoleAssignmentMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalGroupRoleAssignmentMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalGroupRoleAssignmentMetadata::DECODERS
+
+  # @return [GroupRoleAssignmentObject] Always `group.role`.
+  attr_reader :object
+  # @return [Group] Summary information about a group returned in role assignment responses.
+  attr_reader :group
+  # @return [Role] Details about a role that can be assigned through the public Roles API.
+  attr_reader :role
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalGroupRoleAssignmentMetadata
-    FIELDS = {
-      object: 'object',
-      group: 'group',
-      role: 'role'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      group
-      role
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::GroupRoleAssignmentObject.from_value(value)
-      end,
-      group: lambda do |value|
-        ::OctridevOpenai::Group.from_hash(value)
-      end,
-      role: lambda do |value|
-        ::OctridevOpenai::Role.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for GroupRoleAssignment.
-  # Role assignment linking a group to a role.
-  class GroupRoleAssignment
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalGroupRoleAssignmentMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalGroupRoleAssignmentMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalGroupRoleAssignmentMetadata::DECODERS
-
-    # @return [GroupRoleAssignmentObject] Always `group.role`.
-    attr_reader :object
-    # @return [Group] Summary information about a group returned in role assignment responses.
-    attr_reader :group
-    # @return [Role] Details about a role that can be assigned through the public Roles API.
-    attr_reader :role
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the GroupRoleAssignmentObject SDK namespace.
-  module GroupRoleAssignmentObject
-    GROUP_ROLE = 'group.role'
-    VALUES = ['group.role'].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the GroupRoleAssignmentObject SDK namespace.
+module GroupRoleAssignmentObject
+  GROUP_ROLE = 'group.role'
+  VALUES = ['group.role'].freeze
+  def self.from_value(value)
+    value
   end
+end
 end

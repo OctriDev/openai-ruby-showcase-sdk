@@ -28,25 +28,26 @@ module OctridevOpenai
         stream: NOT_GIVEN,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
           [
-            '/threads/',
+            "/threads/",
             SdkClient.encode_path_segment(thread_id),
-            '/runs/',
+            "/runs/",
             SdkClient.encode_path_segment(run_id),
-            '/submit_tool_outputs'
+            "/submit_tool_outputs"
           ].join,
           config: config,
           body: {
             'tool_outputs' => tool_outputs,
-            'stream' => stream
+            'stream' => stream,
           },
           return_type: ::OctridevOpenai::RunObject,
           decoder: :json,
           operation_id: 'submit_assistants_tool_outputs_to_run',
           request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
     end

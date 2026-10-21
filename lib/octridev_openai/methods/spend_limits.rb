@@ -16,15 +16,16 @@ module OctridevOpenai
         config:,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
-          '/organization/spend_limit',
+          "/organization/spend_limit",
           config: config,
           return_type: ::OctridevOpenai::OrganizationSpendLimitResource,
           decoder: :json,
           operation_id: 'retrieve_spend_limits_organization',
           request_options: request_options,
-          errors: { '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
+          errors: { '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -43,22 +44,23 @@ module OctridevOpenai
         interval:,
         request_options: nil
       )
+
         Validation.validate_range('threshold_amount', threshold_amount, min: 1)
 
         SdkClient.request(
           'POST',
-          '/organization/spend_limit',
+          "/organization/spend_limit",
           config: config,
           body: {
             'threshold_amount' => threshold_amount,
             'currency' => currency,
-            'interval' => interval
+            'interval' => interval,
           },
           return_type: ::OctridevOpenai::OrganizationSpendLimitResource,
           decoder: :json,
           operation_id: 'update_spend_limits_organization',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse },
         ).data
       end
 
@@ -69,15 +71,16 @@ module OctridevOpenai
         config:,
         request_options: nil
       )
+
         SdkClient.request(
           'DELETE',
-          '/organization/spend_limit',
+          "/organization/spend_limit",
           config: config,
           return_type: ::OctridevOpenai::OrganizationSpendLimitDeletedResource,
           decoder: :json,
           operation_id: 'delete_spend_limits_organization',
           request_options: request_options,
-          errors: { '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
+          errors: { '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -92,19 +95,20 @@ module OctridevOpenai
         project_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
           [
-            '/organization/projects/',
+            "/organization/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/spend_limit'
+            "/spend_limit"
           ].join,
           config: config,
           return_type: ::OctridevOpenai::ProjectSpendLimitResource,
           decoder: :json,
           operation_id: 'retrieve_spend_limits_project',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -119,19 +123,20 @@ module OctridevOpenai
         project_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'DELETE',
           [
-            '/organization/projects/',
+            "/organization/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/spend_limit'
+            "/spend_limit"
           ].join,
           config: config,
           return_type: ::OctridevOpenai::ProjectSpendLimitDeletedResource,
           decoder: :json,
           operation_id: 'delete_spend_limits_project',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -155,26 +160,27 @@ module OctridevOpenai
         interval:,
         request_options: nil
       )
+
         Validation.validate_range('threshold_amount', threshold_amount, min: 1)
 
         SdkClient.request(
           'POST',
           [
-            '/organization/projects/',
+            "/organization/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/spend_limit'
+            "/spend_limit"
           ].join,
           config: config,
           body: {
             'threshold_amount' => threshold_amount,
             'currency' => currency,
-            'interval' => interval
+            'interval' => interval,
           },
           return_type: ::OctridevOpenai::ProjectSpendLimitResource,
           decoder: :json,
           operation_id: 'update_project_spend_limit',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
     end

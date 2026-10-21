@@ -5,118 +5,119 @@
 
 # webhook_eval_run_canceled domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalWebhookEvalRunCanceledDataMetadata
-    FIELDS = {
-      id: 'id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-    ].freeze
-    DECODERS = {}.freeze
+# Internal model hydration metadata.
+class SdkInternalWebhookEvalRunCanceledDataMetadata
+  FIELDS = {
+    id: "id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for WebhookEvalRunCanceledData.
+# Event data payload.
+class WebhookEvalRunCanceledData
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalWebhookEvalRunCanceledDataMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalWebhookEvalRunCanceledDataMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalWebhookEvalRunCanceledDataMetadata::DECODERS
+
+  # @return [String] The unique ID of the eval run.
+  attr_reader :id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for WebhookEvalRunCanceledData.
-  # Event data payload.
-  class WebhookEvalRunCanceledData
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalWebhookEvalRunCanceledDataMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalWebhookEvalRunCanceledDataMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalWebhookEvalRunCanceledDataMetadata::DECODERS
-
-    # @return [String] The unique ID of the eval run.
-    attr_reader :id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalWebhookEvalRunCanceledMetadata
-    FIELDS = {
-      created_at: 'created_at',
-      id: 'id',
-      data: 'data',
-      object: 'object',
-      type: 'type'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      created_at
-      id
-      data
-      type
-    ].freeze
-    DECODERS = {
-      data: lambda do |value|
-        ::OctridevOpenai::WebhookEvalRunCanceledData.from_hash(value)
-      end,
-      object: lambda do |value|
-        ::OctridevOpenai::WebhookEvalRunCanceledObject.from_value(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::WebhookEvalRunCanceledType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalWebhookEvalRunCanceledMetadata
+  FIELDS = {
+    created_at: "created_at",
+    id: "id",
+    data: "data",
+    object: "object",
+    type: "type",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    created_at
+    id
+    data
+    type
+  ].freeze
+  DECODERS = {
+    data: lambda do |value|
+      ::OctridevOpenai::WebhookEvalRunCanceledData.from_hash(value)
+    end,
+    object: lambda do |value|
+      ::OctridevOpenai::WebhookEvalRunCanceledObject.from_value(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::WebhookEvalRunCanceledType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for WebhookEvalRunCanceled.
+# Sent when an eval run has been canceled.
+class WebhookEvalRunCanceled
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalWebhookEvalRunCanceledMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalWebhookEvalRunCanceledMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalWebhookEvalRunCanceledMetadata::DECODERS
+
+  # @return [Integer] The Unix timestamp (in seconds) of when the eval run was canceled.
+  attr_reader :created_at
+  # @return [String] The unique ID of the event.
+  attr_reader :id
+  # @return [WebhookEvalRunCanceledData] Event data payload.
+  attr_reader :data
+  # @return [WebhookEvalRunCanceledObject] The object of the event. Always `event`.
+  attr_reader :object
+  # @return [WebhookEvalRunCanceledType] The type of the event. Always `eval.run.canceled`.
+  attr_reader :type
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for WebhookEvalRunCanceled.
-  # Sent when an eval run has been canceled.
-  class WebhookEvalRunCanceled
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalWebhookEvalRunCanceledMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalWebhookEvalRunCanceledMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalWebhookEvalRunCanceledMetadata::DECODERS
-
-    # @return [Integer] The Unix timestamp (in seconds) of when the eval run was canceled.
-    attr_reader :created_at
-    # @return [String] The unique ID of the event.
-    attr_reader :id
-    # @return [WebhookEvalRunCanceledData] Event data payload.
-    attr_reader :data
-    # @return [WebhookEvalRunCanceledObject] The object of the event. Always `event`.
-    attr_reader :object
-    # @return [WebhookEvalRunCanceledType] The type of the event. Always `eval.run.canceled`.
-    attr_reader :type
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the WebhookEvalRunCanceledObject SDK namespace.
-  module WebhookEvalRunCanceledObject
-    EVENT = 'event'
-    VALUES = ['event'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the WebhookEvalRunCanceledType SDK namespace.
-  module WebhookEvalRunCanceledType
-    EVAL_RUN_CANCELED = 'eval.run.canceled'
-    VALUES = ['eval.run.canceled'].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the WebhookEvalRunCanceledObject SDK namespace.
+module WebhookEvalRunCanceledObject
+  EVENT = 'event'
+  VALUES = ['event'].freeze
+  def self.from_value(value)
+    value
   end
+end
+
+# Defines the WebhookEvalRunCanceledType SDK namespace.
+module WebhookEvalRunCanceledType
+  EVAL_RUN_CANCELED = 'eval.run.canceled'
+  VALUES = ['eval.run.canceled'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 end

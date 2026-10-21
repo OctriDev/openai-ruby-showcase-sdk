@@ -5,134 +5,134 @@
 
 # responses_beta_model domain models
 module OctridevOpenai
-  # Defines the BetaModelIdsCompaction SDK namespace.
-  module BetaModelIdsCompaction
-    def self.from_hash(hash)
-      return hash if hash.is_a?(::String)
+# Defines the BetaModelIdsCompaction SDK namespace.
+module BetaModelIdsCompaction
+  def self.from_hash(hash)
+    return hash if hash.is_a?(::String)
+    begin
+      return BetaModelIdsResponses.from_hash(hash)
+    rescue ::StandardError
+      hash
+    end
+  end
+end
 
-      begin
-        BetaModelIdsResponses.from_hash(hash)
+# Defines the BetaModelIdsResponses SDK namespace.
+module BetaModelIdsResponses
+  def self.from_hash(hash)
+    if hash.is_a?(::String)
+      [BetaModelIdsShared, BetaModelIdsResponsesVariant1].each do |type|
+        return type.from_value(hash)
       rescue ::StandardError
-        hash
+        next
       end
     end
+    raise "Could not deserialize BetaModelIdsResponses from #{hash.inspect}"
+  end
+end
+
+# Defines the BetaModelIdsResponsesVariant1 SDK namespace.
+module BetaModelIdsResponsesVariant1
+  O1_PRO = 'o1-pro'
+  O1_PRO_2025_03_19 = 'o1-pro-2025-03-19'
+  O3_PRO = 'o3-pro'
+  O3_PRO_2025_06_10 = 'o3-pro-2025-06-10'
+  O3_DEEP_RESEARCH = 'o3-deep-research'
+  O3_DEEP_RESEARCH_2025_06_26 = 'o3-deep-research-2025-06-26'
+  O4_MINI_DEEP_RESEARCH = 'o4-mini-deep-research'
+  O4_MINI_DEEP_RESEARCH_2025_06_26 = 'o4-mini-deep-research-2025-06-26'
+  COMPUTER_USE_PREVIEW = 'computer-use-preview'
+  COMPUTER_USE_PREVIEW_2025_03_11 = 'computer-use-preview-2025-03-11'
+  GPT_5_5_PRO = 'gpt-5.5-pro'
+  GPT_5_5_PRO_2026_04_23 = 'gpt-5.5-pro-2026-04-23'
+  GPT_5_CODEX = 'gpt-5-codex'
+  GPT_5_PRO = 'gpt-5-pro'
+  GPT_5_PRO_2025_10_06 = 'gpt-5-pro-2025-10-06'
+  GPT_5_1_CODEX_MAX = 'gpt-5.1-codex-max'
+  GPT_DAYBREAK_BLUE_LATEST = 'gpt-daybreak-blue-latest'
+  GPT_DAYBREAK_RED_LATEST = 'gpt-daybreak-red-latest'
+  GPT_5_6_CYBER = 'gpt-5.6-cyber'
+  GPT_ROSALIND_RESEARCH = 'gpt-rosalind-research'
+  VALUES = [
+    'o1-pro', 'o1-pro-2025-03-19', 'o3-pro', 'o3-pro-2025-06-10', 'o3-deep-research',
+    'o3-deep-research-2025-06-26', 'o4-mini-deep-research', 'o4-mini-deep-research-2025-06-26',
+    'computer-use-preview', 'computer-use-preview-2025-03-11', 'gpt-5.5-pro',
+    'gpt-5.5-pro-2026-04-23', 'gpt-5-codex', 'gpt-5-pro', 'gpt-5-pro-2025-10-06',
+    'gpt-5.1-codex-max', 'gpt-daybreak-blue-latest', 'gpt-daybreak-red-latest', 'gpt-5.6-cyber',
+    'gpt-rosalind-research'
+  ].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the BetaModelIdsShared SDK value decoder.
+module BetaModelIdsShared
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaModelResponsePropertiesMetadata
+  FIELDS = {
+    metadata: "metadata",
+    top_logprobs: "top_logprobs",
+    temperature: "temperature",
+    top_p: "top_p",
+    user: "user",
+    safety_identifier: "safety_identifier",
+    prompt_cache_key: "prompt_cache_key",
+    prompt_cache_retention: "prompt_cache_retention",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+    metadata: lambda do |value|
+      ::OctridevOpenai::BetaMetadata.from_hash(value)
+    end,
+    prompt_cache_retention: lambda do |value|
+      ::OctridevOpenai::BetaModelResponsePropertiesPromptCacheRetentionVariant0.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaModelResponseProperties.
+# Typed representation of the `BetaModelResponseProperties` API schema.
+class BetaModelResponseProperties
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaModelResponsePropertiesMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaModelResponsePropertiesMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaModelResponsePropertiesMetadata::DECODERS
+
+  # @return [BetaMetadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
+  attr_reader :metadata
+  # @return [Integer] Optional API value serialized in the `top_logprobs` wire field.
+  attr_reader :top_logprobs
+  # @return [Float] Optional API value serialized in the `temperature` wire field.
+  attr_reader :temperature
+  # @return [Float] Optional API value serialized in the `top_p` wire field.
+  attr_reader :top_p
+  # @return [String] This field is being replaced by `safety_identifier` and `prompt_cache_key`. Use `prompt_cache_key` instead to maintain caching optimizations. A stable identifier for your end-users. Used to boost cache hit rates by better bucketing similar requests and to help OpenAI detect and prevent abuse. Learn more.
+  attr_reader :user
+  # @return [String] Optional API value serialized in the `safety_identifier` wire field.
+  attr_reader :safety_identifier
+  # @return [String] Optional `string` value serialized in the `prompt_cache_key` wire field.
+  attr_reader :prompt_cache_key
+  # @return [BetaModelResponsePropertiesPromptCacheRetentionVariant0] Optional API value serialized in the `prompt_cache_retention` wire field.
+  attr_reader :prompt_cache_retention
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the BetaModelIdsResponses SDK namespace.
-  module BetaModelIdsResponses
-    def self.from_hash(hash)
-      if hash.is_a?(::String)
-        [BetaModelIdsShared, BetaModelIdsResponsesVariant1].each do |type|
-          return type.from_value(hash)
-        rescue ::StandardError
-          next
-        end
-      end
-      raise "Could not deserialize BetaModelIdsResponses from #{hash.inspect}"
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the BetaModelIdsResponsesVariant1 SDK namespace.
-  module BetaModelIdsResponsesVariant1
-    O1_PRO = 'o1-pro'
-    O1_PRO_2025_03_19 = 'o1-pro-2025-03-19'
-    O3_PRO = 'o3-pro'
-    O3_PRO_2025_06_10 = 'o3-pro-2025-06-10'
-    O3_DEEP_RESEARCH = 'o3-deep-research'
-    O3_DEEP_RESEARCH_2025_06_26 = 'o3-deep-research-2025-06-26'
-    O4_MINI_DEEP_RESEARCH = 'o4-mini-deep-research'
-    O4_MINI_DEEP_RESEARCH_2025_06_26 = 'o4-mini-deep-research-2025-06-26'
-    COMPUTER_USE_PREVIEW = 'computer-use-preview'
-    COMPUTER_USE_PREVIEW_2025_03_11 = 'computer-use-preview-2025-03-11'
-    GPT_5_5_PRO = 'gpt-5.5-pro'
-    GPT_5_5_PRO_2026_04_23 = 'gpt-5.5-pro-2026-04-23'
-    GPT_5_CODEX = 'gpt-5-codex'
-    GPT_5_PRO = 'gpt-5-pro'
-    GPT_5_PRO_2025_10_06 = 'gpt-5-pro-2025-10-06'
-    GPT_5_1_CODEX_MAX = 'gpt-5.1-codex-max'
-    GPT_DAYBREAK_BLUE_LATEST = 'gpt-daybreak-blue-latest'
-    GPT_DAYBREAK_RED_LATEST = 'gpt-daybreak-red-latest'
-    GPT_5_6_CYBER = 'gpt-5.6-cyber'
-    GPT_ROSALIND_RESEARCH = 'gpt-rosalind-research'
-    VALUES = [
-      'o1-pro', 'o1-pro-2025-03-19', 'o3-pro', 'o3-pro-2025-06-10', 'o3-deep-research',
-      'o3-deep-research-2025-06-26', 'o4-mini-deep-research', 'o4-mini-deep-research-2025-06-26',
-      'computer-use-preview', 'computer-use-preview-2025-03-11', 'gpt-5.5-pro',
-      'gpt-5.5-pro-2026-04-23', 'gpt-5-codex', 'gpt-5-pro', 'gpt-5-pro-2025-10-06',
-      'gpt-5.1-codex-max', 'gpt-daybreak-blue-latest', 'gpt-daybreak-red-latest', 'gpt-5.6-cyber',
-      'gpt-rosalind-research'
-    ].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
-
-  # Defines the BetaModelIdsShared SDK value decoder.
-  module BetaModelIdsShared
-    def self.from_value(value)
-      value
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalBetaModelResponsePropertiesMetadata
-    FIELDS = {
-      metadata: 'metadata',
-      top_logprobs: 'top_logprobs',
-      temperature: 'temperature',
-      top_p: 'top_p',
-      user: 'user',
-      safety_identifier: 'safety_identifier',
-      prompt_cache_key: 'prompt_cache_key',
-      prompt_cache_retention: 'prompt_cache_retention'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {
-      metadata: lambda do |value|
-        ::OctridevOpenai::BetaMetadata.from_hash(value)
-      end,
-      prompt_cache_retention: lambda do |value|
-        ::OctridevOpenai::BetaModelResponsePropertiesPromptCacheRetentionVariant0.from_value(value)
-      end
-    }.freeze
-  end
-
-  # API model for BetaModelResponseProperties.
-  # Typed representation of the `BetaModelResponseProperties` API schema.
-  class BetaModelResponseProperties
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaModelResponsePropertiesMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaModelResponsePropertiesMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaModelResponsePropertiesMetadata::DECODERS
-
-    # @return [BetaMetadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
-    attr_reader :metadata
-    # @return [Integer] Optional API value serialized in the `top_logprobs` wire field.
-    attr_reader :top_logprobs
-    # @return [Float] Optional API value serialized in the `temperature` wire field.
-    attr_reader :temperature
-    # @return [Float] Optional API value serialized in the `top_p` wire field.
-    attr_reader :top_p
-    # @return [String] This field is being replaced by `safety_identifier` and `prompt_cache_key`. Use `prompt_cache_key` instead to maintain caching optimizations. A stable identifier for your end-users. Used to boost cache hit rates by better bucketing similar requests and to help OpenAI detect and prevent abuse. Learn more.
-    attr_reader :user
-    # @return [String] Optional API value serialized in the `safety_identifier` wire field.
-    attr_reader :safety_identifier
-    # @return [String] Optional `string` value serialized in the `prompt_cache_key` wire field.
-    attr_reader :prompt_cache_key
-    # @return [BetaModelResponsePropertiesPromptCacheRetentionVariant0] Optional API value serialized in the `prompt_cache_retention` wire field.
-    attr_reader :prompt_cache_retention
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
+end
 end

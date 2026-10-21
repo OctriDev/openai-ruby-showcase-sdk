@@ -5,582 +5,583 @@
 
 # beta_responses domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalBetaResponsesServerEventVariant49Metadata
-    FIELDS = {
-      agent: 'agent',
-      type: 'type',
-      item_id: 'item_id',
-      output_index: 'output_index',
-      sequence_number: 'sequence_number',
-      stream_id: 'stream_id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      item_id
-      output_index
-      sequence_number
-    ].freeze
-    DECODERS = {
-      agent: lambda do |value|
-        ::OctridevOpenai::BetaAgentTag.from_hash(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::BetaResponseMCPCallFailedEventType.from_value(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalBetaResponsesServerEventVariant49Metadata
+  FIELDS = {
+    agent: "agent",
+    type: "type",
+    item_id: "item_id",
+    output_index: "output_index",
+    sequence_number: "sequence_number",
+    stream_id: "stream_id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    item_id
+    output_index
+    sequence_number
+  ].freeze
+  DECODERS = {
+    agent: lambda do |value|
+      ::OctridevOpenai::BetaAgentTag.from_hash(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::BetaResponseMCPCallFailedEventType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaResponsesServerEventVariant49.
+class BetaResponsesServerEventVariant49
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaResponsesServerEventVariant49Metadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaResponsesServerEventVariant49Metadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaResponsesServerEventVariant49Metadata::DECODERS
+
+  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+  attr_reader :agent
+  # @return [BetaResponseMCPCallFailedEventType] The type of the event. Always 'response.mcp_call.failed'.
+  attr_reader :type
+  # @return [String] The ID of the MCP tool call item that failed.
+  attr_reader :item_id
+  # @return [Integer] The index of the output item that failed.
+  attr_reader :output_index
+  # @return [Integer] The sequence number of this event.
+  attr_reader :sequence_number
+  # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
+  attr_reader :stream_id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BetaResponsesServerEventVariant49.
-  class BetaResponsesServerEventVariant49
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaResponsesServerEventVariant49Metadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaResponsesServerEventVariant49Metadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaResponsesServerEventVariant49Metadata::DECODERS
-
-    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-    attr_reader :agent
-    # @return [BetaResponseMCPCallFailedEventType] The type of the event. Always 'response.mcp_call.failed'.
-    attr_reader :type
-    # @return [String] The ID of the MCP tool call item that failed.
-    attr_reader :item_id
-    # @return [Integer] The index of the output item that failed.
-    attr_reader :output_index
-    # @return [Integer] The sequence number of this event.
-    attr_reader :sequence_number
-    # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
-    attr_reader :stream_id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaResponsesServerEventVariant50Metadata
-    FIELDS = {
-      agent: 'agent',
-      type: 'type',
-      sequence_number: 'sequence_number',
-      output_index: 'output_index',
-      item_id: 'item_id',
-      stream_id: 'stream_id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      sequence_number
-      output_index
-      item_id
-    ].freeze
-    DECODERS = {
-      agent: lambda do |value|
-        ::OctridevOpenai::BetaAgentTag.from_hash(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::BetaResponseMCPCallInProgressEventType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaResponsesServerEventVariant50Metadata
+  FIELDS = {
+    agent: "agent",
+    type: "type",
+    sequence_number: "sequence_number",
+    output_index: "output_index",
+    item_id: "item_id",
+    stream_id: "stream_id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    sequence_number
+    output_index
+    item_id
+  ].freeze
+  DECODERS = {
+    agent: lambda do |value|
+      ::OctridevOpenai::BetaAgentTag.from_hash(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::BetaResponseMCPCallInProgressEventType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaResponsesServerEventVariant50.
+class BetaResponsesServerEventVariant50
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaResponsesServerEventVariant50Metadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaResponsesServerEventVariant50Metadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaResponsesServerEventVariant50Metadata::DECODERS
+
+  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+  attr_reader :agent
+  # @return [BetaResponseMCPCallInProgressEventType] The type of the event. Always 'response.mcp_call.in_progress'.
+  attr_reader :type
+  # @return [Integer] The sequence number of this event.
+  attr_reader :sequence_number
+  # @return [Integer] The index of the output item in the response's output array.
+  attr_reader :output_index
+  # @return [String] The unique identifier of the MCP tool call item being processed.
+  attr_reader :item_id
+  # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
+  attr_reader :stream_id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BetaResponsesServerEventVariant50.
-  class BetaResponsesServerEventVariant50
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaResponsesServerEventVariant50Metadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaResponsesServerEventVariant50Metadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaResponsesServerEventVariant50Metadata::DECODERS
-
-    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-    attr_reader :agent
-    # @return [BetaResponseMCPCallInProgressEventType] The type of the event. Always 'response.mcp_call.in_progress'.
-    attr_reader :type
-    # @return [Integer] The sequence number of this event.
-    attr_reader :sequence_number
-    # @return [Integer] The index of the output item in the response's output array.
-    attr_reader :output_index
-    # @return [String] The unique identifier of the MCP tool call item being processed.
-    attr_reader :item_id
-    # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
-    attr_reader :stream_id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaResponsesServerEventVariant51Metadata
-    FIELDS = {
-      agent: 'agent',
-      type: 'type',
-      item_id: 'item_id',
-      output_index: 'output_index',
-      sequence_number: 'sequence_number',
-      stream_id: 'stream_id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      item_id
-      output_index
-      sequence_number
-    ].freeze
-    DECODERS = {
-      agent: lambda do |value|
-        ::OctridevOpenai::BetaAgentTag.from_hash(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::BetaResponseMCPListToolsCompletedEventType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaResponsesServerEventVariant51Metadata
+  FIELDS = {
+    agent: "agent",
+    type: "type",
+    item_id: "item_id",
+    output_index: "output_index",
+    sequence_number: "sequence_number",
+    stream_id: "stream_id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    item_id
+    output_index
+    sequence_number
+  ].freeze
+  DECODERS = {
+    agent: lambda do |value|
+      ::OctridevOpenai::BetaAgentTag.from_hash(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::BetaResponseMCPListToolsCompletedEventType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaResponsesServerEventVariant51.
+class BetaResponsesServerEventVariant51
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaResponsesServerEventVariant51Metadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaResponsesServerEventVariant51Metadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaResponsesServerEventVariant51Metadata::DECODERS
+
+  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+  attr_reader :agent
+  # @return [BetaResponseMCPListToolsCompletedEventType] The type of the event. Always 'response.mcp_list_tools.completed'.
+  attr_reader :type
+  # @return [String] The ID of the MCP tool call item that produced this output.
+  attr_reader :item_id
+  # @return [Integer] The index of the output item that was processed.
+  attr_reader :output_index
+  # @return [Integer] The sequence number of this event.
+  attr_reader :sequence_number
+  # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
+  attr_reader :stream_id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BetaResponsesServerEventVariant51.
-  class BetaResponsesServerEventVariant51
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaResponsesServerEventVariant51Metadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaResponsesServerEventVariant51Metadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaResponsesServerEventVariant51Metadata::DECODERS
-
-    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-    attr_reader :agent
-    # @return [BetaResponseMCPListToolsCompletedEventType] The type of the event. Always 'response.mcp_list_tools.completed'.
-    attr_reader :type
-    # @return [String] The ID of the MCP tool call item that produced this output.
-    attr_reader :item_id
-    # @return [Integer] The index of the output item that was processed.
-    attr_reader :output_index
-    # @return [Integer] The sequence number of this event.
-    attr_reader :sequence_number
-    # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
-    attr_reader :stream_id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaResponsesServerEventVariant52Metadata
-    FIELDS = {
-      agent: 'agent',
-      type: 'type',
-      item_id: 'item_id',
-      output_index: 'output_index',
-      sequence_number: 'sequence_number',
-      stream_id: 'stream_id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      item_id
-      output_index
-      sequence_number
-    ].freeze
-    DECODERS = {
-      agent: lambda do |value|
-        ::OctridevOpenai::BetaAgentTag.from_hash(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::BetaResponseMCPListToolsFailedEventType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaResponsesServerEventVariant52Metadata
+  FIELDS = {
+    agent: "agent",
+    type: "type",
+    item_id: "item_id",
+    output_index: "output_index",
+    sequence_number: "sequence_number",
+    stream_id: "stream_id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    item_id
+    output_index
+    sequence_number
+  ].freeze
+  DECODERS = {
+    agent: lambda do |value|
+      ::OctridevOpenai::BetaAgentTag.from_hash(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::BetaResponseMCPListToolsFailedEventType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaResponsesServerEventVariant52.
+class BetaResponsesServerEventVariant52
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaResponsesServerEventVariant52Metadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaResponsesServerEventVariant52Metadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaResponsesServerEventVariant52Metadata::DECODERS
+
+  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+  attr_reader :agent
+  # @return [BetaResponseMCPListToolsFailedEventType] The type of the event. Always 'response.mcp_list_tools.failed'.
+  attr_reader :type
+  # @return [String] The ID of the MCP tool call item that failed.
+  attr_reader :item_id
+  # @return [Integer] The index of the output item that failed.
+  attr_reader :output_index
+  # @return [Integer] The sequence number of this event.
+  attr_reader :sequence_number
+  # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
+  attr_reader :stream_id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BetaResponsesServerEventVariant52.
-  class BetaResponsesServerEventVariant52
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaResponsesServerEventVariant52Metadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaResponsesServerEventVariant52Metadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaResponsesServerEventVariant52Metadata::DECODERS
-
-    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-    attr_reader :agent
-    # @return [BetaResponseMCPListToolsFailedEventType] The type of the event. Always 'response.mcp_list_tools.failed'.
-    attr_reader :type
-    # @return [String] The ID of the MCP tool call item that failed.
-    attr_reader :item_id
-    # @return [Integer] The index of the output item that failed.
-    attr_reader :output_index
-    # @return [Integer] The sequence number of this event.
-    attr_reader :sequence_number
-    # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
-    attr_reader :stream_id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaResponsesServerEventVariant53Metadata
-    FIELDS = {
-      agent: 'agent',
-      type: 'type',
-      item_id: 'item_id',
-      output_index: 'output_index',
-      sequence_number: 'sequence_number',
-      stream_id: 'stream_id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      item_id
-      output_index
-      sequence_number
-    ].freeze
-    DECODERS = {
-      agent: lambda do |value|
-        ::OctridevOpenai::BetaAgentTag.from_hash(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::BetaResponseMCPListToolsInProgressEventType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaResponsesServerEventVariant53Metadata
+  FIELDS = {
+    agent: "agent",
+    type: "type",
+    item_id: "item_id",
+    output_index: "output_index",
+    sequence_number: "sequence_number",
+    stream_id: "stream_id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    item_id
+    output_index
+    sequence_number
+  ].freeze
+  DECODERS = {
+    agent: lambda do |value|
+      ::OctridevOpenai::BetaAgentTag.from_hash(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::BetaResponseMCPListToolsInProgressEventType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaResponsesServerEventVariant53.
+class BetaResponsesServerEventVariant53
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaResponsesServerEventVariant53Metadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaResponsesServerEventVariant53Metadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaResponsesServerEventVariant53Metadata::DECODERS
+
+  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+  attr_reader :agent
+  # @return [BetaResponseMCPListToolsInProgressEventType] The type of the event. Always 'response.mcp_list_tools.in_progress'.
+  attr_reader :type
+  # @return [String] The ID of the MCP tool call item that is being processed.
+  attr_reader :item_id
+  # @return [Integer] The index of the output item that is being processed.
+  attr_reader :output_index
+  # @return [Integer] The sequence number of this event.
+  attr_reader :sequence_number
+  # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
+  attr_reader :stream_id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BetaResponsesServerEventVariant53.
-  class BetaResponsesServerEventVariant53
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaResponsesServerEventVariant53Metadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaResponsesServerEventVariant53Metadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaResponsesServerEventVariant53Metadata::DECODERS
-
-    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-    attr_reader :agent
-    # @return [BetaResponseMCPListToolsInProgressEventType] The type of the event. Always 'response.mcp_list_tools.in_progress'.
-    attr_reader :type
-    # @return [String] The ID of the MCP tool call item that is being processed.
-    attr_reader :item_id
-    # @return [Integer] The index of the output item that is being processed.
-    attr_reader :output_index
-    # @return [Integer] The sequence number of this event.
-    attr_reader :sequence_number
-    # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
-    attr_reader :stream_id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaResponsesServerEventVariant54Metadata
-    FIELDS = {
-      agent: 'agent',
-      type: 'type',
-      item_id: 'item_id',
-      output_index: 'output_index',
-      content_index: 'content_index',
-      annotation_index: 'annotation_index',
-      sequence_number: 'sequence_number',
-      annotation: 'annotation',
-      stream_id: 'stream_id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      item_id
-      output_index
-      content_index
-      annotation_index
-      sequence_number
-      annotation
-    ].freeze
-    DECODERS = {
-      agent: lambda do |value|
-        ::OctridevOpenai::BetaAgentTag.from_hash(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::BetaResponseOutputTextAnnotationAddedEventType.from_value(value)
-      end,
-      annotation: lambda do |value|
-        ::OctridevOpenai::BetaAnnotation.from_hash(value)
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      annotation
-    ].freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaResponsesServerEventVariant54Metadata
+  FIELDS = {
+    agent: "agent",
+    type: "type",
+    item_id: "item_id",
+    output_index: "output_index",
+    content_index: "content_index",
+    annotation_index: "annotation_index",
+    sequence_number: "sequence_number",
+    annotation: "annotation",
+    stream_id: "stream_id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    item_id
+    output_index
+    content_index
+    annotation_index
+    sequence_number
+    annotation
+  ].freeze
+  DECODERS = {
+    agent: lambda do |value|
+      ::OctridevOpenai::BetaAgentTag.from_hash(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::BetaResponseOutputTextAnnotationAddedEventType.from_value(value)
+    end,
+    annotation: lambda do |value|
+      ::OctridevOpenai::BetaAnnotation.from_hash(value)
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    annotation
+  ].freeze
+end
+
+# API model for BetaResponsesServerEventVariant54.
+class BetaResponsesServerEventVariant54
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaResponsesServerEventVariant54Metadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaResponsesServerEventVariant54Metadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaResponsesServerEventVariant54Metadata::DECODERS
+
+  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+  attr_reader :agent
+  # @return [BetaResponseOutputTextAnnotationAddedEventType] The type of the event. Always 'response.output_text.annotation.added'.
+  attr_reader :type
+  # @return [String] The unique identifier of the item to which the annotation is being added.
+  attr_reader :item_id
+  # @return [Integer] The index of the output item in the response's output array.
+  attr_reader :output_index
+  # @return [Integer] The index of the content part within the output item.
+  attr_reader :content_index
+  # @return [Integer] The index of the annotation within the content part.
+  attr_reader :annotation_index
+  # @return [Integer] The sequence number of this event.
+  attr_reader :sequence_number
+  # @return [BetaAnnotation] The annotation object being added. (See annotation schema for details.)
+  attr_reader :annotation
+  # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
+  attr_reader :stream_id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BetaResponsesServerEventVariant54.
-  class BetaResponsesServerEventVariant54
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaResponsesServerEventVariant54Metadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaResponsesServerEventVariant54Metadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaResponsesServerEventVariant54Metadata::DECODERS
-
-    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-    attr_reader :agent
-    # @return [BetaResponseOutputTextAnnotationAddedEventType] The type of the event. Always 'response.output_text.annotation.added'.
-    attr_reader :type
-    # @return [String] The unique identifier of the item to which the annotation is being added.
-    attr_reader :item_id
-    # @return [Integer] The index of the output item in the response's output array.
-    attr_reader :output_index
-    # @return [Integer] The index of the content part within the output item.
-    attr_reader :content_index
-    # @return [Integer] The index of the annotation within the content part.
-    attr_reader :annotation_index
-    # @return [Integer] The sequence number of this event.
-    attr_reader :sequence_number
-    # @return [BetaAnnotation] The annotation object being added. (See annotation schema for details.)
-    attr_reader :annotation
-    # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
-    attr_reader :stream_id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalBetaResponsesServerEventVariant54Metadata::NULLABLE_FIELDS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalBetaResponsesServerEventVariant54Metadata::NULLABLE_FIELDS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaResponsesServerEventVariant55Metadata
-    FIELDS = {
-      agent: 'agent',
-      type: 'type',
-      response: 'response',
-      sequence_number: 'sequence_number',
-      stream_id: 'stream_id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      response
-      sequence_number
-    ].freeze
-    DECODERS = {
-      agent: lambda do |value|
-        ::OctridevOpenai::BetaAgentTag.from_hash(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::BetaResponseQueuedEventType.from_value(value)
-      end,
-      response: lambda do |value|
-        ::OctridevOpenai::BetaResponse.from_hash(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaResponsesServerEventVariant55Metadata
+  FIELDS = {
+    agent: "agent",
+    type: "type",
+    response: "response",
+    sequence_number: "sequence_number",
+    stream_id: "stream_id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    response
+    sequence_number
+  ].freeze
+  DECODERS = {
+    agent: lambda do |value|
+      ::OctridevOpenai::BetaAgentTag.from_hash(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::BetaResponseQueuedEventType.from_value(value)
+    end,
+    response: lambda do |value|
+      ::OctridevOpenai::BetaResponse.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaResponsesServerEventVariant55.
+class BetaResponsesServerEventVariant55
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaResponsesServerEventVariant55Metadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaResponsesServerEventVariant55Metadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaResponsesServerEventVariant55Metadata::DECODERS
+
+  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+  attr_reader :agent
+  # @return [BetaResponseQueuedEventType] The type of the event. Always 'response.queued'.
+  attr_reader :type
+  # @return [BetaResponse] The full response object that is queued.
+  attr_reader :response
+  # @return [Integer] The sequence number for this event.
+  attr_reader :sequence_number
+  # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
+  attr_reader :stream_id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BetaResponsesServerEventVariant55.
-  class BetaResponsesServerEventVariant55
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaResponsesServerEventVariant55Metadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaResponsesServerEventVariant55Metadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaResponsesServerEventVariant55Metadata::DECODERS
-
-    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-    attr_reader :agent
-    # @return [BetaResponseQueuedEventType] The type of the event. Always 'response.queued'.
-    attr_reader :type
-    # @return [BetaResponse] The full response object that is queued.
-    attr_reader :response
-    # @return [Integer] The sequence number for this event.
-    attr_reader :sequence_number
-    # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
-    attr_reader :stream_id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaResponsesServerEventVariant56Metadata
-    FIELDS = {
-      agent: 'agent',
-      type: 'type',
-      sequence_number: 'sequence_number',
-      output_index: 'output_index',
-      item_id: 'item_id',
-      delta: 'delta',
-      stream_id: 'stream_id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      sequence_number
-      output_index
-      item_id
-      delta
-    ].freeze
-    DECODERS = {
-      agent: lambda do |value|
-        ::OctridevOpenai::BetaAgentTag.from_hash(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::BetaResponseCustomToolCallInputDeltaEventType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaResponsesServerEventVariant56Metadata
+  FIELDS = {
+    agent: "agent",
+    type: "type",
+    sequence_number: "sequence_number",
+    output_index: "output_index",
+    item_id: "item_id",
+    delta: "delta",
+    stream_id: "stream_id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    sequence_number
+    output_index
+    item_id
+    delta
+  ].freeze
+  DECODERS = {
+    agent: lambda do |value|
+      ::OctridevOpenai::BetaAgentTag.from_hash(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::BetaResponseCustomToolCallInputDeltaEventType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaResponsesServerEventVariant56.
+class BetaResponsesServerEventVariant56
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaResponsesServerEventVariant56Metadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaResponsesServerEventVariant56Metadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaResponsesServerEventVariant56Metadata::DECODERS
+
+  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+  attr_reader :agent
+  # @return [BetaResponseCustomToolCallInputDeltaEventType] The event type identifier.
+  attr_reader :type
+  # @return [Integer] The sequence number of this event.
+  attr_reader :sequence_number
+  # @return [Integer] The index of the output this delta applies to.
+  attr_reader :output_index
+  # @return [String] Unique identifier for the API item associated with this event.
+  attr_reader :item_id
+  # @return [String] The incremental input data (delta) for the custom tool call.
+  attr_reader :delta
+  # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
+  attr_reader :stream_id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BetaResponsesServerEventVariant56.
-  class BetaResponsesServerEventVariant56
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaResponsesServerEventVariant56Metadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaResponsesServerEventVariant56Metadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaResponsesServerEventVariant56Metadata::DECODERS
-
-    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-    attr_reader :agent
-    # @return [BetaResponseCustomToolCallInputDeltaEventType] The event type identifier.
-    attr_reader :type
-    # @return [Integer] The sequence number of this event.
-    attr_reader :sequence_number
-    # @return [Integer] The index of the output this delta applies to.
-    attr_reader :output_index
-    # @return [String] Unique identifier for the API item associated with this event.
-    attr_reader :item_id
-    # @return [String] The incremental input data (delta) for the custom tool call.
-    attr_reader :delta
-    # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
-    attr_reader :stream_id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaResponsesServerEventVariant57Metadata
-    FIELDS = {
-      agent: 'agent',
-      type: 'type',
-      sequence_number: 'sequence_number',
-      output_index: 'output_index',
-      item_id: 'item_id',
-      input: 'input',
-      stream_id: 'stream_id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      sequence_number
-      output_index
-      item_id
-      input
-    ].freeze
-    DECODERS = {
-      agent: lambda do |value|
-        ::OctridevOpenai::BetaAgentTag.from_hash(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::BetaResponseCustomToolCallInputDoneEventType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaResponsesServerEventVariant57Metadata
+  FIELDS = {
+    agent: "agent",
+    type: "type",
+    sequence_number: "sequence_number",
+    output_index: "output_index",
+    item_id: "item_id",
+    input: "input",
+    stream_id: "stream_id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    sequence_number
+    output_index
+    item_id
+    input
+  ].freeze
+  DECODERS = {
+    agent: lambda do |value|
+      ::OctridevOpenai::BetaAgentTag.from_hash(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::BetaResponseCustomToolCallInputDoneEventType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaResponsesServerEventVariant57.
+class BetaResponsesServerEventVariant57
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaResponsesServerEventVariant57Metadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaResponsesServerEventVariant57Metadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaResponsesServerEventVariant57Metadata::DECODERS
+
+  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+  attr_reader :agent
+  # @return [BetaResponseCustomToolCallInputDoneEventType] The event type identifier.
+  attr_reader :type
+  # @return [Integer] The sequence number of this event.
+  attr_reader :sequence_number
+  # @return [Integer] The index of the output this event applies to.
+  attr_reader :output_index
+  # @return [String] Unique identifier for the API item associated with this event.
+  attr_reader :item_id
+  # @return [String] The complete input data for the custom tool call.
+  attr_reader :input
+  # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
+  attr_reader :stream_id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BetaResponsesServerEventVariant57.
-  class BetaResponsesServerEventVariant57
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaResponsesServerEventVariant57Metadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaResponsesServerEventVariant57Metadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaResponsesServerEventVariant57Metadata::DECODERS
-
-    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-    attr_reader :agent
-    # @return [BetaResponseCustomToolCallInputDoneEventType] The event type identifier.
-    attr_reader :type
-    # @return [Integer] The sequence number of this event.
-    attr_reader :sequence_number
-    # @return [Integer] The index of the output this event applies to.
-    attr_reader :output_index
-    # @return [String] Unique identifier for the API item associated with this event.
-    attr_reader :item_id
-    # @return [String] The complete input data for the custom tool call.
-    attr_reader :input
-    # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
-    attr_reader :stream_id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the BetaResponsesServerEvent SDK namespace.
-  module BetaResponsesServerEvent
-    DISCRIMINATOR_MAPPING = {
-      'error' => -> { BetaResponseWsError },
-      'response.steer.accepted' => -> { BetaResponseSteerAcceptedEvent },
-      'response.steer.pending' => -> { BetaResponseSteerPendingEvent },
-      'response.steer.failed' => -> { BetaResponseSteerFailedEvent },
-      'response.inject.created' => -> { BetaResponseInjectCreatedEvent },
-      'response.inject.failed' => -> { BetaResponseInjectFailedEvent }
-    }.freeze
-    UNDECIDED_VARIANTS = [
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the BetaResponsesServerEvent SDK namespace.
+module BetaResponsesServerEvent
+  DISCRIMINATOR_MAPPING = {
+    "error" => -> { BetaResponseWsError },
+    "response.steer.accepted" => -> { BetaResponseSteerAcceptedEvent },
+    "response.steer.pending" => -> { BetaResponseSteerPendingEvent },
+    "response.steer.failed" => -> { BetaResponseSteerFailedEvent },
+    "response.inject.created" => -> { BetaResponseInjectCreatedEvent },
+    "response.inject.failed" => -> { BetaResponseInjectFailedEvent },
+  }.freeze
+  UNDECIDED_VARIANTS = (
+    [
       -> { BetaResponsesServerEventVariant0 },
       -> { BetaResponsesServerEventVariant1 },
       -> { BetaResponsesServerEventVariant2 },
@@ -638,27 +639,29 @@ module OctridevOpenai
       -> { BetaResponseSteerAcceptedEvent },
       -> { BetaResponseSteerFailedEvent },
       -> { BetaResponseInjectCreatedEvent },
-      -> { BetaResponseInjectFailedEvent }
-    ].freeze
+      -> { BetaResponseInjectFailedEvent },
+    ]
+  ).freeze
 
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
 
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
 
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
-
-      raise SdkValidationError.new('BetaResponsesServerEvent', 'variant', "Unknown BetaResponsesServerEvent discriminator: #{hash['type'].inspect}")
-    end
+    raise SdkValidationError.new('BetaResponsesServerEvent', 'variant', "Unknown BetaResponsesServerEvent discriminator: #{hash["type"].inspect}")
   end
+end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaResponsesWebSocketStreamEventMetadata
-    FIELDS = {
-      stream_id: 'stream_id'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {}.freeze
-  end
+# Internal model hydration metadata.
+class SdkInternalBetaResponsesWebSocketStreamEventMetadata
+  FIELDS = {
+    stream_id: "stream_id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
 end

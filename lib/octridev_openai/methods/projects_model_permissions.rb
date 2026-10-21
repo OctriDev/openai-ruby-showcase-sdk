@@ -19,19 +19,20 @@ module OctridevOpenai
         project_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
           [
-            '/organization/projects/',
+            "/organization/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/model_permissions'
+            "/model_permissions"
           ].join,
           config: config,
           return_type: ::OctridevOpenai::ProjectModelPermissions,
           decoder: :json,
           operation_id: 'retrieve_project_model_permissions',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -51,23 +52,24 @@ module OctridevOpenai
         model_ids:,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
           [
-            '/organization/projects/',
+            "/organization/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/model_permissions'
+            "/model_permissions"
           ].join,
           config: config,
           body: {
             'mode' => mode,
-            'model_ids' => model_ids
+            'model_ids' => model_ids,
           },
           return_type: ::OctridevOpenai::ProjectModelPermissions,
           decoder: :json,
           operation_id: 'update_project_model_permissions',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -81,19 +83,20 @@ module OctridevOpenai
         project_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'DELETE',
           [
-            '/organization/projects/',
+            "/organization/projects/",
             SdkClient.encode_path_segment(project_id),
-            '/model_permissions'
+            "/model_permissions"
           ].join,
           config: config,
           return_type: ::OctridevOpenai::ProjectModelPermissionsDeleteResponse,
           decoder: :json,
           operation_id: 'delete_project_model_permissions',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
     end

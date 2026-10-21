@@ -16,7 +16,7 @@ module OctridevOpenai
         V_1024_X1024 = '1024x1024'
         V_1792_X1792 = '1792x1792'
         V_1024_X1792 = '1024x1792'
-        VALUES = %w[256x256 512x512 1024x1024 1792x1792 1024x1792].freeze
+        VALUES = ['256x256', '512x512', '1024x1024', '1792x1792', '1024x1792'].freeze
         def self.from_value(value)
           value
         end
@@ -28,7 +28,7 @@ module OctridevOpenai
         USER_ID = 'user_id'
         API_KEY_ID = 'api_key_id'
         MODEL = 'model'
-        VALUES = %w[project_id user_id api_key_id model].freeze
+        VALUES = ['project_id', 'user_id', 'api_key_id', 'model'].freeze
         def self.from_value(value)
           value
         end
@@ -42,8 +42,8 @@ module OctridevOpenai
         MODEL = 'model'
         CONTEXT_LEVEL = 'context_level'
         API_SOURCE = 'api_source'
-        VALUES = %w[
-          project_id user_id api_key_id model context_level api_source
+        VALUES = [
+          'project_id', 'user_id', 'api_key_id', 'model', 'context_level', 'api_source'
         ].freeze
         def self.from_value(value)
           value
@@ -55,7 +55,7 @@ module OctridevOpenai
         V_1_M = '1m'
         V_1_H = '1h'
         V_1_D = '1d'
-        VALUES = %w[1m 1h 1d].freeze
+        VALUES = ['1m', '1h', '1d'].freeze
         def self.from_value(value)
           value
         end
@@ -66,7 +66,7 @@ module OctridevOpenai
         V_1_M = '1m'
         V_1_H = '1h'
         V_1_D = '1d'
-        VALUES = %w[1m 1h 1d].freeze
+        VALUES = ['1m', '1h', '1d'].freeze
         def self.from_value(value)
           value
         end
@@ -77,7 +77,7 @@ module OctridevOpenai
         V_1_M = '1m'
         V_1_H = '1h'
         V_1_D = '1d'
-        VALUES = %w[1m 1h 1d].freeze
+        VALUES = ['1m', '1h', '1d'].freeze
         def self.from_value(value)
           value
         end
@@ -97,7 +97,7 @@ module OctridevOpenai
         V_1_M = '1m'
         V_1_H = '1h'
         V_1_D = '1d'
-        VALUES = %w[1m 1h 1d].freeze
+        VALUES = ['1m', '1h', '1d'].freeze
         def self.from_value(value)
           value
         end
@@ -108,7 +108,7 @@ module OctridevOpenai
         V_1_M = '1m'
         V_1_H = '1h'
         V_1_D = '1d'
-        VALUES = %w[1m 1h 1d].freeze
+        VALUES = ['1m', '1h', '1d'].freeze
         def self.from_value(value)
           value
         end
@@ -131,7 +131,7 @@ module OctridevOpenai
         MODEL = 'model'
         SIZE = 'size'
         SOURCE = 'source'
-        VALUES = %w[project_id user_id api_key_id model size source].freeze
+        VALUES = ['project_id', 'user_id', 'api_key_id', 'model', 'size', 'source'].freeze
         def self.from_value(value)
           value
         end
@@ -142,7 +142,7 @@ module OctridevOpenai
         V_1_M = '1m'
         V_1_H = '1h'
         V_1_D = '1d'
-        VALUES = %w[1m 1h 1d].freeze
+        VALUES = ['1m', '1h', '1d'].freeze
         def self.from_value(value)
           value
         end
@@ -157,8 +157,8 @@ module OctridevOpenai
         BATCH = 'batch'
         SERVICE_TIER = 'service_tier'
         API_SOURCE = 'api_source'
-        VALUES = %w[
-          project_id user_id api_key_id model batch service_tier api_source
+        VALUES = [
+          'project_id', 'user_id', 'api_key_id', 'model', 'batch', 'service_tier', 'api_source'
         ].freeze
         def self.from_value(value)
           value
@@ -180,7 +180,7 @@ module OctridevOpenai
         USER_ID = 'user_id'
         API_KEY_ID = 'api_key_id'
         MODEL = 'model'
-        VALUES = %w[project_id user_id api_key_id model].freeze
+        VALUES = ['project_id', 'user_id', 'api_key_id', 'model'].freeze
         def self.from_value(value)
           value
         end
@@ -193,7 +193,7 @@ module OctridevOpenai
         LINE_ITEM = 'line_item'
         API_KEY_ID = 'api_key_id'
         API_SOURCE = 'api_source'
-        VALUES = %w[project_id user_id line_item api_key_id api_source].freeze
+        VALUES = ['project_id', 'user_id', 'line_item', 'api_key_id', 'api_source'].freeze
         def self.from_value(value)
           value
         end
@@ -205,7 +205,7 @@ module OctridevOpenai
         USER_ID = 'user_id'
         API_KEY_ID = 'api_key_id'
         MODEL = 'model'
-        VALUES = %w[project_id user_id api_key_id model].freeze
+        VALUES = ['project_id', 'user_id', 'api_key_id', 'model'].freeze
         def self.from_value(value)
           value
         end
@@ -217,7 +217,7 @@ module OctridevOpenai
         USER_ID = 'user_id'
         API_KEY_ID = 'api_key_id'
         VECTOR_STORE_ID = 'vector_store_id'
-        VALUES = %w[project_id user_id api_key_id vector_store_id].freeze
+        VALUES = ['project_id', 'user_id', 'api_key_id', 'vector_store_id'].freeze
         def self.from_value(value)
           value
         end
@@ -228,7 +228,7 @@ module OctridevOpenai
         V_1_M = '1m'
         V_1_H = '1h'
         V_1_D = '1d'
-        VALUES = %w[1m 1h 1d].freeze
+        VALUES = ['1m', '1h', '1d'].freeze
         def self.from_value(value)
           value
         end
@@ -239,7 +239,7 @@ module OctridevOpenai
         V_1_M = '1m'
         V_1_H = '1h'
         V_1_D = '1d'
-        VALUES = %w[1m 1h 1d].freeze
+        VALUES = ['1m', '1h', '1d'].freeze
         def self.from_value(value)
           value
         end
@@ -262,7 +262,7 @@ module OctridevOpenai
         USER_ID = 'user_id'
         API_KEY_ID = 'api_key_id'
         MODEL = 'model'
-        VALUES = %w[project_id user_id api_key_id model].freeze
+        VALUES = ['project_id', 'user_id', 'api_key_id', 'model'].freeze
         def self.from_value(value)
           value
         end
@@ -273,7 +273,7 @@ module OctridevOpenai
         LOW = 'low'
         MEDIUM = 'medium'
         HIGH = 'high'
-        VALUES = %w[low medium high].freeze
+        VALUES = ['low', 'medium', 'high'].freeze
         def self.from_value(value)
           value
         end
@@ -284,7 +284,7 @@ module OctridevOpenai
         V_1_M = '1m'
         V_1_H = '1h'
         V_1_D = '1d'
-        VALUES = %w[1m 1h 1d].freeze
+        VALUES = ['1m', '1h', '1d'].freeze
         def self.from_value(value)
           value
         end
@@ -295,7 +295,7 @@ module OctridevOpenai
         V_1_M = '1m'
         V_1_H = '1h'
         V_1_D = '1d'
-        VALUES = %w[1m 1h 1d].freeze
+        VALUES = ['1m', '1h', '1d'].freeze
         def self.from_value(value)
           value
         end

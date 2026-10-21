@@ -29,6 +29,7 @@ module OctridevOpenai
         vault_ids: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.if_given(idempotency_key) do
           Validation.validate_length('Idempotency-Key', idempotency_key, min: 1, max: 256)
         end
@@ -37,20 +38,20 @@ module OctridevOpenai
 
         SdkClient.request(
           'POST',
-          '/agents/environments',
+          "/agents/environments",
           config: config,
           body: {
             'environment' => environment,
-            'vault_ids' => vault_ids
+            'vault_ids' => vault_ids,
           },
           return_type: ::OctridevOpenai::PublicEnvironmentResource,
           decoder: :json,
           operation_id: 'create_agent_environment',
           extra_headers: SdkClient.serialize_headers({
-                                                       'Idempotency-Key' => SdkClient.header_value(idempotency_key)
-                                                     }),
+            'Idempotency-Key' => SdkClient.header_value(idempotency_key),
+          }),
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '429' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '429' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
         ).data
       end
     end

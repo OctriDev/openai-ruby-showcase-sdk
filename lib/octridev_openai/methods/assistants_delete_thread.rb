@@ -19,10 +19,11 @@ module OctridevOpenai
         thread_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'DELETE',
           [
-            '/threads/',
+            "/threads/",
             SdkClient.encode_path_segment(thread_id)
           ].join,
           config: config,
@@ -30,7 +31,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_thread',
           request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
     end

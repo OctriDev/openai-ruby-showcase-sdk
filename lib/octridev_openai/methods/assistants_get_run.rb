@@ -15,13 +15,19 @@ module OctridevOpenai
       #
       # @param thread_id [String] The ID of the thread that was run.
       # @param run_id [String] The ID of the run to retrieve.
-      singleton_class.define_method(:get_run) do |config:, thread_id:, run_id:, request_options: nil|
+      singleton_class.define_method(:get_run) do |
+        config:,
+        thread_id:,
+        run_id:,
+        request_options: nil
+      |
+
         SdkClient.request(
           'GET',
           [
-            '/threads/',
+            "/threads/",
             SdkClient.encode_path_segment(thread_id),
-            '/runs/',
+            "/runs/",
             SdkClient.encode_path_segment(run_id)
           ].join,
           config: config,
@@ -29,7 +35,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'get_run',
           request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
     end

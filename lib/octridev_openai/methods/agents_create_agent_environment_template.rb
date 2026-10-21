@@ -45,12 +45,13 @@ module OctridevOpenai
         name: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.if_given(setup_commands) do
           Validation.validate_items('setup_commands', setup_commands, min: 0, max: 16)
         end
 
         Validation.if_given(capability_directories) do
-          Validation.validate_items('capability_directories', capability_directories, min: 0, max: 16_384)
+          Validation.validate_items('capability_directories', capability_directories, min: 0, max: 16384)
         end
 
         Validation.if_given(skills) { Validation.validate_items('skills', skills, min: 0, max: 200) }
@@ -63,7 +64,7 @@ module OctridevOpenai
 
         SdkClient.request(
           'POST',
-          '/agents/environments/templates',
+          "/agents/environments/templates",
           config: config,
           body: {
             'packages' => packages,
@@ -75,13 +76,13 @@ module OctridevOpenai
             'skills' => skills,
             'plugins' => plugins,
             'files' => files,
-            'name' => name
+            'name' => name,
           },
           return_type: ::OctridevOpenai::EnvironmentTemplateResource,
           decoder: :json,
           operation_id: 'create_agent_environment_template',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
         ).data
       end
     end

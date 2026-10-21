@@ -5,676 +5,679 @@
 
 # projects domain models
 module OctridevOpenai
-  # API model for ProjectModelPermissionsDeleteResponse.
-  # Confirmation payload returned after deleting project model permissions.
-  class ProjectModelPermissionsDeleteResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalProjectModelPermissionsDeleteResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalProjectModelPermissionsDeleteResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalProjectModelPermissionsDeleteResponseMetadata::DECODERS
+# API model for ProjectModelPermissionsDeleteResponse.
+# Confirmation payload returned after deleting project model permissions.
+class ProjectModelPermissionsDeleteResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalProjectModelPermissionsDeleteResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalProjectModelPermissionsDeleteResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalProjectModelPermissionsDeleteResponseMetadata::DECODERS
 
-    # @return [ProjectModelPermissionsDeleteResponseObject] The object type, which is always `project.model_permissions.deleted`.
-    attr_reader :object
-    # @return [Boolean] Whether the project model permissions were deleted.
-    attr_reader :deleted
+  # @return [ProjectModelPermissionsDeleteResponseObject] The object type, which is always `project.model_permissions.deleted`.
+  attr_reader :object
+  # @return [Boolean] Whether the project model permissions were deleted.
+  attr_reader :deleted
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the ProjectModelPermissionsDeleteResponseObject SDK namespace.
-  module ProjectModelPermissionsDeleteResponseObject
-    PROJECT_MODEL_PERMISSIONS_DELETED = 'project.model_permissions.deleted'
-    VALUES = ['project.model_permissions.deleted'].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalProjectModelPermissionsUpdateRequestMetadata
-    FIELDS = {
-      mode: 'mode',
-      model_ids: 'model_ids'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      mode
-      model_ids
-    ].freeze
-    DECODERS = {
-      mode: lambda do |value|
-        ::OctridevOpenai::ProjectModelPermissionsUpdateRequestMode.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the ProjectModelPermissionsDeleteResponseObject SDK namespace.
+module ProjectModelPermissionsDeleteResponseObject
+  PROJECT_MODEL_PERMISSIONS_DELETED = 'project.model_permissions.deleted'
+  VALUES = ['project.model_permissions.deleted'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalProjectModelPermissionsUpdateRequestMetadata
+  FIELDS = {
+    mode: "mode",
+    model_ids: "model_ids",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    mode
+    model_ids
+  ].freeze
+  DECODERS = {
+    mode: lambda do |value|
+      ::OctridevOpenai::ProjectModelPermissionsUpdateRequestMode.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for ProjectModelPermissionsUpdateRequest.
+# Typed representation of the `ProjectModelPermissionsUpdateRequest` API schema.
+class ProjectModelPermissionsUpdateRequest
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalProjectModelPermissionsUpdateRequestMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalProjectModelPermissionsUpdateRequestMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalProjectModelPermissionsUpdateRequestMetadata::DECODERS
+
+  # @return [ProjectModelPermissionsUpdateRequestMode] The model permissions mode to apply.
+  attr_reader :mode
+  # @return [Array_of_String] The model IDs included in this permissions policy.
+  attr_reader :model_ids
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ProjectModelPermissionsUpdateRequest.
-  # Typed representation of the `ProjectModelPermissionsUpdateRequest` API schema.
-  class ProjectModelPermissionsUpdateRequest
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalProjectModelPermissionsUpdateRequestMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalProjectModelPermissionsUpdateRequestMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalProjectModelPermissionsUpdateRequestMetadata::DECODERS
-
-    # @return [ProjectModelPermissionsUpdateRequestMode] The model permissions mode to apply.
-    attr_reader :mode
-    # @return [Array_of_String] The model IDs included in this permissions policy.
-    attr_reader :model_ids
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the ProjectModelPermissionsUpdateRequestMode SDK namespace.
-  module ProjectModelPermissionsUpdateRequestMode
-    ALLOW_LIST = 'allow_list'
-    DENY_LIST = 'deny_list'
-    VALUES = %w[allow_list deny_list].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the ProjectModelPermissionsUpdateRequestMode SDK namespace.
+module ProjectModelPermissionsUpdateRequestMode
+  ALLOW_LIST = 'allow_list'
+  DENY_LIST = 'deny_list'
+  VALUES = ['allow_list', 'deny_list'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalProjectRateLimitMetadata
+  FIELDS = {
+    object: "object",
+    id: "id",
+    model: "model",
+    max_requests_per1_minute: "max_requests_per_1_minute",
+    max_tokens_per1_minute: "max_tokens_per_1_minute",
+    max_images_per1_minute: "max_images_per_1_minute",
+    max_audio_megabytes_per1_minute: "max_audio_megabytes_per_1_minute",
+    max_requests_per1_day: "max_requests_per_1_day",
+    batch1_day_max_input_tokens: "batch_1_day_max_input_tokens",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    id
+    model
+    max_requests_per1_minute
+    max_tokens_per1_minute
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::ProjectRateLimitObject.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for ProjectRateLimit.
+# Represents a project rate limit config.
+class ProjectRateLimit
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalProjectRateLimitMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalProjectRateLimitMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalProjectRateLimitMetadata::DECODERS
+
+  # @return [ProjectRateLimitObject] The object type, which is always `project.rate_limit`
+  attr_reader :object
+  # @return [String] The identifier, which can be referenced in API endpoints.
+  attr_reader :id
+  # @return [String] The model this rate limit applies to.
+  attr_reader :model
+  # @return [Integer] The maximum requests per minute.
+  attr_reader :max_requests_per1_minute
+  # @return [Integer] The maximum tokens per minute.
+  attr_reader :max_tokens_per1_minute
+  # @return [Integer] The maximum images per minute. Only present for relevant models.
+  attr_reader :max_images_per1_minute
+  # @return [Integer] The maximum audio megabytes per minute. Only present for relevant models.
+  attr_reader :max_audio_megabytes_per1_minute
+  # @return [Integer] The maximum requests per day. Only present for relevant models.
+  attr_reader :max_requests_per1_day
+  # @return [Integer] The maximum batch input tokens per day. Only present for relevant models.
+  attr_reader :batch1_day_max_input_tokens
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalProjectRateLimitMetadata
-    FIELDS = {
-      object: 'object',
-      id: 'id',
-      model: 'model',
-      max_requests_per1_minute: 'max_requests_per_1_minute',
-      max_tokens_per1_minute: 'max_tokens_per_1_minute',
-      max_images_per1_minute: 'max_images_per_1_minute',
-      max_audio_megabytes_per1_minute: 'max_audio_megabytes_per_1_minute',
-      max_requests_per1_day: 'max_requests_per_1_day',
-      batch1_day_max_input_tokens: 'batch_1_day_max_input_tokens'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      id
-      model
-      max_requests_per1_minute
-      max_tokens_per1_minute
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::ProjectRateLimitObject.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ProjectRateLimit.
-  # Represents a project rate limit config.
-  class ProjectRateLimit
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalProjectRateLimitMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalProjectRateLimitMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalProjectRateLimitMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [ProjectRateLimitObject] The object type, which is always `project.rate_limit`
-    attr_reader :object
-    # @return [String] The identifier, which can be referenced in API endpoints.
-    attr_reader :id
-    # @return [String] The model this rate limit applies to.
-    attr_reader :model
-    # @return [Integer] The maximum requests per minute.
-    attr_reader :max_requests_per1_minute
-    # @return [Integer] The maximum tokens per minute.
-    attr_reader :max_tokens_per1_minute
-    # @return [Integer] The maximum images per minute. Only present for relevant models.
-    attr_reader :max_images_per1_minute
-    # @return [Integer] The maximum audio megabytes per minute. Only present for relevant models.
-    attr_reader :max_audio_megabytes_per1_minute
-    # @return [Integer] The maximum requests per day. Only present for relevant models.
-    attr_reader :max_requests_per1_day
-    # @return [Integer] The maximum batch input tokens per day. Only present for relevant models.
-    attr_reader :batch1_day_max_input_tokens
+# Defines the ProjectRateLimitObject SDK namespace.
+module ProjectRateLimitObject
+  PROJECT_RATE_LIMIT = 'project.rate_limit'
+  VALUES = ['project.rate_limit'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalProjectRateLimitListResponseMetadata
+  FIELDS = {
+    object: "object",
+    data: "data",
+    first_id: "first_id",
+    last_id: "last_id",
+    has_more: "has_more",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    data
+    has_more
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::ProjectRateLimitListResponseObject.from_value(value)
+    end,
+    data: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::ProjectRateLimit.from_hash(item) }
+    end,
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for ProjectRateLimitListResponse.
+# Typed representation of the `ProjectRateLimitListResponse` API schema.
+class ProjectRateLimitListResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalProjectRateLimitListResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalProjectRateLimitListResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalProjectRateLimitListResponseMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [ProjectRateLimitListResponseObject] Required enumerated value serialized in the `object` wire field.
+  attr_reader :object
+  # @return [Array_of_ProjectRateLimit] Required array value serialized in the `data` wire field.
+  attr_reader :data
+  # @return [String] Optional `string` value serialized in the `first_id` wire field.
+  attr_reader :first_id
+  # @return [String] Optional `string` value serialized in the `last_id` wire field.
+  attr_reader :last_id
+  # @return [Boolean] Required `boolean` value serialized in the `has_more` wire field.
+  attr_reader :has_more
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the ProjectRateLimitObject SDK namespace.
-  module ProjectRateLimitObject
-    PROJECT_RATE_LIMIT = 'project.rate_limit'
-    VALUES = ['project.rate_limit'].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalProjectRateLimitListResponseMetadata
-    FIELDS = {
-      object: 'object',
-      data: 'data',
-      first_id: 'first_id',
-      last_id: 'last_id',
-      has_more: 'has_more'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      data
-      has_more
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::ProjectRateLimitListResponseObject.from_value(value)
-      end,
-      data: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::ProjectRateLimit.from_hash(item) }
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the ProjectRateLimitListResponseObject SDK namespace.
+module ProjectRateLimitListResponseObject
+  LIST = 'list'
+  VALUES = ['list'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalProjectRateLimitUpdateRequestMetadata
+  FIELDS = {
+    max_requests_per1_minute: "max_requests_per_1_minute",
+    max_tokens_per1_minute: "max_tokens_per_1_minute",
+    max_images_per1_minute: "max_images_per_1_minute",
+    max_audio_megabytes_per1_minute: "max_audio_megabytes_per_1_minute",
+    max_requests_per1_day: "max_requests_per_1_day",
+    batch1_day_max_input_tokens: "batch_1_day_max_input_tokens",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for ProjectRateLimitUpdateRequest.
+# Typed representation of the `ProjectRateLimitUpdateRequest` API schema.
+class ProjectRateLimitUpdateRequest
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalProjectRateLimitUpdateRequestMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalProjectRateLimitUpdateRequestMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalProjectRateLimitUpdateRequestMetadata::DECODERS
+
+  # @return [Integer] The maximum requests per minute.
+  attr_reader :max_requests_per1_minute
+  # @return [Integer] The maximum tokens per minute.
+  attr_reader :max_tokens_per1_minute
+  # @return [Integer] The maximum images per minute. Only relevant for certain models.
+  attr_reader :max_images_per1_minute
+  # @return [Integer] The maximum audio megabytes per minute. Only relevant for certain models.
+  attr_reader :max_audio_megabytes_per1_minute
+  # @return [Integer] The maximum requests per day. Only relevant for certain models.
+  attr_reader :max_requests_per1_day
+  # @return [Integer] The maximum batch input tokens per day. Only relevant for certain models.
+  attr_reader :batch1_day_max_input_tokens
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ProjectRateLimitListResponse.
-  # Typed representation of the `ProjectRateLimitListResponse` API schema.
-  class ProjectRateLimitListResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalProjectRateLimitListResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalProjectRateLimitListResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalProjectRateLimitListResponseMetadata::DECODERS
-
-    # @return [ProjectRateLimitListResponseObject] Required enumerated value serialized in the `object` wire field.
-    attr_reader :object
-    # @return [Array_of_ProjectRateLimit] Required array value serialized in the `data` wire field.
-    attr_reader :data
-    # @return [String] Optional `string` value serialized in the `first_id` wire field.
-    attr_reader :first_id
-    # @return [String] Optional `string` value serialized in the `last_id` wire field.
-    attr_reader :last_id
-    # @return [Boolean] Required `boolean` value serialized in the `has_more` wire field.
-    attr_reader :has_more
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the ProjectRateLimitListResponseObject SDK namespace.
-  module ProjectRateLimitListResponseObject
-    LIST = 'list'
-    VALUES = ['list'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalProjectServiceAccountMetadata
+  FIELDS = {
+    object: "object",
+    id: "id",
+    name: "name",
+    role: "role",
+    created_at: "created_at",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    id
+    name
+    role
+    created_at
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::ProjectServiceAccountObject.from_value(value)
+    end,
+    role: lambda do |value|
+      ::OctridevOpenai::ProjectServiceAccountRole.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for ProjectServiceAccount.
+# Represents an individual service account in a project.
+class ProjectServiceAccount
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalProjectServiceAccountMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalProjectServiceAccountMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalProjectServiceAccountMetadata::DECODERS
+
+  # @return [ProjectServiceAccountObject] The object type, which is always `organization.project.service_account`
+  attr_reader :object
+  # @return [String] The identifier, which can be referenced in API endpoints
+  attr_reader :id
+  # @return [String] The name of the service account
+  attr_reader :name
+  # @return [ProjectServiceAccountRole] `owner`, `member`, or `none`
+  attr_reader :role
+  # @return [Integer] The Unix timestamp (in seconds) of when the service account was created
+  attr_reader :created_at
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalProjectRateLimitUpdateRequestMetadata
-    FIELDS = {
-      max_requests_per1_minute: 'max_requests_per_1_minute',
-      max_tokens_per1_minute: 'max_tokens_per_1_minute',
-      max_images_per1_minute: 'max_images_per_1_minute',
-      max_audio_megabytes_per1_minute: 'max_audio_megabytes_per_1_minute',
-      max_requests_per1_day: 'max_requests_per_1_day',
-      batch1_day_max_input_tokens: 'batch_1_day_max_input_tokens'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {}.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ProjectRateLimitUpdateRequest.
-  # Typed representation of the `ProjectRateLimitUpdateRequest` API schema.
-  class ProjectRateLimitUpdateRequest
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalProjectRateLimitUpdateRequestMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalProjectRateLimitUpdateRequestMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalProjectRateLimitUpdateRequestMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [Integer] The maximum requests per minute.
-    attr_reader :max_requests_per1_minute
-    # @return [Integer] The maximum tokens per minute.
-    attr_reader :max_tokens_per1_minute
-    # @return [Integer] The maximum images per minute. Only relevant for certain models.
-    attr_reader :max_images_per1_minute
-    # @return [Integer] The maximum audio megabytes per minute. Only relevant for certain models.
-    attr_reader :max_audio_megabytes_per1_minute
-    # @return [Integer] The maximum requests per day. Only relevant for certain models.
-    attr_reader :max_requests_per1_day
-    # @return [Integer] The maximum batch input tokens per day. Only relevant for certain models.
-    attr_reader :batch1_day_max_input_tokens
+# Defines the ProjectServiceAccountObject SDK namespace.
+module ProjectServiceAccountObject
+  ORGANIZATION_PROJECT_SERVICE_ACCOUNT = 'organization.project.service_account'
+  VALUES = ['organization.project.service_account'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Defines the ProjectServiceAccountRole SDK namespace.
+module ProjectServiceAccountRole
+  OWNER = 'owner'
+  MEMBER = 'member'
+  NONE = 'none'
+  VALUES = ['owner', 'member', 'none'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# Internal model hydration metadata.
+class SdkInternalProjectServiceAccountApiKeyMetadata
+  FIELDS = {
+    object: "object",
+    value: "value",
+    name: "name",
+    created_at: "created_at",
+    expires_at: "expires_at",
+    id: "id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    value
+    name
+    created_at
+    id
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::ProjectServiceAccountApiKeyObject.from_value(value)
+    end,
+  }.freeze
+end
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+# API model for ProjectServiceAccountApiKey.
+# Typed representation of the `ProjectServiceAccountApiKey` API schema.
+class ProjectServiceAccountApiKey
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalProjectServiceAccountApiKeyMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalProjectServiceAccountApiKeyMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalProjectServiceAccountApiKeyMetadata::DECODERS
+
+  # @return [ProjectServiceAccountApiKeyObject] The object type, which is always `organization.project.service_account.api_key`
+  attr_reader :object
+  # @return [String] Required `string` value serialized in the `value` wire field.
+  attr_reader :value
+  # @return [String] Required `string` value serialized in the `name` wire field.
+  attr_reader :name
+  # @return [Integer] Required `unixtime`-formatted value serialized in the `created_at` wire field.
+  attr_reader :created_at
+  # @return [Integer] The Unix timestamp (in seconds) when the API key expires, or null if it does not expire.
+  attr_reader :expires_at
+  # @return [String] Required `string` value serialized in the `id` wire field.
+  attr_reader :id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalProjectServiceAccountMetadata
-    FIELDS = {
-      object: 'object',
-      id: 'id',
-      name: 'name',
-      role: 'role',
-      created_at: 'created_at'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      id
-      name
-      role
-      created_at
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::ProjectServiceAccountObject.from_value(value)
-      end,
-      role: lambda do |value|
-        ::OctridevOpenai::ProjectServiceAccountRole.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ProjectServiceAccount.
-  # Represents an individual service account in a project.
-  class ProjectServiceAccount
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalProjectServiceAccountMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalProjectServiceAccountMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalProjectServiceAccountMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [ProjectServiceAccountObject] The object type, which is always `organization.project.service_account`
-    attr_reader :object
-    # @return [String] The identifier, which can be referenced in API endpoints
-    attr_reader :id
-    # @return [String] The name of the service account
-    attr_reader :name
-    # @return [ProjectServiceAccountRole] `owner`, `member`, or `none`
-    attr_reader :role
-    # @return [Integer] The Unix timestamp (in seconds) of when the service account was created
-    attr_reader :created_at
+# Defines the ProjectServiceAccountApiKeyObject SDK namespace.
+module ProjectServiceAccountApiKeyObject
+  ORGANIZATION_PROJECT_SERVICE_ACCOUNT_API_KEY = 'organization.project.service_account.api_key'
+  VALUES = ['organization.project.service_account.api_key'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalProjectServiceAccountCreateRequestMetadata
+  FIELDS = {
+    name: "name",
+    create_service_account_only: "create_service_account_only",
+    expires_in_seconds: "expires_in_seconds",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    name
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for ProjectServiceAccountCreateRequest.
+# Typed representation of the `ProjectServiceAccountCreateRequest` API schema.
+class ProjectServiceAccountCreateRequest
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalProjectServiceAccountCreateRequestMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalProjectServiceAccountCreateRequestMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalProjectServiceAccountCreateRequestMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [String] The name of the service account being created.
+  attr_reader :name
+  # @return [Boolean] Optional `boolean` value serialized in the `create_service_account_only` wire field.
+  attr_reader :create_service_account_only
+  # @return [Integer] Number of seconds until the initial API key expires. If omitted or null, the key does not expire unless the effective organization or project policy requires an expiration. When a policy sets a maximum lifetime, this value must be provided and must not exceed that limit. A non-null value cannot be used when `create_service_account_only` is true.
+  attr_reader :expires_in_seconds
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the ProjectServiceAccountObject SDK namespace.
-  module ProjectServiceAccountObject
-    ORGANIZATION_PROJECT_SERVICE_ACCOUNT = 'organization.project.service_account'
-    VALUES = ['organization.project.service_account'].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the ProjectServiceAccountRole SDK namespace.
-  module ProjectServiceAccountRole
-    OWNER = 'owner'
-    MEMBER = 'member'
-    NONE = 'none'
-    VALUES = %w[owner member none].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalProjectServiceAccountCreateResponseMetadata
+  FIELDS = {
+    object: "object",
+    id: "id",
+    name: "name",
+    role: "role",
+    created_at: "created_at",
+    api_key: "api_key",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    id
+    name
+    role
+    created_at
+    api_key
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::ProjectServiceAccountCreateResponseObject.from_value(value)
+    end,
+    role: lambda do |value|
+      ::OctridevOpenai::ProjectServiceAccountCreateResponseRole.from_value(value)
+    end,
+    api_key: lambda do |value|
+      ::OctridevOpenai::ProjectServiceAccountApiKey.from_hash(value)
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    api_key
+  ].freeze
+end
+
+# API model for ProjectServiceAccountCreateResponse.
+# Typed representation of the `ProjectServiceAccountCreateResponse` API schema.
+class ProjectServiceAccountCreateResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalProjectServiceAccountCreateResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalProjectServiceAccountCreateResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalProjectServiceAccountCreateResponseMetadata::DECODERS
+
+  # @return [ProjectServiceAccountCreateResponseObject] Required enumerated value serialized in the `object` wire field.
+  attr_reader :object
+  # @return [String] Required `string` value serialized in the `id` wire field.
+  attr_reader :id
+  # @return [String] Required `string` value serialized in the `name` wire field.
+  attr_reader :name
+  # @return [ProjectServiceAccountCreateResponseRole] Service accounts created with default project membership have role `member`. Accounts created with `create_service_account_only` have role `none`.
+  attr_reader :role
+  # @return [Integer] Required `unixtime`-formatted value serialized in the `created_at` wire field.
+  attr_reader :created_at
+  # @return [ProjectServiceAccountApiKey] Required API value serialized in the `api_key` wire field.
+  attr_reader :api_key
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalProjectServiceAccountApiKeyMetadata
-    FIELDS = {
-      object: 'object',
-      value: 'value',
-      name: 'name',
-      created_at: 'created_at',
-      expires_at: 'expires_at',
-      id: 'id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      value
-      name
-      created_at
-      id
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::ProjectServiceAccountApiKeyObject.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalProjectServiceAccountCreateResponseMetadata::NULLABLE_FIELDS)
   end
 
-  # API model for ProjectServiceAccountApiKey.
-  # Typed representation of the `ProjectServiceAccountApiKey` API schema.
-  class ProjectServiceAccountApiKey
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalProjectServiceAccountApiKeyMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalProjectServiceAccountApiKeyMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalProjectServiceAccountApiKeyMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [ProjectServiceAccountApiKeyObject] The object type, which is always `organization.project.service_account.api_key`
-    attr_reader :object
-    # @return [String] Required `string` value serialized in the `value` wire field.
-    attr_reader :value
-    # @return [String] Required `string` value serialized in the `name` wire field.
-    attr_reader :name
-    # @return [Integer] Required `unixtime`-formatted value serialized in the `created_at` wire field.
-    attr_reader :created_at
-    # @return [Integer] The Unix timestamp (in seconds) when the API key expires, or null if it does not expire.
-    attr_reader :expires_at
-    # @return [String] Required `string` value serialized in the `id` wire field.
-    attr_reader :id
+# Defines the ProjectServiceAccountCreateResponseObject SDK namespace.
+module ProjectServiceAccountCreateResponseObject
+  ORGANIZATION_PROJECT_SERVICE_ACCOUNT = 'organization.project.service_account'
+  VALUES = ['organization.project.service_account'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Defines the ProjectServiceAccountCreateResponseRole SDK namespace.
+module ProjectServiceAccountCreateResponseRole
+  MEMBER = 'member'
+  NONE = 'none'
+  VALUES = ['member', 'none'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# Internal model hydration metadata.
+class SdkInternalProjectServiceAccountDeleteResponseMetadata
+  FIELDS = {
+    object: "object",
+    id: "id",
+    deleted: "deleted",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    id
+    deleted
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::ProjectServiceAccountDeleteResponseObject.from_value(value)
+    end,
+  }.freeze
+end
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+# API model for ProjectServiceAccountDeleteResponse.
+# Typed representation of the `ProjectServiceAccountDeleteResponse` API schema.
+class ProjectServiceAccountDeleteResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalProjectServiceAccountDeleteResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalProjectServiceAccountDeleteResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalProjectServiceAccountDeleteResponseMetadata::DECODERS
+
+  # @return [ProjectServiceAccountDeleteResponseObject] Required enumerated value serialized in the `object` wire field.
+  attr_reader :object
+  # @return [String] Required `string` value serialized in the `id` wire field.
+  attr_reader :id
+  # @return [Boolean] Required `boolean` value serialized in the `deleted` wire field.
+  attr_reader :deleted
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the ProjectServiceAccountApiKeyObject SDK namespace.
-  module ProjectServiceAccountApiKeyObject
-    ORGANIZATION_PROJECT_SERVICE_ACCOUNT_API_KEY = 'organization.project.service_account.api_key'
-    VALUES = ['organization.project.service_account.api_key'].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalProjectServiceAccountCreateRequestMetadata
-    FIELDS = {
-      name: 'name',
-      create_service_account_only: 'create_service_account_only',
-      expires_in_seconds: 'expires_in_seconds'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      name
-    ].freeze
-    DECODERS = {}.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the ProjectServiceAccountDeleteResponseObject SDK namespace.
+module ProjectServiceAccountDeleteResponseObject
+  ORGANIZATION_PROJECT_SERVICE_ACCOUNT_DELETED = 'organization.project.service_account.deleted'
+  VALUES = ['organization.project.service_account.deleted'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalProjectServiceAccountListResponseMetadata
+  FIELDS = {
+    object: "object",
+    data: "data",
+    first_id: "first_id",
+    last_id: "last_id",
+    has_more: "has_more",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    data
+    has_more
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::ProjectServiceAccountListResponseObject.from_value(value)
+    end,
+    data: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::ProjectServiceAccount.from_hash(item) }
+    end,
+  }.freeze
+end
+
+# API model for ProjectServiceAccountListResponse.
+# Typed representation of the `ProjectServiceAccountListResponse` API schema.
+class ProjectServiceAccountListResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalProjectServiceAccountListResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalProjectServiceAccountListResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalProjectServiceAccountListResponseMetadata::DECODERS
+
+  # @return [ProjectServiceAccountListResponseObject] Required enumerated value serialized in the `object` wire field.
+  attr_reader :object
+  # @return [Array_of_ProjectServiceAccount] Required array value serialized in the `data` wire field.
+  attr_reader :data
+  # @return [String] Optional `string` value serialized in the `first_id` wire field.
+  attr_reader :first_id
+  # @return [String] Optional `string` value serialized in the `last_id` wire field.
+  attr_reader :last_id
+  # @return [Boolean] Required `boolean` value serialized in the `has_more` wire field.
+  attr_reader :has_more
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ProjectServiceAccountCreateRequest.
-  # Typed representation of the `ProjectServiceAccountCreateRequest` API schema.
-  class ProjectServiceAccountCreateRequest
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalProjectServiceAccountCreateRequestMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalProjectServiceAccountCreateRequestMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalProjectServiceAccountCreateRequestMetadata::DECODERS
-
-    # @return [String] The name of the service account being created.
-    attr_reader :name
-    # @return [Boolean] Optional `boolean` value serialized in the `create_service_account_only` wire field.
-    attr_reader :create_service_account_only
-    # @return [Integer] Number of seconds until the initial API key expires. If omitted or null, the key does not expire unless the effective organization or project policy requires an expiration. When a policy sets a maximum lifetime, this value must be provided and must not exceed that limit. A non-null value cannot be used when `create_service_account_only` is true.
-    attr_reader :expires_in_seconds
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalProjectServiceAccountCreateResponseMetadata
-    FIELDS = {
-      object: 'object',
-      id: 'id',
-      name: 'name',
-      role: 'role',
-      created_at: 'created_at',
-      api_key: 'api_key'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      id
-      name
-      role
-      created_at
-      api_key
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::ProjectServiceAccountCreateResponseObject.from_value(value)
-      end,
-      role: lambda do |value|
-        ::OctridevOpenai::ProjectServiceAccountCreateResponseRole.from_value(value)
-      end,
-      api_key: lambda do |value|
-        ::OctridevOpenai::ProjectServiceAccountApiKey.from_hash(value)
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      api_key
-    ].freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
-
-  # API model for ProjectServiceAccountCreateResponse.
-  # Typed representation of the `ProjectServiceAccountCreateResponse` API schema.
-  class ProjectServiceAccountCreateResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalProjectServiceAccountCreateResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalProjectServiceAccountCreateResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalProjectServiceAccountCreateResponseMetadata::DECODERS
-
-    # @return [ProjectServiceAccountCreateResponseObject] Required enumerated value serialized in the `object` wire field.
-    attr_reader :object
-    # @return [String] Required `string` value serialized in the `id` wire field.
-    attr_reader :id
-    # @return [String] Required `string` value serialized in the `name` wire field.
-    attr_reader :name
-    # @return [ProjectServiceAccountCreateResponseRole] Service accounts created with default project membership have role `member`. Accounts created with `create_service_account_only` have role `none`.
-    attr_reader :role
-    # @return [Integer] Required `unixtime`-formatted value serialized in the `created_at` wire field.
-    attr_reader :created_at
-    # @return [ProjectServiceAccountApiKey] Required API value serialized in the `api_key` wire field.
-    attr_reader :api_key
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalProjectServiceAccountCreateResponseMetadata::NULLABLE_FIELDS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the ProjectServiceAccountCreateResponseObject SDK namespace.
-  module ProjectServiceAccountCreateResponseObject
-    ORGANIZATION_PROJECT_SERVICE_ACCOUNT = 'organization.project.service_account'
-    VALUES = ['organization.project.service_account'].freeze
-    def self.from_value(value)
-      value
-    end
-  end
-
-  # Defines the ProjectServiceAccountCreateResponseRole SDK namespace.
-  module ProjectServiceAccountCreateResponseRole
-    MEMBER = 'member'
-    NONE = 'none'
-    VALUES = %w[member none].freeze
-    def self.from_value(value)
-      value
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalProjectServiceAccountDeleteResponseMetadata
-    FIELDS = {
-      object: 'object',
-      id: 'id',
-      deleted: 'deleted'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      id
-      deleted
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::ProjectServiceAccountDeleteResponseObject.from_value(value)
-      end
-    }.freeze
-  end
-
-  # API model for ProjectServiceAccountDeleteResponse.
-  # Typed representation of the `ProjectServiceAccountDeleteResponse` API schema.
-  class ProjectServiceAccountDeleteResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalProjectServiceAccountDeleteResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalProjectServiceAccountDeleteResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalProjectServiceAccountDeleteResponseMetadata::DECODERS
-
-    # @return [ProjectServiceAccountDeleteResponseObject] Required enumerated value serialized in the `object` wire field.
-    attr_reader :object
-    # @return [String] Required `string` value serialized in the `id` wire field.
-    attr_reader :id
-    # @return [Boolean] Required `boolean` value serialized in the `deleted` wire field.
-    attr_reader :deleted
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the ProjectServiceAccountDeleteResponseObject SDK namespace.
-  module ProjectServiceAccountDeleteResponseObject
-    ORGANIZATION_PROJECT_SERVICE_ACCOUNT_DELETED = 'organization.project.service_account.deleted'
-    VALUES = ['organization.project.service_account.deleted'].freeze
-    def self.from_value(value)
-      value
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalProjectServiceAccountListResponseMetadata
-    FIELDS = {
-      object: 'object',
-      data: 'data',
-      first_id: 'first_id',
-      last_id: 'last_id',
-      has_more: 'has_more'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      data
-      has_more
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::ProjectServiceAccountListResponseObject.from_value(value)
-      end,
-      data: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::ProjectServiceAccount.from_hash(item) }
-      end
-    }.freeze
-  end
-
-  # API model for ProjectServiceAccountListResponse.
-  # Typed representation of the `ProjectServiceAccountListResponse` API schema.
-  class ProjectServiceAccountListResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalProjectServiceAccountListResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalProjectServiceAccountListResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalProjectServiceAccountListResponseMetadata::DECODERS
-
-    # @return [ProjectServiceAccountListResponseObject] Required enumerated value serialized in the `object` wire field.
-    attr_reader :object
-    # @return [Array_of_ProjectServiceAccount] Required array value serialized in the `data` wire field.
-    attr_reader :data
-    # @return [String] Optional `string` value serialized in the `first_id` wire field.
-    attr_reader :first_id
-    # @return [String] Optional `string` value serialized in the `last_id` wire field.
-    attr_reader :last_id
-    # @return [Boolean] Required `boolean` value serialized in the `has_more` wire field.
-    attr_reader :has_more
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
+end
 end

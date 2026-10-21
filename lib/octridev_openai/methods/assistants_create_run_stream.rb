@@ -102,42 +102,40 @@ module OctridevOpenai
         request_options: nil,
         &block
       )
-        unless block
-          return enum_for(
-            __method__,
-            config: config,
-            thread_id: thread_id,
-            assistant_id: assistant_id,
-            stream: stream,
-            include: include,
-            model: model,
-            reasoning_effort: reasoning_effort,
-            instructions: instructions,
-            additional_instructions: additional_instructions,
-            additional_messages: additional_messages,
-            tools: tools,
-            metadata: metadata,
-            temperature: temperature,
-            top_p: top_p,
-            max_prompt_tokens: max_prompt_tokens,
-            max_completion_tokens: max_completion_tokens,
-            truncation_strategy: truncation_strategy,
-            tool_choice: tool_choice,
-            parallel_tool_calls: parallel_tool_calls,
-            response_format: response_format,
-            request_options: request_options
-          )
-        end
+    return enum_for(
+          __method__,
+          config: config,
+          thread_id: thread_id,
+          assistant_id: assistant_id,
+          stream: stream,
+          include: include,
+          model: model,
+          reasoning_effort: reasoning_effort,
+          instructions: instructions,
+          additional_instructions: additional_instructions,
+          additional_messages: additional_messages,
+          tools: tools,
+          metadata: metadata,
+          temperature: temperature,
+          top_p: top_p,
+          max_prompt_tokens: max_prompt_tokens,
+          max_completion_tokens: max_completion_tokens,
+          truncation_strategy: truncation_strategy,
+          tool_choice: tool_choice,
+          parallel_tool_calls: parallel_tool_calls,
+          response_format: response_format,
+          request_options: request_options,
+        ) unless block
         SdkClient.stream(
           'POST', [
-            '/threads/',
+            "/threads/",
             SdkClient.encode_path_segment(thread_id),
-            '/runs'
+            "/runs"
           ].join,
           config: config,
           query: {
-            'include[]' => QueryValue.new(include, style: 'form', explode: true)
-          },
+          'include[]' => QueryValue.new(include, style: 'form', explode: true),
+        },
           body: {
             'assistant_id' => assistant_id,
             'stream' => stream,
@@ -155,17 +153,16 @@ module OctridevOpenai
             'truncation_strategy' => truncation_strategy,
             'tool_choice' => tool_choice,
             'parallel_tool_calls' => parallel_tool_calls,
-            'response_format' => response_format
+            'response_format' => response_format,
           },
           content_type: 'application/json',
           operation_id: 'create_run_stream',
           stream_format: :sse,
-          stream_media_type: 'text/event-stream',
+          stream_media_type: "text/event-stream",
           request_options: request_options,
           errors: { '429' => ::OctridevOpenai::ErrorResponse }
         ).each do |ev|
           break if ev.data == '[DONE]'
-
           decoded = JSON.parse(ev.data)
           block.call(SdkClient.decode_event(decoded, ::OctridevOpenai::AssistantStreamEvent))
         end

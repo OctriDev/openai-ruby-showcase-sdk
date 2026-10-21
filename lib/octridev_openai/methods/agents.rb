@@ -24,28 +24,29 @@ module OctridevOpenai
         after: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 1, max: 100) }
 
-        Validation.if_given(after) { Validation.validate_length('after', after, min: 0, max: 1_048_576) }
+        Validation.if_given(after) { Validation.validate_length('after', after, min: 0, max: 1048576) }
 
         SdkClient.request(
           'GET',
-          '/agents',
+          "/agents",
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'order' => QueryValue.new(order, style: 'form', explode: true),
-            'after' => QueryValue.new(after, style: 'form', explode: true)
+            'after' => QueryValue.new(after, style: 'form', explode: true),
           },
           return_type: ::OctridevOpenai::AgentListResource,
           decoder: :json,
           operation_id: 'list_agents',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
         ).data
       end
 
-      ListAgentsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+    ListAgentsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists reusable agents in the current project. See agent configuration.
       #
@@ -74,13 +75,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             items.each { |item| y << item }
             break unless page.has_more
-
             next_cursor = page.last_id
             break if next_cursor.nil?
-
             cursor = next_cursor
           end
         end
@@ -105,12 +103,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListAgentsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
-
             cursor = next_cursor
           end
         end
@@ -151,19 +147,20 @@ module OctridevOpenai
         multi_agent: NOT_GIVEN,
         request_options: nil
       )
-        Validation.validate_length('model', model, min: 0, max: 1_048_576)
+
+        Validation.validate_length('model', model, min: 0, max: 1048576)
 
         Validation.if_given(name) { Validation.validate_length('name', name, min: 0, max: 128) }
 
         Validation.if_given(instructions) do
-          Validation.validate_length('instructions', instructions, min: 0, max: 1_048_576)
+          Validation.validate_length('instructions', instructions, min: 0, max: 1048576)
         end
 
         Validation.if_given(tools) { Validation.validate_items('tools', tools, min: 0, max: 2000) }
 
         SdkClient.request(
           'POST',
-          '/agents',
+          "/agents",
           config: config,
           body: {
             'model' => model,
@@ -174,13 +171,13 @@ module OctridevOpenai
             'service_tier' => service_tier,
             'instructions' => instructions,
             'tools' => tools,
-            'multi_agent' => multi_agent
+            'multi_agent' => multi_agent,
           },
           return_type: ::OctridevOpenai::AgentResource,
           decoder: :json,
           operation_id: 'create_agent',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
         ).data
       end
 
@@ -192,12 +189,13 @@ module OctridevOpenai
         agent_id:,
         request_options: nil
       )
-        Validation.validate_length('agent_id', agent_id, min: 0, max: 1_048_576)
+
+        Validation.validate_length('agent_id', agent_id, min: 0, max: 1048576)
 
         SdkClient.request(
           'GET',
           [
-            '/agents/',
+            "/agents/",
             SdkClient.encode_path_segment(agent_id)
           ].join,
           config: config,
@@ -205,7 +203,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'retrieve_agent',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
         ).data
       end
 
@@ -246,12 +244,13 @@ module OctridevOpenai
         tools: NOT_GIVEN,
         request_options: nil
       )
-        Validation.validate_length('agent_id', agent_id, min: 0, max: 1_048_576)
 
-        Validation.if_given(model) { Validation.validate_length('model', model, min: 0, max: 1_048_576) }
+        Validation.validate_length('agent_id', agent_id, min: 0, max: 1048576)
+
+        Validation.if_given(model) { Validation.validate_length('model', model, min: 0, max: 1048576) }
 
         Validation.if_given(instructions) do
-          Validation.validate_length('instructions', instructions, min: 0, max: 1_048_576)
+          Validation.validate_length('instructions', instructions, min: 0, max: 1048576)
         end
 
         Validation.if_given(name) { Validation.validate_length('name', name, min: 0, max: 128) }
@@ -261,7 +260,7 @@ module OctridevOpenai
         SdkClient.request(
           'POST',
           [
-            '/agents/',
+            "/agents/",
             SdkClient.encode_path_segment(agent_id)
           ].join,
           config: config,
@@ -274,13 +273,13 @@ module OctridevOpenai
             'multi_agent' => multi_agent,
             'metadata' => metadata,
             'name' => name,
-            'tools' => tools
+            'tools' => tools,
           },
           return_type: ::OctridevOpenai::AgentResource,
           decoder: :json,
           operation_id: 'update_agent',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
         ).data
       end
 
@@ -292,12 +291,13 @@ module OctridevOpenai
         agent_id:,
         request_options: nil
       )
-        Validation.validate_length('agent_id', agent_id, min: 0, max: 1_048_576)
+
+        Validation.validate_length('agent_id', agent_id, min: 0, max: 1048576)
 
         SdkClient.request(
           'DELETE',
           [
-            '/agents/',
+            "/agents/",
             SdkClient.encode_path_segment(agent_id)
           ].join,
           config: config,
@@ -305,7 +305,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_agent',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
         ).data
       end
     end

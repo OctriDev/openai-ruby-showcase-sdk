@@ -5,93 +5,91 @@
 
 # shared_compound domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalCompoundFilterMetadata
-    FIELDS = {
-      type: 'type',
-      filters: 'filters'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      filters
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::CompoundFilterType.from_value(value)
-      end,
-      filters: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::CompoundFilterFiltersItem.from_hash(item) }
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalCompoundFilterMetadata
+  FIELDS = {
+    type: "type",
+    filters: "filters",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    filters
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::CompoundFilterType.from_value(value)
+    end,
+    filters: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::CompoundFilterFiltersItem.from_hash(item) }
+    end,
+  }.freeze
+end
+
+# API model for CompoundFilter.
+# Combine multiple filters using `and` or `or`.
+class CompoundFilter
+  include Filters
+  include CompoundFilterFiltersItem
+  include VectorStoreSearchRequestFilters
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCompoundFilterMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCompoundFilterMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCompoundFilterMetadata::DECODERS
+
+  # @return [CompoundFilterType] Type of operation: `and` or `or`.
+  attr_reader :type
+  # @return [Array_of_CompoundFilterFiltersItem] Array of filters to combine. Items can be `ComparisonFilter` or `CompoundFilter`.
+  attr_reader :filters
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for CompoundFilter.
-  # Combine multiple filters using `and` or `or`.
-  class CompoundFilter
-    include Filters
-    include CompoundFilterFiltersItem
-    include VectorStoreSearchRequestFilters
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCompoundFilterMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCompoundFilterMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCompoundFilterMetadata::DECODERS
-
-    # @return [CompoundFilterType] Type of operation: `and` or `or`.
-    attr_reader :type
-    # @return [Array_of_CompoundFilterFiltersItem] Array of filters to combine. Items can be `ComparisonFilter` or `CompoundFilter`.
-    attr_reader :filters
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the CompoundFilterType SDK namespace.
-  module CompoundFilterType
-    AND = 'and'
-    OR = 'or'
-    VALUES = %w[and or].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('CompoundFilterType', 'enum', "Unknown CompoundFilterType: #{value}")
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the CompoundFilterFiltersItem SDK namespace.
-  module CompoundFilterFiltersItem
-    DISCRIMINATOR_MAPPING = {
-      'eq' => -> { ComparisonFilter },
-      'ne' => -> { ComparisonFilter },
-      'gt' => -> { ComparisonFilter },
-      'gte' => -> { ComparisonFilter },
-      'lt' => -> { ComparisonFilter },
-      'lte' => -> { ComparisonFilter },
-      'in' => -> { ComparisonFilter },
-      'nin' => -> { ComparisonFilter },
-      'and' => -> { CompoundFilter },
-      'or' => -> { CompoundFilter }
-    }.freeze
+# Defines the CompoundFilterType SDK namespace.
+module CompoundFilterType
+  AND = 'and'
+  OR = 'or'
+  VALUES = ['and', 'or'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
-
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
-
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
-
-      raise SdkValidationError.new('CompoundFilterFiltersItem', 'variant', "Unknown CompoundFilterFiltersItem discriminator: #{hash['type'].inspect}")
-    end
+    raise SdkValidationError.new('CompoundFilterType', 'enum', "Unknown CompoundFilterType: #{value}")
   end
+end
+
+# Defines the CompoundFilterFiltersItem SDK namespace.
+module CompoundFilterFiltersItem
+  DISCRIMINATOR_MAPPING = {
+    "eq" => -> { ComparisonFilter },
+    "ne" => -> { ComparisonFilter },
+    "gt" => -> { ComparisonFilter },
+    "gte" => -> { ComparisonFilter },
+    "lt" => -> { ComparisonFilter },
+    "lte" => -> { ComparisonFilter },
+    "in" => -> { ComparisonFilter },
+    "nin" => -> { ComparisonFilter },
+    "and" => -> { CompoundFilter },
+    "or" => -> { CompoundFilter },
+  }.freeze
+
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
+
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+
+    raise SdkValidationError.new('CompoundFilterFiltersItem', 'variant', "Unknown CompoundFilterFiltersItem discriminator: #{hash["type"].inspect}")
+  end
+end
 end

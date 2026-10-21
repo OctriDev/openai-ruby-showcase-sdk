@@ -5,310 +5,305 @@
 
 # responses_prompt domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalPromptCacheComparisonResponseNotFoundDiagnosticsBodyMetadata
-    FIELDS = {
-      type: 'type'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::PromptCacheComparisonResponseNotFoundDiagnosticsBodyType.from_value(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalPromptCacheComparisonResponseNotFoundDiagnosticsBodyMetadata
+  FIELDS = {
+    type: "type",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::PromptCacheComparisonResponseNotFoundDiagnosticsBodyType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for PromptCacheComparisonResponseNotFoundDiagnosticsBody.
+# Typed representation of the `PromptCacheComparisonResponseNotFoundDiagnosticsBody` API schema.
+class PromptCacheComparisonResponseNotFoundDiagnosticsBody
+  include PromptCacheDiagnostics
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalPromptCacheComparisonResponseNotFoundDiagnosticsBodyMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalPromptCacheComparisonResponseNotFoundDiagnosticsBodyMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalPromptCacheComparisonResponseNotFoundDiagnosticsBodyMetadata::DECODERS
+
+  # @return [PromptCacheComparisonResponseNotFoundDiagnosticsBodyType] Required enumerated value serialized in the `type` wire field.
+  attr_reader :type
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for PromptCacheComparisonResponseNotFoundDiagnosticsBody.
-  # Typed representation of the `PromptCacheComparisonResponseNotFoundDiagnosticsBody` API schema.
-  class PromptCacheComparisonResponseNotFoundDiagnosticsBody
-    include PromptCacheDiagnostics
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalPromptCacheComparisonResponseNotFoundDiagnosticsBodyMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalPromptCacheComparisonResponseNotFoundDiagnosticsBodyMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalPromptCacheComparisonResponseNotFoundDiagnosticsBodyMetadata::DECODERS
-
-    # @return [PromptCacheComparisonResponseNotFoundDiagnosticsBodyType] Required enumerated value serialized in the `type` wire field.
-    attr_reader :type
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the PromptCacheComparisonResponseNotFoundDiagnosticsBodyType SDK namespace.
-  module PromptCacheComparisonResponseNotFoundDiagnosticsBodyType
-    COMPARISON_RESPONSE_NOT_FOUND = 'comparison_response_not_found'
-    VALUES = ['comparison_response_not_found'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('PromptCacheComparisonResponseNotFoundDiagnosticsBodyType', 'enum', "Unknown PromptCacheComparisonResponseNotFoundDiagnosticsBodyType: #{value}")
-    end
+# Defines the PromptCacheComparisonResponseNotFoundDiagnosticsBodyType SDK namespace.
+module PromptCacheComparisonResponseNotFoundDiagnosticsBodyType
+  COMPARISON_RESPONSE_NOT_FOUND = 'comparison_response_not_found'
+  VALUES = ['comparison_response_not_found'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('PromptCacheComparisonResponseNotFoundDiagnosticsBodyType', 'enum', "Unknown PromptCacheComparisonResponseNotFoundDiagnosticsBodyType: #{value}")
+  end
+end
+
+# Defines the PromptCacheDiagnostics SDK namespace.
+module PromptCacheDiagnostics
+  DISCRIMINATOR_MAPPING = {
+    "cache_miss" => -> { PromptCacheMissDiagnosticsBody },
+    "cache_hit" => -> { PromptCacheHitDiagnosticsBody },
+    "comparison_response_not_found" => -> { PromptCacheComparisonResponseNotFoundDiagnosticsBody },
+    "unavailable" => -> { PromptCacheUnavailableDiagnosticsBody },
+  }.freeze
+
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
+
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+
+    raise SdkValidationError.new('PromptCacheDiagnostics', 'variant', "Unknown PromptCacheDiagnostics discriminator: #{hash["type"].inspect}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalPromptCacheHitDiagnosticsBodyMetadata
+  FIELDS = {
+    type: "type",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::PromptCacheHitDiagnosticsBodyType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for PromptCacheHitDiagnosticsBody.
+# Typed representation of the `PromptCacheHitDiagnosticsBody` API schema.
+class PromptCacheHitDiagnosticsBody
+  include PromptCacheDiagnostics
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalPromptCacheHitDiagnosticsBodyMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalPromptCacheHitDiagnosticsBodyMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalPromptCacheHitDiagnosticsBodyMetadata::DECODERS
+
+  # @return [PromptCacheHitDiagnosticsBodyType] Required enumerated value serialized in the `type` wire field.
+  attr_reader :type
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the PromptCacheDiagnostics SDK namespace.
-  module PromptCacheDiagnostics
-    DISCRIMINATOR_MAPPING = {
-      'cache_miss' => -> { PromptCacheMissDiagnosticsBody },
-      'cache_hit' => -> { PromptCacheHitDiagnosticsBody },
-      'comparison_response_not_found' => -> { PromptCacheComparisonResponseNotFoundDiagnosticsBody },
-      'unavailable' => -> { PromptCacheUnavailableDiagnosticsBody }
-    }.freeze
-
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
-
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
-
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
-
-      raise SdkValidationError.new('PromptCacheDiagnostics', 'variant', "Unknown PromptCacheDiagnostics discriminator: #{hash['type'].inspect}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalPromptCacheHitDiagnosticsBodyMetadata
-    FIELDS = {
-      type: 'type'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::PromptCacheHitDiagnosticsBodyType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the PromptCacheHitDiagnosticsBodyType SDK namespace.
+module PromptCacheHitDiagnosticsBodyType
+  CACHE_HIT = 'cache_hit'
+  VALUES = ['cache_hit'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('PromptCacheHitDiagnosticsBodyType', 'enum', "Unknown PromptCacheHitDiagnosticsBodyType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalPromptCacheMissDiagnosticsBodyMetadata
+  FIELDS = {
+    type: "type",
+    reason: "reason",
+    cache_missed_tokens: "cache_missed_tokens",
+    comparison_reusable_tokens: "comparison_reusable_tokens",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    reason
+    cache_missed_tokens
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::PromptCacheMissDiagnosticsBodyType.from_value(value)
+    end,
+    reason: lambda do |value|
+      ::OctridevOpenai::CacheMissReasonTypeEnum.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for PromptCacheMissDiagnosticsBody.
+# Typed representation of the `PromptCacheMissDiagnosticsBody` API schema.
+class PromptCacheMissDiagnosticsBody
+  include PromptCacheDiagnostics
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalPromptCacheMissDiagnosticsBodyMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalPromptCacheMissDiagnosticsBodyMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalPromptCacheMissDiagnosticsBodyMetadata::DECODERS
+
+  # @return [PromptCacheMissDiagnosticsBodyType] Required enumerated value serialized in the `type` wire field.
+  attr_reader :type
+  # @return [CacheMissReasonTypeEnum] The reason prompt cache reuse did not occur.
+  attr_reader :reason
+  # @return [Integer] The estimated number of input tokens affected after the first detected divergence.
+  attr_reader :cache_missed_tokens
+  # @return [Integer] The raw token count of the reusable prefix in the compared response.
+  attr_reader :comparison_reusable_tokens
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for PromptCacheHitDiagnosticsBody.
-  # Typed representation of the `PromptCacheHitDiagnosticsBody` API schema.
-  class PromptCacheHitDiagnosticsBody
-    include PromptCacheDiagnostics
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalPromptCacheHitDiagnosticsBodyMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalPromptCacheHitDiagnosticsBodyMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalPromptCacheHitDiagnosticsBodyMetadata::DECODERS
-
-    # @return [PromptCacheHitDiagnosticsBodyType] Required enumerated value serialized in the `type` wire field.
-    attr_reader :type
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the PromptCacheHitDiagnosticsBodyType SDK namespace.
-  module PromptCacheHitDiagnosticsBodyType
-    CACHE_HIT = 'cache_hit'
-    VALUES = ['cache_hit'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('PromptCacheHitDiagnosticsBodyType', 'enum', "Unknown PromptCacheHitDiagnosticsBodyType: #{value}")
-    end
+# Defines the PromptCacheMissDiagnosticsBodyType SDK namespace.
+module PromptCacheMissDiagnosticsBodyType
+  CACHE_MISS = 'cache_miss'
+  VALUES = ['cache_miss'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('PromptCacheMissDiagnosticsBodyType', 'enum', "Unknown PromptCacheMissDiagnosticsBodyType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalPromptCacheOptionsMetadata
+  FIELDS = {
+    ttl: "ttl",
+    mode: "mode",
+    comparison_response_id: "comparison_response_id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    ttl
+    mode
+  ].freeze
+  DECODERS = {
+    ttl: lambda do |value|
+      ::OctridevOpenai::PromptCacheTTLEnum.from_value(value)
+    end,
+    mode: lambda do |value|
+      ::OctridevOpenai::PromptCacheModeEnum.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for PromptCacheOptions.
+# The prompt-caching options that were applied to the response. Supported for `gpt-5.6` and later models.
+class PromptCacheOptions
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalPromptCacheOptionsMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalPromptCacheOptionsMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalPromptCacheOptionsMetadata::DECODERS
+
+  # @return [PromptCacheTTLEnum] The minimum lifetime applied to each cache breakpoint.
+  attr_reader :ttl
+  # @return [PromptCacheModeEnum] Whether implicit prompt-cache breakpoints were enabled.
+  attr_reader :mode
+  # @return [String] Optional `string` value serialized in the `comparison_response_id` wire field.
+  attr_reader :comparison_response_id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalPromptCacheMissDiagnosticsBodyMetadata
-    FIELDS = {
-      type: 'type',
-      reason: 'reason',
-      cache_missed_tokens: 'cache_missed_tokens',
-      comparison_reusable_tokens: 'comparison_reusable_tokens'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      reason
-      cache_missed_tokens
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::PromptCacheMissDiagnosticsBodyType.from_value(value)
-      end,
-      reason: lambda do |value|
-        ::OctridevOpenai::CacheMissReasonTypeEnum.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for PromptCacheMissDiagnosticsBody.
-  # Typed representation of the `PromptCacheMissDiagnosticsBody` API schema.
-  class PromptCacheMissDiagnosticsBody
-    include PromptCacheDiagnostics
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalPromptCacheMissDiagnosticsBodyMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalPromptCacheMissDiagnosticsBodyMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalPromptCacheMissDiagnosticsBodyMetadata::DECODERS
+# Defines the PromptCacheRetentionEnum SDK namespace.
+module PromptCacheRetentionEnum
+  IN_MEMORY = 'in_memory'
+  V_24_H = '24h'
+  VALUES = ['in_memory', '24h'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    # @return [PromptCacheMissDiagnosticsBodyType] Required enumerated value serialized in the `type` wire field.
-    attr_reader :type
-    # @return [CacheMissReasonTypeEnum] The reason prompt cache reuse did not occur.
-    attr_reader :reason
-    # @return [Integer] The estimated number of input tokens affected after the first detected divergence.
-    attr_reader :cache_missed_tokens
-    # @return [Integer] The raw token count of the reusable prefix in the compared response.
-    attr_reader :comparison_reusable_tokens
+# Internal model hydration metadata.
+class SdkInternalPromptCacheUnavailableDiagnosticsBodyMetadata
+  FIELDS = {
+    type: "type",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::PromptCacheUnavailableDiagnosticsBodyType.from_value(value)
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for PromptCacheUnavailableDiagnosticsBody.
+# Typed representation of the `PromptCacheUnavailableDiagnosticsBody` API schema.
+class PromptCacheUnavailableDiagnosticsBody
+  include PromptCacheDiagnostics
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalPromptCacheUnavailableDiagnosticsBodyMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalPromptCacheUnavailableDiagnosticsBodyMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalPromptCacheUnavailableDiagnosticsBodyMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [PromptCacheUnavailableDiagnosticsBodyType] Required enumerated value serialized in the `type` wire field.
+  attr_reader :type
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the PromptCacheMissDiagnosticsBodyType SDK namespace.
-  module PromptCacheMissDiagnosticsBodyType
-    CACHE_MISS = 'cache_miss'
-    VALUES = ['cache_miss'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('PromptCacheMissDiagnosticsBodyType', 'enum', "Unknown PromptCacheMissDiagnosticsBodyType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalPromptCacheOptionsMetadata
-    FIELDS = {
-      ttl: 'ttl',
-      mode: 'mode',
-      comparison_response_id: 'comparison_response_id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      ttl
-      mode
-    ].freeze
-    DECODERS = {
-      ttl: lambda do |value|
-        ::OctridevOpenai::PromptCacheTTLEnum.from_value(value)
-      end,
-      mode: lambda do |value|
-        ::OctridevOpenai::PromptCacheModeEnum.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # API model for PromptCacheOptions.
-  # The prompt-caching options that were applied to the response. Supported for `gpt-5.6` and later models.
-  class PromptCacheOptions
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalPromptCacheOptionsMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalPromptCacheOptionsMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalPromptCacheOptionsMetadata::DECODERS
+# Defines the PromptCacheUnavailableDiagnosticsBodyType SDK namespace.
+module PromptCacheUnavailableDiagnosticsBodyType
+  UNAVAILABLE = 'unavailable'
+  VALUES = ['unavailable'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    # @return [PromptCacheTTLEnum] The minimum lifetime applied to each cache breakpoint.
-    attr_reader :ttl
-    # @return [PromptCacheModeEnum] Whether implicit prompt-cache breakpoints were enabled.
-    attr_reader :mode
-    # @return [String] Optional `string` value serialized in the `comparison_response_id` wire field.
-    attr_reader :comparison_response_id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+    raise SdkValidationError.new('PromptCacheUnavailableDiagnosticsBodyType', 'enum', "Unknown PromptCacheUnavailableDiagnosticsBodyType: #{value}")
   end
-
-  # Defines the PromptCacheRetentionEnum SDK namespace.
-  module PromptCacheRetentionEnum
-    IN_MEMORY = 'in_memory'
-    V_24_H = '24h'
-    VALUES = %w[in_memory 24h].freeze
-    def self.from_value(value)
-      value
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalPromptCacheUnavailableDiagnosticsBodyMetadata
-    FIELDS = {
-      type: 'type'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::PromptCacheUnavailableDiagnosticsBodyType.from_value(value)
-      end
-    }.freeze
-  end
-
-  # API model for PromptCacheUnavailableDiagnosticsBody.
-  # Typed representation of the `PromptCacheUnavailableDiagnosticsBody` API schema.
-  class PromptCacheUnavailableDiagnosticsBody
-    include PromptCacheDiagnostics
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalPromptCacheUnavailableDiagnosticsBodyMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalPromptCacheUnavailableDiagnosticsBodyMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalPromptCacheUnavailableDiagnosticsBodyMetadata::DECODERS
-
-    # @return [PromptCacheUnavailableDiagnosticsBodyType] Required enumerated value serialized in the `type` wire field.
-    attr_reader :type
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the PromptCacheUnavailableDiagnosticsBodyType SDK namespace.
-  module PromptCacheUnavailableDiagnosticsBodyType
-    UNAVAILABLE = 'unavailable'
-    VALUES = ['unavailable'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('PromptCacheUnavailableDiagnosticsBodyType', 'enum', "Unknown PromptCacheUnavailableDiagnosticsBodyType: #{value}")
-    end
-  end
+end
 end

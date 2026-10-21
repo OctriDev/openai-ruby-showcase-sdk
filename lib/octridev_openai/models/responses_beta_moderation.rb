@@ -5,371 +5,368 @@
 
 # responses_beta_moderation domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalBetaModerationMetadata
-    FIELDS = {
-      input: 'input',
-      output: 'output'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      input
-      output
-    ].freeze
-    DECODERS = {
-      input: lambda do |value|
-        ::OctridevOpenai::BetaModerationInput.from_hash(value)
-      end,
-      output: lambda do |value|
-        ::OctridevOpenai::BetaModerationOutput.from_hash(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalBetaModerationMetadata
+  FIELDS = {
+    input: "input",
+    output: "output",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    input
+    output
+  ].freeze
+  DECODERS = {
+    input: lambda do |value|
+      ::OctridevOpenai::BetaModerationInput.from_hash(value)
+    end,
+    output: lambda do |value|
+      ::OctridevOpenai::BetaModerationOutput.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaModeration.
+# Moderation results or errors for the response input and output.
+class BetaModeration
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaModerationMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaModerationMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaModerationMetadata::DECODERS
+
+  # @return [BetaModerationInput] Moderation for the response input.
+  attr_reader :input
+  # @return [BetaModerationOutput] Moderation for the response output.
+  attr_reader :output
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BetaModeration.
-  # Moderation results or errors for the response input and output.
-  class BetaModeration
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaModerationMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaModerationMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaModerationMetadata::DECODERS
-
-    # @return [BetaModerationInput] Moderation for the response input.
-    attr_reader :input
-    # @return [BetaModerationOutput] Moderation for the response output.
-    attr_reader :output
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaModerationConfigParamMetadata
-    FIELDS = {
-      mode: 'mode'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      mode
-    ].freeze
-    DECODERS = {
-      mode: lambda do |value|
-        ::OctridevOpenai::BetaModerationMode.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaModerationConfigParamMetadata
+  FIELDS = {
+    mode: "mode",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    mode
+  ].freeze
+  DECODERS = {
+    mode: lambda do |value|
+      ::OctridevOpenai::BetaModerationMode.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaModerationConfigParam.
+# The moderation policy for the response input.
+class BetaModerationConfigParam
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaModerationConfigParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaModerationConfigParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaModerationConfigParamMetadata::DECODERS
+
+  # @return [BetaModerationMode] Required enumerated value serialized in the `mode` wire field.
+  attr_reader :mode
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BetaModerationConfigParam.
-  # The moderation policy for the response input.
-  class BetaModerationConfigParam
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaModerationConfigParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaModerationConfigParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaModerationConfigParamMetadata::DECODERS
-
-    # @return [BetaModerationMode] Required enumerated value serialized in the `mode` wire field.
-    attr_reader :mode
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaModerationErrorBodyMetadata
-    FIELDS = {
-      type: 'type',
-      code: 'code',
-      message: 'message'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      code
-      message
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::BetaModerationErrorBodyType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaModerationErrorBodyMetadata
+  FIELDS = {
+    type: "type",
+    code: "code",
+    message: "message",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    code
+    message
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::BetaModerationErrorBodyType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaModerationErrorBody.
+# An error produced while attempting moderation for the response input or output.
+class BetaModerationErrorBody
+  include BetaModerationInput
+  include BetaModerationOutput
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaModerationErrorBodyMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaModerationErrorBodyMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaModerationErrorBodyMetadata::DECODERS
+
+  # @return [BetaModerationErrorBodyType] The object type, which was always `error` for moderation failures.
+  attr_reader :type
+  # @return [String] The error code.
+  attr_reader :code
+  # @return [String] The error message.
+  attr_reader :message
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BetaModerationErrorBody.
-  # An error produced while attempting moderation for the response input or output.
-  class BetaModerationErrorBody
-    include BetaModerationInput
-    include BetaModerationOutput
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaModerationErrorBodyMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaModerationErrorBodyMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaModerationErrorBodyMetadata::DECODERS
-
-    # @return [BetaModerationErrorBodyType] The object type, which was always `error` for moderation failures.
-    attr_reader :type
-    # @return [String] The error code.
-    attr_reader :code
-    # @return [String] The error message.
-    attr_reader :message
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the BetaModerationErrorBodyType SDK namespace.
-  module BetaModerationErrorBodyType
-    ERROR = 'error'
-    VALUES = ['error'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('BetaModerationErrorBodyType', 'enum', "Unknown BetaModerationErrorBodyType: #{value}")
-    end
+# Defines the BetaModerationErrorBodyType SDK namespace.
+module BetaModerationErrorBodyType
+  ERROR = 'error'
+  VALUES = ['error'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('BetaModerationErrorBodyType', 'enum', "Unknown BetaModerationErrorBodyType: #{value}")
+  end
+end
+
+# Defines the BetaModerationInput SDK namespace.
+module BetaModerationInput
+  DISCRIMINATOR_MAPPING = {
+    "moderation_result" => -> { BetaModerationResultBody },
+    "error" => -> { BetaModerationErrorBody },
+  }.freeze
+
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
+
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+
+    raise SdkValidationError.new('BetaModerationInput', 'variant', "Unknown BetaModerationInput discriminator: #{hash["type"].inspect}")
+  end
+end
+
+# Defines the BetaModerationInputType SDK namespace.
+module BetaModerationInputType
+  TEXT = 'text'
+  IMAGE = 'image'
+  VALUES = ['text', 'image'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the BetaModerationMode SDK namespace.
+module BetaModerationMode
+  SCORE = 'score'
+  BLOCK = 'block'
+  VALUES = ['score', 'block'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the BetaModerationOutput SDK namespace.
+module BetaModerationOutput
+  DISCRIMINATOR_MAPPING = {
+    "moderation_result" => -> { BetaModerationResultBody },
+    "error" => -> { BetaModerationErrorBody },
+  }.freeze
+
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
+
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+
+    raise SdkValidationError.new('BetaModerationOutput', 'variant', "Unknown BetaModerationOutput discriminator: #{hash["type"].inspect}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaModerationParamMetadata
+  FIELDS = {
+    model: "model",
+    policy: "policy",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    model
+  ].freeze
+  DECODERS = {
+    policy: lambda do |value|
+      ::OctridevOpenai::BetaModerationPolicyParam.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaModerationParam.
+# Configuration for running moderation on the input and output of this response.
+class BetaModerationParam
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaModerationParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaModerationParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaModerationParamMetadata::DECODERS
+
+  # @return [String] The moderation model to use for moderated completions, e.g. 'omni-moderation-latest'.
+  attr_reader :model
+  # @return [BetaModerationPolicyParam] Optional API value serialized in the `policy` wire field.
+  attr_reader :policy
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the BetaModerationInput SDK namespace.
-  module BetaModerationInput
-    DISCRIMINATOR_MAPPING = {
-      'moderation_result' => -> { BetaModerationResultBody },
-      'error' => -> { BetaModerationErrorBody }
-    }.freeze
-
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
-
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
-
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
-
-      raise SdkValidationError.new('BetaModerationInput', 'variant', "Unknown BetaModerationInput discriminator: #{hash['type'].inspect}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the BetaModerationInputType SDK namespace.
-  module BetaModerationInputType
-    TEXT = 'text'
-    IMAGE = 'image'
-    VALUES = %w[text image].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaModerationPolicyParamMetadata
+  FIELDS = {
+    input: "input",
+    output: "output",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+    input: lambda do |value|
+      ::OctridevOpenai::BetaModerationConfigParam.from_hash(value)
+    end,
+    output: lambda do |value|
+      ::OctridevOpenai::BetaModerationConfigParam.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaModerationPolicyParam.
+# The policy to apply to moderated response input and output.
+class BetaModerationPolicyParam
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaModerationPolicyParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaModerationPolicyParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaModerationPolicyParamMetadata::DECODERS
+
+  # @return [BetaModerationConfigParam] Optional API value serialized in the `input` wire field.
+  attr_reader :input
+  # @return [BetaModerationConfigParam] Optional API value serialized in the `output` wire field.
+  attr_reader :output
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the BetaModerationMode SDK namespace.
-  module BetaModerationMode
-    SCORE = 'score'
-    BLOCK = 'block'
-    VALUES = %w[score block].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the BetaModerationOutput SDK namespace.
-  module BetaModerationOutput
-    DISCRIMINATOR_MAPPING = {
-      'moderation_result' => -> { BetaModerationResultBody },
-      'error' => -> { BetaModerationErrorBody }
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
+# Internal model hydration metadata.
+class SdkInternalBetaModerationResultBodyMetadata
+  FIELDS = {
+    type: "type",
+    model: "model",
+    flagged: "flagged",
+    categories: "categories",
+    category_scores: "category_scores",
+    category_applied_input_types: "category_applied_input_types",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    model
+    flagged
+    categories
+    category_scores
+    category_applied_input_types
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::BetaModerationResultBodyType.from_value(value)
+    end,
+  }.freeze
+end
 
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
+# API model for BetaModerationResultBody.
+# A moderation result produced for the response input or output.
+class BetaModerationResultBody
+  include BetaModerationInput
+  include BetaModerationOutput
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaModerationResultBodyMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaModerationResultBodyMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaModerationResultBodyMetadata::DECODERS
 
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+  # @return [BetaModerationResultBodyType] The object type, which was always `moderation_result` for successful moderation results.
+  attr_reader :type
+  # @return [String] The moderation model that produced this result.
+  attr_reader :model
+  # @return [Boolean] A boolean indicating whether the content was flagged by any category.
+  attr_reader :flagged
+  # @return [Hash] A dictionary of moderation categories to booleans, True if the input is flagged under this category.
+  attr_reader :categories
+  # @return [Hash] A dictionary of moderation categories to scores.
+  attr_reader :category_scores
+  # @return [Hash] Which modalities of input are reflected by the score for each category.
+  attr_reader :category_applied_input_types
 
-      raise SdkValidationError.new('BetaModerationOutput', 'variant', "Unknown BetaModerationOutput discriminator: #{hash['type'].inspect}")
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaModerationParamMetadata
-    FIELDS = {
-      model: 'model',
-      policy: 'policy'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      model
-    ].freeze
-    DECODERS = {
-      policy: lambda do |value|
-        ::OctridevOpenai::BetaModerationPolicyParam.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for BetaModerationParam.
-  # Configuration for running moderation on the input and output of this response.
-  class BetaModerationParam
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaModerationParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaModerationParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaModerationParamMetadata::DECODERS
-
-    # @return [String] The moderation model to use for moderated completions, e.g. 'omni-moderation-latest'.
-    attr_reader :model
-    # @return [BetaModerationPolicyParam] Optional API value serialized in the `policy` wire field.
-    attr_reader :policy
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaModerationPolicyParamMetadata
-    FIELDS = {
-      input: 'input',
-      output: 'output'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {
-      input: lambda do |value|
-        ::OctridevOpenai::BetaModerationConfigParam.from_hash(value)
-      end,
-      output: lambda do |value|
-        ::OctridevOpenai::BetaModerationConfigParam.from_hash(value)
-      end
-    }.freeze
+# Defines the BetaModerationResultBodyType SDK namespace.
+module BetaModerationResultBodyType
+  MODERATION_RESULT = 'moderation_result'
+  VALUES = ['moderation_result'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('BetaModerationResultBodyType', 'enum', "Unknown BetaModerationResultBodyType: #{value}")
   end
-
-  # API model for BetaModerationPolicyParam.
-  # The policy to apply to moderated response input and output.
-  class BetaModerationPolicyParam
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaModerationPolicyParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaModerationPolicyParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaModerationPolicyParamMetadata::DECODERS
-
-    # @return [BetaModerationConfigParam] Optional API value serialized in the `input` wire field.
-    attr_reader :input
-    # @return [BetaModerationConfigParam] Optional API value serialized in the `output` wire field.
-    attr_reader :output
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalBetaModerationResultBodyMetadata
-    FIELDS = {
-      type: 'type',
-      model: 'model',
-      flagged: 'flagged',
-      categories: 'categories',
-      category_scores: 'category_scores',
-      category_applied_input_types: 'category_applied_input_types'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      model
-      flagged
-      categories
-      category_scores
-      category_applied_input_types
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::BetaModerationResultBodyType.from_value(value)
-      end
-    }.freeze
-  end
-
-  # API model for BetaModerationResultBody.
-  # A moderation result produced for the response input or output.
-  class BetaModerationResultBody
-    include BetaModerationInput
-    include BetaModerationOutput
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaModerationResultBodyMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaModerationResultBodyMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaModerationResultBodyMetadata::DECODERS
-
-    # @return [BetaModerationResultBodyType] The object type, which was always `moderation_result` for successful moderation results.
-    attr_reader :type
-    # @return [String] The moderation model that produced this result.
-    attr_reader :model
-    # @return [Boolean] A boolean indicating whether the content was flagged by any category.
-    attr_reader :flagged
-    # @return [Hash] A dictionary of moderation categories to booleans, True if the input is flagged under this category.
-    attr_reader :categories
-    # @return [Hash] A dictionary of moderation categories to scores.
-    attr_reader :category_scores
-    # @return [Hash] Which modalities of input are reflected by the score for each category.
-    attr_reader :category_applied_input_types
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the BetaModerationResultBodyType SDK namespace.
-  module BetaModerationResultBodyType
-    MODERATION_RESULT = 'moderation_result'
-    VALUES = ['moderation_result'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('BetaModerationResultBodyType', 'enum', "Unknown BetaModerationResultBodyType: #{value}")
-    end
-  end
+end
 end

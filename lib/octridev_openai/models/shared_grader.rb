@@ -5,408 +5,404 @@
 
 # shared_grader domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalGraderLabelModelMetadata
-    FIELDS = {
-      type: 'type',
-      name: 'name',
-      model: 'model',
-      input: 'input',
-      labels: 'labels',
-      passing_labels: 'passing_labels'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      name
-      model
-      input
-      labels
-      passing_labels
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::GraderLabelModelType.from_value(value)
-      end,
-      input: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::EvalItem.from_hash(item) }
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalGraderLabelModelMetadata
+  FIELDS = {
+    type: "type",
+    name: "name",
+    model: "model",
+    input: "input",
+    labels: "labels",
+    passing_labels: "passing_labels",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    name
+    model
+    input
+    labels
+    passing_labels
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::GraderLabelModelType.from_value(value)
+    end,
+    input: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::EvalItem.from_hash(item) }
+    end,
+  }.freeze
+end
+
+# API model for GraderLabelModel.
+# A LabelModelGrader object which uses a model to assign labels to each item in the evaluation.
+class GraderLabelModel
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalGraderLabelModelMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalGraderLabelModelMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalGraderLabelModelMetadata::DECODERS
+
+  # @return [GraderLabelModelType] The object type, which is always `label_model`.
+  attr_reader :type
+  # @return [String] The name of the grader.
+  attr_reader :name
+  # @return [String] The model to use for the evaluation. Must support structured outputs.
+  attr_reader :model
+  # @return [Array_of_EvalItem] Required array value serialized in the `input` wire field.
+  attr_reader :input
+  # @return [Array_of_String] The labels to assign to each item in the evaluation.
+  attr_reader :labels
+  # @return [Array_of_String] The labels that indicate a passing result. Must be a subset of labels.
+  attr_reader :passing_labels
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for GraderLabelModel.
-  # A LabelModelGrader object which uses a model to assign labels to each item in the evaluation.
-  class GraderLabelModel
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalGraderLabelModelMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalGraderLabelModelMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalGraderLabelModelMetadata::DECODERS
-
-    # @return [GraderLabelModelType] The object type, which is always `label_model`.
-    attr_reader :type
-    # @return [String] The name of the grader.
-    attr_reader :name
-    # @return [String] The model to use for the evaluation. Must support structured outputs.
-    attr_reader :model
-    # @return [Array_of_EvalItem] Required array value serialized in the `input` wire field.
-    attr_reader :input
-    # @return [Array_of_String] The labels to assign to each item in the evaluation.
-    attr_reader :labels
-    # @return [Array_of_String] The labels that indicate a passing result. Must be a subset of labels.
-    attr_reader :passing_labels
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the GraderLabelModelType SDK namespace.
-  module GraderLabelModelType
-    LABEL_MODEL = 'label_model'
-    VALUES = ['label_model'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('GraderLabelModelType', 'enum', "Unknown GraderLabelModelType: #{value}")
-    end
+# Defines the GraderLabelModelType SDK namespace.
+module GraderLabelModelType
+  LABEL_MODEL = 'label_model'
+  VALUES = ['label_model'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('GraderLabelModelType', 'enum', "Unknown GraderLabelModelType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalGraderPythonMetadata
+  FIELDS = {
+    type: "type",
+    name: "name",
+    source: "source",
+    image_tag: "image_tag",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    name
+    source
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::GraderPythonType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for GraderPython.
+# A PythonGrader object that runs a python script on the input.
+class GraderPython
+  include FineTuneReinforcementMethodGrader
+  include RunGraderRequestGrader
+  include ValidateGraderRequestGrader
+  include ValidateGraderResponseGrader
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalGraderPythonMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalGraderPythonMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalGraderPythonMetadata::DECODERS
+
+  # @return [GraderPythonType] The object type, which is always `python`.
+  attr_reader :type
+  # @return [String] The name of the grader.
+  attr_reader :name
+  # @return [String] The source code of the python script.
+  attr_reader :source
+  # @return [String] The image tag to use for the python script.
+  attr_reader :image_tag
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalGraderPythonMetadata
-    FIELDS = {
-      type: 'type',
-      name: 'name',
-      source: 'source',
-      image_tag: 'image_tag'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      name
-      source
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::GraderPythonType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for GraderPython.
-  # A PythonGrader object that runs a python script on the input.
-  class GraderPython
-    include FineTuneReinforcementMethodGrader
-    include RunGraderRequestGrader
-    include ValidateGraderRequestGrader
-    include ValidateGraderResponseGrader
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalGraderPythonMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalGraderPythonMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalGraderPythonMetadata::DECODERS
+# Defines the GraderPythonType SDK namespace.
+module GraderPythonType
+  PYTHON = 'python'
+  VALUES = ['python'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    # @return [GraderPythonType] The object type, which is always `python`.
-    attr_reader :type
-    # @return [String] The name of the grader.
-    attr_reader :name
-    # @return [String] The source code of the python script.
-    attr_reader :source
-    # @return [String] The image tag to use for the python script.
-    attr_reader :image_tag
+    raise SdkValidationError.new('GraderPythonType', 'enum', "Unknown GraderPythonType: #{value}")
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalGraderScoreModelMetadata
+  FIELDS = {
+    type: "type",
+    name: "name",
+    model: "model",
+    sampling_params: "sampling_params",
+    input: "input",
+    range: "range",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    name
+    model
+    input
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::GraderScoreModelType.from_value(value)
+    end,
+    sampling_params: lambda do |value|
+      ::OctridevOpenai::GraderScoreModelSamplingParams.from_hash(value)
+    end,
+    input: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::EvalItem.from_hash(item) }
+    end,
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for GraderScoreModel.
+# A ScoreModelGrader object that uses a model to assign a score to the input.
+class GraderScoreModel
+  include FineTuneReinforcementMethodGrader
+  include RunGraderRequestGrader
+  include ValidateGraderRequestGrader
+  include ValidateGraderResponseGrader
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalGraderScoreModelMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalGraderScoreModelMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalGraderScoreModelMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [GraderScoreModelType] The object type, which is always `score_model`.
+  attr_reader :type
+  # @return [String] The name of the grader.
+  attr_reader :name
+  # @return [String] The model to use for the evaluation.
+  attr_reader :model
+  # @return [GraderScoreModelSamplingParams] The sampling parameters for the model.
+  attr_reader :sampling_params
+  # @return [Array_of_EvalItem] The input messages evaluated by the grader. Supports text, output text, input image, and input audio content blocks, and may include template strings.
+  attr_reader :input
+  # @return [Array_of_Float] The service requires two numbers for the score range. Defaults to `[0, 1]`.
+  attr_reader :range
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the GraderPythonType SDK namespace.
-  module GraderPythonType
-    PYTHON = 'python'
-    VALUES = ['python'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('GraderPythonType', 'enum', "Unknown GraderPythonType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalGraderScoreModelMetadata
-    FIELDS = {
-      type: 'type',
-      name: 'name',
-      model: 'model',
-      sampling_params: 'sampling_params',
-      input: 'input',
-      range: 'range'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      name
-      model
-      input
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::GraderScoreModelType.from_value(value)
-      end,
-      sampling_params: lambda do |value|
-        ::OctridevOpenai::GraderScoreModelSamplingParams.from_hash(value)
-      end,
-      input: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::EvalItem.from_hash(item) }
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the GraderScoreModelType SDK namespace.
+module GraderScoreModelType
+  SCORE_MODEL = 'score_model'
+  VALUES = ['score_model'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('GraderScoreModelType', 'enum', "Unknown GraderScoreModelType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalGraderStringCheckMetadata
+  FIELDS = {
+    type: "type",
+    name: "name",
+    input: "input",
+    reference: "reference",
+    operation: "operation",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    name
+    input
+    reference
+    operation
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::GraderStringCheckType.from_value(value)
+    end,
+    operation: lambda do |value|
+      ::OctridevOpenai::GraderStringCheckOperation.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for GraderStringCheck.
+# A StringCheckGrader object that performs a string comparison between input and reference using a specified operation.
+class GraderStringCheck
+  include FineTuneReinforcementMethodGrader
+  include RunGraderRequestGrader
+  include ValidateGraderRequestGrader
+  include ValidateGraderResponseGrader
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalGraderStringCheckMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalGraderStringCheckMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalGraderStringCheckMetadata::DECODERS
+
+  # @return [GraderStringCheckType] The object type, which is always `string_check`.
+  attr_reader :type
+  # @return [String] The name of the grader.
+  attr_reader :name
+  # @return [String] The input text. This may include template strings.
+  attr_reader :input
+  # @return [String] The reference text. This may include template strings.
+  attr_reader :reference
+  # @return [GraderStringCheckOperation] The string check operation to perform. One of `eq`, `ne`, `like`, or `ilike`.
+  attr_reader :operation
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for GraderScoreModel.
-  # A ScoreModelGrader object that uses a model to assign a score to the input.
-  class GraderScoreModel
-    include FineTuneReinforcementMethodGrader
-    include RunGraderRequestGrader
-    include ValidateGraderRequestGrader
-    include ValidateGraderResponseGrader
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalGraderScoreModelMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalGraderScoreModelMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalGraderScoreModelMetadata::DECODERS
-
-    # @return [GraderScoreModelType] The object type, which is always `score_model`.
-    attr_reader :type
-    # @return [String] The name of the grader.
-    attr_reader :name
-    # @return [String] The model to use for the evaluation.
-    attr_reader :model
-    # @return [GraderScoreModelSamplingParams] The sampling parameters for the model.
-    attr_reader :sampling_params
-    # @return [Array_of_EvalItem] The input messages evaluated by the grader. Supports text, output text, input image, and input audio content blocks, and may include template strings.
-    attr_reader :input
-    # @return [Array_of_Float] The service requires two numbers for the score range. Defaults to `[0, 1]`.
-    attr_reader :range
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the GraderScoreModelType SDK namespace.
-  module GraderScoreModelType
-    SCORE_MODEL = 'score_model'
-    VALUES = ['score_model'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('GraderScoreModelType', 'enum', "Unknown GraderScoreModelType: #{value}")
-    end
+# Defines the GraderStringCheckOperation SDK namespace.
+module GraderStringCheckOperation
+  EQ = 'eq'
+  NE = 'ne'
+  LIKE = 'like'
+  ILIKE = 'ilike'
+  VALUES = ['eq', 'ne', 'like', 'ilike'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the GraderStringCheckType SDK namespace.
+module GraderStringCheckType
+  STRING_CHECK = 'string_check'
+  VALUES = ['string_check'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('GraderStringCheckType', 'enum', "Unknown GraderStringCheckType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalGraderTextSimilarityMetadata
+  FIELDS = {
+    type: "type",
+    name: "name",
+    input: "input",
+    reference: "reference",
+    evaluation_metric: "evaluation_metric",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    name
+    input
+    reference
+    evaluation_metric
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::GraderTextSimilarityType.from_value(value)
+    end,
+    evaluation_metric: lambda do |value|
+      ::OctridevOpenai::GraderTextSimilarityEvaluationMetric.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for GraderTextSimilarity.
+# A TextSimilarityGrader object which grades text based on similarity metrics.
+class GraderTextSimilarity
+  include FineTuneReinforcementMethodGrader
+  include RunGraderRequestGrader
+  include ValidateGraderRequestGrader
+  include ValidateGraderResponseGrader
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalGraderTextSimilarityMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalGraderTextSimilarityMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalGraderTextSimilarityMetadata::DECODERS
+
+  # @return [GraderTextSimilarityType] The type of grader.
+  attr_reader :type
+  # @return [String] The name of the grader.
+  attr_reader :name
+  # @return [String] The text being graded.
+  attr_reader :input
+  # @return [String] The text being graded against.
+  attr_reader :reference
+  # @return [GraderTextSimilarityEvaluationMetric] The evaluation metric to use. One of `cosine`, `fuzzy_match`, `bleu`, `gleu`, `meteor`, `rouge_1`, `rouge_2`, `rouge_3`, `rouge_4`, `rouge_5`, or `rouge_l`.
+  attr_reader :evaluation_metric
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalGraderStringCheckMetadata
-    FIELDS = {
-      type: 'type',
-      name: 'name',
-      input: 'input',
-      reference: 'reference',
-      operation: 'operation'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      name
-      input
-      reference
-      operation
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::GraderStringCheckType.from_value(value)
-      end,
-      operation: lambda do |value|
-        ::OctridevOpenai::GraderStringCheckOperation.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for GraderStringCheck.
-  # A StringCheckGrader object that performs a string comparison between input and reference using a specified operation.
-  class GraderStringCheck
-    include FineTuneReinforcementMethodGrader
-    include RunGraderRequestGrader
-    include ValidateGraderRequestGrader
-    include ValidateGraderResponseGrader
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalGraderStringCheckMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalGraderStringCheckMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalGraderStringCheckMetadata::DECODERS
-
-    # @return [GraderStringCheckType] The object type, which is always `string_check`.
-    attr_reader :type
-    # @return [String] The name of the grader.
-    attr_reader :name
-    # @return [String] The input text. This may include template strings.
-    attr_reader :input
-    # @return [String] The reference text. This may include template strings.
-    attr_reader :reference
-    # @return [GraderStringCheckOperation] The string check operation to perform. One of `eq`, `ne`, `like`, or `ilike`.
-    attr_reader :operation
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the GraderStringCheckOperation SDK namespace.
-  module GraderStringCheckOperation
-    EQ = 'eq'
-    NE = 'ne'
-    LIKE = 'like'
-    ILIKE = 'ilike'
-    VALUES = %w[eq ne like ilike].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the GraderTextSimilarityEvaluationMetric SDK namespace.
+module GraderTextSimilarityEvaluationMetric
+  COSINE = 'cosine'
+  FUZZY_MATCH = 'fuzzy_match'
+  BLEU = 'bleu'
+  GLEU = 'gleu'
+  METEOR = 'meteor'
+  ROUGE_1 = 'rouge_1'
+  ROUGE_2 = 'rouge_2'
+  ROUGE_3 = 'rouge_3'
+  ROUGE_4 = 'rouge_4'
+  ROUGE_5 = 'rouge_5'
+  ROUGE_L = 'rouge_l'
+  VALUES = [
+    'cosine', 'fuzzy_match', 'bleu', 'gleu', 'meteor', 'rouge_1', 'rouge_2', 'rouge_3', 'rouge_4',
+    'rouge_5', 'rouge_l'
+  ].freeze
+  def self.from_value(value)
+    value
   end
+end
 
-  # Defines the GraderStringCheckType SDK namespace.
-  module GraderStringCheckType
-    STRING_CHECK = 'string_check'
-    VALUES = ['string_check'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+# Defines the GraderTextSimilarityType SDK namespace.
+module GraderTextSimilarityType
+  TEXT_SIMILARITY = 'text_similarity'
+  VALUES = ['text_similarity'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-      raise SdkValidationError.new('GraderStringCheckType', 'enum', "Unknown GraderStringCheckType: #{value}")
-    end
+    raise SdkValidationError.new('GraderTextSimilarityType', 'enum', "Unknown GraderTextSimilarityType: #{value}")
   end
-
-  # Internal model hydration metadata.
-  class SdkInternalGraderTextSimilarityMetadata
-    FIELDS = {
-      type: 'type',
-      name: 'name',
-      input: 'input',
-      reference: 'reference',
-      evaluation_metric: 'evaluation_metric'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      name
-      input
-      reference
-      evaluation_metric
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::GraderTextSimilarityType.from_value(value)
-      end,
-      evaluation_metric: lambda do |value|
-        ::OctridevOpenai::GraderTextSimilarityEvaluationMetric.from_value(value)
-      end
-    }.freeze
-  end
-
-  # API model for GraderTextSimilarity.
-  # A TextSimilarityGrader object which grades text based on similarity metrics.
-  class GraderTextSimilarity
-    include FineTuneReinforcementMethodGrader
-    include RunGraderRequestGrader
-    include ValidateGraderRequestGrader
-    include ValidateGraderResponseGrader
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalGraderTextSimilarityMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalGraderTextSimilarityMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalGraderTextSimilarityMetadata::DECODERS
-
-    # @return [GraderTextSimilarityType] The type of grader.
-    attr_reader :type
-    # @return [String] The name of the grader.
-    attr_reader :name
-    # @return [String] The text being graded.
-    attr_reader :input
-    # @return [String] The text being graded against.
-    attr_reader :reference
-    # @return [GraderTextSimilarityEvaluationMetric] The evaluation metric to use. One of `cosine`, `fuzzy_match`, `bleu`, `gleu`, `meteor`, `rouge_1`, `rouge_2`, `rouge_3`, `rouge_4`, `rouge_5`, or `rouge_l`.
-    attr_reader :evaluation_metric
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the GraderTextSimilarityEvaluationMetric SDK namespace.
-  module GraderTextSimilarityEvaluationMetric
-    COSINE = 'cosine'
-    FUZZY_MATCH = 'fuzzy_match'
-    BLEU = 'bleu'
-    GLEU = 'gleu'
-    METEOR = 'meteor'
-    ROUGE_1 = 'rouge_1'
-    ROUGE_2 = 'rouge_2'
-    ROUGE_3 = 'rouge_3'
-    ROUGE_4 = 'rouge_4'
-    ROUGE_5 = 'rouge_5'
-    ROUGE_L = 'rouge_l'
-    VALUES = %w[
-      cosine fuzzy_match bleu gleu meteor rouge_1 rouge_2 rouge_3 rouge_4
-      rouge_5 rouge_l
-    ].freeze
-    def self.from_value(value)
-      value
-    end
-  end
-
-  # Defines the GraderTextSimilarityType SDK namespace.
-  module GraderTextSimilarityType
-    TEXT_SIMILARITY = 'text_similarity'
-    VALUES = ['text_similarity'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('GraderTextSimilarityType', 'enum', "Unknown GraderTextSimilarityType: #{value}")
-    end
-  end
+end
 end

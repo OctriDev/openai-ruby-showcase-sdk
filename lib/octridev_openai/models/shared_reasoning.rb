@@ -5,179 +5,176 @@
 
 # shared_reasoning domain models
 module OctridevOpenai
-  # Defines the ReasoningEffort SDK namespace.
-  module ReasoningEffort
-    def self.from_hash(hash)
-      return ReasoningEffortVariant0.from_value(hash) if hash.is_a?(::String)
+# Defines the ReasoningEffort SDK namespace.
+module ReasoningEffort
+  def self.from_hash(hash)
+    return ReasoningEffortVariant0.from_value(hash) if hash.is_a?(::String)
+    hash
+  end
+end
 
-      hash
-    end
+# Defines the ReasoningEffortVariant0 SDK namespace.
+module ReasoningEffortVariant0
+  NONE = 'none'
+  MINIMAL = 'minimal'
+  LOW = 'low'
+  MEDIUM = 'medium'
+  HIGH = 'high'
+  XHIGH = 'xhigh'
+  MAX = 'max'
+  VALUES = ['none', 'minimal', 'low', 'medium', 'high', 'xhigh', 'max'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalReasoningItemMetadata
+  FIELDS = {
+    type: "type",
+    id: "id",
+    encrypted_content: "encrypted_content",
+    summary: "summary",
+    content: "content",
+    status: "status",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    id
+    summary
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ReasoningItemType.from_value(value)
+    end,
+    summary: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::SummaryTextContent.from_hash(item) }
+    end,
+    content: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::ReasoningTextContent.from_hash(item) }
+    end,
+    status: lambda do |value|
+      ::OctridevOpenai::ReasoningItemStatus.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for ReasoningItem.
+# A description of the chain of thought used by a reasoning model while generating a response. Be sure to include these items in your `input` to the Responses API for subsequent turns of a conversation if you are manually managing context.
+class ReasoningItem
+  include ConversationItem
+  include Item
+  include ItemResource
+  include OutputItem
+  include ItemField
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalReasoningItemMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalReasoningItemMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalReasoningItemMetadata::DECODERS
+
+  # @return [ReasoningItemType] The type of the object. Always `reasoning`.
+  attr_reader :type
+  # @return [String] The unique identifier of the reasoning content.
+  attr_reader :id
+  # @return [String] Optional `string` value serialized in the `encrypted_content` wire field.
+  attr_reader :encrypted_content
+  # @return [Array_of_SummaryTextContent] Reasoning summary content.
+  attr_reader :summary
+  # @return [Array_of_ReasoningTextContent] Reasoning text content.
+  attr_reader :content
+  # @return [ReasoningItemStatus] The status of the item. One of `in_progress`, `completed`, or `incomplete`. Populated when items are returned via API.
+  attr_reader :status
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the ReasoningEffortVariant0 SDK namespace.
-  module ReasoningEffortVariant0
-    NONE = 'none'
-    MINIMAL = 'minimal'
-    LOW = 'low'
-    MEDIUM = 'medium'
-    HIGH = 'high'
-    XHIGH = 'xhigh'
-    MAX = 'max'
-    VALUES = %w[none minimal low medium high xhigh max].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalReasoningItemMetadata
-    FIELDS = {
-      type: 'type',
-      id: 'id',
-      encrypted_content: 'encrypted_content',
-      summary: 'summary',
-      content: 'content',
-      status: 'status'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      id
-      summary
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ReasoningItemType.from_value(value)
-      end,
-      summary: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::SummaryTextContent.from_hash(item) }
-      end,
-      content: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::ReasoningTextContent.from_hash(item) }
-      end,
-      status: lambda do |value|
-        ::OctridevOpenai::ReasoningItemStatus.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the ReasoningItemStatus SDK namespace.
+module ReasoningItemStatus
+  IN_PROGRESS = 'in_progress'
+  COMPLETED = 'completed'
+  INCOMPLETE = 'incomplete'
+  VALUES = ['in_progress', 'completed', 'incomplete'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the ReasoningItemType SDK namespace.
+module ReasoningItemType
+  REASONING = 'reasoning'
+  VALUES = ['reasoning'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('ReasoningItemType', 'enum', "Unknown ReasoningItemType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalReasoningTextContentMetadata
+  FIELDS = {
+    type: "type",
+    text: "text",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    text
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ReasoningTextContentType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for ReasoningTextContent.
+# Reasoning text from the model.
+class ReasoningTextContent
+  include OutputContent
+  include MessageContentItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalReasoningTextContentMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalReasoningTextContentMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalReasoningTextContentMetadata::DECODERS
+
+  # @return [ReasoningTextContentType] The type of the reasoning text. Always `reasoning_text`.
+  attr_reader :type
+  # @return [String] The reasoning text from the model.
+  attr_reader :text
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ReasoningItem.
-  # A description of the chain of thought used by a reasoning model while generating a response. Be sure to include these items in your `input` to the Responses API for subsequent turns of a conversation if you are manually managing context.
-  class ReasoningItem
-    include ConversationItem
-    include Item
-    include ItemResource
-    include OutputItem
-    include ItemField
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalReasoningItemMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalReasoningItemMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalReasoningItemMetadata::DECODERS
-
-    # @return [ReasoningItemType] The type of the object. Always `reasoning`.
-    attr_reader :type
-    # @return [String] The unique identifier of the reasoning content.
-    attr_reader :id
-    # @return [String] Optional `string` value serialized in the `encrypted_content` wire field.
-    attr_reader :encrypted_content
-    # @return [Array_of_SummaryTextContent] Reasoning summary content.
-    attr_reader :summary
-    # @return [Array_of_ReasoningTextContent] Reasoning text content.
-    attr_reader :content
-    # @return [ReasoningItemStatus] The status of the item. One of `in_progress`, `completed`, or `incomplete`. Populated when items are returned via API.
-    attr_reader :status
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the ReasoningItemStatus SDK namespace.
-  module ReasoningItemStatus
-    IN_PROGRESS = 'in_progress'
-    COMPLETED = 'completed'
-    INCOMPLETE = 'incomplete'
-    VALUES = %w[in_progress completed incomplete].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the ReasoningItemType SDK namespace.
-  module ReasoningItemType
-    REASONING = 'reasoning'
-    VALUES = ['reasoning'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+# Defines the ReasoningTextContentType SDK namespace.
+module ReasoningTextContentType
+  REASONING_TEXT = 'reasoning_text'
+  VALUES = ['reasoning_text'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-      raise SdkValidationError.new('ReasoningItemType', 'enum', "Unknown ReasoningItemType: #{value}")
-    end
+    raise SdkValidationError.new('ReasoningTextContentType', 'enum', "Unknown ReasoningTextContentType: #{value}")
   end
-
-  # Internal model hydration metadata.
-  class SdkInternalReasoningTextContentMetadata
-    FIELDS = {
-      type: 'type',
-      text: 'text'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      text
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ReasoningTextContentType.from_value(value)
-      end
-    }.freeze
-  end
-
-  # API model for ReasoningTextContent.
-  # Reasoning text from the model.
-  class ReasoningTextContent
-    include OutputContent
-    include MessageContentItem
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalReasoningTextContentMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalReasoningTextContentMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalReasoningTextContentMetadata::DECODERS
-
-    # @return [ReasoningTextContentType] The type of the reasoning text. Always `reasoning_text`.
-    attr_reader :type
-    # @return [String] The reasoning text from the model.
-    attr_reader :text
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the ReasoningTextContentType SDK namespace.
-  module ReasoningTextContentType
-    REASONING_TEXT = 'reasoning_text'
-    VALUES = ['reasoning_text'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('ReasoningTextContentType', 'enum', "Unknown ReasoningTextContentType: #{value}")
-    end
-  end
+end
 end

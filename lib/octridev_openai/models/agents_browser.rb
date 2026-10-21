@@ -5,316 +5,316 @@
 
 # agents_browser domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalBrowserAuthenticationFieldResourceMetadata
-    FIELDS = {
-      id: 'id',
-      label: 'label',
-      type: 'type',
-      required: 'required'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-      label
-      type
-      required
-    ].freeze
-    DECODERS = {}.freeze
+# Internal model hydration metadata.
+class SdkInternalBrowserAuthenticationFieldResourceMetadata
+  FIELDS = {
+    id: "id",
+    label: "label",
+    type: "type",
+    required: "required",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+    label
+    type
+    required
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for BrowserAuthenticationFieldResource.
+# A control in a registered browser-login form.
+class BrowserAuthenticationFieldResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBrowserAuthenticationFieldResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBrowserAuthenticationFieldResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBrowserAuthenticationFieldResourceMetadata::DECODERS
+
+  # @return [String] The field ID to submit as field_id in a fields entry.
+  attr_reader :id
+  # @return [String] The label to display beside the control.
+  attr_reader :label
+  # @return [String] The rendering type, such as email, password, or text.
+  attr_reader :type
+  # @return [Boolean] Whether this control requires a nonempty value.
+  attr_reader :required
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BrowserAuthenticationFieldResource.
-  # A control in a registered browser-login form.
-  class BrowserAuthenticationFieldResource
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBrowserAuthenticationFieldResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBrowserAuthenticationFieldResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBrowserAuthenticationFieldResourceMetadata::DECODERS
-
-    # @return [String] The field ID to submit as field_id in a fields entry.
-    attr_reader :id
-    # @return [String] The label to display beside the control.
-    attr_reader :label
-    # @return [String] The rendering type, such as email, password, or text.
-    attr_reader :type
-    # @return [Boolean] Whether this control requires a nonempty value.
-    attr_reader :required
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBrowserAuthenticationFieldValueParamMetadata
-    FIELDS = {
-      field_id: 'field_id',
-      value: 'value'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      field_id
-      value
-    ].freeze
-    DECODERS = {}.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBrowserAuthenticationFieldValueParamMetadata
+  FIELDS = {
+    field_id: "field_id",
+    value: "value",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    field_id
+    value
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for BrowserAuthenticationFieldValueParam.
+# One user-entered value, including non-password fields such as an email address.
+class BrowserAuthenticationFieldValueParam
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBrowserAuthenticationFieldValueParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBrowserAuthenticationFieldValueParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBrowserAuthenticationFieldValueParamMetadata::DECODERS
+
+  # @return [String] The field ID from the required action.
+  attr_reader :field_id
+  # @return [String] The value to enter into the registered control.
+  attr_reader :value
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BrowserAuthenticationFieldValueParam.
-  # One user-entered value, including non-password fields such as an email address.
-  class BrowserAuthenticationFieldValueParam
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBrowserAuthenticationFieldValueParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBrowserAuthenticationFieldValueParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBrowserAuthenticationFieldValueParamMetadata::DECODERS
-
-    # @return [String] The field ID from the required action.
-    attr_reader :field_id
-    # @return [String] The value to enter into the registered control.
-    attr_reader :value
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the BrowserAuthenticationHistoryRequestKindResource SDK namespace.
-  module BrowserAuthenticationHistoryRequestKindResource
-    DISCRIMINATOR_MAPPING = {
-      'browser_authentication' => -> { BrowserAuthenticationHistoryRequestKindResourceBrowserAuthentication }
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
+# Defines the BrowserAuthenticationHistoryRequestKindResource SDK namespace.
+module BrowserAuthenticationHistoryRequestKindResource
+  DISCRIMINATOR_MAPPING = {
+    "browser_authentication" => -> { BrowserAuthenticationHistoryRequestKindResourceBrowserAuthentication },
+  }.freeze
 
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
 
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
 
-      raise SdkValidationError.new('BrowserAuthenticationHistoryRequestKindResource', 'variant', "Unknown BrowserAuthenticationHistoryRequestKindResource discriminator: #{hash['type'].inspect}")
-    end
+    raise SdkValidationError.new('BrowserAuthenticationHistoryRequestKindResource', 'variant', "Unknown BrowserAuthenticationHistoryRequestKindResource discriminator: #{hash["type"].inspect}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBrowserAuthenticationHistoryRequestKindResourceBrowserAuthenticationMetadata
+  FIELDS = {
+    type: "type",
+    reason: "reason",
+    credential_origin: "credential_origin",
+    fields: "fields",
+    options: "options",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    reason
+    credential_origin
+    fields
+    options
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::BrowserAuthenticationHistoryRequestKindResourceBrowserAuthenticationType.from_value(value)
+    end,
+    fields: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::BrowserAuthenticationFieldResource.from_hash(item) }
+    end,
+    options: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::BrowserAuthenticationOptionResource.from_hash(item) }
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    reason
+    credential_origin
+  ].freeze
+end
+
+# API model for BrowserAuthenticationHistoryRequestKindResourceBrowserAuthentication.
+# A registered form awaiting the application's response.
+class BrowserAuthenticationHistoryRequestKindResourceBrowserAuthentication
+  include BrowserAuthenticationHistoryRequestKindResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBrowserAuthenticationHistoryRequestKindResourceBrowserAuthenticationMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBrowserAuthenticationHistoryRequestKindResourceBrowserAuthenticationMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBrowserAuthenticationHistoryRequestKindResourceBrowserAuthenticationMetadata::DECODERS
+
+  # @return [BrowserAuthenticationHistoryRequestKindResourceBrowserAuthenticationType] The type of the object. Always `browser_authentication`.
+  attr_reader :type
+  # @return [String] Why the agent needs the user to sign in.
+  attr_reader :reason
+  # @return [String] The registered form or frame origin where values will be entered.
+  attr_reader :credential_origin
+  # @return [Array_of_BrowserAuthenticationFieldResource] Controls to render. All submitted values are sensitive.
+  attr_reader :fields
+  # @return [Array_of_BrowserAuthenticationOptionResource] Sign-in methods. Empty for a plain form.
+  attr_reader :options
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBrowserAuthenticationHistoryRequestKindResourceBrowserAuthenticationMetadata
-    FIELDS = {
-      type: 'type',
-      reason: 'reason',
-      credential_origin: 'credential_origin',
-      fields: 'fields',
-      options: 'options'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      reason
-      credential_origin
-      fields
-      options
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::BrowserAuthenticationHistoryRequestKindResourceBrowserAuthenticationType.from_value(value)
-      end,
-      fields: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::BrowserAuthenticationFieldResource.from_hash(item) }
-      end,
-      options: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::BrowserAuthenticationOptionResource.from_hash(item) }
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      reason
-      credential_origin
-    ].freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalBrowserAuthenticationHistoryRequestKindResourceBrowserAuthenticationMetadata::NULLABLE_FIELDS)
   end
 
-  # API model for BrowserAuthenticationHistoryRequestKindResourceBrowserAuthentication.
-  # A registered form awaiting the application's response.
-  class BrowserAuthenticationHistoryRequestKindResourceBrowserAuthentication
-    include BrowserAuthenticationHistoryRequestKindResource
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBrowserAuthenticationHistoryRequestKindResourceBrowserAuthenticationMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBrowserAuthenticationHistoryRequestKindResourceBrowserAuthenticationMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBrowserAuthenticationHistoryRequestKindResourceBrowserAuthenticationMetadata::DECODERS
+# Defines the BrowserAuthenticationHistoryRequestKindResourceBrowserAuthenticationType SDK namespace.
+module BrowserAuthenticationHistoryRequestKindResourceBrowserAuthenticationType
+  BROWSER_AUTHENTICATION = 'browser_authentication'
+  VALUES = ['browser_authentication'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    # @return [BrowserAuthenticationHistoryRequestKindResourceBrowserAuthenticationType] The type of the object. Always `browser_authentication`.
-    attr_reader :type
-    # @return [String] Why the agent needs the user to sign in.
-    attr_reader :reason
-    # @return [String] The registered form or frame origin where values will be entered.
-    attr_reader :credential_origin
-    # @return [Array_of_BrowserAuthenticationFieldResource] Controls to render. All submitted values are sensitive.
-    attr_reader :fields
-    # @return [Array_of_BrowserAuthenticationOptionResource] Sign-in methods. Empty for a plain form.
-    attr_reader :options
+    raise SdkValidationError.new('BrowserAuthenticationHistoryRequestKindResourceBrowserAuthenticationType', 'enum', "Unknown BrowserAuthenticationHistoryRequestKindResourceBrowserAuthenticationType: #{value}")
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalBrowserAuthenticationOptionResourceMetadata
+  FIELDS = {
+    id: "id",
+    label: "label",
+    field_ids: "field_ids",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+    label
+    field_ids
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalBrowserAuthenticationHistoryRequestKindResourceBrowserAuthenticationMetadata::NULLABLE_FIELDS)
-    end
+# API model for BrowserAuthenticationOptionResource.
+# A sign-in method and the fields that belong to it.
+class BrowserAuthenticationOptionResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBrowserAuthenticationOptionResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBrowserAuthenticationOptionResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBrowserAuthenticationOptionResourceMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [String] The option ID to submit as selected_option.
+  attr_reader :id
+  # @return [String] The method label to display.
+  attr_reader :label
+  # @return [Array_of_String] IDs from the registered fields that this method accepts.
+  attr_reader :field_ids
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the BrowserAuthenticationHistoryRequestKindResourceBrowserAuthenticationType SDK namespace.
-  module BrowserAuthenticationHistoryRequestKindResourceBrowserAuthenticationType
-    BROWSER_AUTHENTICATION = 'browser_authentication'
-    VALUES = ['browser_authentication'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('BrowserAuthenticationHistoryRequestKindResourceBrowserAuthenticationType', 'enum', "Unknown BrowserAuthenticationHistoryRequestKindResourceBrowserAuthenticationType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBrowserAuthenticationOptionResourceMetadata
-    FIELDS = {
-      id: 'id',
-      label: 'label',
-      field_ids: 'field_ids'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-      label
-      field_ids
-    ].freeze
-    DECODERS = {}.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBrowserAuthenticationRequestItemResourceMetadata
+  FIELDS = {
+    turn_id: "turn_id",
+    request_id: "request_id",
+    request: "request",
+    id: "id",
+    type: "type",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    turn_id
+    request_id
+    request
+    id
+    type
+  ].freeze
+  DECODERS = {
+    request: lambda do |value|
+      ::OctridevOpenai::BrowserAuthenticationHistoryRequestKindResource.from_hash(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::BrowserAuthenticationRequestItemResourceType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BrowserAuthenticationRequestItemResource.
+# A credential-free history record of the emitted login request.
+class BrowserAuthenticationRequestItemResource
+  include SessionTurnItemResource
+  include AgentOutputItemResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBrowserAuthenticationRequestItemResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBrowserAuthenticationRequestItemResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBrowserAuthenticationRequestItemResourceMetadata::DECODERS
+
+  # @return [String] Required `string` value serialized in the `turn_id` wire field.
+  attr_reader :turn_id
+  # @return [String] Required `string` value serialized in the `request_id` wire field.
+  attr_reader :request_id
+  # @return [BrowserAuthenticationHistoryRequestKindResource] Required API value serialized in the `request` wire field.
+  attr_reader :request
+  # @return [String] The stable history item ID.
+  attr_reader :id
+  # @return [BrowserAuthenticationRequestItemResourceType] The item type. Always computer_use_approval_request.
+  attr_reader :type
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BrowserAuthenticationOptionResource.
-  # A sign-in method and the fields that belong to it.
-  class BrowserAuthenticationOptionResource
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBrowserAuthenticationOptionResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBrowserAuthenticationOptionResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBrowserAuthenticationOptionResourceMetadata::DECODERS
-
-    # @return [String] The option ID to submit as selected_option.
-    attr_reader :id
-    # @return [String] The method label to display.
-    attr_reader :label
-    # @return [Array_of_String] IDs from the registered fields that this method accepts.
-    attr_reader :field_ids
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBrowserAuthenticationRequestItemResourceMetadata
-    FIELDS = {
-      turn_id: 'turn_id',
-      request_id: 'request_id',
-      request: 'request',
-      id: 'id',
-      type: 'type'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      turn_id
-      request_id
-      request
-      id
-      type
-    ].freeze
-    DECODERS = {
-      request: lambda do |value|
-        ::OctridevOpenai::BrowserAuthenticationHistoryRequestKindResource.from_hash(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::BrowserAuthenticationRequestItemResourceType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # API model for BrowserAuthenticationRequestItemResource.
-  # A credential-free history record of the emitted login request.
-  class BrowserAuthenticationRequestItemResource
-    include SessionTurnItemResource
-    include AgentOutputItemResource
+# Defines the BrowserAuthenticationRequestItemResourceType SDK namespace.
+module BrowserAuthenticationRequestItemResourceType
+  COMPUTER_USE_APPROVAL_REQUEST = 'computer_use_approval_request'
+  VALUES = ['computer_use_approval_request'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBrowserAuthenticationRequestItemResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBrowserAuthenticationRequestItemResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBrowserAuthenticationRequestItemResourceMetadata::DECODERS
-
-    # @return [String] Required `string` value serialized in the `turn_id` wire field.
-    attr_reader :turn_id
-    # @return [String] Required `string` value serialized in the `request_id` wire field.
-    attr_reader :request_id
-    # @return [BrowserAuthenticationHistoryRequestKindResource] Required API value serialized in the `request` wire field.
-    attr_reader :request
-    # @return [String] The stable history item ID.
-    attr_reader :id
-    # @return [BrowserAuthenticationRequestItemResourceType] The item type. Always computer_use_approval_request.
-    attr_reader :type
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+    raise SdkValidationError.new('BrowserAuthenticationRequestItemResourceType', 'enum', "Unknown BrowserAuthenticationRequestItemResourceType: #{value}")
   end
+end
 
-  # Defines the BrowserAuthenticationRequestItemResourceType SDK namespace.
-  module BrowserAuthenticationRequestItemResourceType
-    COMPUTER_USE_APPROVAL_REQUEST = 'computer_use_approval_request'
-    VALUES = ['computer_use_approval_request'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('BrowserAuthenticationRequestItemResourceType', 'enum', "Unknown BrowserAuthenticationRequestItemResourceType: #{value}")
-    end
+# Defines the BrowserOriginAccessDecisionParam SDK namespace.
+module BrowserOriginAccessDecisionParam
+  APPROVE = 'approve'
+  DENY = 'deny'
+  CANCEL = 'cancel'
+  VALUES = ['approve', 'deny', 'cancel'].freeze
+  def self.from_value(value)
+    value
   end
-
-  # Defines the BrowserOriginAccessDecisionParam SDK namespace.
-  module BrowserOriginAccessDecisionParam
-    APPROVE = 'approve'
-    DENY = 'deny'
-    CANCEL = 'cancel'
-    VALUES = %w[approve deny cancel].freeze
-    def self.from_value(value)
-      value
-    end
-  end
+end
 end

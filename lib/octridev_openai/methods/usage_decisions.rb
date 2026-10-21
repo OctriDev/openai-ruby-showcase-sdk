@@ -49,9 +49,10 @@ module OctridevOpenai
         batch: NOT_GIVEN,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
-          '/organization/usage/decisions',
+          "/organization/usage/decisions",
           config: config,
           query: {
             'start_time' => QueryValue.new(start_time, style: 'form', explode: true),
@@ -64,17 +65,17 @@ module OctridevOpenai
             'user_ids' => QueryValue.new(user_ids, style: 'form', explode: true),
             'api_key_ids' => QueryValue.new(api_key_ids, style: 'form', explode: true),
             'models' => QueryValue.new(models, style: 'form', explode: true),
-            'batch' => QueryValue.new(batch, style: 'form', explode: true)
+            'batch' => QueryValue.new(batch, style: 'form', explode: true),
           },
           return_type: ::OctridevOpenai::PublicDecisionsUsageResponseResource,
           decoder: :json,
           operation_id: 'decisions_usage',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::DecisionsUsageErrorResponse, '403' => ::OctridevOpenai::DecisionsUsagePermissionErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::DecisionsUsageErrorResponse, '403' => ::OctridevOpenai::DecisionsUsagePermissionErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
-      DecisionsUsagePage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+    DecisionsUsagePage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Get Decisions API usage details for the organization.
       #
@@ -136,13 +137,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             items.each { |item| y << item }
             break unless page.has_more
-
             next_cursor = page.next_page
             break if next_cursor.nil?
-
             cursor = next_cursor
           end
         end
@@ -183,12 +181,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             next_cursor = page.next_page
             has_more = page.has_more && !next_cursor.nil?
             y << DecisionsUsagePage.new(data: page, items: items, has_more: has_more)
             break unless has_more
-
             cursor = next_cursor
           end
         end

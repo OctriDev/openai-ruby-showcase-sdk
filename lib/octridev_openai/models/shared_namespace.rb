@@ -5,86 +5,84 @@
 
 # shared_namespace domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalNamespaceToolParamMetadata
-    FIELDS = {
-      type: 'type',
-      name: 'name',
-      description: 'description',
-      tools: 'tools'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      name
-      description
-      tools
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::NamespaceToolParamType.from_value(value)
-      end,
-      tools: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::NamespaceToolParamToolsItem.from_hash(item) }
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalNamespaceToolParamMetadata
+  FIELDS = {
+    type: "type",
+    name: "name",
+    description: "description",
+    tools: "tools",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    name
+    description
+    tools
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::NamespaceToolParamType.from_value(value)
+    end,
+    tools: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::NamespaceToolParamToolsItem.from_hash(item) }
+    end,
+  }.freeze
+end
+
+# API model for NamespaceToolParam.
+# Groups function/custom tools under a shared namespace.
+class NamespaceToolParam
+  include Tool
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalNamespaceToolParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalNamespaceToolParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalNamespaceToolParamMetadata::DECODERS
+
+  # @return [NamespaceToolParamType] The type of the tool. Always `namespace`.
+  attr_reader :type
+  # @return [String] The namespace name used in tool calls (for example, `crm`).
+  attr_reader :name
+  # @return [String] A description of the namespace shown to the model.
+  attr_reader :description
+  # @return [Array_of_NamespaceToolParamToolsItem] The function/custom tools available inside this namespace.
+  attr_reader :tools
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for NamespaceToolParam.
-  # Groups function/custom tools under a shared namespace.
-  class NamespaceToolParam
-    include Tool
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalNamespaceToolParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalNamespaceToolParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalNamespaceToolParamMetadata::DECODERS
-
-    # @return [NamespaceToolParamType] The type of the tool. Always `namespace`.
-    attr_reader :type
-    # @return [String] The namespace name used in tool calls (for example, `crm`).
-    attr_reader :name
-    # @return [String] A description of the namespace shown to the model.
-    attr_reader :description
-    # @return [Array_of_NamespaceToolParamToolsItem] The function/custom tools available inside this namespace.
-    attr_reader :tools
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the NamespaceToolParamType SDK namespace.
-  module NamespaceToolParamType
-    NAMESPACE = 'namespace'
-    VALUES = ['namespace'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('NamespaceToolParamType', 'enum', "Unknown NamespaceToolParamType: #{value}")
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the NamespaceToolParamToolsItem SDK namespace.
-  module NamespaceToolParamToolsItem
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
+# Defines the NamespaceToolParamType SDK namespace.
+module NamespaceToolParamType
+  NAMESPACE = 'namespace'
+  VALUES = ['namespace'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-      mapping = { 'function' => FunctionToolParam, 'custom' => CustomToolParam }
-      type = mapping[hash['type']]
-      return type.from_hash(hash) if type
-
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
-
-      raise SdkValidationError.new('NamespaceToolParamToolsItem', 'variant', "Unknown NamespaceToolParamToolsItem discriminator: #{hash['type'].inspect}")
-    end
+    raise SdkValidationError.new('NamespaceToolParamType', 'enum', "Unknown NamespaceToolParamType: #{value}")
   end
+end
+
+# Defines the NamespaceToolParamToolsItem SDK namespace.
+module NamespaceToolParamToolsItem
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    mapping = { "function" => FunctionToolParam, "custom" => CustomToolParam }
+    type = mapping[hash["type"]]
+    return type.from_hash(hash) if type
+
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+
+    raise SdkValidationError.new('NamespaceToolParamToolsItem', 'variant', "Unknown NamespaceToolParamToolsItem discriminator: #{hash["type"].inspect}")
+  end
+end
 end

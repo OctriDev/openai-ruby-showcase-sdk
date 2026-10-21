@@ -25,23 +25,24 @@ module OctridevOpenai
         after: NOT_GIVEN,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
-          '/organization/invites',
+          "/organization/invites",
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
-            'after' => QueryValue.new(after, style: 'form', explode: true)
+            'after' => QueryValue.new(after, style: 'form', explode: true),
           },
           return_type: ::OctridevOpenai::InviteListResponse,
           decoder: :json,
           operation_id: 'list_invites',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
-      ListInvitesPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+    ListInvitesPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists organization invites and their status, role, and project access details. Use `limit` to control the number of results and `after` to continue from an invite ID. The response includes `has_more` and cursor IDs to help you paginate.
       #
@@ -70,13 +71,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             items.each { |item| y << item }
             break unless page.has_more
-
             next_cursor = page.last_id
             break if next_cursor.nil?
-
             cursor = next_cursor
           end
         end
@@ -99,12 +97,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListInvitesPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
-
             cursor = next_cursor
           end
         end
@@ -126,20 +122,21 @@ module OctridevOpenai
         projects: NOT_GIVEN,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
-          '/organization/invites',
+          "/organization/invites",
           config: config,
           body: {
             'email' => email,
             'role' => role,
-            'projects' => projects
+            'projects' => projects,
           },
           return_type: ::OctridevOpenai::Invite,
           decoder: :json,
           operation_id: 'create_invites',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -153,10 +150,11 @@ module OctridevOpenai
         invite_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
           [
-            '/organization/invites/',
+            "/organization/invites/",
             SdkClient.encode_path_segment(invite_id)
           ].join,
           config: config,
@@ -164,7 +162,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'retrieve_invite',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -176,10 +174,11 @@ module OctridevOpenai
         invite_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'DELETE',
           [
-            '/organization/invites/',
+            "/organization/invites/",
             SdkClient.encode_path_segment(invite_id)
           ].join,
           config: config,
@@ -187,7 +186,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_invite',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
     end

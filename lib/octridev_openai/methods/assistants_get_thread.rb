@@ -14,11 +14,16 @@ module OctridevOpenai
       # Retrieves a thread.
       #
       # @param thread_id [String] The ID of the thread to retrieve.
-      singleton_class.define_method(:get_thread) do |config:, thread_id:, request_options: nil|
+      singleton_class.define_method(:get_thread) do |
+        config:,
+        thread_id:,
+        request_options: nil
+      |
+
         SdkClient.request(
           'GET',
           [
-            '/threads/',
+            "/threads/",
             SdkClient.encode_path_segment(thread_id)
           ].join,
           config: config,
@@ -26,7 +31,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'get_thread',
           request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
     end

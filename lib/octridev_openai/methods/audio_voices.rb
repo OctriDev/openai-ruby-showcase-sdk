@@ -17,9 +17,10 @@ module OctridevOpenai
         body:,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
-          '/audio/voices',
+          "/audio/voices",
           config: config,
           body: body,
           content_type: 'multipart/form-data',
@@ -27,7 +28,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'create_voice',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
     end

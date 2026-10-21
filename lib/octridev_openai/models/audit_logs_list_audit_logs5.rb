@@ -5,442 +5,460 @@
 
 # audit_logs domain models
 module OctridevOpenai
-  # API model for AuditLogUserAddedData.
-  # The payload used to add the user to the project.
-  class AuditLogUserAddedData
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalAuditLogUserAddedDataMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalAuditLogUserAddedDataMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalAuditLogUserAddedDataMetadata::DECODERS
+# API model for AuditLogUserAddedData.
+# The payload used to add the user to the project.
+class AuditLogUserAddedData
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalAuditLogUserAddedDataMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalAuditLogUserAddedDataMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalAuditLogUserAddedDataMetadata::DECODERS
 
-    # @return [String] The role of the user. Is either `owner` or `member`.
-    attr_reader :role
+  # @return [String] The role of the user. Is either `owner` or `member`.
+  attr_reader :role
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalAuditLogUserAddedMetadata
-    FIELDS = {
-      id: 'id',
-      data: 'data'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {
-      data: lambda do |value|
-        ::OctridevOpenai::AuditLogUserAddedData.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for AuditLogUserAdded.
-  # The details for events with this `type`.
-  class AuditLogUserAdded
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalAuditLogUserAddedMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalAuditLogUserAddedMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalAuditLogUserAddedMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] The user ID.
-    attr_reader :id
-    # @return [AuditLogUserAddedData] The payload used to add the user to the project.
-    attr_reader :data
+# Internal model hydration metadata.
+class SdkInternalAuditLogUserAddedMetadata
+  FIELDS = {
+    id: "id",
+    data: "data",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+    data: lambda do |value|
+      ::OctridevOpenai::AuditLogUserAddedData.from_hash(value)
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for AuditLogUserAdded.
+# The details for events with this `type`.
+class AuditLogUserAdded
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalAuditLogUserAddedMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalAuditLogUserAddedMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalAuditLogUserAddedMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [String] The user ID.
+  attr_reader :id
+  # @return [AuditLogUserAddedData] The payload used to add the user to the project.
+  attr_reader :data
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalAuditLogUserUpdatedChangesRequestedMetadata
-    FIELDS = {
-      role: 'role'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {}.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for AuditLogUserUpdatedChangesRequested.
-  # The payload used to update the user.
-  class AuditLogUserUpdatedChangesRequested
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalAuditLogUserUpdatedChangesRequestedMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalAuditLogUserUpdatedChangesRequestedMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalAuditLogUserUpdatedChangesRequestedMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] The role of the user. Is either `owner` or `member`.
-    attr_reader :role
+# Internal model hydration metadata.
+class SdkInternalAuditLogUserUpdatedChangesRequestedMetadata
+  FIELDS = {
+    role: "role",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for AuditLogUserUpdatedChangesRequested.
+# The payload used to update the user.
+class AuditLogUserUpdatedChangesRequested
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalAuditLogUserUpdatedChangesRequestedMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalAuditLogUserUpdatedChangesRequestedMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalAuditLogUserUpdatedChangesRequestedMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [String] The role of the user. Is either `owner` or `member`.
+  attr_reader :role
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalAuditLogUserUpdatedMetadata
-    FIELDS = {
-      id: 'id',
-      changes_requested: 'changes_requested'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {
-      changes_requested: lambda do |value|
-        ::OctridevOpenai::AuditLogUserUpdatedChangesRequested.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for AuditLogUserUpdated.
-  # The details for events with this `type`.
-  class AuditLogUserUpdated
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalAuditLogUserUpdatedMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalAuditLogUserUpdatedMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalAuditLogUserUpdatedMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] The project ID.
-    attr_reader :id
-    # @return [AuditLogUserUpdatedChangesRequested] The payload used to update the user.
-    attr_reader :changes_requested
+# Internal model hydration metadata.
+class SdkInternalAuditLogUserUpdatedMetadata
+  FIELDS = {
+    id: "id",
+    changes_requested: "changes_requested",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+    changes_requested: lambda do |value|
+      ::OctridevOpenai::AuditLogUserUpdatedChangesRequested.from_hash(value)
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for AuditLogUserUpdated.
+# The details for events with this `type`.
+class AuditLogUserUpdated
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalAuditLogUserUpdatedMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalAuditLogUserUpdatedMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalAuditLogUserUpdatedMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [String] The project ID.
+  attr_reader :id
+  # @return [AuditLogUserUpdatedChangesRequested] The payload used to update the user.
+  attr_reader :changes_requested
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalAuditLogUserDeletedMetadata
-    FIELDS = {
-      id: 'id'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {}.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for AuditLogUserDeleted.
-  # The details for events with this `type`.
-  class AuditLogUserDeleted
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalAuditLogUserDeletedMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalAuditLogUserDeletedMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalAuditLogUserDeletedMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] The user ID.
-    attr_reader :id
+# Internal model hydration metadata.
+class SdkInternalAuditLogUserDeletedMetadata
+  FIELDS = {
+    id: "id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for AuditLogUserDeleted.
+# The details for events with this `type`.
+class AuditLogUserDeleted
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalAuditLogUserDeletedMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalAuditLogUserDeletedMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalAuditLogUserDeletedMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [String] The user ID.
+  attr_reader :id
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalAuditLogCertificateCreatedMetadata
-    FIELDS = {
-      id: 'id',
-      name: 'name'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {}.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for AuditLogCertificateCreated.
-  # The details for events with this `type`.
-  class AuditLogCertificateCreated
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalAuditLogCertificateCreatedMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalAuditLogCertificateCreatedMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalAuditLogCertificateCreatedMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] The certificate ID.
-    attr_reader :id
-    # @return [String] The name of the certificate.
-    attr_reader :name
+# Internal model hydration metadata.
+class SdkInternalAuditLogCertificateCreatedMetadata
+  FIELDS = {
+    id: "id",
+    name: "name",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for AuditLogCertificateCreated.
+# The details for events with this `type`.
+class AuditLogCertificateCreated
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalAuditLogCertificateCreatedMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalAuditLogCertificateCreatedMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalAuditLogCertificateCreatedMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [String] The certificate ID.
+  attr_reader :id
+  # @return [String] The name of the certificate.
+  attr_reader :name
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalAuditLogCertificateUpdatedMetadata
-    FIELDS = {
-      id: 'id',
-      name: 'name'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {}.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for AuditLogCertificateUpdated.
-  # The details for events with this `type`.
-  class AuditLogCertificateUpdated
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalAuditLogCertificateUpdatedMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalAuditLogCertificateUpdatedMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalAuditLogCertificateUpdatedMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] The certificate ID.
-    attr_reader :id
-    # @return [String] The name of the certificate.
-    attr_reader :name
+# Internal model hydration metadata.
+class SdkInternalAuditLogCertificateUpdatedMetadata
+  FIELDS = {
+    id: "id",
+    name: "name",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for AuditLogCertificateUpdated.
+# The details for events with this `type`.
+class AuditLogCertificateUpdated
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalAuditLogCertificateUpdatedMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalAuditLogCertificateUpdatedMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalAuditLogCertificateUpdatedMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [String] The certificate ID.
+  attr_reader :id
+  # @return [String] The name of the certificate.
+  attr_reader :name
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalAuditLogCertificateDeletedMetadata
-    FIELDS = {
-      id: 'id',
-      name: 'name',
-      certificate: 'certificate'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {}.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for AuditLogCertificateDeleted.
-  # The details for events with this `type`.
-  class AuditLogCertificateDeleted
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalAuditLogCertificateDeletedMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalAuditLogCertificateDeletedMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalAuditLogCertificateDeletedMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] The certificate ID.
-    attr_reader :id
-    # @return [String] The name of the certificate.
-    attr_reader :name
-    # @return [String] The certificate content in PEM format.
-    attr_reader :certificate
+# Internal model hydration metadata.
+class SdkInternalAuditLogCertificateDeletedMetadata
+  FIELDS = {
+    id: "id",
+    name: "name",
+    certificate: "certificate",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for AuditLogCertificateDeleted.
+# The details for events with this `type`.
+class AuditLogCertificateDeleted
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalAuditLogCertificateDeletedMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalAuditLogCertificateDeletedMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalAuditLogCertificateDeletedMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [String] The certificate ID.
+  attr_reader :id
+  # @return [String] The name of the certificate.
+  attr_reader :name
+  # @return [String] The certificate content in PEM format.
+  attr_reader :certificate
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalAuditLogCertificatesActivatedCertificatesItemMetadata
-    FIELDS = {
-      id: 'id',
-      name: 'name'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {}.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for AuditLogCertificatesActivatedCertificatesItem.
-  # Required object value serialized in the `certificates[]` wire field.
-  class AuditLogCertificatesActivatedCertificatesItem
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalAuditLogCertificatesActivatedCertificatesItemMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalAuditLogCertificatesActivatedCertificatesItemMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalAuditLogCertificatesActivatedCertificatesItemMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] The certificate ID.
-    attr_reader :id
-    # @return [String] The name of the certificate.
-    attr_reader :name
+# Internal model hydration metadata.
+class SdkInternalAuditLogCertificatesActivatedCertificatesItemMetadata
+  FIELDS = {
+    id: "id",
+    name: "name",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for AuditLogCertificatesActivatedCertificatesItem.
+# Required object value serialized in the `certificates[]` wire field.
+class AuditLogCertificatesActivatedCertificatesItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalAuditLogCertificatesActivatedCertificatesItemMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalAuditLogCertificatesActivatedCertificatesItemMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalAuditLogCertificatesActivatedCertificatesItemMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [String] The certificate ID.
+  attr_reader :id
+  # @return [String] The name of the certificate.
+  attr_reader :name
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalAuditLogCertificatesActivatedMetadata
-    FIELDS = {
-      certificates: 'certificates'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {
-      certificates: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::AuditLogCertificatesActivatedCertificatesItem.from_hash(item) }
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for AuditLogCertificatesActivated.
-  # The details for events with this `type`.
-  class AuditLogCertificatesActivated
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalAuditLogCertificatesActivatedMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalAuditLogCertificatesActivatedMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalAuditLogCertificatesActivatedMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [Array_of_AuditLogCertificatesActivatedCertificatesItem] Optional array value serialized in the `certificates` wire field.
-    attr_reader :certificates
+# Internal model hydration metadata.
+class SdkInternalAuditLogCertificatesActivatedMetadata
+  FIELDS = {
+    certificates: "certificates",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+    certificates: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::AuditLogCertificatesActivatedCertificatesItem.from_hash(item) }
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for AuditLogCertificatesActivated.
+# The details for events with this `type`.
+class AuditLogCertificatesActivated
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalAuditLogCertificatesActivatedMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalAuditLogCertificatesActivatedMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalAuditLogCertificatesActivatedMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [Array_of_AuditLogCertificatesActivatedCertificatesItem] Optional array value serialized in the `certificates` wire field.
+  attr_reader :certificates
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalAuditLogCertificatesDeactivatedCertificatesItemMetadata
-    FIELDS = {
-      id: 'id',
-      name: 'name'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {}.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for AuditLogCertificatesDeactivatedCertificatesItem.
-  # Required object value serialized in the `certificates[]` wire field.
-  class AuditLogCertificatesDeactivatedCertificatesItem
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalAuditLogCertificatesDeactivatedCertificatesItemMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalAuditLogCertificatesDeactivatedCertificatesItemMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalAuditLogCertificatesDeactivatedCertificatesItemMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] The certificate ID.
-    attr_reader :id
-    # @return [String] The name of the certificate.
-    attr_reader :name
+# Internal model hydration metadata.
+class SdkInternalAuditLogCertificatesDeactivatedCertificatesItemMetadata
+  FIELDS = {
+    id: "id",
+    name: "name",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for AuditLogCertificatesDeactivatedCertificatesItem.
+# Required object value serialized in the `certificates[]` wire field.
+class AuditLogCertificatesDeactivatedCertificatesItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalAuditLogCertificatesDeactivatedCertificatesItemMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalAuditLogCertificatesDeactivatedCertificatesItemMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalAuditLogCertificatesDeactivatedCertificatesItemMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [String] The certificate ID.
+  attr_reader :id
+  # @return [String] The name of the certificate.
+  attr_reader :name
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalAuditLogCertificatesDeactivatedMetadata
-    FIELDS = {
-      certificates: 'certificates'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {
-      certificates: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::AuditLogCertificatesDeactivatedCertificatesItem.from_hash(item) }
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for AuditLogCertificatesDeactivated.
-  # The details for events with this `type`.
-  class AuditLogCertificatesDeactivated
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalAuditLogCertificatesDeactivatedMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalAuditLogCertificatesDeactivatedMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalAuditLogCertificatesDeactivatedMetadata::DECODERS
-
-    # @return [Array_of_AuditLogCertificatesDeactivatedCertificatesItem] Optional array value serialized in the `certificates` wire field.
-    attr_reader :certificates
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
+
+# Internal model hydration metadata.
+class SdkInternalAuditLogCertificatesDeactivatedMetadata
+  FIELDS = {
+    certificates: "certificates",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+    certificates: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::AuditLogCertificatesDeactivatedCertificatesItem.from_hash(item) }
+    end,
+  }.freeze
+end
+
+# API model for AuditLogCertificatesDeactivated.
+# The details for events with this `type`.
+class AuditLogCertificatesDeactivated
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalAuditLogCertificatesDeactivatedMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalAuditLogCertificatesDeactivatedMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalAuditLogCertificatesDeactivatedMetadata::DECODERS
+
+  # @return [Array_of_AuditLogCertificatesDeactivatedCertificatesItem] Optional array value serialized in the `certificates` wire field.
+  attr_reader :certificates
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
+  end
+
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  end
+
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 end

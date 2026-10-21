@@ -5,92 +5,91 @@
 
 # realtime_realtime_client domain models
 module OctridevOpenai
-  # Defines the RealtimeClientEventSessionUpdateType SDK namespace.
-  module RealtimeClientEventSessionUpdateType
-    SESSION_UPDATE = 'session.update'
-    VALUES = ['session.update'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+# Defines the RealtimeClientEventSessionUpdateType SDK namespace.
+module RealtimeClientEventSessionUpdateType
+  SESSION_UPDATE = 'session.update'
+  VALUES = ['session.update'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-      raise SdkValidationError.new('RealtimeClientEventSessionUpdateType', 'enum', "Unknown RealtimeClientEventSessionUpdateType: #{value}")
-    end
+    raise SdkValidationError.new('RealtimeClientEventSessionUpdateType', 'enum', "Unknown RealtimeClientEventSessionUpdateType: #{value}")
+  end
+end
+
+# Defines the RealtimeClientEventSessionUpdateSession SDK namespace.
+module RealtimeClientEventSessionUpdateSession
+  DISCRIMINATOR_MAPPING = {
+    "realtime" => -> { RealtimeSessionCreateRequestGA },
+    "transcription" => -> { RealtimeTranscriptionSessionCreateRequestGA },
+  }.freeze
+
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
+
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+
+    raise SdkValidationError.new('RealtimeClientEventSessionUpdateSession', 'variant', "Unknown RealtimeClientEventSessionUpdateSession discriminator: #{hash["type"].inspect}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalRealtimeClientEventTranscriptionSessionUpdateMetadata
+  FIELDS = {
+    event_id: "event_id",
+    type: "type",
+    session: "session",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    session
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::RealtimeClientEventTranscriptionSessionUpdateType.from_value(value)
+    end,
+    session: lambda do |value|
+      ::OctridevOpenai::RealtimeTranscriptionSessionCreateRequest.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for RealtimeClientEventTranscriptionSessionUpdate.
+# Send this event to update a transcription session.
+class RealtimeClientEventTranscriptionSessionUpdate
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRealtimeClientEventTranscriptionSessionUpdateMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRealtimeClientEventTranscriptionSessionUpdateMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRealtimeClientEventTranscriptionSessionUpdateMetadata::DECODERS
+
+  # @return [String] Optional client-generated ID used to identify this event.
+  attr_reader :event_id
+  # @return [RealtimeClientEventTranscriptionSessionUpdateType] The event type, must be `transcription_session.update`.
+  attr_reader :type
+  # @return [RealtimeTranscriptionSessionCreateRequest] Realtime transcription session object configuration.
+  attr_reader :session
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the RealtimeClientEventSessionUpdateSession SDK namespace.
-  module RealtimeClientEventSessionUpdateSession
-    DISCRIMINATOR_MAPPING = {
-      'realtime' => -> { RealtimeSessionCreateRequestGA },
-      'transcription' => -> { RealtimeTranscriptionSessionCreateRequestGA }
-    }.freeze
-
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
-
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
-
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
-
-      raise SdkValidationError.new('RealtimeClientEventSessionUpdateSession', 'variant', "Unknown RealtimeClientEventSessionUpdateSession discriminator: #{hash['type'].inspect}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalRealtimeClientEventTranscriptionSessionUpdateMetadata
-    FIELDS = {
-      event_id: 'event_id',
-      type: 'type',
-      session: 'session'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      session
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::RealtimeClientEventTranscriptionSessionUpdateType.from_value(value)
-      end,
-      session: lambda do |value|
-        ::OctridevOpenai::RealtimeTranscriptionSessionCreateRequest.from_hash(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # API model for RealtimeClientEventTranscriptionSessionUpdate.
-  # Send this event to update a transcription session.
-  class RealtimeClientEventTranscriptionSessionUpdate
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRealtimeClientEventTranscriptionSessionUpdateMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRealtimeClientEventTranscriptionSessionUpdateMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRealtimeClientEventTranscriptionSessionUpdateMetadata::DECODERS
-
-    # @return [String] Optional client-generated ID used to identify this event.
-    attr_reader :event_id
-    # @return [RealtimeClientEventTranscriptionSessionUpdateType] The event type, must be `transcription_session.update`.
-    attr_reader :type
-    # @return [RealtimeTranscriptionSessionCreateRequest] Realtime transcription session object configuration.
-    attr_reader :session
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+# Defines the RealtimeClientEventTranscriptionSessionUpdateType SDK namespace.
+module RealtimeClientEventTranscriptionSessionUpdateType
+  TRANSCRIPTION_SESSION_UPDATE = 'transcription_session.update'
+  VALUES = ['transcription_session.update'].freeze
+  def self.from_value(value)
+    value
   end
-
-  # Defines the RealtimeClientEventTranscriptionSessionUpdateType SDK namespace.
-  module RealtimeClientEventTranscriptionSessionUpdateType
-    TRANSCRIPTION_SESSION_UPDATE = 'transcription_session.update'
-    VALUES = ['transcription_session.update'].freeze
-    def self.from_value(value)
-      value
-    end
-  end
+end
 end

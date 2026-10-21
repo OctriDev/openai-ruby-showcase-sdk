@@ -5,120 +5,120 @@
 
 # test domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalPublicTestEndpointBodyMetadata
-    FIELDS = {
-      event_type: 'event_type'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      event_type
-    ].freeze
-    DECODERS = {
-      event_type: lambda do |value|
-        ::OctridevOpenai::ProjectEventTypeEnum.from_value(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalPublicTestEndpointBodyMetadata
+  FIELDS = {
+    event_type: "event_type",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    event_type
+  ].freeze
+  DECODERS = {
+    event_type: lambda do |value|
+      ::OctridevOpenai::ProjectEventTypeEnum.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for PublicTestEndpointBody.
+# Typed representation of the `PublicTestEndpointBody` API schema.
+class PublicTestEndpointBody
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalPublicTestEndpointBodyMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalPublicTestEndpointBodyMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalPublicTestEndpointBodyMetadata::DECODERS
+
+  # @return [ProjectEventTypeEnum] The event type to send as a sample delivery.
+  attr_reader :event_type
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for PublicTestEndpointBody.
-  # Typed representation of the `PublicTestEndpointBody` API schema.
-  class PublicTestEndpointBody
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalPublicTestEndpointBodyMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalPublicTestEndpointBodyMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalPublicTestEndpointBodyMetadata::DECODERS
-
-    # @return [ProjectEventTypeEnum] The event type to send as a sample delivery.
-    attr_reader :event_type
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalWebhookEndpointTestResultResourceMetadata
-    FIELDS = {
-      object: 'object',
-      webhook_endpoint_id: 'webhook_endpoint_id',
-      event_type: 'event_type',
-      status_code: 'status_code',
-      success: 'success'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      webhook_endpoint_id
-      event_type
-      status_code
-      success
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::WebhookEndpointTestResultResourceObject.from_value(value)
-      end,
-      success: lambda do |value|
-        ::OctridevOpenai::WebhookEndpointTestResultResourceSuccess.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalWebhookEndpointTestResultResourceMetadata
+  FIELDS = {
+    object: "object",
+    webhook_endpoint_id: "webhook_endpoint_id",
+    event_type: "event_type",
+    status_code: "status_code",
+    success: "success",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    webhook_endpoint_id
+    event_type
+    status_code
+    success
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::WebhookEndpointTestResultResourceObject.from_value(value)
+    end,
+    success: lambda do |value|
+      ::OctridevOpenai::WebhookEndpointTestResultResourceSuccess.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for WebhookEndpointTestResultResource.
+# Typed representation of the `WebhookEndpointTestResultResource` API schema.
+class WebhookEndpointTestResultResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalWebhookEndpointTestResultResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalWebhookEndpointTestResultResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalWebhookEndpointTestResultResourceMetadata::DECODERS
+
+  # @return [WebhookEndpointTestResultResourceObject] The object type, which is always webhook_endpoint.test.
+  attr_reader :object
+  # @return [String] The ID of the webhook endpoint that received the test.
+  attr_reader :webhook_endpoint_id
+  # @return [String] The event type sent in the test.
+  attr_reader :event_type
+  # @return [Integer] The HTTP status code returned by the endpoint.
+  attr_reader :status_code
+  # @return [WebhookEndpointTestResultResourceSuccess] Whether the test request completed. Always true for returned results; use status_code to determine the endpoint response.
+  attr_reader :success
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for WebhookEndpointTestResultResource.
-  # Typed representation of the `WebhookEndpointTestResultResource` API schema.
-  class WebhookEndpointTestResultResource
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalWebhookEndpointTestResultResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalWebhookEndpointTestResultResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalWebhookEndpointTestResultResourceMetadata::DECODERS
-
-    # @return [WebhookEndpointTestResultResourceObject] The object type, which is always webhook_endpoint.test.
-    attr_reader :object
-    # @return [String] The ID of the webhook endpoint that received the test.
-    attr_reader :webhook_endpoint_id
-    # @return [String] The event type sent in the test.
-    attr_reader :event_type
-    # @return [Integer] The HTTP status code returned by the endpoint.
-    attr_reader :status_code
-    # @return [WebhookEndpointTestResultResourceSuccess] Whether the test request completed. Always true for returned results; use status_code to determine the endpoint response.
-    attr_reader :success
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the WebhookEndpointTestResultResourceObject SDK namespace.
-  module WebhookEndpointTestResultResourceObject
-    WEBHOOK_ENDPOINT_TEST = 'webhook_endpoint.test'
-    VALUES = ['webhook_endpoint.test'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the WebhookEndpointTestResultResourceSuccess SDK namespace.
-  module WebhookEndpointTestResultResourceSuccess
-    TRUE = true
-    VALUES = [true].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the WebhookEndpointTestResultResourceObject SDK namespace.
+module WebhookEndpointTestResultResourceObject
+  WEBHOOK_ENDPOINT_TEST = 'webhook_endpoint.test'
+  VALUES = ['webhook_endpoint.test'].freeze
+  def self.from_value(value)
+    value
   end
+end
+
+# Defines the WebhookEndpointTestResultResourceSuccess SDK namespace.
+module WebhookEndpointTestResultResourceSuccess
+  TRUE = true
+  VALUES = [true].freeze
+  def self.from_value(value)
+    value
+  end
+end
 end

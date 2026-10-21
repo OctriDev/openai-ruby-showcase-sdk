@@ -5,683 +5,677 @@
 
 # responses_beta_computer domain models
 module OctridevOpenai
-  # Defines the BetaComputerAction SDK namespace.
-  module BetaComputerAction
-    DISCRIMINATOR_MAPPING = {
-      'click' => -> { BetaClickParam },
-      'double_click' => -> { BetaDoubleClickAction },
-      'drag' => -> { BetaDragParam },
-      'keypress' => -> { BetaKeyPressAction },
-      'move' => -> { BetaMoveParam },
-      'screenshot' => -> { BetaScreenshotParam },
-      'scroll' => -> { BetaScrollParam },
-      'type' => -> { BetaTypeParam },
-      'wait' => -> { BetaWaitParam }
-    }.freeze
+# Defines the BetaComputerAction SDK namespace.
+module BetaComputerAction
+  DISCRIMINATOR_MAPPING = {
+    "click" => -> { BetaClickParam },
+    "double_click" => -> { BetaDoubleClickAction },
+    "drag" => -> { BetaDragParam },
+    "keypress" => -> { BetaKeyPressAction },
+    "move" => -> { BetaMoveParam },
+    "screenshot" => -> { BetaScreenshotParam },
+    "scroll" => -> { BetaScrollParam },
+    "type" => -> { BetaTypeParam },
+    "wait" => -> { BetaWaitParam },
+  }.freeze
 
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
 
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
 
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+    raise SdkValidationError.new('BetaComputerAction', 'variant', "Unknown BetaComputerAction discriminator: #{hash["type"].inspect}")
+  end
+end
 
-      raise SdkValidationError.new('BetaComputerAction', 'variant', "Unknown BetaComputerAction discriminator: #{hash['type'].inspect}")
-    end
+# Defines the BetaComputerActionList SDK value decoder.
+module BetaComputerActionList
+  def self.from_hash(value)
+    return nil if value.nil?
+    value&.map { |item| ::OctridevOpenai::BetaComputerAction.from_hash(item) }
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaComputerCallOutputItemParamMetadata
+  FIELDS = {
+    agent: "agent",
+    id: "id",
+    call_id: "call_id",
+    type: "type",
+    output: "output",
+    acknowledged_safety_checks: "acknowledged_safety_checks",
+    status: "status",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    call_id
+    type
+    output
+  ].freeze
+  DECODERS = {
+    agent: lambda do |value|
+      ::OctridevOpenai::BetaAgentTagParam.from_hash(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::BetaComputerCallOutputItemParamType.from_value(value)
+    end,
+    output: lambda do |value|
+      ::OctridevOpenai::BetaComputerScreenshotImage.from_hash(value)
+    end,
+    acknowledged_safety_checks: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::BetaComputerCallSafetyCheckParam.from_hash(item) }
+    end,
+    status: lambda do |value|
+      ::OctridevOpenai::BetaFunctionCallItemStatus.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaComputerCallOutputItemParam.
+# The output of a computer tool call.
+class BetaComputerCallOutputItemParam
+  include BetaItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaComputerCallOutputItemParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaComputerCallOutputItemParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaComputerCallOutputItemParamMetadata::DECODERS
+
+  # @return [BetaAgentTagParam] Optional API value serialized in the `agent` wire field.
+  attr_reader :agent
+  # @return [String] Optional `string` value serialized in the `id` wire field.
+  attr_reader :id
+  # @return [String] The ID of the computer tool call that produced the output.
+  attr_reader :call_id
+  # @return [BetaComputerCallOutputItemParamType] The type of the computer tool call output. Always `computer_call_output`.
+  attr_reader :type
+  # @return [BetaComputerScreenshotImage] A computer screenshot image used with the computer use tool.
+  attr_reader :output
+  # @return [Array_of_BetaComputerCallSafetyCheckParam] The safety checks reported by the API that have been acknowledged by the developer.
+  attr_reader :acknowledged_safety_checks
+  # @return [BetaFunctionCallItemStatus] Optional API value serialized in the `status` wire field.
+  attr_reader :status
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the BetaComputerActionList SDK value decoder.
-  module BetaComputerActionList
-    def self.from_hash(value)
-      return nil if value.nil?
-
-      value&.map { |item| ::OctridevOpenai::BetaComputerAction.from_hash(item) }
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaComputerCallOutputItemParamMetadata
-    FIELDS = {
-      agent: 'agent',
-      id: 'id',
-      call_id: 'call_id',
-      type: 'type',
-      output: 'output',
-      acknowledged_safety_checks: 'acknowledged_safety_checks',
-      status: 'status'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      call_id
-      type
-      output
-    ].freeze
-    DECODERS = {
-      agent: lambda do |value|
-        ::OctridevOpenai::BetaAgentTagParam.from_hash(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::BetaComputerCallOutputItemParamType.from_value(value)
-      end,
-      output: lambda do |value|
-        ::OctridevOpenai::BetaComputerScreenshotImage.from_hash(value)
-      end,
-      acknowledged_safety_checks: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::BetaComputerCallSafetyCheckParam.from_hash(item) }
-      end,
-      status: lambda do |value|
-        ::OctridevOpenai::BetaFunctionCallItemStatus.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the BetaComputerCallOutputItemParamType SDK namespace.
+module BetaComputerCallOutputItemParamType
+  COMPUTER_CALL_OUTPUT = 'computer_call_output'
+  VALUES = ['computer_call_output'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('BetaComputerCallOutputItemParamType', 'enum', "Unknown BetaComputerCallOutputItemParamType: #{value}")
+  end
+end
+
+# Defines the BetaComputerCallOutputStatus SDK namespace.
+module BetaComputerCallOutputStatus
+  COMPLETED = 'completed'
+  INCOMPLETE = 'incomplete'
+  FAILED = 'failed'
+  VALUES = ['completed', 'incomplete', 'failed'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaComputerCallSafetyCheckParamMetadata
+  FIELDS = {
+    id: "id",
+    code: "code",
+    message: "message",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for BetaComputerCallSafetyCheckParam.
+# A pending safety check for the computer call.
+class BetaComputerCallSafetyCheckParam
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaComputerCallSafetyCheckParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaComputerCallSafetyCheckParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaComputerCallSafetyCheckParamMetadata::DECODERS
+
+  # @return [String] The ID of the pending safety check.
+  attr_reader :id
+  # @return [String] Optional `string` value serialized in the `code` wire field.
+  attr_reader :code
+  # @return [String] Optional `string` value serialized in the `message` wire field.
+  attr_reader :message
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BetaComputerCallOutputItemParam.
-  # The output of a computer tool call.
-  class BetaComputerCallOutputItemParam
-    include BetaItem
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaComputerCallOutputItemParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaComputerCallOutputItemParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaComputerCallOutputItemParamMetadata::DECODERS
-
-    # @return [BetaAgentTagParam] Optional API value serialized in the `agent` wire field.
-    attr_reader :agent
-    # @return [String] Optional `string` value serialized in the `id` wire field.
-    attr_reader :id
-    # @return [String] The ID of the computer tool call that produced the output.
-    attr_reader :call_id
-    # @return [BetaComputerCallOutputItemParamType] The type of the computer tool call output. Always `computer_call_output`.
-    attr_reader :type
-    # @return [BetaComputerScreenshotImage] A computer screenshot image used with the computer use tool.
-    attr_reader :output
-    # @return [Array_of_BetaComputerCallSafetyCheckParam] The safety checks reported by the API that have been acknowledged by the developer.
-    attr_reader :acknowledged_safety_checks
-    # @return [BetaFunctionCallItemStatus] Optional API value serialized in the `status` wire field.
-    attr_reader :status
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the BetaComputerCallOutputItemParamType SDK namespace.
-  module BetaComputerCallOutputItemParamType
-    COMPUTER_CALL_OUTPUT = 'computer_call_output'
-    VALUES = ['computer_call_output'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('BetaComputerCallOutputItemParamType', 'enum', "Unknown BetaComputerCallOutputItemParamType: #{value}")
-    end
+# Defines the BetaComputerEnvironment SDK namespace.
+module BetaComputerEnvironment
+  WINDOWS = 'windows'
+  MAC = 'mac'
+  LINUX = 'linux'
+  UBUNTU = 'ubuntu'
+  BROWSER = 'browser'
+  VALUES = ['windows', 'mac', 'linux', 'ubuntu', 'browser'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaComputerScreenshotContentMetadata
+  FIELDS = {
+    type: "type",
+    image_url: "image_url",
+    file_id: "file_id",
+    detail: "detail",
+    prompt_cache_breakpoint: "prompt_cache_breakpoint",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    image_url
+    file_id
+    detail
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::BetaComputerScreenshotContentType.from_value(value)
+    end,
+    detail: lambda do |value|
+      ::OctridevOpenai::BetaImageDetail.from_value(value)
+    end,
+    prompt_cache_breakpoint: lambda do |value|
+      ::OctridevOpenai::BetaPromptCacheBreakpointConfig.from_hash(value)
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    image_url
+    file_id
+  ].freeze
+end
+
+# API model for BetaComputerScreenshotContent.
+# A screenshot of a computer.
+class BetaComputerScreenshotContent
+  include BetaAgentMessageContentItem
+  include BetaMessageContentItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaComputerScreenshotContentMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaComputerScreenshotContentMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaComputerScreenshotContentMetadata::DECODERS
+
+  # @return [BetaComputerScreenshotContentType] Specifies the event type. For a computer screenshot, this property is always set to `computer_screenshot`.
+  attr_reader :type
+  # @return [String] Required API value serialized in the `image_url` wire field.
+  attr_reader :image_url
+  # @return [String] Required `string` value serialized in the `file_id` wire field.
+  attr_reader :file_id
+  # @return [BetaImageDetail] The detail level of the screenshot image to be sent to the model. One of `high`, `low`, `auto`, or `original`. Defaults to `auto`.
+  attr_reader :detail
+  # @return [BetaPromptCacheBreakpointConfig] Marks the exact end of a reusable prompt prefix. The breakpoint inherits its TTL from the request's `prompt_cache_options.ttl`; the boundary is not rounded to a token block.
+  attr_reader :prompt_cache_breakpoint
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the BetaComputerCallOutputStatus SDK namespace.
-  module BetaComputerCallOutputStatus
-    COMPLETED = 'completed'
-    INCOMPLETE = 'incomplete'
-    FAILED = 'failed'
-    VALUES = %w[completed incomplete failed].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalBetaComputerScreenshotContentMetadata::NULLABLE_FIELDS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaComputerCallSafetyCheckParamMetadata
-    FIELDS = {
-      id: 'id',
-      code: 'code',
-      message: 'message'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-    ].freeze
-    DECODERS = {}.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the BetaComputerScreenshotContentType SDK namespace.
+module BetaComputerScreenshotContentType
+  COMPUTER_SCREENSHOT = 'computer_screenshot'
+  VALUES = ['computer_screenshot'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('BetaComputerScreenshotContentType', 'enum', "Unknown BetaComputerScreenshotContentType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaComputerScreenshotImageMetadata
+  FIELDS = {
+    type: "type",
+    image_url: "image_url",
+    file_id: "file_id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::BetaComputerScreenshotImageType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaComputerScreenshotImage.
+# A computer screenshot image used with the computer use tool.
+class BetaComputerScreenshotImage
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaComputerScreenshotImageMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaComputerScreenshotImageMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaComputerScreenshotImageMetadata::DECODERS
+
+  # @return [BetaComputerScreenshotImageType] Specifies the event type. For a computer screenshot, this property is always set to `computer_screenshot`.
+  attr_reader :type
+  # @return [String] The URL of the screenshot image.
+  attr_reader :image_url
+  # @return [String] The identifier of an uploaded file that contains the screenshot.
+  attr_reader :file_id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BetaComputerCallSafetyCheckParam.
-  # A pending safety check for the computer call.
-  class BetaComputerCallSafetyCheckParam
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaComputerCallSafetyCheckParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaComputerCallSafetyCheckParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaComputerCallSafetyCheckParamMetadata::DECODERS
-
-    # @return [String] The ID of the pending safety check.
-    attr_reader :id
-    # @return [String] Optional `string` value serialized in the `code` wire field.
-    attr_reader :code
-    # @return [String] Optional `string` value serialized in the `message` wire field.
-    attr_reader :message
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the BetaComputerEnvironment SDK namespace.
-  module BetaComputerEnvironment
-    WINDOWS = 'windows'
-    MAC = 'mac'
-    LINUX = 'linux'
-    UBUNTU = 'ubuntu'
-    BROWSER = 'browser'
-    VALUES = %w[windows mac linux ubuntu browser].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the BetaComputerScreenshotImageType SDK namespace.
+module BetaComputerScreenshotImageType
+  COMPUTER_SCREENSHOT = 'computer_screenshot'
+  VALUES = ['computer_screenshot'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaComputerToolMetadata
+  FIELDS = {
+    type: "type",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::BetaComputerToolType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaComputerTool.
+# A tool that controls a virtual computer. Learn more about the computer tool.
+class BetaComputerTool
+  include BetaTool
+  include BetaToolSearchOutputTool
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaComputerToolMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaComputerToolMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaComputerToolMetadata::DECODERS
+
+  # @return [BetaComputerToolType] The type of the computer tool. Always `computer`.
+  attr_reader :type
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaComputerScreenshotContentMetadata
-    FIELDS = {
-      type: 'type',
-      image_url: 'image_url',
-      file_id: 'file_id',
-      detail: 'detail',
-      prompt_cache_breakpoint: 'prompt_cache_breakpoint'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      image_url
-      file_id
-      detail
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::BetaComputerScreenshotContentType.from_value(value)
-      end,
-      detail: lambda do |value|
-        ::OctridevOpenai::BetaImageDetail.from_value(value)
-      end,
-      prompt_cache_breakpoint: lambda do |value|
-        ::OctridevOpenai::BetaPromptCacheBreakpointConfig.from_hash(value)
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      image_url
-      file_id
-    ].freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for BetaComputerScreenshotContent.
-  # A screenshot of a computer.
-  class BetaComputerScreenshotContent
-    include BetaAgentMessageContentItem
-    include BetaMessageContentItem
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaComputerScreenshotContentMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaComputerScreenshotContentMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaComputerScreenshotContentMetadata::DECODERS
+# Defines the BetaComputerToolType SDK namespace.
+module BetaComputerToolType
+  COMPUTER = 'computer'
+  VALUES = ['computer'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    # @return [BetaComputerScreenshotContentType] Specifies the event type. For a computer screenshot, this property is always set to `computer_screenshot`.
-    attr_reader :type
-    # @return [String] Required API value serialized in the `image_url` wire field.
-    attr_reader :image_url
-    # @return [String] Required `string` value serialized in the `file_id` wire field.
-    attr_reader :file_id
-    # @return [BetaImageDetail] The detail level of the screenshot image to be sent to the model. One of `high`, `low`, `auto`, or `original`. Defaults to `auto`.
-    attr_reader :detail
-    # @return [BetaPromptCacheBreakpointConfig] Marks the exact end of a reusable prompt prefix. The breakpoint inherits its TTL from the request's `prompt_cache_options.ttl`; the boundary is not rounded to a token block.
-    attr_reader :prompt_cache_breakpoint
+    raise SdkValidationError.new('BetaComputerToolType', 'enum', "Unknown BetaComputerToolType: #{value}")
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalBetaComputerToolCallMetadata
+  FIELDS = {
+    agent: "agent",
+    type: "type",
+    id: "id",
+    call_id: "call_id",
+    action: "action",
+    actions: "actions",
+    pending_safety_checks: "pending_safety_checks",
+    status: "status",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    id
+    call_id
+    pending_safety_checks
+    status
+  ].freeze
+  DECODERS = {
+    agent: lambda do |value|
+      ::OctridevOpenai::BetaAgentTag.from_hash(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::BetaComputerToolCallType.from_value(value)
+    end,
+    action: lambda do |value|
+      ::OctridevOpenai::BetaComputerAction.from_hash(value)
+    end,
+    actions: lambda do |value|
+      ::OctridevOpenai::BetaComputerActionList.from_hash(value)
+    end,
+    pending_safety_checks: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::BetaComputerCallSafetyCheckParam.from_hash(item) }
+    end,
+    status: lambda do |value|
+      ::OctridevOpenai::BetaComputerToolCallStatus.from_value(value)
+    end,
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalBetaComputerScreenshotContentMetadata::NULLABLE_FIELDS)
-    end
+# API model for BetaComputerToolCall.
+# A tool call to a computer use tool. See the computer use guide for more information.
+class BetaComputerToolCall
+  include BetaItem
+  include BetaItemResource
+  include BetaItemField
+  include BetaOutputItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaComputerToolCallMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaComputerToolCallMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaComputerToolCallMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [BetaAgentTag] The agent that produced this item.
+  attr_reader :agent
+  # @return [BetaComputerToolCallType] The type of the computer call. Always `computer_call`.
+  attr_reader :type
+  # @return [String] The unique ID of the computer call.
+  attr_reader :id
+  # @return [String] An identifier used when responding to the tool call with output.
+  attr_reader :call_id
+  # @return [BetaComputerAction] Optional API value serialized in the `action` wire field.
+  attr_reader :action
+  # @return [BetaComputerActionList] Flattened batched actions for `computer_use`. Each action includes an `type` discriminator and action-specific fields.
+  attr_reader :actions
+  # @return [Array_of_BetaComputerCallSafetyCheckParam] The pending safety checks for the computer call.
+  attr_reader :pending_safety_checks
+  # @return [BetaComputerToolCallStatus] The status of the item. One of `in_progress`, `completed`, or `incomplete`. Populated when items are returned via API.
+  attr_reader :status
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the BetaComputerScreenshotContentType SDK namespace.
-  module BetaComputerScreenshotContentType
-    COMPUTER_SCREENSHOT = 'computer_screenshot'
-    VALUES = ['computer_screenshot'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('BetaComputerScreenshotContentType', 'enum', "Unknown BetaComputerScreenshotContentType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaComputerScreenshotImageMetadata
-    FIELDS = {
-      type: 'type',
-      image_url: 'image_url',
-      file_id: 'file_id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::BetaComputerScreenshotImageType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the BetaComputerToolCallStatus SDK namespace.
+module BetaComputerToolCallStatus
+  IN_PROGRESS = 'in_progress'
+  COMPLETED = 'completed'
+  INCOMPLETE = 'incomplete'
+  VALUES = ['in_progress', 'completed', 'incomplete'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the BetaComputerToolCallType SDK namespace.
+module BetaComputerToolCallType
+  COMPUTER_CALL = 'computer_call'
+  VALUES = ['computer_call'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('BetaComputerToolCallType', 'enum', "Unknown BetaComputerToolCallType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaComputerToolCallOutputMetadata
+  FIELDS = {
+    agent: "agent",
+    type: "type",
+    id: "id",
+    call_id: "call_id",
+    acknowledged_safety_checks: "acknowledged_safety_checks",
+    output: "output",
+    status: "status",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    call_id
+    output
+  ].freeze
+  DECODERS = {
+    agent: lambda do |value|
+      ::OctridevOpenai::BetaAgentTag.from_hash(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::BetaComputerToolCallOutputType.from_value(value)
+    end,
+    acknowledged_safety_checks: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::BetaComputerCallSafetyCheckParam.from_hash(item) }
+    end,
+    output: lambda do |value|
+      ::OctridevOpenai::BetaComputerScreenshotImage.from_hash(value)
+    end,
+    status: lambda do |value|
+      ::OctridevOpenai::BetaComputerToolCallOutputStatus.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaComputerToolCallOutput.
+# The output of a computer tool call.
+class BetaComputerToolCallOutput
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaComputerToolCallOutputMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaComputerToolCallOutputMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaComputerToolCallOutputMetadata::DECODERS
+
+  # @return [BetaAgentTag] The agent that produced this item.
+  attr_reader :agent
+  # @return [BetaComputerToolCallOutputType] The type of the computer tool call output. Always `computer_call_output`.
+  attr_reader :type
+  # @return [String] The ID of the computer tool call output.
+  attr_reader :id
+  # @return [String] The ID of the computer tool call that produced the output.
+  attr_reader :call_id
+  # @return [Array_of_BetaComputerCallSafetyCheckParam] The safety checks reported by the API that have been acknowledged by the developer.
+  attr_reader :acknowledged_safety_checks
+  # @return [BetaComputerScreenshotImage] A computer screenshot image used with the computer use tool.
+  attr_reader :output
+  # @return [BetaComputerToolCallOutputStatus] The status of the message input. One of `in_progress`, `completed`, or `incomplete`. Populated when input items are returned via API.
+  attr_reader :status
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BetaComputerScreenshotImage.
-  # A computer screenshot image used with the computer use tool.
-  class BetaComputerScreenshotImage
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaComputerScreenshotImageMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaComputerScreenshotImageMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaComputerScreenshotImageMetadata::DECODERS
-
-    # @return [BetaComputerScreenshotImageType] Specifies the event type. For a computer screenshot, this property is always set to `computer_screenshot`.
-    attr_reader :type
-    # @return [String] The URL of the screenshot image.
-    attr_reader :image_url
-    # @return [String] The identifier of an uploaded file that contains the screenshot.
-    attr_reader :file_id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the BetaComputerScreenshotImageType SDK namespace.
-  module BetaComputerScreenshotImageType
-    COMPUTER_SCREENSHOT = 'computer_screenshot'
-    VALUES = ['computer_screenshot'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the BetaComputerToolCallOutputStatus SDK namespace.
+module BetaComputerToolCallOutputStatus
+  IN_PROGRESS = 'in_progress'
+  COMPLETED = 'completed'
+  INCOMPLETE = 'incomplete'
+  VALUES = ['in_progress', 'completed', 'incomplete'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the BetaComputerToolCallOutputType SDK namespace.
+module BetaComputerToolCallOutputType
+  COMPUTER_CALL_OUTPUT = 'computer_call_output'
+  VALUES = ['computer_call_output'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('BetaComputerToolCallOutputType', 'enum', "Unknown BetaComputerToolCallOutputType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaComputerToolCallOutputResourceMetadata
+  FIELDS = {
+    agent: "agent",
+    type: "type",
+    id: "id",
+    call_id: "call_id",
+    acknowledged_safety_checks: "acknowledged_safety_checks",
+    output: "output",
+    status: "status",
+    created_by: "created_by",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    id
+    call_id
+    output
+    status
+  ].freeze
+  DECODERS = {
+    agent: lambda do |value|
+      ::OctridevOpenai::BetaAgentTag.from_hash(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::BetaComputerToolCallOutputType.from_value(value)
+    end,
+    acknowledged_safety_checks: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::BetaComputerCallSafetyCheckParam.from_hash(item) }
+    end,
+    output: lambda do |value|
+      ::OctridevOpenai::BetaComputerScreenshotImage.from_hash(value)
+    end,
+    status: lambda do |value|
+      ::OctridevOpenai::BetaComputerCallOutputStatus.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaComputerToolCallOutputResource.
+# Typed representation of the `BetaComputerToolCallOutputResource` API schema.
+class BetaComputerToolCallOutputResource
+  include BetaItemResource
+  include BetaItemField
+  include BetaOutputItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaComputerToolCallOutputResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaComputerToolCallOutputResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaComputerToolCallOutputResourceMetadata::DECODERS
+
+  # @return [BetaAgentTag] The agent that produced this item.
+  attr_reader :agent
+  # @return [BetaComputerToolCallOutputType] The type of the computer tool call output. Always `computer_call_output`.
+  attr_reader :type
+  # @return [String] The ID of the computer tool call output.
+  attr_reader :id
+  # @return [String] The ID of the computer tool call that produced the output.
+  attr_reader :call_id
+  # @return [Array_of_BetaComputerCallSafetyCheckParam] The safety checks reported by the API that have been acknowledged by the developer.
+  attr_reader :acknowledged_safety_checks
+  # @return [BetaComputerScreenshotImage] A computer screenshot image used with the computer use tool.
+  attr_reader :output
+  # @return [BetaComputerCallOutputStatus] The status of the message input. One of `in_progress`, `completed`, or `incomplete`. Populated when input items are returned via API.
+  attr_reader :status
+  # @return [String] The identifier of the actor that created the item.
+  attr_reader :created_by
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaComputerToolMetadata
-    FIELDS = {
-      type: 'type'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::BetaComputerToolType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for BetaComputerTool.
-  # A tool that controls a virtual computer. Learn more about the computer tool.
-  class BetaComputerTool
-    include BetaTool
-    include BetaToolSearchOutputTool
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaComputerToolMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaComputerToolMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaComputerToolMetadata::DECODERS
-
-    # @return [BetaComputerToolType] The type of the computer tool. Always `computer`.
-    attr_reader :type
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the BetaComputerToolType SDK namespace.
-  module BetaComputerToolType
-    COMPUTER = 'computer'
-    VALUES = ['computer'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('BetaComputerToolType', 'enum', "Unknown BetaComputerToolType: #{value}")
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalBetaComputerToolCallMetadata
-    FIELDS = {
-      agent: 'agent',
-      type: 'type',
-      id: 'id',
-      call_id: 'call_id',
-      action: 'action',
-      actions: 'actions',
-      pending_safety_checks: 'pending_safety_checks',
-      status: 'status'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      id
-      call_id
-      pending_safety_checks
-      status
-    ].freeze
-    DECODERS = {
-      agent: lambda do |value|
-        ::OctridevOpenai::BetaAgentTag.from_hash(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::BetaComputerToolCallType.from_value(value)
-      end,
-      action: lambda do |value|
-        ::OctridevOpenai::BetaComputerAction.from_hash(value)
-      end,
-      actions: lambda do |value|
-        ::OctridevOpenai::BetaComputerActionList.from_hash(value)
-      end,
-      pending_safety_checks: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::BetaComputerCallSafetyCheckParam.from_hash(item) }
-      end,
-      status: lambda do |value|
-        ::OctridevOpenai::BetaComputerToolCallStatus.from_value(value)
-      end
-    }.freeze
-  end
-
-  # API model for BetaComputerToolCall.
-  # A tool call to a computer use tool. See the computer use guide for more information.
-  class BetaComputerToolCall
-    include BetaItem
-    include BetaItemResource
-    include BetaItemField
-    include BetaOutputItem
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaComputerToolCallMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaComputerToolCallMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaComputerToolCallMetadata::DECODERS
-
-    # @return [BetaAgentTag] The agent that produced this item.
-    attr_reader :agent
-    # @return [BetaComputerToolCallType] The type of the computer call. Always `computer_call`.
-    attr_reader :type
-    # @return [String] The unique ID of the computer call.
-    attr_reader :id
-    # @return [String] An identifier used when responding to the tool call with output.
-    attr_reader :call_id
-    # @return [BetaComputerAction] Optional API value serialized in the `action` wire field.
-    attr_reader :action
-    # @return [BetaComputerActionList] Flattened batched actions for `computer_use`. Each action includes an `type` discriminator and action-specific fields.
-    attr_reader :actions
-    # @return [Array_of_BetaComputerCallSafetyCheckParam] The pending safety checks for the computer call.
-    attr_reader :pending_safety_checks
-    # @return [BetaComputerToolCallStatus] The status of the item. One of `in_progress`, `completed`, or `incomplete`. Populated when items are returned via API.
-    attr_reader :status
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the BetaComputerToolCallStatus SDK namespace.
-  module BetaComputerToolCallStatus
-    IN_PROGRESS = 'in_progress'
-    COMPLETED = 'completed'
-    INCOMPLETE = 'incomplete'
-    VALUES = %w[in_progress completed incomplete].freeze
-    def self.from_value(value)
-      value
-    end
-  end
-
-  # Defines the BetaComputerToolCallType SDK namespace.
-  module BetaComputerToolCallType
-    COMPUTER_CALL = 'computer_call'
-    VALUES = ['computer_call'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('BetaComputerToolCallType', 'enum', "Unknown BetaComputerToolCallType: #{value}")
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalBetaComputerToolCallOutputMetadata
-    FIELDS = {
-      agent: 'agent',
-      type: 'type',
-      id: 'id',
-      call_id: 'call_id',
-      acknowledged_safety_checks: 'acknowledged_safety_checks',
-      output: 'output',
-      status: 'status'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      call_id
-      output
-    ].freeze
-    DECODERS = {
-      agent: lambda do |value|
-        ::OctridevOpenai::BetaAgentTag.from_hash(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::BetaComputerToolCallOutputType.from_value(value)
-      end,
-      acknowledged_safety_checks: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::BetaComputerCallSafetyCheckParam.from_hash(item) }
-      end,
-      output: lambda do |value|
-        ::OctridevOpenai::BetaComputerScreenshotImage.from_hash(value)
-      end,
-      status: lambda do |value|
-        ::OctridevOpenai::BetaComputerToolCallOutputStatus.from_value(value)
-      end
-    }.freeze
-  end
-
-  # API model for BetaComputerToolCallOutput.
-  # The output of a computer tool call.
-  class BetaComputerToolCallOutput
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaComputerToolCallOutputMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaComputerToolCallOutputMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaComputerToolCallOutputMetadata::DECODERS
-
-    # @return [BetaAgentTag] The agent that produced this item.
-    attr_reader :agent
-    # @return [BetaComputerToolCallOutputType] The type of the computer tool call output. Always `computer_call_output`.
-    attr_reader :type
-    # @return [String] The ID of the computer tool call output.
-    attr_reader :id
-    # @return [String] The ID of the computer tool call that produced the output.
-    attr_reader :call_id
-    # @return [Array_of_BetaComputerCallSafetyCheckParam] The safety checks reported by the API that have been acknowledged by the developer.
-    attr_reader :acknowledged_safety_checks
-    # @return [BetaComputerScreenshotImage] A computer screenshot image used with the computer use tool.
-    attr_reader :output
-    # @return [BetaComputerToolCallOutputStatus] The status of the message input. One of `in_progress`, `completed`, or `incomplete`. Populated when input items are returned via API.
-    attr_reader :status
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the BetaComputerToolCallOutputStatus SDK namespace.
-  module BetaComputerToolCallOutputStatus
-    IN_PROGRESS = 'in_progress'
-    COMPLETED = 'completed'
-    INCOMPLETE = 'incomplete'
-    VALUES = %w[in_progress completed incomplete].freeze
-    def self.from_value(value)
-      value
-    end
-  end
-
-  # Defines the BetaComputerToolCallOutputType SDK namespace.
-  module BetaComputerToolCallOutputType
-    COMPUTER_CALL_OUTPUT = 'computer_call_output'
-    VALUES = ['computer_call_output'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('BetaComputerToolCallOutputType', 'enum', "Unknown BetaComputerToolCallOutputType: #{value}")
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalBetaComputerToolCallOutputResourceMetadata
-    FIELDS = {
-      agent: 'agent',
-      type: 'type',
-      id: 'id',
-      call_id: 'call_id',
-      acknowledged_safety_checks: 'acknowledged_safety_checks',
-      output: 'output',
-      status: 'status',
-      created_by: 'created_by'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      id
-      call_id
-      output
-      status
-    ].freeze
-    DECODERS = {
-      agent: lambda do |value|
-        ::OctridevOpenai::BetaAgentTag.from_hash(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::BetaComputerToolCallOutputType.from_value(value)
-      end,
-      acknowledged_safety_checks: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::BetaComputerCallSafetyCheckParam.from_hash(item) }
-      end,
-      output: lambda do |value|
-        ::OctridevOpenai::BetaComputerScreenshotImage.from_hash(value)
-      end,
-      status: lambda do |value|
-        ::OctridevOpenai::BetaComputerCallOutputStatus.from_value(value)
-      end
-    }.freeze
-  end
-
-  # API model for BetaComputerToolCallOutputResource.
-  # Typed representation of the `BetaComputerToolCallOutputResource` API schema.
-  class BetaComputerToolCallOutputResource
-    include BetaItemResource
-    include BetaItemField
-    include BetaOutputItem
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaComputerToolCallOutputResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaComputerToolCallOutputResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaComputerToolCallOutputResourceMetadata::DECODERS
-
-    # @return [BetaAgentTag] The agent that produced this item.
-    attr_reader :agent
-    # @return [BetaComputerToolCallOutputType] The type of the computer tool call output. Always `computer_call_output`.
-    attr_reader :type
-    # @return [String] The ID of the computer tool call output.
-    attr_reader :id
-    # @return [String] The ID of the computer tool call that produced the output.
-    attr_reader :call_id
-    # @return [Array_of_BetaComputerCallSafetyCheckParam] The safety checks reported by the API that have been acknowledged by the developer.
-    attr_reader :acknowledged_safety_checks
-    # @return [BetaComputerScreenshotImage] A computer screenshot image used with the computer use tool.
-    attr_reader :output
-    # @return [BetaComputerCallOutputStatus] The status of the message input. One of `in_progress`, `completed`, or `incomplete`. Populated when input items are returned via API.
-    attr_reader :status
-    # @return [String] The identifier of the actor that created the item.
-    attr_reader :created_by
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalBetaComputerUsePreviewToolMetadata
-    FIELDS = {
-      type: 'type',
-      environment: 'environment',
-      display_width: 'display_width',
-      display_height: 'display_height'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      environment
-      display_width
-      display_height
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::BetaComputerUsePreviewToolType.from_value(value)
-      end,
-      environment: lambda do |value|
-        ::OctridevOpenai::BetaComputerEnvironment.from_value(value)
-      end
-    }.freeze
-  end
+# Internal model hydration metadata.
+class SdkInternalBetaComputerUsePreviewToolMetadata
+  FIELDS = {
+    type: "type",
+    environment: "environment",
+    display_width: "display_width",
+    display_height: "display_height",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    environment
+    display_width
+    display_height
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::BetaComputerUsePreviewToolType.from_value(value)
+    end,
+    environment: lambda do |value|
+      ::OctridevOpenai::BetaComputerEnvironment.from_value(value)
+    end,
+  }.freeze
+end
 end

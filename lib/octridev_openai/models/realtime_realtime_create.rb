@@ -5,183 +5,183 @@
 
 # realtime_realtime_create domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalRealtimeCreateClientSecretRequestExpiresAfterMetadata
-    FIELDS = {
-      anchor: 'anchor',
-      seconds: 'seconds'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {
-      anchor: lambda do |value|
-        ::OctridevOpenai::RealtimeCreateClientSecretRequestExpiresAfterAnchor.from_value(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalRealtimeCreateClientSecretRequestExpiresAfterMetadata
+  FIELDS = {
+    anchor: "anchor",
+    seconds: "seconds",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+    anchor: lambda do |value|
+      ::OctridevOpenai::RealtimeCreateClientSecretRequestExpiresAfterAnchor.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for RealtimeCreateClientSecretRequestExpiresAfter.
+# Configuration for the client secret expiration. Expiration refers to the time after which a client secret will no longer be valid for creating sessions. The session itself may continue after that time once started. A secret can be used to create multiple sessions until it expires.
+class RealtimeCreateClientSecretRequestExpiresAfter
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRealtimeCreateClientSecretRequestExpiresAfterMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRealtimeCreateClientSecretRequestExpiresAfterMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRealtimeCreateClientSecretRequestExpiresAfterMetadata::DECODERS
+
+  # @return [RealtimeCreateClientSecretRequestExpiresAfterAnchor] The anchor point for the client secret expiration, meaning that `seconds` will be added to the `created_at` time of the client secret to produce an expiration timestamp. Only `created_at` is currently supported.
+  attr_reader :anchor
+  # @return [Integer] The number of seconds from the anchor point to the expiration. Select a value between `10` and `7200` (2 hours). This default to 600 seconds (10 minutes) if not specified.
+  attr_reader :seconds
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for RealtimeCreateClientSecretRequestExpiresAfter.
-  # Configuration for the client secret expiration. Expiration refers to the time after which a client secret will no longer be valid for creating sessions. The session itself may continue after that time once started. A secret can be used to create multiple sessions until it expires.
-  class RealtimeCreateClientSecretRequestExpiresAfter
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRealtimeCreateClientSecretRequestExpiresAfterMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRealtimeCreateClientSecretRequestExpiresAfterMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRealtimeCreateClientSecretRequestExpiresAfterMetadata::DECODERS
-
-    # @return [RealtimeCreateClientSecretRequestExpiresAfterAnchor] The anchor point for the client secret expiration, meaning that `seconds` will be added to the `created_at` time of the client secret to produce an expiration timestamp. Only `created_at` is currently supported.
-    attr_reader :anchor
-    # @return [Integer] The number of seconds from the anchor point to the expiration. Select a value between `10` and `7200` (2 hours). This default to 600 seconds (10 minutes) if not specified.
-    attr_reader :seconds
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalRealtimeCreateClientSecretRequestMetadata
-    FIELDS = {
-      expires_after: 'expires_after',
-      session: 'session'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {
-      expires_after: lambda do |value|
-        ::OctridevOpenai::RealtimeCreateClientSecretRequestExpiresAfter.from_hash(value)
-      end,
-      session: lambda do |value|
-        ::OctridevOpenai::RealtimeCreateClientSecretRequestSession.from_hash(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalRealtimeCreateClientSecretRequestMetadata
+  FIELDS = {
+    expires_after: "expires_after",
+    session: "session",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+    expires_after: lambda do |value|
+      ::OctridevOpenai::RealtimeCreateClientSecretRequestExpiresAfter.from_hash(value)
+    end,
+    session: lambda do |value|
+      ::OctridevOpenai::RealtimeCreateClientSecretRequestSession.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for RealtimeCreateClientSecretRequest.
+# Create a session and client secret for the Realtime API. The request can specify either a realtime or a transcription session configuration. Learn more about the Realtime API.
+class RealtimeCreateClientSecretRequest
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRealtimeCreateClientSecretRequestMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRealtimeCreateClientSecretRequestMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRealtimeCreateClientSecretRequestMetadata::DECODERS
+
+  # @return [RealtimeCreateClientSecretRequestExpiresAfter] Configuration for the client secret expiration. Expiration refers to the time after which a client secret will no longer be valid for creating sessions. The session itself may continue after that time once started. A secret can be used to create multiple sessions until it expires.
+  attr_reader :expires_after
+  # @return [RealtimeCreateClientSecretRequestSession] Session configuration to use for the client secret. Choose either a realtime session or a transcription session.
+  attr_reader :session
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for RealtimeCreateClientSecretRequest.
-  # Create a session and client secret for the Realtime API. The request can specify either a realtime or a transcription session configuration. Learn more about the Realtime API.
-  class RealtimeCreateClientSecretRequest
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRealtimeCreateClientSecretRequestMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRealtimeCreateClientSecretRequestMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRealtimeCreateClientSecretRequestMetadata::DECODERS
-
-    # @return [RealtimeCreateClientSecretRequestExpiresAfter] Configuration for the client secret expiration. Expiration refers to the time after which a client secret will no longer be valid for creating sessions. The session itself may continue after that time once started. A secret can be used to create multiple sessions until it expires.
-    attr_reader :expires_after
-    # @return [RealtimeCreateClientSecretRequestSession] Session configuration to use for the client secret. Choose either a realtime session or a transcription session.
-    attr_reader :session
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the RealtimeCreateClientSecretRequestExpiresAfterAnchor SDK namespace.
-  module RealtimeCreateClientSecretRequestExpiresAfterAnchor
-    CREATED_AT = 'created_at'
-    VALUES = ['created_at'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the RealtimeCreateClientSecretRequestExpiresAfterAnchor SDK namespace.
+module RealtimeCreateClientSecretRequestExpiresAfterAnchor
+  CREATED_AT = 'created_at'
+  VALUES = ['created_at'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the RealtimeCreateClientSecretRequestSession SDK namespace.
+module RealtimeCreateClientSecretRequestSession
+  DISCRIMINATOR_MAPPING = {
+    "realtime" => -> { RealtimeSessionCreateRequestGA },
+    "transcription" => -> { RealtimeTranscriptionSessionCreateRequestGA },
+  }.freeze
+
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
+
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+
+    raise SdkValidationError.new('RealtimeCreateClientSecretRequestSession', 'variant', "Unknown RealtimeCreateClientSecretRequestSession discriminator: #{hash["type"].inspect}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalRealtimeCreateClientSecretResponseMetadata
+  FIELDS = {
+    value: "value",
+    expires_at: "expires_at",
+    session: "session",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    value
+    expires_at
+    session
+  ].freeze
+  DECODERS = {
+    session: lambda do |value|
+      ::OctridevOpenai::RealtimeCreateClientSecretResponseSession.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for RealtimeCreateClientSecretResponse.
+# Response from creating a session and client secret for the Realtime API.
+class RealtimeCreateClientSecretResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalRealtimeCreateClientSecretResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalRealtimeCreateClientSecretResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalRealtimeCreateClientSecretResponseMetadata::DECODERS
+
+  # @return [String] The generated client secret value.
+  attr_reader :value
+  # @return [Integer] Expiration timestamp for the client secret, in seconds since epoch.
+  attr_reader :expires_at
+  # @return [RealtimeCreateClientSecretResponseSession] The session configuration for either a realtime or transcription session.
+  attr_reader :session
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the RealtimeCreateClientSecretRequestSession SDK namespace.
-  module RealtimeCreateClientSecretRequestSession
-    DISCRIMINATOR_MAPPING = {
-      'realtime' => -> { RealtimeSessionCreateRequestGA },
-      'transcription' => -> { RealtimeTranscriptionSessionCreateRequestGA }
-    }.freeze
-
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
-
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
-
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
-
-      raise SdkValidationError.new('RealtimeCreateClientSecretRequestSession', 'variant', "Unknown RealtimeCreateClientSecretRequestSession discriminator: #{hash['type'].inspect}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalRealtimeCreateClientSecretResponseMetadata
-    FIELDS = {
-      value: 'value',
-      expires_at: 'expires_at',
-      session: 'session'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      value
-      expires_at
-      session
-    ].freeze
-    DECODERS = {
-      session: lambda do |value|
-        ::OctridevOpenai::RealtimeCreateClientSecretResponseSession.from_hash(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # API model for RealtimeCreateClientSecretResponse.
-  # Response from creating a session and client secret for the Realtime API.
-  class RealtimeCreateClientSecretResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalRealtimeCreateClientSecretResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalRealtimeCreateClientSecretResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalRealtimeCreateClientSecretResponseMetadata::DECODERS
+# Defines the RealtimeCreateClientSecretResponseSession SDK namespace.
+module RealtimeCreateClientSecretResponseSession
+  DISCRIMINATOR_MAPPING = {
+    "realtime" => -> { RealtimeSessionCreateResponseGA },
+    "transcription" => -> { RealtimeTranscriptionSessionCreateResponseGA },
+  }.freeze
 
-    # @return [String] The generated client secret value.
-    attr_reader :value
-    # @return [Integer] Expiration timestamp for the client secret, in seconds since epoch.
-    attr_reader :expires_at
-    # @return [RealtimeCreateClientSecretResponseSession] The session configuration for either a realtime or transcription session.
-    attr_reader :session
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+    raise SdkValidationError.new('RealtimeCreateClientSecretResponseSession', 'variant', "Unknown RealtimeCreateClientSecretResponseSession discriminator: #{hash["type"].inspect}")
   end
-
-  # Defines the RealtimeCreateClientSecretResponseSession SDK namespace.
-  module RealtimeCreateClientSecretResponseSession
-    DISCRIMINATOR_MAPPING = {
-      'realtime' => -> { RealtimeSessionCreateResponseGA },
-      'transcription' => -> { RealtimeTranscriptionSessionCreateResponseGA }
-    }.freeze
-
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
-
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
-
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
-
-      raise SdkValidationError.new('RealtimeCreateClientSecretResponseSession', 'variant', "Unknown RealtimeCreateClientSecretResponseSession discriminator: #{hash['type'].inspect}")
-    end
-  end
+end
 end

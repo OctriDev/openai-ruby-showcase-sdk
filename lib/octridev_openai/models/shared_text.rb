@@ -5,150 +5,147 @@
 
 # shared_text domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalTextContentMetadata
-    FIELDS = {
-      type: 'type',
-      text: 'text'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      text
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::TextContentType.from_value(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalTextContentMetadata
+  FIELDS = {
+    type: "type",
+    text: "text",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    text
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::TextContentType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for TextContent.
+# A text content.
+class TextContent
+  include MessageContentItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalTextContentMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalTextContentMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalTextContentMetadata::DECODERS
+
+  # @return [TextContentType] Required enumerated value serialized in the `type` wire field.
+  attr_reader :type
+  # @return [String] Required `string` value serialized in the `text` wire field.
+  attr_reader :text
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for TextContent.
-  # A text content.
-  class TextContent
-    include MessageContentItem
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalTextContentMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalTextContentMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalTextContentMetadata::DECODERS
-
-    # @return [TextContentType] Required enumerated value serialized in the `type` wire field.
-    attr_reader :type
-    # @return [String] Required `string` value serialized in the `text` wire field.
-    attr_reader :text
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the TextContentType SDK namespace.
-  module TextContentType
-    TEXT = 'text'
-    VALUES = ['text'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('TextContentType', 'enum', "Unknown TextContentType: #{value}")
-    end
+# Defines the TextContentType SDK namespace.
+module TextContentType
+  TEXT = 'text'
+  VALUES = ['text'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('TextContentType', 'enum', "Unknown TextContentType: #{value}")
+  end
+end
+
+# Defines the TextResponseFormatConfiguration SDK namespace.
+module TextResponseFormatConfiguration
+  DISCRIMINATOR_MAPPING = {
+    "text" => -> { ResponseFormatText },
+    "json_schema" => -> { TextResponseFormatJsonSchema },
+    "json_object" => -> { ResponseFormatJsonObject },
+  }.freeze
+
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
+
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+
+    raise SdkValidationError.new('TextResponseFormatConfiguration', 'variant', "Unknown TextResponseFormatConfiguration discriminator: #{hash["type"].inspect}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalTextResponseFormatJsonSchemaMetadata
+  FIELDS = {
+    type: "type",
+    description: "description",
+    name: "name",
+    schema: "schema",
+    strict: "strict",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    name
+    schema
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::TextResponseFormatJsonSchemaType.from_value(value)
+    end,
+    schema: lambda do |value|
+      ::OctridevOpenai::ResponseFormatJsonSchemaSchema.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for TextResponseFormatJsonSchema.
+# JSON Schema response format. Used to generate structured JSON responses. Learn more about Structured Outputs.
+class TextResponseFormatJsonSchema
+  include TextResponseFormatConfiguration
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalTextResponseFormatJsonSchemaMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalTextResponseFormatJsonSchemaMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalTextResponseFormatJsonSchemaMetadata::DECODERS
+
+  # @return [TextResponseFormatJsonSchemaType] The type of response format being defined. Always `json_schema`.
+  attr_reader :type
+  # @return [String] A description of what the response format is for, used by the model to determine how to respond in the format.
+  attr_reader :description
+  # @return [String] The name of the response format. Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64.
+  attr_reader :name
+  # @return [ResponseFormatJsonSchemaSchema] The schema for the response format, described as a JSON Schema object. Learn how to build JSON schemas here.
+  attr_reader :schema
+  # @return [Boolean] Optional `boolean` value serialized in the `strict` wire field.
+  attr_reader :strict
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the TextResponseFormatConfiguration SDK namespace.
-  module TextResponseFormatConfiguration
-    DISCRIMINATOR_MAPPING = {
-      'text' => -> { ResponseFormatText },
-      'json_schema' => -> { TextResponseFormatJsonSchema },
-      'json_object' => -> { ResponseFormatJsonObject }
-    }.freeze
-
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
-
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
-
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
-
-      raise SdkValidationError.new('TextResponseFormatConfiguration', 'variant', "Unknown TextResponseFormatConfiguration discriminator: #{hash['type'].inspect}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalTextResponseFormatJsonSchemaMetadata
-    FIELDS = {
-      type: 'type',
-      description: 'description',
-      name: 'name',
-      schema: 'schema',
-      strict: 'strict'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      name
-      schema
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::TextResponseFormatJsonSchemaType.from_value(value)
-      end,
-      schema: lambda do |value|
-        ::OctridevOpenai::ResponseFormatJsonSchemaSchema.from_hash(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # API model for TextResponseFormatJsonSchema.
-  # JSON Schema response format. Used to generate structured JSON responses. Learn more about Structured Outputs.
-  class TextResponseFormatJsonSchema
-    include TextResponseFormatConfiguration
+# Defines the TextResponseFormatJsonSchemaType SDK namespace.
+module TextResponseFormatJsonSchemaType
+  JSON_SCHEMA = 'json_schema'
+  VALUES = ['json_schema'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalTextResponseFormatJsonSchemaMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalTextResponseFormatJsonSchemaMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalTextResponseFormatJsonSchemaMetadata::DECODERS
-
-    # @return [TextResponseFormatJsonSchemaType] The type of response format being defined. Always `json_schema`.
-    attr_reader :type
-    # @return [String] A description of what the response format is for, used by the model to determine how to respond in the format.
-    attr_reader :description
-    # @return [String] The name of the response format. Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64.
-    attr_reader :name
-    # @return [ResponseFormatJsonSchemaSchema] The schema for the response format, described as a JSON Schema object. Learn how to build JSON schemas here.
-    attr_reader :schema
-    # @return [Boolean] Optional `boolean` value serialized in the `strict` wire field.
-    attr_reader :strict
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+    raise SdkValidationError.new('TextResponseFormatJsonSchemaType', 'enum', "Unknown TextResponseFormatJsonSchemaType: #{value}")
   end
-
-  # Defines the TextResponseFormatJsonSchemaType SDK namespace.
-  module TextResponseFormatJsonSchemaType
-    JSON_SCHEMA = 'json_schema'
-    VALUES = ['json_schema'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('TextResponseFormatJsonSchemaType', 'enum', "Unknown TextResponseFormatJsonSchemaType: #{value}")
-    end
-  end
+end
 end

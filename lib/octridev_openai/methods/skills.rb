@@ -23,21 +23,22 @@ module OctridevOpenai
         content_type: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.validate_items('files', files, max: 500)
 
         SdkClient.request(
           'POST',
-          '/skills',
+          "/skills",
           config: config,
           body: {
-            'files' => SdkClient.upload(files, 'files')
+            'files' => SdkClient.upload(files, 'files'),
           },
           content_type: SdkClient.body_content_type(content_type, nil, 'application/json'),
           return_type: ::OctridevOpenai::SkillResource,
           decoder: :json,
           operation_id: 'create_skill',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -57,26 +58,27 @@ module OctridevOpenai
         after: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 0, max: 100) }
 
         SdkClient.request(
           'GET',
-          '/skills',
+          "/skills",
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'order' => QueryValue.new(order, style: 'form', explode: true),
-            'after' => QueryValue.new(after, style: 'form', explode: true)
+            'after' => QueryValue.new(after, style: 'form', explode: true),
           },
           return_type: ::OctridevOpenai::SkillListResource,
           decoder: :json,
           operation_id: 'list_skills',
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
-      ListSkillsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+    ListSkillsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists skills available in the current project. Use `limit` to control the number of results, `order` to sort them, and `after` to continue from a previous result.
       #
@@ -106,13 +108,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             items.each { |item| y << item }
             break unless page.has_more
-
             next_cursor = page.last_id
             break if next_cursor.nil?
-
             cursor = next_cursor
           end
         end
@@ -137,12 +136,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListSkillsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
-
             cursor = next_cursor
           end
         end
@@ -158,10 +155,11 @@ module OctridevOpenai
         skill_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'DELETE',
           [
-            '/skills/',
+            "/skills/",
             SdkClient.encode_path_segment(skill_id)
           ].join,
           config: config,
@@ -169,7 +167,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_skill',
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -178,11 +176,16 @@ module OctridevOpenai
       # Get a skill by its ID.
       #
       # @param skill_id [String] The identifier of the skill to retrieve.
-      singleton_class.define_method(:get_skill) do |config:, skill_id:, request_options: nil|
+      singleton_class.define_method(:get_skill) do |
+        config:,
+        skill_id:,
+        request_options: nil
+      |
+
         SdkClient.request(
           'GET',
           [
-            '/skills/',
+            "/skills/",
             SdkClient.encode_path_segment(skill_id)
           ].join,
           config: config,
@@ -190,7 +193,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'get_skill',
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -206,21 +209,22 @@ module OctridevOpenai
         default_version:,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
           [
-            '/skills/',
+            "/skills/",
             SdkClient.encode_path_segment(skill_id)
           ].join,
           config: config,
           body: {
-            'default_version' => default_version
+            'default_version' => default_version,
           },
           return_type: ::OctridevOpenai::SkillResource,
           decoder: :json,
           operation_id: 'update_skill_default_version',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -229,19 +233,24 @@ module OctridevOpenai
       # Download a skill zip bundle by its ID.
       #
       # @param skill_id [String] The identifier of the skill to download.
-      singleton_class.define_method(:get_skill_content) do |config:, skill_id:, request_options: nil|
+      singleton_class.define_method(:get_skill_content) do |
+        config:,
+        skill_id:,
+        request_options: nil
+      |
+
         SdkClient.request(
           'GET',
           [
-            '/skills/',
+            "/skills/",
             SdkClient.encode_path_segment(skill_id),
-            '/content'
+            "/content"
           ].join,
           config: config,
           decoder: :bytes,
           operation_id: 'get_skill_content',
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -263,26 +272,27 @@ module OctridevOpenai
         content_type: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.validate_items('files', files, max: 500)
 
         SdkClient.request(
           'POST',
           [
-            '/skills/',
+            "/skills/",
             SdkClient.encode_path_segment(skill_id),
-            '/versions'
+            "/versions"
           ].join,
           config: config,
           body: {
             'files' => SdkClient.upload(files, 'files'),
-            'default' => default
+            'default' => default,
           },
           content_type: SdkClient.body_content_type(content_type, nil, 'application/json'),
           return_type: ::OctridevOpenai::SkillVersionResource,
           decoder: :json,
           operation_id: 'create_skill_version',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -302,30 +312,31 @@ module OctridevOpenai
         after: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 0, max: 100) }
 
         SdkClient.request(
           'GET',
           [
-            '/skills/',
+            "/skills/",
             SdkClient.encode_path_segment(skill_id),
-            '/versions'
+            "/versions"
           ].join,
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'order' => QueryValue.new(order, style: 'form', explode: true),
-            'after' => QueryValue.new(after, style: 'form', explode: true)
+            'after' => QueryValue.new(after, style: 'form', explode: true),
           },
           return_type: ::OctridevOpenai::SkillVersionListResource,
           decoder: :json,
           operation_id: 'list_skill_versions',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
-      ListSkillVersionsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+    ListSkillVersionsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists versions for a skill. Use `after` to continue from a skill version ID, `limit` to control the number of results, and `order` to sort by version number.
       #
@@ -356,13 +367,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             items.each { |item| y << item }
             break unless page.has_more
-
             next_cursor = page.last_id
             break if next_cursor.nil?
-
             cursor = next_cursor
           end
         end
@@ -389,12 +397,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListSkillVersionsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
-
             cursor = next_cursor
           end
         end
@@ -406,13 +412,19 @@ module OctridevOpenai
       #
       # @param skill_id [String] The identifier of the skill.
       # @param version [String] The version number to retrieve.
-      singleton_class.define_method(:get_skill_version) do |config:, skill_id:, version:, request_options: nil|
+      singleton_class.define_method(:get_skill_version) do |
+        config:,
+        skill_id:,
+        version:,
+        request_options: nil
+      |
+
         SdkClient.request(
           'GET',
           [
-            '/skills/',
+            "/skills/",
             SdkClient.encode_path_segment(skill_id),
-            '/versions/',
+            "/versions/",
             SdkClient.encode_path_segment(version)
           ].join,
           config: config,
@@ -420,7 +432,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'get_skill_version',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -436,12 +448,13 @@ module OctridevOpenai
         version:,
         request_options: nil
       )
+
         SdkClient.request(
           'DELETE',
           [
-            '/skills/',
+            "/skills/",
             SdkClient.encode_path_segment(skill_id),
-            '/versions/',
+            "/versions/",
             SdkClient.encode_path_segment(version)
           ].join,
           config: config,
@@ -449,7 +462,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_skill_version',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -459,21 +472,27 @@ module OctridevOpenai
       #
       # @param skill_id [String] The identifier of the skill.
       # @param version [String] The skill version number.
-      singleton_class.define_method(:get_skill_version_content) do |config:, skill_id:, version:, request_options: nil|
+      singleton_class.define_method(:get_skill_version_content) do |
+        config:,
+        skill_id:,
+        version:,
+        request_options: nil
+      |
+
         SdkClient.request(
           'GET',
           [
-            '/skills/',
+            "/skills/",
             SdkClient.encode_path_segment(skill_id),
-            '/versions/',
+            "/versions/",
             SdkClient.encode_path_segment(version),
-            '/content'
+            "/content"
           ].join,
           config: config,
           decoder: :bytes,
           operation_id: 'get_skill_version_content',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
     end

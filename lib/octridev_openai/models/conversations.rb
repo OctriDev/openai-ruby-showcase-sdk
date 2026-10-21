@@ -5,322 +5,322 @@
 
 # conversations domain models
 module OctridevOpenai
-  # Defines the ConversationItem SDK namespace.
-  module ConversationItem
-    DISCRIMINATOR_MAPPING = {
-      'message' => -> { Message },
-      'function_call' => -> { FunctionToolCallResource },
-      'function_call_output' => -> { FunctionToolCallOutputResource },
-      'file_search_call' => -> { FileSearchToolCall },
-      'web_search_call' => -> { WebSearchToolCall },
-      'image_generation_call' => -> { ImageGenToolCall },
-      'computer_call' => -> { ComputerToolCall },
-      'computer_call_output' => -> { ComputerToolCallOutputResource },
-      'tool_search_call' => -> { ToolSearchCall },
-      'tool_search_output' => -> { ToolSearchOutput },
-      'additional_tools' => -> { AdditionalTools },
-      'configuration_update' => -> { ResponseConfigurationUpdate },
-      'reasoning' => -> { ReasoningItem },
-      'program' => -> { Program },
-      'program_output' => -> { ProgramOutput },
-      'compaction' => -> { CompactionBody },
-      'code_interpreter_call' => -> { CodeInterpreterToolCall },
-      'local_shell_call' => -> { LocalShellToolCall },
-      'local_shell_call_output' => -> { LocalShellToolCallOutput },
-      'shell_call' => -> { FunctionShellCall },
-      'shell_call_output' => -> { FunctionShellCallOutput },
-      'apply_patch_call' => -> { ApplyPatchToolCall },
-      'apply_patch_call_output' => -> { ApplyPatchToolCallOutput },
-      'mcp_list_tools' => -> { MCPListTools },
-      'mcp_approval_request' => -> { MCPApprovalRequest },
-      'mcp_approval_response' => -> { MCPApprovalResponseResource },
-      'mcp_call' => -> { MCPToolCall },
-      'custom_tool_call' => -> { CustomToolCall },
-      'custom_tool_call_output' => -> { CustomToolCallOutput }
-    }.freeze
+# Defines the ConversationItem SDK namespace.
+module ConversationItem
+  DISCRIMINATOR_MAPPING = {
+    "message" => -> { Message },
+    "function_call" => -> { FunctionToolCallResource },
+    "function_call_output" => -> { FunctionToolCallOutputResource },
+    "file_search_call" => -> { FileSearchToolCall },
+    "web_search_call" => -> { WebSearchToolCall },
+    "image_generation_call" => -> { ImageGenToolCall },
+    "computer_call" => -> { ComputerToolCall },
+    "computer_call_output" => -> { ComputerToolCallOutputResource },
+    "tool_search_call" => -> { ToolSearchCall },
+    "tool_search_output" => -> { ToolSearchOutput },
+    "additional_tools" => -> { AdditionalTools },
+    "configuration_update" => -> { ResponseConfigurationUpdate },
+    "reasoning" => -> { ReasoningItem },
+    "program" => -> { Program },
+    "program_output" => -> { ProgramOutput },
+    "compaction" => -> { CompactionBody },
+    "code_interpreter_call" => -> { CodeInterpreterToolCall },
+    "local_shell_call" => -> { LocalShellToolCall },
+    "local_shell_call_output" => -> { LocalShellToolCallOutput },
+    "shell_call" => -> { FunctionShellCall },
+    "shell_call_output" => -> { FunctionShellCallOutput },
+    "apply_patch_call" => -> { ApplyPatchToolCall },
+    "apply_patch_call_output" => -> { ApplyPatchToolCallOutput },
+    "mcp_list_tools" => -> { MCPListTools },
+    "mcp_approval_request" => -> { MCPApprovalRequest },
+    "mcp_approval_response" => -> { MCPApprovalResponseResource },
+    "mcp_call" => -> { MCPToolCall },
+    "custom_tool_call" => -> { CustomToolCall },
+    "custom_tool_call_output" => -> { CustomToolCallOutput },
+  }.freeze
 
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
+    return type.from_hash(hash) if type
 
-      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
-      return type.from_hash(hash) if type
+    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
 
-      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+    raise SdkValidationError.new('ConversationItem', 'variant', "Unknown ConversationItem discriminator: #{hash["type"].inspect}")
+  end
+end
 
-      raise SdkValidationError.new('ConversationItem', 'variant', "Unknown ConversationItem discriminator: #{hash['type'].inspect}")
-    end
+# Internal model hydration metadata.
+class SdkInternalConversationItemListMetadata
+  FIELDS = {
+    object: "object",
+    data: "data",
+    has_more: "has_more",
+    first_id: "first_id",
+    last_id: "last_id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    data
+    has_more
+    first_id
+    last_id
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::ConversationItemListObject.from_value(value)
+    end,
+    data: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::ConversationItem.from_hash(item) }
+    end,
+  }.freeze
+end
+
+# API model for ConversationItemList.
+# A list of Conversation items.
+class ConversationItemList
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalConversationItemListMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalConversationItemListMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalConversationItemListMetadata::DECODERS
+
+  # @return [ConversationItemListObject] The type of object returned, must be `list`.
+  attr_reader :object
+  # @return [Array_of_ConversationItem] A list of conversation items.
+  attr_reader :data
+  # @return [Boolean] Whether there are more items available.
+  attr_reader :has_more
+  # @return [String] The ID of the first item in the list.
+  attr_reader :first_id
+  # @return [String] The ID of the last item in the list.
+  attr_reader :last_id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalConversationItemListMetadata
-    FIELDS = {
-      object: 'object',
-      data: 'data',
-      has_more: 'has_more',
-      first_id: 'first_id',
-      last_id: 'last_id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      data
-      has_more
-      first_id
-      last_id
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::ConversationItemListObject.from_value(value)
-      end,
-      data: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::ConversationItem.from_hash(item) }
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ConversationItemList.
-  # A list of Conversation items.
-  class ConversationItemList
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalConversationItemListMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalConversationItemListMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalConversationItemListMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [ConversationItemListObject] The type of object returned, must be `list`.
-    attr_reader :object
-    # @return [Array_of_ConversationItem] A list of conversation items.
-    attr_reader :data
-    # @return [Boolean] Whether there are more items available.
-    attr_reader :has_more
-    # @return [String] The ID of the first item in the list.
-    attr_reader :first_id
-    # @return [String] The ID of the last item in the list.
-    attr_reader :last_id
+# Defines the ConversationItemListObject SDK namespace.
+module ConversationItemListObject
+  LIST = 'list'
+  VALUES = ['list'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalConversationResourceMetadata
+  FIELDS = {
+    id: "id",
+    object: "object",
+    metadata: "metadata",
+    created_at: "created_at",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+    object
+    metadata
+    created_at
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::ConversationResourceObject.from_value(value)
+    end,
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for ConversationResource.
+# Typed representation of the `ConversationResource` API schema.
+class ConversationResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalConversationResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalConversationResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalConversationResourceMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [String] The unique ID of the conversation.
+  attr_reader :id
+  # @return [ConversationResourceObject] The object type, which is always `conversation`.
+  attr_reader :object
+  # @return [Hash] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
+  attr_reader :metadata
+  # @return [Integer] The time at which the conversation was created, measured in seconds since the Unix epoch.
+  attr_reader :created_at
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the ConversationItemListObject SDK namespace.
-  module ConversationItemListObject
-    LIST = 'list'
-    VALUES = ['list'].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalConversationResourceMetadata
-    FIELDS = {
-      id: 'id',
-      object: 'object',
-      metadata: 'metadata',
-      created_at: 'created_at'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-      object
-      metadata
-      created_at
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::ConversationResourceObject.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the ConversationResourceObject SDK namespace.
+module ConversationResourceObject
+  CONVERSATION = 'conversation'
+  VALUES = ['conversation'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalCreateConversationBodyMetadata
+  FIELDS = {
+    metadata: "metadata",
+    items: "items",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+    metadata: lambda do |value|
+      ::OctridevOpenai::Metadata.from_hash(value)
+    end,
+    items: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::InputItem.from_hash(item) }
+    end,
+  }.freeze
+end
+
+# API model for CreateConversationBody.
+# Typed representation of the `CreateConversationBody` API schema.
+class CreateConversationBody
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCreateConversationBodyMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCreateConversationBodyMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCreateConversationBodyMetadata::DECODERS
+
+  # @return [Metadata] Optional API value serialized in the `metadata` wire field.
+  attr_reader :metadata
+  # @return [Array_of_InputItem] Initial items to include in the conversation context. You may add up to 20 items at a time.
+  attr_reader :items
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ConversationResource.
-  # Typed representation of the `ConversationResource` API schema.
-  class ConversationResource
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalConversationResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalConversationResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalConversationResourceMetadata::DECODERS
-
-    # @return [String] The unique ID of the conversation.
-    attr_reader :id
-    # @return [ConversationResourceObject] The object type, which is always `conversation`.
-    attr_reader :object
-    # @return [Hash] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
-    attr_reader :metadata
-    # @return [Integer] The time at which the conversation was created, measured in seconds since the Unix epoch.
-    attr_reader :created_at
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the ConversationResourceObject SDK namespace.
-  module ConversationResourceObject
-    CONVERSATION = 'conversation'
-    VALUES = ['conversation'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalDeletedConversationResourceMetadata
+  FIELDS = {
+    object: "object",
+    deleted: "deleted",
+    id: "id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    deleted
+    id
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::DeletedConversationResourceObject.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for DeletedConversationResource.
+# Typed representation of the `DeletedConversationResource` API schema.
+class DeletedConversationResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalDeletedConversationResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalDeletedConversationResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalDeletedConversationResourceMetadata::DECODERS
+
+  # @return [DeletedConversationResourceObject] Required enumerated value serialized in the `object` wire field.
+  attr_reader :object
+  # @return [Boolean] Required `boolean` value serialized in the `deleted` wire field.
+  attr_reader :deleted
+  # @return [String] Required `string` value serialized in the `id` wire field.
+  attr_reader :id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalCreateConversationBodyMetadata
-    FIELDS = {
-      metadata: 'metadata',
-      items: 'items'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {
-      metadata: lambda do |value|
-        ::OctridevOpenai::Metadata.from_hash(value)
-      end,
-      items: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::InputItem.from_hash(item) }
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for CreateConversationBody.
-  # Typed representation of the `CreateConversationBody` API schema.
-  class CreateConversationBody
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCreateConversationBodyMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCreateConversationBodyMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCreateConversationBodyMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [Metadata] Optional API value serialized in the `metadata` wire field.
-    attr_reader :metadata
-    # @return [Array_of_InputItem] Initial items to include in the conversation context. You may add up to 20 items at a time.
-    attr_reader :items
+# Defines the DeletedConversationResourceObject SDK namespace.
+module DeletedConversationResourceObject
+  CONVERSATION_DELETED = 'conversation.deleted'
+  VALUES = ['conversation.deleted'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalUpdateConversationBodyMetadata
+  FIELDS = {
+    metadata: "metadata",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    metadata
+  ].freeze
+  DECODERS = {
+    metadata: lambda do |value|
+      ::OctridevOpenai::Metadata.from_hash(value)
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    metadata
+  ].freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for UpdateConversationBody.
+# Typed representation of the `UpdateConversationBody` API schema.
+class UpdateConversationBody
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalUpdateConversationBodyMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalUpdateConversationBodyMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalUpdateConversationBodyMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [Metadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
+  attr_reader :metadata
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalDeletedConversationResourceMetadata
-    FIELDS = {
-      object: 'object',
-      deleted: 'deleted',
-      id: 'id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      deleted
-      id
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::DeletedConversationResourceObject.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalUpdateConversationBodyMetadata::NULLABLE_FIELDS)
   end
 
-  # API model for DeletedConversationResource.
-  # Typed representation of the `DeletedConversationResource` API schema.
-  class DeletedConversationResource
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalDeletedConversationResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalDeletedConversationResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalDeletedConversationResourceMetadata::DECODERS
-
-    # @return [DeletedConversationResourceObject] Required enumerated value serialized in the `object` wire field.
-    attr_reader :object
-    # @return [Boolean] Required `boolean` value serialized in the `deleted` wire field.
-    attr_reader :deleted
-    # @return [String] Required `string` value serialized in the `id` wire field.
-    attr_reader :id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
-
-  # Defines the DeletedConversationResourceObject SDK namespace.
-  module DeletedConversationResourceObject
-    CONVERSATION_DELETED = 'conversation.deleted'
-    VALUES = ['conversation.deleted'].freeze
-    def self.from_value(value)
-      value
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalUpdateConversationBodyMetadata
-    FIELDS = {
-      metadata: 'metadata'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      metadata
-    ].freeze
-    DECODERS = {
-      metadata: lambda do |value|
-        ::OctridevOpenai::Metadata.from_hash(value)
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      metadata
-    ].freeze
-  end
-
-  # API model for UpdateConversationBody.
-  # Typed representation of the `UpdateConversationBody` API schema.
-  class UpdateConversationBody
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalUpdateConversationBodyMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalUpdateConversationBodyMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalUpdateConversationBodyMetadata::DECODERS
-
-    # @return [Metadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
-    attr_reader :metadata
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalUpdateConversationBodyMetadata::NULLABLE_FIELDS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
+end
 end

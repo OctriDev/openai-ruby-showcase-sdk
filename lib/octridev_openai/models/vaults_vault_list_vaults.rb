@@ -5,100 +5,99 @@
 
 # vaults_vault domain models
 module OctridevOpenai
-  # Defines the VaultListResourceObject SDK namespace.
-  module VaultListResourceObject
-    LIST = 'list'
-    VALUES = ['list'].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the VaultListResourceObject SDK namespace.
+module VaultListResourceObject
+  LIST = 'list'
+  VALUES = ['list'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalVaultResourceMetadata
+  FIELDS = {
+    id: "id",
+    object: "object",
+    name: "name",
+    metadata: "metadata",
+    created_at: "created_at",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+    object
+    name
+    metadata
+    created_at
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::VaultResourceObject.from_value(value)
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    name
+  ].freeze
+end
+
+# API model for VaultResource.
+# A collection of credentials for MCP servers and OpenAI-hosted environments.
+class VaultResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalVaultResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalVaultResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalVaultResourceMetadata::DECODERS
+
+  # @return [String] The ID of the vault.
+  attr_reader :id
+  # @return [VaultResourceObject] The object type. Always `vault`.
+  attr_reader :object
+  # @return [String] The human-readable name of the vault, if set.
+  attr_reader :name
+  # @return [Hash] Key-value pairs associated with the vault, such as an application or team identifier.
+  attr_reader :metadata
+  # @return [Integer] The Unix timestamp, in seconds, when the vault was created.
+  attr_reader :created_at
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalVaultResourceMetadata
-    FIELDS = {
-      id: 'id',
-      object: 'object',
-      name: 'name',
-      metadata: 'metadata',
-      created_at: 'created_at'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-      object
-      name
-      metadata
-      created_at
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::VaultResourceObject.from_value(value)
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      name
-    ].freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalVaultResourceMetadata::NULLABLE_FIELDS)
   end
 
-  # API model for VaultResource.
-  # A collection of credentials for MCP servers and OpenAI-hosted environments.
-  class VaultResource
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalVaultResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalVaultResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalVaultResourceMetadata::DECODERS
-
-    # @return [String] The ID of the vault.
-    attr_reader :id
-    # @return [VaultResourceObject] The object type. Always `vault`.
-    attr_reader :object
-    # @return [String] The human-readable name of the vault, if set.
-    attr_reader :name
-    # @return [Hash] Key-value pairs associated with the vault, such as an application or team identifier.
-    attr_reader :metadata
-    # @return [Integer] The Unix timestamp, in seconds, when the vault was created.
-    attr_reader :created_at
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalVaultResourceMetadata::NULLABLE_FIELDS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the VaultResourceObject SDK namespace.
-  module VaultResourceObject
-    VAULT = 'vault'
-    VALUES = ['vault'].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the VaultResourceObject SDK namespace.
+module VaultResourceObject
+  VAULT = 'vault'
+  VALUES = ['vault'].freeze
+  def self.from_value(value)
+    value
   end
+end
 
-  # Defines the VaultStatusFilterParam SDK namespace.
-  module VaultStatusFilterParam
-    def self.from_hash(hash)
-      return VaultStatusParam.from_value(hash) if hash.is_a?(::String)
-      return hash.map { |item| VaultStatusParam.from_value(item) } if hash.is_a?(::Array)
-
-      raise "Could not deserialize VaultStatusFilterParam from #{hash.inspect}"
-    end
+# Defines the VaultStatusFilterParam SDK namespace.
+module VaultStatusFilterParam
+  def self.from_hash(hash)
+    return VaultStatusParam.from_value(hash) if hash.is_a?(::String)
+    return hash.map { |item| VaultStatusParam.from_value(item) } if hash.is_a?(::Array)
+    raise "Could not deserialize VaultStatusFilterParam from #{hash.inspect}"
   end
+end
 
-  # Defines the VaultStatusParam SDK namespace.
-  module VaultStatusParam
-    ACTIVE = 'active'
-    ARCHIVED = 'archived'
-    VALUES = %w[active archived].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the VaultStatusParam SDK namespace.
+module VaultStatusParam
+  ACTIVE = 'active'
+  ARCHIVED = 'archived'
+  VALUES = ['active', 'archived'].freeze
+  def self.from_value(value)
+    value
   end
+end
 end

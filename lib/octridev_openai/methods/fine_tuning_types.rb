@@ -13,7 +13,7 @@ module OctridevOpenai
       module ListFineTuningCheckpointPermissionsParameter
         ASCENDING = 'ascending'
         DESCENDING = 'descending'
-        VALUES = %w[ascending descending].freeze
+        VALUES = ['ascending', 'descending'].freeze
         def self.from_value(value)
           value
         end

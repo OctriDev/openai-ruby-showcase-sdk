@@ -101,6 +101,7 @@ module OctridevOpenai
         response_format: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.if_given(tools) { Validation.validate_items('tools', tools, max: 20) }
 
         Validation.if_given(temperature) { Validation.validate_range('temperature', temperature, min: 0, max: 2) }
@@ -118,13 +119,13 @@ module OctridevOpenai
         SdkClient.request(
           'POST',
           [
-            '/threads/',
+            "/threads/",
             SdkClient.encode_path_segment(thread_id),
-            '/runs'
+            "/runs"
           ].join,
           config: config,
           query: {
-            'include[]' => QueryValue.new(include, style: 'form', explode: true)
+            'include[]' => QueryValue.new(include, style: 'form', explode: true),
           },
           body: {
             'assistant_id' => assistant_id,
@@ -143,13 +144,13 @@ module OctridevOpenai
             'truncation_strategy' => truncation_strategy,
             'tool_choice' => tool_choice,
             'parallel_tool_calls' => parallel_tool_calls,
-            'response_format' => response_format
+            'response_format' => response_format,
           },
           return_type: ::OctridevOpenai::RunObject,
           decoder: :json,
           operation_id: 'create_run',
           request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
     end

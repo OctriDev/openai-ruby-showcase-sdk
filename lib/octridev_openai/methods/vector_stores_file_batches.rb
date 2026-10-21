@@ -46,6 +46,7 @@ module OctridevOpenai
         attributes: NOT_GIVEN,
         request_options: nil
       )
+
         Validation.if_given(file_ids) { Validation.validate_items('file_ids', file_ids, min: 1, max: 2000) }
 
         Validation.if_given(files) { Validation.validate_items('files', files, min: 1, max: 2000) }
@@ -53,22 +54,22 @@ module OctridevOpenai
         SdkClient.request(
           'POST',
           [
-            '/vector_stores/',
+            "/vector_stores/",
             SdkClient.encode_path_segment(vector_store_id),
-            '/file_batches'
+            "/file_batches"
           ].join,
           config: config,
           body: {
             'file_ids' => file_ids,
             'files' => files,
             'chunking_strategy' => chunking_strategy,
-            'attributes' => attributes
+            'attributes' => attributes,
           },
           return_type: ::OctridevOpenai::VectorStoreFileBatchObject,
           decoder: :json,
           operation_id: 'create_vector_store_file_batch',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '409' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '409' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -79,13 +80,19 @@ module OctridevOpenai
       # @param vector_store_id [String] The ID of the vector store that the file
       #   batch belongs to.
       # @param batch_id [String] The ID of the file batch being retrieved.
-      singleton_class.define_method(:get_vector_store_file_batch) do |config:, vector_store_id:, batch_id:, request_options: nil|
+      singleton_class.define_method(:get_vector_store_file_batch) do |
+        config:,
+        vector_store_id:,
+        batch_id:,
+        request_options: nil
+      |
+
         SdkClient.request(
           'GET',
           [
-            '/vector_stores/',
+            "/vector_stores/",
             SdkClient.encode_path_segment(vector_store_id),
-            '/file_batches/',
+            "/file_batches/",
             SdkClient.encode_path_segment(batch_id)
           ].join,
           config: config,
@@ -93,7 +100,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'get_vector_store_file_batch',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -110,21 +117,22 @@ module OctridevOpenai
         batch_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
           [
-            '/vector_stores/',
+            "/vector_stores/",
             SdkClient.encode_path_segment(vector_store_id),
-            '/file_batches/',
+            "/file_batches/",
             SdkClient.encode_path_segment(batch_id),
-            '/cancel'
+            "/cancel"
           ].join,
           config: config,
           return_type: ::OctridevOpenai::VectorStoreFileBatchObject,
           decoder: :json,
           operation_id: 'cancel_vector_store_file_batch',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '409' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '409' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -161,14 +169,15 @@ module OctridevOpenai
         filter: NOT_GIVEN,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
           [
-            '/vector_stores/',
+            "/vector_stores/",
             SdkClient.encode_path_segment(vector_store_id),
-            '/file_batches/',
+            "/file_batches/",
             SdkClient.encode_path_segment(batch_id),
-            '/files'
+            "/files"
           ].join,
           config: config,
           query: {
@@ -176,17 +185,17 @@ module OctridevOpenai
             'order' => QueryValue.new(order, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
             'before' => QueryValue.new(before, style: 'form', explode: true),
-            'filter' => QueryValue.new(filter, style: 'form', explode: true)
+            'filter' => QueryValue.new(filter, style: 'form', explode: true),
           },
           return_type: ::OctridevOpenai::ListVectorStoreFilesResponse,
           decoder: :json,
           operation_id: 'list_files_in_vector_store_batch',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
-      ListFilesInVectorStoreBatchPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+    ListFilesInVectorStoreBatchPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists the files in a vector store file batch. Use `filter` to limit results by processing status and the cursor parameters to navigate through the batch's files.
       #
@@ -237,13 +246,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             items.each { |item| y << item }
             break unless page.has_more
-
             next_cursor = page.last_id
             break if next_cursor.nil?
-
             cursor = next_cursor
           end
         end
@@ -276,12 +282,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListFilesInVectorStoreBatchPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
-
             cursor = next_cursor
           end
         end

@@ -5,214 +5,211 @@
 
 # shared_mcpapproval domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalMCPApprovalRequestMetadata
-    FIELDS = {
-      type: 'type',
-      id: 'id',
-      server_label: 'server_label',
-      name: 'name',
-      arguments: 'arguments'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      id
-      server_label
-      name
-      arguments
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::MCPApprovalRequestType.from_value(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalMCPApprovalRequestMetadata
+  FIELDS = {
+    type: "type",
+    id: "id",
+    server_label: "server_label",
+    name: "name",
+    arguments: "arguments",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    id
+    server_label
+    name
+    arguments
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::MCPApprovalRequestType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for MCPApprovalRequest.
+# A request for human approval of a tool invocation.
+class MCPApprovalRequest
+  include ConversationItem
+  include Item
+  include ItemResource
+  include OutputItem
+  include ItemField
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalMCPApprovalRequestMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalMCPApprovalRequestMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalMCPApprovalRequestMetadata::DECODERS
+
+  # @return [MCPApprovalRequestType] The type of the item. Always `mcp_approval_request`.
+  attr_reader :type
+  # @return [String] The unique ID of the approval request.
+  attr_reader :id
+  # @return [String] The label of the MCP server making the request.
+  attr_reader :server_label
+  # @return [String] The name of the tool to run.
+  attr_reader :name
+  # @return [String] A JSON string of arguments for the tool.
+  attr_reader :arguments
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for MCPApprovalRequest.
-  # A request for human approval of a tool invocation.
-  class MCPApprovalRequest
-    include ConversationItem
-    include Item
-    include ItemResource
-    include OutputItem
-    include ItemField
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalMCPApprovalRequestMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalMCPApprovalRequestMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalMCPApprovalRequestMetadata::DECODERS
-
-    # @return [MCPApprovalRequestType] The type of the item. Always `mcp_approval_request`.
-    attr_reader :type
-    # @return [String] The unique ID of the approval request.
-    attr_reader :id
-    # @return [String] The label of the MCP server making the request.
-    attr_reader :server_label
-    # @return [String] The name of the tool to run.
-    attr_reader :name
-    # @return [String] A JSON string of arguments for the tool.
-    attr_reader :arguments
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the MCPApprovalRequestType SDK namespace.
-  module MCPApprovalRequestType
-    MCP_APPROVAL_REQUEST = 'mcp_approval_request'
-    VALUES = ['mcp_approval_request'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('MCPApprovalRequestType', 'enum', "Unknown MCPApprovalRequestType: #{value}")
-    end
+# Defines the MCPApprovalRequestType SDK namespace.
+module MCPApprovalRequestType
+  MCP_APPROVAL_REQUEST = 'mcp_approval_request'
+  VALUES = ['mcp_approval_request'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('MCPApprovalRequestType', 'enum', "Unknown MCPApprovalRequestType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalMCPApprovalResponseMetadata
+  FIELDS = {
+    type: "type",
+    id: "id",
+    approval_request_id: "approval_request_id",
+    approve: "approve",
+    reason: "reason",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    approval_request_id
+    approve
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::MCPApprovalResponseType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for MCPApprovalResponse.
+# A response to an MCP approval request.
+class MCPApprovalResponse
+  include Item
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalMCPApprovalResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalMCPApprovalResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalMCPApprovalResponseMetadata::DECODERS
+
+  # @return [MCPApprovalResponseType] The type of the item. Always `mcp_approval_response`.
+  attr_reader :type
+  # @return [String] Optional `string` value serialized in the `id` wire field.
+  attr_reader :id
+  # @return [String] The ID of the approval request being answered.
+  attr_reader :approval_request_id
+  # @return [Boolean] Whether the request was approved.
+  attr_reader :approve
+  # @return [String] Optional `string` value serialized in the `reason` wire field.
+  attr_reader :reason
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalMCPApprovalResponseMetadata
-    FIELDS = {
-      type: 'type',
-      id: 'id',
-      approval_request_id: 'approval_request_id',
-      approve: 'approve',
-      reason: 'reason'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      approval_request_id
-      approve
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::MCPApprovalResponseType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for MCPApprovalResponse.
-  # A response to an MCP approval request.
-  class MCPApprovalResponse
-    include Item
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalMCPApprovalResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalMCPApprovalResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalMCPApprovalResponseMetadata::DECODERS
+# Defines the MCPApprovalResponseType SDK namespace.
+module MCPApprovalResponseType
+  MCP_APPROVAL_RESPONSE = 'mcp_approval_response'
+  VALUES = ['mcp_approval_response'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    # @return [MCPApprovalResponseType] The type of the item. Always `mcp_approval_response`.
-    attr_reader :type
-    # @return [String] Optional `string` value serialized in the `id` wire field.
-    attr_reader :id
-    # @return [String] The ID of the approval request being answered.
-    attr_reader :approval_request_id
-    # @return [Boolean] Whether the request was approved.
-    attr_reader :approve
-    # @return [String] Optional `string` value serialized in the `reason` wire field.
-    attr_reader :reason
+    raise SdkValidationError.new('MCPApprovalResponseType', 'enum', "Unknown MCPApprovalResponseType: #{value}")
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalMCPApprovalResponseResourceMetadata
+  FIELDS = {
+    type: "type",
+    id: "id",
+    approval_request_id: "approval_request_id",
+    approve: "approve",
+    reason: "reason",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    id
+    approval_request_id
+    approve
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::MCPApprovalResponseResourceType.from_value(value)
+    end,
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for MCPApprovalResponseResource.
+# A response to an MCP approval request.
+class MCPApprovalResponseResource
+  include ConversationItem
+  include ItemResource
+  include OutputItem
+  include ItemField
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalMCPApprovalResponseResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalMCPApprovalResponseResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalMCPApprovalResponseResourceMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [MCPApprovalResponseResourceType] The type of the item. Always `mcp_approval_response`.
+  attr_reader :type
+  # @return [String] The unique ID of the approval response
+  attr_reader :id
+  # @return [String] The ID of the approval request being answered.
+  attr_reader :approval_request_id
+  # @return [Boolean] Whether the request was approved.
+  attr_reader :approve
+  # @return [String] Optional `string` value serialized in the `reason` wire field.
+  attr_reader :reason
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the MCPApprovalResponseType SDK namespace.
-  module MCPApprovalResponseType
-    MCP_APPROVAL_RESPONSE = 'mcp_approval_response'
-    VALUES = ['mcp_approval_response'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('MCPApprovalResponseType', 'enum', "Unknown MCPApprovalResponseType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalMCPApprovalResponseResourceMetadata
-    FIELDS = {
-      type: 'type',
-      id: 'id',
-      approval_request_id: 'approval_request_id',
-      approve: 'approve',
-      reason: 'reason'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      id
-      approval_request_id
-      approve
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::MCPApprovalResponseResourceType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # API model for MCPApprovalResponseResource.
-  # A response to an MCP approval request.
-  class MCPApprovalResponseResource
-    include ConversationItem
-    include ItemResource
-    include OutputItem
-    include ItemField
+# Defines the MCPApprovalResponseResourceType SDK namespace.
+module MCPApprovalResponseResourceType
+  MCP_APPROVAL_RESPONSE = 'mcp_approval_response'
+  VALUES = ['mcp_approval_response'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalMCPApprovalResponseResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalMCPApprovalResponseResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalMCPApprovalResponseResourceMetadata::DECODERS
-
-    # @return [MCPApprovalResponseResourceType] The type of the item. Always `mcp_approval_response`.
-    attr_reader :type
-    # @return [String] The unique ID of the approval response
-    attr_reader :id
-    # @return [String] The ID of the approval request being answered.
-    attr_reader :approval_request_id
-    # @return [Boolean] Whether the request was approved.
-    attr_reader :approve
-    # @return [String] Optional `string` value serialized in the `reason` wire field.
-    attr_reader :reason
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+    raise SdkValidationError.new('MCPApprovalResponseResourceType', 'enum', "Unknown MCPApprovalResponseResourceType: #{value}")
   end
-
-  # Defines the MCPApprovalResponseResourceType SDK namespace.
-  module MCPApprovalResponseResourceType
-    MCP_APPROVAL_RESPONSE = 'mcp_approval_response'
-    VALUES = ['mcp_approval_response'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('MCPApprovalResponseResourceType', 'enum', "Unknown MCPApprovalResponseResourceType: #{value}")
-    end
-  end
+end
 end

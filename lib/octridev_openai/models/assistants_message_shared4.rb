@@ -5,25 +5,25 @@
 
 # assistants_message domain models
 module OctridevOpenai
-  # Defines the MessageStreamEventVariant3Event SDK namespace.
-  module MessageStreamEventVariant3Event
-    THREAD_MESSAGE_COMPLETED = 'thread.message.completed'
-    VALUES = ['thread.message.completed'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+# Defines the MessageStreamEventVariant3Event SDK namespace.
+module MessageStreamEventVariant3Event
+  THREAD_MESSAGE_COMPLETED = 'thread.message.completed'
+  VALUES = ['thread.message.completed'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-      raise SdkValidationError.new('MessageStreamEventVariant3Event', 'enum', "Unknown MessageStreamEventVariant3Event: #{value}")
-    end
+    raise SdkValidationError.new('MessageStreamEventVariant3Event', 'enum', "Unknown MessageStreamEventVariant3Event: #{value}")
   end
+end
 
-  # Defines the MessageStreamEventVariant4Event SDK namespace.
-  module MessageStreamEventVariant4Event
-    THREAD_MESSAGE_INCOMPLETE = 'thread.message.incomplete'
-    VALUES = ['thread.message.incomplete'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+# Defines the MessageStreamEventVariant4Event SDK namespace.
+module MessageStreamEventVariant4Event
+  THREAD_MESSAGE_INCOMPLETE = 'thread.message.incomplete'
+  VALUES = ['thread.message.incomplete'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-      raise SdkValidationError.new('MessageStreamEventVariant4Event', 'enum', "Unknown MessageStreamEventVariant4Event: #{value}")
-    end
+    raise SdkValidationError.new('MessageStreamEventVariant4Event', 'enum', "Unknown MessageStreamEventVariant4Event: #{value}")
   end
+end
 end

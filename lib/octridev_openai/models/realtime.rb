@@ -5,13 +5,13 @@
 
 # realtime domain models
 module OctridevOpenai
-  # Defines the NoiseReductionType SDK namespace.
-  module NoiseReductionType
-    NEAR_FIELD = 'near_field'
-    FAR_FIELD = 'far_field'
-    VALUES = %w[near_field far_field].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the NoiseReductionType SDK namespace.
+module NoiseReductionType
+  NEAR_FIELD = 'near_field'
+  FAR_FIELD = 'far_field'
+  VALUES = ['near_field', 'far_field'].freeze
+  def self.from_value(value)
+    value
   end
+end
 end

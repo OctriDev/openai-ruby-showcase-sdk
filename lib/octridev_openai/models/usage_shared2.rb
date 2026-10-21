@@ -5,398 +5,394 @@
 
 # usage domain models
 module OctridevOpenai
-  # Defines the UsageImagesResultObject SDK namespace.
-  module UsageImagesResultObject
-    ORGANIZATION_USAGE_IMAGES_RESULT = 'organization.usage.images.result'
-    VALUES = ['organization.usage.images.result'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+# Defines the UsageImagesResultObject SDK namespace.
+module UsageImagesResultObject
+  ORGANIZATION_USAGE_IMAGES_RESULT = 'organization.usage.images.result'
+  VALUES = ['organization.usage.images.result'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-      raise SdkValidationError.new('UsageImagesResultObject', 'enum', "Unknown UsageImagesResultObject: #{value}")
-    end
+    raise SdkValidationError.new('UsageImagesResultObject', 'enum', "Unknown UsageImagesResultObject: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalUsageModerationsResultMetadata
+  FIELDS = {
+    object: "object",
+    input_tokens: "input_tokens",
+    num_model_requests: "num_model_requests",
+    project_id: "project_id",
+    user_id: "user_id",
+    api_key_id: "api_key_id",
+    model: "model",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    input_tokens
+    num_model_requests
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::UsageModerationsResultObject.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for UsageModerationsResult.
+# The aggregated moderations usage details of the specific time bucket.
+class UsageModerationsResult
+  include UsageTimeBucketResultsItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalUsageModerationsResultMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalUsageModerationsResultMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalUsageModerationsResultMetadata::DECODERS
+
+  # @return [UsageModerationsResultObject] Required enumerated value serialized in the `object` wire field.
+  attr_reader :object
+  # @return [Integer] The aggregated number of input tokens used.
+  attr_reader :input_tokens
+  # @return [Integer] The count of requests made to the model.
+  attr_reader :num_model_requests
+  # @return [String] Optional `string` value serialized in the `project_id` wire field.
+  attr_reader :project_id
+  # @return [String] Optional `string` value serialized in the `user_id` wire field.
+  attr_reader :user_id
+  # @return [String] Optional `string` value serialized in the `api_key_id` wire field.
+  attr_reader :api_key_id
+  # @return [String] Optional `string` value serialized in the `model` wire field.
+  attr_reader :model
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalUsageModerationsResultMetadata
-    FIELDS = {
-      object: 'object',
-      input_tokens: 'input_tokens',
-      num_model_requests: 'num_model_requests',
-      project_id: 'project_id',
-      user_id: 'user_id',
-      api_key_id: 'api_key_id',
-      model: 'model'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      input_tokens
-      num_model_requests
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::UsageModerationsResultObject.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for UsageModerationsResult.
-  # The aggregated moderations usage details of the specific time bucket.
-  class UsageModerationsResult
-    include UsageTimeBucketResultsItem
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalUsageModerationsResultMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalUsageModerationsResultMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalUsageModerationsResultMetadata::DECODERS
+# Defines the UsageModerationsResultObject SDK namespace.
+module UsageModerationsResultObject
+  ORGANIZATION_USAGE_MODERATIONS_RESULT = 'organization.usage.moderations.result'
+  VALUES = ['organization.usage.moderations.result'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    # @return [UsageModerationsResultObject] Required enumerated value serialized in the `object` wire field.
-    attr_reader :object
-    # @return [Integer] The aggregated number of input tokens used.
-    attr_reader :input_tokens
-    # @return [Integer] The count of requests made to the model.
-    attr_reader :num_model_requests
-    # @return [String] Optional `string` value serialized in the `project_id` wire field.
-    attr_reader :project_id
-    # @return [String] Optional `string` value serialized in the `user_id` wire field.
-    attr_reader :user_id
-    # @return [String] Optional `string` value serialized in the `api_key_id` wire field.
-    attr_reader :api_key_id
-    # @return [String] Optional `string` value serialized in the `model` wire field.
-    attr_reader :model
+    raise SdkValidationError.new('UsageModerationsResultObject', 'enum', "Unknown UsageModerationsResultObject: #{value}")
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalUsageResponseMetadata
+  FIELDS = {
+    object: "object",
+    data: "data",
+    has_more: "has_more",
+    next_page: "next_page",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    data
+    has_more
+    next_page
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::UsageResponseObject.from_value(value)
+    end,
+    data: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::UsageTimeBucket.from_hash(item) }
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    next_page
+  ].freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for UsageResponse.
+# Typed representation of the `UsageResponse` API schema.
+class UsageResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalUsageResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalUsageResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalUsageResponseMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [UsageResponseObject] Required enumerated value serialized in the `object` wire field.
+  attr_reader :object
+  # @return [Array_of_UsageTimeBucket] Required array value serialized in the `data` wire field.
+  attr_reader :data
+  # @return [Boolean] Required `boolean` value serialized in the `has_more` wire field.
+  attr_reader :has_more
+  # @return [String] Required `string` value serialized in the `next_page` wire field.
+  attr_reader :next_page
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the UsageModerationsResultObject SDK namespace.
-  module UsageModerationsResultObject
-    ORGANIZATION_USAGE_MODERATIONS_RESULT = 'organization.usage.moderations.result'
-    VALUES = ['organization.usage.moderations.result'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('UsageModerationsResultObject', 'enum', "Unknown UsageModerationsResultObject: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalUsageResponseMetadata::NULLABLE_FIELDS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalUsageResponseMetadata
-    FIELDS = {
-      object: 'object',
-      data: 'data',
-      has_more: 'has_more',
-      next_page: 'next_page'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      data
-      has_more
-      next_page
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::UsageResponseObject.from_value(value)
-      end,
-      data: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::UsageTimeBucket.from_hash(item) }
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      next_page
-    ].freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the UsageResponseObject SDK namespace.
+module UsageResponseObject
+  PAGE = 'page'
+  VALUES = ['page'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalUsageTimeBucketMetadata
+  FIELDS = {
+    object: "object",
+    start_time: "start_time",
+    end_time: "end_time",
+    results: "results",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    start_time
+    end_time
+    results
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::UsageTimeBucketObject.from_value(value)
+    end,
+    results: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::UsageTimeBucketResultsItem.from_hash(item) }
+    end,
+  }.freeze
+end
+
+# API model for UsageTimeBucket.
+# Typed representation of the `UsageTimeBucket` API schema.
+class UsageTimeBucket
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalUsageTimeBucketMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalUsageTimeBucketMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalUsageTimeBucketMetadata::DECODERS
+
+  # @return [UsageTimeBucketObject] Required enumerated value serialized in the `object` wire field.
+  attr_reader :object
+  # @return [Integer] Required `integer` value serialized in the `start_time` wire field.
+  attr_reader :start_time
+  # @return [Integer] Required `integer` value serialized in the `end_time` wire field.
+  attr_reader :end_time
+  # @return [Array_of_UsageTimeBucketResultsItem] Required array value serialized in the `results` wire field.
+  attr_reader :results
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for UsageResponse.
-  # Typed representation of the `UsageResponse` API schema.
-  class UsageResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalUsageResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalUsageResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalUsageResponseMetadata::DECODERS
-
-    # @return [UsageResponseObject] Required enumerated value serialized in the `object` wire field.
-    attr_reader :object
-    # @return [Array_of_UsageTimeBucket] Required array value serialized in the `data` wire field.
-    attr_reader :data
-    # @return [Boolean] Required `boolean` value serialized in the `has_more` wire field.
-    attr_reader :has_more
-    # @return [String] Required `string` value serialized in the `next_page` wire field.
-    attr_reader :next_page
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalUsageResponseMetadata::NULLABLE_FIELDS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the UsageResponseObject SDK namespace.
-  module UsageResponseObject
-    PAGE = 'page'
-    VALUES = ['page'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the UsageTimeBucketObject SDK namespace.
+module UsageTimeBucketObject
+  BUCKET = 'bucket'
+  VALUES = ['bucket'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the UsageTimeBucketResultsItem SDK namespace.
+module UsageTimeBucketResultsItem
+  DISCRIMINATOR_MAPPING = {
+    "organization.usage.completions.result" => -> { UsageCompletionsResult },
+    "organization.usage.embeddings.result" => -> { UsageEmbeddingsResult },
+    "organization.usage.moderations.result" => -> { UsageModerationsResult },
+    "organization.usage.images.result" => -> { UsageImagesResult },
+    "organization.usage.audio_speeches.result" => -> { UsageAudioSpeechesResult },
+    "organization.usage.audio_transcriptions.result" => -> { UsageAudioTranscriptionsResult },
+    "organization.usage.vector_stores.result" => -> { UsageVectorStoresResult },
+    "organization.usage.code_interpreter_sessions.result" => -> { UsageCodeInterpreterSessionsResult },
+    "organization.usage.file_searches.result" => -> { UsageFileSearchCallsResult },
+    "organization.usage.web_searches.result" => -> { UsageWebSearchCallsResult },
+    "organization.costs.result" => -> { CostsResult },
+  }.freeze
+
+  def self.from_hash(hash)
+    return hash unless hash.is_a?(::Hash)
+    type = DISCRIMINATOR_MAPPING[hash["object"]]&.call
+    return type.from_hash(hash) if type
+
+    return SdkUnknownMember.new(hash) if hash["object"].is_a?(::String)
+
+    raise SdkValidationError.new('UsageTimeBucketResultsItem', 'variant', "Unknown UsageTimeBucketResultsItem discriminator: #{hash["object"].inspect}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalUsageVectorStoresResultMetadata
+  FIELDS = {
+    object: "object",
+    usage_bytes: "usage_bytes",
+    project_id: "project_id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    usage_bytes
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::UsageVectorStoresResultObject.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for UsageVectorStoresResult.
+# The aggregated vector stores usage details of the specific time bucket.
+class UsageVectorStoresResult
+  include UsageTimeBucketResultsItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalUsageVectorStoresResultMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalUsageVectorStoresResultMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalUsageVectorStoresResultMetadata::DECODERS
+
+  # @return [UsageVectorStoresResultObject] Required enumerated value serialized in the `object` wire field.
+  attr_reader :object
+  # @return [Integer] The vector stores usage in bytes.
+  attr_reader :usage_bytes
+  # @return [String] Optional `string` value serialized in the `project_id` wire field.
+  attr_reader :project_id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalUsageTimeBucketMetadata
-    FIELDS = {
-      object: 'object',
-      start_time: 'start_time',
-      end_time: 'end_time',
-      results: 'results'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      start_time
-      end_time
-      results
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::UsageTimeBucketObject.from_value(value)
-      end,
-      results: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::UsageTimeBucketResultsItem.from_hash(item) }
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for UsageTimeBucket.
-  # Typed representation of the `UsageTimeBucket` API schema.
-  class UsageTimeBucket
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalUsageTimeBucketMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalUsageTimeBucketMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalUsageTimeBucketMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [UsageTimeBucketObject] Required enumerated value serialized in the `object` wire field.
-    attr_reader :object
-    # @return [Integer] Required `integer` value serialized in the `start_time` wire field.
-    attr_reader :start_time
-    # @return [Integer] Required `integer` value serialized in the `end_time` wire field.
-    attr_reader :end_time
-    # @return [Array_of_UsageTimeBucketResultsItem] Required array value serialized in the `results` wire field.
-    attr_reader :results
+# Defines the UsageVectorStoresResultObject SDK namespace.
+module UsageVectorStoresResultObject
+  ORGANIZATION_USAGE_VECTOR_STORES_RESULT = 'organization.usage.vector_stores.result'
+  VALUES = ['organization.usage.vector_stores.result'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+    raise SdkValidationError.new('UsageVectorStoresResultObject', 'enum', "Unknown UsageVectorStoresResultObject: #{value}")
+  end
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# Defines the UsageWebSearchCallsResultApiSourceVariant0 SDK namespace.
+module UsageWebSearchCallsResultApiSourceVariant0
+  AGENTS_API = 'agents_api'
+  UNLABELED = 'unlabeled'
+  VALUES = ['agents_api', 'unlabeled'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+# Internal model hydration metadata.
+class SdkInternalUsageWebSearchCallsResultMetadata
+  FIELDS = {
+    api_source: "api_source",
+    object: "object",
+    num_model_requests: "num_model_requests",
+    num_requests: "num_requests",
+    project_id: "project_id",
+    user_id: "user_id",
+    api_key_id: "api_key_id",
+    model: "model",
+    context_level: "context_level",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    num_model_requests
+    num_requests
+  ].freeze
+  DECODERS = {
+    api_source: lambda do |value|
+      ::OctridevOpenai::UsageWebSearchCallsResultApiSourceVariant0.from_value(value)
+    end,
+    object: lambda do |value|
+      ::OctridevOpenai::UsageWebSearchCallsResultObject.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for UsageWebSearchCallsResult.
+# The aggregated web search calls usage details of the specific time bucket.
+class UsageWebSearchCallsResult
+  include UsageTimeBucketResultsItem
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalUsageWebSearchCallsResultMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalUsageWebSearchCallsResultMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalUsageWebSearchCallsResultMetadata::DECODERS
+
+  # @return [UsageWebSearchCallsResultApiSourceVariant0] When grouped by `api_source`, `agents_api` identifies attributed Agents API activity and `unlabeled` includes all records without published source attribution, including historical and unknown origins. Unlabeled does not imply direct API usage. Without source grouping, this field is null.
+  attr_reader :api_source
+  # @return [UsageWebSearchCallsResultObject] Required enumerated value serialized in the `object` wire field.
+  attr_reader :object
+  # @return [Integer] The count of model requests.
+  attr_reader :num_model_requests
+  # @return [Integer] The count of web search calls.
+  attr_reader :num_requests
+  # @return [String] Optional `string` value serialized in the `project_id` wire field.
+  attr_reader :project_id
+  # @return [String] Optional `string` value serialized in the `user_id` wire field.
+  attr_reader :user_id
+  # @return [String] Optional `string` value serialized in the `api_key_id` wire field.
+  attr_reader :api_key_id
+  # @return [String] Optional `string` value serialized in the `model` wire field.
+  attr_reader :model
+  # @return [String] Optional `string` value serialized in the `context_level` wire field.
+  attr_reader :context_level
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the UsageTimeBucketObject SDK namespace.
-  module UsageTimeBucketObject
-    BUCKET = 'bucket'
-    VALUES = ['bucket'].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the UsageTimeBucketResultsItem SDK namespace.
-  module UsageTimeBucketResultsItem
-    DISCRIMINATOR_MAPPING = {
-      'organization.usage.completions.result' => -> { UsageCompletionsResult },
-      'organization.usage.embeddings.result' => -> { UsageEmbeddingsResult },
-      'organization.usage.moderations.result' => -> { UsageModerationsResult },
-      'organization.usage.images.result' => -> { UsageImagesResult },
-      'organization.usage.audio_speeches.result' => -> { UsageAudioSpeechesResult },
-      'organization.usage.audio_transcriptions.result' => -> { UsageAudioTranscriptionsResult },
-      'organization.usage.vector_stores.result' => -> { UsageVectorStoresResult },
-      'organization.usage.code_interpreter_sessions.result' => -> { UsageCodeInterpreterSessionsResult },
-      'organization.usage.file_searches.result' => -> { UsageFileSearchCallsResult },
-      'organization.usage.web_searches.result' => -> { UsageWebSearchCallsResult },
-      'organization.costs.result' => -> { CostsResult }
-    }.freeze
-
-    def self.from_hash(hash)
-      return hash unless hash.is_a?(::Hash)
-
-      type = DISCRIMINATOR_MAPPING[hash['object']]&.call
-      return type.from_hash(hash) if type
-
-      return SdkUnknownMember.new(hash) if hash['object'].is_a?(::String)
-
-      raise SdkValidationError.new('UsageTimeBucketResultsItem', 'variant', "Unknown UsageTimeBucketResultsItem discriminator: #{hash['object'].inspect}")
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Internal model hydration metadata.
-  class SdkInternalUsageVectorStoresResultMetadata
-    FIELDS = {
-      object: 'object',
-      usage_bytes: 'usage_bytes',
-      project_id: 'project_id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      usage_bytes
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::UsageVectorStoresResultObject.from_value(value)
-      end
-    }.freeze
+# Defines the UsageWebSearchCallsResultObject SDK namespace.
+module UsageWebSearchCallsResultObject
+  ORGANIZATION_USAGE_WEB_SEARCHES_RESULT = 'organization.usage.web_searches.result'
+  VALUES = ['organization.usage.web_searches.result'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('UsageWebSearchCallsResultObject', 'enum', "Unknown UsageWebSearchCallsResultObject: #{value}")
   end
-
-  # API model for UsageVectorStoresResult.
-  # The aggregated vector stores usage details of the specific time bucket.
-  class UsageVectorStoresResult
-    include UsageTimeBucketResultsItem
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalUsageVectorStoresResultMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalUsageVectorStoresResultMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalUsageVectorStoresResultMetadata::DECODERS
-
-    # @return [UsageVectorStoresResultObject] Required enumerated value serialized in the `object` wire field.
-    attr_reader :object
-    # @return [Integer] The vector stores usage in bytes.
-    attr_reader :usage_bytes
-    # @return [String] Optional `string` value serialized in the `project_id` wire field.
-    attr_reader :project_id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the UsageVectorStoresResultObject SDK namespace.
-  module UsageVectorStoresResultObject
-    ORGANIZATION_USAGE_VECTOR_STORES_RESULT = 'organization.usage.vector_stores.result'
-    VALUES = ['organization.usage.vector_stores.result'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('UsageVectorStoresResultObject', 'enum', "Unknown UsageVectorStoresResultObject: #{value}")
-    end
-  end
-
-  # Defines the UsageWebSearchCallsResultApiSourceVariant0 SDK namespace.
-  module UsageWebSearchCallsResultApiSourceVariant0
-    AGENTS_API = 'agents_api'
-    UNLABELED = 'unlabeled'
-    VALUES = %w[agents_api unlabeled].freeze
-    def self.from_value(value)
-      value
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalUsageWebSearchCallsResultMetadata
-    FIELDS = {
-      api_source: 'api_source',
-      object: 'object',
-      num_model_requests: 'num_model_requests',
-      num_requests: 'num_requests',
-      project_id: 'project_id',
-      user_id: 'user_id',
-      api_key_id: 'api_key_id',
-      model: 'model',
-      context_level: 'context_level'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      num_model_requests
-      num_requests
-    ].freeze
-    DECODERS = {
-      api_source: lambda do |value|
-        ::OctridevOpenai::UsageWebSearchCallsResultApiSourceVariant0.from_value(value)
-      end,
-      object: lambda do |value|
-        ::OctridevOpenai::UsageWebSearchCallsResultObject.from_value(value)
-      end
-    }.freeze
-  end
-
-  # API model for UsageWebSearchCallsResult.
-  # The aggregated web search calls usage details of the specific time bucket.
-  class UsageWebSearchCallsResult
-    include UsageTimeBucketResultsItem
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalUsageWebSearchCallsResultMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalUsageWebSearchCallsResultMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalUsageWebSearchCallsResultMetadata::DECODERS
-
-    # @return [UsageWebSearchCallsResultApiSourceVariant0] When grouped by `api_source`, `agents_api` identifies attributed Agents API activity and `unlabeled` includes all records without published source attribution, including historical and unknown origins. Unlabeled does not imply direct API usage. Without source grouping, this field is null.
-    attr_reader :api_source
-    # @return [UsageWebSearchCallsResultObject] Required enumerated value serialized in the `object` wire field.
-    attr_reader :object
-    # @return [Integer] The count of model requests.
-    attr_reader :num_model_requests
-    # @return [Integer] The count of web search calls.
-    attr_reader :num_requests
-    # @return [String] Optional `string` value serialized in the `project_id` wire field.
-    attr_reader :project_id
-    # @return [String] Optional `string` value serialized in the `user_id` wire field.
-    attr_reader :user_id
-    # @return [String] Optional `string` value serialized in the `api_key_id` wire field.
-    attr_reader :api_key_id
-    # @return [String] Optional `string` value serialized in the `model` wire field.
-    attr_reader :model
-    # @return [String] Optional `string` value serialized in the `context_level` wire field.
-    attr_reader :context_level
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the UsageWebSearchCallsResultObject SDK namespace.
-  module UsageWebSearchCallsResultObject
-    ORGANIZATION_USAGE_WEB_SEARCHES_RESULT = 'organization.usage.web_searches.result'
-    VALUES = ['organization.usage.web_searches.result'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('UsageWebSearchCallsResultObject', 'enum', "Unknown UsageWebSearchCallsResultObject: #{value}")
-    end
-  end
+end
 end

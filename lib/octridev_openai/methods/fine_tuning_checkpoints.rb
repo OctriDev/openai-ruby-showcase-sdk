@@ -30,29 +30,30 @@ module OctridevOpenai
         order: NOT_GIVEN,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
           [
-            '/fine_tuning/checkpoints/',
+            "/fine_tuning/checkpoints/",
             SdkClient.encode_path_segment(fine_tuned_model_checkpoint),
-            '/permissions'
+            "/permissions"
           ].join,
           config: config,
           query: {
             'project_id' => QueryValue.new(project_id, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
-            'order' => QueryValue.new(order, style: 'form', explode: true)
+            'order' => QueryValue.new(order, style: 'form', explode: true),
           },
           return_type: ::OctridevOpenai::ListFineTuningCheckpointPermissionResponse,
           decoder: :json,
           operation_id: 'list_fine_tuning_checkpoint_permissions',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
-      ListFineTuningCheckpointPermissionsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+    ListFineTuningCheckpointPermissionsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists permissions for a fine-tuned model checkpoint. Use `project_id` to filter permissions by project and `after` to continue from a permission ID; this endpoint requires an admin API key.
       #
@@ -89,13 +90,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             items.each { |item| y << item }
             break unless page.has_more
-
             next_cursor = page.last_id
             break if next_cursor.nil?
-
             cursor = next_cursor
           end
         end
@@ -124,12 +122,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListFineTuningCheckpointPermissionsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
-
             cursor = next_cursor
           end
         end
@@ -149,22 +145,23 @@ module OctridevOpenai
         project_ids:,
         request_options: nil
       )
+
         SdkClient.request(
           'POST',
           [
-            '/fine_tuning/checkpoints/',
+            "/fine_tuning/checkpoints/",
             SdkClient.encode_path_segment(fine_tuned_model_checkpoint),
-            '/permissions'
+            "/permissions"
           ].join,
           config: config,
           body: {
-            'project_ids' => project_ids
+            'project_ids' => project_ids,
           },
           return_type: ::OctridevOpenai::ListFineTuningCheckpointPermissionResponse,
           decoder: :json,
           operation_id: 'create_fine_tuning_checkpoint_permission',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
@@ -182,12 +179,13 @@ module OctridevOpenai
         permission_id:,
         request_options: nil
       )
+
         SdkClient.request(
           'DELETE',
           [
-            '/fine_tuning/checkpoints/',
+            "/fine_tuning/checkpoints/",
             SdkClient.encode_path_segment(fine_tuned_model_checkpoint),
-            '/permissions/',
+            "/permissions/",
             SdkClient.encode_path_segment(permission_id)
           ].join,
           config: config,
@@ -195,7 +193,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_fine_tuning_checkpoint_permission',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
     end

@@ -5,604 +5,598 @@
 
 # responses_beta_response_reasoning domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalBetaResponseReasoningSummaryPartAddedEventPartMetadata
-    FIELDS = {
-      type: 'type',
-      text: 'text'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      text
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::BetaResponseReasoningSummaryPartAddedEventPartType.from_value(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalBetaResponseReasoningSummaryPartAddedEventPartMetadata
+  FIELDS = {
+    type: "type",
+    text: "text",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    text
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::BetaResponseReasoningSummaryPartAddedEventPartType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaResponseReasoningSummaryPartAddedEventPart.
+# The summary part that was added.
+class BetaResponseReasoningSummaryPartAddedEventPart
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaResponseReasoningSummaryPartAddedEventPartMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaResponseReasoningSummaryPartAddedEventPartMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaResponseReasoningSummaryPartAddedEventPartMetadata::DECODERS
+
+  # @return [BetaResponseReasoningSummaryPartAddedEventPartType] The type of the summary part. Always `summary_text`.
+  attr_reader :type
+  # @return [String] The text of the summary part.
+  attr_reader :text
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BetaResponseReasoningSummaryPartAddedEventPart.
-  # The summary part that was added.
-  class BetaResponseReasoningSummaryPartAddedEventPart
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaResponseReasoningSummaryPartAddedEventPartMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaResponseReasoningSummaryPartAddedEventPartMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaResponseReasoningSummaryPartAddedEventPartMetadata::DECODERS
-
-    # @return [BetaResponseReasoningSummaryPartAddedEventPartType] The type of the summary part. Always `summary_text`.
-    attr_reader :type
-    # @return [String] The text of the summary part.
-    attr_reader :text
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaResponseReasoningSummaryPartAddedEventMetadata
-    FIELDS = {
-      agent: 'agent',
-      type: 'type',
-      item_id: 'item_id',
-      output_index: 'output_index',
-      summary_index: 'summary_index',
-      sequence_number: 'sequence_number',
-      part: 'part'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      item_id
-      output_index
-      summary_index
-      sequence_number
-      part
-    ].freeze
-    DECODERS = {
-      agent: lambda do |value|
-        ::OctridevOpenai::BetaAgentTag.from_hash(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::BetaResponseReasoningSummaryPartAddedEventType.from_value(value)
-      end,
-      part: lambda do |value|
-        ::OctridevOpenai::BetaResponseReasoningSummaryPartAddedEventPart.from_hash(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaResponseReasoningSummaryPartAddedEventMetadata
+  FIELDS = {
+    agent: "agent",
+    type: "type",
+    item_id: "item_id",
+    output_index: "output_index",
+    summary_index: "summary_index",
+    sequence_number: "sequence_number",
+    part: "part",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    item_id
+    output_index
+    summary_index
+    sequence_number
+    part
+  ].freeze
+  DECODERS = {
+    agent: lambda do |value|
+      ::OctridevOpenai::BetaAgentTag.from_hash(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::BetaResponseReasoningSummaryPartAddedEventType.from_value(value)
+    end,
+    part: lambda do |value|
+      ::OctridevOpenai::BetaResponseReasoningSummaryPartAddedEventPart.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaResponseReasoningSummaryPartAddedEvent.
+# Emitted when a new reasoning summary part is added.
+class BetaResponseReasoningSummaryPartAddedEvent
+  include BetaResponseStreamEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaResponseReasoningSummaryPartAddedEventMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaResponseReasoningSummaryPartAddedEventMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaResponseReasoningSummaryPartAddedEventMetadata::DECODERS
+
+  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+  attr_reader :agent
+  # @return [BetaResponseReasoningSummaryPartAddedEventType] The type of the event. Always `response.reasoning_summary_part.added`.
+  attr_reader :type
+  # @return [String] The ID of the item this summary part is associated with.
+  attr_reader :item_id
+  # @return [Integer] The index of the output item this summary part is associated with.
+  attr_reader :output_index
+  # @return [Integer] The index of the summary part within the reasoning summary.
+  attr_reader :summary_index
+  # @return [Integer] The sequence number of this event.
+  attr_reader :sequence_number
+  # @return [BetaResponseReasoningSummaryPartAddedEventPart] The summary part that was added.
+  attr_reader :part
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BetaResponseReasoningSummaryPartAddedEvent.
-  # Emitted when a new reasoning summary part is added.
-  class BetaResponseReasoningSummaryPartAddedEvent
-    include BetaResponseStreamEvent
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaResponseReasoningSummaryPartAddedEventMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaResponseReasoningSummaryPartAddedEventMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaResponseReasoningSummaryPartAddedEventMetadata::DECODERS
-
-    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-    attr_reader :agent
-    # @return [BetaResponseReasoningSummaryPartAddedEventType] The type of the event. Always `response.reasoning_summary_part.added`.
-    attr_reader :type
-    # @return [String] The ID of the item this summary part is associated with.
-    attr_reader :item_id
-    # @return [Integer] The index of the output item this summary part is associated with.
-    attr_reader :output_index
-    # @return [Integer] The index of the summary part within the reasoning summary.
-    attr_reader :summary_index
-    # @return [Integer] The sequence number of this event.
-    attr_reader :sequence_number
-    # @return [BetaResponseReasoningSummaryPartAddedEventPart] The summary part that was added.
-    attr_reader :part
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the BetaResponseReasoningSummaryPartAddedEventPartType SDK namespace.
-  module BetaResponseReasoningSummaryPartAddedEventPartType
-    SUMMARY_TEXT = 'summary_text'
-    VALUES = ['summary_text'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the BetaResponseReasoningSummaryPartAddedEventPartType SDK namespace.
+module BetaResponseReasoningSummaryPartAddedEventPartType
+  SUMMARY_TEXT = 'summary_text'
+  VALUES = ['summary_text'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the BetaResponseReasoningSummaryPartAddedEventType SDK namespace.
+module BetaResponseReasoningSummaryPartAddedEventType
+  RESPONSE_REASONING_SUMMARY_PART_ADDED = 'response.reasoning_summary_part.added'
+  VALUES = ['response.reasoning_summary_part.added'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('BetaResponseReasoningSummaryPartAddedEventType', 'enum', "Unknown BetaResponseReasoningSummaryPartAddedEventType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaResponseReasoningSummaryPartDoneEventPartMetadata
+  FIELDS = {
+    type: "type",
+    text: "text",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    text
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::BetaResponseReasoningSummaryPartDoneEventPartType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaResponseReasoningSummaryPartDoneEventPart.
+# The completed summary part.
+class BetaResponseReasoningSummaryPartDoneEventPart
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaResponseReasoningSummaryPartDoneEventPartMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaResponseReasoningSummaryPartDoneEventPartMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaResponseReasoningSummaryPartDoneEventPartMetadata::DECODERS
+
+  # @return [BetaResponseReasoningSummaryPartDoneEventPartType] The type of the summary part. Always `summary_text`.
+  attr_reader :type
+  # @return [String] The text of the summary part.
+  attr_reader :text
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the BetaResponseReasoningSummaryPartAddedEventType SDK namespace.
-  module BetaResponseReasoningSummaryPartAddedEventType
-    RESPONSE_REASONING_SUMMARY_PART_ADDED = 'response.reasoning_summary_part.added'
-    VALUES = ['response.reasoning_summary_part.added'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('BetaResponseReasoningSummaryPartAddedEventType', 'enum', "Unknown BetaResponseReasoningSummaryPartAddedEventType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaResponseReasoningSummaryPartDoneEventPartMetadata
-    FIELDS = {
-      type: 'type',
-      text: 'text'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      text
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::BetaResponseReasoningSummaryPartDoneEventPartType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaResponseReasoningSummaryPartDoneEventMetadata
+  FIELDS = {
+    agent: "agent",
+    type: "type",
+    item_id: "item_id",
+    output_index: "output_index",
+    summary_index: "summary_index",
+    status: "status",
+    sequence_number: "sequence_number",
+    part: "part",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    item_id
+    output_index
+    summary_index
+    sequence_number
+    part
+  ].freeze
+  DECODERS = {
+    agent: lambda do |value|
+      ::OctridevOpenai::BetaAgentTag.from_hash(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::BetaResponseReasoningSummaryPartDoneEventType.from_value(value)
+    end,
+    status: lambda do |value|
+      ::OctridevOpenai::BetaResponseReasoningSummaryPartDoneEventStatus.from_value(value)
+    end,
+    part: lambda do |value|
+      ::OctridevOpenai::BetaResponseReasoningSummaryPartDoneEventPart.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaResponseReasoningSummaryPartDoneEvent.
+# Emitted when a reasoning summary part is completed.
+class BetaResponseReasoningSummaryPartDoneEvent
+  include BetaResponseStreamEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaResponseReasoningSummaryPartDoneEventMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaResponseReasoningSummaryPartDoneEventMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaResponseReasoningSummaryPartDoneEventMetadata::DECODERS
+
+  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+  attr_reader :agent
+  # @return [BetaResponseReasoningSummaryPartDoneEventType] The type of the event. Always `response.reasoning_summary_part.done`.
+  attr_reader :type
+  # @return [String] The ID of the item this summary part is associated with.
+  attr_reader :item_id
+  # @return [Integer] The index of the output item this summary part is associated with.
+  attr_reader :output_index
+  # @return [Integer] The index of the summary part within the reasoning summary.
+  attr_reader :summary_index
+  # @return [BetaResponseReasoningSummaryPartDoneEventStatus] The completion status of the summary part. Omitted when the part completed normally and set to `incomplete` when generation was interrupted.
+  attr_reader :status
+  # @return [Integer] The sequence number of this event.
+  attr_reader :sequence_number
+  # @return [BetaResponseReasoningSummaryPartDoneEventPart] The completed summary part.
+  attr_reader :part
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BetaResponseReasoningSummaryPartDoneEventPart.
-  # The completed summary part.
-  class BetaResponseReasoningSummaryPartDoneEventPart
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaResponseReasoningSummaryPartDoneEventPartMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaResponseReasoningSummaryPartDoneEventPartMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaResponseReasoningSummaryPartDoneEventPartMetadata::DECODERS
-
-    # @return [BetaResponseReasoningSummaryPartDoneEventPartType] The type of the summary part. Always `summary_text`.
-    attr_reader :type
-    # @return [String] The text of the summary part.
-    attr_reader :text
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaResponseReasoningSummaryPartDoneEventMetadata
-    FIELDS = {
-      agent: 'agent',
-      type: 'type',
-      item_id: 'item_id',
-      output_index: 'output_index',
-      summary_index: 'summary_index',
-      status: 'status',
-      sequence_number: 'sequence_number',
-      part: 'part'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      item_id
-      output_index
-      summary_index
-      sequence_number
-      part
-    ].freeze
-    DECODERS = {
-      agent: lambda do |value|
-        ::OctridevOpenai::BetaAgentTag.from_hash(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::BetaResponseReasoningSummaryPartDoneEventType.from_value(value)
-      end,
-      status: lambda do |value|
-        ::OctridevOpenai::BetaResponseReasoningSummaryPartDoneEventStatus.from_value(value)
-      end,
-      part: lambda do |value|
-        ::OctridevOpenai::BetaResponseReasoningSummaryPartDoneEventPart.from_hash(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the BetaResponseReasoningSummaryPartDoneEventPartType SDK namespace.
+module BetaResponseReasoningSummaryPartDoneEventPartType
+  SUMMARY_TEXT = 'summary_text'
+  VALUES = ['summary_text'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the BetaResponseReasoningSummaryPartDoneEventStatus SDK namespace.
+module BetaResponseReasoningSummaryPartDoneEventStatus
+  INCOMPLETE = 'incomplete'
+  VALUES = ['incomplete'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the BetaResponseReasoningSummaryPartDoneEventType SDK namespace.
+module BetaResponseReasoningSummaryPartDoneEventType
+  RESPONSE_REASONING_SUMMARY_PART_DONE = 'response.reasoning_summary_part.done'
+  VALUES = ['response.reasoning_summary_part.done'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('BetaResponseReasoningSummaryPartDoneEventType', 'enum', "Unknown BetaResponseReasoningSummaryPartDoneEventType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaResponseReasoningSummaryTextDeltaEventMetadata
+  FIELDS = {
+    agent: "agent",
+    type: "type",
+    item_id: "item_id",
+    output_index: "output_index",
+    summary_index: "summary_index",
+    delta: "delta",
+    sequence_number: "sequence_number",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    item_id
+    output_index
+    summary_index
+    delta
+    sequence_number
+  ].freeze
+  DECODERS = {
+    agent: lambda do |value|
+      ::OctridevOpenai::BetaAgentTag.from_hash(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::BetaResponseReasoningSummaryTextDeltaEventType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaResponseReasoningSummaryTextDeltaEvent.
+# Emitted when a delta is added to a reasoning summary text.
+class BetaResponseReasoningSummaryTextDeltaEvent
+  include BetaResponseStreamEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaResponseReasoningSummaryTextDeltaEventMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaResponseReasoningSummaryTextDeltaEventMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaResponseReasoningSummaryTextDeltaEventMetadata::DECODERS
+
+  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+  attr_reader :agent
+  # @return [BetaResponseReasoningSummaryTextDeltaEventType] The type of the event. Always `response.reasoning_summary_text.delta`.
+  attr_reader :type
+  # @return [String] The ID of the item this summary text delta is associated with.
+  attr_reader :item_id
+  # @return [Integer] The index of the output item this summary text delta is associated with.
+  attr_reader :output_index
+  # @return [Integer] The index of the summary part within the reasoning summary.
+  attr_reader :summary_index
+  # @return [String] The text delta that was added to the summary.
+  attr_reader :delta
+  # @return [Integer] The sequence number of this event.
+  attr_reader :sequence_number
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for BetaResponseReasoningSummaryPartDoneEvent.
-  # Emitted when a reasoning summary part is completed.
-  class BetaResponseReasoningSummaryPartDoneEvent
-    include BetaResponseStreamEvent
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaResponseReasoningSummaryPartDoneEventMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaResponseReasoningSummaryPartDoneEventMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaResponseReasoningSummaryPartDoneEventMetadata::DECODERS
-
-    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-    attr_reader :agent
-    # @return [BetaResponseReasoningSummaryPartDoneEventType] The type of the event. Always `response.reasoning_summary_part.done`.
-    attr_reader :type
-    # @return [String] The ID of the item this summary part is associated with.
-    attr_reader :item_id
-    # @return [Integer] The index of the output item this summary part is associated with.
-    attr_reader :output_index
-    # @return [Integer] The index of the summary part within the reasoning summary.
-    attr_reader :summary_index
-    # @return [BetaResponseReasoningSummaryPartDoneEventStatus] The completion status of the summary part. Omitted when the part completed normally and set to `incomplete` when generation was interrupted.
-    attr_reader :status
-    # @return [Integer] The sequence number of this event.
-    attr_reader :sequence_number
-    # @return [BetaResponseReasoningSummaryPartDoneEventPart] The completed summary part.
-    attr_reader :part
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the BetaResponseReasoningSummaryPartDoneEventPartType SDK namespace.
-  module BetaResponseReasoningSummaryPartDoneEventPartType
-    SUMMARY_TEXT = 'summary_text'
-    VALUES = ['summary_text'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the BetaResponseReasoningSummaryTextDeltaEventType SDK namespace.
+module BetaResponseReasoningSummaryTextDeltaEventType
+  RESPONSE_REASONING_SUMMARY_TEXT_DELTA = 'response.reasoning_summary_text.delta'
+  VALUES = ['response.reasoning_summary_text.delta'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('BetaResponseReasoningSummaryTextDeltaEventType', 'enum', "Unknown BetaResponseReasoningSummaryTextDeltaEventType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaResponseReasoningSummaryTextDoneEventMetadata
+  FIELDS = {
+    agent: "agent",
+    type: "type",
+    item_id: "item_id",
+    output_index: "output_index",
+    summary_index: "summary_index",
+    text: "text",
+    sequence_number: "sequence_number",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    item_id
+    output_index
+    summary_index
+    text
+    sequence_number
+  ].freeze
+  DECODERS = {
+    agent: lambda do |value|
+      ::OctridevOpenai::BetaAgentTag.from_hash(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::BetaResponseReasoningSummaryTextDoneEventType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaResponseReasoningSummaryTextDoneEvent.
+# Emitted when a reasoning summary text is completed.
+class BetaResponseReasoningSummaryTextDoneEvent
+  include BetaResponseStreamEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaResponseReasoningSummaryTextDoneEventMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaResponseReasoningSummaryTextDoneEventMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaResponseReasoningSummaryTextDoneEventMetadata::DECODERS
+
+  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+  attr_reader :agent
+  # @return [BetaResponseReasoningSummaryTextDoneEventType] The type of the event. Always `response.reasoning_summary_text.done`.
+  attr_reader :type
+  # @return [String] The ID of the item this summary text is associated with.
+  attr_reader :item_id
+  # @return [Integer] The index of the output item this summary text is associated with.
+  attr_reader :output_index
+  # @return [Integer] The index of the summary part within the reasoning summary.
+  attr_reader :summary_index
+  # @return [String] The full text of the completed reasoning summary.
+  attr_reader :text
+  # @return [Integer] The sequence number of this event.
+  attr_reader :sequence_number
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the BetaResponseReasoningSummaryPartDoneEventStatus SDK namespace.
-  module BetaResponseReasoningSummaryPartDoneEventStatus
-    INCOMPLETE = 'incomplete'
-    VALUES = ['incomplete'].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the BetaResponseReasoningSummaryPartDoneEventType SDK namespace.
-  module BetaResponseReasoningSummaryPartDoneEventType
-    RESPONSE_REASONING_SUMMARY_PART_DONE = 'response.reasoning_summary_part.done'
-    VALUES = ['response.reasoning_summary_part.done'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('BetaResponseReasoningSummaryPartDoneEventType', 'enum', "Unknown BetaResponseReasoningSummaryPartDoneEventType: #{value}")
-    end
+# Defines the BetaResponseReasoningSummaryTextDoneEventType SDK namespace.
+module BetaResponseReasoningSummaryTextDoneEventType
+  RESPONSE_REASONING_SUMMARY_TEXT_DONE = 'response.reasoning_summary_text.done'
+  VALUES = ['response.reasoning_summary_text.done'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('BetaResponseReasoningSummaryTextDoneEventType', 'enum', "Unknown BetaResponseReasoningSummaryTextDoneEventType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalBetaResponseReasoningTextDeltaEventMetadata
+  FIELDS = {
+    agent: "agent",
+    type: "type",
+    item_id: "item_id",
+    output_index: "output_index",
+    content_index: "content_index",
+    delta: "delta",
+    sequence_number: "sequence_number",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    item_id
+    output_index
+    content_index
+    delta
+    sequence_number
+  ].freeze
+  DECODERS = {
+    agent: lambda do |value|
+      ::OctridevOpenai::BetaAgentTag.from_hash(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::BetaResponseReasoningTextDeltaEventType.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for BetaResponseReasoningTextDeltaEvent.
+# Emitted when a delta is added to a reasoning text.
+class BetaResponseReasoningTextDeltaEvent
+  include BetaResponseStreamEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaResponseReasoningTextDeltaEventMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaResponseReasoningTextDeltaEventMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaResponseReasoningTextDeltaEventMetadata::DECODERS
+
+  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+  attr_reader :agent
+  # @return [BetaResponseReasoningTextDeltaEventType] The type of the event. Always `response.reasoning_text.delta`.
+  attr_reader :type
+  # @return [String] The ID of the item this reasoning text delta is associated with.
+  attr_reader :item_id
+  # @return [Integer] The index of the output item this reasoning text delta is associated with.
+  attr_reader :output_index
+  # @return [Integer] The index of the reasoning content part this delta is associated with.
+  attr_reader :content_index
+  # @return [String] The text delta that was added to the reasoning content.
+  attr_reader :delta
+  # @return [Integer] The sequence number of this event.
+  attr_reader :sequence_number
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaResponseReasoningSummaryTextDeltaEventMetadata
-    FIELDS = {
-      agent: 'agent',
-      type: 'type',
-      item_id: 'item_id',
-      output_index: 'output_index',
-      summary_index: 'summary_index',
-      delta: 'delta',
-      sequence_number: 'sequence_number'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      item_id
-      output_index
-      summary_index
-      delta
-      sequence_number
-    ].freeze
-    DECODERS = {
-      agent: lambda do |value|
-        ::OctridevOpenai::BetaAgentTag.from_hash(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::BetaResponseReasoningSummaryTextDeltaEventType.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for BetaResponseReasoningSummaryTextDeltaEvent.
-  # Emitted when a delta is added to a reasoning summary text.
-  class BetaResponseReasoningSummaryTextDeltaEvent
-    include BetaResponseStreamEvent
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaResponseReasoningSummaryTextDeltaEventMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaResponseReasoningSummaryTextDeltaEventMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaResponseReasoningSummaryTextDeltaEventMetadata::DECODERS
+# Defines the BetaResponseReasoningTextDeltaEventType SDK namespace.
+module BetaResponseReasoningTextDeltaEventType
+  RESPONSE_REASONING_TEXT_DELTA = 'response.reasoning_text.delta'
+  VALUES = ['response.reasoning_text.delta'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-    attr_reader :agent
-    # @return [BetaResponseReasoningSummaryTextDeltaEventType] The type of the event. Always `response.reasoning_summary_text.delta`.
-    attr_reader :type
-    # @return [String] The ID of the item this summary text delta is associated with.
-    attr_reader :item_id
-    # @return [Integer] The index of the output item this summary text delta is associated with.
-    attr_reader :output_index
-    # @return [Integer] The index of the summary part within the reasoning summary.
-    attr_reader :summary_index
-    # @return [String] The text delta that was added to the summary.
-    attr_reader :delta
-    # @return [Integer] The sequence number of this event.
-    attr_reader :sequence_number
+    raise SdkValidationError.new('BetaResponseReasoningTextDeltaEventType', 'enum', "Unknown BetaResponseReasoningTextDeltaEventType: #{value}")
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalBetaResponseReasoningTextDoneEventMetadata
+  FIELDS = {
+    agent: "agent",
+    type: "type",
+    item_id: "item_id",
+    output_index: "output_index",
+    content_index: "content_index",
+    text: "text",
+    sequence_number: "sequence_number",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    item_id
+    output_index
+    content_index
+    text
+    sequence_number
+  ].freeze
+  DECODERS = {
+    agent: lambda do |value|
+      ::OctridevOpenai::BetaAgentTag.from_hash(value)
+    end,
+    type: lambda do |value|
+      ::OctridevOpenai::BetaResponseReasoningTextDoneEventType.from_value(value)
+    end,
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for BetaResponseReasoningTextDoneEvent.
+# Emitted when a reasoning text is completed.
+class BetaResponseReasoningTextDoneEvent
+  include BetaResponseStreamEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaResponseReasoningTextDoneEventMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaResponseReasoningTextDoneEventMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaResponseReasoningTextDoneEventMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+  attr_reader :agent
+  # @return [BetaResponseReasoningTextDoneEventType] The type of the event. Always `response.reasoning_text.done`.
+  attr_reader :type
+  # @return [String] The ID of the item this reasoning text is associated with.
+  attr_reader :item_id
+  # @return [Integer] The index of the output item this reasoning text is associated with.
+  attr_reader :output_index
+  # @return [Integer] The index of the reasoning content part.
+  attr_reader :content_index
+  # @return [String] The full text of the completed reasoning content.
+  attr_reader :text
+  # @return [Integer] The sequence number of this event.
+  attr_reader :sequence_number
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the BetaResponseReasoningSummaryTextDeltaEventType SDK namespace.
-  module BetaResponseReasoningSummaryTextDeltaEventType
-    RESPONSE_REASONING_SUMMARY_TEXT_DELTA = 'response.reasoning_summary_text.delta'
-    VALUES = ['response.reasoning_summary_text.delta'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('BetaResponseReasoningSummaryTextDeltaEventType', 'enum', "Unknown BetaResponseReasoningSummaryTextDeltaEventType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaResponseReasoningSummaryTextDoneEventMetadata
-    FIELDS = {
-      agent: 'agent',
-      type: 'type',
-      item_id: 'item_id',
-      output_index: 'output_index',
-      summary_index: 'summary_index',
-      text: 'text',
-      sequence_number: 'sequence_number'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      item_id
-      output_index
-      summary_index
-      text
-      sequence_number
-    ].freeze
-    DECODERS = {
-      agent: lambda do |value|
-        ::OctridevOpenai::BetaAgentTag.from_hash(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::BetaResponseReasoningSummaryTextDoneEventType.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # API model for BetaResponseReasoningSummaryTextDoneEvent.
-  # Emitted when a reasoning summary text is completed.
-  class BetaResponseReasoningSummaryTextDoneEvent
-    include BetaResponseStreamEvent
+# Defines the BetaResponseReasoningTextDoneEventType SDK namespace.
+module BetaResponseReasoningTextDoneEventType
+  RESPONSE_REASONING_TEXT_DONE = 'response.reasoning_text.done'
+  VALUES = ['response.reasoning_text.done'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaResponseReasoningSummaryTextDoneEventMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaResponseReasoningSummaryTextDoneEventMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaResponseReasoningSummaryTextDoneEventMetadata::DECODERS
-
-    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-    attr_reader :agent
-    # @return [BetaResponseReasoningSummaryTextDoneEventType] The type of the event. Always `response.reasoning_summary_text.done`.
-    attr_reader :type
-    # @return [String] The ID of the item this summary text is associated with.
-    attr_reader :item_id
-    # @return [Integer] The index of the output item this summary text is associated with.
-    attr_reader :output_index
-    # @return [Integer] The index of the summary part within the reasoning summary.
-    attr_reader :summary_index
-    # @return [String] The full text of the completed reasoning summary.
-    attr_reader :text
-    # @return [Integer] The sequence number of this event.
-    attr_reader :sequence_number
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+    raise SdkValidationError.new('BetaResponseReasoningTextDoneEventType', 'enum', "Unknown BetaResponseReasoningTextDoneEventType: #{value}")
   end
-
-  # Defines the BetaResponseReasoningSummaryTextDoneEventType SDK namespace.
-  module BetaResponseReasoningSummaryTextDoneEventType
-    RESPONSE_REASONING_SUMMARY_TEXT_DONE = 'response.reasoning_summary_text.done'
-    VALUES = ['response.reasoning_summary_text.done'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('BetaResponseReasoningSummaryTextDoneEventType', 'enum', "Unknown BetaResponseReasoningSummaryTextDoneEventType: #{value}")
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalBetaResponseReasoningTextDeltaEventMetadata
-    FIELDS = {
-      agent: 'agent',
-      type: 'type',
-      item_id: 'item_id',
-      output_index: 'output_index',
-      content_index: 'content_index',
-      delta: 'delta',
-      sequence_number: 'sequence_number'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      item_id
-      output_index
-      content_index
-      delta
-      sequence_number
-    ].freeze
-    DECODERS = {
-      agent: lambda do |value|
-        ::OctridevOpenai::BetaAgentTag.from_hash(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::BetaResponseReasoningTextDeltaEventType.from_value(value)
-      end
-    }.freeze
-  end
-
-  # API model for BetaResponseReasoningTextDeltaEvent.
-  # Emitted when a delta is added to a reasoning text.
-  class BetaResponseReasoningTextDeltaEvent
-    include BetaResponseStreamEvent
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaResponseReasoningTextDeltaEventMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaResponseReasoningTextDeltaEventMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaResponseReasoningTextDeltaEventMetadata::DECODERS
-
-    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-    attr_reader :agent
-    # @return [BetaResponseReasoningTextDeltaEventType] The type of the event. Always `response.reasoning_text.delta`.
-    attr_reader :type
-    # @return [String] The ID of the item this reasoning text delta is associated with.
-    attr_reader :item_id
-    # @return [Integer] The index of the output item this reasoning text delta is associated with.
-    attr_reader :output_index
-    # @return [Integer] The index of the reasoning content part this delta is associated with.
-    attr_reader :content_index
-    # @return [String] The text delta that was added to the reasoning content.
-    attr_reader :delta
-    # @return [Integer] The sequence number of this event.
-    attr_reader :sequence_number
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the BetaResponseReasoningTextDeltaEventType SDK namespace.
-  module BetaResponseReasoningTextDeltaEventType
-    RESPONSE_REASONING_TEXT_DELTA = 'response.reasoning_text.delta'
-    VALUES = ['response.reasoning_text.delta'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('BetaResponseReasoningTextDeltaEventType', 'enum', "Unknown BetaResponseReasoningTextDeltaEventType: #{value}")
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalBetaResponseReasoningTextDoneEventMetadata
-    FIELDS = {
-      agent: 'agent',
-      type: 'type',
-      item_id: 'item_id',
-      output_index: 'output_index',
-      content_index: 'content_index',
-      text: 'text',
-      sequence_number: 'sequence_number'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      item_id
-      output_index
-      content_index
-      text
-      sequence_number
-    ].freeze
-    DECODERS = {
-      agent: lambda do |value|
-        ::OctridevOpenai::BetaAgentTag.from_hash(value)
-      end,
-      type: lambda do |value|
-        ::OctridevOpenai::BetaResponseReasoningTextDoneEventType.from_value(value)
-      end
-    }.freeze
-  end
-
-  # API model for BetaResponseReasoningTextDoneEvent.
-  # Emitted when a reasoning text is completed.
-  class BetaResponseReasoningTextDoneEvent
-    include BetaResponseStreamEvent
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaResponseReasoningTextDoneEventMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaResponseReasoningTextDoneEventMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaResponseReasoningTextDoneEventMetadata::DECODERS
-
-    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-    attr_reader :agent
-    # @return [BetaResponseReasoningTextDoneEventType] The type of the event. Always `response.reasoning_text.done`.
-    attr_reader :type
-    # @return [String] The ID of the item this reasoning text is associated with.
-    attr_reader :item_id
-    # @return [Integer] The index of the output item this reasoning text is associated with.
-    attr_reader :output_index
-    # @return [Integer] The index of the reasoning content part.
-    attr_reader :content_index
-    # @return [String] The full text of the completed reasoning content.
-    attr_reader :text
-    # @return [Integer] The sequence number of this event.
-    attr_reader :sequence_number
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the BetaResponseReasoningTextDoneEventType SDK namespace.
-  module BetaResponseReasoningTextDoneEventType
-    RESPONSE_REASONING_TEXT_DONE = 'response.reasoning_text.done'
-    VALUES = ['response.reasoning_text.done'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('BetaResponseReasoningTextDoneEventType', 'enum', "Unknown BetaResponseReasoningTextDoneEventType: #{value}")
-    end
-  end
+end
 end

@@ -5,19 +5,19 @@
 
 # content domain models
 module OctridevOpenai
-  # Defines the Content SDK namespace.
-  module Content
-    def self.from_hash(hash)
-      lossy = nil
-      [InputContent, OutputContent].each do |type|
-        decoded = type.from_hash(hash)
-        return decoded if SdkModel.keeps_every_key?(hash, decoded)
+# Defines the Content SDK namespace.
+module Content
+  def self.from_hash(hash)
+    lossy = nil
+    [InputContent, OutputContent].each do |type|
+      decoded = type.from_hash(hash)
+      return decoded if SdkModel.keeps_every_key?(hash, decoded)
 
-        lossy ||= decoded
-      rescue ::StandardError
-        next
-      end
-      lossy unless lossy.nil?
+      lossy ||= decoded
+    rescue ::StandardError
+      next
     end
+    return lossy unless lossy.nil?
   end
+end
 end

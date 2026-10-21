@@ -5,26 +5,26 @@
 
 # realtime_realtime domain models
 module OctridevOpenai
-  # Defines the RealtimeTurnDetectionVariant1Eagerness SDK namespace.
-  module RealtimeTurnDetectionVariant1Eagerness
-    LOW = 'low'
-    MEDIUM = 'medium'
-    HIGH = 'high'
-    AUTO = 'auto'
-    VALUES = %w[low medium high auto].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the RealtimeTurnDetectionVariant1Eagerness SDK namespace.
+module RealtimeTurnDetectionVariant1Eagerness
+  LOW = 'low'
+  MEDIUM = 'medium'
+  HIGH = 'high'
+  AUTO = 'auto'
+  VALUES = ['low', 'medium', 'high', 'auto'].freeze
+  def self.from_value(value)
+    value
   end
+end
 
-  # Defines the RealtimeTurnDetectionVariant1Type SDK namespace.
-  module RealtimeTurnDetectionVariant1Type
-    SEMANTIC_VAD = 'semantic_vad'
-    VALUES = ['semantic_vad'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+# Defines the RealtimeTurnDetectionVariant1Type SDK namespace.
+module RealtimeTurnDetectionVariant1Type
+  SEMANTIC_VAD = 'semantic_vad'
+  VALUES = ['semantic_vad'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-      raise SdkValidationError.new('RealtimeTurnDetectionVariant1Type', 'enum', "Unknown RealtimeTurnDetectionVariant1Type: #{value}")
-    end
+    raise SdkValidationError.new('RealtimeTurnDetectionVariant1Type', 'enum', "Unknown RealtimeTurnDetectionVariant1Type: #{value}")
   end
+end
 end

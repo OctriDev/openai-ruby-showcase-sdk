@@ -5,52 +5,51 @@
 
 # shared_permission domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalPermissionErrorResponseMetadata
-    FIELDS = {
-      error: 'error'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      error
-    ].freeze
-    DECODERS = {
-      error: lambda do |value|
-        ::OctridevOpenai::PermissionErrorResponseError.from_hash(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalPermissionErrorResponseMetadata
+  FIELDS = {
+    error: "error",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    error
+  ].freeze
+  DECODERS = {
+    error: lambda do |value|
+      ::OctridevOpenai::PermissionErrorResponseError.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for PermissionErrorResponse.
+# Typed representation of the `PermissionErrorResponse` API schema.
+class PermissionErrorResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalPermissionErrorResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalPermissionErrorResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalPermissionErrorResponseMetadata::DECODERS
+
+  # @return [PermissionErrorResponseError] Details about the permission error.
+  attr_reader :error
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for PermissionErrorResponse.
-  # Typed representation of the `PermissionErrorResponse` API schema.
-  class PermissionErrorResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalPermissionErrorResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalPermissionErrorResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalPermissionErrorResponseMetadata::DECODERS
-
-    # @return [PermissionErrorResponseError] Details about the permission error.
-    attr_reader :error
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the PermissionErrorResponseError SDK namespace.
-  module PermissionErrorResponseError
-    def self.from_hash(hash)
-      return hash if hash.is_a?(::String)
-
-      Error3.from_hash(hash)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
+
+# Defines the PermissionErrorResponseError SDK namespace.
+module PermissionErrorResponseError
+  def self.from_hash(hash)
+    return hash if hash.is_a?(::String)
+    return Error3.from_hash(hash)
+  end
+end
 end

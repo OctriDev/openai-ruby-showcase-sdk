@@ -5,311 +5,314 @@
 
 # responses domain models
 module OctridevOpenai
-  # Defines the CacheMissReasonTypeEnum SDK namespace.
-  module CacheMissReasonTypeEnum
-    MODEL_CHANGED = 'model_changed'
-    PROMPT_CACHE_KEY_CHANGED = 'prompt_cache_key_changed'
-    TOOLS_CHANGED = 'tools_changed'
-    TEXT_FORMAT_CHANGED = 'text_format_changed'
-    REASONING_EFFORT_CHANGED = 'reasoning_effort_changed'
-    VERBOSITY_CHANGED = 'verbosity_changed'
-    CONTEXT_COMPACTED = 'context_compacted'
-    INPUT_CHANGED = 'input_changed'
-    SERVICE_TIER_CHANGED = 'service_tier_changed'
-    VALUES = %w[
-      model_changed prompt_cache_key_changed tools_changed text_format_changed
-      reasoning_effort_changed verbosity_changed context_compacted input_changed
-      service_tier_changed
-    ].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the CacheMissReasonTypeEnum SDK namespace.
+module CacheMissReasonTypeEnum
+  MODEL_CHANGED = 'model_changed'
+  PROMPT_CACHE_KEY_CHANGED = 'prompt_cache_key_changed'
+  TOOLS_CHANGED = 'tools_changed'
+  TEXT_FORMAT_CHANGED = 'text_format_changed'
+  REASONING_EFFORT_CHANGED = 'reasoning_effort_changed'
+  VERBOSITY_CHANGED = 'verbosity_changed'
+  CONTEXT_COMPACTED = 'context_compacted'
+  INPUT_CHANGED = 'input_changed'
+  SERVICE_TIER_CHANGED = 'service_tier_changed'
+  VALUES = [
+    'model_changed', 'prompt_cache_key_changed', 'tools_changed', 'text_format_changed',
+    'reasoning_effort_changed', 'verbosity_changed', 'context_compacted', 'input_changed',
+    'service_tier_changed'
+  ].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalContextManagementParamMetadata
+  FIELDS = {
+    type: "type",
+    compact_threshold: "compact_threshold",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for ContextManagementParam.
+# Typed representation of the `ContextManagementParam` API schema.
+class ContextManagementParam
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalContextManagementParamMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalContextManagementParamMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalContextManagementParamMetadata::DECODERS
+
+  # @return [String] The context management entry type. Currently only 'compaction' is supported.
+  attr_reader :type
+  # @return [Integer] Optional API value serialized in the `compact_threshold` wire field.
+  attr_reader :compact_threshold
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalContextManagementParamMetadata
-    FIELDS = {
-      type: 'type',
-      compact_threshold: 'compact_threshold'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-    ].freeze
-    DECODERS = {}.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ContextManagementParam.
-  # Typed representation of the `ContextManagementParam` API schema.
-  class ContextManagementParam
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalContextManagementParamMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalContextManagementParamMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalContextManagementParamMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] The context management entry type. Currently only 'compaction' is supported.
-    attr_reader :type
-    # @return [Integer] Optional API value serialized in the `compact_threshold` wire field.
-    attr_reader :compact_threshold
+# Defines the CreateResponseVariant2TruncationVariant0 SDK namespace.
+module CreateResponseVariant2TruncationVariant0
+  AUTO = 'auto'
+  DISABLED = 'disabled'
+  VALUES = ['auto', 'disabled'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalCreateResponseMetadata
+  FIELDS = {
+    metadata: "metadata",
+    top_logprobs: "top_logprobs",
+    temperature: "temperature",
+    top_p: "top_p",
+    user: "user",
+    safety_identifier: "safety_identifier",
+    prompt_cache_key: "prompt_cache_key",
+    prompt_cache_retention: "prompt_cache_retention",
+    prompt_cache_options: "prompt_cache_options",
+    previous_response_id: "previous_response_id",
+    model: "model",
+    background: "background",
+    max_tool_calls: "max_tool_calls",
+    text: "text",
+    tools: "tools",
+    tool_choice: "tool_choice",
+    prompt: "prompt",
+    access_programs: "access_programs",
+    service_tier: "service_tier",
+    truncation: "truncation",
+    reasoning: "reasoning",
+    input: "input",
+    include: "include",
+    parallel_tool_calls: "parallel_tool_calls",
+    store: "store",
+    instructions: "instructions",
+    moderation: "moderation",
+    stream: "stream",
+    stream_options: "stream_options",
+    conversation: "conversation",
+    context_management: "context_management",
+    max_output_tokens: "max_output_tokens",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+    metadata: lambda do |value|
+      ::OctridevOpenai::Metadata.from_hash(value)
+    end,
+    prompt_cache_retention: lambda do |value|
+      ::OctridevOpenai::ModelResponsePropertiesPromptCacheRetentionVariant0.from_value(value)
+    end,
+    prompt_cache_options: lambda do |value|
+      ::OctridevOpenai::ResponsePromptCacheOptionsParam.from_hash(value)
+    end,
+    model: lambda do |value|
+      ::OctridevOpenai::ModelIdsResponses.from_hash(value)
+    end,
+    text: lambda do |value|
+      ::OctridevOpenai::ResponseTextParam.from_hash(value)
+    end,
+    tools: lambda do |value|
+      ::OctridevOpenai::ToolsArray.from_hash(value)
+    end,
+    tool_choice: lambda do |value|
+      ::OctridevOpenai::ToolChoiceParam.from_hash(value)
+    end,
+    prompt: lambda do |value|
+      ::OctridevOpenai::Prompt.from_hash(value)
+    end,
+    access_programs: lambda do |value|
+      ::OctridevOpenai::AccessProgramsParam.from_hash(value)
+    end,
+    service_tier: lambda do |value|
+      ::OctridevOpenai::ServiceTierResponses.from_hash(value)
+    end,
+    truncation: lambda do |value|
+      ::OctridevOpenai::CreateResponseVariant2TruncationVariant0.from_value(value)
+    end,
+    reasoning: lambda do |value|
+      ::OctridevOpenai::Reasoning.from_hash(value)
+    end,
+    input: lambda do |value|
+      ::OctridevOpenai::InputParam.from_hash(value)
+    end,
+    include: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::IncludeEnum.from_value(item) }
+    end,
+    moderation: lambda do |value|
+      ::OctridevOpenai::ModerationParam.from_hash(value)
+    end,
+    stream_options: lambda do |value|
+      ::OctridevOpenai::ResponseStreamOptions.from_hash(value)
+    end,
+    conversation: lambda do |value|
+      ::OctridevOpenai::ConversationParam.from_hash(value)
+    end,
+    context_management: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::ContextManagementParam.from_hash(item) }
+    end,
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for CreateResponse.
+# Typed representation of the `CreateResponse` API schema.
+class CreateResponse
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCreateResponseMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCreateResponseMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCreateResponseMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  attr_reader :service_tier, :truncation, :reasoning, :parallel_tool_calls, :store, :instructions,
+              :moderation, :stream, :conversation, :max_output_tokens
+  # @return [Metadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
+  attr_reader :metadata
+  # @return [Integer] An integer between 0 and 20 specifying the maximum number of most likely tokens to return at each token position, each with an associated log probability. In some cases, the number of returned tokens may be fewer than requested.
+  attr_reader :top_logprobs
+  # @return [Float] Optional API value serialized in the `temperature` wire field.
+  attr_reader :temperature
+  # @return [Float] Optional API value serialized in the `top_p` wire field.
+  attr_reader :top_p
+  # @return [String] This field is being replaced by `safety_identifier` and `prompt_cache_key`. Use `prompt_cache_key` instead to maintain caching optimizations. A stable identifier for your end-users. Used to boost cache hit rates by better bucketing similar requests and to help OpenAI detect and prevent abuse. Learn more.
+  attr_reader :user
+  # @return [String] Optional API value serialized in the `safety_identifier` wire field.
+  attr_reader :safety_identifier
+  # @return [String] Optional `string` value serialized in the `prompt_cache_key` wire field.
+  attr_reader :prompt_cache_key
+  # @return [ModelResponsePropertiesPromptCacheRetentionVariant0] Optional API value serialized in the `prompt_cache_retention` wire field.
+  attr_reader :prompt_cache_retention
+  # @return [ResponsePromptCacheOptionsParam] Options for prompt caching. Supported for `gpt-5.6` and later models. By default, OpenAI automatically chooses one implicit cache breakpoint. You can add explicit breakpoints to content blocks with `prompt_cache_breakpoint`. Each request can write up to four breakpoints. For cache matching, OpenAI considers up to the latest 80 breakpoints in the conversation, without a content-block lookback limit. Set `mode` to `explicit` to disable the implicit breakpoint. The `ttl`…
+  attr_reader :prompt_cache_options
+  # @return [String] Optional `string` value serialized in the `previous_response_id` wire field.
+  attr_reader :previous_response_id
+  # @return [ModelIdsResponses] Model ID used to generate the response, like `gpt-6-astra`. OpenAI offers a wide range of models with different capabilities, performance characteristics, and price points. Refer to the model guide to browse and compare available models.
+  attr_reader :model
+  # @return [Boolean] Optional `boolean` value serialized in the `background` wire field.
+  attr_reader :background
+  # @return [Integer] Optional `integer` value serialized in the `max_tool_calls` wire field.
+  attr_reader :max_tool_calls
+  # @return [ResponseTextParam] Configuration options for a text response from the model. Can be plain text or structured JSON data. Learn more: - Text inputs and outputs - Structured Outputs
+  attr_reader :text
+  # @return [ToolsArray] An array of tools the model may call while generating a response. You can specify which tool to use by setting the `tool_choice` parameter. We support the following categories of tools: - **Built-in tools**: Tools that are provided by OpenAI that extend the model's capabilities, like web search or file search. Learn more about built-in tools. - **MCP Tools**: Integrations with third-party systems via custom MCP servers or predefined connectors such as Google Drive and…
+  attr_reader :tools
+  # @return [ToolChoiceParam] How the model should select which tool (or tools) to use when generating a response. See the `tools` parameter to see how to specify which tools the model can call.
+  attr_reader :tool_choice
+  # @return [Prompt] Reference to a prompt template and its variables. Learn more.
+  attr_reader :prompt
+  # @return [AccessProgramsParam] Domain-specific access programs to use for this request.
+  attr_reader :access_programs
+  # @return [InputParam] Text, image, or file inputs to the model, used to generate a response. Learn more: - Text inputs and outputs - Image inputs - File inputs - Conversation state - Function calling
+  attr_reader :input
+  # @return [Array_of_IncludeEnum] Specify additional output data to include in the model response. Currently supported values are: - `web_search_call.action.sources`: Include the sources of the web search tool call. - `code_interpreter_call.outputs`: Includes the outputs of python code execution in code interpreter tool call items. - `computer_call_output.output.image_url`: Include image urls from the computer call output. - `file_search_call.results`: Include the search results of the file search tool call.…
+  attr_reader :include
+  # @return [ResponseStreamOptions] Options for streaming responses. Only set this when you set `stream: true`.
+  attr_reader :stream_options
+  # @return [Array_of_ContextManagementParam] Context management configuration for this request.
+  attr_reader :context_management
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the CreateResponseVariant2TruncationVariant0 SDK namespace.
-  module CreateResponseVariant2TruncationVariant0
-    AUTO = 'auto'
-    DISABLED = 'disabled'
-    VALUES = %w[auto disabled].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalCreateResponseMetadata
-    FIELDS = {
-      metadata: 'metadata',
-      top_logprobs: 'top_logprobs',
-      temperature: 'temperature',
-      top_p: 'top_p',
-      user: 'user',
-      safety_identifier: 'safety_identifier',
-      prompt_cache_key: 'prompt_cache_key',
-      prompt_cache_retention: 'prompt_cache_retention',
-      prompt_cache_options: 'prompt_cache_options',
-      previous_response_id: 'previous_response_id',
-      model: 'model',
-      background: 'background',
-      max_tool_calls: 'max_tool_calls',
-      text: 'text',
-      tools: 'tools',
-      tool_choice: 'tool_choice',
-      prompt: 'prompt',
-      access_programs: 'access_programs',
-      service_tier: 'service_tier',
-      truncation: 'truncation',
-      reasoning: 'reasoning',
-      input: 'input',
-      include: 'include',
-      parallel_tool_calls: 'parallel_tool_calls',
-      store: 'store',
-      instructions: 'instructions',
-      moderation: 'moderation',
-      stream: 'stream',
-      stream_options: 'stream_options',
-      conversation: 'conversation',
-      context_management: 'context_management',
-      max_output_tokens: 'max_output_tokens'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {
-      metadata: lambda do |value|
-        ::OctridevOpenai::Metadata.from_hash(value)
-      end,
-      prompt_cache_retention: lambda do |value|
-        ::OctridevOpenai::ModelResponsePropertiesPromptCacheRetentionVariant0.from_value(value)
-      end,
-      prompt_cache_options: lambda do |value|
-        ::OctridevOpenai::ResponsePromptCacheOptionsParam.from_hash(value)
-      end,
-      model: lambda do |value|
-        ::OctridevOpenai::ModelIdsResponses.from_hash(value)
-      end,
-      text: lambda do |value|
-        ::OctridevOpenai::ResponseTextParam.from_hash(value)
-      end,
-      tools: lambda do |value|
-        ::OctridevOpenai::ToolsArray.from_hash(value)
-      end,
-      tool_choice: lambda do |value|
-        ::OctridevOpenai::ToolChoiceParam.from_hash(value)
-      end,
-      prompt: lambda do |value|
-        ::OctridevOpenai::Prompt.from_hash(value)
-      end,
-      access_programs: lambda do |value|
-        ::OctridevOpenai::AccessProgramsParam.from_hash(value)
-      end,
-      service_tier: lambda do |value|
-        ::OctridevOpenai::ServiceTierResponses.from_hash(value)
-      end,
-      truncation: lambda do |value|
-        ::OctridevOpenai::CreateResponseVariant2TruncationVariant0.from_value(value)
-      end,
-      reasoning: lambda do |value|
-        ::OctridevOpenai::Reasoning.from_hash(value)
-      end,
-      input: lambda do |value|
-        ::OctridevOpenai::InputParam.from_hash(value)
-      end,
-      include: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::IncludeEnum.from_value(item) }
-      end,
-      moderation: lambda do |value|
-        ::OctridevOpenai::ModerationParam.from_hash(value)
-      end,
-      stream_options: lambda do |value|
-        ::OctridevOpenai::ResponseStreamOptions.from_hash(value)
-      end,
-      conversation: lambda do |value|
-        ::OctridevOpenai::ConversationParam.from_hash(value)
-      end,
-      context_management: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::ContextManagementParam.from_hash(item) }
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the CyberAccessProgramEnum SDK namespace.
+module CyberAccessProgramEnum
+  STANDARD = 'standard'
+  DAYBREAK_BLUE = 'daybreak_blue'
+  DAYBREAK_RED = 'daybreak_red'
+  VALUES = ['standard', 'daybreak_blue', 'daybreak_red'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Defines the PersonalityEnum SDK value decoder.
+module PersonalityEnum
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalShellCallOutputDeltaMetadata
+  FIELDS = {
+    stdout: "stdout",
+    stderr: "stderr",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for ShellCallOutputDelta.
+# A delta of stdout/stderr emitted while a shell call was running.
+class ShellCallOutputDelta
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalShellCallOutputDeltaMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalShellCallOutputDeltaMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalShellCallOutputDeltaMetadata::DECODERS
+
+  # @return [String] The stdout delta that was emitted.
+  attr_reader :stdout
+  # @return [String] The stderr delta that was emitted.
+  attr_reader :stderr
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for CreateResponse.
-  # Typed representation of the `CreateResponse` API schema.
-  class CreateResponse
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCreateResponseMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCreateResponseMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCreateResponseMetadata::DECODERS
-
-    attr_reader :service_tier, :truncation, :reasoning, :parallel_tool_calls, :store, :instructions,
-                :moderation, :stream, :conversation, :max_output_tokens
-    # @return [Metadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
-    attr_reader :metadata
-    # @return [Integer] An integer between 0 and 20 specifying the maximum number of most likely tokens to return at each token position, each with an associated log probability. In some cases, the number of returned tokens may be fewer than requested.
-    attr_reader :top_logprobs
-    # @return [Float] Optional API value serialized in the `temperature` wire field.
-    attr_reader :temperature
-    # @return [Float] Optional API value serialized in the `top_p` wire field.
-    attr_reader :top_p
-    # @return [String] This field is being replaced by `safety_identifier` and `prompt_cache_key`. Use `prompt_cache_key` instead to maintain caching optimizations. A stable identifier for your end-users. Used to boost cache hit rates by better bucketing similar requests and to help OpenAI detect and prevent abuse. Learn more.
-    attr_reader :user
-    # @return [String] Optional API value serialized in the `safety_identifier` wire field.
-    attr_reader :safety_identifier
-    # @return [String] Optional `string` value serialized in the `prompt_cache_key` wire field.
-    attr_reader :prompt_cache_key
-    # @return [ModelResponsePropertiesPromptCacheRetentionVariant0] Optional API value serialized in the `prompt_cache_retention` wire field.
-    attr_reader :prompt_cache_retention
-    # @return [ResponsePromptCacheOptionsParam] Options for prompt caching. Supported for `gpt-5.6` and later models. By default, OpenAI automatically chooses one implicit cache breakpoint. You can add explicit breakpoints to content blocks with `prompt_cache_breakpoint`. Each request can write up to four breakpoints. For cache matching, OpenAI considers up to the latest 80 breakpoints in the conversation, without a content-block lookback limit. Set `mode` to `explicit` to disable the implicit breakpoint. The `ttl`…
-    attr_reader :prompt_cache_options
-    # @return [String] Optional `string` value serialized in the `previous_response_id` wire field.
-    attr_reader :previous_response_id
-    # @return [ModelIdsResponses] Model ID used to generate the response, like `gpt-6-astra`. OpenAI offers a wide range of models with different capabilities, performance characteristics, and price points. Refer to the model guide to browse and compare available models.
-    attr_reader :model
-    # @return [Boolean] Optional `boolean` value serialized in the `background` wire field.
-    attr_reader :background
-    # @return [Integer] Optional `integer` value serialized in the `max_tool_calls` wire field.
-    attr_reader :max_tool_calls
-    # @return [ResponseTextParam] Configuration options for a text response from the model. Can be plain text or structured JSON data. Learn more: - Text inputs and outputs - Structured Outputs
-    attr_reader :text
-    # @return [ToolsArray] An array of tools the model may call while generating a response. You can specify which tool to use by setting the `tool_choice` parameter. We support the following categories of tools: - **Built-in tools**: Tools that are provided by OpenAI that extend the model's capabilities, like web search or file search. Learn more about built-in tools. - **MCP Tools**: Integrations with third-party systems via custom MCP servers or predefined connectors such as Google Drive and…
-    attr_reader :tools
-    # @return [ToolChoiceParam] How the model should select which tool (or tools) to use when generating a response. See the `tools` parameter to see how to specify which tools the model can call.
-    attr_reader :tool_choice
-    # @return [Prompt] Reference to a prompt template and its variables. Learn more.
-    attr_reader :prompt
-    # @return [AccessProgramsParam] Domain-specific access programs to use for this request.
-    attr_reader :access_programs
-    # @return [InputParam] Text, image, or file inputs to the model, used to generate a response. Learn more: - Text inputs and outputs - Image inputs - File inputs - Conversation state - Function calling
-    attr_reader :input
-    # @return [Array_of_IncludeEnum] Specify additional output data to include in the model response. Currently supported values are: - `web_search_call.action.sources`: Include the sources of the web search tool call. - `code_interpreter_call.outputs`: Includes the outputs of python code execution in code interpreter tool call items. - `computer_call_output.output.image_url`: Include image urls from the computer call output. - `file_search_call.results`: Include the search results of the file search tool call.…
-    attr_reader :include
-    # @return [ResponseStreamOptions] Options for streaming responses. Only set this when you set `stream: true`.
-    attr_reader :stream_options
-    # @return [Array_of_ContextManagementParam] Context management configuration for this request.
-    attr_reader :context_management
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the CyberAccessProgramEnum SDK namespace.
-  module CyberAccessProgramEnum
-    STANDARD = 'standard'
-    DAYBREAK_BLUE = 'daybreak_blue'
-    DAYBREAK_RED = 'daybreak_red'
-    VALUES = %w[standard daybreak_blue daybreak_red].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # Defines the PersonalityEnum SDK value decoder.
-  module PersonalityEnum
-    def self.from_value(value)
-      value
-    end
+# Defines the ToolsArray SDK value decoder.
+module ToolsArray
+  def self.from_hash(value)
+    return nil if value.nil?
+    value&.map { |item| ::OctridevOpenai::Tool.from_hash(item) }
   end
+end
 
-  # Internal model hydration metadata.
-  class SdkInternalShellCallOutputDeltaMetadata
-    FIELDS = {
-      stdout: 'stdout',
-      stderr: 'stderr'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {}.freeze
+# Defines the TruncationEnum SDK namespace.
+module TruncationEnum
+  AUTO = 'auto'
+  DISABLED = 'disabled'
+  VALUES = ['auto', 'disabled'].freeze
+  def self.from_value(value)
+    value
   end
-
-  # API model for ShellCallOutputDelta.
-  # A delta of stdout/stderr emitted while a shell call was running.
-  class ShellCallOutputDelta
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalShellCallOutputDeltaMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalShellCallOutputDeltaMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalShellCallOutputDeltaMetadata::DECODERS
-
-    # @return [String] The stdout delta that was emitted.
-    attr_reader :stdout
-    # @return [String] The stderr delta that was emitted.
-    attr_reader :stderr
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the ToolsArray SDK value decoder.
-  module ToolsArray
-    def self.from_hash(value)
-      return nil if value.nil?
-
-      value&.map { |item| ::OctridevOpenai::Tool.from_hash(item) }
-    end
-  end
-
-  # Defines the TruncationEnum SDK namespace.
-  module TruncationEnum
-    AUTO = 'auto'
-    DISABLED = 'disabled'
-    VALUES = %w[auto disabled].freeze
-    def self.from_value(value)
-      value
-    end
-  end
+end
 end

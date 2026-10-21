@@ -5,96 +5,98 @@
 
 # shared_misalignment domain models
 module OctridevOpenai
-  # Defines the MisalignmentErrorType SDK value decoder.
-  module MisalignmentErrorType
-    def self.from_value(value)
-      value
-    end
+# Defines the MisalignmentErrorType SDK value decoder.
+module MisalignmentErrorType
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalMisalignmentSteerMetadata
+  FIELDS = {
+    message: "message",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    message
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for MisalignmentSteer.
+# Typed representation of the `_MisalignmentSteer` API schema.
+class MisalignmentSteer
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalMisalignmentSteerMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalMisalignmentSteerMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalMisalignmentSteerMetadata::DECODERS
+
+  # @return [String] The public continuation instruction.
+  attr_reader :message
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalMisalignmentSteerMetadata
-    FIELDS = {
-      message: 'message'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      message
-    ].freeze
-    DECODERS = {}.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for MisalignmentSteer.
-  # Typed representation of the `_MisalignmentSteer` API schema.
-  class MisalignmentSteer
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalMisalignmentSteerMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalMisalignmentSteerMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalMisalignmentSteerMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] The public continuation instruction.
-    attr_reader :message
+# Internal model hydration metadata.
+class SdkInternalMisalignmentErrorDetailsResourceMetadata
+  FIELDS = {
+    review_target: "review_target",
+    error_type: "error_type",
+    detailed_explanation: "detailed_explanation",
+    steer: "steer",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+    error_type: lambda do |value|
+      ::OctridevOpenai::MisalignmentErrorType.from_value(value)
+    end,
+    steer: lambda do |value|
+      ::OctridevOpenai::MisalignmentSteer.from_hash(value)
+    end,
+  }.freeze
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# API model for MisalignmentErrorDetailsResource.
+# Typed representation of the `MisalignmentErrorDetailsResource` API schema.
+class MisalignmentErrorDetailsResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalMisalignmentErrorDetailsResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalMisalignmentErrorDetailsResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalMisalignmentErrorDetailsResourceMetadata::DECODERS
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+  # @return [String] Optional API value serialized in the `review_target` wire field.
+  attr_reader :review_target
+  # @return [MisalignmentErrorType] An optional classification; clients must accept additional values.
+  attr_reader :error_type
+  # @return [String] The public explanation for this block.
+  attr_reader :detailed_explanation
+  # @return [MisalignmentSteer] An optional public continuation instruction.
+  attr_reader :steer
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalMisalignmentErrorDetailsResourceMetadata
-    FIELDS = {
-      review_target: 'review_target',
-      error_type: 'error_type',
-      detailed_explanation: 'detailed_explanation',
-      steer: 'steer'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {
-      error_type: lambda do |value|
-        ::OctridevOpenai::MisalignmentErrorType.from_value(value)
-      end,
-      steer: lambda do |value|
-        ::OctridevOpenai::MisalignmentSteer.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for MisalignmentErrorDetailsResource.
-  # Typed representation of the `MisalignmentErrorDetailsResource` API schema.
-  class MisalignmentErrorDetailsResource
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalMisalignmentErrorDetailsResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalMisalignmentErrorDetailsResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalMisalignmentErrorDetailsResourceMetadata::DECODERS
-
-    # @return [String] Optional API value serialized in the `review_target` wire field.
-    attr_reader :review_target
-    # @return [MisalignmentErrorType] An optional classification; clients must accept additional values.
-    attr_reader :error_type
-    # @return [String] The public explanation for this block.
-    attr_reader :detailed_explanation
-    # @return [MisalignmentSteer] An optional public continuation instruction.
-    attr_reader :steer
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 end

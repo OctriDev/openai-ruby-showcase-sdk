@@ -36,9 +36,10 @@ module OctridevOpenai
         page: NOT_GIVEN,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
-          '/organization/usage/vector_stores',
+          "/organization/usage/vector_stores",
           config: config,
           query: {
             'start_time' => QueryValue.new(start_time, style: 'form', explode: true),
@@ -47,17 +48,17 @@ module OctridevOpenai
             'project_ids' => QueryValue.new(project_ids, style: 'form', explode: true),
             'group_by' => QueryValue.new(group_by, style: 'form', explode: true),
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
-            'page' => QueryValue.new(page, style: 'form', explode: true)
+            'page' => QueryValue.new(page, style: 'form', explode: true),
           },
           return_type: ::OctridevOpenai::UsageResponse,
           decoder: :json,
           operation_id: 'usage_vector_stores',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
-      UsageVectorStoresPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+    UsageVectorStoresPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Get vector stores usage details for the organization.
       #
@@ -102,13 +103,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             items.each { |item| y << item }
             break unless page.has_more
-
             next_cursor = page.next_page
             break if next_cursor.nil?
-
             cursor = next_cursor
           end
         end
@@ -141,12 +139,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             next_cursor = page.next_page
             has_more = page.has_more && !next_cursor.nil?
             y << UsageVectorStoresPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
-
             cursor = next_cursor
           end
         end

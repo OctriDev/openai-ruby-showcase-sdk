@@ -45,14 +45,15 @@ module OctridevOpenai
         include: NOT_GIVEN,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
           [
-            '/threads/',
+            "/threads/",
             SdkClient.encode_path_segment(thread_id),
-            '/runs/',
+            "/runs/",
             SdkClient.encode_path_segment(run_id),
-            '/steps'
+            "/steps"
           ].join,
           config: config,
           query: {
@@ -60,17 +61,17 @@ module OctridevOpenai
             'order' => QueryValue.new(order, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
             'before' => QueryValue.new(before, style: 'form', explode: true),
-            'include[]' => QueryValue.new(include, style: 'form', explode: true)
+            'include[]' => QueryValue.new(include, style: 'form', explode: true),
           },
           return_type: ::OctridevOpenai::ListRunStepsResponse,
           decoder: :json,
           operation_id: 'list_run_steps',
           request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
-      ListRunStepsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+    ListRunStepsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists the steps belonging to a run on a thread. Use cursor parameters to page through the steps, and set `order` to control their order by creation time.
       #
@@ -124,13 +125,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             items.each { |item| y << item }
             break unless page.has_more
-
             next_cursor = page.last_id
             break if next_cursor.nil?
-
             cursor = next_cursor
           end
         end
@@ -163,12 +161,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListRunStepsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
-
             cursor = next_cursor
           end
         end

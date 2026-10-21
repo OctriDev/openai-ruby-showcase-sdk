@@ -38,12 +38,13 @@ module OctridevOpenai
         run_id: NOT_GIVEN,
         request_options: nil
       )
+
         SdkClient.request(
           'GET',
           [
-            '/threads/',
+            "/threads/",
             SdkClient.encode_path_segment(thread_id),
-            '/messages'
+            "/messages"
           ].join,
           config: config,
           query: {
@@ -51,17 +52,17 @@ module OctridevOpenai
             'order' => QueryValue.new(order, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
             'before' => QueryValue.new(before, style: 'form', explode: true),
-            'run_id' => QueryValue.new(run_id, style: 'form', explode: true)
+            'run_id' => QueryValue.new(run_id, style: 'form', explode: true),
           },
           return_type: ::OctridevOpenai::ListMessagesResponse,
           decoder: :json,
           operation_id: 'list_messages',
           request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
-      ListMessagesPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+    ListMessagesPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists messages belonging to a thread. Use `run_id` to filter by the run that generated the messages and `order` to control their creation-time order. Use `after` or `before` cursors to navigate the results.
       #
@@ -107,13 +108,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             items.each { |item| y << item }
             break unless page.has_more
-
             next_cursor = page.last_id
             break if next_cursor.nil?
-
             cursor = next_cursor
           end
         end
@@ -144,12 +142,10 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
-
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListMessagesPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
-
             cursor = next_cursor
           end
         end

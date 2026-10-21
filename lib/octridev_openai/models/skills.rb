@@ -5,522 +5,525 @@
 
 # skills domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalCreateSkillBodyMetadata
-    FIELDS = {
-      files: 'files'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      files
-    ].freeze
-    DECODERS = {}.freeze
+# Internal model hydration metadata.
+class SdkInternalCreateSkillBodyMetadata
+  FIELDS = {
+    files: "files",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    files
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for CreateSkillBody.
+# Uploads a skill either as a directory (multipart `files[]`) or as a single zip file.
+class CreateSkillBody
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCreateSkillBodyMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCreateSkillBodyMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCreateSkillBodyMetadata::DECODERS
+
+  # @return [Array_of_String] Skill files to upload (directory upload) or a single zip file.
+  attr_reader :files
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for CreateSkillBody.
-  # Uploads a skill either as a directory (multipart `files[]`) or as a single zip file.
-  class CreateSkillBody
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCreateSkillBodyMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCreateSkillBodyMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCreateSkillBodyMetadata::DECODERS
-
-    # @return [Array_of_String] Skill files to upload (directory upload) or a single zip file.
-    attr_reader :files
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalCreateSkillVersionBodyMetadata
-    FIELDS = {
-      files: 'files',
-      default: 'default'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      files
-    ].freeze
-    DECODERS = {}.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalCreateSkillVersionBodyMetadata
+  FIELDS = {
+    files: "files",
+    default: "default",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    files
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for CreateSkillVersionBody.
+# Uploads a new immutable version of a skill.
+class CreateSkillVersionBody
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalCreateSkillVersionBodyMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalCreateSkillVersionBodyMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalCreateSkillVersionBodyMetadata::DECODERS
+
+  # @return [Array_of_String] Skill files to upload (directory upload) or a single zip file.
+  attr_reader :files
+  # @return [Boolean] Whether to set this version as the default.
+  attr_reader :default
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for CreateSkillVersionBody.
-  # Uploads a new immutable version of a skill.
-  class CreateSkillVersionBody
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalCreateSkillVersionBodyMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalCreateSkillVersionBodyMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalCreateSkillVersionBodyMetadata::DECODERS
-
-    # @return [Array_of_String] Skill files to upload (directory upload) or a single zip file.
-    attr_reader :files
-    # @return [Boolean] Whether to set this version as the default.
-    attr_reader :default
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalDeletedSkillResourceMetadata
-    FIELDS = {
-      object: 'object',
-      deleted: 'deleted',
-      id: 'id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      deleted
-      id
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::DeletedSkillResourceObject.from_value(value)
-      end
-    }.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalDeletedSkillResourceMetadata
+  FIELDS = {
+    object: "object",
+    deleted: "deleted",
+    id: "id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    deleted
+    id
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::DeletedSkillResourceObject.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for DeletedSkillResource.
+# Typed representation of the `DeletedSkillResource` API schema.
+class DeletedSkillResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalDeletedSkillResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalDeletedSkillResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalDeletedSkillResourceMetadata::DECODERS
+
+  # @return [DeletedSkillResourceObject] Required enumerated value serialized in the `object` wire field.
+  attr_reader :object
+  # @return [Boolean] Required `boolean` value serialized in the `deleted` wire field.
+  attr_reader :deleted
+  # @return [String] Required `string` value serialized in the `id` wire field.
+  attr_reader :id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for DeletedSkillResource.
-  # Typed representation of the `DeletedSkillResource` API schema.
-  class DeletedSkillResource
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalDeletedSkillResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalDeletedSkillResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalDeletedSkillResourceMetadata::DECODERS
-
-    # @return [DeletedSkillResourceObject] Required enumerated value serialized in the `object` wire field.
-    attr_reader :object
-    # @return [Boolean] Required `boolean` value serialized in the `deleted` wire field.
-    attr_reader :deleted
-    # @return [String] Required `string` value serialized in the `id` wire field.
-    attr_reader :id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the DeletedSkillResourceObject SDK namespace.
-  module DeletedSkillResourceObject
-    SKILL_DELETED = 'skill.deleted'
-    VALUES = ['skill.deleted'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the DeletedSkillResourceObject SDK namespace.
+module DeletedSkillResourceObject
+  SKILL_DELETED = 'skill.deleted'
+  VALUES = ['skill.deleted'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalDeletedSkillVersionResourceMetadata
+  FIELDS = {
+    object: "object",
+    deleted: "deleted",
+    id: "id",
+    version: "version",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    deleted
+    id
+    version
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::DeletedSkillVersionResourceObject.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for DeletedSkillVersionResource.
+# Typed representation of the `DeletedSkillVersionResource` API schema.
+class DeletedSkillVersionResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalDeletedSkillVersionResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalDeletedSkillVersionResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalDeletedSkillVersionResourceMetadata::DECODERS
+
+  # @return [DeletedSkillVersionResourceObject] Required enumerated value serialized in the `object` wire field.
+  attr_reader :object
+  # @return [Boolean] Required `boolean` value serialized in the `deleted` wire field.
+  attr_reader :deleted
+  # @return [String] Required `string` value serialized in the `id` wire field.
+  attr_reader :id
+  # @return [String] The deleted skill version.
+  attr_reader :version
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalDeletedSkillVersionResourceMetadata
-    FIELDS = {
-      object: 'object',
-      deleted: 'deleted',
-      id: 'id',
-      version: 'version'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      deleted
-      id
-      version
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::DeletedSkillVersionResourceObject.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for DeletedSkillVersionResource.
-  # Typed representation of the `DeletedSkillVersionResource` API schema.
-  class DeletedSkillVersionResource
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalDeletedSkillVersionResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalDeletedSkillVersionResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalDeletedSkillVersionResourceMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [DeletedSkillVersionResourceObject] Required enumerated value serialized in the `object` wire field.
-    attr_reader :object
-    # @return [Boolean] Required `boolean` value serialized in the `deleted` wire field.
-    attr_reader :deleted
-    # @return [String] Required `string` value serialized in the `id` wire field.
-    attr_reader :id
-    # @return [String] The deleted skill version.
-    attr_reader :version
+# Defines the DeletedSkillVersionResourceObject SDK namespace.
+module DeletedSkillVersionResourceObject
+  SKILL_VERSION_DELETED = 'skill.version.deleted'
+  VALUES = ['skill.version.deleted'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalSetDefaultSkillVersionBodyMetadata
+  FIELDS = {
+    default_version: "default_version",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    default_version
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for SetDefaultSkillVersionBody.
+# Updates the default version pointer for a skill.
+class SetDefaultSkillVersionBody
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalSetDefaultSkillVersionBodyMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalSetDefaultSkillVersionBodyMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalSetDefaultSkillVersionBodyMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [String] The skill version number to set as default.
+  attr_reader :default_version
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the DeletedSkillVersionResourceObject SDK namespace.
-  module DeletedSkillVersionResourceObject
-    SKILL_VERSION_DELETED = 'skill.version.deleted'
-    VALUES = ['skill.version.deleted'].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalSetDefaultSkillVersionBodyMetadata
-    FIELDS = {
-      default_version: 'default_version'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      default_version
-    ].freeze
-    DECODERS = {}.freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalSkillListResourceMetadata
+  FIELDS = {
+    object: "object",
+    data: "data",
+    first_id: "first_id",
+    last_id: "last_id",
+    has_more: "has_more",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    data
+    first_id
+    last_id
+    has_more
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::SkillListResourceObject.from_value(value)
+    end,
+    data: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::SkillResource.from_hash(item) }
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    first_id
+    last_id
+  ].freeze
+end
+
+# API model for SkillListResource.
+# Typed representation of the `SkillListResource` API schema.
+class SkillListResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalSkillListResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalSkillListResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalSkillListResourceMetadata::DECODERS
+
+  # @return [SkillListResourceObject] The type of object returned, must be `list`.
+  attr_reader :object
+  # @return [Array_of_SkillResource] A list of items
+  attr_reader :data
+  # @return [String] Required `string` value serialized in the `first_id` wire field.
+  attr_reader :first_id
+  # @return [String] Required `string` value serialized in the `last_id` wire field.
+  attr_reader :last_id
+  # @return [Boolean] Whether there are more items available.
+  attr_reader :has_more
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for SetDefaultSkillVersionBody.
-  # Updates the default version pointer for a skill.
-  class SetDefaultSkillVersionBody
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalSetDefaultSkillVersionBodyMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalSetDefaultSkillVersionBodyMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalSetDefaultSkillVersionBodyMetadata::DECODERS
-
-    # @return [String] The skill version number to set as default.
-    attr_reader :default_version
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalSkillListResourceMetadata::NULLABLE_FIELDS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalSkillListResourceMetadata
-    FIELDS = {
-      object: 'object',
-      data: 'data',
-      first_id: 'first_id',
-      last_id: 'last_id',
-      has_more: 'has_more'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      data
-      first_id
-      last_id
-      has_more
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::SkillListResourceObject.from_value(value)
-      end,
-      data: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::SkillResource.from_hash(item) }
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      first_id
-      last_id
-    ].freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the SkillListResourceObject SDK namespace.
+module SkillListResourceObject
+  LIST = 'list'
+  VALUES = ['list'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalSkillResourceMetadata
+  FIELDS = {
+    id: "id",
+    object: "object",
+    name: "name",
+    description: "description",
+    created_at: "created_at",
+    default_version: "default_version",
+    latest_version: "latest_version",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+    object
+    name
+    description
+    created_at
+    default_version
+    latest_version
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::SkillResourceObject.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for SkillResource.
+# Typed representation of the `SkillResource` API schema.
+class SkillResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalSkillResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalSkillResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalSkillResourceMetadata::DECODERS
+
+  # @return [String] Unique identifier for the skill.
+  attr_reader :id
+  # @return [SkillResourceObject] The object type, which is `skill`.
+  attr_reader :object
+  # @return [String] Name of the skill.
+  attr_reader :name
+  # @return [String] Description of the skill.
+  attr_reader :description
+  # @return [Integer] Unix timestamp (seconds) for when the skill was created.
+  attr_reader :created_at
+  # @return [String] Default version for the skill.
+  attr_reader :default_version
+  # @return [String] Latest version for the skill.
+  attr_reader :latest_version
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for SkillListResource.
-  # Typed representation of the `SkillListResource` API schema.
-  class SkillListResource
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalSkillListResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalSkillListResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalSkillListResourceMetadata::DECODERS
-
-    # @return [SkillListResourceObject] The type of object returned, must be `list`.
-    attr_reader :object
-    # @return [Array_of_SkillResource] A list of items
-    attr_reader :data
-    # @return [String] Required `string` value serialized in the `first_id` wire field.
-    attr_reader :first_id
-    # @return [String] Required `string` value serialized in the `last_id` wire field.
-    attr_reader :last_id
-    # @return [Boolean] Whether there are more items available.
-    attr_reader :has_more
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalSkillListResourceMetadata::NULLABLE_FIELDS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the SkillListResourceObject SDK namespace.
-  module SkillListResourceObject
-    LIST = 'list'
-    VALUES = ['list'].freeze
-    def self.from_value(value)
-      value
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
+
+# Defines the SkillResourceObject SDK namespace.
+module SkillResourceObject
+  SKILL = 'skill'
+  VALUES = ['skill'].freeze
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalSkillVersionListResourceMetadata
+  FIELDS = {
+    object: "object",
+    data: "data",
+    first_id: "first_id",
+    last_id: "last_id",
+    has_more: "has_more",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    data
+    first_id
+    last_id
+    has_more
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::SkillVersionListResourceObject.from_value(value)
+    end,
+    data: lambda do |value|
+      value&.map { |item| ::OctridevOpenai::SkillVersionResource.from_hash(item) }
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    first_id
+    last_id
+  ].freeze
+end
+
+# API model for SkillVersionListResource.
+# Typed representation of the `SkillVersionListResource` API schema.
+class SkillVersionListResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalSkillVersionListResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalSkillVersionListResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalSkillVersionListResourceMetadata::DECODERS
+
+  # @return [SkillVersionListResourceObject] The type of object returned, must be `list`.
+  attr_reader :object
+  # @return [Array_of_SkillVersionResource] A list of items
+  attr_reader :data
+  # @return [String] Required `string` value serialized in the `first_id` wire field.
+  attr_reader :first_id
+  # @return [String] Required `string` value serialized in the `last_id` wire field.
+  attr_reader :last_id
+  # @return [Boolean] Whether there are more items available.
+  attr_reader :has_more
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalSkillResourceMetadata
-    FIELDS = {
-      id: 'id',
-      object: 'object',
-      name: 'name',
-      description: 'description',
-      created_at: 'created_at',
-      default_version: 'default_version',
-      latest_version: 'latest_version'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-      object
-      name
-      description
-      created_at
-      default_version
-      latest_version
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::SkillResourceObject.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalSkillVersionListResourceMetadata::NULLABLE_FIELDS)
   end
 
-  # API model for SkillResource.
-  # Typed representation of the `SkillResource` API schema.
-  class SkillResource
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalSkillResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalSkillResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalSkillResourceMetadata::DECODERS
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    # @return [String] Unique identifier for the skill.
-    attr_reader :id
-    # @return [SkillResourceObject] The object type, which is `skill`.
-    attr_reader :object
-    # @return [String] Name of the skill.
-    attr_reader :name
-    # @return [String] Description of the skill.
-    attr_reader :description
-    # @return [Integer] Unix timestamp (seconds) for when the skill was created.
-    attr_reader :created_at
-    # @return [String] Default version for the skill.
-    attr_reader :default_version
-    # @return [String] Latest version for the skill.
-    attr_reader :latest_version
+# Defines the SkillVersionListResourceObject SDK namespace.
+module SkillVersionListResourceObject
+  LIST = 'list'
+  VALUES = ['list'].freeze
+  def self.from_value(value)
+    value
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalSkillVersionResourceMetadata
+  FIELDS = {
+    object: "object",
+    id: "id",
+    skill_id: "skill_id",
+    version: "version",
+    created_at: "created_at",
+    name: "name",
+    description: "description",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    object
+    id
+    skill_id
+    version
+    created_at
+    name
+    description
+  ].freeze
+  DECODERS = {
+    object: lambda do |value|
+      ::OctridevOpenai::SkillVersionResourceObject.from_value(value)
+    end,
+  }.freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for SkillVersionResource.
+# Typed representation of the `SkillVersionResource` API schema.
+class SkillVersionResource
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalSkillVersionResourceMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalSkillVersionResourceMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalSkillVersionResourceMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [SkillVersionResourceObject] The object type, which is `skill.version`.
+  attr_reader :object
+  # @return [String] Unique identifier for the skill version.
+  attr_reader :id
+  # @return [String] Identifier of the skill for this version.
+  attr_reader :skill_id
+  # @return [String] Version number for this skill.
+  attr_reader :version
+  # @return [Integer] Unix timestamp (seconds) for when the version was created.
+  attr_reader :created_at
+  # @return [String] Name of the skill version.
+  attr_reader :name
+  # @return [String] Description of the skill version.
+  attr_reader :description
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the SkillResourceObject SDK namespace.
-  module SkillResourceObject
-    SKILL = 'skill'
-    VALUES = ['skill'].freeze
-    def self.from_value(value)
-      value
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalSkillVersionListResourceMetadata
-    FIELDS = {
-      object: 'object',
-      data: 'data',
-      first_id: 'first_id',
-      last_id: 'last_id',
-      has_more: 'has_more'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      data
-      first_id
-      last_id
-      has_more
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::SkillVersionListResourceObject.from_value(value)
-      end,
-      data: lambda do |value|
-        value&.map { |item| ::OctridevOpenai::SkillVersionResource.from_hash(item) }
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      first_id
-      last_id
-    ].freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # API model for SkillVersionListResource.
-  # Typed representation of the `SkillVersionListResource` API schema.
-  class SkillVersionListResource
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalSkillVersionListResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalSkillVersionListResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalSkillVersionListResourceMetadata::DECODERS
-
-    # @return [SkillVersionListResourceObject] The type of object returned, must be `list`.
-    attr_reader :object
-    # @return [Array_of_SkillVersionResource] A list of items
-    attr_reader :data
-    # @return [String] Required `string` value serialized in the `first_id` wire field.
-    attr_reader :first_id
-    # @return [String] Required `string` value serialized in the `last_id` wire field.
-    attr_reader :last_id
-    # @return [Boolean] Whether there are more items available.
-    attr_reader :has_more
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalSkillVersionListResourceMetadata::NULLABLE_FIELDS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+# Defines the SkillVersionResourceObject SDK namespace.
+module SkillVersionResourceObject
+  SKILL_VERSION = 'skill.version'
+  VALUES = ['skill.version'].freeze
+  def self.from_value(value)
+    value
   end
-
-  # Defines the SkillVersionListResourceObject SDK namespace.
-  module SkillVersionListResourceObject
-    LIST = 'list'
-    VALUES = ['list'].freeze
-    def self.from_value(value)
-      value
-    end
-  end
-
-  # Internal model hydration metadata.
-  class SdkInternalSkillVersionResourceMetadata
-    FIELDS = {
-      object: 'object',
-      id: 'id',
-      skill_id: 'skill_id',
-      version: 'version',
-      created_at: 'created_at',
-      name: 'name',
-      description: 'description'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      object
-      id
-      skill_id
-      version
-      created_at
-      name
-      description
-    ].freeze
-    DECODERS = {
-      object: lambda do |value|
-        ::OctridevOpenai::SkillVersionResourceObject.from_value(value)
-      end
-    }.freeze
-  end
-
-  # API model for SkillVersionResource.
-  # Typed representation of the `SkillVersionResource` API schema.
-  class SkillVersionResource
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalSkillVersionResourceMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalSkillVersionResourceMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalSkillVersionResourceMetadata::DECODERS
-
-    # @return [SkillVersionResourceObject] The object type, which is `skill.version`.
-    attr_reader :object
-    # @return [String] Unique identifier for the skill version.
-    attr_reader :id
-    # @return [String] Identifier of the skill for this version.
-    attr_reader :skill_id
-    # @return [String] Version number for this skill.
-    attr_reader :version
-    # @return [Integer] Unix timestamp (seconds) for when the version was created.
-    attr_reader :created_at
-    # @return [String] Name of the skill version.
-    attr_reader :name
-    # @return [String] Description of the skill version.
-    attr_reader :description
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
-  end
-
-  # Defines the SkillVersionResourceObject SDK namespace.
-  module SkillVersionResourceObject
-    SKILL_VERSION = 'skill.version'
-    VALUES = ['skill.version'].freeze
-    def self.from_value(value)
-      value
-    end
-  end
+end
 end

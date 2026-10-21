@@ -29,39 +29,36 @@ module OctridevOpenai
         request_options: nil,
         &block
       )
-        unless block
-          return enum_for(
-            __method__,
-            config: config,
-            thread_id: thread_id,
-            run_id: run_id,
-            tool_outputs: tool_outputs,
-            stream: stream,
-            request_options: request_options
-          )
-        end
+    return enum_for(
+          __method__,
+          config: config,
+          thread_id: thread_id,
+          run_id: run_id,
+          tool_outputs: tool_outputs,
+          stream: stream,
+          request_options: request_options,
+        ) unless block
         SdkClient.stream(
           'POST', [
-            '/threads/',
+            "/threads/",
             SdkClient.encode_path_segment(thread_id),
-            '/runs/',
+            "/runs/",
             SdkClient.encode_path_segment(run_id),
-            '/submit_tool_outputs'
+            "/submit_tool_outputs"
           ].join,
           config: config,
           body: {
             'tool_outputs' => tool_outputs,
-            'stream' => stream
+            'stream' => stream,
           },
           content_type: 'application/json',
           operation_id: 'submit_assistants_tool_outputs_to_run_stream',
           stream_format: :sse,
-          stream_media_type: 'text/event-stream',
+          stream_media_type: "text/event-stream",
           request_options: request_options,
           errors: { '429' => ::OctridevOpenai::ErrorResponse }
         ).each do |ev|
           break if ev.data == '[DONE]'
-
           decoded = JSON.parse(ev.data)
           block.call(SdkClient.decode_event(decoded, ::OctridevOpenai::AssistantStreamEvent))
         end

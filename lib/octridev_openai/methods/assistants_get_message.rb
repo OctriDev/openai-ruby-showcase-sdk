@@ -16,13 +16,19 @@ module OctridevOpenai
       # @param thread_id [String] The ID of the thread to which this message
       #   belongs.
       # @param message_id [String] The ID of the message to retrieve.
-      singleton_class.define_method(:get_message) do |config:, thread_id:, message_id:, request_options: nil|
+      singleton_class.define_method(:get_message) do |
+        config:,
+        thread_id:,
+        message_id:,
+        request_options: nil
+      |
+
         SdkClient.request(
           'GET',
           [
-            '/threads/',
+            "/threads/",
             SdkClient.encode_path_segment(thread_id),
-            '/messages/',
+            "/messages/",
             SdkClient.encode_path_segment(message_id)
           ].join,
           config: config,
@@ -30,7 +36,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'get_message',
           request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse }
+          errors: { '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
     end

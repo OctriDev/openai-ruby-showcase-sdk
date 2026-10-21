@@ -5,72 +5,73 @@
 
 # shared_model domain models
 module OctridevOpenai
-  # Defines the ModelIdsShared SDK value decoder.
-  module ModelIdsShared
-    def self.from_value(value)
-      value
-    end
+# Defines the ModelIdsShared SDK value decoder.
+module ModelIdsShared
+  def self.from_value(value)
+    value
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalModelResponsePropertiesMetadata
+  FIELDS = {
+    metadata: "metadata",
+    top_logprobs: "top_logprobs",
+    temperature: "temperature",
+    top_p: "top_p",
+    user: "user",
+    safety_identifier: "safety_identifier",
+    prompt_cache_key: "prompt_cache_key",
+    prompt_cache_retention: "prompt_cache_retention",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+  ].freeze
+  DECODERS = {
+    metadata: lambda do |value|
+      ::OctridevOpenai::Metadata.from_hash(value)
+    end,
+    prompt_cache_retention: lambda do |value|
+      ::OctridevOpenai::ModelResponsePropertiesPromptCacheRetentionVariant0.from_value(value)
+    end,
+  }.freeze
+end
+
+# API model for ModelResponseProperties.
+# Typed representation of the `ModelResponseProperties` API schema.
+class ModelResponseProperties
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalModelResponsePropertiesMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalModelResponsePropertiesMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalModelResponsePropertiesMetadata::DECODERS
+
+  # @return [Metadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
+  attr_reader :metadata
+  # @return [Integer] Optional API value serialized in the `top_logprobs` wire field.
+  attr_reader :top_logprobs
+  # @return [Float] Optional API value serialized in the `temperature` wire field.
+  attr_reader :temperature
+  # @return [Float] Optional API value serialized in the `top_p` wire field.
+  attr_reader :top_p
+  # @return [String] This field is being replaced by `safety_identifier` and `prompt_cache_key`. Use `prompt_cache_key` instead to maintain caching optimizations. A stable identifier for your end-users. Used to boost cache hit rates by better bucketing similar requests and to help OpenAI detect and prevent abuse. Learn more.
+  attr_reader :user
+  # @return [String] Optional API value serialized in the `safety_identifier` wire field.
+  attr_reader :safety_identifier
+  # @return [String] Optional `string` value serialized in the `prompt_cache_key` wire field.
+  attr_reader :prompt_cache_key
+  # @return [ModelResponsePropertiesPromptCacheRetentionVariant0] Optional API value serialized in the `prompt_cache_retention` wire field.
+  attr_reader :prompt_cache_retention
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalModelResponsePropertiesMetadata
-    FIELDS = {
-      metadata: 'metadata',
-      top_logprobs: 'top_logprobs',
-      temperature: 'temperature',
-      top_p: 'top_p',
-      user: 'user',
-      safety_identifier: 'safety_identifier',
-      prompt_cache_key: 'prompt_cache_key',
-      prompt_cache_retention: 'prompt_cache_retention'
-    }.freeze
-    REQUIRED_FIELDS = %i[].freeze
-    DECODERS = {
-      metadata: lambda do |value|
-        ::OctridevOpenai::Metadata.from_hash(value)
-      end,
-      prompt_cache_retention: lambda do |value|
-        ::OctridevOpenai::ModelResponsePropertiesPromptCacheRetentionVariant0.from_value(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ModelResponseProperties.
-  # Typed representation of the `ModelResponseProperties` API schema.
-  class ModelResponseProperties
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalModelResponsePropertiesMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalModelResponsePropertiesMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalModelResponsePropertiesMetadata::DECODERS
-
-    # @return [Metadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
-    attr_reader :metadata
-    # @return [Integer] Optional API value serialized in the `top_logprobs` wire field.
-    attr_reader :top_logprobs
-    # @return [Float] Optional API value serialized in the `temperature` wire field.
-    attr_reader :temperature
-    # @return [Float] Optional API value serialized in the `top_p` wire field.
-    attr_reader :top_p
-    # @return [String] This field is being replaced by `safety_identifier` and `prompt_cache_key`. Use `prompt_cache_key` instead to maintain caching optimizations. A stable identifier for your end-users. Used to boost cache hit rates by better bucketing similar requests and to help OpenAI detect and prevent abuse. Learn more.
-    attr_reader :user
-    # @return [String] Optional API value serialized in the `safety_identifier` wire field.
-    attr_reader :safety_identifier
-    # @return [String] Optional `string` value serialized in the `prompt_cache_key` wire field.
-    attr_reader :prompt_cache_key
-    # @return [ModelResponsePropertiesPromptCacheRetentionVariant0] Optional API value serialized in the `prompt_cache_retention` wire field.
-    attr_reader :prompt_cache_retention
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 end

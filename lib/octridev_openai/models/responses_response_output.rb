@@ -5,222 +5,219 @@
 
 # responses_response_output domain models
 module OctridevOpenai
-  # Internal model hydration metadata.
-  class SdkInternalResponseOutputItemAddedEventMetadata
-    FIELDS = {
-      type: 'type',
-      output_index: 'output_index',
-      sequence_number: 'sequence_number',
-      item: 'item'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      output_index
-      sequence_number
-      item
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ResponseOutputItemAddedEventType.from_value(value)
-      end,
-      item: lambda do |value|
-        ::OctridevOpenai::OutputItem.from_hash(value)
-      end
-    }.freeze
+# Internal model hydration metadata.
+class SdkInternalResponseOutputItemAddedEventMetadata
+  FIELDS = {
+    type: "type",
+    output_index: "output_index",
+    sequence_number: "sequence_number",
+    item: "item",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    output_index
+    sequence_number
+    item
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ResponseOutputItemAddedEventType.from_value(value)
+    end,
+    item: lambda do |value|
+      ::OctridevOpenai::OutputItem.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for ResponseOutputItemAddedEvent.
+# Emitted when a new output item is added.
+class ResponseOutputItemAddedEvent
+  include ResponseStreamEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalResponseOutputItemAddedEventMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalResponseOutputItemAddedEventMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalResponseOutputItemAddedEventMetadata::DECODERS
+
+  # @return [ResponseOutputItemAddedEventType] The type of the event. Always `response.output_item.added`.
+  attr_reader :type
+  # @return [Integer] The index of the output item that was added.
+  attr_reader :output_index
+  # @return [Integer] The sequence number of this event.
+  attr_reader :sequence_number
+  # @return [OutputItem] The output item that was added. For reasoning items, `encrypted_content` may be incomplete while the item is in progress. Use the reasoning item from the corresponding `response.output_item.done` event when passing it as input to a subsequent request.
+  attr_reader :item
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # API model for ResponseOutputItemAddedEvent.
-  # Emitted when a new output item is added.
-  class ResponseOutputItemAddedEvent
-    include ResponseStreamEvent
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalResponseOutputItemAddedEventMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalResponseOutputItemAddedEventMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalResponseOutputItemAddedEventMetadata::DECODERS
-
-    # @return [ResponseOutputItemAddedEventType] The type of the event. Always `response.output_item.added`.
-    attr_reader :type
-    # @return [Integer] The index of the output item that was added.
-    attr_reader :output_index
-    # @return [Integer] The sequence number of this event.
-    attr_reader :sequence_number
-    # @return [OutputItem] The output item that was added. For reasoning items, `encrypted_content` may be incomplete while the item is in progress. Use the reasoning item from the corresponding `response.output_item.done` event when passing it as input to a subsequent request.
-    attr_reader :item
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # Defines the ResponseOutputItemAddedEventType SDK namespace.
-  module ResponseOutputItemAddedEventType
-    RESPONSE_OUTPUT_ITEM_ADDED = 'response.output_item.added'
-    VALUES = ['response.output_item.added'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-      raise SdkValidationError.new('ResponseOutputItemAddedEventType', 'enum', "Unknown ResponseOutputItemAddedEventType: #{value}")
-    end
+# Defines the ResponseOutputItemAddedEventType SDK namespace.
+module ResponseOutputItemAddedEventType
+  RESPONSE_OUTPUT_ITEM_ADDED = 'response.output_item.added'
+  VALUES = ['response.output_item.added'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
+
+    raise SdkValidationError.new('ResponseOutputItemAddedEventType', 'enum', "Unknown ResponseOutputItemAddedEventType: #{value}")
+  end
+end
+
+# Internal model hydration metadata.
+class SdkInternalResponseOutputItemDoneEventMetadata
+  FIELDS = {
+    type: "type",
+    output_index: "output_index",
+    sequence_number: "sequence_number",
+    item: "item",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    output_index
+    sequence_number
+    item
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ResponseOutputItemDoneEventType.from_value(value)
+    end,
+    item: lambda do |value|
+      ::OctridevOpenai::OutputItem.from_hash(value)
+    end,
+  }.freeze
+end
+
+# API model for ResponseOutputItemDoneEvent.
+# Emitted when an output item is marked done.
+class ResponseOutputItemDoneEvent
+  include ResponseStreamEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalResponseOutputItemDoneEventMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalResponseOutputItemDoneEventMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalResponseOutputItemDoneEventMetadata::DECODERS
+
+  # @return [ResponseOutputItemDoneEventType] The type of the event. Always `response.output_item.done`.
+  attr_reader :type
+  # @return [Integer] The index of the output item that was marked done.
+  attr_reader :output_index
+  # @return [Integer] The sequence number of this event.
+  attr_reader :sequence_number
+  # @return [OutputItem] The output item that was marked done.
+  attr_reader :item
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalResponseOutputItemDoneEventMetadata
-    FIELDS = {
-      type: 'type',
-      output_index: 'output_index',
-      sequence_number: 'sequence_number',
-      item: 'item'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      output_index
-      sequence_number
-      item
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ResponseOutputItemDoneEventType.from_value(value)
-      end,
-      item: lambda do |value|
-        ::OctridevOpenai::OutputItem.from_hash(value)
-      end
-    }.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for ResponseOutputItemDoneEvent.
-  # Emitted when an output item is marked done.
-  class ResponseOutputItemDoneEvent
-    include ResponseStreamEvent
+  def to_h
+    SdkModel.to_h(self, FIELDS)
+  end
+end
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalResponseOutputItemDoneEventMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalResponseOutputItemDoneEventMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalResponseOutputItemDoneEventMetadata::DECODERS
+# Defines the ResponseOutputItemDoneEventType SDK namespace.
+module ResponseOutputItemDoneEventType
+  RESPONSE_OUTPUT_ITEM_DONE = 'response.output_item.done'
+  VALUES = ['response.output_item.done'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    # @return [ResponseOutputItemDoneEventType] The type of the event. Always `response.output_item.done`.
-    attr_reader :type
-    # @return [Integer] The index of the output item that was marked done.
-    attr_reader :output_index
-    # @return [Integer] The sequence number of this event.
-    attr_reader :sequence_number
-    # @return [OutputItem] The output item that was marked done.
-    attr_reader :item
+    raise SdkValidationError.new('ResponseOutputItemDoneEventType', 'enum', "Unknown ResponseOutputItemDoneEventType: #{value}")
+  end
+end
 
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
+# Internal model hydration metadata.
+class SdkInternalResponseOutputTextAnnotationAddedEventMetadata
+  FIELDS = {
+    type: "type",
+    item_id: "item_id",
+    output_index: "output_index",
+    content_index: "content_index",
+    annotation_index: "annotation_index",
+    sequence_number: "sequence_number",
+    annotation: "annotation",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    type
+    item_id
+    output_index
+    content_index
+    annotation_index
+    sequence_number
+    annotation
+  ].freeze
+  DECODERS = {
+    type: lambda do |value|
+      ::OctridevOpenai::ResponseOutputTextAnnotationAddedEventType.from_value(value)
+    end,
+    annotation: lambda do |value|
+      ::OctridevOpenai::Annotation.from_hash(value)
+    end,
+  }.freeze
+  NULLABLE_FIELDS = %i[
+    annotation
+  ].freeze
+end
 
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
+# API model for ResponseOutputTextAnnotationAddedEvent.
+# Emitted when an annotation is added to output text content.
+class ResponseOutputTextAnnotationAddedEvent
+  include ResponseStreamEvent
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalResponseOutputTextAnnotationAddedEventMetadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalResponseOutputTextAnnotationAddedEventMetadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalResponseOutputTextAnnotationAddedEventMetadata::DECODERS
 
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  # @return [ResponseOutputTextAnnotationAddedEventType] The type of the event. Always 'response.output_text.annotation.added'.
+  attr_reader :type
+  # @return [String] The unique identifier of the item to which the annotation is being added.
+  attr_reader :item_id
+  # @return [Integer] The index of the output item in the response's output array.
+  attr_reader :output_index
+  # @return [Integer] The index of the content part within the output item.
+  attr_reader :content_index
+  # @return [Integer] The index of the annotation within the content part.
+  attr_reader :annotation_index
+  # @return [Integer] The sequence number of this event.
+  attr_reader :sequence_number
+  # @return [Annotation] The annotation object being added. (See annotation schema for details.)
+  attr_reader :annotation
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Defines the ResponseOutputItemDoneEventType SDK namespace.
-  module ResponseOutputItemDoneEventType
-    RESPONSE_OUTPUT_ITEM_DONE = 'response.output_item.done'
-    VALUES = ['response.output_item.done'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('ResponseOutputItemDoneEventType', 'enum', "Unknown ResponseOutputItemDoneEventType: #{value}")
-    end
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalResponseOutputTextAnnotationAddedEventMetadata::NULLABLE_FIELDS)
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalResponseOutputTextAnnotationAddedEventMetadata
-    FIELDS = {
-      type: 'type',
-      item_id: 'item_id',
-      output_index: 'output_index',
-      content_index: 'content_index',
-      annotation_index: 'annotation_index',
-      sequence_number: 'sequence_number',
-      annotation: 'annotation'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      type
-      item_id
-      output_index
-      content_index
-      annotation_index
-      sequence_number
-      annotation
-    ].freeze
-    DECODERS = {
-      type: lambda do |value|
-        ::OctridevOpenai::ResponseOutputTextAnnotationAddedEventType.from_value(value)
-      end,
-      annotation: lambda do |value|
-        ::OctridevOpenai::Annotation.from_hash(value)
-      end
-    }.freeze
-    NULLABLE_FIELDS = %i[
-      annotation
-    ].freeze
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 
-  # API model for ResponseOutputTextAnnotationAddedEvent.
-  # Emitted when an annotation is added to output text content.
-  class ResponseOutputTextAnnotationAddedEvent
-    include ResponseStreamEvent
+# Defines the ResponseOutputTextAnnotationAddedEventType SDK namespace.
+module ResponseOutputTextAnnotationAddedEventType
+  RESPONSE_OUTPUT_TEXT_ANNOTATION_ADDED = 'response.output_text.annotation.added'
+  VALUES = ['response.output_text.annotation.added'].freeze
+  def self.from_value(value)
+    return value if VALUES.include?(value)
 
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalResponseOutputTextAnnotationAddedEventMetadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalResponseOutputTextAnnotationAddedEventMetadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalResponseOutputTextAnnotationAddedEventMetadata::DECODERS
-
-    # @return [ResponseOutputTextAnnotationAddedEventType] The type of the event. Always 'response.output_text.annotation.added'.
-    attr_reader :type
-    # @return [String] The unique identifier of the item to which the annotation is being added.
-    attr_reader :item_id
-    # @return [Integer] The index of the output item in the response's output array.
-    attr_reader :output_index
-    # @return [Integer] The index of the content part within the output item.
-    attr_reader :content_index
-    # @return [Integer] The index of the annotation within the content part.
-    attr_reader :annotation_index
-    # @return [Integer] The sequence number of this event.
-    attr_reader :sequence_number
-    # @return [Annotation] The annotation object being added. (See annotation schema for details.)
-    attr_reader :annotation
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalResponseOutputTextAnnotationAddedEventMetadata::NULLABLE_FIELDS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+    raise SdkValidationError.new('ResponseOutputTextAnnotationAddedEventType', 'enum', "Unknown ResponseOutputTextAnnotationAddedEventType: #{value}")
   end
-
-  # Defines the ResponseOutputTextAnnotationAddedEventType SDK namespace.
-  module ResponseOutputTextAnnotationAddedEventType
-    RESPONSE_OUTPUT_TEXT_ANNOTATION_ADDED = 'response.output_text.annotation.added'
-    VALUES = ['response.output_text.annotation.added'].freeze
-    def self.from_value(value)
-      return value if VALUES.include?(value)
-
-      raise SdkValidationError.new('ResponseOutputTextAnnotationAddedEventType', 'enum', "Unknown ResponseOutputTextAnnotationAddedEventType: #{value}")
-    end
-  end
+end
 end

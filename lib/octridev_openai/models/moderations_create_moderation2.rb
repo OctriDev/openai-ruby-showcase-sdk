@@ -5,52 +5,52 @@
 
 # moderations domain models
 module OctridevOpenai
-  # Defines the CreateModerationResponseResultsItemCategoryAppliedInputTypesSX95bf977d69 SDK namespace.
-  module CreateModerationResponseResultsItemCategoryAppliedInputTypesSX95bf977d69
-    TEXT = 'text'
-    IMAGE = 'image'
-    VALUES = %w[text image].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the CreateModerationResponseResultsItemCategoryAppliedInputTypesSX95bf977d69 SDK namespace.
+module CreateModerationResponseResultsItemCategoryAppliedInputTypesSX95bf977d69
+  TEXT = 'text'
+  IMAGE = 'image'
+  VALUES = ['text', 'image'].freeze
+  def self.from_value(value)
+    value
   end
+end
 
-  # Defines the CreateModerationResponseResultsItemCategoryAppliedInputTypesSexualItem SDK namespace.
-  module CreateModerationResponseResultsItemCategoryAppliedInputTypesSexualItem
-    TEXT = 'text'
-    IMAGE = 'image'
-    VALUES = %w[text image].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the CreateModerationResponseResultsItemCategoryAppliedInputTypesSexualItem SDK namespace.
+module CreateModerationResponseResultsItemCategoryAppliedInputTypesSexualItem
+  TEXT = 'text'
+  IMAGE = 'image'
+  VALUES = ['text', 'image'].freeze
+  def self.from_value(value)
+    value
   end
+end
 
-  # Defines the CreateModerationResponseResultsItemCategoryAppliedInputTypesSX612f28e753 SDK namespace.
-  module CreateModerationResponseResultsItemCategoryAppliedInputTypesSX612f28e753
-    TEXT = 'text'
-    VALUES = ['text'].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the CreateModerationResponseResultsItemCategoryAppliedInputTypesSX612f28e753 SDK namespace.
+module CreateModerationResponseResultsItemCategoryAppliedInputTypesSX612f28e753
+  TEXT = 'text'
+  VALUES = ['text'].freeze
+  def self.from_value(value)
+    value
   end
+end
 
-  # Defines the CreateModerationResponseResultsItemCategoryAppliedInputTypesViolenceItem SDK namespace.
-  module CreateModerationResponseResultsItemCategoryAppliedInputTypesViolenceItem
-    TEXT = 'text'
-    IMAGE = 'image'
-    VALUES = %w[text image].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the CreateModerationResponseResultsItemCategoryAppliedInputTypesViolenceItem SDK namespace.
+module CreateModerationResponseResultsItemCategoryAppliedInputTypesViolenceItem
+  TEXT = 'text'
+  IMAGE = 'image'
+  VALUES = ['text', 'image'].freeze
+  def self.from_value(value)
+    value
   end
+end
 
-  # Defines the CreateModerationResponseResultsItemCategoryAppliedInputTypesVX143234c62c SDK namespace.
-  module CreateModerationResponseResultsItemCategoryAppliedInputTypesVX143234c62c
-    TEXT = 'text'
-    IMAGE = 'image'
-    VALUES = %w[text image].freeze
-    def self.from_value(value)
-      value
-    end
+# Defines the CreateModerationResponseResultsItemCategoryAppliedInputTypesVX143234c62c SDK namespace.
+module CreateModerationResponseResultsItemCategoryAppliedInputTypesVX143234c62c
+  TEXT = 'text'
+  IMAGE = 'image'
+  VALUES = ['text', 'image'].freeze
+  def self.from_value(value)
+    value
   end
+end
 end

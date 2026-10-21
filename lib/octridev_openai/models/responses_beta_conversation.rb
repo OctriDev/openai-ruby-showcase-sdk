@@ -5,50 +5,49 @@
 
 # responses_beta_conversation domain models
 module OctridevOpenai
-  # Defines the BetaConversationParam SDK namespace.
-  module BetaConversationParam
-    def self.from_hash(hash)
-      return hash if hash.is_a?(::String)
+# Defines the BetaConversationParam SDK namespace.
+module BetaConversationParam
+  def self.from_hash(hash)
+    return hash if hash.is_a?(::String)
+    return BetaConversationParam2.from_hash(hash)
+  end
+end
 
-      BetaConversationParam2.from_hash(hash)
-    end
+# Internal model hydration metadata.
+class SdkInternalBetaConversationParam2Metadata
+  FIELDS = {
+    id: "id",
+  }.freeze
+  REQUIRED_FIELDS = %i[
+    id
+  ].freeze
+  DECODERS = {
+  }.freeze
+end
+
+# API model for BetaConversationParam2.
+# The conversation that this response belongs to.
+class BetaConversationParam2
+  include BetaConversationParam
+  CONSTRUCTION_SURFACE = :named
+  FIELDS = SdkInternalBetaConversationParam2Metadata::FIELDS
+  REQUIRED_FIELDS = SdkInternalBetaConversationParam2Metadata::REQUIRED_FIELDS
+  DECODERS = SdkInternalBetaConversationParam2Metadata::DECODERS
+
+  # @return [String] The unique ID of the conversation.
+  attr_reader :id
+
+  def initialize(**attributes)
+    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+    freeze
   end
 
-  # Internal model hydration metadata.
-  class SdkInternalBetaConversationParam2Metadata
-    FIELDS = {
-      id: 'id'
-    }.freeze
-    REQUIRED_FIELDS = %i[
-      id
-    ].freeze
-    DECODERS = {}.freeze
+  def self.from_hash(data)
+    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
   end
 
-  # API model for BetaConversationParam2.
-  # The conversation that this response belongs to.
-  class BetaConversationParam2
-    include BetaConversationParam
-
-    CONSTRUCTION_SURFACE = :named
-    FIELDS = SdkInternalBetaConversationParam2Metadata::FIELDS
-    REQUIRED_FIELDS = SdkInternalBetaConversationParam2Metadata::REQUIRED_FIELDS
-    DECODERS = SdkInternalBetaConversationParam2Metadata::DECODERS
-
-    # @return [String] The unique ID of the conversation.
-    attr_reader :id
-
-    def initialize(**attributes)
-      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-      freeze
-    end
-
-    def self.from_hash(data)
-      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-    end
-
-    def to_h
-      SdkModel.to_h(self, FIELDS)
-    end
+  def to_h
+    SdkModel.to_h(self, FIELDS)
   end
+end
 end
