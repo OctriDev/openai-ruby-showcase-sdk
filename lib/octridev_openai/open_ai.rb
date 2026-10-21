@@ -6560,14 +6560,14 @@ module OctridevOpenai
     # Creates or replaces a project's hard spend limit. Supply `threshold_amount`, `currency`, and `interval` to set the spending threshold and the period used to evaluate it. The response includes the resulting limit and its enforcement state.
     #
     # Create or replace a project's hard spend limit.
-    def update_project(
+    def update(
       project_id:,
       threshold_amount:,
       currency:,
       interval:,
       request_options: nil
     )
-      ::OctridevOpenai::Methods::SpendLimits.update_spend_limits_project(
+      ::OctridevOpenai::Methods::SpendLimits.update_project_spend_limit(
         config: @config,
         project_id: project_id,
         threshold_amount: threshold_amount,
