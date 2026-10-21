@@ -5,122 +5,122 @@
 
 # agents_turn domain models
 module OctridevOpenai
-# Defines the TurnObjectResource SDK namespace.
-module TurnObjectResource
-  AGENT_SESSION_TURN = 'agent.session.turn'
-  VALUES = ['agent.session.turn'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalTurnResourceMetadata
-  FIELDS = {
-    id: "id",
-    object: "object",
-    session_id: "session_id",
-    agent_id: "agent_id",
-    subagent_id: "subagent_id",
-    status: "status",
-    created_at: "created_at",
-    started_at: "started_at",
-    completed_at: "completed_at",
-    error: "error",
-    usage: "usage",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    object
-    session_id
-    agent_id
-    subagent_id
-    status
-    created_at
-    started_at
-    completed_at
-    error
-    usage
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::TurnObjectResource.from_value(value)
-    end,
-    status: lambda do |value|
-      ::OctridevOpenai::TurnStatusResource.from_value(value)
-    end,
-    error: lambda do |value|
-      ::OctridevOpenai::SessionTurnErrorResource.from_hash(value)
-    end,
-    usage: lambda do |value|
-      ::OctridevOpenai::TokenUsageResource.from_hash(value)
-    end,
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    subagent_id
-    started_at
-    completed_at
-    error
-    usage
-  ].freeze
-end
-
-# API model for TurnResource.
-# The canonical public representation of a session turn.
-class TurnResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalTurnResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalTurnResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalTurnResourceMetadata::DECODERS
-
-  # @return [String] The ID of the turn.
-  attr_reader :id
-  # @return [TurnObjectResource] The object type. Always `agent.session.turn`.
-  attr_reader :object
-  # @return [String] The ID of the session that owns the turn.
-  attr_reader :session_id
-  # @return [String] The ID of the agent that ran the turn.
-  attr_reader :agent_id
-  # @return [String] The ID of the subagent that ran the turn, if applicable.
-  attr_reader :subagent_id
-  # @return [TurnStatusResource] The current status of the turn.
-  attr_reader :status
-  # @return [Integer] The Unix timestamp, in seconds, used to order the turn by creation time. Subagent turns use their start time, falling back to completion time or the subagent opening time when the preceding timestamps are unavailable.
-  attr_reader :created_at
-  # @return [Integer] The Unix timestamp, in seconds, when the turn started.
-  attr_reader :started_at
-  # @return [Integer] The Unix timestamp, in seconds, when the turn reached a terminal state.
-  attr_reader :completed_at
-  # @return [SessionTurnErrorResource] A customer-safe error. Non-null only for a failed turn.
-  attr_reader :error
-  # @return [TokenUsageResource] Best-effort token usage for the turn, or null if unknown. Recorded usage may change.
-  attr_reader :usage
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the TurnObjectResource SDK namespace.
+  module TurnObjectResource
+    AGENT_SESSION_TURN = 'agent.session.turn'
+    VALUES = ['agent.session.turn'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalTurnResourceMetadata::NULLABLE_FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalTurnResourceMetadata
+    FIELDS = {
+      id: 'id',
+      object: 'object',
+      session_id: 'session_id',
+      agent_id: 'agent_id',
+      subagent_id: 'subagent_id',
+      status: 'status',
+      created_at: 'created_at',
+      started_at: 'started_at',
+      completed_at: 'completed_at',
+      error: 'error',
+      usage: 'usage'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      object
+      session_id
+      agent_id
+      subagent_id
+      status
+      created_at
+      started_at
+      completed_at
+      error
+      usage
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::TurnObjectResource.from_value(value)
+      end,
+      status: lambda do |value|
+        ::OctridevOpenai::TurnStatusResource.from_value(value)
+      end,
+      error: lambda do |value|
+        ::OctridevOpenai::SessionTurnErrorResource.from_hash(value)
+      end,
+      usage: lambda do |value|
+        ::OctridevOpenai::TokenUsageResource.from_hash(value)
+      end
+    }.freeze
+    NULLABLE_FIELDS = %i[
+      subagent_id
+      started_at
+      completed_at
+      error
+      usage
+    ].freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for TurnResource.
+  # The canonical public representation of a session turn.
+  class TurnResource
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalTurnResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalTurnResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalTurnResourceMetadata::DECODERS
 
-# Defines the TurnStatusResource SDK namespace.
-module TurnStatusResource
-  QUEUED = 'queued'
-  IN_PROGRESS = 'in_progress'
-  WAITING = 'waiting'
-  COMPLETED = 'completed'
-  FAILED = 'failed'
-  CANCELLED = 'cancelled'
-  VALUES = ['queued', 'in_progress', 'waiting', 'completed', 'failed', 'cancelled'].freeze
-  def self.from_value(value)
-    value
+    # @return [String] The ID of the turn.
+    attr_reader :id
+    # @return [TurnObjectResource] The object type. Always `agent.session.turn`.
+    attr_reader :object
+    # @return [String] The ID of the session that owns the turn.
+    attr_reader :session_id
+    # @return [String] The ID of the agent that ran the turn.
+    attr_reader :agent_id
+    # @return [String] The ID of the subagent that ran the turn, if applicable.
+    attr_reader :subagent_id
+    # @return [TurnStatusResource] The current status of the turn.
+    attr_reader :status
+    # @return [Integer] The Unix timestamp, in seconds, used to order the turn by creation time. Subagent turns use their start time, falling back to completion time or the subagent opening time when the preceding timestamps are unavailable.
+    attr_reader :created_at
+    # @return [Integer] The Unix timestamp, in seconds, when the turn started.
+    attr_reader :started_at
+    # @return [Integer] The Unix timestamp, in seconds, when the turn reached a terminal state.
+    attr_reader :completed_at
+    # @return [SessionTurnErrorResource] A customer-safe error. Non-null only for a failed turn.
+    attr_reader :error
+    # @return [TokenUsageResource] Best-effort token usage for the turn, or null if unknown. Recorded usage may change.
+    attr_reader :usage
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalTurnResourceMetadata::NULLABLE_FIELDS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
+
+  # Defines the TurnStatusResource SDK namespace.
+  module TurnStatusResource
+    QUEUED = 'queued'
+    IN_PROGRESS = 'in_progress'
+    WAITING = 'waiting'
+    COMPLETED = 'completed'
+    FAILED = 'failed'
+    CANCELLED = 'cancelled'
+    VALUES = %w[queued in_progress waiting completed failed cancelled].freeze
+    def self.from_value(value)
+      value
+    end
+  end
 end

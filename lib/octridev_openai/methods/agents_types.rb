@@ -12,11 +12,11 @@ module OctridevOpenai
       # Internal model hydration metadata.
       class SdkInternalListAgentSessionSubagentsResponseMetadata
         FIELDS = {
-          object: "object",
-          data: "data",
-          first_id: "first_id",
-          last_id: "last_id",
-          has_more: "has_more",
+          object: 'object',
+          data: 'data',
+          first_id: 'first_id',
+          last_id: 'last_id',
+          has_more: 'has_more'
         }.freeze
         REQUIRED_FIELDS = %i[
           object
@@ -31,7 +31,7 @@ module OctridevOpenai
           end,
           data: lambda do |value|
             value&.map { |item| ::OctridevOpenai::SubagentResource.from_hash(item) }
-          end,
+          end
         }.freeze
         NULLABLE_FIELDS = %i[
           first_id

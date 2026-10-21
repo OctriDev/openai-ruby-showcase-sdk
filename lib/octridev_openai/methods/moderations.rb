@@ -24,20 +24,19 @@ module OctridevOpenai
         model: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
-          "/moderations",
+          '/moderations',
           config: config,
           body: {
             'input' => input,
-            'model' => model,
+            'model' => model
           },
           return_type: ::OctridevOpenai::CreateModerationResponse,
           decoder: :json,
           operation_id: 'create_moderation',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
     end

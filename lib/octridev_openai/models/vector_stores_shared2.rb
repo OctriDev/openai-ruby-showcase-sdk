@@ -5,675 +5,672 @@
 
 # vector_stores domain models
 module OctridevOpenai
-# API model for StaticChunkingStrategyResponseParam.
-# Typed representation of the `StaticChunkingStrategyResponseParam` API schema.
-class StaticChunkingStrategyResponseParam
-  include VectorStoreFileObjectChunkingStrategy
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalStaticChunkingStrategyResponseParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalStaticChunkingStrategyResponseParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalStaticChunkingStrategyResponseParamMetadata::DECODERS
+  # API model for StaticChunkingStrategyResponseParam.
+  # Typed representation of the `StaticChunkingStrategyResponseParam` API schema.
+  class StaticChunkingStrategyResponseParam
+    include VectorStoreFileObjectChunkingStrategy
 
-  # @return [StaticChunkingStrategyResponseParamType] Always `static`.
-  attr_reader :type
-  # @return [StaticChunkingStrategy] Required object value serialized in the `static` wire field.
-  attr_reader :static
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalStaticChunkingStrategyResponseParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalStaticChunkingStrategyResponseParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalStaticChunkingStrategyResponseParamMetadata::DECODERS
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    # @return [StaticChunkingStrategyResponseParamType] Always `static`.
+    attr_reader :type
+    # @return [StaticChunkingStrategy] Required object value serialized in the `static` wire field.
+    attr_reader :static
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the StaticChunkingStrategyResponseParamType SDK namespace.
+  module StaticChunkingStrategyResponseParamType
+    STATIC = 'static'
+    VALUES = ['static'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('StaticChunkingStrategyResponseParamType', 'enum', "Unknown StaticChunkingStrategyResponseParamType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the StaticChunkingStrategyResponseParamType SDK namespace.
-module StaticChunkingStrategyResponseParamType
-  STATIC = 'static'
-  VALUES = ['static'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('StaticChunkingStrategyResponseParamType', 'enum', "Unknown StaticChunkingStrategyResponseParamType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalUpdateVectorStoreFileAttributesRequestMetadata
-  FIELDS = {
-    attributes: "attributes",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    attributes
-  ].freeze
-  DECODERS = {
-    attributes: lambda do |value|
-      ::OctridevOpenai::VectorStoreFileAttributes.from_hash(value)
-    end,
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    attributes
-  ].freeze
-end
-
-# API model for UpdateVectorStoreFileAttributesRequest.
-# Typed representation of the `UpdateVectorStoreFileAttributesRequest` API schema.
-class UpdateVectorStoreFileAttributesRequest
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalUpdateVectorStoreFileAttributesRequestMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalUpdateVectorStoreFileAttributesRequestMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalUpdateVectorStoreFileAttributesRequestMetadata::DECODERS
-
-  # @return [VectorStoreFileAttributes] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters, booleans, or numbers.
-  attr_reader :attributes
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalUpdateVectorStoreFileAttributesRequestMetadata
+    FIELDS = {
+      attributes: 'attributes'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      attributes
+    ].freeze
+    DECODERS = {
+      attributes: lambda do |value|
+        ::OctridevOpenai::VectorStoreFileAttributes.from_hash(value)
+      end
+    }.freeze
+    NULLABLE_FIELDS = %i[
+      attributes
+    ].freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalUpdateVectorStoreFileAttributesRequestMetadata::NULLABLE_FIELDS)
+  # API model for UpdateVectorStoreFileAttributesRequest.
+  # Typed representation of the `UpdateVectorStoreFileAttributesRequest` API schema.
+  class UpdateVectorStoreFileAttributesRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalUpdateVectorStoreFileAttributesRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalUpdateVectorStoreFileAttributesRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalUpdateVectorStoreFileAttributesRequestMetadata::DECODERS
+
+    # @return [VectorStoreFileAttributes] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters, booleans, or numbers.
+    attr_reader :attributes
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalUpdateVectorStoreFileAttributesRequestMetadata::NULLABLE_FIELDS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalUpdateVectorStoreRequestExpiresAfterMetadata
-  FIELDS = {
-    anchor: "anchor",
-    days: "days",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    anchor
-    days
-  ].freeze
-  DECODERS = {
-    anchor: lambda do |value|
-      ::OctridevOpenai::VectorStoreExpirationAfterAnchor.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for UpdateVectorStoreRequestExpiresAfter.
-# Optional API value serialized in the `expires_after` wire field.
-class UpdateVectorStoreRequestExpiresAfter
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalUpdateVectorStoreRequestExpiresAfterMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalUpdateVectorStoreRequestExpiresAfterMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalUpdateVectorStoreRequestExpiresAfterMetadata::DECODERS
-
-  # @return [VectorStoreExpirationAfterAnchor] Anchor timestamp after which the expiration policy applies. Supported anchors: `last_active_at`.
-  attr_reader :anchor
-  # @return [Integer] The number of days after the anchor time that the vector store will expire.
-  attr_reader :days
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalUpdateVectorStoreRequestExpiresAfterMetadata
+    FIELDS = {
+      anchor: 'anchor',
+      days: 'days'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      anchor
+      days
+    ].freeze
+    DECODERS = {
+      anchor: lambda do |value|
+        ::OctridevOpenai::VectorStoreExpirationAfterAnchor.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for UpdateVectorStoreRequestExpiresAfter.
+  # Optional API value serialized in the `expires_after` wire field.
+  class UpdateVectorStoreRequestExpiresAfter
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalUpdateVectorStoreRequestExpiresAfterMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalUpdateVectorStoreRequestExpiresAfterMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalUpdateVectorStoreRequestExpiresAfterMetadata::DECODERS
+
+    # @return [VectorStoreExpirationAfterAnchor] Anchor timestamp after which the expiration policy applies. Supported anchors: `last_active_at`.
+    attr_reader :anchor
+    # @return [Integer] The number of days after the anchor time that the vector store will expire.
+    attr_reader :days
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalUpdateVectorStoreRequestMetadata
-  FIELDS = {
-    name: "name",
-    expires_after: "expires_after",
-    metadata: "metadata",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    expires_after: lambda do |value|
-      ::OctridevOpenai::UpdateVectorStoreRequestExpiresAfter.from_hash(value)
-    end,
-    metadata: lambda do |value|
-      ::OctridevOpenai::Metadata.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for UpdateVectorStoreRequest.
-# Typed representation of the `UpdateVectorStoreRequest` API schema.
-class UpdateVectorStoreRequest
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalUpdateVectorStoreRequestMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalUpdateVectorStoreRequestMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalUpdateVectorStoreRequestMetadata::DECODERS
-
-  # @return [String] The name of the vector store.
-  attr_reader :name
-  # @return [UpdateVectorStoreRequestExpiresAfter] Optional API value serialized in the `expires_after` wire field.
-  attr_reader :expires_after
-  # @return [Metadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
-  attr_reader :metadata
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalUpdateVectorStoreRequestMetadata
+    FIELDS = {
+      name: 'name',
+      expires_after: 'expires_after',
+      metadata: 'metadata'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      expires_after: lambda do |value|
+        ::OctridevOpenai::UpdateVectorStoreRequestExpiresAfter.from_hash(value)
+      end,
+      metadata: lambda do |value|
+        ::OctridevOpenai::Metadata.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for UpdateVectorStoreRequest.
+  # Typed representation of the `UpdateVectorStoreRequest` API schema.
+  class UpdateVectorStoreRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalUpdateVectorStoreRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalUpdateVectorStoreRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalUpdateVectorStoreRequestMetadata::DECODERS
+
+    # @return [String] The name of the vector store.
+    attr_reader :name
+    # @return [UpdateVectorStoreRequestExpiresAfter] Optional API value serialized in the `expires_after` wire field.
+    attr_reader :expires_after
+    # @return [Metadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
+    attr_reader :metadata
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalVectorStoreExpirationAfterMetadata
-  FIELDS = {
-    anchor: "anchor",
-    days: "days",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    anchor
-    days
-  ].freeze
-  DECODERS = {
-    anchor: lambda do |value|
-      ::OctridevOpenai::VectorStoreExpirationAfterAnchor.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for VectorStoreExpirationAfter.
-# The expiration policy for a vector store.
-class VectorStoreExpirationAfter
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalVectorStoreExpirationAfterMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalVectorStoreExpirationAfterMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalVectorStoreExpirationAfterMetadata::DECODERS
-
-  # @return [VectorStoreExpirationAfterAnchor] Anchor timestamp after which the expiration policy applies. Supported anchors: `last_active_at`.
-  attr_reader :anchor
-  # @return [Integer] The number of days after the anchor time that the vector store will expire.
-  attr_reader :days
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalVectorStoreExpirationAfterMetadata
+    FIELDS = {
+      anchor: 'anchor',
+      days: 'days'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      anchor
+      days
+    ].freeze
+    DECODERS = {
+      anchor: lambda do |value|
+        ::OctridevOpenai::VectorStoreExpirationAfterAnchor.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for VectorStoreExpirationAfter.
+  # The expiration policy for a vector store.
+  class VectorStoreExpirationAfter
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalVectorStoreExpirationAfterMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalVectorStoreExpirationAfterMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalVectorStoreExpirationAfterMetadata::DECODERS
+
+    # @return [VectorStoreExpirationAfterAnchor] Anchor timestamp after which the expiration policy applies. Supported anchors: `last_active_at`.
+    attr_reader :anchor
+    # @return [Integer] The number of days after the anchor time that the vector store will expire.
+    attr_reader :days
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the VectorStoreExpirationAfterAnchor SDK namespace.
-module VectorStoreExpirationAfterAnchor
-  LAST_ACTIVE_AT = 'last_active_at'
-  VALUES = ['last_active_at'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalVectorStoreFileBatchObjectFileCountsMetadata
-  FIELDS = {
-    in_progress: "in_progress",
-    completed: "completed",
-    failed: "failed",
-    cancelled: "cancelled",
-    total: "total",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    in_progress
-    completed
-    failed
-    cancelled
-    total
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for VectorStoreFileBatchObjectFileCounts.
-# Required object value serialized in the `file_counts` wire field.
-class VectorStoreFileBatchObjectFileCounts
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalVectorStoreFileBatchObjectFileCountsMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalVectorStoreFileBatchObjectFileCountsMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalVectorStoreFileBatchObjectFileCountsMetadata::DECODERS
-
-  # @return [Integer] The number of files that are currently being processed.
-  attr_reader :in_progress
-  # @return [Integer] The number of files that have been processed.
-  attr_reader :completed
-  # @return [Integer] The number of files that have failed to process.
-  attr_reader :failed
-  # @return [Integer] The number of files that where cancelled.
-  attr_reader :cancelled
-  # @return [Integer] The total number of files.
-  attr_reader :total
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the VectorStoreExpirationAfterAnchor SDK namespace.
+  module VectorStoreExpirationAfterAnchor
+    LAST_ACTIVE_AT = 'last_active_at'
+    VALUES = ['last_active_at'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalVectorStoreFileBatchObjectFileCountsMetadata
+    FIELDS = {
+      in_progress: 'in_progress',
+      completed: 'completed',
+      failed: 'failed',
+      cancelled: 'cancelled',
+      total: 'total'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      in_progress
+      completed
+      failed
+      cancelled
+      total
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for VectorStoreFileBatchObjectFileCounts.
+  # Required object value serialized in the `file_counts` wire field.
+  class VectorStoreFileBatchObjectFileCounts
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalVectorStoreFileBatchObjectFileCountsMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalVectorStoreFileBatchObjectFileCountsMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalVectorStoreFileBatchObjectFileCountsMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalVectorStoreFileBatchObjectMetadata
-  FIELDS = {
-    id: "id",
-    object: "object",
-    created_at: "created_at",
-    vector_store_id: "vector_store_id",
-    status: "status",
-    file_counts: "file_counts",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    object
-    created_at
-    vector_store_id
-    status
-    file_counts
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::VectorStoreFileBatchObjectObject.from_value(value)
-    end,
-    status: lambda do |value|
-      ::OctridevOpenai::VectorStoreFileBatchObjectStatus.from_value(value)
-    end,
-    file_counts: lambda do |value|
-      ::OctridevOpenai::VectorStoreFileBatchObjectFileCounts.from_hash(value)
-    end,
-  }.freeze
-end
+    # @return [Integer] The number of files that are currently being processed.
+    attr_reader :in_progress
+    # @return [Integer] The number of files that have been processed.
+    attr_reader :completed
+    # @return [Integer] The number of files that have failed to process.
+    attr_reader :failed
+    # @return [Integer] The number of files that where cancelled.
+    attr_reader :cancelled
+    # @return [Integer] The total number of files.
+    attr_reader :total
 
-# API model for VectorStoreFileBatchObject.
-# A batch of files attached to a vector store.
-class VectorStoreFileBatchObject
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalVectorStoreFileBatchObjectMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalVectorStoreFileBatchObjectMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalVectorStoreFileBatchObjectMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [String] The identifier, which can be referenced in API endpoints.
-  attr_reader :id
-  # @return [VectorStoreFileBatchObjectObject] The object type, which is always `vector_store.file_batch`.
-  attr_reader :object
-  # @return [Integer] The Unix timestamp (in seconds) for when the vector store files batch was created.
-  attr_reader :created_at
-  # @return [String] The ID of the vector store that the File is attached to.
-  attr_reader :vector_store_id
-  # @return [VectorStoreFileBatchObjectStatus] The status of the vector store files batch, which can be either `in_progress`, `completed`, `cancelled` or `failed`.
-  attr_reader :status
-  # @return [VectorStoreFileBatchObjectFileCounts] Required object value serialized in the `file_counts` wire field.
-  attr_reader :file_counts
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalVectorStoreFileBatchObjectMetadata
+    FIELDS = {
+      id: 'id',
+      object: 'object',
+      created_at: 'created_at',
+      vector_store_id: 'vector_store_id',
+      status: 'status',
+      file_counts: 'file_counts'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      object
+      created_at
+      vector_store_id
+      status
+      file_counts
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::VectorStoreFileBatchObjectObject.from_value(value)
+      end,
+      status: lambda do |value|
+        ::OctridevOpenai::VectorStoreFileBatchObjectStatus.from_value(value)
+      end,
+      file_counts: lambda do |value|
+        ::OctridevOpenai::VectorStoreFileBatchObjectFileCounts.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for VectorStoreFileBatchObject.
+  # A batch of files attached to a vector store.
+  class VectorStoreFileBatchObject
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalVectorStoreFileBatchObjectMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalVectorStoreFileBatchObjectMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalVectorStoreFileBatchObjectMetadata::DECODERS
 
-# Defines the VectorStoreFileBatchObjectObject SDK namespace.
-module VectorStoreFileBatchObjectObject
-  VECTOR_STORE_FILE_BATCH = 'vector_store.file_batch'
-  VALUES = ['vector_store.file_batch'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    # @return [String] The identifier, which can be referenced in API endpoints.
+    attr_reader :id
+    # @return [VectorStoreFileBatchObjectObject] The object type, which is always `vector_store.file_batch`.
+    attr_reader :object
+    # @return [Integer] The Unix timestamp (in seconds) for when the vector store files batch was created.
+    attr_reader :created_at
+    # @return [String] The ID of the vector store that the File is attached to.
+    attr_reader :vector_store_id
+    # @return [VectorStoreFileBatchObjectStatus] The status of the vector store files batch, which can be either `in_progress`, `completed`, `cancelled` or `failed`.
+    attr_reader :status
+    # @return [VectorStoreFileBatchObjectFileCounts] Required object value serialized in the `file_counts` wire field.
+    attr_reader :file_counts
 
-# Defines the VectorStoreFileBatchObjectStatus SDK namespace.
-module VectorStoreFileBatchObjectStatus
-  IN_PROGRESS = 'in_progress'
-  COMPLETED = 'completed'
-  CANCELLED = 'cancelled'
-  FAILED = 'failed'
-  VALUES = ['in_progress', 'completed', 'cancelled', 'failed'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# Internal model hydration metadata.
-class SdkInternalVectorStoreFileContentResponseDataItemMetadata
-  FIELDS = {
-    type: "type",
-    text: "text",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-# API model for VectorStoreFileContentResponseDataItem.
-# Required object value serialized in the `data[]` wire field.
-class VectorStoreFileContentResponseDataItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalVectorStoreFileContentResponseDataItemMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalVectorStoreFileContentResponseDataItemMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalVectorStoreFileContentResponseDataItemMetadata::DECODERS
-
-  # @return [String] The content type (currently only `"text"`)
-  attr_reader :type
-  # @return [String] The text content
-  attr_reader :text
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the VectorStoreFileBatchObjectObject SDK namespace.
+  module VectorStoreFileBatchObjectObject
+    VECTOR_STORE_FILE_BATCH = 'vector_store.file_batch'
+    VALUES = ['vector_store.file_batch'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalVectorStoreFileContentResponseMetadata
-  FIELDS = {
-    object: "object",
-    data: "data",
-    has_more: "has_more",
-    next_page: "next_page",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    object
-    data
-    has_more
-    next_page
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::VectorStoreFileContentResponseObject.from_value(value)
-    end,
-    data: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::VectorStoreFileContentResponseDataItem.from_hash(item) }
-    end,
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    next_page
-  ].freeze
-end
-
-# API model for VectorStoreFileContentResponse.
-# Represents the parsed content of a vector store file.
-class VectorStoreFileContentResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalVectorStoreFileContentResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalVectorStoreFileContentResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalVectorStoreFileContentResponseMetadata::DECODERS
-
-  # @return [VectorStoreFileContentResponseObject] The object type, which is always `vector_store.file_content.page`
-  attr_reader :object
-  # @return [Array_of_VectorStoreFileContentResponseDataItem] Parsed content of the file.
-  attr_reader :data
-  # @return [Boolean] Indicates if there are more content pages to fetch.
-  attr_reader :has_more
-  # @return [String] Required `string` value serialized in the `next_page` wire field.
-  attr_reader :next_page
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the VectorStoreFileBatchObjectStatus SDK namespace.
+  module VectorStoreFileBatchObjectStatus
+    IN_PROGRESS = 'in_progress'
+    COMPLETED = 'completed'
+    CANCELLED = 'cancelled'
+    FAILED = 'failed'
+    VALUES = %w[in_progress completed cancelled failed].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalVectorStoreFileContentResponseMetadata::NULLABLE_FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalVectorStoreFileContentResponseDataItemMetadata
+    FIELDS = {
+      type: 'type',
+      text: 'text'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for VectorStoreFileContentResponseDataItem.
+  # Required object value serialized in the `data[]` wire field.
+  class VectorStoreFileContentResponseDataItem
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalVectorStoreFileContentResponseDataItemMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalVectorStoreFileContentResponseDataItemMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalVectorStoreFileContentResponseDataItemMetadata::DECODERS
 
-# Defines the VectorStoreFileContentResponseObject SDK namespace.
-module VectorStoreFileContentResponseObject
-  VECTOR_STORE_FILE_CONTENT_PAGE = 'vector_store.file_content.page'
-  VALUES = ['vector_store.file_content.page'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    # @return [String] The content type (currently only `"text"`)
+    attr_reader :type
+    # @return [String] The text content
+    attr_reader :text
 
-# Internal model hydration metadata.
-class SdkInternalVectorStoreFileObjectLastErrorMetadata
-  FIELDS = {
-    code: "code",
-    message: "message",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    code
-    message
-  ].freeze
-  DECODERS = {
-    code: lambda do |value|
-      ::OctridevOpenai::VectorStoreFileObjectLastErrorCode.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for VectorStoreFileObjectLastError.
-# The last error associated with this vector store file. Will be `null` if there are no errors.
-class VectorStoreFileObjectLastError
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalVectorStoreFileObjectLastErrorMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalVectorStoreFileObjectLastErrorMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalVectorStoreFileObjectLastErrorMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [VectorStoreFileObjectLastErrorCode] One of `server_error`, `unsupported_file`, or `invalid_file`.
-  attr_reader :code
-  # @return [String] A human-readable description of the error.
-  attr_reader :message
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalVectorStoreFileContentResponseMetadata
+    FIELDS = {
+      object: 'object',
+      data: 'data',
+      has_more: 'has_more',
+      next_page: 'next_page'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      object
+      data
+      has_more
+      next_page
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::VectorStoreFileContentResponseObject.from_value(value)
+      end,
+      data: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::VectorStoreFileContentResponseDataItem.from_hash(item) }
+      end
+    }.freeze
+    NULLABLE_FIELDS = %i[
+      next_page
+    ].freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for VectorStoreFileContentResponse.
+  # Represents the parsed content of a vector store file.
+  class VectorStoreFileContentResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalVectorStoreFileContentResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalVectorStoreFileContentResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalVectorStoreFileContentResponseMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalVectorStoreFileObjectMetadata
-  FIELDS = {
-    id: "id",
-    object: "object",
-    usage_bytes: "usage_bytes",
-    created_at: "created_at",
-    vector_store_id: "vector_store_id",
-    status: "status",
-    last_error: "last_error",
-    chunking_strategy: "chunking_strategy",
-    attributes: "attributes",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    object
-    usage_bytes
-    created_at
-    vector_store_id
-    status
-    last_error
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::VectorStoreFileObjectObject.from_value(value)
-    end,
-    status: lambda do |value|
-      ::OctridevOpenai::VectorStoreFileObjectStatus.from_value(value)
-    end,
-    last_error: lambda do |value|
-      ::OctridevOpenai::VectorStoreFileObjectLastError.from_hash(value)
-    end,
-    chunking_strategy: lambda do |value|
-      ::OctridevOpenai::VectorStoreFileObjectChunkingStrategy.from_hash(value)
-    end,
-    attributes: lambda do |value|
-      ::OctridevOpenai::VectorStoreFileAttributes.from_hash(value)
-    end,
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    last_error
-  ].freeze
-end
+    # @return [VectorStoreFileContentResponseObject] The object type, which is always `vector_store.file_content.page`
+    attr_reader :object
+    # @return [Array_of_VectorStoreFileContentResponseDataItem] Parsed content of the file.
+    attr_reader :data
+    # @return [Boolean] Indicates if there are more content pages to fetch.
+    attr_reader :has_more
+    # @return [String] Required `string` value serialized in the `next_page` wire field.
+    attr_reader :next_page
 
-# API model for VectorStoreFileObject.
-# A list of files attached to a vector store.
-class VectorStoreFileObject
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalVectorStoreFileObjectMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalVectorStoreFileObjectMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalVectorStoreFileObjectMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [String] The identifier, which can be referenced in API endpoints.
-  attr_reader :id
-  # @return [VectorStoreFileObjectObject] The object type, which is always `vector_store.file`.
-  attr_reader :object
-  # @return [Integer] The total vector store usage in bytes. Note that this may be different from the original file size.
-  attr_reader :usage_bytes
-  # @return [Integer] The Unix timestamp (in seconds) for when the vector store file was created.
-  attr_reader :created_at
-  # @return [String] The ID of the vector store that the File is attached to.
-  attr_reader :vector_store_id
-  # @return [VectorStoreFileObjectStatus] The status of the vector store file, which can be either `in_progress`, `completed`, `cancelled`, or `failed`. The status `completed` indicates that the vector store file is ready for use.
-  attr_reader :status
-  # @return [VectorStoreFileObjectLastError] The last error associated with this vector store file. Will be `null` if there are no errors.
-  attr_reader :last_error
-  # @return [VectorStoreFileObjectChunkingStrategy] The strategy used to chunk the file.
-  attr_reader :chunking_strategy
-  # @return [VectorStoreFileAttributes] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters, booleans, or numbers.
-  attr_reader :attributes
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalVectorStoreFileContentResponseMetadata::NULLABLE_FIELDS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalVectorStoreFileObjectMetadata::NULLABLE_FIELDS)
+  # Defines the VectorStoreFileContentResponseObject SDK namespace.
+  module VectorStoreFileContentResponseObject
+    VECTOR_STORE_FILE_CONTENT_PAGE = 'vector_store.file_content.page'
+    VALUES = ['vector_store.file_content.page'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalVectorStoreFileObjectLastErrorMetadata
+    FIELDS = {
+      code: 'code',
+      message: 'message'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      code
+      message
+    ].freeze
+    DECODERS = {
+      code: lambda do |value|
+        ::OctridevOpenai::VectorStoreFileObjectLastErrorCode.from_value(value)
+      end
+    }.freeze
   end
-end
 
-# Defines the VectorStoreFileObjectLastErrorCode SDK namespace.
-module VectorStoreFileObjectLastErrorCode
-  SERVER_ERROR = 'server_error'
-  UNSUPPORTED_FILE = 'unsupported_file'
-  INVALID_FILE = 'invalid_file'
-  VALUES = ['server_error', 'unsupported_file', 'invalid_file'].freeze
-  def self.from_value(value)
-    value
+  # API model for VectorStoreFileObjectLastError.
+  # The last error associated with this vector store file. Will be `null` if there are no errors.
+  class VectorStoreFileObjectLastError
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalVectorStoreFileObjectLastErrorMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalVectorStoreFileObjectLastErrorMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalVectorStoreFileObjectLastErrorMetadata::DECODERS
+
+    # @return [VectorStoreFileObjectLastErrorCode] One of `server_error`, `unsupported_file`, or `invalid_file`.
+    attr_reader :code
+    # @return [String] A human-readable description of the error.
+    attr_reader :message
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
 
-# Defines the VectorStoreFileObjectObject SDK namespace.
-module VectorStoreFileObjectObject
-  VECTOR_STORE_FILE = 'vector_store.file'
-  VALUES = ['vector_store.file'].freeze
-  def self.from_value(value)
-    value
+  # Internal model hydration metadata.
+  class SdkInternalVectorStoreFileObjectMetadata
+    FIELDS = {
+      id: 'id',
+      object: 'object',
+      usage_bytes: 'usage_bytes',
+      created_at: 'created_at',
+      vector_store_id: 'vector_store_id',
+      status: 'status',
+      last_error: 'last_error',
+      chunking_strategy: 'chunking_strategy',
+      attributes: 'attributes'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      object
+      usage_bytes
+      created_at
+      vector_store_id
+      status
+      last_error
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::VectorStoreFileObjectObject.from_value(value)
+      end,
+      status: lambda do |value|
+        ::OctridevOpenai::VectorStoreFileObjectStatus.from_value(value)
+      end,
+      last_error: lambda do |value|
+        ::OctridevOpenai::VectorStoreFileObjectLastError.from_hash(value)
+      end,
+      chunking_strategy: lambda do |value|
+        ::OctridevOpenai::VectorStoreFileObjectChunkingStrategy.from_hash(value)
+      end,
+      attributes: lambda do |value|
+        ::OctridevOpenai::VectorStoreFileAttributes.from_hash(value)
+      end
+    }.freeze
+    NULLABLE_FIELDS = %i[
+      last_error
+    ].freeze
   end
-end
 
-# Defines the VectorStoreFileObjectStatus SDK namespace.
-module VectorStoreFileObjectStatus
-  IN_PROGRESS = 'in_progress'
-  COMPLETED = 'completed'
-  CANCELLED = 'cancelled'
-  FAILED = 'failed'
-  VALUES = ['in_progress', 'completed', 'cancelled', 'failed'].freeze
-  def self.from_value(value)
-    value
+  # API model for VectorStoreFileObject.
+  # A list of files attached to a vector store.
+  class VectorStoreFileObject
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalVectorStoreFileObjectMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalVectorStoreFileObjectMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalVectorStoreFileObjectMetadata::DECODERS
+
+    # @return [String] The identifier, which can be referenced in API endpoints.
+    attr_reader :id
+    # @return [VectorStoreFileObjectObject] The object type, which is always `vector_store.file`.
+    attr_reader :object
+    # @return [Integer] The total vector store usage in bytes. Note that this may be different from the original file size.
+    attr_reader :usage_bytes
+    # @return [Integer] The Unix timestamp (in seconds) for when the vector store file was created.
+    attr_reader :created_at
+    # @return [String] The ID of the vector store that the File is attached to.
+    attr_reader :vector_store_id
+    # @return [VectorStoreFileObjectStatus] The status of the vector store file, which can be either `in_progress`, `completed`, `cancelled`, or `failed`. The status `completed` indicates that the vector store file is ready for use.
+    attr_reader :status
+    # @return [VectorStoreFileObjectLastError] The last error associated with this vector store file. Will be `null` if there are no errors.
+    attr_reader :last_error
+    # @return [VectorStoreFileObjectChunkingStrategy] The strategy used to chunk the file.
+    attr_reader :chunking_strategy
+    # @return [VectorStoreFileAttributes] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters, booleans, or numbers.
+    attr_reader :attributes
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalVectorStoreFileObjectMetadata::NULLABLE_FIELDS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
 
-# Defines the VectorStoreFileObjectChunkingStrategy SDK namespace.
-module VectorStoreFileObjectChunkingStrategy
-  DISCRIMINATOR_MAPPING = {
-    "static" => -> { StaticChunkingStrategyResponseParam },
-    "other" => -> { OtherChunkingStrategyResponseParam },
-  }.freeze
-
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('VectorStoreFileObjectChunkingStrategy', 'variant', "Unknown VectorStoreFileObjectChunkingStrategy discriminator: #{hash["type"].inspect}")
+  # Defines the VectorStoreFileObjectLastErrorCode SDK namespace.
+  module VectorStoreFileObjectLastErrorCode
+    SERVER_ERROR = 'server_error'
+    UNSUPPORTED_FILE = 'unsupported_file'
+    INVALID_FILE = 'invalid_file'
+    VALUES = %w[server_error unsupported_file invalid_file].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
 
-# Internal model hydration metadata.
-class SdkInternalVectorStoreObjectFileCountsMetadata
-  FIELDS = {
-    in_progress: "in_progress",
-    completed: "completed",
-    failed: "failed",
-    cancelled: "cancelled",
-    total: "total",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    in_progress
-    completed
-    failed
-    cancelled
-    total
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
+  # Defines the VectorStoreFileObjectObject SDK namespace.
+  module VectorStoreFileObjectObject
+    VECTOR_STORE_FILE = 'vector_store.file'
+    VALUES = ['vector_store.file'].freeze
+    def self.from_value(value)
+      value
+    end
+  end
+
+  # Defines the VectorStoreFileObjectStatus SDK namespace.
+  module VectorStoreFileObjectStatus
+    IN_PROGRESS = 'in_progress'
+    COMPLETED = 'completed'
+    CANCELLED = 'cancelled'
+    FAILED = 'failed'
+    VALUES = %w[in_progress completed cancelled failed].freeze
+    def self.from_value(value)
+      value
+    end
+  end
+
+  # Defines the VectorStoreFileObjectChunkingStrategy SDK namespace.
+  module VectorStoreFileObjectChunkingStrategy
+    DISCRIMINATOR_MAPPING = {
+      'static' => -> { StaticChunkingStrategyResponseParam },
+      'other' => -> { OtherChunkingStrategyResponseParam }
+    }.freeze
+
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('VectorStoreFileObjectChunkingStrategy', 'variant', "Unknown VectorStoreFileObjectChunkingStrategy discriminator: #{hash['type'].inspect}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalVectorStoreObjectFileCountsMetadata
+    FIELDS = {
+      in_progress: 'in_progress',
+      completed: 'completed',
+      failed: 'failed',
+      cancelled: 'cancelled',
+      total: 'total'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      in_progress
+      completed
+      failed
+      cancelled
+      total
+    ].freeze
+    DECODERS = {}.freeze
+  end
 end

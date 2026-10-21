@@ -25,24 +25,23 @@ module OctridevOpenai
         limit: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
-          "/audio/voice_consents",
+          '/audio/voice_consents',
           config: config,
           query: {
             'after' => QueryValue.new(after, style: 'form', explode: true),
-            'limit' => QueryValue.new(limit, style: 'form', explode: true),
+            'limit' => QueryValue.new(limit, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::VoiceConsentListResource,
           decoder: :json,
           operation_id: 'list_voice_consents',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
-    ListVoiceConsentsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      ListVoiceConsentsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists voice consent recordings used to authorize creation of custom voices. Use the `after` cursor to continue from a previous page and `limit` to control the number of records returned. The response includes pagination cursors and indicates whether more records are available.
       #
@@ -71,10 +70,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.last_id
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -97,10 +99,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListVoiceConsentsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end
@@ -111,16 +115,11 @@ module OctridevOpenai
       # Retrieves a voice consent recording.
       #
       # @param consent_id [String] The ID of the consent recording to retrieve.
-      singleton_class.define_method(:get_voice_consent) do |
-        config:,
-        consent_id:,
-        request_options: nil
-      |
-
+      singleton_class.define_method(:get_voice_consent) do |config:, consent_id:, request_options: nil|
         SdkClient.request(
           'GET',
           [
-            "/audio/voice_consents/",
+            '/audio/voice_consents/',
             SdkClient.encode_path_segment(consent_id)
           ].join,
           config: config,
@@ -128,7 +127,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'get_voice_consent',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -144,22 +143,21 @@ module OctridevOpenai
         name:,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
           [
-            "/audio/voice_consents/",
+            '/audio/voice_consents/',
             SdkClient.encode_path_segment(consent_id)
           ].join,
           config: config,
           body: {
-            'name' => name,
+            'name' => name
           },
           return_type: ::OctridevOpenai::VoiceConsentResource,
           decoder: :json,
           operation_id: 'update_voice_consent',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -173,11 +171,10 @@ module OctridevOpenai
         consent_id:,
         request_options: nil
       )
-
         SdkClient.request(
           'DELETE',
           [
-            "/audio/voice_consents/",
+            '/audio/voice_consents/',
             SdkClient.encode_path_segment(consent_id)
           ].join,
           config: config,
@@ -185,7 +182,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_voice_consent',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -197,10 +194,9 @@ module OctridevOpenai
         body:,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
-          "/audio/voices",
+          '/audio/voices',
           config: config,
           body: body,
           content_type: 'multipart/form-data',
@@ -208,7 +204,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'create_voice',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
     end

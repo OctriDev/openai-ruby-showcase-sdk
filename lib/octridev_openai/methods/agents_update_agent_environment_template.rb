@@ -48,8 +48,7 @@ module OctridevOpenai
         files: NOT_GIVEN,
         request_options: nil
       )
-
-        Validation.validate_length('environment_template_id', environment_template_id, min: 0, max: 1048576)
+        Validation.validate_length('environment_template_id', environment_template_id, min: 0, max: 1_048_576)
 
         Validation.if_given(name) { Validation.validate_length('name', name, min: 1, max: 256) }
 
@@ -58,7 +57,7 @@ module OctridevOpenai
         end
 
         Validation.if_given(capability_directories) do
-          Validation.validate_items('capability_directories', capability_directories, min: 0, max: 16384)
+          Validation.validate_items('capability_directories', capability_directories, min: 0, max: 16_384)
         end
 
         Validation.if_given(skills) { Validation.validate_items('skills', skills, min: 0, max: 200) }
@@ -70,7 +69,7 @@ module OctridevOpenai
         SdkClient.request(
           'POST',
           [
-            "/agents/environments/templates/",
+            '/agents/environments/templates/',
             SdkClient.encode_path_segment(environment_template_id)
           ].join,
           config: config,
@@ -84,13 +83,13 @@ module OctridevOpenai
             'capability_directories' => capability_directories,
             'skills' => skills,
             'plugins' => plugins,
-            'files' => files,
+            'files' => files
           },
           return_type: ::OctridevOpenai::EnvironmentTemplateResource,
           decoder: :json,
           operation_id: 'update_agent_environment_template',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).data
       end
     end

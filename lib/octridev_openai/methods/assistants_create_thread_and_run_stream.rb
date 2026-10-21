@@ -92,29 +92,31 @@ module OctridevOpenai
         request_options: nil,
         &block
       )
-    return enum_for(
-          __method__,
-          config: config,
-          assistant_id: assistant_id,
-          stream: stream,
-          thread: thread,
-          model: model,
-          instructions: instructions,
-          tools: tools,
-          tool_resources: tool_resources,
-          metadata: metadata,
-          temperature: temperature,
-          top_p: top_p,
-          max_prompt_tokens: max_prompt_tokens,
-          max_completion_tokens: max_completion_tokens,
-          truncation_strategy: truncation_strategy,
-          tool_choice: tool_choice,
-          parallel_tool_calls: parallel_tool_calls,
-          response_format: response_format,
-          request_options: request_options,
-        ) unless block
+        unless block
+          return enum_for(
+            __method__,
+            config: config,
+            assistant_id: assistant_id,
+            stream: stream,
+            thread: thread,
+            model: model,
+            instructions: instructions,
+            tools: tools,
+            tool_resources: tool_resources,
+            metadata: metadata,
+            temperature: temperature,
+            top_p: top_p,
+            max_prompt_tokens: max_prompt_tokens,
+            max_completion_tokens: max_completion_tokens,
+            truncation_strategy: truncation_strategy,
+            tool_choice: tool_choice,
+            parallel_tool_calls: parallel_tool_calls,
+            response_format: response_format,
+            request_options: request_options
+          )
+        end
         SdkClient.stream(
-          'POST', "/threads/runs",
+          'POST', '/threads/runs',
           config: config,
           body: {
             'assistant_id' => assistant_id,
@@ -132,16 +134,17 @@ module OctridevOpenai
             'truncation_strategy' => truncation_strategy,
             'tool_choice' => tool_choice,
             'parallel_tool_calls' => parallel_tool_calls,
-            'response_format' => response_format,
+            'response_format' => response_format
           },
           content_type: 'application/json',
           operation_id: 'create_thread_and_run_stream',
           stream_format: :sse,
-          stream_media_type: "text/event-stream",
+          stream_media_type: 'text/event-stream',
           request_options: request_options,
           errors: { '429' => ::OctridevOpenai::ErrorResponse }
         ).each do |ev|
           break if ev.data == '[DONE]'
+
           decoded = JSON.parse(ev.data)
           block.call(SdkClient.decode_event(decoded, ::OctridevOpenai::AssistantStreamEvent))
         end

@@ -5,28 +5,28 @@
 
 # beta_responses domain models
 module OctridevOpenai
-# API model for BetaResponsesWebSocketStreamEvent.
-# Typed representation of the `BetaResponsesWebSocketStreamEvent` API schema.
-class BetaResponsesWebSocketStreamEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaResponsesWebSocketStreamEventMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaResponsesWebSocketStreamEventMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaResponsesWebSocketStreamEventMetadata::DECODERS
+  # API model for BetaResponsesWebSocketStreamEvent.
+  # Typed representation of the `BetaResponsesWebSocketStreamEvent` API schema.
+  class BetaResponsesWebSocketStreamEvent
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaResponsesWebSocketStreamEventMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaResponsesWebSocketStreamEventMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaResponsesWebSocketStreamEventMetadata::DECODERS
 
-  # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
-  attr_reader :stream_id
+    # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
+    attr_reader :stream_id
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
 end

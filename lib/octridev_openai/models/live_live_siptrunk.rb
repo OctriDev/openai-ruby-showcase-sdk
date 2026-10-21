@@ -5,209 +5,209 @@
 
 # live_live_siptrunk domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalLiveSIPTrunkMetadata
-  FIELDS = {
-    provider_url: "provider_url",
-    auth: "auth",
-    caller_number: "caller_number",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    provider_url
-    auth
-    caller_number
-  ].freeze
-  DECODERS = {
-    auth: lambda do |value|
-      ::OctridevOpenai::LiveSIPTrunkAuth.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for LiveSIPTrunk.
-# SIP trunk configuration supplied for this call. Keep trunk credentials on your server. The creation response does not return this configuration.
-class LiveSIPTrunk
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveSIPTrunkMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveSIPTrunkMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveSIPTrunkMetadata::DECODERS
-
-  # @return [String] Provider endpoint in the form `sips:host[:port][;transport=tcp]`. The default port is 5061. IPv6 addresses must be bracketed. TLS signaling is required; plaintext SIP is not supported. Do not include userinfo, a path, URI headers, or other URI parameters. Local hostnames and literal private, loopback, link-local, unspecified, multicast, and broadcast IP addresses are rejected.
-  attr_reader :provider_url
-  # @return [LiveSIPTrunkAuth] Credentials for SIP Digest authentication with your trunk provider.
-  attr_reader :auth
-  # @return [String] Caller phone number in E.164 format to use in the SIP From header.
-  attr_reader :caller_number
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalLiveSIPTrunkMetadata
+    FIELDS = {
+      provider_url: 'provider_url',
+      auth: 'auth',
+      caller_number: 'caller_number'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      provider_url
+      auth
+      caller_number
+    ].freeze
+    DECODERS = {
+      auth: lambda do |value|
+        ::OctridevOpenai::LiveSIPTrunkAuth.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for LiveSIPTrunk.
+  # SIP trunk configuration supplied for this call. Keep trunk credentials on your server. The creation response does not return this configuration.
+  class LiveSIPTrunk
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveSIPTrunkMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveSIPTrunkMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveSIPTrunkMetadata::DECODERS
+
+    # @return [String] Provider endpoint in the form `sips:host[:port][;transport=tcp]`. The default port is 5061. IPv6 addresses must be bracketed. TLS signaling is required; plaintext SIP is not supported. Do not include userinfo, a path, URI headers, or other URI parameters. Local hostnames and literal private, loopback, link-local, unspecified, multicast, and broadcast IP addresses are rejected.
+    attr_reader :provider_url
+    # @return [LiveSIPTrunkAuth] Credentials for SIP Digest authentication with your trunk provider.
+    attr_reader :auth
+    # @return [String] Caller phone number in E.164 format to use in the SIP From header.
+    attr_reader :caller_number
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalLiveSIPTrunkAuthMetadata
-  FIELDS = {
-    type: "type",
-    username: "username",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    username
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LiveSIPTrunkAuthType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for LiveSIPTrunkAuth.
-# Credentials for SIP Digest authentication with your trunk provider.
-class LiveSIPTrunkAuth
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveSIPTrunkAuthMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveSIPTrunkAuthMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveSIPTrunkAuthMetadata::DECODERS
-
-  # @return [LiveSIPTrunkAuthType] Use `digest` for SIP Digest authentication. Handles 401 and 407 challenges.
-  attr_reader :type
-  # @return [String] Provider username. Must contain a non-whitespace character, be at most 256 bytes, and contain no CR, LF, or NUL.
-  attr_reader :username
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalLiveSIPTrunkAuthMetadata
+    FIELDS = {
+      type: 'type',
+      username: 'username'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      username
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LiveSIPTrunkAuthType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for LiveSIPTrunkAuth.
+  # Credentials for SIP Digest authentication with your trunk provider.
+  class LiveSIPTrunkAuth
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveSIPTrunkAuthMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveSIPTrunkAuthMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveSIPTrunkAuthMetadata::DECODERS
+
+    # @return [LiveSIPTrunkAuthType] Use `digest` for SIP Digest authentication. Handles 401 and 407 challenges.
+    attr_reader :type
+    # @return [String] Provider username. Must contain a non-whitespace character, be at most 256 bytes, and contain no CR, LF, or NUL.
+    attr_reader :username
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the LiveSIPTrunkAuthType SDK namespace.
-module LiveSIPTrunkAuthType
-  DIGEST = 'digest'
-  VALUES = ['digest'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalLiveSIPTrunkAuthRequestMetadata
-  FIELDS = {
-    type: "type",
-    username: "username",
-    password: "password",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    username
-    password
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LiveSIPTrunkAuthRequestType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for LiveSIPTrunkAuthRequest.
-# Credentials for SIP Digest authentication with your trunk provider.
-class LiveSIPTrunkAuthRequest
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveSIPTrunkAuthRequestMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveSIPTrunkAuthRequestMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveSIPTrunkAuthRequestMetadata::DECODERS
-
-  # @return [LiveSIPTrunkAuthRequestType] Use `digest` for SIP Digest authentication. Handles 401 and 407 challenges.
-  attr_reader :type
-  # @return [String] Provider username. Must contain a non-whitespace character, be at most 256 bytes, and contain no CR, LF, or NUL.
-  attr_reader :username
-  # @return [String] Provider password. Must be at most 4096 bytes and contain no CR, LF, or NUL.
-  attr_reader :password
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the LiveSIPTrunkAuthType SDK namespace.
+  module LiveSIPTrunkAuthType
+    DIGEST = 'digest'
+    VALUES = ['digest'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalLiveSIPTrunkAuthRequestMetadata
+    FIELDS = {
+      type: 'type',
+      username: 'username',
+      password: 'password'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      username
+      password
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LiveSIPTrunkAuthRequestType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for LiveSIPTrunkAuthRequest.
+  # Credentials for SIP Digest authentication with your trunk provider.
+  class LiveSIPTrunkAuthRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveSIPTrunkAuthRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveSIPTrunkAuthRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveSIPTrunkAuthRequestMetadata::DECODERS
 
-# Defines the LiveSIPTrunkAuthRequestType SDK namespace.
-module LiveSIPTrunkAuthRequestType
-  DIGEST = 'digest'
-  VALUES = ['digest'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    # @return [LiveSIPTrunkAuthRequestType] Use `digest` for SIP Digest authentication. Handles 401 and 407 challenges.
+    attr_reader :type
+    # @return [String] Provider username. Must contain a non-whitespace character, be at most 256 bytes, and contain no CR, LF, or NUL.
+    attr_reader :username
+    # @return [String] Provider password. Must be at most 4096 bytes and contain no CR, LF, or NUL.
+    attr_reader :password
 
-# Internal model hydration metadata.
-class SdkInternalLiveSIPTrunkRequestMetadata
-  FIELDS = {
-    provider_url: "provider_url",
-    auth: "auth",
-    caller_number: "caller_number",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    provider_url
-    auth
-    caller_number
-  ].freeze
-  DECODERS = {
-    auth: lambda do |value|
-      ::OctridevOpenai::LiveSIPTrunkAuthRequest.from_hash(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for LiveSIPTrunkRequest.
-# SIP trunk configuration supplied for this call. Keep trunk credentials on your server. The creation response does not return this configuration.
-class LiveSIPTrunkRequest
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveSIPTrunkRequestMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveSIPTrunkRequestMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveSIPTrunkRequestMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [String] Provider endpoint in the form `sips:host[:port][;transport=tcp]`. The default port is 5061. IPv6 addresses must be bracketed. TLS signaling is required; plaintext SIP is not supported. Do not include userinfo, a path, URI headers, or other URI parameters. Local hostnames and literal private, loopback, link-local, unspecified, multicast, and broadcast IP addresses are rejected.
-  attr_reader :provider_url
-  # @return [LiveSIPTrunkAuthRequest] Credentials for SIP Digest authentication with your trunk provider.
-  attr_reader :auth
-  # @return [String] Caller phone number in E.164 format to use in the SIP From header.
-  attr_reader :caller_number
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the LiveSIPTrunkAuthRequestType SDK namespace.
+  module LiveSIPTrunkAuthRequestType
+    DIGEST = 'digest'
+    VALUES = ['digest'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalLiveSIPTrunkRequestMetadata
+    FIELDS = {
+      provider_url: 'provider_url',
+      auth: 'auth',
+      caller_number: 'caller_number'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      provider_url
+      auth
+      caller_number
+    ].freeze
+    DECODERS = {
+      auth: lambda do |value|
+        ::OctridevOpenai::LiveSIPTrunkAuthRequest.from_hash(value)
+      end
+    }.freeze
   end
-end
+
+  # API model for LiveSIPTrunkRequest.
+  # SIP trunk configuration supplied for this call. Keep trunk credentials on your server. The creation response does not return this configuration.
+  class LiveSIPTrunkRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveSIPTrunkRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveSIPTrunkRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveSIPTrunkRequestMetadata::DECODERS
+
+    # @return [String] Provider endpoint in the form `sips:host[:port][;transport=tcp]`. The default port is 5061. IPv6 addresses must be bracketed. TLS signaling is required; plaintext SIP is not supported. Do not include userinfo, a path, URI headers, or other URI parameters. Local hostnames and literal private, loopback, link-local, unspecified, multicast, and broadcast IP addresses are rejected.
+    attr_reader :provider_url
+    # @return [LiveSIPTrunkAuthRequest] Credentials for SIP Digest authentication with your trunk provider.
+    attr_reader :auth
+    # @return [String] Caller phone number in E.164 format to use in the SIP From header.
+    attr_reader :caller_number
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
 end

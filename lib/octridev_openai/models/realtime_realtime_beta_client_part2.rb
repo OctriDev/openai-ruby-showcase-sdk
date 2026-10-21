@@ -5,12 +5,12 @@
 
 # realtime_realtime_beta_client domain models (part 2)
 module OctridevOpenai
-# Defines the RealtimeBetaClientEventTranscriptionSessionUpdateType SDK namespace.
-module RealtimeBetaClientEventTranscriptionSessionUpdateType
-  TRANSCRIPTION_SESSION_UPDATE = 'transcription_session.update'
-  VALUES = ['transcription_session.update'].freeze
-  def self.from_value(value)
-    value
+  # Defines the RealtimeBetaClientEventTranscriptionSessionUpdateType SDK namespace.
+  module RealtimeBetaClientEventTranscriptionSessionUpdateType
+    TRANSCRIPTION_SESSION_UPDATE = 'transcription_session.update'
+    VALUES = ['transcription_session.update'].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
 end

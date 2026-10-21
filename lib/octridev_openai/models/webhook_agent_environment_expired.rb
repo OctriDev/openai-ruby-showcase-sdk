@@ -5,74 +5,74 @@
 
 # webhook_agent_environment_expired domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalWebhookAgentEnvironmentExpiredMetadata
-  FIELDS = {
-    id: "id",
-    object: "object",
-    created_at: "created_at",
-    type: "type",
-    data: "data",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    object
-    created_at
-    type
-    data
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::WebhookAgentSessionEnvelopeObject.from_value(value)
-    end,
-    type: lambda do |value|
-      ::OctridevOpenai::WebhookAgentEnvironmentExpiredVariant1Type.from_value(value)
-    end,
-    data: lambda do |value|
-      ::OctridevOpenai::AgentEnvironmentEvent.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for WebhookAgentEnvironmentExpired.
-# Sent when an agent environment expires and can no longer resume from a snapshot.
-class WebhookAgentEnvironmentExpired
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalWebhookAgentEnvironmentExpiredMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalWebhookAgentEnvironmentExpiredMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalWebhookAgentEnvironmentExpiredMetadata::DECODERS
-
-  # @return [String] The unique ID of the event.
-  attr_reader :id
-  # @return [WebhookAgentSessionEnvelopeObject] The object type. Always `event`.
-  attr_reader :object
-  # @return [Integer] The Unix timestamp, in seconds, when the event was created.
-  attr_reader :created_at
-  # @return [WebhookAgentEnvironmentExpiredVariant1Type] The event type. Always `agent.environment.expired`.
-  attr_reader :type
-  # @return [AgentEnvironmentEvent] Identifies the environment whose lifecycle changed.
-  attr_reader :data
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalWebhookAgentEnvironmentExpiredMetadata
+    FIELDS = {
+      id: 'id',
+      object: 'object',
+      created_at: 'created_at',
+      type: 'type',
+      data: 'data'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      object
+      created_at
+      type
+      data
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::WebhookAgentSessionEnvelopeObject.from_value(value)
+      end,
+      type: lambda do |value|
+        ::OctridevOpenai::WebhookAgentEnvironmentExpiredVariant1Type.from_value(value)
+      end,
+      data: lambda do |value|
+        ::OctridevOpenai::AgentEnvironmentEvent.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for WebhookAgentEnvironmentExpired.
+  # Sent when an agent environment expires and can no longer resume from a snapshot.
+  class WebhookAgentEnvironmentExpired
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalWebhookAgentEnvironmentExpiredMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalWebhookAgentEnvironmentExpiredMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalWebhookAgentEnvironmentExpiredMetadata::DECODERS
+
+    # @return [String] The unique ID of the event.
+    attr_reader :id
+    # @return [WebhookAgentSessionEnvelopeObject] The object type. Always `event`.
+    attr_reader :object
+    # @return [Integer] The Unix timestamp, in seconds, when the event was created.
+    attr_reader :created_at
+    # @return [WebhookAgentEnvironmentExpiredVariant1Type] The event type. Always `agent.environment.expired`.
+    attr_reader :type
+    # @return [AgentEnvironmentEvent] Identifies the environment whose lifecycle changed.
+    attr_reader :data
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the WebhookAgentEnvironmentExpiredVariant1Type SDK namespace.
+  module WebhookAgentEnvironmentExpiredVariant1Type
+    AGENT_ENVIRONMENT_EXPIRED = 'agent.environment.expired'
+    VALUES = ['agent.environment.expired'].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
-
-# Defines the WebhookAgentEnvironmentExpiredVariant1Type SDK namespace.
-module WebhookAgentEnvironmentExpiredVariant1Type
-  AGENT_ENVIRONMENT_EXPIRED = 'agent.environment.expired'
-  VALUES = ['agent.environment.expired'].freeze
-  def self.from_value(value)
-    value
-  end
-end
 end

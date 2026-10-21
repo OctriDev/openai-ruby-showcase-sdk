@@ -5,107 +5,109 @@
 
 # responses_beta_direct domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalBetaDirectToolCallCallerMetadata
-  FIELDS = {
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaDirectToolCallCallerType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaDirectToolCallCaller.
-# Typed representation of the `BetaDirectToolCallCaller` API schema.
-class BetaDirectToolCallCaller
-  include BetaToolCallCaller
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaDirectToolCallCallerMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaDirectToolCallCallerMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaDirectToolCallCallerMetadata::DECODERS
-
-  # @return [BetaDirectToolCallCallerType] Required enumerated value serialized in the `type` wire field.
-  attr_reader :type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalBetaDirectToolCallCallerMetadata
+    FIELDS = {
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaDirectToolCallCallerType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for BetaDirectToolCallCaller.
+  # Typed representation of the `BetaDirectToolCallCaller` API schema.
+  class BetaDirectToolCallCaller
+    include BetaToolCallCaller
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaDirectToolCallCallerMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaDirectToolCallCallerMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaDirectToolCallCallerMetadata::DECODERS
+
+    # @return [BetaDirectToolCallCallerType] Required enumerated value serialized in the `type` wire field.
+    attr_reader :type
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the BetaDirectToolCallCallerType SDK namespace.
+  module BetaDirectToolCallCallerType
+    DIRECT = 'direct'
+    VALUES = ['direct'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the BetaDirectToolCallCallerType SDK namespace.
-module BetaDirectToolCallCallerType
-  DIRECT = 'direct'
-  VALUES = ['direct'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('BetaDirectToolCallCallerType', 'enum', "Unknown BetaDirectToolCallCallerType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaDirectToolCallCallerParamMetadata
-  FIELDS = {
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaDirectToolCallCallerParamType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaDirectToolCallCallerParam.
-# Typed representation of the `BetaDirectToolCallCallerParam` API schema.
-class BetaDirectToolCallCallerParam
-  include BetaToolCallCallerParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaDirectToolCallCallerParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaDirectToolCallCallerParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaDirectToolCallCallerParamMetadata::DECODERS
-
-  # @return [BetaDirectToolCallCallerParamType] The caller type. Always `direct`.
-  attr_reader :type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('BetaDirectToolCallCallerType', 'enum', "Unknown BetaDirectToolCallCallerType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalBetaDirectToolCallCallerParamMetadata
+    FIELDS = {
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaDirectToolCallCallerParamType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for BetaDirectToolCallCallerParam.
+  # Typed representation of the `BetaDirectToolCallCallerParam` API schema.
+  class BetaDirectToolCallCallerParam
+    include BetaToolCallCallerParam
 
-# Defines the BetaDirectToolCallCallerParamType SDK namespace.
-module BetaDirectToolCallCallerParamType
-  DIRECT = 'direct'
-  VALUES = ['direct'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaDirectToolCallCallerParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaDirectToolCallCallerParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaDirectToolCallCallerParamMetadata::DECODERS
 
-    raise SdkValidationError.new('BetaDirectToolCallCallerParamType', 'enum', "Unknown BetaDirectToolCallCallerParamType: #{value}")
+    # @return [BetaDirectToolCallCallerParamType] The caller type. Always `direct`.
+    attr_reader :type
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
+
+  # Defines the BetaDirectToolCallCallerParamType SDK namespace.
+  module BetaDirectToolCallCallerParamType
+    DIRECT = 'direct'
+    VALUES = ['direct'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaDirectToolCallCallerParamType', 'enum', "Unknown BetaDirectToolCallCallerParamType: #{value}")
+    end
+  end
 end

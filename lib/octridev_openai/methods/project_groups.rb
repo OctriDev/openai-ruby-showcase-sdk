@@ -13,7 +13,7 @@ module OctridevOpenai
       module RetrieveProjectGroupParameter
         GROUP = 'group'
         TENANT_GROUP = 'tenant_group'
-        VALUES = ['group', 'tenant_group'].freeze
+        VALUES = %w[group tenant_group].freeze
         def self.from_value(value)
           value
         end
@@ -23,7 +23,7 @@ module OctridevOpenai
       module ListProjectGroupsParameter
         ASC = 'asc'
         DESC = 'desc'
-        VALUES = ['asc', 'desc'].freeze
+        VALUES = %w[asc desc].freeze
         def self.from_value(value)
           value
         end
@@ -48,31 +48,30 @@ module OctridevOpenai
         order: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 0, max: 100) }
 
         SdkClient.request(
           'GET',
           [
-            "/organization/projects/",
+            '/organization/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/groups"
+            '/groups'
           ].join,
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
-            'order' => QueryValue.new(order, style: 'form', explode: true),
+            'order' => QueryValue.new(order, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::ProjectGroupListResource,
           decoder: :json,
           operation_id: 'list_project_groups',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
-    ListProjectGroupsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      ListProjectGroupsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists the groups that have access to a project. Use `after` to continue from the last group in a previous response, and set `limit` and `order` to control the page size and sort order.
       #
@@ -106,10 +105,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.next_
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -136,10 +138,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.next_
             has_more = page.has_more && !next_cursor.nil?
             y << ListProjectGroupsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end
@@ -159,24 +163,23 @@ module OctridevOpenai
         role:,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
           [
-            "/organization/projects/",
+            '/organization/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/groups"
+            '/groups'
           ].join,
           config: config,
           body: {
             'group_id' => group_id,
-            'role' => role,
+            'role' => role
           },
           return_type: ::OctridevOpenai::ProjectGroup,
           decoder: :json,
           operation_id: 'add_project_group',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -195,24 +198,23 @@ module OctridevOpenai
         group_type: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
           [
-            "/organization/projects/",
+            '/organization/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/groups/",
+            '/groups/',
             SdkClient.encode_path_segment(group_id)
           ].join,
           config: config,
           query: {
-            'group_type' => QueryValue.new(group_type, style: 'form', explode: true),
+            'group_type' => QueryValue.new(group_type, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::ProjectGroup,
           decoder: :json,
           operation_id: 'retrieve_project_group',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -228,13 +230,12 @@ module OctridevOpenai
         group_id:,
         request_options: nil
       )
-
         SdkClient.request(
           'DELETE',
           [
-            "/organization/projects/",
+            '/organization/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/groups/",
+            '/groups/',
             SdkClient.encode_path_segment(group_id)
           ].join,
           config: config,
@@ -242,7 +243,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'remove_project_group',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
     end

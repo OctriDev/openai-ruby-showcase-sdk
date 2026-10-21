@@ -59,10 +59,9 @@ module OctridevOpenai
         parallel_tool_calls: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
-          "/responses/input_tokens",
+          '/responses/input_tokens',
           config: config,
           body: {
             'model' => model,
@@ -76,13 +75,13 @@ module OctridevOpenai
             'personality' => personality,
             'conversation' => conversation,
             'tool_choice' => tool_choice,
-            'parallel_tool_calls' => parallel_tool_calls,
+            'parallel_tool_calls' => parallel_tool_calls
           },
           return_type: ::OctridevOpenai::TokenCountsResource,
           decoder: :json,
           operation_id: 'count_responses_input_tokens',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -139,10 +138,9 @@ module OctridevOpenai
         parallel_tool_calls: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
-          "/responses/input_tokens?beta=true",
+          '/responses/input_tokens?beta=true',
           config: config,
           body: {
             'model' => model,
@@ -156,16 +154,16 @@ module OctridevOpenai
             'personality' => personality,
             'conversation' => conversation,
             'tool_choice' => tool_choice,
-            'parallel_tool_calls' => parallel_tool_calls,
+            'parallel_tool_calls' => parallel_tool_calls
           },
           return_type: ::OctridevOpenai::BetaTokenCountsResource,
           decoder: :json,
           operation_id: 'beta_responses_count_input_tokens',
           extra_headers: SdkClient.serialize_headers({
-            'openai-beta' => SdkClient.header_value(openai_beta),
-          }),
+                                                       'openai-beta' => SdkClient.header_value(openai_beta)
+                                                     }),
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::BetaErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::BetaErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
     end

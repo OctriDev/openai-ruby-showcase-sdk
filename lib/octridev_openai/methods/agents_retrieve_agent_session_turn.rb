@@ -19,17 +19,16 @@ module OctridevOpenai
         turn_id:,
         request_options: nil
       )
+        Validation.validate_length('session_id', session_id, min: 0, max: 1_048_576)
 
-        Validation.validate_length('session_id', session_id, min: 0, max: 1048576)
-
-        Validation.validate_length('turn_id', turn_id, min: 0, max: 1048576)
+        Validation.validate_length('turn_id', turn_id, min: 0, max: 1_048_576)
 
         SdkClient.request(
           'GET',
           [
-            "/agents/sessions/",
+            '/agents/sessions/',
             SdkClient.encode_path_segment(session_id),
-            "/turns/",
+            '/turns/',
             SdkClient.encode_path_segment(turn_id)
           ].join,
           config: config,
@@ -37,7 +36,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'retrieve_agent_session_turn',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).data
       end
     end

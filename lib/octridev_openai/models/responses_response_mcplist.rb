@@ -5,195 +5,198 @@
 
 # responses_response_mcplist domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalResponseMCPListToolsCompletedEventMetadata
-  FIELDS = {
-    type: "type",
-    item_id: "item_id",
-    output_index: "output_index",
-    sequence_number: "sequence_number",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    item_id
-    output_index
-    sequence_number
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ResponseMCPListToolsCompletedEventType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for ResponseMCPListToolsCompletedEvent.
-# Emitted when the list of available MCP tools has been successfully retrieved.
-class ResponseMCPListToolsCompletedEvent
-  include ResponseStreamEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalResponseMCPListToolsCompletedEventMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalResponseMCPListToolsCompletedEventMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalResponseMCPListToolsCompletedEventMetadata::DECODERS
-
-  # @return [ResponseMCPListToolsCompletedEventType] The type of the event. Always 'response.mcp_list_tools.completed'.
-  attr_reader :type
-  # @return [String] The ID of the MCP tool call item that produced this output.
-  attr_reader :item_id
-  # @return [Integer] The index of the output item that was processed.
-  attr_reader :output_index
-  # @return [Integer] The sequence number of this event.
-  attr_reader :sequence_number
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalResponseMCPListToolsCompletedEventMetadata
+    FIELDS = {
+      type: 'type',
+      item_id: 'item_id',
+      output_index: 'output_index',
+      sequence_number: 'sequence_number'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      item_id
+      output_index
+      sequence_number
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ResponseMCPListToolsCompletedEventType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ResponseMCPListToolsCompletedEvent.
+  # Emitted when the list of available MCP tools has been successfully retrieved.
+  class ResponseMCPListToolsCompletedEvent
+    include ResponseStreamEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalResponseMCPListToolsCompletedEventMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalResponseMCPListToolsCompletedEventMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalResponseMCPListToolsCompletedEventMetadata::DECODERS
+
+    # @return [ResponseMCPListToolsCompletedEventType] The type of the event. Always 'response.mcp_list_tools.completed'.
+    attr_reader :type
+    # @return [String] The ID of the MCP tool call item that produced this output.
+    attr_reader :item_id
+    # @return [Integer] The index of the output item that was processed.
+    attr_reader :output_index
+    # @return [Integer] The sequence number of this event.
+    attr_reader :sequence_number
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the ResponseMCPListToolsCompletedEventType SDK namespace.
+  module ResponseMCPListToolsCompletedEventType
+    RESPONSE_MCP_LIST_TOOLS_COMPLETED = 'response.mcp_list_tools.completed'
+    VALUES = ['response.mcp_list_tools.completed'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the ResponseMCPListToolsCompletedEventType SDK namespace.
-module ResponseMCPListToolsCompletedEventType
-  RESPONSE_MCP_LIST_TOOLS_COMPLETED = 'response.mcp_list_tools.completed'
-  VALUES = ['response.mcp_list_tools.completed'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('ResponseMCPListToolsCompletedEventType', 'enum', "Unknown ResponseMCPListToolsCompletedEventType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalResponseMCPListToolsFailedEventMetadata
-  FIELDS = {
-    type: "type",
-    item_id: "item_id",
-    output_index: "output_index",
-    sequence_number: "sequence_number",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    item_id
-    output_index
-    sequence_number
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ResponseMCPListToolsFailedEventType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for ResponseMCPListToolsFailedEvent.
-# Emitted when the attempt to list available MCP tools has failed.
-class ResponseMCPListToolsFailedEvent
-  include ResponseStreamEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalResponseMCPListToolsFailedEventMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalResponseMCPListToolsFailedEventMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalResponseMCPListToolsFailedEventMetadata::DECODERS
-
-  # @return [ResponseMCPListToolsFailedEventType] The type of the event. Always 'response.mcp_list_tools.failed'.
-  attr_reader :type
-  # @return [String] The ID of the MCP tool call item that failed.
-  attr_reader :item_id
-  # @return [Integer] The index of the output item that failed.
-  attr_reader :output_index
-  # @return [Integer] The sequence number of this event.
-  attr_reader :sequence_number
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('ResponseMCPListToolsCompletedEventType', 'enum', "Unknown ResponseMCPListToolsCompletedEventType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalResponseMCPListToolsFailedEventMetadata
+    FIELDS = {
+      type: 'type',
+      item_id: 'item_id',
+      output_index: 'output_index',
+      sequence_number: 'sequence_number'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      item_id
+      output_index
+      sequence_number
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ResponseMCPListToolsFailedEventType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for ResponseMCPListToolsFailedEvent.
+  # Emitted when the attempt to list available MCP tools has failed.
+  class ResponseMCPListToolsFailedEvent
+    include ResponseStreamEvent
 
-# Defines the ResponseMCPListToolsFailedEventType SDK namespace.
-module ResponseMCPListToolsFailedEventType
-  RESPONSE_MCP_LIST_TOOLS_FAILED = 'response.mcp_list_tools.failed'
-  VALUES = ['response.mcp_list_tools.failed'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalResponseMCPListToolsFailedEventMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalResponseMCPListToolsFailedEventMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalResponseMCPListToolsFailedEventMetadata::DECODERS
 
-    raise SdkValidationError.new('ResponseMCPListToolsFailedEventType', 'enum', "Unknown ResponseMCPListToolsFailedEventType: #{value}")
-  end
-end
+    # @return [ResponseMCPListToolsFailedEventType] The type of the event. Always 'response.mcp_list_tools.failed'.
+    attr_reader :type
+    # @return [String] The ID of the MCP tool call item that failed.
+    attr_reader :item_id
+    # @return [Integer] The index of the output item that failed.
+    attr_reader :output_index
+    # @return [Integer] The sequence number of this event.
+    attr_reader :sequence_number
 
-# Internal model hydration metadata.
-class SdkInternalResponseMCPListToolsInProgressEventMetadata
-  FIELDS = {
-    type: "type",
-    item_id: "item_id",
-    output_index: "output_index",
-    sequence_number: "sequence_number",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    item_id
-    output_index
-    sequence_number
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ResponseMCPListToolsInProgressEventType.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for ResponseMCPListToolsInProgressEvent.
-# Emitted when the system is in the process of retrieving the list of available MCP tools.
-class ResponseMCPListToolsInProgressEvent
-  include ResponseStreamEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalResponseMCPListToolsInProgressEventMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalResponseMCPListToolsInProgressEventMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalResponseMCPListToolsInProgressEventMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [ResponseMCPListToolsInProgressEventType] The type of the event. Always 'response.mcp_list_tools.in_progress'.
-  attr_reader :type
-  # @return [String] The ID of the MCP tool call item that is being processed.
-  attr_reader :item_id
-  # @return [Integer] The index of the output item that is being processed.
-  attr_reader :output_index
-  # @return [Integer] The sequence number of this event.
-  attr_reader :sequence_number
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the ResponseMCPListToolsFailedEventType SDK namespace.
+  module ResponseMCPListToolsFailedEventType
+    RESPONSE_MCP_LIST_TOOLS_FAILED = 'response.mcp_list_tools.failed'
+    VALUES = ['response.mcp_list_tools.failed'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('ResponseMCPListToolsFailedEventType', 'enum', "Unknown ResponseMCPListToolsFailedEventType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalResponseMCPListToolsInProgressEventMetadata
+    FIELDS = {
+      type: 'type',
+      item_id: 'item_id',
+      output_index: 'output_index',
+      sequence_number: 'sequence_number'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      item_id
+      output_index
+      sequence_number
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ResponseMCPListToolsInProgressEventType.from_value(value)
+      end
+    }.freeze
   end
-end
 
-# Defines the ResponseMCPListToolsInProgressEventType SDK namespace.
-module ResponseMCPListToolsInProgressEventType
-  RESPONSE_MCP_LIST_TOOLS_IN_PROGRESS = 'response.mcp_list_tools.in_progress'
-  VALUES = ['response.mcp_list_tools.in_progress'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+  # API model for ResponseMCPListToolsInProgressEvent.
+  # Emitted when the system is in the process of retrieving the list of available MCP tools.
+  class ResponseMCPListToolsInProgressEvent
+    include ResponseStreamEvent
 
-    raise SdkValidationError.new('ResponseMCPListToolsInProgressEventType', 'enum', "Unknown ResponseMCPListToolsInProgressEventType: #{value}")
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalResponseMCPListToolsInProgressEventMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalResponseMCPListToolsInProgressEventMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalResponseMCPListToolsInProgressEventMetadata::DECODERS
+
+    # @return [ResponseMCPListToolsInProgressEventType] The type of the event. Always 'response.mcp_list_tools.in_progress'.
+    attr_reader :type
+    # @return [String] The ID of the MCP tool call item that is being processed.
+    attr_reader :item_id
+    # @return [Integer] The index of the output item that is being processed.
+    attr_reader :output_index
+    # @return [Integer] The sequence number of this event.
+    attr_reader :sequence_number
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
+
+  # Defines the ResponseMCPListToolsInProgressEventType SDK namespace.
+  module ResponseMCPListToolsInProgressEventType
+    RESPONSE_MCP_LIST_TOOLS_IN_PROGRESS = 'response.mcp_list_tools.in_progress'
+    VALUES = ['response.mcp_list_tools.in_progress'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('ResponseMCPListToolsInProgressEventType', 'enum', "Unknown ResponseMCPListToolsInProgressEventType: #{value}")
+    end
+  end
 end

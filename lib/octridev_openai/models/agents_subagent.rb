@@ -5,105 +5,105 @@
 
 # agents_subagent domain models
 module OctridevOpenai
-# Defines the SubagentObjectResource SDK namespace.
-module SubagentObjectResource
-  AGENT_SESSION_SUBAGENT = 'agent.session.subagent'
-  VALUES = ['agent.session.subagent'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalSubagentResourceMetadata
-  FIELDS = {
-    id: "id",
-    object: "object",
-    session_id: "session_id",
-    name: "name",
-    instructions: "instructions",
-    parent_agent_id: "parent_agent_id",
-    status: "status",
-    opened_at: "opened_at",
-    closed_at: "closed_at",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    object
-    session_id
-    name
-    instructions
-    parent_agent_id
-    status
-    opened_at
-    closed_at
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::SubagentObjectResource.from_value(value)
-    end,
-    instructions: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::AgentContentResource.from_hash(item) }
-    end,
-    status: lambda do |value|
-      ::OctridevOpenai::SubagentStatusResource.from_value(value)
-    end,
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    name
-    instructions
-    closed_at
-  ].freeze
-end
-
-# API model for SubagentResource.
-# A subagent created within a session.
-class SubagentResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalSubagentResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalSubagentResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalSubagentResourceMetadata::DECODERS
-
-  # @return [String] The ID of the subagent.
-  attr_reader :id
-  # @return [SubagentObjectResource] The object type. Always `agent.session.subagent`.
-  attr_reader :object
-  # @return [String] The ID of the session that owns the subagent.
-  attr_reader :session_id
-  # @return [String] The runner-assigned nickname, or null when unavailable.
-  attr_reader :name
-  # @return [Array_of_AgentContentResource] Initial task content, or null when unavailable. Text may contain placeholders for images or audio when only a preview is available.
-  attr_reader :instructions
-  # @return [String] The ID of the agent that created this subagent.
-  attr_reader :parent_agent_id
-  # @return [SubagentStatusResource] The current status of the subagent.
-  attr_reader :status
-  # @return [Integer] The Unix timestamp, in seconds, when the subagent was first opened. Resuming does not change it.
-  attr_reader :opened_at
-  # @return [Integer] The Unix timestamp, in seconds, when the subagent was closed. Null while active, including after resume.
-  attr_reader :closed_at
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the SubagentObjectResource SDK namespace.
+  module SubagentObjectResource
+    AGENT_SESSION_SUBAGENT = 'agent.session.subagent'
+    VALUES = ['agent.session.subagent'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalSubagentResourceMetadata::NULLABLE_FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalSubagentResourceMetadata
+    FIELDS = {
+      id: 'id',
+      object: 'object',
+      session_id: 'session_id',
+      name: 'name',
+      instructions: 'instructions',
+      parent_agent_id: 'parent_agent_id',
+      status: 'status',
+      opened_at: 'opened_at',
+      closed_at: 'closed_at'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      object
+      session_id
+      name
+      instructions
+      parent_agent_id
+      status
+      opened_at
+      closed_at
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::SubagentObjectResource.from_value(value)
+      end,
+      instructions: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::AgentContentResource.from_hash(item) }
+      end,
+      status: lambda do |value|
+        ::OctridevOpenai::SubagentStatusResource.from_value(value)
+      end
+    }.freeze
+    NULLABLE_FIELDS = %i[
+      name
+      instructions
+      closed_at
+    ].freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for SubagentResource.
+  # A subagent created within a session.
+  class SubagentResource
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalSubagentResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalSubagentResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalSubagentResourceMetadata::DECODERS
 
-# Defines the SubagentStatusResource SDK namespace.
-module SubagentStatusResource
-  ACTIVE = 'active'
-  CLOSED = 'closed'
-  VALUES = ['active', 'closed'].freeze
-  def self.from_value(value)
-    value
+    # @return [String] The ID of the subagent.
+    attr_reader :id
+    # @return [SubagentObjectResource] The object type. Always `agent.session.subagent`.
+    attr_reader :object
+    # @return [String] The ID of the session that owns the subagent.
+    attr_reader :session_id
+    # @return [String] The runner-assigned nickname, or null when unavailable.
+    attr_reader :name
+    # @return [Array_of_AgentContentResource] Initial task content, or null when unavailable. Text may contain placeholders for images or audio when only a preview is available.
+    attr_reader :instructions
+    # @return [String] The ID of the agent that created this subagent.
+    attr_reader :parent_agent_id
+    # @return [SubagentStatusResource] The current status of the subagent.
+    attr_reader :status
+    # @return [Integer] The Unix timestamp, in seconds, when the subagent was first opened. Resuming does not change it.
+    attr_reader :opened_at
+    # @return [Integer] The Unix timestamp, in seconds, when the subagent was closed. Null while active, including after resume.
+    attr_reader :closed_at
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalSubagentResourceMetadata::NULLABLE_FIELDS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
+
+  # Defines the SubagentStatusResource SDK namespace.
+  module SubagentStatusResource
+    ACTIVE = 'active'
+    CLOSED = 'closed'
+    VALUES = %w[active closed].freeze
+    def self.from_value(value)
+      value
+    end
+  end
 end

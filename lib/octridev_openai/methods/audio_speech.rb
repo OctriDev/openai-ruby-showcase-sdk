@@ -44,7 +44,6 @@ module OctridevOpenai
         stream_format: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.validate_length('input', input, max: 4096)
 
         Validation.if_given(instructions) { Validation.validate_length('instructions', instructions, max: 4096) }
@@ -53,7 +52,7 @@ module OctridevOpenai
 
         SdkClient.request(
           'POST',
-          "/audio/speech",
+          '/audio/speech',
           config: config,
           body: {
             'model' => model,
@@ -62,12 +61,12 @@ module OctridevOpenai
             'instructions' => instructions,
             'response_format' => response_format,
             'speed' => speed,
-            'stream_format' => stream_format,
+            'stream_format' => stream_format
           },
           decoder: :bytes,
           operation_id: 'create_speech',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '401' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '401' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -107,20 +106,22 @@ module OctridevOpenai
         request_options: nil,
         &block
       )
-    return enum_for(
-          __method__,
-          config: config,
-          model: model,
-          input: input,
-          voice: voice,
-          instructions: instructions,
-          response_format: response_format,
-          speed: speed,
-          stream_format: stream_format,
-          request_options: request_options,
-        ) unless block
+        unless block
+          return enum_for(
+            __method__,
+            config: config,
+            model: model,
+            input: input,
+            voice: voice,
+            instructions: instructions,
+            response_format: response_format,
+            speed: speed,
+            stream_format: stream_format,
+            request_options: request_options
+          )
+        end
         SdkClient.stream(
-          'POST', "/audio/speech",
+          'POST', '/audio/speech',
           config: config,
           body: {
             'model' => model,
@@ -129,16 +130,17 @@ module OctridevOpenai
             'instructions' => instructions,
             'response_format' => response_format,
             'speed' => speed,
-            'stream_format' => stream_format,
+            'stream_format' => stream_format
           },
           content_type: 'application/json',
           operation_id: 'create_speech_stream',
           stream_format: :sse,
-          stream_media_type: "text/event-stream",
+          stream_media_type: 'text/event-stream',
           request_options: request_options,
           errors: { '400' => ::OctridevOpenai::ErrorResponse, '401' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
         ).each do |ev|
           break if ev.data == '[DONE]'
+
           decoded = JSON.parse(ev.data)
           block.call(SdkClient.decode_event(decoded, ::OctridevOpenai::CreateSpeechResponseStreamEvent))
         end

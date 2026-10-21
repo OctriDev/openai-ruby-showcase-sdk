@@ -5,117 +5,117 @@
 
 # vaults_deleted domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalDeletedVaultCredentialResourceMetadata
-  FIELDS = {
-    id: "id",
-    object: "object",
-    deleted: "deleted",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    object
-    deleted
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::DeletedVaultCredentialResourceObject.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for DeletedVaultCredentialResource.
-# Confirmation that a vault credential was deleted.
-class DeletedVaultCredentialResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalDeletedVaultCredentialResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalDeletedVaultCredentialResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalDeletedVaultCredentialResourceMetadata::DECODERS
-
-  # @return [String] The ID of the deleted credential.
-  attr_reader :id
-  # @return [DeletedVaultCredentialResourceObject] The object type. Always `vault.credential.deleted`.
-  attr_reader :object
-  # @return [Boolean] Whether the resource was deleted. Always `true`.
-  attr_reader :deleted
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalDeletedVaultCredentialResourceMetadata
+    FIELDS = {
+      id: 'id',
+      object: 'object',
+      deleted: 'deleted'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      object
+      deleted
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::DeletedVaultCredentialResourceObject.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for DeletedVaultCredentialResource.
+  # Confirmation that a vault credential was deleted.
+  class DeletedVaultCredentialResource
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalDeletedVaultCredentialResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalDeletedVaultCredentialResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalDeletedVaultCredentialResourceMetadata::DECODERS
+
+    # @return [String] The ID of the deleted credential.
+    attr_reader :id
+    # @return [DeletedVaultCredentialResourceObject] The object type. Always `vault.credential.deleted`.
+    attr_reader :object
+    # @return [Boolean] Whether the resource was deleted. Always `true`.
+    attr_reader :deleted
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the DeletedVaultCredentialResourceObject SDK namespace.
-module DeletedVaultCredentialResourceObject
-  VAULT_CREDENTIAL_DELETED = 'vault.credential.deleted'
-  VALUES = ['vault.credential.deleted'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalDeletedVaultResourceMetadata
-  FIELDS = {
-    id: "id",
-    object: "object",
-    deleted: "deleted",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    object
-    deleted
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::DeletedVaultResourceObject.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for DeletedVaultResource.
-# Confirmation that a vault was deleted.
-class DeletedVaultResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalDeletedVaultResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalDeletedVaultResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalDeletedVaultResourceMetadata::DECODERS
-
-  # @return [String] The ID of the deleted vault.
-  attr_reader :id
-  # @return [DeletedVaultResourceObject] The object type. Always `vault.deleted`.
-  attr_reader :object
-  # @return [Boolean] Whether the resource was deleted. Always `true`.
-  attr_reader :deleted
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the DeletedVaultCredentialResourceObject SDK namespace.
+  module DeletedVaultCredentialResourceObject
+    VAULT_CREDENTIAL_DELETED = 'vault.credential.deleted'
+    VALUES = ['vault.credential.deleted'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalDeletedVaultResourceMetadata
+    FIELDS = {
+      id: 'id',
+      object: 'object',
+      deleted: 'deleted'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      object
+      deleted
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::DeletedVaultResourceObject.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for DeletedVaultResource.
+  # Confirmation that a vault was deleted.
+  class DeletedVaultResource
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalDeletedVaultResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalDeletedVaultResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalDeletedVaultResourceMetadata::DECODERS
 
-# Defines the DeletedVaultResourceObject SDK namespace.
-module DeletedVaultResourceObject
-  VAULT_DELETED = 'vault.deleted'
-  VALUES = ['vault.deleted'].freeze
-  def self.from_value(value)
-    value
+    # @return [String] The ID of the deleted vault.
+    attr_reader :id
+    # @return [DeletedVaultResourceObject] The object type. Always `vault.deleted`.
+    attr_reader :object
+    # @return [Boolean] Whether the resource was deleted. Always `true`.
+    attr_reader :deleted
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
+
+  # Defines the DeletedVaultResourceObject SDK namespace.
+  module DeletedVaultResourceObject
+    VAULT_DELETED = 'vault.deleted'
+    VALUES = ['vault.deleted'].freeze
+    def self.from_value(value)
+      value
+    end
+  end
 end

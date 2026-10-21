@@ -38,26 +38,25 @@ module OctridevOpenai
         metadata: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
           [
-            "/threads/",
+            '/threads/',
             SdkClient.encode_path_segment(thread_id),
-            "/messages"
+            '/messages'
           ].join,
           config: config,
           body: {
             'role' => role,
             'content' => content,
             'attachments' => attachments,
-            'metadata' => metadata,
+            'metadata' => metadata
           },
           return_type: ::OctridevOpenai::MessageObject,
           decoder: :json,
           operation_id: 'create_message',
           request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
     end

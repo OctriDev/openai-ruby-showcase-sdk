@@ -5,153 +5,152 @@
 
 # code_interpreter domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalCodeInterpreterFileOutputFilesItemMetadata
-  FIELDS = {
-    mime_type: "mime_type",
-    file_id: "file_id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    mime_type
-    file_id
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for CodeInterpreterFileOutputFilesItem.
-# Required object value serialized in the `files[]` wire field.
-class CodeInterpreterFileOutputFilesItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCodeInterpreterFileOutputFilesItemMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCodeInterpreterFileOutputFilesItemMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCodeInterpreterFileOutputFilesItemMetadata::DECODERS
-
-  # @return [String] The MIME type of the file.
-  attr_reader :mime_type
-  # @return [String] The ID of the file.
-  attr_reader :file_id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalCodeInterpreterFileOutputFilesItemMetadata
+    FIELDS = {
+      mime_type: 'mime_type',
+      file_id: 'file_id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      mime_type
+      file_id
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for CodeInterpreterFileOutputFilesItem.
+  # Required object value serialized in the `files[]` wire field.
+  class CodeInterpreterFileOutputFilesItem
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCodeInterpreterFileOutputFilesItemMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCodeInterpreterFileOutputFilesItemMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCodeInterpreterFileOutputFilesItemMetadata::DECODERS
+
+    # @return [String] The MIME type of the file.
+    attr_reader :mime_type
+    # @return [String] The ID of the file.
+    attr_reader :file_id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalCodeInterpreterFileOutputMetadata
-  FIELDS = {
-    type: "type",
-    files: "files",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    files
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::CodeInterpreterFileOutputType.from_value(value)
-    end,
-    files: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::CodeInterpreterFileOutputFilesItem.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for CodeInterpreterFileOutput.
-# The output of a code interpreter tool call that is a file.
-class CodeInterpreterFileOutput
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCodeInterpreterFileOutputMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCodeInterpreterFileOutputMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCodeInterpreterFileOutputMetadata::DECODERS
-
-  # @return [CodeInterpreterFileOutputType] The type of the code interpreter file output. Always `files`.
-  attr_reader :type
-  # @return [Array_of_CodeInterpreterFileOutputFilesItem] Required array value serialized in the `files` wire field.
-  attr_reader :files
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalCodeInterpreterFileOutputMetadata
+    FIELDS = {
+      type: 'type',
+      files: 'files'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      files
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::CodeInterpreterFileOutputType.from_value(value)
+      end,
+      files: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::CodeInterpreterFileOutputFilesItem.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for CodeInterpreterFileOutput.
+  # The output of a code interpreter tool call that is a file.
+  class CodeInterpreterFileOutput
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCodeInterpreterFileOutputMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCodeInterpreterFileOutputMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCodeInterpreterFileOutputMetadata::DECODERS
+
+    # @return [CodeInterpreterFileOutputType] The type of the code interpreter file output. Always `files`.
+    attr_reader :type
+    # @return [Array_of_CodeInterpreterFileOutputFilesItem] Required array value serialized in the `files` wire field.
+    attr_reader :files
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the CodeInterpreterFileOutputType SDK namespace.
-module CodeInterpreterFileOutputType
-  FILES = 'files'
-  VALUES = ['files'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalCodeInterpreterTextOutputMetadata
-  FIELDS = {
-    type: "type",
-    logs: "logs",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    logs
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::CodeInterpreterTextOutputType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for CodeInterpreterTextOutput.
-# The output of a code interpreter tool call that is text.
-class CodeInterpreterTextOutput
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCodeInterpreterTextOutputMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCodeInterpreterTextOutputMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCodeInterpreterTextOutputMetadata::DECODERS
-
-  # @return [CodeInterpreterTextOutputType] The type of the code interpreter text output. Always `logs`.
-  attr_reader :type
-  # @return [String] The logs of the code interpreter tool call.
-  attr_reader :logs
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the CodeInterpreterFileOutputType SDK namespace.
+  module CodeInterpreterFileOutputType
+    FILES = 'files'
+    VALUES = ['files'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalCodeInterpreterTextOutputMetadata
+    FIELDS = {
+      type: 'type',
+      logs: 'logs'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      logs
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::CodeInterpreterTextOutputType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for CodeInterpreterTextOutput.
+  # The output of a code interpreter tool call that is text.
+  class CodeInterpreterTextOutput
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCodeInterpreterTextOutputMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCodeInterpreterTextOutputMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCodeInterpreterTextOutputMetadata::DECODERS
 
-# Defines the CodeInterpreterTextOutputType SDK namespace.
-module CodeInterpreterTextOutputType
-  LOGS = 'logs'
-  VALUES = ['logs'].freeze
-  def self.from_value(value)
-    value
+    # @return [CodeInterpreterTextOutputType] The type of the code interpreter text output. Always `logs`.
+    attr_reader :type
+    # @return [String] The logs of the code interpreter tool call.
+    attr_reader :logs
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
+
+  # Defines the CodeInterpreterTextOutputType SDK namespace.
+  module CodeInterpreterTextOutputType
+    LOGS = 'logs'
+    VALUES = ['logs'].freeze
+    def self.from_value(value)
+      value
+    end
+  end
 end

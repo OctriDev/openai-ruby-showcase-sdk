@@ -43,10 +43,9 @@ module OctridevOpenai
         service_tier: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
-          "/responses/compact",
+          '/responses/compact',
           config: config,
           body: {
             'model' => model,
@@ -56,13 +55,13 @@ module OctridevOpenai
             'prompt_cache_key' => prompt_cache_key,
             'prompt_cache_retention' => prompt_cache_retention,
             'prompt_cache_options' => prompt_cache_options,
-            'service_tier' => service_tier,
+            'service_tier' => service_tier
           },
           return_type: ::OctridevOpenai::CompactResource,
           decoder: :json,
           operation_id: 'compact_responses',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -103,10 +102,9 @@ module OctridevOpenai
         service_tier: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
-          "/responses/compact?beta=true",
+          '/responses/compact?beta=true',
           config: config,
           body: {
             'model' => model,
@@ -116,16 +114,16 @@ module OctridevOpenai
             'prompt_cache_key' => prompt_cache_key,
             'prompt_cache_retention' => prompt_cache_retention,
             'prompt_cache_options' => prompt_cache_options,
-            'service_tier' => service_tier,
+            'service_tier' => service_tier
           },
           return_type: ::OctridevOpenai::BetaCompactResource,
           decoder: :json,
           operation_id: 'beta_responses_compact',
           extra_headers: SdkClient.serialize_headers({
-            'openai-beta' => SdkClient.header_value(openai_beta),
-          }),
+                                                       'openai-beta' => SdkClient.header_value(openai_beta)
+                                                     }),
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::BetaErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::BetaErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
     end

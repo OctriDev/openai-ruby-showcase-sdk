@@ -18,26 +18,29 @@ module OctridevOpenai
         request_options: nil,
         &block
       )
-    return enum_for(
-          __method__,
-          config: config,
-          session_id: session_id,
-          request_options: request_options,
-        ) unless block
+        unless block
+          return enum_for(
+            __method__,
+            config: config,
+            session_id: session_id,
+            request_options: request_options
+          )
+        end
         SdkClient.stream(
           'GET', [
-            "/agents/sessions/",
+            '/agents/sessions/',
             SdkClient.encode_path_segment(session_id),
-            "/events"
+            '/events'
           ].join,
           config: config,
           operation_id: 'list_agent_session_events',
           stream_format: :sse,
-          stream_media_type: "text/event-stream",
+          stream_media_type: 'text/event-stream',
           request_options: request_options,
           errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).each do |ev|
           break if ev.data == '[DONE]'
+
           decoded = JSON.parse(ev.data)
           block.call(SdkClient.decode_event(decoded, ::OctridevOpenai::SessionEvent))
         end

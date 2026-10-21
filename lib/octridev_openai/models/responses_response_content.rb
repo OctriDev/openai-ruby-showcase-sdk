@@ -5,153 +5,155 @@
 
 # responses_response_content domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalResponseContentPartAddedEventMetadata
-  FIELDS = {
-    type: "type",
-    item_id: "item_id",
-    output_index: "output_index",
-    content_index: "content_index",
-    part: "part",
-    sequence_number: "sequence_number",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    item_id
-    output_index
-    content_index
-    part
-    sequence_number
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ResponseContentPartAddedEventType.from_value(value)
-    end,
-    part: lambda do |value|
-      ::OctridevOpenai::OutputContent.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for ResponseContentPartAddedEvent.
-# Emitted when a new content part is added.
-class ResponseContentPartAddedEvent
-  include ResponseStreamEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalResponseContentPartAddedEventMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalResponseContentPartAddedEventMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalResponseContentPartAddedEventMetadata::DECODERS
-
-  # @return [ResponseContentPartAddedEventType] The type of the event. Always `response.content_part.added`.
-  attr_reader :type
-  # @return [String] The ID of the output item that the content part was added to.
-  attr_reader :item_id
-  # @return [Integer] The index of the output item that the content part was added to.
-  attr_reader :output_index
-  # @return [Integer] The index of the content part that was added.
-  attr_reader :content_index
-  # @return [OutputContent] The content part that was added.
-  attr_reader :part
-  # @return [Integer] The sequence number of this event.
-  attr_reader :sequence_number
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalResponseContentPartAddedEventMetadata
+    FIELDS = {
+      type: 'type',
+      item_id: 'item_id',
+      output_index: 'output_index',
+      content_index: 'content_index',
+      part: 'part',
+      sequence_number: 'sequence_number'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      item_id
+      output_index
+      content_index
+      part
+      sequence_number
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ResponseContentPartAddedEventType.from_value(value)
+      end,
+      part: lambda do |value|
+        ::OctridevOpenai::OutputContent.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ResponseContentPartAddedEvent.
+  # Emitted when a new content part is added.
+  class ResponseContentPartAddedEvent
+    include ResponseStreamEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalResponseContentPartAddedEventMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalResponseContentPartAddedEventMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalResponseContentPartAddedEventMetadata::DECODERS
+
+    # @return [ResponseContentPartAddedEventType] The type of the event. Always `response.content_part.added`.
+    attr_reader :type
+    # @return [String] The ID of the output item that the content part was added to.
+    attr_reader :item_id
+    # @return [Integer] The index of the output item that the content part was added to.
+    attr_reader :output_index
+    # @return [Integer] The index of the content part that was added.
+    attr_reader :content_index
+    # @return [OutputContent] The content part that was added.
+    attr_reader :part
+    # @return [Integer] The sequence number of this event.
+    attr_reader :sequence_number
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the ResponseContentPartAddedEventType SDK namespace.
+  module ResponseContentPartAddedEventType
+    RESPONSE_CONTENT_PART_ADDED = 'response.content_part.added'
+    VALUES = ['response.content_part.added'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the ResponseContentPartAddedEventType SDK namespace.
-module ResponseContentPartAddedEventType
-  RESPONSE_CONTENT_PART_ADDED = 'response.content_part.added'
-  VALUES = ['response.content_part.added'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('ResponseContentPartAddedEventType', 'enum', "Unknown ResponseContentPartAddedEventType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalResponseContentPartDoneEventMetadata
-  FIELDS = {
-    type: "type",
-    item_id: "item_id",
-    output_index: "output_index",
-    content_index: "content_index",
-    sequence_number: "sequence_number",
-    part: "part",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    item_id
-    output_index
-    content_index
-    sequence_number
-    part
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ResponseContentPartDoneEventType.from_value(value)
-    end,
-    part: lambda do |value|
-      ::OctridevOpenai::OutputContent.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for ResponseContentPartDoneEvent.
-# Emitted when a content part is done.
-class ResponseContentPartDoneEvent
-  include ResponseStreamEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalResponseContentPartDoneEventMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalResponseContentPartDoneEventMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalResponseContentPartDoneEventMetadata::DECODERS
-
-  # @return [ResponseContentPartDoneEventType] The type of the event. Always `response.content_part.done`.
-  attr_reader :type
-  # @return [String] The ID of the output item that the content part was added to.
-  attr_reader :item_id
-  # @return [Integer] The index of the output item that the content part was added to.
-  attr_reader :output_index
-  # @return [Integer] The index of the content part that is done.
-  attr_reader :content_index
-  # @return [Integer] The sequence number of this event.
-  attr_reader :sequence_number
-  # @return [OutputContent] The content part that is done.
-  attr_reader :part
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('ResponseContentPartAddedEventType', 'enum', "Unknown ResponseContentPartAddedEventType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalResponseContentPartDoneEventMetadata
+    FIELDS = {
+      type: 'type',
+      item_id: 'item_id',
+      output_index: 'output_index',
+      content_index: 'content_index',
+      sequence_number: 'sequence_number',
+      part: 'part'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      item_id
+      output_index
+      content_index
+      sequence_number
+      part
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ResponseContentPartDoneEventType.from_value(value)
+      end,
+      part: lambda do |value|
+        ::OctridevOpenai::OutputContent.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for ResponseContentPartDoneEvent.
+  # Emitted when a content part is done.
+  class ResponseContentPartDoneEvent
+    include ResponseStreamEvent
 
-# Defines the ResponseContentPartDoneEventType SDK namespace.
-module ResponseContentPartDoneEventType
-  RESPONSE_CONTENT_PART_DONE = 'response.content_part.done'
-  VALUES = ['response.content_part.done'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalResponseContentPartDoneEventMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalResponseContentPartDoneEventMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalResponseContentPartDoneEventMetadata::DECODERS
 
-    raise SdkValidationError.new('ResponseContentPartDoneEventType', 'enum', "Unknown ResponseContentPartDoneEventType: #{value}")
+    # @return [ResponseContentPartDoneEventType] The type of the event. Always `response.content_part.done`.
+    attr_reader :type
+    # @return [String] The ID of the output item that the content part was added to.
+    attr_reader :item_id
+    # @return [Integer] The index of the output item that the content part was added to.
+    attr_reader :output_index
+    # @return [Integer] The index of the content part that is done.
+    attr_reader :content_index
+    # @return [Integer] The sequence number of this event.
+    attr_reader :sequence_number
+    # @return [OutputContent] The content part that is done.
+    attr_reader :part
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
+
+  # Defines the ResponseContentPartDoneEventType SDK namespace.
+  module ResponseContentPartDoneEventType
+    RESPONSE_CONTENT_PART_DONE = 'response.content_part.done'
+    VALUES = ['response.content_part.done'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('ResponseContentPartDoneEventType', 'enum', "Unknown ResponseContentPartDoneEventType: #{value}")
+    end
+  end
 end

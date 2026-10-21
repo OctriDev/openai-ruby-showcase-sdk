@@ -5,186 +5,185 @@
 
 # webhook_live_transport_incoming domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalWebhookLiveTransportIncomingDataSipHeadersItemMetadata
-  FIELDS = {
-    name: "name",
-    value: "value",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    name
-    value
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for WebhookLiveTransportIncomingDataSipHeadersItem.
-# A header from the SIP Invite.
-class WebhookLiveTransportIncomingDataSipHeadersItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalWebhookLiveTransportIncomingDataSipHeadersItemMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalWebhookLiveTransportIncomingDataSipHeadersItemMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalWebhookLiveTransportIncomingDataSipHeadersItemMetadata::DECODERS
-
-  # @return [String] Name of the SIP Header.
-  attr_reader :name
-  # @return [String] Value of the SIP Header.
-  attr_reader :value
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalWebhookLiveTransportIncomingDataSipHeadersItemMetadata
+    FIELDS = {
+      name: 'name',
+      value: 'value'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      name
+      value
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for WebhookLiveTransportIncomingDataSipHeadersItem.
+  # A header from the SIP Invite.
+  class WebhookLiveTransportIncomingDataSipHeadersItem
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalWebhookLiveTransportIncomingDataSipHeadersItemMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalWebhookLiveTransportIncomingDataSipHeadersItemMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalWebhookLiveTransportIncomingDataSipHeadersItemMetadata::DECODERS
+
+    # @return [String] Name of the SIP Header.
+    attr_reader :name
+    # @return [String] Value of the SIP Header.
+    attr_reader :value
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalWebhookLiveTransportIncomingDataMetadata
-  FIELDS = {
-    type: "type",
-    session_id: "session_id",
-    sip_media_security: "sip_media_security",
-    sip_headers: "sip_headers",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    session_id
-    sip_headers
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::WebhookLiveTransportIncomingDataType.from_value(value)
-    end,
-    sip_headers: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::WebhookLiveTransportIncomingDataSipHeadersItem.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for WebhookLiveTransportIncomingData.
-# Event data payload.
-class WebhookLiveTransportIncomingData
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalWebhookLiveTransportIncomingDataMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalWebhookLiveTransportIncomingDataMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalWebhookLiveTransportIncomingDataMetadata::DECODERS
-
-  # @return [WebhookLiveTransportIncomingDataType] The incoming transport type. Always `sip`.
-  attr_reader :type
-  # @return [String] The `live_...` ID of the pending SIP session. Forward this value unchanged when accepting or rejecting the call through the Live API.
-  attr_reader :session_id
-  # @return [String] Media protection selected on the SIP leg during SDP negotiation. `srtp` indicates SRTP; `rtp` indicates unencrypted RTP. Omitted when unknown. This does not describe SIP signaling security or confirm that media has flowed. Clients should handle unrecognized values as unknown.
-  attr_reader :sip_media_security
-  # @return [Array_of_WebhookLiveTransportIncomingDataSipHeadersItem] Headers from the SIP INVITE, excluding SIP authorization headers. Retained names, values, repeated entries, and order are preserved. Treat these values as untrusted call metadata.
-  attr_reader :sip_headers
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalWebhookLiveTransportIncomingDataMetadata
+    FIELDS = {
+      type: 'type',
+      session_id: 'session_id',
+      sip_media_security: 'sip_media_security',
+      sip_headers: 'sip_headers'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      session_id
+      sip_headers
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::WebhookLiveTransportIncomingDataType.from_value(value)
+      end,
+      sip_headers: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::WebhookLiveTransportIncomingDataSipHeadersItem.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for WebhookLiveTransportIncomingData.
+  # Event data payload.
+  class WebhookLiveTransportIncomingData
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalWebhookLiveTransportIncomingDataMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalWebhookLiveTransportIncomingDataMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalWebhookLiveTransportIncomingDataMetadata::DECODERS
+
+    # @return [WebhookLiveTransportIncomingDataType] The incoming transport type. Always `sip`.
+    attr_reader :type
+    # @return [String] The `live_...` ID of the pending SIP session. Forward this value unchanged when accepting or rejecting the call through the Live API.
+    attr_reader :session_id
+    # @return [String] Media protection selected on the SIP leg during SDP negotiation. `srtp` indicates SRTP; `rtp` indicates unencrypted RTP. Omitted when unknown. This does not describe SIP signaling security or confirm that media has flowed. Clients should handle unrecognized values as unknown.
+    attr_reader :sip_media_security
+    # @return [Array_of_WebhookLiveTransportIncomingDataSipHeadersItem] Headers from the SIP INVITE, excluding SIP authorization headers. Retained names, values, repeated entries, and order are preserved. Treat these values as untrusted call metadata.
+    attr_reader :sip_headers
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalWebhookLiveTransportIncomingMetadata
-  FIELDS = {
-    created_at: "created_at",
-    id: "id",
-    data: "data",
-    object: "object",
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    created_at
-    id
-    data
-    type
-  ].freeze
-  DECODERS = {
-    data: lambda do |value|
-      ::OctridevOpenai::WebhookLiveTransportIncomingData.from_hash(value)
-    end,
-    object: lambda do |value|
-      ::OctridevOpenai::WebhookLiveTransportIncomingObject.from_value(value)
-    end,
-    type: lambda do |value|
-      ::OctridevOpenai::WebhookLiveTransportIncomingType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for WebhookLiveTransportIncoming.
-# Sent when an incoming API SIP session is available for Live acceptance. The same pending session can also emit `realtime.call.incoming`; the first successful Realtime or Live accept endpoint selects the runtime surface.
-class WebhookLiveTransportIncoming
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalWebhookLiveTransportIncomingMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalWebhookLiveTransportIncomingMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalWebhookLiveTransportIncomingMetadata::DECODERS
-
-  # @return [Integer] The Unix timestamp (in seconds) of when the event was created.
-  attr_reader :created_at
-  # @return [String] The unique ID of the event.
-  attr_reader :id
-  # @return [WebhookLiveTransportIncomingData] Event data payload.
-  attr_reader :data
-  # @return [WebhookLiveTransportIncomingObject] The object of the event. Always `event`.
-  attr_reader :object
-  # @return [WebhookLiveTransportIncomingType] The type of the event. Always `live.transport.incoming`.
-  attr_reader :type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalWebhookLiveTransportIncomingMetadata
+    FIELDS = {
+      created_at: 'created_at',
+      id: 'id',
+      data: 'data',
+      object: 'object',
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      created_at
+      id
+      data
+      type
+    ].freeze
+    DECODERS = {
+      data: lambda do |value|
+        ::OctridevOpenai::WebhookLiveTransportIncomingData.from_hash(value)
+      end,
+      object: lambda do |value|
+        ::OctridevOpenai::WebhookLiveTransportIncomingObject.from_value(value)
+      end,
+      type: lambda do |value|
+        ::OctridevOpenai::WebhookLiveTransportIncomingType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for WebhookLiveTransportIncoming.
+  # Sent when an incoming API SIP session is available for Live acceptance. The same pending session can also emit `realtime.call.incoming`; the first successful Realtime or Live accept endpoint selects the runtime surface.
+  class WebhookLiveTransportIncoming
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalWebhookLiveTransportIncomingMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalWebhookLiveTransportIncomingMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalWebhookLiveTransportIncomingMetadata::DECODERS
+
+    # @return [Integer] The Unix timestamp (in seconds) of when the event was created.
+    attr_reader :created_at
+    # @return [String] The unique ID of the event.
+    attr_reader :id
+    # @return [WebhookLiveTransportIncomingData] Event data payload.
+    attr_reader :data
+    # @return [WebhookLiveTransportIncomingObject] The object of the event. Always `event`.
+    attr_reader :object
+    # @return [WebhookLiveTransportIncomingType] The type of the event. Always `live.transport.incoming`.
+    attr_reader :type
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the WebhookLiveTransportIncomingDataType SDK namespace.
+  module WebhookLiveTransportIncomingDataType
+    SIP = 'sip'
+    VALUES = ['sip'].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
 
-# Defines the WebhookLiveTransportIncomingDataType SDK namespace.
-module WebhookLiveTransportIncomingDataType
-  SIP = 'sip'
-  VALUES = ['sip'].freeze
-  def self.from_value(value)
-    value
+  # Defines the WebhookLiveTransportIncomingObject SDK namespace.
+  module WebhookLiveTransportIncomingObject
+    EVENT = 'event'
+    VALUES = ['event'].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
 
-# Defines the WebhookLiveTransportIncomingObject SDK namespace.
-module WebhookLiveTransportIncomingObject
-  EVENT = 'event'
-  VALUES = ['event'].freeze
-  def self.from_value(value)
-    value
+  # Defines the WebhookLiveTransportIncomingType SDK namespace.
+  module WebhookLiveTransportIncomingType
+    LIVE_TRANSPORT_INCOMING = 'live.transport.incoming'
+    VALUES = ['live.transport.incoming'].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
-
-# Defines the WebhookLiveTransportIncomingType SDK namespace.
-module WebhookLiveTransportIncomingType
-  LIVE_TRANSPORT_INCOMING = 'live.transport.incoming'
-  VALUES = ['live.transport.incoming'].freeze
-  def self.from_value(value)
-    value
-  end
-end
 end

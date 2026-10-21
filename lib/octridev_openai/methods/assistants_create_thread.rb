@@ -32,21 +32,20 @@ module OctridevOpenai
         metadata: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
-          "/threads",
+          '/threads',
           config: config,
           body: {
             'messages' => messages,
             'tool_resources' => tool_resources,
-            'metadata' => metadata,
+            'metadata' => metadata
           },
           return_type: ::OctridevOpenai::ThreadObject,
           decoder: :json,
           operation_id: 'create_thread',
           request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
     end

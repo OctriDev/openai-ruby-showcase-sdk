@@ -25,28 +25,27 @@ module OctridevOpenai
         after: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
           [
-            "/organization/projects/",
+            '/organization/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/service_accounts"
+            '/service_accounts'
           ].join,
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
-            'after' => QueryValue.new(after, style: 'form', explode: true),
+            'after' => QueryValue.new(after, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::ProjectServiceAccountListResponse,
           decoder: :json,
           operation_id: 'list_project_service_accounts',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
-    ListProjectServiceAccountsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      ListProjectServiceAccountsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Returns a list of service accounts in the project.
       #
@@ -76,10 +75,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.last_id
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -104,10 +106,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListProjectServiceAccountsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end
@@ -136,25 +140,24 @@ module OctridevOpenai
         expires_in_seconds: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
           [
-            "/organization/projects/",
+            '/organization/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/service_accounts"
+            '/service_accounts'
           ].join,
           config: config,
           body: {
             'name' => name,
             'create_service_account_only' => create_service_account_only,
-            'expires_in_seconds' => expires_in_seconds,
+            'expires_in_seconds' => expires_in_seconds
           },
           return_type: ::OctridevOpenai::ProjectServiceAccountCreateResponse,
           decoder: :json,
           operation_id: 'create_project_service_account',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -170,13 +173,12 @@ module OctridevOpenai
         service_account_id:,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
           [
-            "/organization/projects/",
+            '/organization/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/service_accounts/",
+            '/service_accounts/',
             SdkClient.encode_path_segment(service_account_id)
           ].join,
           config: config,
@@ -184,7 +186,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'retrieve_project_service_account',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -205,25 +207,24 @@ module OctridevOpenai
         role: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
           [
-            "/organization/projects/",
+            '/organization/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/service_accounts/",
+            '/service_accounts/',
             SdkClient.encode_path_segment(service_account_id)
           ].join,
           config: config,
           body: {
             'name' => name,
-            'role' => role,
+            'role' => role
           },
           return_type: ::OctridevOpenai::ProjectServiceAccount,
           decoder: :json,
           operation_id: 'update_project_service_account',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -237,13 +238,12 @@ module OctridevOpenai
         service_account_id:,
         request_options: nil
       )
-
         SdkClient.request(
           'DELETE',
           [
-            "/organization/projects/",
+            '/organization/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/service_accounts/",
+            '/service_accounts/',
             SdkClient.encode_path_segment(service_account_id)
           ].join,
           config: config,
@@ -251,7 +251,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_project_service_account',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -275,27 +275,26 @@ module OctridevOpenai
         expires_in_seconds: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
           [
-            "/organization/projects/",
+            '/organization/projects/',
             SdkClient.encode_path_segment(project_id),
-            "/service_accounts/",
+            '/service_accounts/',
             SdkClient.encode_path_segment(service_account_id),
-            "/api_keys"
+            '/api_keys'
           ].join,
           config: config,
           body: {
             'name' => name,
             'scopes' => scopes,
-            'expires_in_seconds' => expires_in_seconds,
+            'expires_in_seconds' => expires_in_seconds
           },
           return_type: ::OctridevOpenai::ServiceAccountApiKeyBody,
           decoder: :json,
           operation_id: 'create_projects_service_account_api_key',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '409' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '409' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
     end

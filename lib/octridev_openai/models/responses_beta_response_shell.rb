@@ -5,390 +5,395 @@
 
 # responses_beta_response_shell domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalBetaResponseShellCallCommandAddedStreamingEventMetadata
-  FIELDS = {
-    type: "type",
-    sequence_number: "sequence_number",
-    agent: "agent",
-    output_index: "output_index",
-    command_index: "command_index",
-    command: "command",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    sequence_number
-    output_index
-    command_index
-    command
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaResponseShellCallCommandAddedStreamingEventType.from_value(value)
-    end,
-    agent: lambda do |value|
-      ::OctridevOpenai::BetaAgentTag.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaResponseShellCallCommandAddedStreamingEvent.
-# A streaming event that indicated a shell command was added to a tool call.
-class BetaResponseShellCallCommandAddedStreamingEvent
-  include BetaResponseStreamEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaResponseShellCallCommandAddedStreamingEventMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaResponseShellCallCommandAddedStreamingEventMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaResponseShellCallCommandAddedStreamingEventMetadata::DECODERS
-
-  # @return [BetaResponseShellCallCommandAddedStreamingEventType] The type of the event, always `response.shell_call_command.added`.
-  attr_reader :type
-  # @return [Integer] The sequence number of the event that was emitted.
-  attr_reader :sequence_number
-  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-  attr_reader :agent
-  # @return [Integer] The index of the output item that was updated.
-  attr_reader :output_index
-  # @return [Integer] The index of the shell command that was added.
-  attr_reader :command_index
-  # @return [String] The shell command that was added.
-  attr_reader :command
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalBetaResponseShellCallCommandAddedStreamingEventMetadata
+    FIELDS = {
+      type: 'type',
+      sequence_number: 'sequence_number',
+      agent: 'agent',
+      output_index: 'output_index',
+      command_index: 'command_index',
+      command: 'command'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      sequence_number
+      output_index
+      command_index
+      command
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaResponseShellCallCommandAddedStreamingEventType.from_value(value)
+      end,
+      agent: lambda do |value|
+        ::OctridevOpenai::BetaAgentTag.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for BetaResponseShellCallCommandAddedStreamingEvent.
+  # A streaming event that indicated a shell command was added to a tool call.
+  class BetaResponseShellCallCommandAddedStreamingEvent
+    include BetaResponseStreamEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaResponseShellCallCommandAddedStreamingEventMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaResponseShellCallCommandAddedStreamingEventMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaResponseShellCallCommandAddedStreamingEventMetadata::DECODERS
+
+    # @return [BetaResponseShellCallCommandAddedStreamingEventType] The type of the event, always `response.shell_call_command.added`.
+    attr_reader :type
+    # @return [Integer] The sequence number of the event that was emitted.
+    attr_reader :sequence_number
+    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+    attr_reader :agent
+    # @return [Integer] The index of the output item that was updated.
+    attr_reader :output_index
+    # @return [Integer] The index of the shell command that was added.
+    attr_reader :command_index
+    # @return [String] The shell command that was added.
+    attr_reader :command
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the BetaResponseShellCallCommandAddedStreamingEventType SDK namespace.
+  module BetaResponseShellCallCommandAddedStreamingEventType
+    RESPONSE_SHELL_CALL_COMMAND_ADDED = 'response.shell_call_command.added'
+    VALUES = ['response.shell_call_command.added'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the BetaResponseShellCallCommandAddedStreamingEventType SDK namespace.
-module BetaResponseShellCallCommandAddedStreamingEventType
-  RESPONSE_SHELL_CALL_COMMAND_ADDED = 'response.shell_call_command.added'
-  VALUES = ['response.shell_call_command.added'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('BetaResponseShellCallCommandAddedStreamingEventType', 'enum', "Unknown BetaResponseShellCallCommandAddedStreamingEventType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaResponseShellCallCommandDeltaStreamingEventMetadata
-  FIELDS = {
-    type: "type",
-    sequence_number: "sequence_number",
-    agent: "agent",
-    output_index: "output_index",
-    command_index: "command_index",
-    delta: "delta",
-    obfuscation: "obfuscation",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    sequence_number
-    output_index
-    command_index
-    delta
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaResponseShellCallCommandDeltaStreamingEventType.from_value(value)
-    end,
-    agent: lambda do |value|
-      ::OctridevOpenai::BetaAgentTag.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaResponseShellCallCommandDeltaStreamingEvent.
-# A streaming event that indicated a shell command was incrementally updated.
-class BetaResponseShellCallCommandDeltaStreamingEvent
-  include BetaResponseStreamEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaResponseShellCallCommandDeltaStreamingEventMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaResponseShellCallCommandDeltaStreamingEventMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaResponseShellCallCommandDeltaStreamingEventMetadata::DECODERS
-
-  # @return [BetaResponseShellCallCommandDeltaStreamingEventType] The type of the event, always `response.shell_call_command.delta`.
-  attr_reader :type
-  # @return [Integer] The sequence number of the event that was emitted.
-  attr_reader :sequence_number
-  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-  attr_reader :agent
-  # @return [Integer] The index of the output item that was updated.
-  attr_reader :output_index
-  # @return [Integer] The index of the shell command that was updated.
-  attr_reader :command_index
-  # @return [String] The shell command delta that was appended.
-  attr_reader :delta
-  # @return [String] An obfuscation string that was added to pad the event payload.
-  attr_reader :obfuscation
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('BetaResponseShellCallCommandAddedStreamingEventType', 'enum', "Unknown BetaResponseShellCallCommandAddedStreamingEventType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalBetaResponseShellCallCommandDeltaStreamingEventMetadata
+    FIELDS = {
+      type: 'type',
+      sequence_number: 'sequence_number',
+      agent: 'agent',
+      output_index: 'output_index',
+      command_index: 'command_index',
+      delta: 'delta',
+      obfuscation: 'obfuscation'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      sequence_number
+      output_index
+      command_index
+      delta
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaResponseShellCallCommandDeltaStreamingEventType.from_value(value)
+      end,
+      agent: lambda do |value|
+        ::OctridevOpenai::BetaAgentTag.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for BetaResponseShellCallCommandDeltaStreamingEvent.
+  # A streaming event that indicated a shell command was incrementally updated.
+  class BetaResponseShellCallCommandDeltaStreamingEvent
+    include BetaResponseStreamEvent
 
-# Defines the BetaResponseShellCallCommandDeltaStreamingEventType SDK namespace.
-module BetaResponseShellCallCommandDeltaStreamingEventType
-  RESPONSE_SHELL_CALL_COMMAND_DELTA = 'response.shell_call_command.delta'
-  VALUES = ['response.shell_call_command.delta'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaResponseShellCallCommandDeltaStreamingEventMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaResponseShellCallCommandDeltaStreamingEventMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaResponseShellCallCommandDeltaStreamingEventMetadata::DECODERS
 
-    raise SdkValidationError.new('BetaResponseShellCallCommandDeltaStreamingEventType', 'enum', "Unknown BetaResponseShellCallCommandDeltaStreamingEventType: #{value}")
-  end
-end
+    # @return [BetaResponseShellCallCommandDeltaStreamingEventType] The type of the event, always `response.shell_call_command.delta`.
+    attr_reader :type
+    # @return [Integer] The sequence number of the event that was emitted.
+    attr_reader :sequence_number
+    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+    attr_reader :agent
+    # @return [Integer] The index of the output item that was updated.
+    attr_reader :output_index
+    # @return [Integer] The index of the shell command that was updated.
+    attr_reader :command_index
+    # @return [String] The shell command delta that was appended.
+    attr_reader :delta
+    # @return [String] An obfuscation string that was added to pad the event payload.
+    attr_reader :obfuscation
 
-# Internal model hydration metadata.
-class SdkInternalBetaResponseShellCallCommandDoneStreamingEventMetadata
-  FIELDS = {
-    type: "type",
-    sequence_number: "sequence_number",
-    agent: "agent",
-    output_index: "output_index",
-    command_index: "command_index",
-    command: "command",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    sequence_number
-    output_index
-    command_index
-    command
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaResponseShellCallCommandDoneStreamingEventType.from_value(value)
-    end,
-    agent: lambda do |value|
-      ::OctridevOpenai::BetaAgentTag.from_hash(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for BetaResponseShellCallCommandDoneStreamingEvent.
-# A streaming event that indicated a shell command was completed.
-class BetaResponseShellCallCommandDoneStreamingEvent
-  include BetaResponseStreamEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaResponseShellCallCommandDoneStreamingEventMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaResponseShellCallCommandDoneStreamingEventMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaResponseShellCallCommandDoneStreamingEventMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [BetaResponseShellCallCommandDoneStreamingEventType] The type of the event, always `response.shell_call_command.done`.
-  attr_reader :type
-  # @return [Integer] The sequence number of the event that was emitted.
-  attr_reader :sequence_number
-  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-  attr_reader :agent
-  # @return [Integer] The index of the output item that was updated.
-  attr_reader :output_index
-  # @return [Integer] The index of the shell command that was completed.
-  attr_reader :command_index
-  # @return [String] The final shell command that was emitted.
-  attr_reader :command
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the BetaResponseShellCallCommandDeltaStreamingEventType SDK namespace.
+  module BetaResponseShellCallCommandDeltaStreamingEventType
+    RESPONSE_SHELL_CALL_COMMAND_DELTA = 'response.shell_call_command.delta'
+    VALUES = ['response.shell_call_command.delta'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaResponseShellCallCommandDeltaStreamingEventType', 'enum', "Unknown BetaResponseShellCallCommandDeltaStreamingEventType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the BetaResponseShellCallCommandDoneStreamingEventType SDK namespace.
-module BetaResponseShellCallCommandDoneStreamingEventType
-  RESPONSE_SHELL_CALL_COMMAND_DONE = 'response.shell_call_command.done'
-  VALUES = ['response.shell_call_command.done'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('BetaResponseShellCallCommandDoneStreamingEventType', 'enum', "Unknown BetaResponseShellCallCommandDoneStreamingEventType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaResponseShellCallOutputContentDeltaStreamingEventMetadata
-  FIELDS = {
-    type: "type",
-    sequence_number: "sequence_number",
-    agent: "agent",
-    item_id: "item_id",
-    output_index: "output_index",
-    command_index: "command_index",
-    delta: "delta",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    sequence_number
-    item_id
-    output_index
-    command_index
-    delta
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaResponseShellCallOutputContentDeltaStreamingEventType.from_value(value)
-    end,
-    agent: lambda do |value|
-      ::OctridevOpenai::BetaAgentTag.from_hash(value)
-    end,
-    delta: lambda do |value|
-      ::OctridevOpenai::BetaShellCallOutputDelta.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaResponseShellCallOutputContentDeltaStreamingEvent.
-# A streaming event that indicated shell call output was incrementally added.
-class BetaResponseShellCallOutputContentDeltaStreamingEvent
-  include BetaResponseStreamEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaResponseShellCallOutputContentDeltaStreamingEventMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaResponseShellCallOutputContentDeltaStreamingEventMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaResponseShellCallOutputContentDeltaStreamingEventMetadata::DECODERS
-
-  # @return [BetaResponseShellCallOutputContentDeltaStreamingEventType] The type of the event, always `response.shell_call_output_content.delta`.
-  attr_reader :type
-  # @return [Integer] The sequence number of the event that was emitted.
-  attr_reader :sequence_number
-  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-  attr_reader :agent
-  # @return [String] The ID of the output item that was updated.
-  attr_reader :item_id
-  # @return [Integer] The index of the output item that was updated.
-  attr_reader :output_index
-  # @return [Integer] The index of the shell command that produced output.
-  attr_reader :command_index
-  # @return [BetaShellCallOutputDelta] The stdout/stderr delta that was emitted.
-  attr_reader :delta
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalBetaResponseShellCallCommandDoneStreamingEventMetadata
+    FIELDS = {
+      type: 'type',
+      sequence_number: 'sequence_number',
+      agent: 'agent',
+      output_index: 'output_index',
+      command_index: 'command_index',
+      command: 'command'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      sequence_number
+      output_index
+      command_index
+      command
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaResponseShellCallCommandDoneStreamingEventType.from_value(value)
+      end,
+      agent: lambda do |value|
+        ::OctridevOpenai::BetaAgentTag.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for BetaResponseShellCallCommandDoneStreamingEvent.
+  # A streaming event that indicated a shell command was completed.
+  class BetaResponseShellCallCommandDoneStreamingEvent
+    include BetaResponseStreamEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaResponseShellCallCommandDoneStreamingEventMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaResponseShellCallCommandDoneStreamingEventMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaResponseShellCallCommandDoneStreamingEventMetadata::DECODERS
+
+    # @return [BetaResponseShellCallCommandDoneStreamingEventType] The type of the event, always `response.shell_call_command.done`.
+    attr_reader :type
+    # @return [Integer] The sequence number of the event that was emitted.
+    attr_reader :sequence_number
+    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+    attr_reader :agent
+    # @return [Integer] The index of the output item that was updated.
+    attr_reader :output_index
+    # @return [Integer] The index of the shell command that was completed.
+    attr_reader :command_index
+    # @return [String] The final shell command that was emitted.
+    attr_reader :command
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the BetaResponseShellCallCommandDoneStreamingEventType SDK namespace.
+  module BetaResponseShellCallCommandDoneStreamingEventType
+    RESPONSE_SHELL_CALL_COMMAND_DONE = 'response.shell_call_command.done'
+    VALUES = ['response.shell_call_command.done'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the BetaResponseShellCallOutputContentDeltaStreamingEventType SDK namespace.
-module BetaResponseShellCallOutputContentDeltaStreamingEventType
-  RESPONSE_SHELL_CALL_OUTPUT_CONTENT_DELTA = 'response.shell_call_output_content.delta'
-  VALUES = ['response.shell_call_output_content.delta'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('BetaResponseShellCallOutputContentDeltaStreamingEventType', 'enum', "Unknown BetaResponseShellCallOutputContentDeltaStreamingEventType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaResponseShellCallOutputContentDoneStreamingEventMetadata
-  FIELDS = {
-    type: "type",
-    sequence_number: "sequence_number",
-    agent: "agent",
-    item_id: "item_id",
-    output_index: "output_index",
-    command_index: "command_index",
-    output: "output",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    sequence_number
-    item_id
-    output_index
-    command_index
-    output
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::BetaResponseShellCallOutputContentDoneStreamingEventType.from_value(value)
-    end,
-    agent: lambda do |value|
-      ::OctridevOpenai::BetaAgentTag.from_hash(value)
-    end,
-    output: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::BetaFunctionShellCallOutputContent.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for BetaResponseShellCallOutputContentDoneStreamingEvent.
-# A streaming event that indicated shell call output was completed.
-class BetaResponseShellCallOutputContentDoneStreamingEvent
-  include BetaResponseStreamEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaResponseShellCallOutputContentDoneStreamingEventMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaResponseShellCallOutputContentDoneStreamingEventMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaResponseShellCallOutputContentDoneStreamingEventMetadata::DECODERS
-
-  # @return [BetaResponseShellCallOutputContentDoneStreamingEventType] The type of the event, always `response.shell_call_output_content.done`.
-  attr_reader :type
-  # @return [Integer] The sequence number of the event that was emitted.
-  attr_reader :sequence_number
-  # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
-  attr_reader :agent
-  # @return [String] The ID of the output item that was updated.
-  attr_reader :item_id
-  # @return [Integer] The index of the output item that was updated.
-  attr_reader :output_index
-  # @return [Integer] The index of the shell command that produced output.
-  attr_reader :command_index
-  # @return [Array_of_BetaFunctionShellCallOutputContent] The output contents emitted for the shell command.
-  attr_reader :output
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('BetaResponseShellCallCommandDoneStreamingEventType', 'enum', "Unknown BetaResponseShellCallCommandDoneStreamingEventType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalBetaResponseShellCallOutputContentDeltaStreamingEventMetadata
+    FIELDS = {
+      type: 'type',
+      sequence_number: 'sequence_number',
+      agent: 'agent',
+      item_id: 'item_id',
+      output_index: 'output_index',
+      command_index: 'command_index',
+      delta: 'delta'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      sequence_number
+      item_id
+      output_index
+      command_index
+      delta
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaResponseShellCallOutputContentDeltaStreamingEventType.from_value(value)
+      end,
+      agent: lambda do |value|
+        ::OctridevOpenai::BetaAgentTag.from_hash(value)
+      end,
+      delta: lambda do |value|
+        ::OctridevOpenai::BetaShellCallOutputDelta.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for BetaResponseShellCallOutputContentDeltaStreamingEvent.
+  # A streaming event that indicated shell call output was incrementally added.
+  class BetaResponseShellCallOutputContentDeltaStreamingEvent
+    include BetaResponseStreamEvent
 
-# Defines the BetaResponseShellCallOutputContentDoneStreamingEventType SDK namespace.
-module BetaResponseShellCallOutputContentDoneStreamingEventType
-  RESPONSE_SHELL_CALL_OUTPUT_CONTENT_DONE = 'response.shell_call_output_content.done'
-  VALUES = ['response.shell_call_output_content.done'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaResponseShellCallOutputContentDeltaStreamingEventMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaResponseShellCallOutputContentDeltaStreamingEventMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaResponseShellCallOutputContentDeltaStreamingEventMetadata::DECODERS
 
-    raise SdkValidationError.new('BetaResponseShellCallOutputContentDoneStreamingEventType', 'enum', "Unknown BetaResponseShellCallOutputContentDoneStreamingEventType: #{value}")
+    # @return [BetaResponseShellCallOutputContentDeltaStreamingEventType] The type of the event, always `response.shell_call_output_content.delta`.
+    attr_reader :type
+    # @return [Integer] The sequence number of the event that was emitted.
+    attr_reader :sequence_number
+    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+    attr_reader :agent
+    # @return [String] The ID of the output item that was updated.
+    attr_reader :item_id
+    # @return [Integer] The index of the output item that was updated.
+    attr_reader :output_index
+    # @return [Integer] The index of the shell command that produced output.
+    attr_reader :command_index
+    # @return [BetaShellCallOutputDelta] The stdout/stderr delta that was emitted.
+    attr_reader :delta
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
+
+  # Defines the BetaResponseShellCallOutputContentDeltaStreamingEventType SDK namespace.
+  module BetaResponseShellCallOutputContentDeltaStreamingEventType
+    RESPONSE_SHELL_CALL_OUTPUT_CONTENT_DELTA = 'response.shell_call_output_content.delta'
+    VALUES = ['response.shell_call_output_content.delta'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaResponseShellCallOutputContentDeltaStreamingEventType', 'enum', "Unknown BetaResponseShellCallOutputContentDeltaStreamingEventType: #{value}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalBetaResponseShellCallOutputContentDoneStreamingEventMetadata
+    FIELDS = {
+      type: 'type',
+      sequence_number: 'sequence_number',
+      agent: 'agent',
+      item_id: 'item_id',
+      output_index: 'output_index',
+      command_index: 'command_index',
+      output: 'output'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      sequence_number
+      item_id
+      output_index
+      command_index
+      output
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::BetaResponseShellCallOutputContentDoneStreamingEventType.from_value(value)
+      end,
+      agent: lambda do |value|
+        ::OctridevOpenai::BetaAgentTag.from_hash(value)
+      end,
+      output: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::BetaFunctionShellCallOutputContent.from_hash(item) }
+      end
+    }.freeze
+  end
+
+  # API model for BetaResponseShellCallOutputContentDoneStreamingEvent.
+  # A streaming event that indicated shell call output was completed.
+  class BetaResponseShellCallOutputContentDoneStreamingEvent
+    include BetaResponseStreamEvent
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaResponseShellCallOutputContentDoneStreamingEventMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaResponseShellCallOutputContentDoneStreamingEventMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaResponseShellCallOutputContentDoneStreamingEventMetadata::DECODERS
+
+    # @return [BetaResponseShellCallOutputContentDoneStreamingEventType] The type of the event, always `response.shell_call_output_content.done`.
+    attr_reader :type
+    # @return [Integer] The sequence number of the event that was emitted.
+    attr_reader :sequence_number
+    # @return [BetaAgentTag] The agent that owns this multi-agent streaming event.
+    attr_reader :agent
+    # @return [String] The ID of the output item that was updated.
+    attr_reader :item_id
+    # @return [Integer] The index of the output item that was updated.
+    attr_reader :output_index
+    # @return [Integer] The index of the shell command that produced output.
+    attr_reader :command_index
+    # @return [Array_of_BetaFunctionShellCallOutputContent] The output contents emitted for the shell command.
+    attr_reader :output
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
+
+  # Defines the BetaResponseShellCallOutputContentDoneStreamingEventType SDK namespace.
+  module BetaResponseShellCallOutputContentDoneStreamingEventType
+    RESPONSE_SHELL_CALL_OUTPUT_CONTENT_DONE = 'response.shell_call_output_content.done'
+    VALUES = ['response.shell_call_output_content.done'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaResponseShellCallOutputContentDoneStreamingEventType', 'enum', "Unknown BetaResponseShellCallOutputContentDoneStreamingEventType: #{value}")
+    end
+  end
 end

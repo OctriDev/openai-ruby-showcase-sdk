@@ -17,13 +17,12 @@ module OctridevOpenai
         environment_id:,
         request_options: nil
       )
-
-        Validation.validate_length('environment_id', environment_id, min: 0, max: 1048576)
+        Validation.validate_length('environment_id', environment_id, min: 0, max: 1_048_576)
 
         SdkClient.request(
           'GET',
           [
-            "/agents/environments/",
+            '/agents/environments/',
             SdkClient.encode_path_segment(environment_id)
           ].join,
           config: config,
@@ -31,7 +30,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'retrieve_agent_environment',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).data
       end
     end

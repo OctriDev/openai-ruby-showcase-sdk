@@ -25,25 +25,24 @@ module OctridevOpenai
         content_type: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
           [
-            "/containers/",
+            '/containers/',
             SdkClient.encode_path_segment(container_id),
-            "/files"
+            '/files'
           ].join,
           config: config,
           body: {
             'file_id' => file_id,
-            'file' => SdkClient.upload(file, 'file'),
+            'file' => SdkClient.upload(file, 'file')
           },
           content_type: SdkClient.body_content_type(content_type, nil, 'application/json'),
           return_type: ::OctridevOpenai::ContainerFileResource,
           decoder: :json,
           operation_id: 'create_container_file',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -68,29 +67,28 @@ module OctridevOpenai
         after: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
           [
-            "/containers/",
+            '/containers/',
             SdkClient.encode_path_segment(container_id),
-            "/files"
+            '/files'
           ].join,
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'order' => QueryValue.new(order, style: 'form', explode: true),
-            'after' => QueryValue.new(after, style: 'form', explode: true),
+            'after' => QueryValue.new(after, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::ContainerFileListResource,
           decoder: :json,
           operation_id: 'list_container_files',
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
-    ListContainerFilesPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      ListContainerFilesPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists files associated with a container. Use `after` to continue from a file ID returned in a previous page, and `limit` and `order` to control the result page. The container must exist and must not have expired.
       #
@@ -126,10 +124,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.last_id
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -156,10 +157,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListContainerFilesPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end
@@ -174,13 +177,12 @@ module OctridevOpenai
         file_id:,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
           [
-            "/containers/",
+            '/containers/',
             SdkClient.encode_path_segment(container_id),
-            "/files/",
+            '/files/',
             SdkClient.encode_path_segment(file_id)
           ].join,
           config: config,
@@ -188,7 +190,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'retrieve_container_file',
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -201,13 +203,12 @@ module OctridevOpenai
         file_id:,
         request_options: nil
       )
-
         SdkClient.request(
           'DELETE',
           [
-            "/containers/",
+            '/containers/',
             SdkClient.encode_path_segment(container_id),
-            "/files/",
+            '/files/',
             SdkClient.encode_path_segment(file_id)
           ].join,
           config: config,
@@ -215,7 +216,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_container_file',
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
 
@@ -228,21 +229,20 @@ module OctridevOpenai
         file_id:,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
           [
-            "/containers/",
+            '/containers/',
             SdkClient.encode_path_segment(container_id),
-            "/files/",
+            '/files/',
             SdkClient.encode_path_segment(file_id),
-            "/content"
+            '/content'
           ].join,
           config: config,
           decoder: :bytes,
           operation_id: 'retrieve_container_file_content',
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
     end

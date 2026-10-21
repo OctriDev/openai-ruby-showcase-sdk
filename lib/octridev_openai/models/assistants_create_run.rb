@@ -5,666 +5,656 @@
 
 # assistants_create domain models
 module OctridevOpenai
-# API model for CreateRunRequest.
-# Typed representation of the `CreateRunRequest` API schema.
-class CreateRunRequest
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCreateRunRequestMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCreateRunRequestMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCreateRunRequestMetadata::DECODERS
+  # API model for CreateRunRequest.
+  # Typed representation of the `CreateRunRequest` API schema.
+  class CreateRunRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCreateRunRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCreateRunRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCreateRunRequestMetadata::DECODERS
 
-  # @return [String] The ID of the assistant to use to execute this run.
-  attr_reader :assistant_id
-  # @return [Object] The ID of the Model to be used to execute this run. If a value is provided here, it will override the model associated with the assistant. If not, the model associated with the assistant will be used.
-  attr_reader :model
-  # @return [ReasoningEffort] Optional API value serialized in the `reasoning_effort` wire field.
-  attr_reader :reasoning_effort
-  # @return [String] Overrides the instructions of the assistant. This is useful for modifying the behavior on a per-run basis.
-  attr_reader :instructions
-  # @return [String] Appends additional instructions at the end of the instructions for the run. This is useful for modifying the behavior on a per-run basis without overriding other instructions.
-  attr_reader :additional_instructions
-  # @return [Array_of_CreateMessageRequest] Adds additional messages to the thread before creating the run.
-  attr_reader :additional_messages
-  # @return [Array_of_CreateRunRequestToolsItem] Override the tools the assistant can use for this run. This is useful for modifying the behavior on a per-run basis.
-  attr_reader :tools
-  # @return [Metadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
-  attr_reader :metadata
-  # @return [Float] What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
-  attr_reader :temperature
-  # @return [Float] An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered. We generally recommend altering this or temperature but not both.
-  attr_reader :top_p
-  # @return [Boolean] If `true`, returns a stream of events that happen during the Run as server-sent events, terminating when the Run enters a terminal state with a `data: [DONE]` message.
-  attr_reader :stream
-  # @return [Integer] The maximum number of prompt tokens that may be used over the course of the run. The run will make a best effort to use only the number of prompt tokens specified, across multiple turns of the run. If the run exceeds the number of prompt tokens specified, the run will end with status `incomplete`. See `incomplete_details` for more info.
-  attr_reader :max_prompt_tokens
-  # @return [Integer] The maximum number of completion tokens that may be used over the course of the run. The run will make a best effort to use only the number of completion tokens specified, across multiple turns of the run. If the run exceeds the number of completion tokens specified, the run will end with status `incomplete`. See `incomplete_details` for more info.
-  attr_reader :max_completion_tokens
-  # @return [CreateRunRequestTruncationStrategy] Optional API value serialized in the `truncation_strategy` wire field.
-  attr_reader :truncation_strategy
-  # @return [AssistantsApiToolChoiceOption] Optional API value serialized in the `tool_choice` wire field.
-  attr_reader :tool_choice
-  # @return [ParallelToolCalls] Whether to enable parallel function calling during tool use.
-  attr_reader :parallel_tool_calls
-  # @return [AssistantsApiResponseFormatOption] Specifies the format that the model must output. Compatible with GPT-4o, GPT-4 Turbo, and all GPT-3.5 Turbo models since `gpt-3.5-turbo-1106`. Setting to `{ "type": "json_schema", "json_schema": {...} }` enables Structured Outputs which ensures the model will match your supplied JSON schema. Learn more in the Structured Outputs guide. Setting to `{ "type": "json_object" }` enables JSON mode, which ensures the message the model generates is valid JSON. **Important:** when…
-  attr_reader :response_format
+    # @return [String] The ID of the assistant to use to execute this run.
+    attr_reader :assistant_id
+    # @return [Object] The ID of the Model to be used to execute this run. If a value is provided here, it will override the model associated with the assistant. If not, the model associated with the assistant will be used.
+    attr_reader :model
+    # @return [ReasoningEffort] Optional API value serialized in the `reasoning_effort` wire field.
+    attr_reader :reasoning_effort
+    # @return [String] Overrides the instructions of the assistant. This is useful for modifying the behavior on a per-run basis.
+    attr_reader :instructions
+    # @return [String] Appends additional instructions at the end of the instructions for the run. This is useful for modifying the behavior on a per-run basis without overriding other instructions.
+    attr_reader :additional_instructions
+    # @return [Array_of_CreateMessageRequest] Adds additional messages to the thread before creating the run.
+    attr_reader :additional_messages
+    # @return [Array_of_CreateRunRequestToolsItem] Override the tools the assistant can use for this run. This is useful for modifying the behavior on a per-run basis.
+    attr_reader :tools
+    # @return [Metadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
+    attr_reader :metadata
+    # @return [Float] What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
+    attr_reader :temperature
+    # @return [Float] An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered. We generally recommend altering this or temperature but not both.
+    attr_reader :top_p
+    # @return [Boolean] If `true`, returns a stream of events that happen during the Run as server-sent events, terminating when the Run enters a terminal state with a `data: [DONE]` message.
+    attr_reader :stream
+    # @return [Integer] The maximum number of prompt tokens that may be used over the course of the run. The run will make a best effort to use only the number of prompt tokens specified, across multiple turns of the run. If the run exceeds the number of prompt tokens specified, the run will end with status `incomplete`. See `incomplete_details` for more info.
+    attr_reader :max_prompt_tokens
+    # @return [Integer] The maximum number of completion tokens that may be used over the course of the run. The run will make a best effort to use only the number of completion tokens specified, across multiple turns of the run. If the run exceeds the number of completion tokens specified, the run will end with status `incomplete`. See `incomplete_details` for more info.
+    attr_reader :max_completion_tokens
+    # @return [CreateRunRequestTruncationStrategy] Optional API value serialized in the `truncation_strategy` wire field.
+    attr_reader :truncation_strategy
+    # @return [AssistantsApiToolChoiceOption] Optional API value serialized in the `tool_choice` wire field.
+    attr_reader :tool_choice
+    # @return [ParallelToolCalls] Whether to enable parallel function calling during tool use.
+    attr_reader :parallel_tool_calls
+    # @return [AssistantsApiResponseFormatOption] Specifies the format that the model must output. Compatible with GPT-4o, GPT-4 Turbo, and all GPT-3.5 Turbo models since `gpt-3.5-turbo-1106`. Setting to `{ "type": "json_schema", "json_schema": {...} }` enables Structured Outputs which ensures the model will match your supplied JSON schema. Learn more in the Structured Outputs guide. Setting to `{ "type": "json_object" }` enables JSON mode, which ensures the message the model generates is valid JSON. **Important:** when…
+    attr_reader :response_format
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the CreateRunRequestToolsItem SDK namespace.
+  module CreateRunRequestToolsItem
+    DISCRIMINATOR_MAPPING = {
+      'code_interpreter' => -> { AssistantToolsCode },
+      'file_search' => -> { AssistantToolsFileSearch },
+      'function' => -> { AssistantToolsFunction }
+    }.freeze
+
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('CreateRunRequestToolsItem', 'variant', "Unknown CreateRunRequestToolsItem discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the CreateRunRequestToolsItem SDK namespace.
-module CreateRunRequestToolsItem
-  DISCRIMINATOR_MAPPING = {
-    "code_interpreter" => -> { AssistantToolsCode },
-    "file_search" => -> { AssistantToolsFileSearch },
-    "function" => -> { AssistantToolsFunction },
-  }.freeze
-
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('CreateRunRequestToolsItem', 'variant', "Unknown CreateRunRequestToolsItem discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalCreateThreadAndRunRequestToolResourcesCodeInterpreterMetadata
-  FIELDS = {
-    file_ids: "file_ids",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for CreateThreadAndRunRequestToolResourcesCodeInterpreter.
-# Optional object value serialized in the `code_interpreter` wire field.
-class CreateThreadAndRunRequestToolResourcesCodeInterpreter
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCreateThreadAndRunRequestToolResourcesCodeInterpreterMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCreateThreadAndRunRequestToolResourcesCodeInterpreterMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCreateThreadAndRunRequestToolResourcesCodeInterpreterMetadata::DECODERS
-
-  # @return [Array_of_String] A list of file IDs made available to the `code_interpreter` tool. There can be a maximum of 20 files associated with the tool.
-  attr_reader :file_ids
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalCreateThreadAndRunRequestToolResourcesCodeInterpreterMetadata
+    FIELDS = {
+      file_ids: 'file_ids'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for CreateThreadAndRunRequestToolResourcesCodeInterpreter.
+  # Optional object value serialized in the `code_interpreter` wire field.
+  class CreateThreadAndRunRequestToolResourcesCodeInterpreter
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCreateThreadAndRunRequestToolResourcesCodeInterpreterMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCreateThreadAndRunRequestToolResourcesCodeInterpreterMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCreateThreadAndRunRequestToolResourcesCodeInterpreterMetadata::DECODERS
+
+    # @return [Array_of_String] A list of file IDs made available to the `code_interpreter` tool. There can be a maximum of 20 files associated with the tool.
+    attr_reader :file_ids
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalCreateThreadAndRunRequestToolResourcesFileSearchMetadata
-  FIELDS = {
-    vector_store_ids: "vector_store_ids",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for CreateThreadAndRunRequestToolResourcesFileSearch.
-# Optional object value serialized in the `file_search` wire field.
-class CreateThreadAndRunRequestToolResourcesFileSearch
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCreateThreadAndRunRequestToolResourcesFileSearchMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCreateThreadAndRunRequestToolResourcesFileSearchMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCreateThreadAndRunRequestToolResourcesFileSearchMetadata::DECODERS
-
-  # @return [Array_of_String] The ID of the vector store attached to this assistant. There can be a maximum of 1 vector store attached to the assistant.
-  attr_reader :vector_store_ids
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalCreateThreadAndRunRequestToolResourcesFileSearchMetadata
+    FIELDS = {
+      vector_store_ids: 'vector_store_ids'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for CreateThreadAndRunRequestToolResourcesFileSearch.
+  # Optional object value serialized in the `file_search` wire field.
+  class CreateThreadAndRunRequestToolResourcesFileSearch
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCreateThreadAndRunRequestToolResourcesFileSearchMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCreateThreadAndRunRequestToolResourcesFileSearchMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCreateThreadAndRunRequestToolResourcesFileSearchMetadata::DECODERS
+
+    # @return [Array_of_String] The ID of the vector store attached to this assistant. There can be a maximum of 1 vector store attached to the assistant.
+    attr_reader :vector_store_ids
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalCreateThreadAndRunRequestToolResourcesMetadata
-  FIELDS = {
-    code_interpreter: "code_interpreter",
-    file_search: "file_search",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    code_interpreter: lambda do |value|
-      ::OctridevOpenai::CreateThreadAndRunRequestToolResourcesCodeInterpreter.from_hash(value)
-    end,
-    file_search: lambda do |value|
-      ::OctridevOpenai::CreateThreadAndRunRequestToolResourcesFileSearch.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for CreateThreadAndRunRequestToolResources.
-# A set of resources that are used by the assistant's tools. The resources are specific to the type of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires a list of vector store IDs.
-class CreateThreadAndRunRequestToolResources
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCreateThreadAndRunRequestToolResourcesMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCreateThreadAndRunRequestToolResourcesMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCreateThreadAndRunRequestToolResourcesMetadata::DECODERS
-
-  # @return [CreateThreadAndRunRequestToolResourcesCodeInterpreter] Optional object value serialized in the `code_interpreter` wire field.
-  attr_reader :code_interpreter
-  # @return [CreateThreadAndRunRequestToolResourcesFileSearch] Optional object value serialized in the `file_search` wire field.
-  attr_reader :file_search
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalCreateThreadAndRunRequestToolResourcesMetadata
+    FIELDS = {
+      code_interpreter: 'code_interpreter',
+      file_search: 'file_search'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      code_interpreter: lambda do |value|
+        ::OctridevOpenai::CreateThreadAndRunRequestToolResourcesCodeInterpreter.from_hash(value)
+      end,
+      file_search: lambda do |value|
+        ::OctridevOpenai::CreateThreadAndRunRequestToolResourcesFileSearch.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for CreateThreadAndRunRequestToolResources.
+  # A set of resources that are used by the assistant's tools. The resources are specific to the type of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires a list of vector store IDs.
+  class CreateThreadAndRunRequestToolResources
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCreateThreadAndRunRequestToolResourcesMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCreateThreadAndRunRequestToolResourcesMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCreateThreadAndRunRequestToolResourcesMetadata::DECODERS
+
+    # @return [CreateThreadAndRunRequestToolResourcesCodeInterpreter] Optional object value serialized in the `code_interpreter` wire field.
+    attr_reader :code_interpreter
+    # @return [CreateThreadAndRunRequestToolResourcesFileSearch] Optional object value serialized in the `file_search` wire field.
+    attr_reader :file_search
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalCreateThreadAndRunRequestTruncationStrategyMetadata
-  FIELDS = {
-    type: "type",
-    last_messages: "last_messages",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::TruncationObjectType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for CreateThreadAndRunRequestTruncationStrategy.
-# Optional API value serialized in the `truncation_strategy` wire field.
-class CreateThreadAndRunRequestTruncationStrategy
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCreateThreadAndRunRequestTruncationStrategyMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCreateThreadAndRunRequestTruncationStrategyMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCreateThreadAndRunRequestTruncationStrategyMetadata::DECODERS
-
-  # @return [TruncationObjectType] The truncation strategy to use for the thread. The default is `auto`. If set to `last_messages`, the thread will be truncated to the n most recent messages in the thread. When set to `auto`, messages in the middle of the thread will be dropped to fit the context length of the model, `max_prompt_tokens`.
-  attr_reader :type
-  # @return [Integer] Optional API value serialized in the `last_messages` wire field.
-  attr_reader :last_messages
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalCreateThreadAndRunRequestTruncationStrategyMetadata
+    FIELDS = {
+      type: 'type',
+      last_messages: 'last_messages'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::TruncationObjectType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for CreateThreadAndRunRequestTruncationStrategy.
+  # Optional API value serialized in the `truncation_strategy` wire field.
+  class CreateThreadAndRunRequestTruncationStrategy
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCreateThreadAndRunRequestTruncationStrategyMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCreateThreadAndRunRequestTruncationStrategyMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCreateThreadAndRunRequestTruncationStrategyMetadata::DECODERS
+
+    # @return [TruncationObjectType] The truncation strategy to use for the thread. The default is `auto`. If set to `last_messages`, the thread will be truncated to the n most recent messages in the thread. When set to `auto`, messages in the middle of the thread will be dropped to fit the context length of the model, `max_prompt_tokens`.
+    attr_reader :type
+    # @return [Integer] Optional API value serialized in the `last_messages` wire field.
+    attr_reader :last_messages
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalCreateThreadAndRunRequestMetadata
-  FIELDS = {
-    assistant_id: "assistant_id",
-    thread: "thread",
-    model: "model",
-    instructions: "instructions",
-    tools: "tools",
-    tool_resources: "tool_resources",
-    metadata: "metadata",
-    temperature: "temperature",
-    top_p: "top_p",
-    stream: "stream",
-    max_prompt_tokens: "max_prompt_tokens",
-    max_completion_tokens: "max_completion_tokens",
-    truncation_strategy: "truncation_strategy",
-    tool_choice: "tool_choice",
-    parallel_tool_calls: "parallel_tool_calls",
-    response_format: "response_format",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    assistant_id
-  ].freeze
-  DECODERS = {
-    thread: lambda do |value|
-      ::OctridevOpenai::CreateThreadRequest.from_hash(value)
-    end,
-    tools: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::CreateThreadAndRunRequestToolsItem.from_hash(item) }
-    end,
-    tool_resources: lambda do |value|
-      ::OctridevOpenai::CreateThreadAndRunRequestToolResources.from_hash(value)
-    end,
-    metadata: lambda do |value|
-      ::OctridevOpenai::Metadata.from_hash(value)
-    end,
-    truncation_strategy: lambda do |value|
-      ::OctridevOpenai::CreateThreadAndRunRequestTruncationStrategy.from_hash(value)
-    end,
-    tool_choice: lambda do |value|
-      ::OctridevOpenai::AssistantsApiToolChoiceOption.from_hash(value)
-    end,
-    parallel_tool_calls: lambda do |value|
-      ::OctridevOpenai::ParallelToolCalls.from_value(value)
-    end,
-    response_format: lambda do |value|
-      ::OctridevOpenai::AssistantsApiResponseFormatOption.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for CreateThreadAndRunRequest.
-# Typed representation of the `CreateThreadAndRunRequest` API schema.
-class CreateThreadAndRunRequest
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCreateThreadAndRunRequestMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCreateThreadAndRunRequestMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCreateThreadAndRunRequestMetadata::DECODERS
-
-  # @return [String] The ID of the assistant to use to execute this run.
-  attr_reader :assistant_id
-  # @return [CreateThreadRequest] Options to create a new thread. If no thread is provided when running a request, an empty thread will be created.
-  attr_reader :thread
-  # @return [String] The ID of the Model to be used to execute this run. If a value is provided here, it will override the model associated with the assistant. If not, the model associated with the assistant will be used.
-  attr_reader :model
-  # @return [String] Override the default system message of the assistant. This is useful for modifying the behavior on a per-run basis.
-  attr_reader :instructions
-  # @return [Array_of_CreateThreadAndRunRequestToolsItem] Override the tools the assistant can use for this run. This is useful for modifying the behavior on a per-run basis.
-  attr_reader :tools
-  # @return [CreateThreadAndRunRequestToolResources] A set of resources that are used by the assistant's tools. The resources are specific to the type of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires a list of vector store IDs.
-  attr_reader :tool_resources
-  # @return [Metadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
-  attr_reader :metadata
-  # @return [Float] What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
-  attr_reader :temperature
-  # @return [Float] An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered. We generally recommend altering this or temperature but not both.
-  attr_reader :top_p
-  # @return [Boolean] If `true`, returns a stream of events that happen during the Run as server-sent events, terminating when the Run enters a terminal state with a `data: [DONE]` message.
-  attr_reader :stream
-  # @return [Integer] The maximum number of prompt tokens that may be used over the course of the run. The run will make a best effort to use only the number of prompt tokens specified, across multiple turns of the run. If the run exceeds the number of prompt tokens specified, the run will end with status `incomplete`. See `incomplete_details` for more info.
-  attr_reader :max_prompt_tokens
-  # @return [Integer] The maximum number of completion tokens that may be used over the course of the run. The run will make a best effort to use only the number of completion tokens specified, across multiple turns of the run. If the run exceeds the number of completion tokens specified, the run will end with status `incomplete`. See `incomplete_details` for more info.
-  attr_reader :max_completion_tokens
-  # @return [CreateThreadAndRunRequestTruncationStrategy] Optional API value serialized in the `truncation_strategy` wire field.
-  attr_reader :truncation_strategy
-  # @return [AssistantsApiToolChoiceOption] Optional API value serialized in the `tool_choice` wire field.
-  attr_reader :tool_choice
-  # @return [ParallelToolCalls] Whether to enable parallel function calling during tool use.
-  attr_reader :parallel_tool_calls
-  # @return [AssistantsApiResponseFormatOption] Specifies the format that the model must output. Compatible with GPT-4o, GPT-4 Turbo, and all GPT-3.5 Turbo models since `gpt-3.5-turbo-1106`. Setting to `{ "type": "json_schema", "json_schema": {...} }` enables Structured Outputs which ensures the model will match your supplied JSON schema. Learn more in the Structured Outputs guide. Setting to `{ "type": "json_object" }` enables JSON mode, which ensures the message the model generates is valid JSON. **Important:** when…
-  attr_reader :response_format
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalCreateThreadAndRunRequestMetadata
+    FIELDS = {
+      assistant_id: 'assistant_id',
+      thread: 'thread',
+      model: 'model',
+      instructions: 'instructions',
+      tools: 'tools',
+      tool_resources: 'tool_resources',
+      metadata: 'metadata',
+      temperature: 'temperature',
+      top_p: 'top_p',
+      stream: 'stream',
+      max_prompt_tokens: 'max_prompt_tokens',
+      max_completion_tokens: 'max_completion_tokens',
+      truncation_strategy: 'truncation_strategy',
+      tool_choice: 'tool_choice',
+      parallel_tool_calls: 'parallel_tool_calls',
+      response_format: 'response_format'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      assistant_id
+    ].freeze
+    DECODERS = {
+      thread: lambda do |value|
+        ::OctridevOpenai::CreateThreadRequest.from_hash(value)
+      end,
+      tools: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::CreateThreadAndRunRequestToolsItem.from_hash(item) }
+      end,
+      tool_resources: lambda do |value|
+        ::OctridevOpenai::CreateThreadAndRunRequestToolResources.from_hash(value)
+      end,
+      metadata: lambda do |value|
+        ::OctridevOpenai::Metadata.from_hash(value)
+      end,
+      truncation_strategy: lambda do |value|
+        ::OctridevOpenai::CreateThreadAndRunRequestTruncationStrategy.from_hash(value)
+      end,
+      tool_choice: lambda do |value|
+        ::OctridevOpenai::AssistantsApiToolChoiceOption.from_hash(value)
+      end,
+      parallel_tool_calls: lambda do |value|
+        ::OctridevOpenai::ParallelToolCalls.from_value(value)
+      end,
+      response_format: lambda do |value|
+        ::OctridevOpenai::AssistantsApiResponseFormatOption.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for CreateThreadAndRunRequest.
+  # Typed representation of the `CreateThreadAndRunRequest` API schema.
+  class CreateThreadAndRunRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCreateThreadAndRunRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCreateThreadAndRunRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCreateThreadAndRunRequestMetadata::DECODERS
+
+    # @return [String] The ID of the assistant to use to execute this run.
+    attr_reader :assistant_id
+    # @return [CreateThreadRequest] Options to create a new thread. If no thread is provided when running a request, an empty thread will be created.
+    attr_reader :thread
+    # @return [String] The ID of the Model to be used to execute this run. If a value is provided here, it will override the model associated with the assistant. If not, the model associated with the assistant will be used.
+    attr_reader :model
+    # @return [String] Override the default system message of the assistant. This is useful for modifying the behavior on a per-run basis.
+    attr_reader :instructions
+    # @return [Array_of_CreateThreadAndRunRequestToolsItem] Override the tools the assistant can use for this run. This is useful for modifying the behavior on a per-run basis.
+    attr_reader :tools
+    # @return [CreateThreadAndRunRequestToolResources] A set of resources that are used by the assistant's tools. The resources are specific to the type of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires a list of vector store IDs.
+    attr_reader :tool_resources
+    # @return [Metadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
+    attr_reader :metadata
+    # @return [Float] What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
+    attr_reader :temperature
+    # @return [Float] An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered. We generally recommend altering this or temperature but not both.
+    attr_reader :top_p
+    # @return [Boolean] If `true`, returns a stream of events that happen during the Run as server-sent events, terminating when the Run enters a terminal state with a `data: [DONE]` message.
+    attr_reader :stream
+    # @return [Integer] The maximum number of prompt tokens that may be used over the course of the run. The run will make a best effort to use only the number of prompt tokens specified, across multiple turns of the run. If the run exceeds the number of prompt tokens specified, the run will end with status `incomplete`. See `incomplete_details` for more info.
+    attr_reader :max_prompt_tokens
+    # @return [Integer] The maximum number of completion tokens that may be used over the course of the run. The run will make a best effort to use only the number of completion tokens specified, across multiple turns of the run. If the run exceeds the number of completion tokens specified, the run will end with status `incomplete`. See `incomplete_details` for more info.
+    attr_reader :max_completion_tokens
+    # @return [CreateThreadAndRunRequestTruncationStrategy] Optional API value serialized in the `truncation_strategy` wire field.
+    attr_reader :truncation_strategy
+    # @return [AssistantsApiToolChoiceOption] Optional API value serialized in the `tool_choice` wire field.
+    attr_reader :tool_choice
+    # @return [ParallelToolCalls] Whether to enable parallel function calling during tool use.
+    attr_reader :parallel_tool_calls
+    # @return [AssistantsApiResponseFormatOption] Specifies the format that the model must output. Compatible with GPT-4o, GPT-4 Turbo, and all GPT-3.5 Turbo models since `gpt-3.5-turbo-1106`. Setting to `{ "type": "json_schema", "json_schema": {...} }` enables Structured Outputs which ensures the model will match your supplied JSON schema. Learn more in the Structured Outputs guide. Setting to `{ "type": "json_object" }` enables JSON mode, which ensures the message the model generates is valid JSON. **Important:** when…
+    attr_reader :response_format
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the CreateThreadAndRunRequestToolsItem SDK namespace.
+  module CreateThreadAndRunRequestToolsItem
+    DISCRIMINATOR_MAPPING = {
+      'code_interpreter' => -> { AssistantToolsCode },
+      'file_search' => -> { AssistantToolsFileSearch },
+      'function' => -> { AssistantToolsFunction }
+    }.freeze
 
-# Defines the CreateThreadAndRunRequestToolsItem SDK namespace.
-module CreateThreadAndRunRequestToolsItem
-  DISCRIMINATOR_MAPPING = {
-    "code_interpreter" => -> { AssistantToolsCode },
-    "file_search" => -> { AssistantToolsFileSearch },
-    "function" => -> { AssistantToolsFunction },
-  }.freeze
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
 
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
 
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
 
-    raise SdkValidationError.new('CreateThreadAndRunRequestToolsItem', 'variant', "Unknown CreateThreadAndRunRequestToolsItem discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalCreateThreadRequestToolResourcesCodeInterpreterMetadata
-  FIELDS = {
-    file_ids: "file_ids",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for CreateThreadRequestToolResourcesCodeInterpreter.
-# Optional object value serialized in the `code_interpreter` wire field.
-class CreateThreadRequestToolResourcesCodeInterpreter
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCreateThreadRequestToolResourcesCodeInterpreterMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCreateThreadRequestToolResourcesCodeInterpreterMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCreateThreadRequestToolResourcesCodeInterpreterMetadata::DECODERS
-
-  # @return [Array_of_String] A list of file IDs made available to the `code_interpreter` tool. There can be a maximum of 20 files associated with the tool.
-  attr_reader :file_ids
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('CreateThreadAndRunRequestToolsItem', 'variant', "Unknown CreateThreadAndRunRequestToolsItem discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalCreateThreadRequestToolResourcesCodeInterpreterMetadata
+    FIELDS = {
+      file_ids: 'file_ids'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for CreateThreadRequestToolResourcesCodeInterpreter.
+  # Optional object value serialized in the `code_interpreter` wire field.
+  class CreateThreadRequestToolResourcesCodeInterpreter
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCreateThreadRequestToolResourcesCodeInterpreterMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCreateThreadRequestToolResourcesCodeInterpreterMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCreateThreadRequestToolResourcesCodeInterpreterMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalCreateThreadRequestToolResourcesFileSearchVectorStoresItemMetadata
-  FIELDS = {
-    file_ids: "file_ids",
-    chunking_strategy: "chunking_strategy",
-    metadata: "metadata",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    chunking_strategy: lambda do |value|
-      ::OctridevOpenai::CreateThreadRequestToolResourcesFileSearchVectorStoresItemChuX7aa7dff179.from_hash(value)
-    end,
-    metadata: lambda do |value|
-      ::OctridevOpenai::Metadata.from_hash(value)
-    end,
-  }.freeze
-end
+    # @return [Array_of_String] A list of file IDs made available to the `code_interpreter` tool. There can be a maximum of 20 files associated with the tool.
+    attr_reader :file_ids
 
-# API model for CreateThreadRequestToolResourcesFileSearchVectorStoresItem.
-# Required object value serialized in the `vector_stores[]` wire field.
-class CreateThreadRequestToolResourcesFileSearchVectorStoresItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCreateThreadRequestToolResourcesFileSearchVectorStoresItemMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCreateThreadRequestToolResourcesFileSearchVectorStoresItemMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCreateThreadRequestToolResourcesFileSearchVectorStoresItemMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [Array_of_String] A list of file IDs to add to the vector store. For vector stores created before Nov 2025, there can be a maximum of 10,000 files in a vector store. For vector stores created starting in Nov 2025, the limit is 100,000,000 files.
-  attr_reader :file_ids
-  # @return [CreateThreadRequestToolResourcesFileSearchVectorStoresItemChuX7aa7dff179] The chunking strategy used to chunk the file(s). If not set, will use the `auto` strategy.
-  attr_reader :chunking_strategy
-  # @return [Metadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
-  attr_reader :metadata
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalCreateThreadRequestToolResourcesFileSearchVectorStoresItemMetadata
+    FIELDS = {
+      file_ids: 'file_ids',
+      chunking_strategy: 'chunking_strategy',
+      metadata: 'metadata'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      chunking_strategy: lambda do |value|
+        ::OctridevOpenai::CreateThreadRequestToolResourcesFileSearchVectorStoresItemChuX7aa7dff179.from_hash(value)
+      end,
+      metadata: lambda do |value|
+        ::OctridevOpenai::Metadata.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for CreateThreadRequestToolResourcesFileSearchVectorStoresItem.
+  # Required object value serialized in the `vector_stores[]` wire field.
+  class CreateThreadRequestToolResourcesFileSearchVectorStoresItem
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCreateThreadRequestToolResourcesFileSearchVectorStoresItemMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCreateThreadRequestToolResourcesFileSearchVectorStoresItemMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCreateThreadRequestToolResourcesFileSearchVectorStoresItemMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalCreateThreadRequestToolResourcesFileSearchMetadata
-  FIELDS = {
-    vector_store_ids: "vector_store_ids",
-    vector_stores: "vector_stores",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    vector_stores: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::CreateThreadRequestToolResourcesFileSearchVectorStoresItem.from_hash(item) }
-    end,
-  }.freeze
-end
+    # @return [Array_of_String] A list of file IDs to add to the vector store. For vector stores created before Nov 2025, there can be a maximum of 10,000 files in a vector store. For vector stores created starting in Nov 2025, the limit is 100,000,000 files.
+    attr_reader :file_ids
+    # @return [CreateThreadRequestToolResourcesFileSearchVectorStoresItemChuX7aa7dff179] The chunking strategy used to chunk the file(s). If not set, will use the `auto` strategy.
+    attr_reader :chunking_strategy
+    # @return [Metadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
+    attr_reader :metadata
 
-# API model for CreateThreadRequestToolResourcesFileSearch.
-# Optional object value serialized in the `file_search` wire field.
-class CreateThreadRequestToolResourcesFileSearch
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCreateThreadRequestToolResourcesFileSearchMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCreateThreadRequestToolResourcesFileSearchMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCreateThreadRequestToolResourcesFileSearchMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [Array_of_String] The vector store attached to this thread. There can be a maximum of 1 vector store attached to the thread.
-  attr_reader :vector_store_ids
-  # @return [Array_of_CreateThreadRequestToolResourcesFileSearchVectorStoresItem] A helper to create a vector store with file_ids and attach it to this thread. There can be a maximum of 1 vector store attached to the thread.
-  attr_reader :vector_stores
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalCreateThreadRequestToolResourcesFileSearchMetadata
+    FIELDS = {
+      vector_store_ids: 'vector_store_ids',
+      vector_stores: 'vector_stores'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      vector_stores: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::CreateThreadRequestToolResourcesFileSearchVectorStoresItem.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for CreateThreadRequestToolResourcesFileSearch.
+  # Optional object value serialized in the `file_search` wire field.
+  class CreateThreadRequestToolResourcesFileSearch
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCreateThreadRequestToolResourcesFileSearchMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCreateThreadRequestToolResourcesFileSearchMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCreateThreadRequestToolResourcesFileSearchMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalCreateThreadRequestToolResourcesMetadata
-  FIELDS = {
-    code_interpreter: "code_interpreter",
-    file_search: "file_search",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    code_interpreter: lambda do |value|
-      ::OctridevOpenai::CreateThreadRequestToolResourcesCodeInterpreter.from_hash(value)
-    end,
-    file_search: lambda do |value|
-      ::OctridevOpenai::CreateThreadRequestToolResourcesFileSearch.from_hash(value)
-    end,
-  }.freeze
-end
+    # @return [Array_of_String] The vector store attached to this thread. There can be a maximum of 1 vector store attached to the thread.
+    attr_reader :vector_store_ids
+    # @return [Array_of_CreateThreadRequestToolResourcesFileSearchVectorStoresItem] A helper to create a vector store with file_ids and attach it to this thread. There can be a maximum of 1 vector store attached to the thread.
+    attr_reader :vector_stores
 
-# API model for CreateThreadRequestToolResources.
-# A set of resources that are made available to the assistant's tools in this thread. The resources are specific to the type of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires a list of vector store IDs.
-class CreateThreadRequestToolResources
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCreateThreadRequestToolResourcesMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCreateThreadRequestToolResourcesMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCreateThreadRequestToolResourcesMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [CreateThreadRequestToolResourcesCodeInterpreter] Optional object value serialized in the `code_interpreter` wire field.
-  attr_reader :code_interpreter
-  # @return [CreateThreadRequestToolResourcesFileSearch] Optional object value serialized in the `file_search` wire field.
-  attr_reader :file_search
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalCreateThreadRequestToolResourcesMetadata
+    FIELDS = {
+      code_interpreter: 'code_interpreter',
+      file_search: 'file_search'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      code_interpreter: lambda do |value|
+        ::OctridevOpenai::CreateThreadRequestToolResourcesCodeInterpreter.from_hash(value)
+      end,
+      file_search: lambda do |value|
+        ::OctridevOpenai::CreateThreadRequestToolResourcesFileSearch.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for CreateThreadRequestToolResources.
+  # A set of resources that are made available to the assistant's tools in this thread. The resources are specific to the type of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires a list of vector store IDs.
+  class CreateThreadRequestToolResources
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCreateThreadRequestToolResourcesMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCreateThreadRequestToolResourcesMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCreateThreadRequestToolResourcesMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalCreateThreadRequestMetadata
-  FIELDS = {
-    messages: "messages",
-    tool_resources: "tool_resources",
-    metadata: "metadata",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    messages: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::CreateMessageRequest.from_hash(item) }
-    end,
-    tool_resources: lambda do |value|
-      ::OctridevOpenai::CreateThreadRequestToolResources.from_hash(value)
-    end,
-    metadata: lambda do |value|
-      ::OctridevOpenai::Metadata.from_hash(value)
-    end,
-  }.freeze
-end
+    # @return [CreateThreadRequestToolResourcesCodeInterpreter] Optional object value serialized in the `code_interpreter` wire field.
+    attr_reader :code_interpreter
+    # @return [CreateThreadRequestToolResourcesFileSearch] Optional object value serialized in the `file_search` wire field.
+    attr_reader :file_search
 
-# API model for CreateThreadRequest.
-# Options to create a new thread. If no thread is provided when running a request, an empty thread will be created.
-class CreateThreadRequest
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCreateThreadRequestMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCreateThreadRequestMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCreateThreadRequestMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [Array_of_CreateMessageRequest] A list of messages to start the thread with.
-  attr_reader :messages
-  # @return [CreateThreadRequestToolResources] A set of resources that are made available to the assistant's tools in this thread. The resources are specific to the type of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires a list of vector store IDs.
-  attr_reader :tool_resources
-  # @return [Metadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
-  attr_reader :metadata
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalCreateThreadRequestMetadata
+    FIELDS = {
+      messages: 'messages',
+      tool_resources: 'tool_resources',
+      metadata: 'metadata'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      messages: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::CreateMessageRequest.from_hash(item) }
+      end,
+      tool_resources: lambda do |value|
+        ::OctridevOpenai::CreateThreadRequestToolResources.from_hash(value)
+      end,
+      metadata: lambda do |value|
+        ::OctridevOpenai::Metadata.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for CreateThreadRequest.
+  # Options to create a new thread. If no thread is provided when running a request, an empty thread will be created.
+  class CreateThreadRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCreateThreadRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCreateThreadRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCreateThreadRequestMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalCreateThreadRequestToolResourcesFileSearchVectorStoresItemChuX7cd9c16c51Metadata
-  FIELDS = {
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::CreateThreadRequestToolResourcesFileSearchVectorStoresItemChuX9ddb22a38b.from_value(value)
-    end,
-  }.freeze
-end
+    # @return [Array_of_CreateMessageRequest] A list of messages to start the thread with.
+    attr_reader :messages
+    # @return [CreateThreadRequestToolResources] A set of resources that are made available to the assistant's tools in this thread. The resources are specific to the type of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires a list of vector store IDs.
+    attr_reader :tool_resources
+    # @return [Metadata] Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard. Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.
+    attr_reader :metadata
 
-# API model for CreateThreadRequestToolResourcesFileSearchVectorStoresItemChuX7cd9c16c51.
-class CreateThreadRequestToolResourcesFileSearchVectorStoresItemChuX7cd9c16c51
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCreateThreadRequestToolResourcesFileSearchVectorStoresItemChuX7cd9c16c51Metadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCreateThreadRequestToolResourcesFileSearchVectorStoresItemChuX7cd9c16c51Metadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCreateThreadRequestToolResourcesFileSearchVectorStoresItemChuX7cd9c16c51Metadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [CreateThreadRequestToolResourcesFileSearchVectorStoresItemChuX9ddb22a38b] Always `auto`.
-  attr_reader :type
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalCreateThreadRequestToolResourcesFileSearchVectorStoresItemChuX7cd9c16c51Metadata
+    FIELDS = {
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::CreateThreadRequestToolResourcesFileSearchVectorStoresItemChuX9ddb22a38b.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for CreateThreadRequestToolResourcesFileSearchVectorStoresItemChuX7cd9c16c51.
+  class CreateThreadRequestToolResourcesFileSearchVectorStoresItemChuX7cd9c16c51
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCreateThreadRequestToolResourcesFileSearchVectorStoresItemChuX7cd9c16c51Metadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCreateThreadRequestToolResourcesFileSearchVectorStoresItemChuX7cd9c16c51Metadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCreateThreadRequestToolResourcesFileSearchVectorStoresItemChuX7cd9c16c51Metadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalCreateThreadRequestToolResourcesFileSearchVectorStoresItemChuX9d5f3948ceMetadata
-  FIELDS = {
-    max_chunk_size_tokens: "max_chunk_size_tokens",
-    chunk_overlap_tokens: "chunk_overlap_tokens",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    max_chunk_size_tokens
-    chunk_overlap_tokens
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
+    # @return [CreateThreadRequestToolResourcesFileSearchVectorStoresItemChuX9ddb22a38b] Always `auto`.
+    attr_reader :type
 
-# API model for CreateThreadRequestToolResourcesFileSearchVectorStoresItemChuX9d5f3948ce.
-# Required object value serialized in the `static` wire field.
-class CreateThreadRequestToolResourcesFileSearchVectorStoresItemChuX9d5f3948ce
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalCreateThreadRequestToolResourcesFileSearchVectorStoresItemChuX9d5f3948ceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalCreateThreadRequestToolResourcesFileSearchVectorStoresItemChuX9d5f3948ceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalCreateThreadRequestToolResourcesFileSearchVectorStoresItemChuX9d5f3948ceMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [Integer] The maximum number of tokens in each chunk. The default value is `800`. The minimum value is `100` and the maximum value is `4096`.
-  attr_reader :max_chunk_size_tokens
-  # @return [Integer] The number of tokens that overlap between chunks. The default value is `400`. Note that the overlap must not exceed half of `max_chunk_size_tokens`.
-  attr_reader :chunk_overlap_tokens
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalCreateThreadRequestToolResourcesFileSearchVectorStoresItemChuX9d5f3948ceMetadata
+    FIELDS = {
+      max_chunk_size_tokens: 'max_chunk_size_tokens',
+      chunk_overlap_tokens: 'chunk_overlap_tokens'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      max_chunk_size_tokens
+      chunk_overlap_tokens
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # API model for CreateThreadRequestToolResourcesFileSearchVectorStoresItemChuX9d5f3948ce.
+  # Required object value serialized in the `static` wire field.
+  class CreateThreadRequestToolResourcesFileSearchVectorStoresItemChuX9d5f3948ce
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalCreateThreadRequestToolResourcesFileSearchVectorStoresItemChuX9d5f3948ceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalCreateThreadRequestToolResourcesFileSearchVectorStoresItemChuX9d5f3948ceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalCreateThreadRequestToolResourcesFileSearchVectorStoresItemChuX9d5f3948ceMetadata::DECODERS
+
+    # @return [Integer] The maximum number of tokens in each chunk. The default value is `800`. The minimum value is `100` and the maximum value is `4096`.
+    attr_reader :max_chunk_size_tokens
+    # @return [Integer] The number of tokens that overlap between chunks. The default value is `400`. Note that the overlap must not exceed half of `max_chunk_size_tokens`.
+    attr_reader :chunk_overlap_tokens
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
 end

@@ -22,34 +22,26 @@ module OctridevOpenai
       #   `step_details.tool_calls*].file_search.results[*].content` to fetch the file
       #   search result content. See the [file search tool documentation for more
       #   information.
-      singleton_class.define_method(:get_run_step) do |
-        config:,
-        thread_id:,
-        run_id:,
-        step_id:,
-        include: NOT_GIVEN,
-        request_options: nil
-      |
-
+      singleton_class.define_method(:get_run_step) do |config:, thread_id:, run_id:, step_id:, include: NOT_GIVEN, request_options: nil|
         SdkClient.request(
           'GET',
           [
-            "/threads/",
+            '/threads/',
             SdkClient.encode_path_segment(thread_id),
-            "/runs/",
+            '/runs/',
             SdkClient.encode_path_segment(run_id),
-            "/steps/",
+            '/steps/',
             SdkClient.encode_path_segment(step_id)
           ].join,
           config: config,
           query: {
-            'include[]' => QueryValue.new(include, style: 'form', explode: true),
+            'include[]' => QueryValue.new(include, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::RunStepObject,
           decoder: :json,
           operation_id: 'get_run_step',
           request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '429' => ::OctridevOpenai::ErrorResponse }
         ).data
       end
     end

@@ -5,174 +5,174 @@
 
 # assistants_delete domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalDeleteAssistantResponseMetadata
-  FIELDS = {
-    id: "id",
-    deleted: "deleted",
-    object: "object",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    deleted
-    object
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::DeleteAssistantResponseObject.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for DeleteAssistantResponse.
-# Typed representation of the `DeleteAssistantResponse` API schema.
-class DeleteAssistantResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalDeleteAssistantResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalDeleteAssistantResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalDeleteAssistantResponseMetadata::DECODERS
-
-  # @return [String] Required `string` value serialized in the `id` wire field.
-  attr_reader :id
-  # @return [Boolean] Required `boolean` value serialized in the `deleted` wire field.
-  attr_reader :deleted
-  # @return [DeleteAssistantResponseObject] Required enumerated value serialized in the `object` wire field.
-  attr_reader :object
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalDeleteAssistantResponseMetadata
+    FIELDS = {
+      id: 'id',
+      deleted: 'deleted',
+      object: 'object'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      deleted
+      object
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::DeleteAssistantResponseObject.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for DeleteAssistantResponse.
+  # Typed representation of the `DeleteAssistantResponse` API schema.
+  class DeleteAssistantResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalDeleteAssistantResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalDeleteAssistantResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalDeleteAssistantResponseMetadata::DECODERS
+
+    # @return [String] Required `string` value serialized in the `id` wire field.
+    attr_reader :id
+    # @return [Boolean] Required `boolean` value serialized in the `deleted` wire field.
+    attr_reader :deleted
+    # @return [DeleteAssistantResponseObject] Required enumerated value serialized in the `object` wire field.
+    attr_reader :object
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the DeleteAssistantResponseObject SDK namespace.
-module DeleteAssistantResponseObject
-  ASSISTANT_DELETED = 'assistant.deleted'
-  VALUES = ['assistant.deleted'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalDeleteMessageResponseMetadata
-  FIELDS = {
-    id: "id",
-    deleted: "deleted",
-    object: "object",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    deleted
-    object
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::DeleteMessageResponseObject.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for DeleteMessageResponse.
-# Typed representation of the `DeleteMessageResponse` API schema.
-class DeleteMessageResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalDeleteMessageResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalDeleteMessageResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalDeleteMessageResponseMetadata::DECODERS
-
-  # @return [String] Required `string` value serialized in the `id` wire field.
-  attr_reader :id
-  # @return [Boolean] Required `boolean` value serialized in the `deleted` wire field.
-  attr_reader :deleted
-  # @return [DeleteMessageResponseObject] Required enumerated value serialized in the `object` wire field.
-  attr_reader :object
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the DeleteAssistantResponseObject SDK namespace.
+  module DeleteAssistantResponseObject
+    ASSISTANT_DELETED = 'assistant.deleted'
+    VALUES = ['assistant.deleted'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalDeleteMessageResponseMetadata
+    FIELDS = {
+      id: 'id',
+      deleted: 'deleted',
+      object: 'object'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      deleted
+      object
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::DeleteMessageResponseObject.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # API model for DeleteMessageResponse.
+  # Typed representation of the `DeleteMessageResponse` API schema.
+  class DeleteMessageResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalDeleteMessageResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalDeleteMessageResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalDeleteMessageResponseMetadata::DECODERS
 
-# Defines the DeleteMessageResponseObject SDK namespace.
-module DeleteMessageResponseObject
-  THREAD_MESSAGE_DELETED = 'thread.message.deleted'
-  VALUES = ['thread.message.deleted'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    # @return [String] Required `string` value serialized in the `id` wire field.
+    attr_reader :id
+    # @return [Boolean] Required `boolean` value serialized in the `deleted` wire field.
+    attr_reader :deleted
+    # @return [DeleteMessageResponseObject] Required enumerated value serialized in the `object` wire field.
+    attr_reader :object
 
-# Internal model hydration metadata.
-class SdkInternalDeleteThreadResponseMetadata
-  FIELDS = {
-    id: "id",
-    deleted: "deleted",
-    object: "object",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    deleted
-    object
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::DeleteThreadResponseObject.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for DeleteThreadResponse.
-# Typed representation of the `DeleteThreadResponse` API schema.
-class DeleteThreadResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalDeleteThreadResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalDeleteThreadResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalDeleteThreadResponseMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [String] Required `string` value serialized in the `id` wire field.
-  attr_reader :id
-  # @return [Boolean] Required `boolean` value serialized in the `deleted` wire field.
-  attr_reader :deleted
-  # @return [DeleteThreadResponseObject] Required enumerated value serialized in the `object` wire field.
-  attr_reader :object
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the DeleteMessageResponseObject SDK namespace.
+  module DeleteMessageResponseObject
+    THREAD_MESSAGE_DELETED = 'thread.message.deleted'
+    VALUES = ['thread.message.deleted'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalDeleteThreadResponseMetadata
+    FIELDS = {
+      id: 'id',
+      deleted: 'deleted',
+      object: 'object'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      deleted
+      object
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::DeleteThreadResponseObject.from_value(value)
+      end
+    }.freeze
   end
-end
 
-# Defines the DeleteThreadResponseObject SDK namespace.
-module DeleteThreadResponseObject
-  THREAD_DELETED = 'thread.deleted'
-  VALUES = ['thread.deleted'].freeze
-  def self.from_value(value)
-    value
+  # API model for DeleteThreadResponse.
+  # Typed representation of the `DeleteThreadResponse` API schema.
+  class DeleteThreadResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalDeleteThreadResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalDeleteThreadResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalDeleteThreadResponseMetadata::DECODERS
+
+    # @return [String] Required `string` value serialized in the `id` wire field.
+    attr_reader :id
+    # @return [Boolean] Required `boolean` value serialized in the `deleted` wire field.
+    attr_reader :deleted
+    # @return [DeleteThreadResponseObject] Required enumerated value serialized in the `object` wire field.
+    attr_reader :object
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
-end
+
+  # Defines the DeleteThreadResponseObject SDK namespace.
+  module DeleteThreadResponseObject
+    THREAD_DELETED = 'thread.deleted'
+    VALUES = ['thread.deleted'].freeze
+    def self.from_value(value)
+      value
+    end
+  end
 end

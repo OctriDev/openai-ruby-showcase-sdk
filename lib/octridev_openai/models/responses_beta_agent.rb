@@ -5,277 +5,279 @@
 
 # responses_beta_agent domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalBetaAgentTagParamMetadata
-  FIELDS = {
-    agent_name: "agent_name",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    agent_name
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for BetaAgentTagParam.
-# The agent that produced this item.
-class BetaAgentTagParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaAgentTagParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaAgentTagParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaAgentTagParamMetadata::DECODERS
-
-  # @return [String] The canonical name of the agent that produced this item.
-  attr_reader :agent_name
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalBetaAgentTagParamMetadata
+    FIELDS = {
+      agent_name: 'agent_name'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      agent_name
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for BetaAgentTagParam.
+  # The agent that produced this item.
+  class BetaAgentTagParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaAgentTagParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaAgentTagParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaAgentTagParamMetadata::DECODERS
+
+    # @return [String] The canonical name of the agent that produced this item.
+    attr_reader :agent_name
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaAgentMessageMetadata
-  FIELDS = {
-    agent: "agent",
-    type: "type",
-    id: "id",
-    author: "author",
-    recipient: "recipient",
-    content: "content",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    id
-    author
-    recipient
-    content
-  ].freeze
-  DECODERS = {
-    agent: lambda do |value|
-      ::OctridevOpenai::BetaAgentTag.from_hash(value)
-    end,
-    type: lambda do |value|
-      ::OctridevOpenai::BetaAgentMessageType.from_value(value)
-    end,
-    content: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::BetaAgentMessageContentItem.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for BetaAgentMessage.
-# Typed representation of the `BetaAgentMessage` API schema.
-class BetaAgentMessage
-  include BetaItemResource
-  include BetaItemField
-  include BetaOutputItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaAgentMessageMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaAgentMessageMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaAgentMessageMetadata::DECODERS
-
-  # @return [BetaAgentTag] The agent that produced this item.
-  attr_reader :agent
-  # @return [BetaAgentMessageType] The type of the item. Always `agent_message`.
-  attr_reader :type
-  # @return [String] The unique ID of the agent message.
-  attr_reader :id
-  # @return [String] The sending agent identity.
-  attr_reader :author
-  # @return [String] The destination agent identity.
-  attr_reader :recipient
-  # @return [Array_of_BetaAgentMessageContentItem] Encrypted content sent between agents.
-  attr_reader :content
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalBetaAgentMessageMetadata
+    FIELDS = {
+      agent: 'agent',
+      type: 'type',
+      id: 'id',
+      author: 'author',
+      recipient: 'recipient',
+      content: 'content'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      id
+      author
+      recipient
+      content
+    ].freeze
+    DECODERS = {
+      agent: lambda do |value|
+        ::OctridevOpenai::BetaAgentTag.from_hash(value)
+      end,
+      type: lambda do |value|
+        ::OctridevOpenai::BetaAgentMessageType.from_value(value)
+      end,
+      content: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::BetaAgentMessageContentItem.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for BetaAgentMessage.
+  # Typed representation of the `BetaAgentMessage` API schema.
+  class BetaAgentMessage
+    include BetaItemResource
+    include BetaItemField
+    include BetaOutputItem
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaAgentMessageMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaAgentMessageMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaAgentMessageMetadata::DECODERS
+
+    # @return [BetaAgentTag] The agent that produced this item.
+    attr_reader :agent
+    # @return [BetaAgentMessageType] The type of the item. Always `agent_message`.
+    attr_reader :type
+    # @return [String] The unique ID of the agent message.
+    attr_reader :id
+    # @return [String] The sending agent identity.
+    attr_reader :author
+    # @return [String] The destination agent identity.
+    attr_reader :recipient
+    # @return [Array_of_BetaAgentMessageContentItem] Encrypted content sent between agents.
+    attr_reader :content
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
+  # Defines the BetaAgentMessageType SDK namespace.
+  module BetaAgentMessageType
+    AGENT_MESSAGE = 'agent_message'
+    VALUES = ['agent_message'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the BetaAgentMessageType SDK namespace.
-module BetaAgentMessageType
-  AGENT_MESSAGE = 'agent_message'
-  VALUES = ['agent_message'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('BetaAgentMessageType', 'enum', "Unknown BetaAgentMessageType: #{value}")
-  end
-end
-
-# Defines the BetaAgentMessageContentItem SDK namespace.
-module BetaAgentMessageContentItem
-  DISCRIMINATOR_MAPPING = {
-    "input_text" => -> { BetaInputTextContent },
-    "output_text" => -> { BetaOutputTextContent },
-    "text" => -> { BetaTextContent },
-    "summary_text" => -> { BetaSummaryTextContent },
-    "reasoning_text" => -> { BetaReasoningTextContent },
-    "refusal" => -> { BetaRefusalContent },
-    "input_image" => -> { BetaInputImageContent },
-    "computer_screenshot" => -> { BetaComputerScreenshotContent },
-    "input_file" => -> { BetaInputFileContent },
-    "encrypted_content" => -> { BetaEncryptedContent },
-  }.freeze
-
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('BetaAgentMessageContentItem', 'variant', "Unknown BetaAgentMessageContentItem discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaAgentMessageItemParamMetadata
-  FIELDS = {
-    agent: "agent",
-    id: "id",
-    type: "type",
-    author: "author",
-    recipient: "recipient",
-    content: "content",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    author
-    recipient
-    content
-  ].freeze
-  DECODERS = {
-    agent: lambda do |value|
-      ::OctridevOpenai::BetaAgentTagParam.from_hash(value)
-    end,
-    type: lambda do |value|
-      ::OctridevOpenai::BetaAgentMessageItemParamType.from_value(value)
-    end,
-    content: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::BetaAgentMessageItemParamContentItem.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for BetaAgentMessageItemParam.
-# A message routed between agents.
-class BetaAgentMessageItemParam
-  include BetaItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaAgentMessageItemParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaAgentMessageItemParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaAgentMessageItemParamMetadata::DECODERS
-
-  # @return [BetaAgentTagParam] Optional API value serialized in the `agent` wire field.
-  attr_reader :agent
-  # @return [String] Optional `string` value serialized in the `id` wire field.
-  attr_reader :id
-  # @return [BetaAgentMessageItemParamType] The item type. Always `agent_message`.
-  attr_reader :type
-  # @return [String] The sending agent identity.
-  attr_reader :author
-  # @return [String] The destination agent identity.
-  attr_reader :recipient
-  # @return [Array_of_BetaAgentMessageItemParamContentItem] Plaintext, image, or encrypted content sent between agents.
-  attr_reader :content
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('BetaAgentMessageType', 'enum', "Unknown BetaAgentMessageType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the BetaAgentMessageContentItem SDK namespace.
+  module BetaAgentMessageContentItem
+    DISCRIMINATOR_MAPPING = {
+      'input_text' => -> { BetaInputTextContent },
+      'output_text' => -> { BetaOutputTextContent },
+      'text' => -> { BetaTextContent },
+      'summary_text' => -> { BetaSummaryTextContent },
+      'reasoning_text' => -> { BetaReasoningTextContent },
+      'refusal' => -> { BetaRefusalContent },
+      'input_image' => -> { BetaInputImageContent },
+      'computer_screenshot' => -> { BetaComputerScreenshotContent },
+      'input_file' => -> { BetaInputFileContent },
+      'encrypted_content' => -> { BetaEncryptedContent }
+    }.freeze
+
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('BetaAgentMessageContentItem', 'variant', "Unknown BetaAgentMessageContentItem discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-end
-
-# Defines the BetaAgentMessageItemParamType SDK namespace.
-module BetaAgentMessageItemParamType
-  AGENT_MESSAGE = 'agent_message'
-  VALUES = ['agent_message'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('BetaAgentMessageItemParamType', 'enum', "Unknown BetaAgentMessageItemParamType: #{value}")
-  end
-end
-
-# Defines the BetaAgentMessageItemParamContentItem SDK namespace.
-module BetaAgentMessageItemParamContentItem
-  DISCRIMINATOR_MAPPING = {
-    "input_text" => -> { BetaInputTextContentParam },
-    "input_image" => -> { BetaInputImageContentParamAutoParam },
-    "encrypted_content" => -> { BetaEncryptedContentParam },
-  }.freeze
-
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('BetaAgentMessageItemParamContentItem', 'variant', "Unknown BetaAgentMessageItemParamContentItem discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaAgentTagMetadata
-  FIELDS = {
-    agent_name: "agent_name",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    agent_name
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for BetaAgentTag.
-# Typed representation of the `BetaAgentTag` API schema.
-class BetaAgentTag
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaAgentTagMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaAgentTagMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaAgentTagMetadata::DECODERS
-
-  # @return [String] The canonical name of the agent that produced this item.
-  attr_reader :agent_name
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalBetaAgentMessageItemParamMetadata
+    FIELDS = {
+      agent: 'agent',
+      id: 'id',
+      type: 'type',
+      author: 'author',
+      recipient: 'recipient',
+      content: 'content'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      author
+      recipient
+      content
+    ].freeze
+    DECODERS = {
+      agent: lambda do |value|
+        ::OctridevOpenai::BetaAgentTagParam.from_hash(value)
+      end,
+      type: lambda do |value|
+        ::OctridevOpenai::BetaAgentMessageItemParamType.from_value(value)
+      end,
+      content: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::BetaAgentMessageItemParamContentItem.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for BetaAgentMessageItemParam.
+  # A message routed between agents.
+  class BetaAgentMessageItemParam
+    include BetaItem
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaAgentMessageItemParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaAgentMessageItemParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaAgentMessageItemParamMetadata::DECODERS
+
+    # @return [BetaAgentTagParam] Optional API value serialized in the `agent` wire field.
+    attr_reader :agent
+    # @return [String] Optional `string` value serialized in the `id` wire field.
+    attr_reader :id
+    # @return [BetaAgentMessageItemParamType] The item type. Always `agent_message`.
+    attr_reader :type
+    # @return [String] The sending agent identity.
+    attr_reader :author
+    # @return [String] The destination agent identity.
+    attr_reader :recipient
+    # @return [Array_of_BetaAgentMessageItemParamContentItem] Plaintext, image, or encrypted content sent between agents.
+    attr_reader :content
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the BetaAgentMessageItemParamType SDK namespace.
+  module BetaAgentMessageItemParamType
+    AGENT_MESSAGE = 'agent_message'
+    VALUES = ['agent_message'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaAgentMessageItemParamType', 'enum', "Unknown BetaAgentMessageItemParamType: #{value}")
+    end
   end
-end
+
+  # Defines the BetaAgentMessageItemParamContentItem SDK namespace.
+  module BetaAgentMessageItemParamContentItem
+    DISCRIMINATOR_MAPPING = {
+      'input_text' => -> { BetaInputTextContentParam },
+      'input_image' => -> { BetaInputImageContentParamAutoParam },
+      'encrypted_content' => -> { BetaEncryptedContentParam }
+    }.freeze
+
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('BetaAgentMessageItemParamContentItem', 'variant', "Unknown BetaAgentMessageItemParamContentItem discriminator: #{hash['type'].inspect}")
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalBetaAgentTagMetadata
+    FIELDS = {
+      agent_name: 'agent_name'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      agent_name
+    ].freeze
+    DECODERS = {}.freeze
+  end
+
+  # API model for BetaAgentTag.
+  # Typed representation of the `BetaAgentTag` API schema.
+  class BetaAgentTag
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaAgentTagMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaAgentTagMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaAgentTagMetadata::DECODERS
+
+    # @return [String] The canonical name of the agent that produced this item.
+    attr_reader :agent_name
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+  end
 end

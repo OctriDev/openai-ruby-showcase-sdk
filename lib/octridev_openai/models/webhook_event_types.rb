@@ -5,56 +5,56 @@
 
 # webhook_event_types domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalWebhookEventTypeListResourceMetadata
-  FIELDS = {
-    object: "object",
-    data: "data",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    object
-    data
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::WebhookEventTypeListResourceObject.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for WebhookEventTypeListResource.
-# Typed representation of the `WebhookEventTypeListResource` API schema.
-class WebhookEventTypeListResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalWebhookEventTypeListResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalWebhookEventTypeListResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalWebhookEventTypeListResourceMetadata::DECODERS
-
-  # @return [WebhookEventTypeListResourceObject] The object type, which is always list.
-  attr_reader :object
-  # @return [Array_of_String] The webhook event types available to the authenticated project.
-  attr_reader :data
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalWebhookEventTypeListResourceMetadata
+    FIELDS = {
+      object: 'object',
+      data: 'data'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      object
+      data
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::WebhookEventTypeListResourceObject.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for WebhookEventTypeListResource.
+  # Typed representation of the `WebhookEventTypeListResource` API schema.
+  class WebhookEventTypeListResource
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalWebhookEventTypeListResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalWebhookEventTypeListResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalWebhookEventTypeListResourceMetadata::DECODERS
+
+    # @return [WebhookEventTypeListResourceObject] The object type, which is always list.
+    attr_reader :object
+    # @return [Array_of_String] The webhook event types available to the authenticated project.
+    attr_reader :data
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the WebhookEventTypeListResourceObject SDK namespace.
+  module WebhookEventTypeListResourceObject
+    LIST = 'list'
+    VALUES = ['list'].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
-
-# Defines the WebhookEventTypeListResourceObject SDK namespace.
-module WebhookEventTypeListResourceObject
-  LIST = 'list'
-  VALUES = ['list'].freeze
-  def self.from_value(value)
-    value
-  end
-end
 end

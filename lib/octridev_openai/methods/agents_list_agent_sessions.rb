@@ -27,32 +27,31 @@ module OctridevOpenai
         agent_id: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 1, max: 100) }
 
-        Validation.if_given(after) { Validation.validate_length('after', after, min: 0, max: 1048576) }
+        Validation.if_given(after) { Validation.validate_length('after', after, min: 0, max: 1_048_576) }
 
-        Validation.if_given(agent_id) { Validation.validate_length('agent_id', agent_id, min: 0, max: 1048576) }
+        Validation.if_given(agent_id) { Validation.validate_length('agent_id', agent_id, min: 0, max: 1_048_576) }
 
         SdkClient.request(
           'GET',
-          "/agents/sessions",
+          '/agents/sessions',
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'order' => QueryValue.new(order, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
-            'agent_id' => QueryValue.new(agent_id, style: 'form', explode: true),
+            'agent_id' => QueryValue.new(agent_id, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::SessionListResource,
           decoder: :json,
           operation_id: 'list_agent_sessions',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).data
       end
 
-    ListAgentSessionsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      ListAgentSessionsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists managed agent sessions using ID-based pagination and the requested sort order. See managing sessions.
       #
@@ -85,10 +84,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.last_id
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -115,10 +117,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListAgentSessionsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end

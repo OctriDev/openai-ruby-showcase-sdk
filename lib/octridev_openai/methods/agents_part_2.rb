@@ -28,39 +28,38 @@ module OctridevOpenai
         after: NOT_GIVEN,
         request_options: nil
       )
+        Validation.validate_length('session_id', session_id, min: 0, max: 1_048_576)
 
-        Validation.validate_length('session_id', session_id, min: 0, max: 1048576)
-
-        Validation.validate_length('subagent_id', subagent_id, min: 0, max: 1048576)
+        Validation.validate_length('subagent_id', subagent_id, min: 0, max: 1_048_576)
 
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 1, max: 100) }
 
-        Validation.if_given(after) { Validation.validate_length('after', after, min: 0, max: 1048576) }
+        Validation.if_given(after) { Validation.validate_length('after', after, min: 0, max: 1_048_576) }
 
         SdkClient.request(
           'GET',
           [
-            "/agents/sessions/",
+            '/agents/sessions/',
             SdkClient.encode_path_segment(session_id),
-            "/subagents/",
+            '/subagents/',
             SdkClient.encode_path_segment(subagent_id),
-            "/items"
+            '/items'
           ].join,
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'order' => QueryValue.new(order, style: 'form', explode: true),
-            'after' => QueryValue.new(after, style: 'form', explode: true),
+            'after' => QueryValue.new(after, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::SessionItemListResource,
           decoder: :json,
           operation_id: 'list_agent_session_subagent_items',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).data
       end
 
-    ListAgentSessionSubagentItemsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      ListAgentSessionSubagentItemsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists this subagent's own items across all of its turns. See subagent workflows.
       #
@@ -95,10 +94,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.last_id
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -127,10 +129,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListAgentSessionSubagentItemsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end
@@ -155,39 +159,38 @@ module OctridevOpenai
         after: NOT_GIVEN,
         request_options: nil
       )
+        Validation.validate_length('session_id', session_id, min: 0, max: 1_048_576)
 
-        Validation.validate_length('session_id', session_id, min: 0, max: 1048576)
-
-        Validation.validate_length('subagent_id', subagent_id, min: 0, max: 1048576)
+        Validation.validate_length('subagent_id', subagent_id, min: 0, max: 1_048_576)
 
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 1, max: 100) }
 
-        Validation.if_given(after) { Validation.validate_length('after', after, min: 0, max: 1048576) }
+        Validation.if_given(after) { Validation.validate_length('after', after, min: 0, max: 1_048_576) }
 
         SdkClient.request(
           'GET',
           [
-            "/agents/sessions/",
+            '/agents/sessions/',
             SdkClient.encode_path_segment(session_id),
-            "/subagents/",
+            '/subagents/',
             SdkClient.encode_path_segment(subagent_id),
-            "/turns"
+            '/turns'
           ].join,
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'order' => QueryValue.new(order, style: 'form', explode: true),
-            'after' => QueryValue.new(after, style: 'form', explode: true),
+            'after' => QueryValue.new(after, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::SessionTurnListResource,
           decoder: :json,
           operation_id: 'list_agent_session_subagent_turns',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).data
       end
 
-    ListAgentSessionSubagentTurnsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      ListAgentSessionSubagentTurnsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists all turns of this subagent, including turns after a resume. See subagent workflows.
       #
@@ -222,10 +225,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.last_id
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -254,10 +260,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListAgentSessionSubagentTurnsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end
@@ -275,21 +283,20 @@ module OctridevOpenai
         turn_id:,
         request_options: nil
       )
+        Validation.validate_length('session_id', session_id, min: 0, max: 1_048_576)
 
-        Validation.validate_length('session_id', session_id, min: 0, max: 1048576)
+        Validation.validate_length('subagent_id', subagent_id, min: 0, max: 1_048_576)
 
-        Validation.validate_length('subagent_id', subagent_id, min: 0, max: 1048576)
-
-        Validation.validate_length('turn_id', turn_id, min: 0, max: 1048576)
+        Validation.validate_length('turn_id', turn_id, min: 0, max: 1_048_576)
 
         SdkClient.request(
           'GET',
           [
-            "/agents/sessions/",
+            '/agents/sessions/',
             SdkClient.encode_path_segment(session_id),
-            "/subagents/",
+            '/subagents/',
             SdkClient.encode_path_segment(subagent_id),
-            "/turns/",
+            '/turns/',
             SdkClient.encode_path_segment(turn_id)
           ].join,
           config: config,
@@ -297,7 +304,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'retrieve_agent_session_subagent_turn',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).data
       end
 
@@ -322,43 +329,42 @@ module OctridevOpenai
         after: NOT_GIVEN,
         request_options: nil
       )
+        Validation.validate_length('session_id', session_id, min: 0, max: 1_048_576)
 
-        Validation.validate_length('session_id', session_id, min: 0, max: 1048576)
+        Validation.validate_length('subagent_id', subagent_id, min: 0, max: 1_048_576)
 
-        Validation.validate_length('subagent_id', subagent_id, min: 0, max: 1048576)
-
-        Validation.validate_length('turn_id', turn_id, min: 0, max: 1048576)
+        Validation.validate_length('turn_id', turn_id, min: 0, max: 1_048_576)
 
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 1, max: 100) }
 
-        Validation.if_given(after) { Validation.validate_length('after', after, min: 0, max: 1048576) }
+        Validation.if_given(after) { Validation.validate_length('after', after, min: 0, max: 1_048_576) }
 
         SdkClient.request(
           'GET',
           [
-            "/agents/sessions/",
+            '/agents/sessions/',
             SdkClient.encode_path_segment(session_id),
-            "/subagents/",
+            '/subagents/',
             SdkClient.encode_path_segment(subagent_id),
-            "/turns/",
+            '/turns/',
             SdkClient.encode_path_segment(turn_id),
-            "/items"
+            '/items'
           ].join,
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'order' => QueryValue.new(order, style: 'form', explode: true),
-            'after' => QueryValue.new(after, style: 'form', explode: true),
+            'after' => QueryValue.new(after, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::SessionItemListResource,
           decoder: :json,
           operation_id: 'list_agent_session_subagent_turn_items',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).data
       end
 
-    ListAgentSessionSubagentTurnItemsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      ListAgentSessionSubagentTurnItemsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists items belonging to one turn of this subagent. See subagent workflows.
       #
@@ -396,10 +402,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.last_id
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -430,10 +439,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListAgentSessionSubagentTurnItemsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end
@@ -454,29 +465,28 @@ module OctridevOpenai
         after: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 1, max: 100) }
 
-        Validation.if_given(after) { Validation.validate_length('after', after, min: 0, max: 1048576) }
+        Validation.if_given(after) { Validation.validate_length('after', after, min: 0, max: 1_048_576) }
 
         SdkClient.request(
           'GET',
-          "/agents",
+          '/agents',
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'order' => QueryValue.new(order, style: 'form', explode: true),
-            'after' => QueryValue.new(after, style: 'form', explode: true),
+            'after' => QueryValue.new(after, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::AgentListResource,
           decoder: :json,
           operation_id: 'list_agents',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).data
       end
 
-    ListAgentsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      ListAgentsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists reusable agents in the current project. See agent configuration.
       #
@@ -505,10 +515,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.last_id
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -533,10 +546,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListAgentsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end
