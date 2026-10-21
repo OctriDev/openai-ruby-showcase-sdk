@@ -9,79 +9,7 @@ module OctridevOpenai
   module Methods
     # Defines the Agents SDK namespace.
     module Agents
-      # Internal model hydration metadata.
-      class SdkInternalListAgentSessionSubagentsResponseMetadata
-        FIELDS = {
-          object: "object",
-          data: "data",
-          first_id: "first_id",
-          last_id: "last_id",
-          has_more: "has_more",
-        }.freeze
-        REQUIRED_FIELDS = %i[
-          object
-          data
-          first_id
-          last_id
-          has_more
-        ].freeze
-        DECODERS = {
-          object: lambda do |value|
-            ::OctridevOpenai::Methods::Agents::ListAgentSessionSubagentsResponseObject.from_value(value)
-          end,
-          data: lambda do |value|
-            value&.map { |item| ::OctridevOpenai::SubagentResource.from_hash(item) }
-          end,
-        }.freeze
-        NULLABLE_FIELDS = %i[
-          first_id
-          last_id
-        ].freeze
-      end
-
-      # API model for ListAgentSessionSubagentsResponse.
-      # A page of Agents API resources, with IDs for retrieving additional pages.
-      class ListAgentSessionSubagentsResponse
-        CONSTRUCTION_SURFACE = :named
-        FIELDS = SdkInternalListAgentSessionSubagentsResponseMetadata::FIELDS
-        REQUIRED_FIELDS = SdkInternalListAgentSessionSubagentsResponseMetadata::REQUIRED_FIELDS
-        DECODERS = SdkInternalListAgentSessionSubagentsResponseMetadata::DECODERS
-
-        # @return [ListAgentSessionSubagentsResponseObject] The object type, which is always `list`.
-        attr_reader :object
-        # @return [Array_of_SubagentResource] The resources returned in this page, in the requested sort order.
-        attr_reader :data
-        # @return [String] The ID of the first resource in `data`, or `null` if the page is empty.
-        attr_reader :first_id
-        # @return [String] The ID of the last resource in `data`, or `null` if the page is empty. Pass this as `after` with the same order and filters.
-        attr_reader :last_id
-        # @return [Boolean] Whether there are more resources to retrieve after this page.
-        attr_reader :has_more
-
-        def initialize(**attributes)
-          SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-          freeze
-        end
-
-        def self.from_hash(data)
-          SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalListAgentSessionSubagentsResponseMetadata::NULLABLE_FIELDS)
-        end
-
-        def to_h
-          SdkModel.to_h(self, FIELDS)
-        end
-      end
-
-      # Defines the ListAgentSessionSubagentsResponseObject SDK namespace.
-      module ListAgentSessionSubagentsResponseObject
-        LIST = 'list'
-        VALUES = ['list'].freeze
-        def self.from_value(value)
-          value
-        end
-      end
-
-      # Lists OpenAI-hosted environments owned by the authenticated principal. Requires access to the prewarming beta.
+      # Lists reusable agents in the current project. See agent configuration.
       #
       # @param limit [Integer] The maximum number of resources to return, between 1
       #   and 100. Defaults to 20.
@@ -89,14 +17,11 @@ module OctridevOpenai
       #   Defaults to `desc`.
       # @param after [String] Return resources after this resource ID in the
       #   selected order.
-      # @param type [EnvironmentTypeParam] The hosting type to list. Defaults to
-      #   `openai_hosted`.
-      def self.list_agent_environments(
+      def self.list_agents(
         config:,
         limit: NOT_GIVEN,
         order: NOT_GIVEN,
         after: NOT_GIVEN,
-        type: NOT_GIVEN,
         request_options: nil
       )
 
@@ -106,25 +31,24 @@ module OctridevOpenai
 
         SdkClient.request(
           'GET',
-          "/agents/environments",
+          "/agents",
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'order' => QueryValue.new(order, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
-            'type' => QueryValue.new(type, style: 'form', explode: true),
           },
-          return_type: ::OctridevOpenai::AgentEnvironmentListResource,
+          return_type: ::OctridevOpenai::AgentListResource,
           decoder: :json,
-          operation_id: 'list_agent_environments',
+          operation_id: 'list_agents',
           request_options: request_options,
           errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
         ).data
       end
 
-    ListAgentEnvironmentsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+    ListAgentsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
-      # Lists OpenAI-hosted environments owned by the authenticated principal. Requires access to the prewarming beta.
+      # Lists reusable agents in the current project. See agent configuration.
       #
       # @param limit [Integer] The maximum number of resources to return, between 1
       #   and 100. Defaults to 20.
@@ -132,25 +56,21 @@ module OctridevOpenai
       #   Defaults to `desc`.
       # @param after [String] Return resources after this resource ID in the
       #   selected order.
-      # @param type [EnvironmentTypeParam] The hosting type to list. Defaults to
-      #   `openai_hosted`.
-      def self.list_agent_environments_paginated(
+      def self.list_agents_paginated(
         config:,
         limit: nil,
         order: nil,
         after: nil,
-        type: nil,
         request_options: nil
       )
         Enumerator.new do |y|
           cursor = after
           loop do
-            page = list_agent_environments(
+            page = list_agents(
               config: config,
               limit: limit,
               order: order,
               after: cursor,
-              type: type,
               request_options: request_options
             )
             items = page.data || []
@@ -164,333 +84,226 @@ module OctridevOpenai
         end
       end
 
-      def self.list_agent_environments_pages(
+      def self.list_agents_pages(
         config:,
         limit: nil,
         order: nil,
         after: nil,
-        type: nil,
         request_options: nil
       )
         Enumerator.new do |y|
           cursor = after
           loop do
-            page = list_agent_environments(
+            page = list_agents(
               config: config,
               limit: limit,
               order: order,
               after: cursor,
-              type: type,
               request_options: request_options
             )
             items = page.data || []
             break if items.empty?
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
-            y << ListAgentEnvironmentsPage.new(data: page, items: items, has_more: has_more)
+            y << ListAgentsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
             cursor = next_cursor
           end
         end
       end
 
-      # Creates an OpenAI-hosted environment before creating a session. Requires access to the prewarming beta.
+      # Creates a reusable agent without storing credentials. See agent configuration.
       #
-      # @param environment [CreateEnvironmentParam] The required hosting type and
-      #   its configuration.
-      # @param idempotency_key [String] Deduplicates creation for 24 hours within
-      #   the authenticated organization, project, and creator. Retry the same JSON
-      #   parameters with the same key to retrieve the original environment in its
-      #   current state. Different parameters or an incomplete hosted creation return
-      #   409. Deleted environments are not recreated. After retention expires, the
-      #   key may create a new environment. Without this header, each request creates
-      #   a new environment.
-      # @param vault_ids [Array_of_String] The IDs of up to 10 vaults made available
-      #   to an OpenAI-hosted environment.
-      def self.create_agent_environment(
+      # @param model [String] The model to use for the agent. The requested model
+      #   name is preserved.
+      # @param metadata [Hash] Up to 16 string key-value pairs, with keys up to 64
+      #   and values up to 512 characters. Omission or null defaults to an empty map.
+      # @param name [String] A human-readable name for the agent. Omission or null
+      #   leaves the agent unnamed.
+      # @param reasoning [ReasoningParam] Configuration for model reasoning.
+      #   Omission uses the model's default effort.
+      # @param text [TextParam] Configuration for generated text. Defaults to the
+      #   `text` format and medium verbosity.
+      # @param service_tier [ServiceTierParam] The service tier used for model
+      #   requests. Defaults to `auto`.
+      # @param instructions [String] Additional instructions appended to the agent's
+      #   default base instructions. Omit or set to null to add no custom
+      #   instructions.
+      # @param tools [Array_of_PersistedAgentToolConfigParam] Tools available to the
+      #   agent. Defaults to an empty list. The tool list must fit within 3 MiB
+      #   (3,145,728 bytes) of compact UTF-8 JSON.
+      # @param multi_agent [MultiAgentConfigCurrentParam] Configuration for creating
+      #   and coordinating subagents. Subagent tools are disabled by default.
+      def self.create_agent(
         config:,
-        environment:,
-        idempotency_key: NOT_GIVEN,
-        vault_ids: NOT_GIVEN,
+        model:,
+        metadata: NOT_GIVEN,
+        name: NOT_GIVEN,
+        reasoning: NOT_GIVEN,
+        text: NOT_GIVEN,
+        service_tier: NOT_GIVEN,
+        instructions: NOT_GIVEN,
+        tools: NOT_GIVEN,
+        multi_agent: NOT_GIVEN,
         request_options: nil
       )
 
-        Validation.if_given(idempotency_key) do
-          Validation.validate_length('Idempotency-Key', idempotency_key, min: 1, max: 256)
+        Validation.validate_length('model', model, min: 0, max: 1048576)
+
+        Validation.if_given(name) { Validation.validate_length('name', name, min: 0, max: 128) }
+
+        Validation.if_given(instructions) do
+          Validation.validate_length('instructions', instructions, min: 0, max: 1048576)
         end
 
-        Validation.if_given(vault_ids) { Validation.validate_items('vault_ids', vault_ids, min: 0, max: 10) }
+        Validation.if_given(tools) { Validation.validate_items('tools', tools, min: 0, max: 2000) }
 
         SdkClient.request(
           'POST',
-          "/agents/environments",
+          "/agents",
           config: config,
           body: {
-            'environment' => environment,
-            'vault_ids' => vault_ids,
+            'model' => model,
+            'metadata' => metadata,
+            'name' => name,
+            'reasoning' => reasoning,
+            'text' => text,
+            'service_tier' => service_tier,
+            'instructions' => instructions,
+            'tools' => tools,
+            'multi_agent' => multi_agent,
           },
-          return_type: ::OctridevOpenai::PublicEnvironmentResource,
+          return_type: ::OctridevOpenai::AgentResource,
           decoder: :json,
-          operation_id: 'create_agent_environment',
-          extra_headers: SdkClient.serialize_headers({
-            'Idempotency-Key' => SdkClient.header_value(idempotency_key),
-          }),
-          request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '429' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
-        ).data
-      end
-
-      # Retrieves an execution environment's connection status and safe installed metadata. See environment lifecycle.
-      #
-      # @param environment_id [String] The ID of the environment.
-      def self.retrieve_agent_environment(
-        config:,
-        environment_id:,
-        request_options: nil
-      )
-
-        Validation.validate_length('environment_id', environment_id, min: 0, max: 1048576)
-
-        SdkClient.request(
-          'GET',
-          [
-            "/agents/environments/",
-            SdkClient.encode_path_segment(environment_id)
-          ].join,
-          config: config,
-          return_type: ::OctridevOpenai::PublicEnvironmentResource,
-          decoder: :json,
-          operation_id: 'retrieve_agent_environment',
+          operation_id: 'create_agent',
           request_options: request_options,
           errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
         ).data
       end
 
-      # Lists live files on a connected execution environment with optional directory filtering and opaque cursor pagination. See environment files.
+      # Retrieves a reusable agent by ID. See agent configuration.
       #
-      # @param environment_id [String] The ID of the environment.
-      # @param path [String] Restrict the listing to this absolute workspace
-      #   directory.
-      # @param limit [Integer] The maximum number of files to return, between 1 and
-      #   100.
-      # @param order [ListOrderParam] Sort by case-sensitive path components.
-      #   Defaults to descending.
-      # @param page [String] The opaque token from the previous page. Keep the same
-      #   path, order, and limit.
-      def self.list_agent_environment_files(
+      # @param agent_id [String] The ID of the reusable agent.
+      def self.retrieve_agent(
         config:,
-        environment_id:,
-        path: NOT_GIVEN,
-        limit: NOT_GIVEN,
-        order: NOT_GIVEN,
-        page: NOT_GIVEN,
+        agent_id:,
         request_options: nil
       )
 
-        Validation.validate_length('environment_id', environment_id, min: 0, max: 1048576)
-
-        Validation.if_given(path) { Validation.validate_length('path', path, min: 0, max: 1048576) }
-
-        Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 1, max: 100) }
-
-        Validation.if_given(page) { Validation.validate_length('page', page, min: 0, max: 1048576) }
+        Validation.validate_length('agent_id', agent_id, min: 0, max: 1048576)
 
         SdkClient.request(
           'GET',
           [
-            "/agents/environments/",
-            SdkClient.encode_path_segment(environment_id),
-            "/files"
+            "/agents/",
+            SdkClient.encode_path_segment(agent_id)
           ].join,
           config: config,
-          query: {
-            'path' => QueryValue.new(path, style: 'form', explode: true),
-            'limit' => QueryValue.new(limit, style: 'form', explode: true),
-            'order' => QueryValue.new(order, style: 'form', explode: true),
-            'page' => QueryValue.new(page, style: 'form', explode: true),
-          },
-          return_type: ::OctridevOpenai::EnvironmentFileListResource,
+          return_type: ::OctridevOpenai::AgentResource,
           decoder: :json,
-          operation_id: 'list_agent_environment_files',
+          operation_id: 'retrieve_agent',
           request_options: request_options,
           errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
         ).data
       end
 
-      # Writes a file to a connected agent execution environment, using either inline base64 data or a file uploaded through the Files API. Choose the `inline` or `file_id` body variant and provide the absolute destination `path`; writing to an existing regular file at that path replaces it. Upload the file between turns and wait for success before starting the next turn.
+      # Updates a reusable agent. See agent configuration.
       #
-      # Copies inline bytes or a Files API file into a connected execution environment, replacing an existing regular file at the same path. Upload between turns and wait for success before starting the next turn. See environment files.
-      #
-      # @param environment_id [String] The ID of the environment.
-      def self.create_agent_environment_file(
+      # @param agent_id [String] The ID of the reusable agent.
+      # @param model [String] The model to use for the agent. The requested model
+      #   name is preserved.
+      # @param reasoning [ReasoningParam] Configuration for model reasoning. Omit to
+      #   keep the current settings; pass `null` to reset to the model's default
+      #   effort.
+      # @param text [TextParam] Configuration for text generated by the agent.
+      # @param service_tier [ServiceTierParam] The service tier used for model
+      #   requests.
+      # @param instructions [String] Additional instructions appended to the agent's
+      #   default base instructions. Omit to leave unchanged.
+      # @param multi_agent [MultiAgentConfigCurrentParam] Configuration for creating
+      #   and coordinating subagents.
+      # @param metadata [Hash] Replaces all metadata. Omit to leave unchanged, or
+      #   pass null or {} to clear it. Up to 16 string key-value pairs, with keys up
+      #   to 64 and values up to 512 characters.
+      # @param name [String] A replacement name. Omit to leave unchanged, or pass
+      #   null to clear it.
+      # @param tools [Array_of_PersistedAgentToolConfigParam] Replaces the tool
+      #   list. Omit to leave it unchanged, or pass null to clear it. The replacement
+      #   must fit within 3 MiB (3,145,728 bytes) of compact UTF-8 JSON.
+      def self.update_agent(
         config:,
-        environment_id:,
-        body: NOT_GIVEN,
+        agent_id:,
+        model: NOT_GIVEN,
+        reasoning: NOT_GIVEN,
+        text: NOT_GIVEN,
+        service_tier: NOT_GIVEN,
+        instructions: NOT_GIVEN,
+        multi_agent: NOT_GIVEN,
+        metadata: NOT_GIVEN,
+        name: NOT_GIVEN,
+        tools: NOT_GIVEN,
         request_options: nil
       )
 
-        Validation.validate_length('environment_id', environment_id, min: 0, max: 1048576)
+        Validation.validate_length('agent_id', agent_id, min: 0, max: 1048576)
+
+        Validation.if_given(model) { Validation.validate_length('model', model, min: 0, max: 1048576) }
+
+        Validation.if_given(instructions) do
+          Validation.validate_length('instructions', instructions, min: 0, max: 1048576)
+        end
+
+        Validation.if_given(name) { Validation.validate_length('name', name, min: 0, max: 128) }
+
+        Validation.if_given(tools) { Validation.validate_items('tools', tools, min: 0, max: 2000) }
 
         SdkClient.request(
           'POST',
           [
-            "/agents/environments/",
-            SdkClient.encode_path_segment(environment_id),
-            "/files"
+            "/agents/",
+            SdkClient.encode_path_segment(agent_id)
           ].join,
           config: config,
-          body: body,
-          return_type: ::OctridevOpenai::EnvironmentFileResource,
-          decoder: :json,
-          operation_id: 'create_agent_environment_file',
-          request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '429' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
-        ).data
-      end
-
-      # Lists subagents in a session, including nested and closed subagents. See subagent workflows.
-      #
-      # @param session_id [String] The ID of the session.
-      # @param limit [Integer] The maximum number of resources to return, between 1
-      #   and 100. Defaults to 20.
-      # @param order [ListOrderParam] The order in which resources are returned.
-      #   Defaults to `desc`.
-      # @param after [String] Return resources after this resource ID in the
-      #   selected order.
-      def self.list_agent_session_subagents(
-        config:,
-        session_id:,
-        limit: NOT_GIVEN,
-        order: NOT_GIVEN,
-        after: NOT_GIVEN,
-        request_options: nil
-      )
-
-        Validation.validate_length('session_id', session_id, min: 0, max: 1048576)
-
-        Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 1, max: 100) }
-
-        Validation.if_given(after) { Validation.validate_length('after', after, min: 0, max: 1048576) }
-
-        SdkClient.request(
-          'GET',
-          [
-            "/agents/sessions/",
-            SdkClient.encode_path_segment(session_id),
-            "/subagents"
-          ].join,
-          config: config,
-          query: {
-            'limit' => QueryValue.new(limit, style: 'form', explode: true),
-            'order' => QueryValue.new(order, style: 'form', explode: true),
-            'after' => QueryValue.new(after, style: 'form', explode: true),
+          body: {
+            'model' => model,
+            'reasoning' => reasoning,
+            'text' => text,
+            'service_tier' => service_tier,
+            'instructions' => instructions,
+            'multi_agent' => multi_agent,
+            'metadata' => metadata,
+            'name' => name,
+            'tools' => tools,
           },
-          return_type: ::OctridevOpenai::Methods::Agents::ListAgentSessionSubagentsResponse,
+          return_type: ::OctridevOpenai::AgentResource,
           decoder: :json,
-          operation_id: 'list_agent_session_subagents',
+          operation_id: 'update_agent',
           request_options: request_options,
           errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
         ).data
       end
 
-    ListAgentSessionSubagentsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
-
-      # Lists subagents in a session, including nested and closed subagents. See subagent workflows.
+      # Deletes a reusable agent. See agent configuration.
       #
-      # @param session_id [String] The ID of the session.
-      # @param limit [Integer] The maximum number of resources to return, between 1
-      #   and 100. Defaults to 20.
-      # @param order [ListOrderParam] The order in which resources are returned.
-      #   Defaults to `desc`.
-      # @param after [String] Return resources after this resource ID in the
-      #   selected order.
-      def self.list_agent_session_subagents_paginated(
+      # @param agent_id [String] The ID of the reusable agent.
+      def self.delete_agent(
         config:,
-        session_id: nil,
-        limit: nil,
-        order: nil,
-        after: nil,
-        request_options: nil
-      )
-        Enumerator.new do |y|
-          cursor = after
-          loop do
-            page = list_agent_session_subagents(
-              config: config,
-              session_id: session_id,
-              limit: limit,
-              order: order,
-              after: cursor,
-              request_options: request_options
-            )
-            items = page.data || []
-            break if items.empty?
-            items.each { |item| y << item }
-            break unless page.has_more
-            next_cursor = page.last_id
-            break if next_cursor.nil?
-            cursor = next_cursor
-          end
-        end
-      end
-
-      def self.list_agent_session_subagents_pages(
-        config:,
-        session_id: nil,
-        limit: nil,
-        order: nil,
-        after: nil,
-        request_options: nil
-      )
-        Enumerator.new do |y|
-          cursor = after
-          loop do
-            page = list_agent_session_subagents(
-              config: config,
-              session_id: session_id,
-              limit: limit,
-              order: order,
-              after: cursor,
-              request_options: request_options
-            )
-            items = page.data || []
-            break if items.empty?
-            next_cursor = page.last_id
-            has_more = page.has_more && !next_cursor.nil?
-            y << ListAgentSessionSubagentsPage.new(data: page, items: items, has_more: has_more)
-            break unless has_more
-            cursor = next_cursor
-          end
-        end
-      end
-
-      # Retrieves a subagent belonging to this session. See subagent workflows.
-      #
-      # @param session_id [String] The ID of the session.
-      # @param subagent_id [String] The ID of the subagent in this session.
-      def self.retrieve_agent_session_subagent(
-        config:,
-        session_id:,
-        subagent_id:,
+        agent_id:,
         request_options: nil
       )
 
-        Validation.validate_length('session_id', session_id, min: 0, max: 1048576)
-
-        Validation.validate_length('subagent_id', subagent_id, min: 0, max: 1048576)
+        Validation.validate_length('agent_id', agent_id, min: 0, max: 1048576)
 
         SdkClient.request(
-          'GET',
+          'DELETE',
           [
-            "/agents/sessions/",
-            SdkClient.encode_path_segment(session_id),
-            "/subagents/",
-            SdkClient.encode_path_segment(subagent_id)
+            "/agents/",
+            SdkClient.encode_path_segment(agent_id)
           ].join,
           config: config,
-          return_type: ::OctridevOpenai::SubagentResource,
+          return_type: ::OctridevOpenai::DeletedAgentResource,
           decoder: :json,
-          operation_id: 'retrieve_agent_session_subagent',
+          operation_id: 'delete_agent',
           request_options: request_options,
           errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
         ).data
@@ -499,8 +312,37 @@ module OctridevOpenai
   end
 end
 
-require_relative 'agents_part_2'
-require_relative 'agents_part_3'
-require_relative 'agents_part_4'
-require_relative 'agents_part_5'
-require_relative 'agents_part_6'
+require_relative 'agents_types'
+require_relative 'agents_list_agent_environments'
+require_relative 'agents_create_agent_environment'
+require_relative 'agents_retrieve_agent_environment'
+require_relative 'agents_list_agent_environment_files'
+require_relative 'agents_create_agent_environment_file'
+require_relative 'agents_list_agent_environment_templates'
+require_relative 'agents_create_agent_environment_template'
+require_relative 'agents_retrieve_agent_environment_template'
+require_relative 'agents_update_agent_environment_template'
+require_relative 'agents_delete_agent_environment_template'
+require_relative 'agents_list_agent_session_subagents'
+require_relative 'agents_retrieve_agent_session_subagent'
+require_relative 'agents_list_agent_session_subagent_items'
+require_relative 'agents_list_agent_session_subagent_turns'
+require_relative 'agents_retrieve_agent_session_subagent_turn'
+require_relative 'agents_list_agent_session_subagent_turn_items'
+require_relative 'agents_list_agent_sessions'
+require_relative 'agents_create_agent_session'
+require_relative 'agents_create_agent_session_stream'
+require_relative 'agents_retrieve_agent_session'
+require_relative 'agents_update_agent_session'
+require_relative 'agents_delete_agent_session'
+require_relative 'agents_list_agent_session_artifacts'
+require_relative 'agents_retrieve_agent_session_artifact'
+require_relative 'agents_delete_agent_session_artifact'
+require_relative 'agents_retrieve_agent_session_artifact_content'
+require_relative 'agents_list_agent_session_events'
+require_relative 'agents_create_agent_session_events'
+require_relative 'agents_list_agent_session_items'
+require_relative 'agents_list_agent_session_traces'
+require_relative 'agents_list_agent_session_turns'
+require_relative 'agents_retrieve_agent_session_turn'
+require_relative 'agents_list_agent_session_turn_items'

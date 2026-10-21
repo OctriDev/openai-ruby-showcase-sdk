@@ -9,191 +9,6 @@ module OctridevOpenai
   module Methods
     # Defines the Responses SDK namespace.
     module Responses
-      # Internal model hydration metadata.
-      class SdkInternalDeleteResponseResponseMetadata
-        FIELDS = {
-          object: "object",
-          deleted: "deleted",
-          id: "id",
-        }.freeze
-        REQUIRED_FIELDS = %i[
-          object
-          deleted
-          id
-        ].freeze
-        DECODERS = {
-          object: lambda do |value|
-            ::OctridevOpenai::Methods::Responses::DeleteResponseResponseObject.from_value(value)
-          end,
-        }.freeze
-      end
-
-      # API model for DeleteResponseResponse.
-      class DeleteResponseResponse
-        CONSTRUCTION_SURFACE = :named
-        FIELDS = SdkInternalDeleteResponseResponseMetadata::FIELDS
-        REQUIRED_FIELDS = SdkInternalDeleteResponseResponseMetadata::REQUIRED_FIELDS
-        DECODERS = SdkInternalDeleteResponseResponseMetadata::DECODERS
-
-        attr_reader :object, :deleted, :id
-
-        def initialize(**attributes)
-          SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-          freeze
-        end
-
-        def self.from_hash(data)
-          SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-        end
-
-        def to_h
-          SdkModel.to_h(self, FIELDS)
-        end
-      end
-
-      # Internal model hydration metadata.
-      class SdkInternalBetaDeleteResponseResponseMetadata
-        FIELDS = {
-          object: "object",
-          deleted: "deleted",
-          id: "id",
-        }.freeze
-        REQUIRED_FIELDS = %i[
-          object
-          deleted
-          id
-        ].freeze
-        DECODERS = {
-          object: lambda do |value|
-            ::OctridevOpenai::Methods::Responses::BetaDeleteResponseResponseObject.from_value(value)
-          end,
-        }.freeze
-      end
-
-      # API model for BetaDeleteResponseResponse.
-      class BetaDeleteResponseResponse
-        CONSTRUCTION_SURFACE = :named
-        FIELDS = SdkInternalBetaDeleteResponseResponseMetadata::FIELDS
-        REQUIRED_FIELDS = SdkInternalBetaDeleteResponseResponseMetadata::REQUIRED_FIELDS
-        DECODERS = SdkInternalBetaDeleteResponseResponseMetadata::DECODERS
-
-        attr_reader :object, :deleted, :id
-
-        def initialize(**attributes)
-          SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-          freeze
-        end
-
-        def self.from_hash(data)
-          SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-        end
-
-        def to_h
-          SdkModel.to_h(self, FIELDS)
-        end
-      end
-
-      # Defines the BetaListInputItemsParameter SDK namespace.
-      module BetaListInputItemsParameter
-        ASC = 'asc'
-        DESC = 'desc'
-        VALUES = ['asc', 'desc'].freeze
-        def self.from_value(value)
-          value
-        end
-      end
-
-      # Defines the BetaDeleteResponseParameterItem SDK namespace.
-      module BetaDeleteResponseParameterItem
-        RESPONSES_MULTI_AGENT_V1 = 'responses_multi_agent=v1'
-        VALUES = ['responses_multi_agent=v1'].freeze
-        def self.from_value(value)
-          value
-        end
-      end
-
-      # Defines the BetaResponsesCountInputTokensParameterItem SDK namespace.
-      module BetaResponsesCountInputTokensParameterItem
-        RESPONSES_MULTI_AGENT_V1 = 'responses_multi_agent=v1'
-        VALUES = ['responses_multi_agent=v1'].freeze
-        def self.from_value(value)
-          value
-        end
-      end
-
-      # Defines the DeleteResponseResponseObject SDK namespace.
-      module DeleteResponseResponseObject
-        RESPONSE_DELETED = 'response.deleted'
-        VALUES = ['response.deleted'].freeze
-        def self.from_value(value)
-          value
-        end
-      end
-
-      # Defines the BetaCreateResponseParameterItem SDK namespace.
-      module BetaCreateResponseParameterItem
-        RESPONSES_MULTI_AGENT_V1 = 'responses_multi_agent=v1'
-        VALUES = ['responses_multi_agent=v1'].freeze
-        def self.from_value(value)
-          value
-        end
-      end
-
-      # Defines the BetaListInputItemsParameterItem SDK namespace.
-      module BetaListInputItemsParameterItem
-        RESPONSES_MULTI_AGENT_V1 = 'responses_multi_agent=v1'
-        VALUES = ['responses_multi_agent=v1'].freeze
-        def self.from_value(value)
-          value
-        end
-      end
-
-      # Defines the BetaGetResponseParameterItem SDK namespace.
-      module BetaGetResponseParameterItem
-        RESPONSES_MULTI_AGENT_V1 = 'responses_multi_agent=v1'
-        VALUES = ['responses_multi_agent=v1'].freeze
-        def self.from_value(value)
-          value
-        end
-      end
-
-      # Defines the BetaDeleteResponseResponseObject SDK namespace.
-      module BetaDeleteResponseResponseObject
-        RESPONSE_DELETED = 'response.deleted'
-        VALUES = ['response.deleted'].freeze
-        def self.from_value(value)
-          value
-        end
-      end
-
-      # Defines the ListInputItemsParameter SDK namespace.
-      module ListInputItemsParameter
-        ASC = 'asc'
-        DESC = 'desc'
-        VALUES = ['asc', 'desc'].freeze
-        def self.from_value(value)
-          value
-        end
-      end
-
-      # Defines the BetaResponsesCompactParameterItem SDK namespace.
-      module BetaResponsesCompactParameterItem
-        RESPONSES_MULTI_AGENT_V1 = 'responses_multi_agent=v1'
-        VALUES = ['responses_multi_agent=v1'].freeze
-        def self.from_value(value)
-          value
-        end
-      end
-
-      # Defines the BetaCancelResponseParameterItem SDK namespace.
-      module BetaCancelResponseParameterItem
-        RESPONSES_MULTI_AGENT_V1 = 'responses_multi_agent=v1'
-        VALUES = ['responses_multi_agent=v1'].freeze
-        def self.from_value(value)
-          value
-        end
-      end
-
       # Creates a model response from text, image, or file input and can produce text or JSON output. Provide `input` and `model`, and configure `tools` and `tool_choice` when you want the model to use custom code or built-in tools. Set `background` to run the response asynchronously or `stream` to receive generated events as they are produced.
       #
       # Creates a model response. Provide text or image inputs to generate text or JSON outputs. Have the model call your own custom code or use built-in tools like web search or file search to use your own data as input for the model's response.
@@ -389,55 +204,105 @@ module OctridevOpenai
         ).data
       end
 
-      # Cancels a model response that is running in the background. Use this operation when you need to stop background generation before it completes. Only responses created with `background` set to `true` can be cancelled.
+      # Creates a model response from text, image, or file input, with optional tools and output configuration. Use `input`, `model`, and `tools` to control what the model processes and how it generates the response. Set `background` to true if you need to cancel the response later.
       #
-      # Cancels a model response with the given ID. Only responses created with the `background` parameter set to `true` can be cancelled. Learn more.
+      # Creates a model response. Provide text or image inputs to generate text or JSON outputs. Have the model call your own custom code or use built-in tools like web search or file search to use your own data as input for the model's response.
       #
-      # @param response_id [String] The ID of the response to cancel.
-      def self.cancel_response(
+      # @param openai_beta [Array_of_BetaCreateResponseParameterItem] Optional beta
+      #   features to enable for this request.
+      def self.beta_create_response(
         config:,
-        response_id:,
+        body:,
+        openai_beta: NOT_GIVEN,
         request_options: nil
       )
 
         SdkClient.request(
           'POST',
-          [
-            "/responses/",
-            SdkClient.encode_path_segment(response_id),
-            "/cancel"
-          ].join,
+          "/responses?beta=true",
           config: config,
-          return_type: ::OctridevOpenai::Response,
+          body: body,
+          return_type: ::OctridevOpenai::BetaResponse,
           decoder: :json,
-          operation_id: 'cancel_response',
+          operation_id: 'beta_create_response',
+          extra_headers: SdkClient.serialize_headers({
+            'openai-beta' => SdkClient.header_value(openai_beta),
+          }),
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::BetaErrorResponse, '404' => ::OctridevOpenai::BetaErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
-      # Lists the input items used to generate a model response. Use `limit` to set the page size and `order` to choose the item order. Use `after` with an item identifier to continue through the results; check `has_more` to determine whether additional items are available.
+      # Creates a model response from text, image, or file input, with optional tools and output configuration. Use `input`, `model`, and `tools` to control what the model processes and how it generates the response. Set `background` to true if you need to cancel the response later.
       #
-      # Returns a list of input items for a given response.
+      # Creates a model response. Provide text or image inputs to generate text or JSON outputs. Have the model call your own custom code or use built-in tools like web search or file search to use your own data as input for the model's response.
       #
-      # @param response_id [String] The ID of the response to retrieve input items
-      #   for.
-      # @param limit [Integer] A limit on the number of objects to be returned.
-      #   Limit can range between 1 and 100, and the default is 20.
-      # @param order [ListInputItemsParameter] The order to return the input items
-      #   in. Default is `desc`. - `asc`: Return the input items in ascending order. -
-      #   `desc`: Return the input items in descending order.
-      # @param after [String] An item ID to list items after, used in pagination.
-      # @param include [Array_of_IncludeEnum] Additional fields to include in the
-      #   response. See the `include` parameter for Response creation above for more
-      #   information.
-      def self.list_input_items(
+      # @param openai_beta [Array_of_BetaCreateResponseParameterItem] Optional beta
+      #   features to enable for this request.
+      def self.beta_create_response_stream(
+        config:,
+        body:,
+        openai_beta: NOT_GIVEN,
+        request_options: nil,
+        &block
+      )
+    return enum_for(
+          __method__,
+          config: config,
+          body: body,
+          openai_beta: openai_beta,
+          request_options: request_options,
+        ) unless block
+        SdkClient.stream(
+          'POST', "/responses?beta=true",
+          config: config,
+          body: body,
+          content_type: 'application/json',
+          operation_id: 'beta_create_response_stream',
+          stream_format: :sse,
+          stream_media_type: "text/event-stream",
+          extra_headers: SdkClient.serialize_headers({
+            'openai-beta' => SdkClient.header_value(openai_beta),
+          }),
+          request_options: request_options,
+          errors: { '400' => ::OctridevOpenai::BetaErrorResponse, '404' => ::OctridevOpenai::BetaErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
+        ).each do |ev|
+          break if ev.data == '[DONE]'
+          decoded = JSON.parse(ev.data)
+          block.call(SdkClient.decode_event(decoded, ::OctridevOpenai::BetaResponseStreamEvent))
+        end
+      end
+
+      # Retrieves a model response by its identifier. Use `include` to request additional response data, or set `stream` to receive response events as server-sent events. Use `starting_after` to begin streaming after a particular event sequence number.
+      #
+      # Retrieves a model response with the given ID.
+      #
+      # @param response_id [String] The ID of the response to retrieve.
+      # @param include [Array_of_BetaIncludeEnum] Additional fields to include in
+      #   the response. See the `include` parameter for Response creation above for
+      #   more information.
+      # @param stream [Boolean] If set to true, the model response data will be
+      #   streamed to the client as it is generated using server-sent events. See the
+      #   Streaming section below for more information.
+      # @param starting_after [Integer] The sequence number of the event after which
+      #   to start streaming.
+      # @param include_obfuscation [Boolean] When true, stream obfuscation will be
+      #   enabled. Stream obfuscation adds random characters to an `obfuscation` field
+      #   on streaming delta events to normalize payload sizes as a mitigation to
+      #   certain side-channel attacks. These obfuscation fields are included by
+      #   default, but add a small amount of overhead to the data stream. You can set
+      #   `include_obfuscation` to false to optimize for bandwidth if you trust the
+      #   network links between your application and the OpenAI API.
+      # @param openai_beta [Array_of_BetaGetResponseParameterItem] Optional beta
+      #   features to enable for this request.
+      def self.beta_get_response(
         config:,
         response_id:,
-        limit: NOT_GIVEN,
-        order: NOT_GIVEN,
-        after: NOT_GIVEN,
         include: NOT_GIVEN,
+        stream: NOT_GIVEN,
+        starting_after: NOT_GIVEN,
+        include_obfuscation: NOT_GIVEN,
+        openai_beta: NOT_GIVEN,
         request_options: nil
       )
 
@@ -446,106 +311,136 @@ module OctridevOpenai
           [
             "/responses/",
             SdkClient.encode_path_segment(response_id),
-            "/input_items"
+            "?beta=true"
           ].join,
           config: config,
           query: {
-            'limit' => QueryValue.new(limit, style: 'form', explode: true),
-            'order' => QueryValue.new(order, style: 'form', explode: true),
-            'after' => QueryValue.new(after, style: 'form', explode: true),
             'include' => QueryValue.new(include, style: 'form', explode: true),
+            'stream' => QueryValue.new(stream, style: 'form', explode: true),
+            'starting_after' => QueryValue.new(starting_after, style: 'form', explode: true),
+            'include_obfuscation' => QueryValue.new(include_obfuscation, style: 'form', explode: true),
           },
-          return_type: ::OctridevOpenai::ResponseItemList,
+          return_type: ::OctridevOpenai::BetaResponse,
           decoder: :json,
-          operation_id: 'list_input_items',
+          operation_id: 'beta_get_response',
+          extra_headers: SdkClient.serialize_headers({
+            'openai-beta' => SdkClient.header_value(openai_beta),
+          }),
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '404' => ::OctridevOpenai::BetaErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
 
-    ListInputItemsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
-
-      # Lists the input items used to generate a model response. Use `limit` to set the page size and `order` to choose the item order. Use `after` with an item identifier to continue through the results; check `has_more` to determine whether additional items are available.
+      # Retrieves a model response by its identifier. Use `include` to request additional response data, or set `stream` to receive response events as server-sent events. Use `starting_after` to begin streaming after a particular event sequence number.
       #
-      # Returns a list of input items for a given response.
+      # Retrieves a model response with the given ID.
       #
-      # @param response_id [String] The ID of the response to retrieve input items
-      #   for.
-      # @param limit [Integer] A limit on the number of objects to be returned.
-      #   Limit can range between 1 and 100, and the default is 20.
-      # @param order [ListInputItemsParameter] The order to return the input items
-      #   in. Default is `desc`. - `asc`: Return the input items in ascending order. -
-      #   `desc`: Return the input items in descending order.
-      # @param after [String] An item ID to list items after, used in pagination.
-      # @param include [Array_of_IncludeEnum] Additional fields to include in the
-      #   response. See the `include` parameter for Response creation above for more
-      #   information.
-      def self.list_input_items_paginated(
+      # @param response_id [String] The ID of the response to retrieve.
+      # @param include [Array_of_BetaIncludeEnum] Additional fields to include in
+      #   the response. See the `include` parameter for Response creation above for
+      #   more information.
+      # @param stream [Boolean] If set to true, the model response data will be
+      #   streamed to the client as it is generated using server-sent events. See the
+      #   Streaming section below for more information.
+      # @param starting_after [Integer] The sequence number of the event after which
+      #   to start streaming.
+      # @param include_obfuscation [Boolean] When true, stream obfuscation will be
+      #   enabled. Stream obfuscation adds random characters to an `obfuscation` field
+      #   on streaming delta events to normalize payload sizes as a mitigation to
+      #   certain side-channel attacks. These obfuscation fields are included by
+      #   default, but add a small amount of overhead to the data stream. You can set
+      #   `include_obfuscation` to false to optimize for bandwidth if you trust the
+      #   network links between your application and the OpenAI API.
+      # @param openai_beta [Array_of_BetaGetResponseParameterItem] Optional beta
+      #   features to enable for this request.
+      def self.beta_get_response_stream(
         config:,
-        response_id: nil,
-        limit: nil,
-        order: nil,
-        after: nil,
-        include: nil,
-        request_options: nil
+        response_id:,
+        include: NOT_GIVEN,
+        stream: NOT_GIVEN,
+        starting_after: NOT_GIVEN,
+        include_obfuscation: NOT_GIVEN,
+        openai_beta: NOT_GIVEN,
+        request_options: nil,
+        &block
       )
-        Enumerator.new do |y|
-          cursor = after
-          loop do
-            page = list_input_items(
-              config: config,
-              response_id: response_id,
-              limit: limit,
-              order: order,
-              after: cursor,
-              include: include,
-              request_options: request_options
-            )
-            items = page.data || []
-            break if items.empty?
-            items.each { |item| y << item }
-            break unless page.has_more
-            next_cursor = page.last_id
-            break if next_cursor.nil?
-            cursor = next_cursor
-          end
+    return enum_for(
+          __method__,
+          config: config,
+          response_id: response_id,
+          include: include,
+          stream: stream,
+          starting_after: starting_after,
+          include_obfuscation: include_obfuscation,
+          openai_beta: openai_beta,
+          request_options: request_options,
+        ) unless block
+        SdkClient.stream(
+          'GET', [
+            "/responses/",
+            SdkClient.encode_path_segment(response_id),
+            "?beta=true"
+          ].join,
+          config: config,
+          query: {
+          'include' => QueryValue.new(include, style: 'form', explode: true),
+          'stream' => QueryValue.new(stream, style: 'form', explode: true),
+          'starting_after' => QueryValue.new(starting_after, style: 'form', explode: true),
+          'include_obfuscation' => QueryValue.new(include_obfuscation, style: 'form', explode: true),
+        },
+          operation_id: 'beta_get_response_stream',
+          stream_format: :sse,
+          stream_media_type: "text/event-stream",
+          extra_headers: SdkClient.serialize_headers({
+            'openai-beta' => SdkClient.header_value(openai_beta),
+          }),
+          request_options: request_options,
+          errors: { '404' => ::OctridevOpenai::BetaErrorResponse, '429' => ::OctridevOpenai::ErrorResponse }
+        ).each do |ev|
+          break if ev.data == '[DONE]'
+          decoded = JSON.parse(ev.data)
+          block.call(SdkClient.decode_event(decoded, ::OctridevOpenai::BetaResponseStreamEvent))
         end
       end
 
-      def self.list_input_items_pages(
+      # Deletes a model response by its identifier. Use this operation when you no longer need the response to remain available. The response identifies the deleted object and indicates that deletion occurred.
+      #
+      # Deletes a model response with the given ID.
+      #
+      # @param response_id [String] The ID of the response to delete.
+      # @param openai_beta [Array_of_BetaDeleteResponseParameterItem] Optional beta
+      #   features to enable for this request.
+      def self.beta_delete_response(
         config:,
-        response_id: nil,
-        limit: nil,
-        order: nil,
-        after: nil,
-        include: nil,
+        response_id:,
+        openai_beta: NOT_GIVEN,
         request_options: nil
       )
-        Enumerator.new do |y|
-          cursor = after
-          loop do
-            page = list_input_items(
-              config: config,
-              response_id: response_id,
-              limit: limit,
-              order: order,
-              after: cursor,
-              include: include,
-              request_options: request_options
-            )
-            items = page.data || []
-            break if items.empty?
-            next_cursor = page.last_id
-            has_more = page.has_more && !next_cursor.nil?
-            y << ListInputItemsPage.new(data: page, items: items, has_more: has_more)
-            break unless has_more
-            cursor = next_cursor
-          end
-        end
+
+        SdkClient.request(
+          'DELETE',
+          [
+            "/responses/",
+            SdkClient.encode_path_segment(response_id),
+            "?beta=true"
+          ].join,
+          config: config,
+          return_type: ::OctridevOpenai::Methods::Responses::BetaDeleteResponseResponse,
+          decoder: :json,
+          operation_id: 'beta_delete_response',
+          extra_headers: SdkClient.serialize_headers({
+            'openai-beta' => SdkClient.header_value(openai_beta),
+          }),
+          request_options: request_options,
+          errors: { '404' => ::OctridevOpenai::BetaErrorResponse, '429' => ::OctridevOpenai::ErrorResponse },
+        ).data
       end
     end
   end
 end
 
-require_relative 'responses_part_2'
-require_relative 'responses_part_3'
+require_relative 'responses_types'
+require_relative 'responses_cancel'
+require_relative 'responses_input_items'
+require_relative 'responses_input_tokens'
+require_relative 'responses_compact'

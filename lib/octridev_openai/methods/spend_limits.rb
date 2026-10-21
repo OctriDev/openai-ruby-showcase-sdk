@@ -152,7 +152,7 @@ module OctridevOpenai
       # @param interval [UpdateProjectSpendLimitBodyInterval] The time interval for
       #   evaluating spend against the threshold. Currently, only `month` is
       #   supported.
-      def self.update_spend_limits_project(
+      def self.update_project_spend_limit(
         config:,
         project_id:,
         threshold_amount:,
@@ -178,7 +178,7 @@ module OctridevOpenai
           },
           return_type: ::OctridevOpenai::ProjectSpendLimitResource,
           decoder: :json,
-          operation_id: 'update_spend_limits_project',
+          operation_id: 'update_project_spend_limit',
           request_options: request_options,
           errors: { '400' => ::OctridevOpenai::ErrorResponse, '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
         ).data

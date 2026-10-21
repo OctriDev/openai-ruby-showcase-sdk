@@ -9,76 +9,6 @@ module OctridevOpenai
   module Methods
     # Defines the Assistants SDK namespace.
     module Assistants
-      # Defines the ListRunStepsParameterItem SDK namespace.
-      module ListRunStepsParameterItem
-        STEP_DETAILS_TOOL_CALLS_FILE_SEARCH_RESULTS_CONTENT =
-          'step_details.tool_calls[*].file_search.results[*].content'
-        VALUES = ['step_details.tool_calls[*].file_search.results[*].content'].freeze
-        def self.from_value(value)
-          value
-        end
-      end
-
-      # Defines the ListRunStepsParameter SDK namespace.
-      module ListRunStepsParameter
-        ASC = 'asc'
-        DESC = 'desc'
-        VALUES = ['asc', 'desc'].freeze
-        def self.from_value(value)
-          value
-        end
-      end
-
-      # Defines the ListAssistantsParameter SDK namespace.
-      module ListAssistantsParameter
-        ASC = 'asc'
-        DESC = 'desc'
-        VALUES = ['asc', 'desc'].freeze
-        def self.from_value(value)
-          value
-        end
-      end
-
-      # Defines the ListMessagesParameter SDK namespace.
-      module ListMessagesParameter
-        ASC = 'asc'
-        DESC = 'desc'
-        VALUES = ['asc', 'desc'].freeze
-        def self.from_value(value)
-          value
-        end
-      end
-
-      # Defines the ListRunsParameter SDK namespace.
-      module ListRunsParameter
-        ASC = 'asc'
-        DESC = 'desc'
-        VALUES = ['asc', 'desc'].freeze
-        def self.from_value(value)
-          value
-        end
-      end
-
-      # Defines the GetRunStepParameterItem SDK namespace.
-      module GetRunStepParameterItem
-        STEP_DETAILS_TOOL_CALLS_FILE_SEARCH_RESULTS_CONTENT =
-          'step_details.tool_calls[*].file_search.results[*].content'
-        VALUES = ['step_details.tool_calls[*].file_search.results[*].content'].freeze
-        def self.from_value(value)
-          value
-        end
-      end
-
-      # Defines the CreateRunParameterItem SDK namespace.
-      module CreateRunParameterItem
-        STEP_DETAILS_TOOL_CALLS_FILE_SEARCH_RESULTS_CONTENT =
-          'step_details.tool_calls[*].file_search.results[*].content'
-        VALUES = ['step_details.tool_calls[*].file_search.results[*].content'].freeze
-        def self.from_value(value)
-          value
-        end
-      end
-
       # Lists assistant configurations available to the authenticated user. Use `after` or `before` to navigate the list, and `limit` and `order` to control page size and sorting. This operation is closing down and will be removed on a date not specified here.
       #
       # Returns a list of assistants.
@@ -424,51 +354,29 @@ module OctridevOpenai
           errors: { '429' => ::OctridevOpenai::ErrorResponse },
         ).data
       end
-
-      # Creates a thread that can contain messages and resources for assistant tools. Provide `messages` to seed the thread, or `tool_resources` to make files or vector stores available to tools. You can also attach structured `metadata` to the thread.
-      #
-      # Create a thread.
-      #
-      # @param messages [Array_of_CreateMessageRequest] A list of messages to start
-      #   the thread with.
-      # @param tool_resources [CreateThreadRequestToolResources] A set of resources
-      #   that are made available to the assistant's tools in this thread. The
-      #   resources are specific to the type of tool. For example, the
-      #   `code_interpreter` tool requires a list of file IDs, while the `file_search`
-      #   tool requires a list of vector store IDs.
-      # @param metadata [Metadata] Set of 16 key-value pairs that can be attached to
-      #   an object. This can be useful for storing additional information about the
-      #   object in a structured format, and querying for objects via API or the
-      #   dashboard. Keys are strings with a maximum length of 64 characters. Values
-      #   are strings with a maximum length of 512 characters.
-      def self.create_thread(
-        config:,
-        messages: NOT_GIVEN,
-        tool_resources: NOT_GIVEN,
-        metadata: NOT_GIVEN,
-        request_options: nil
-      )
-
-        SdkClient.request(
-          'POST',
-          "/threads",
-          config: config,
-          body: {
-            'messages' => messages,
-            'tool_resources' => tool_resources,
-            'metadata' => metadata,
-          },
-          return_type: ::OctridevOpenai::ThreadObject,
-          decoder: :json,
-          operation_id: 'create_thread',
-          request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse },
-        ).data
-      end
     end
   end
 end
 
-require_relative 'assistants_part_2'
-require_relative 'assistants_part_3'
-require_relative 'assistants_part_4'
+require_relative 'assistants_types'
+require_relative 'assistants_create_thread'
+require_relative 'assistants_create_thread_and_run'
+require_relative 'assistants_create_thread_and_run_stream'
+require_relative 'assistants_get_thread'
+require_relative 'assistants_modify_thread'
+require_relative 'assistants_delete_thread'
+require_relative 'assistants_list_messages'
+require_relative 'assistants_create_message'
+require_relative 'assistants_get_message'
+require_relative 'assistants_modify_message'
+require_relative 'assistants_delete_message'
+require_relative 'assistants_list_runs'
+require_relative 'assistants_create_run'
+require_relative 'assistants_create_run_stream'
+require_relative 'assistants_get_run'
+require_relative 'assistants_modify_run'
+require_relative 'assistants_cancel_run'
+require_relative 'assistants_list_run_steps'
+require_relative 'assistants_get_run_step'
+require_relative 'assistants_submit_assistants_tool_outputs_to_run'
+require_relative 'assistants_submit_assistants_tool_outputs_to_run_stream'
