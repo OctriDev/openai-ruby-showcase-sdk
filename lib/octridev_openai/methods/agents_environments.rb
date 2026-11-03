@@ -27,30 +27,29 @@ module OctridevOpenai
         type: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 1, max: 100) }
 
-        Validation.if_given(after) { Validation.validate_length('after', after, min: 0, max: 1048576) }
+        Validation.if_given(after) { Validation.validate_length('after', after, min: 0, max: 1_048_576) }
 
         SdkClient.request(
           'GET',
-          "/agents/environments",
+          '/agents/environments',
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'order' => QueryValue.new(order, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
-            'type' => QueryValue.new(type, style: 'form', explode: true),
+            'type' => QueryValue.new(type, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::AgentEnvironmentListResource,
           decoder: :json,
           operation_id: 'list_agent_environments',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).result
       end
 
-    ListAgentEnvironmentsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      ListAgentEnvironmentsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists OpenAI-hosted environments owned by the authenticated principal. Requires access to the prewarming beta.
       #
@@ -83,10 +82,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.last_id
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -113,10 +115,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListAgentEnvironmentsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end
@@ -142,7 +146,6 @@ module OctridevOpenai
         vault_ids: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.if_given(idempotency_key) do
           Validation.validate_length('Idempotency-Key', idempotency_key, min: 1, max: 256)
         end
@@ -151,20 +154,20 @@ module OctridevOpenai
 
         SdkClient.request(
           'POST',
-          "/agents/environments",
+          '/agents/environments',
           config: config,
           body: {
             'environment' => environment,
-            'vault_ids' => vault_ids,
+            'vault_ids' => vault_ids
           },
           return_type: ::OctridevOpenai::PublicEnvironmentResource,
           decoder: :json,
           operation_id: 'create_agent_environment',
           extra_headers: SdkClient.serialize_headers({
-            'Idempotency-Key' => SdkClient.header_value(idempotency_key),
-          }),
+                                                       'Idempotency-Key' => SdkClient.header_value(idempotency_key)
+                                                     }),
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '429' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '429' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).result
       end
 
@@ -176,13 +179,12 @@ module OctridevOpenai
         environment_id:,
         request_options: nil
       )
-
-        Validation.validate_length('environment_id', environment_id, min: 0, max: 1048576)
+        Validation.validate_length('environment_id', environment_id, min: 0, max: 1_048_576)
 
         SdkClient.request(
           'GET',
           [
-            "/agents/environments/",
+            '/agents/environments/',
             SdkClient.encode_path_segment(environment_id)
           ].join,
           config: config,
@@ -190,7 +192,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'retrieve_agent_environment',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).result
       end
 
@@ -214,34 +216,33 @@ module OctridevOpenai
         page: NOT_GIVEN,
         request_options: nil
       )
+        Validation.validate_length('environment_id', environment_id, min: 0, max: 1_048_576)
 
-        Validation.validate_length('environment_id', environment_id, min: 0, max: 1048576)
-
-        Validation.if_given(path) { Validation.validate_length('path', path, min: 0, max: 1048576) }
+        Validation.if_given(path) { Validation.validate_length('path', path, min: 0, max: 1_048_576) }
 
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 1, max: 100) }
 
-        Validation.if_given(page) { Validation.validate_length('page', page, min: 0, max: 1048576) }
+        Validation.if_given(page) { Validation.validate_length('page', page, min: 0, max: 1_048_576) }
 
         SdkClient.request(
           'GET',
           [
-            "/agents/environments/",
+            '/agents/environments/',
             SdkClient.encode_path_segment(environment_id),
-            "/files"
+            '/files'
           ].join,
           config: config,
           query: {
             'path' => QueryValue.new(path, style: 'form', explode: true),
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'order' => QueryValue.new(order, style: 'form', explode: true),
-            'page' => QueryValue.new(page, style: 'form', explode: true),
+            'page' => QueryValue.new(page, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::EnvironmentFileListResource,
           decoder: :json,
           operation_id: 'list_agent_environment_files',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).result
       end
 
@@ -256,15 +257,14 @@ module OctridevOpenai
         body: NOT_GIVEN,
         request_options: nil
       )
-
-        Validation.validate_length('environment_id', environment_id, min: 0, max: 1048576)
+        Validation.validate_length('environment_id', environment_id, min: 0, max: 1_048_576)
 
         SdkClient.request(
           'POST',
           [
-            "/agents/environments/",
+            '/agents/environments/',
             SdkClient.encode_path_segment(environment_id),
-            "/files"
+            '/files'
           ].join,
           config: config,
           body: body,
@@ -272,7 +272,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'create_agent_environment_file',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '429' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '429' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).result
       end
 
@@ -291,29 +291,28 @@ module OctridevOpenai
         after: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.if_given(limit) { Validation.validate_range('limit', limit, min: 1, max: 100) }
 
-        Validation.if_given(after) { Validation.validate_length('after', after, min: 0, max: 1048576) }
+        Validation.if_given(after) { Validation.validate_length('after', after, min: 0, max: 1_048_576) }
 
         SdkClient.request(
           'GET',
-          "/agents/environments/templates",
+          '/agents/environments/templates',
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'order' => QueryValue.new(order, style: 'form', explode: true),
-            'after' => QueryValue.new(after, style: 'form', explode: true),
+            'after' => QueryValue.new(after, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::EnvironmentTemplateListResource,
           decoder: :json,
           operation_id: 'list_agent_environment_templates',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).result
       end
 
-    ListAgentEnvironmentTemplatesPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      ListAgentEnvironmentTemplatesPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists reusable environment templates without returning confidential values. See reusing a hosted setup.
       #
@@ -342,10 +341,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.last_id
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -370,10 +372,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListAgentEnvironmentTemplatesPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end
@@ -415,13 +419,12 @@ module OctridevOpenai
         name: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.if_given(setup_commands) do
           Validation.validate_items('setup_commands', setup_commands, min: 0, max: 16)
         end
 
         Validation.if_given(capability_directories) do
-          Validation.validate_items('capability_directories', capability_directories, min: 0, max: 16384)
+          Validation.validate_items('capability_directories', capability_directories, min: 0, max: 16_384)
         end
 
         Validation.if_given(skills) { Validation.validate_items('skills', skills, min: 0, max: 200) }
@@ -434,7 +437,7 @@ module OctridevOpenai
 
         SdkClient.request(
           'POST',
-          "/agents/environments/templates",
+          '/agents/environments/templates',
           config: config,
           body: {
             'packages' => packages,
@@ -446,13 +449,13 @@ module OctridevOpenai
             'skills' => skills,
             'plugins' => plugins,
             'files' => files,
-            'name' => name,
+            'name' => name
           },
           return_type: ::OctridevOpenai::EnvironmentTemplateResource,
           decoder: :json,
           operation_id: 'create_agent_environment_template',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).result
       end
 
@@ -465,13 +468,12 @@ module OctridevOpenai
         environment_template_id:,
         request_options: nil
       )
-
-        Validation.validate_length('environment_template_id', environment_template_id, min: 0, max: 1048576)
+        Validation.validate_length('environment_template_id', environment_template_id, min: 0, max: 1_048_576)
 
         SdkClient.request(
           'GET',
           [
-            "/agents/environments/templates/",
+            '/agents/environments/templates/',
             SdkClient.encode_path_segment(environment_template_id)
           ].join,
           config: config,
@@ -479,7 +481,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'retrieve_agent_environment_template',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).result
       end
 
@@ -522,8 +524,7 @@ module OctridevOpenai
         files: NOT_GIVEN,
         request_options: nil
       )
-
-        Validation.validate_length('environment_template_id', environment_template_id, min: 0, max: 1048576)
+        Validation.validate_length('environment_template_id', environment_template_id, min: 0, max: 1_048_576)
 
         Validation.if_given(name) { Validation.validate_length('name', name, min: 1, max: 256) }
 
@@ -532,7 +533,7 @@ module OctridevOpenai
         end
 
         Validation.if_given(capability_directories) do
-          Validation.validate_items('capability_directories', capability_directories, min: 0, max: 16384)
+          Validation.validate_items('capability_directories', capability_directories, min: 0, max: 16_384)
         end
 
         Validation.if_given(skills) { Validation.validate_items('skills', skills, min: 0, max: 200) }
@@ -544,7 +545,7 @@ module OctridevOpenai
         SdkClient.request(
           'POST',
           [
-            "/agents/environments/templates/",
+            '/agents/environments/templates/',
             SdkClient.encode_path_segment(environment_template_id)
           ].join,
           config: config,
@@ -558,13 +559,13 @@ module OctridevOpenai
             'capability_directories' => capability_directories,
             'skills' => skills,
             'plugins' => plugins,
-            'files' => files,
+            'files' => files
           },
           return_type: ::OctridevOpenai::EnvironmentTemplateResource,
           decoder: :json,
           operation_id: 'update_agent_environment_template',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse2, '401' => ::OctridevOpenai::ErrorResponse2, '403' => ::OctridevOpenai::ErrorResponse2, '404' => ::OctridevOpenai::ErrorResponse2, '409' => ::OctridevOpenai::ErrorResponse2, '500' => ::OctridevOpenai::ErrorResponse2, '503' => ::OctridevOpenai::ErrorResponse2 }
         ).result
       end
     end

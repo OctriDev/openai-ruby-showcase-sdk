@@ -5,30 +5,30 @@
 
 # agents_service domain models
 module OctridevOpenai
-# Defines the ServiceTierParam SDK namespace.
-module ServiceTierParam
-  AUTO = 'auto'
-  DEFAULT = 'default'
-  FLEX = 'flex'
-  PRIORITY = 'priority'
-  FAST = 'fast'
-  VALUES = ['auto', 'default', 'flex', 'priority', 'fast'].freeze
-  def self.from_value(value)
-    value
+  # Defines the ServiceTierParam SDK namespace.
+  module ServiceTierParam
+    AUTO = 'auto'
+    DEFAULT = 'default'
+    FLEX = 'flex'
+    PRIORITY = 'priority'
+    FAST = 'fast'
+    VALUES = %w[auto default flex priority fast].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
 
-# Defines the ServiceTierResource SDK namespace.
-module ServiceTierResource
-  AUTO = 'auto'
-  DEFAULT = 'default'
-  FLEX = 'flex'
-  PRIORITY = 'priority'
-  FAST = 'fast'
-  ULTRAFAST = 'ultrafast'
-  VALUES = ['auto', 'default', 'flex', 'priority', 'fast', 'ultrafast'].freeze
-  def self.from_value(value)
-    value
+  # Defines the ServiceTierResource SDK namespace.
+  module ServiceTierResource
+    AUTO = 'auto'
+    DEFAULT = 'default'
+    FLEX = 'flex'
+    PRIORITY = 'priority'
+    FAST = 'fast'
+    ULTRAFAST = 'ultrafast'
+    VALUES = %w[auto default flex priority fast ultrafast].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
 end

@@ -5,28 +5,28 @@
 
 # live_live_reasoning domain models
 module OctridevOpenai
-# Defines the LiveReasoningEffort SDK namespace.
-module LiveReasoningEffort
-  NONE = 'none'
-  MINIMAL = 'minimal'
-  LOW = 'low'
-  MEDIUM = 'medium'
-  HIGH = 'high'
-  XHIGH = 'xhigh'
-  VALUES = ['none', 'minimal', 'low', 'medium', 'high', 'xhigh'].freeze
-  def self.from_value(value)
-    value
+  # Defines the LiveReasoningEffort SDK namespace.
+  module LiveReasoningEffort
+    NONE = 'none'
+    MINIMAL = 'minimal'
+    LOW = 'low'
+    MEDIUM = 'medium'
+    HIGH = 'high'
+    XHIGH = 'xhigh'
+    VALUES = %w[none minimal low medium high xhigh].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
 
-# Defines the LiveReasoningSummary SDK namespace.
-module LiveReasoningSummary
-  CONCISE = 'concise'
-  DETAILED = 'detailed'
-  AUTO = 'auto'
-  VALUES = ['concise', 'detailed', 'auto'].freeze
-  def self.from_value(value)
-    value
+  # Defines the LiveReasoningSummary SDK namespace.
+  module LiveReasoningSummary
+    CONCISE = 'concise'
+    DETAILED = 'detailed'
+    AUTO = 'auto'
+    VALUES = %w[concise detailed auto].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
 end

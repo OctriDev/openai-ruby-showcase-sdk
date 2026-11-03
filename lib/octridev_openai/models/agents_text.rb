@@ -5,363 +5,368 @@
 
 # agents_text domain models
 module OctridevOpenai
-# Defines the TextFormatParam SDK namespace.
-module TextFormatParam
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    mapping = { "text" => TextFormatParamText, "json_schema" => TextFormatParamJsonSchema }
-    type = mapping[hash["type"]]
-    return type.from_hash(hash) if type
+  # Defines the TextFormatParam SDK namespace.
+  module TextFormatParam
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
 
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+      mapping = { 'text' => TextFormatParamText, 'json_schema' => TextFormatParamJsonSchema }
+      type = mapping[hash['type']]
+      return type.from_hash(hash) if type
 
-    raise SdkValidationError.new('TextFormatParam', 'variant', "Unknown TextFormatParam discriminator: #{hash["type"].inspect}")
-  end
-end
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
 
-# Internal model hydration metadata.
-class SdkInternalTextFormatParamJsonSchemaMetadata
-  FIELDS = {
-    type: "type",
-    schema: "schema",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    schema
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::TextFormatParamJsonSchemaType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for TextFormatParamJsonSchema.
-# Constrains generated text to a JSON Schema.
-class TextFormatParamJsonSchema
-  include TextFormatParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalTextFormatParamJsonSchemaMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalTextFormatParamJsonSchemaMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalTextFormatParamJsonSchemaMetadata::DECODERS
-
-  # @return [TextFormatParamJsonSchemaType] The type of the object. Always `json_schema`.
-  attr_reader :type
-  # @return [Hash] The JSON Schema that generated text must match.
-  attr_reader :schema
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('TextFormatParam', 'variant', "Unknown TextFormatParam discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalTextFormatParamJsonSchemaMetadata
+    FIELDS = {
+      type: 'type',
+      schema: 'schema'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      schema
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::TextFormatParamJsonSchemaType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # API model for TextFormatParamJsonSchema.
+  # Constrains generated text to a JSON Schema.
+  class TextFormatParamJsonSchema
+    include TextFormatParam
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalTextFormatParamJsonSchemaMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalTextFormatParamJsonSchemaMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalTextFormatParamJsonSchemaMetadata::DECODERS
+
+    # @return [TextFormatParamJsonSchemaType] The type of the object. Always `json_schema`.
+    attr_reader :type
+    # @return [Hash] The JSON Schema that generated text must match.
+    attr_reader :schema
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # Defines the TextFormatParamJsonSchemaType SDK namespace.
+  module TextFormatParamJsonSchemaType
+    JSON_SCHEMA = 'json_schema'
+    VALUES = ['json_schema'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the TextFormatParamJsonSchemaType SDK namespace.
-module TextFormatParamJsonSchemaType
-  JSON_SCHEMA = 'json_schema'
-  VALUES = ['json_schema'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('TextFormatParamJsonSchemaType', 'enum', "Unknown TextFormatParamJsonSchemaType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalTextFormatParamTextMetadata
-  FIELDS = {
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::TextFormatParamTextType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for TextFormatParamText.
-# Generates ordinary text without a structured-output constraint.
-class TextFormatParamText
-  include TextFormatParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalTextFormatParamTextMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalTextFormatParamTextMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalTextFormatParamTextMetadata::DECODERS
-
-  # @return [TextFormatParamTextType] The type of the object. Always `text`.
-  attr_reader :type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('TextFormatParamJsonSchemaType', 'enum', "Unknown TextFormatParamJsonSchemaType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalTextFormatParamTextMetadata
+    FIELDS = {
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::TextFormatParamTextType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # API model for TextFormatParamText.
+  # Generates ordinary text without a structured-output constraint.
+  class TextFormatParamText
+    include TextFormatParam
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalTextFormatParamTextMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalTextFormatParamTextMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalTextFormatParamTextMetadata::DECODERS
+
+    # @return [TextFormatParamTextType] The type of the object. Always `text`.
+    attr_reader :type
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # Defines the TextFormatParamTextType SDK namespace.
+  module TextFormatParamTextType
+    TEXT = 'text'
+    VALUES = ['text'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-# Defines the TextFormatParamTextType SDK namespace.
-module TextFormatParamTextType
-  TEXT = 'text'
-  VALUES = ['text'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('TextFormatParamTextType', 'enum', "Unknown TextFormatParamTextType: #{value}")
-  end
-end
-
-# Defines the TextFormatResource SDK namespace.
-module TextFormatResource
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    mapping = { "text" => TextFormatResourceText, "json_schema" => TextFormatResourceJsonSchema }
-    type = mapping[hash["type"]]
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('TextFormatResource', 'variant', "Unknown TextFormatResource discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalTextFormatResourceJsonSchemaMetadata
-  FIELDS = {
-    type: "type",
-    schema: "schema",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    schema
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::TextFormatResourceJsonSchemaType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for TextFormatResourceJsonSchema.
-# Constrains generated text to a JSON Schema.
-class TextFormatResourceJsonSchema
-  include TextFormatResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalTextFormatResourceJsonSchemaMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalTextFormatResourceJsonSchemaMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalTextFormatResourceJsonSchemaMetadata::DECODERS
-
-  # @return [TextFormatResourceJsonSchemaType] The type of the object. Always `json_schema`.
-  attr_reader :type
-  # @return [Hash] The JSON Schema that generated text must match.
-  attr_reader :schema
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('TextFormatParamTextType', 'enum', "Unknown TextFormatParamTextType: #{value}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the TextFormatResource SDK namespace.
+  module TextFormatResource
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      mapping = { 'text' => TextFormatResourceText, 'json_schema' => TextFormatResourceJsonSchema }
+      type = mapping[hash['type']]
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('TextFormatResource', 'variant', "Unknown TextFormatResource discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalTextFormatResourceJsonSchemaMetadata
+    FIELDS = {
+      type: 'type',
+      schema: 'schema'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      schema
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::TextFormatResourceJsonSchemaType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # API model for TextFormatResourceJsonSchema.
+  # Constrains generated text to a JSON Schema.
+  class TextFormatResourceJsonSchema
+    include TextFormatResource
 
-# Defines the TextFormatResourceJsonSchemaType SDK namespace.
-module TextFormatResourceJsonSchemaType
-  JSON_SCHEMA = 'json_schema'
-  VALUES = ['json_schema'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalTextFormatResourceJsonSchemaMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalTextFormatResourceJsonSchemaMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalTextFormatResourceJsonSchemaMetadata::DECODERS
 
-    raise SdkValidationError.new('TextFormatResourceJsonSchemaType', 'enum', "Unknown TextFormatResourceJsonSchemaType: #{value}")
-  end
-end
+    # @return [TextFormatResourceJsonSchemaType] The type of the object. Always `json_schema`.
+    attr_reader :type
+    # @return [Hash] The JSON Schema that generated text must match.
+    attr_reader :schema
 
-# Internal model hydration metadata.
-class SdkInternalTextFormatResourceTextMetadata
-  FIELDS = {
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::TextFormatResourceTextType.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for TextFormatResourceText.
-# Generates ordinary text without a structured-output constraint.
-class TextFormatResourceText
-  include TextFormatResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalTextFormatResourceTextMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalTextFormatResourceTextMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalTextFormatResourceTextMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [TextFormatResourceTextType] The type of the object. Always `text`.
-  attr_reader :type
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the TextFormatResourceJsonSchemaType SDK namespace.
+  module TextFormatResourceJsonSchemaType
+    JSON_SCHEMA = 'json_schema'
+    VALUES = ['json_schema'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('TextFormatResourceJsonSchemaType', 'enum', "Unknown TextFormatResourceJsonSchemaType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalTextFormatResourceTextMetadata
+    FIELDS = {
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::TextFormatResourceTextType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # API model for TextFormatResourceText.
+  # Generates ordinary text without a structured-output constraint.
+  class TextFormatResourceText
+    include TextFormatResource
 
-# Defines the TextFormatResourceTextType SDK namespace.
-module TextFormatResourceTextType
-  TEXT = 'text'
-  VALUES = ['text'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalTextFormatResourceTextMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalTextFormatResourceTextMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalTextFormatResourceTextMetadata::DECODERS
 
-    raise SdkValidationError.new('TextFormatResourceTextType', 'enum', "Unknown TextFormatResourceTextType: #{value}")
-  end
-end
+    # @return [TextFormatResourceTextType] The type of the object. Always `text`.
+    attr_reader :type
 
-# Internal model hydration metadata.
-class SdkInternalTextParamMetadata
-  FIELDS = {
-    format: "format",
-    verbosity: "verbosity",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    format: lambda do |value|
-      ::OctridevOpenai::TextFormatParam.from_hash(value)
-    end,
-    verbosity: lambda do |value|
-      ::OctridevOpenai::VerbosityParam.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for TextParam.
-# Configuration for text generated by the agent.
-class TextParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalTextParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalTextParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalTextParamMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [TextFormatParam] The output format. Omission uses ordinary text (`{"type": "text"}`).
-  attr_reader :format
-  # @return [VerbosityParam] The amount of text the model should produce. Defaults to `medium`, matching Responses.
-  attr_reader :verbosity
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the TextFormatResourceTextType SDK namespace.
+  module TextFormatResourceTextType
+    TEXT = 'text'
+    VALUES = ['text'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('TextFormatResourceTextType', 'enum', "Unknown TextFormatResourceTextType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalTextParamMetadata
+    FIELDS = {
+      format: 'format',
+      verbosity: 'verbosity'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      format: lambda do |value|
+        ::OctridevOpenai::TextFormatParam.from_hash(value)
+      end,
+      verbosity: lambda do |value|
+        ::OctridevOpenai::VerbosityParam.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # API model for TextParam.
+  # Configuration for text generated by the agent.
+  class TextParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalTextParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalTextParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalTextParamMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalTextResourceMetadata
-  FIELDS = {
-    format: "format",
-    verbosity: "verbosity",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    format
-    verbosity
-  ].freeze
-  DECODERS = {
-    format: lambda do |value|
-      ::OctridevOpenai::TextFormatResource.from_hash(value)
-    end,
-    verbosity: lambda do |value|
-      ::OctridevOpenai::VerbosityResource.from_value(value)
-    end,
-  }.freeze
-end
+    # @return [TextFormatParam] The output format. Omission uses ordinary text (`{"type": "text"}`).
+    attr_reader :format
+    # @return [VerbosityParam] The amount of text the model should produce. Defaults to `medium`, matching Responses.
+    attr_reader :verbosity
 
-# API model for TextResource.
-# The text configuration used by an agent.
-class TextResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalTextResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalTextResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalTextResourceMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [TextFormatResource] The effective output format. Defaults to ordinary text.
-  attr_reader :format
-  # @return [VerbosityResource] The amount of text produced by the agent. Defaults to `medium`.
-  attr_reader :verbosity
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalTextResourceMetadata
+    FIELDS = {
+      format: 'format',
+      verbosity: 'verbosity'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      format
+      verbosity
+    ].freeze
+    DECODERS = {
+      format: lambda do |value|
+        ::OctridevOpenai::TextFormatResource.from_hash(value)
+      end,
+      verbosity: lambda do |value|
+        ::OctridevOpenai::VerbosityResource.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
+  # API model for TextResource.
+  # The text configuration used by an agent.
+  class TextResource
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalTextResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalTextResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalTextResourceMetadata::DECODERS
 
-  def to_json(*args)
-    to_h.to_json(*args)
+    # @return [TextFormatResource] The effective output format. Defaults to ordinary text.
+    attr_reader :format
+    # @return [VerbosityResource] The amount of text produced by the agent. Defaults to `medium`.
+    attr_reader :verbosity
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
-end
 end

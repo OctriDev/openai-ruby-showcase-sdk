@@ -5,175 +5,178 @@
 
 # shared_apply domain models
 module OctridevOpenai
-# API model for ApplyPatchToolParam.
-# Allows the assistant to create, delete, or update files using unified diffs.
-class ApplyPatchToolParam
-  include Tool
-  include ToolSearchOutputTool
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalApplyPatchToolParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalApplyPatchToolParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalApplyPatchToolParamMetadata::DECODERS
+  # API model for ApplyPatchToolParam.
+  # Allows the assistant to create, delete, or update files using unified diffs.
+  class ApplyPatchToolParam
+    include Tool
+    include ToolSearchOutputTool
 
-  # @return [ApplyPatchToolParamType] The type of the tool. Always `apply_patch`.
-  attr_reader :type
-  # @return [Array_of_CallableToolAllowedCaller] The tool invocation context(s).
-  attr_reader :allowed_callers
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalApplyPatchToolParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalApplyPatchToolParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalApplyPatchToolParamMetadata::DECODERS
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    # @return [ApplyPatchToolParamType] The type of the tool. Always `apply_patch`.
+    attr_reader :type
+    # @return [Array_of_CallableToolAllowedCaller] The tool invocation context(s).
+    attr_reader :allowed_callers
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the ApplyPatchToolParamType SDK namespace.
+  module ApplyPatchToolParamType
+    APPLY_PATCH = 'apply_patch'
+    VALUES = ['apply_patch'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('ApplyPatchToolParamType', 'enum', "Unknown ApplyPatchToolParamType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalApplyPatchUpdateFileOperationMetadata
+    FIELDS = {
+      type: 'type',
+      path: 'path',
+      diff: 'diff'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      path
+      diff
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ApplyPatchUpdateFileOperationType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # API model for ApplyPatchUpdateFileOperation.
+  # Instruction describing how to update a file via the apply_patch tool.
+  class ApplyPatchUpdateFileOperation
+    include ApplyPatchToolCallOperation
 
-# Defines the ApplyPatchToolParamType SDK namespace.
-module ApplyPatchToolParamType
-  APPLY_PATCH = 'apply_patch'
-  VALUES = ['apply_patch'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalApplyPatchUpdateFileOperationMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalApplyPatchUpdateFileOperationMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalApplyPatchUpdateFileOperationMetadata::DECODERS
 
-    raise SdkValidationError.new('ApplyPatchToolParamType', 'enum', "Unknown ApplyPatchToolParamType: #{value}")
-  end
-end
+    # @return [ApplyPatchUpdateFileOperationType] Update an existing file with the provided diff.
+    attr_reader :type
+    # @return [String] Path of the file to update.
+    attr_reader :path
+    # @return [String] Diff to apply.
+    attr_reader :diff
 
-# Internal model hydration metadata.
-class SdkInternalApplyPatchUpdateFileOperationMetadata
-  FIELDS = {
-    type: "type",
-    path: "path",
-    diff: "diff",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    path
-    diff
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ApplyPatchUpdateFileOperationType.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for ApplyPatchUpdateFileOperation.
-# Instruction describing how to update a file via the apply_patch tool.
-class ApplyPatchUpdateFileOperation
-  include ApplyPatchToolCallOperation
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalApplyPatchUpdateFileOperationMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalApplyPatchUpdateFileOperationMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalApplyPatchUpdateFileOperationMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [ApplyPatchUpdateFileOperationType] Update an existing file with the provided diff.
-  attr_reader :type
-  # @return [String] Path of the file to update.
-  attr_reader :path
-  # @return [String] Diff to apply.
-  attr_reader :diff
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the ApplyPatchUpdateFileOperationType SDK namespace.
+  module ApplyPatchUpdateFileOperationType
+    UPDATE_FILE = 'update_file'
+    VALUES = ['update_file'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('ApplyPatchUpdateFileOperationType', 'enum', "Unknown ApplyPatchUpdateFileOperationType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalApplyPatchUpdateFileOperationParamMetadata
+    FIELDS = {
+      type: 'type',
+      path: 'path',
+      diff: 'diff'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      path
+      diff
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ApplyPatchUpdateFileOperationParamType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # API model for ApplyPatchUpdateFileOperationParam.
+  # Instruction for updating an existing file via the apply_patch tool.
+  class ApplyPatchUpdateFileOperationParam
+    include ApplyPatchOperationParam
 
-# Defines the ApplyPatchUpdateFileOperationType SDK namespace.
-module ApplyPatchUpdateFileOperationType
-  UPDATE_FILE = 'update_file'
-  VALUES = ['update_file'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalApplyPatchUpdateFileOperationParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalApplyPatchUpdateFileOperationParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalApplyPatchUpdateFileOperationParamMetadata::DECODERS
 
-    raise SdkValidationError.new('ApplyPatchUpdateFileOperationType', 'enum', "Unknown ApplyPatchUpdateFileOperationType: #{value}")
-  end
-end
+    # @return [ApplyPatchUpdateFileOperationParamType] The operation type. Always `update_file`.
+    attr_reader :type
+    # @return [String] Path of the file to update relative to the workspace root.
+    attr_reader :path
+    # @return [String] Unified diff content to apply to the existing file.
+    attr_reader :diff
 
-# Internal model hydration metadata.
-class SdkInternalApplyPatchUpdateFileOperationParamMetadata
-  FIELDS = {
-    type: "type",
-    path: "path",
-    diff: "diff",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    path
-    diff
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ApplyPatchUpdateFileOperationParamType.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for ApplyPatchUpdateFileOperationParam.
-# Instruction for updating an existing file via the apply_patch tool.
-class ApplyPatchUpdateFileOperationParam
-  include ApplyPatchOperationParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalApplyPatchUpdateFileOperationParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalApplyPatchUpdateFileOperationParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalApplyPatchUpdateFileOperationParamMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [ApplyPatchUpdateFileOperationParamType] The operation type. Always `update_file`.
-  attr_reader :type
-  # @return [String] Path of the file to update relative to the workspace root.
-  attr_reader :path
-  # @return [String] Unified diff content to apply to the existing file.
-  attr_reader :diff
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
+  # Defines the ApplyPatchUpdateFileOperationParamType SDK namespace.
+  module ApplyPatchUpdateFileOperationParamType
+    UPDATE_FILE = 'update_file'
+    VALUES = ['update_file'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+      raise SdkValidationError.new('ApplyPatchUpdateFileOperationParamType', 'enum', "Unknown ApplyPatchUpdateFileOperationParamType: #{value}")
+    end
   end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Defines the ApplyPatchUpdateFileOperationParamType SDK namespace.
-module ApplyPatchUpdateFileOperationParamType
-  UPDATE_FILE = 'update_file'
-  VALUES = ['update_file'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('ApplyPatchUpdateFileOperationParamType', 'enum', "Unknown ApplyPatchUpdateFileOperationParamType: #{value}")
-  end
-end
 end

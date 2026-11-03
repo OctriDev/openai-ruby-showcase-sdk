@@ -5,127 +5,126 @@
 
 # webhook_fine_tuning_job_cancelled domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalWebhookFineTuningJobCancelledDataMetadata
-  FIELDS = {
-    id: "id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for WebhookFineTuningJobCancelledData.
-# Event data payload.
-class WebhookFineTuningJobCancelledData
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalWebhookFineTuningJobCancelledDataMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalWebhookFineTuningJobCancelledDataMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalWebhookFineTuningJobCancelledDataMetadata::DECODERS
-
-  # @return [String] The unique ID of the fine-tuning job.
-  attr_reader :id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalWebhookFineTuningJobCancelledDataMetadata
+    FIELDS = {
+      id: 'id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for WebhookFineTuningJobCancelledData.
+  # Event data payload.
+  class WebhookFineTuningJobCancelledData
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalWebhookFineTuningJobCancelledDataMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalWebhookFineTuningJobCancelledDataMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalWebhookFineTuningJobCancelledDataMetadata::DECODERS
+
+    # @return [String] The unique ID of the fine-tuning job.
+    attr_reader :id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalWebhookFineTuningJobCancelledMetadata
+    FIELDS = {
+      created_at: 'created_at',
+      id: 'id',
+      data: 'data',
+      object: 'object',
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      created_at
+      id
+      data
+      type
+    ].freeze
+    DECODERS = {
+      data: lambda do |value|
+        ::OctridevOpenai::WebhookFineTuningJobCancelledData.from_hash(value)
+      end,
+      object: lambda do |value|
+        ::OctridevOpenai::WebhookFineTuningJobCancelledObject.from_value(value)
+      end,
+      type: lambda do |value|
+        ::OctridevOpenai::WebhookFineTuningJobCancelledType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # API model for WebhookFineTuningJobCancelled.
+  # Sent when a fine-tuning job has been cancelled.
+  class WebhookFineTuningJobCancelled
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalWebhookFineTuningJobCancelledMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalWebhookFineTuningJobCancelledMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalWebhookFineTuningJobCancelledMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalWebhookFineTuningJobCancelledMetadata
-  FIELDS = {
-    created_at: "created_at",
-    id: "id",
-    data: "data",
-    object: "object",
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    created_at
-    id
-    data
-    type
-  ].freeze
-  DECODERS = {
-    data: lambda do |value|
-      ::OctridevOpenai::WebhookFineTuningJobCancelledData.from_hash(value)
-    end,
-    object: lambda do |value|
-      ::OctridevOpenai::WebhookFineTuningJobCancelledObject.from_value(value)
-    end,
-    type: lambda do |value|
-      ::OctridevOpenai::WebhookFineTuningJobCancelledType.from_value(value)
-    end,
-  }.freeze
-end
+    # @return [Integer] The Unix timestamp (in seconds) of when the fine-tuning job was cancelled.
+    attr_reader :created_at
+    # @return [String] The unique ID of the event.
+    attr_reader :id
+    # @return [WebhookFineTuningJobCancelledData] Event data payload.
+    attr_reader :data
+    # @return [WebhookFineTuningJobCancelledObject] The object of the event. Always `event`.
+    attr_reader :object
+    # @return [WebhookFineTuningJobCancelledType] The type of the event. Always `fine_tuning.job.cancelled`.
+    attr_reader :type
 
-# API model for WebhookFineTuningJobCancelled.
-# Sent when a fine-tuning job has been cancelled.
-class WebhookFineTuningJobCancelled
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalWebhookFineTuningJobCancelledMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalWebhookFineTuningJobCancelledMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalWebhookFineTuningJobCancelledMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [Integer] The Unix timestamp (in seconds) of when the fine-tuning job was cancelled.
-  attr_reader :created_at
-  # @return [String] The unique ID of the event.
-  attr_reader :id
-  # @return [WebhookFineTuningJobCancelledData] Event data payload.
-  attr_reader :data
-  # @return [WebhookFineTuningJobCancelledObject] The object of the event. Always `event`.
-  attr_reader :object
-  # @return [WebhookFineTuningJobCancelledType] The type of the event. Always `fine_tuning.job.cancelled`.
-  attr_reader :type
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the WebhookFineTuningJobCancelledObject SDK namespace.
+  module WebhookFineTuningJobCancelledObject
+    EVENT = 'event'
+    VALUES = ['event'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the WebhookFineTuningJobCancelledType SDK namespace.
+  module WebhookFineTuningJobCancelledType
+    FINE_TUNING_JOB_CANCELLED = 'fine_tuning.job.cancelled'
+    VALUES = ['fine_tuning.job.cancelled'].freeze
+    def self.from_value(value)
+      value
+    end
   end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Defines the WebhookFineTuningJobCancelledObject SDK namespace.
-module WebhookFineTuningJobCancelledObject
-  EVENT = 'event'
-  VALUES = ['event'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the WebhookFineTuningJobCancelledType SDK namespace.
-module WebhookFineTuningJobCancelledType
-  FINE_TUNING_JOB_CANCELLED = 'fine_tuning.job.cancelled'
-  VALUES = ['fine_tuning.job.cancelled'].freeze
-  def self.from_value(value)
-    value
-  end
-end
 end

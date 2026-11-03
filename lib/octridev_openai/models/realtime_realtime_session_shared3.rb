@@ -5,65 +5,64 @@
 
 # realtime_realtime_session domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalRealtimeSessionTracingVariant1Metadata
-  FIELDS = {
-    workflow_name: "workflow_name",
-    group_id: "group_id",
-    metadata: "metadata",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for RealtimeSessionTracingVariant1.
-class RealtimeSessionTracingVariant1
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeSessionTracingVariant1Metadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeSessionTracingVariant1Metadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeSessionTracingVariant1Metadata::DECODERS
-
-  # @return [String] The name of the workflow to attach to this trace. This is used to name the trace in the traces dashboard.
-  attr_reader :workflow_name
-  # @return [String] The group id to attach to this trace to enable filtering and grouping in the traces dashboard.
-  attr_reader :group_id
-  # @return [Hash] The arbitrary metadata to attach to this trace to enable filtering in the traces dashboard.
-  attr_reader :metadata
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeSessionTracingVariant1Metadata
+    FIELDS = {
+      workflow_name: 'workflow_name',
+      group_id: 'group_id',
+      metadata: 'metadata'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for RealtimeSessionTracingVariant1.
+  class RealtimeSessionTracingVariant1
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeSessionTracingVariant1Metadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeSessionTracingVariant1Metadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeSessionTracingVariant1Metadata::DECODERS
+
+    # @return [String] The name of the workflow to attach to this trace. This is used to name the trace in the traces dashboard.
+    attr_reader :workflow_name
+    # @return [String] The group id to attach to this trace to enable filtering and grouping in the traces dashboard.
+    attr_reader :group_id
+    # @return [Hash] The arbitrary metadata to attach to this trace to enable filtering in the traces dashboard.
+    attr_reader :metadata
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the RealtimeSessionTracing SDK namespace.
+  module RealtimeSessionTracing
+    def self.from_hash(hash)
+      return RealtimeSessionTracingVariant0.from_value(hash) if hash.is_a?(::String)
+
+      RealtimeSessionTracingVariant1.from_hash(hash)
+    end
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
+  # Defines the RealtimeSessionTracingVariant0 SDK namespace.
+  module RealtimeSessionTracingVariant0
+    AUTO = 'auto'
+    VALUES = ['auto'].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
-
-# Defines the RealtimeSessionTracing SDK namespace.
-module RealtimeSessionTracing
-  def self.from_hash(hash)
-    return RealtimeSessionTracingVariant0.from_value(hash) if hash.is_a?(::String)
-    return RealtimeSessionTracingVariant1.from_hash(hash)
-  end
-end
-
-# Defines the RealtimeSessionTracingVariant0 SDK namespace.
-module RealtimeSessionTracingVariant0
-  AUTO = 'auto'
-  VALUES = ['auto'].freeze
-  def self.from_value(value)
-    value
-  end
-end
 end

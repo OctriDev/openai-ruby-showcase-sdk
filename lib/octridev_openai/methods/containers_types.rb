@@ -12,9 +12,9 @@ module OctridevOpenai
       # Internal model hydration metadata.
       class SdkInternalDeleteContainerResponseMetadata
         FIELDS = {
-          object: "object",
-          deleted: "deleted",
-          id: "id",
+          object: 'object',
+          deleted: 'deleted',
+          id: 'id'
         }.freeze
         REQUIRED_FIELDS = %i[
           object
@@ -24,7 +24,7 @@ module OctridevOpenai
         DECODERS = {
           object: lambda do |value|
             ::OctridevOpenai::Methods::Containers::DeleteContainerResponseObject.from_value(value)
-          end,
+          end
         }.freeze
       end
 
@@ -58,9 +58,9 @@ module OctridevOpenai
       # Internal model hydration metadata.
       class SdkInternalDeleteContainerFileResponseMetadata
         FIELDS = {
-          object: "object",
-          deleted: "deleted",
-          id: "id",
+          object: 'object',
+          deleted: 'deleted',
+          id: 'id'
         }.freeze
         REQUIRED_FIELDS = %i[
           object
@@ -70,7 +70,7 @@ module OctridevOpenai
         DECODERS = {
           object: lambda do |value|
             ::OctridevOpenai::Methods::Containers::DeleteContainerFileResponseObject.from_value(value)
-          end,
+          end
         }.freeze
       end
 
@@ -105,7 +105,7 @@ module OctridevOpenai
       module ListContainersParameter
         ASC = 'asc'
         DESC = 'desc'
-        VALUES = ['asc', 'desc'].freeze
+        VALUES = %w[asc desc].freeze
         def self.from_value(value)
           value
         end
@@ -124,7 +124,7 @@ module OctridevOpenai
       module ListContainerFilesParameter
         ASC = 'asc'
         DESC = 'desc'
-        VALUES = ['asc', 'desc'].freeze
+        VALUES = %w[asc desc].freeze
         def self.from_value(value)
           value
         end

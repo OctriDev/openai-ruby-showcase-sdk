@@ -5,18 +5,19 @@
 
 # realtime_realtime_beta_response domain models
 module OctridevOpenai
-# Defines the RealtimeBetaResponseCreateParamsToolChoice SDK namespace.
-module RealtimeBetaResponseCreateParamsToolChoice
-  def self.from_hash(hash)
-    return ToolChoiceOptions.from_value(hash) if hash.is_a?(::String)
-    return hash unless hash.is_a?(::Hash)
-    mapping = { "function" => ToolChoiceFunction, "mcp" => ToolChoiceMCP }
-    type = mapping[hash["type"]]
-    return type.from_hash(hash) if type
+  # Defines the RealtimeBetaResponseCreateParamsToolChoice SDK namespace.
+  module RealtimeBetaResponseCreateParamsToolChoice
+    def self.from_hash(hash)
+      return ToolChoiceOptions.from_value(hash) if hash.is_a?(::String)
+      return hash unless hash.is_a?(::Hash)
 
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+      mapping = { 'function' => ToolChoiceFunction, 'mcp' => ToolChoiceMCP }
+      type = mapping[hash['type']]
+      return type.from_hash(hash) if type
 
-    raise SdkValidationError.new('RealtimeBetaResponseCreateParamsToolChoice', 'variant', "Unknown RealtimeBetaResponseCreateParamsToolChoice discriminator: #{hash["type"].inspect}")
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('RealtimeBetaResponseCreateParamsToolChoice', 'variant', "Unknown RealtimeBetaResponseCreateParamsToolChoice discriminator: #{hash['type'].inspect}")
+    end
   end
-end
 end

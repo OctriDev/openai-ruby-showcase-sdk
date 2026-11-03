@@ -5,652 +5,631 @@
 
 # audit_logs domain models
 module OctridevOpenai
-# API model for AuditLogRoleCreated.
-# The details for events with this `type`.
-class AuditLogRoleCreated
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAuditLogRoleCreatedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAuditLogRoleCreatedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAuditLogRoleCreatedMetadata::DECODERS
+  # API model for AuditLogRoleCreated.
+  # The details for events with this `type`.
+  class AuditLogRoleCreated
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAuditLogRoleCreatedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAuditLogRoleCreatedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAuditLogRoleCreatedMetadata::DECODERS
 
-  # @return [String] The role ID.
-  attr_reader :id
-  # @return [String] The name of the role.
-  attr_reader :role_name
-  # @return [Array_of_String] The permissions granted by the role.
-  attr_reader :permissions
-  # @return [String] The type of resource the role belongs to.
-  attr_reader :resource_type
-  # @return [String] The resource the role is scoped to.
-  attr_reader :resource_id
+    # @return [String] The role ID.
+    attr_reader :id
+    # @return [String] The name of the role.
+    attr_reader :role_name
+    # @return [Array_of_String] The permissions granted by the role.
+    attr_reader :permissions
+    # @return [String] The type of resource the role belongs to.
+    attr_reader :resource_type
+    # @return [String] The resource the role is scoped to.
+    attr_reader :resource_id
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalAuditLogRoleUpdatedChangesRequestedMetadata
+    FIELDS = {
+      role_name: 'role_name',
+      resource_id: 'resource_id',
+      resource_type: 'resource_type',
+      permissions_added: 'permissions_added',
+      permissions_removed: 'permissions_removed',
+      description: 'description',
+      metadata: 'metadata'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # API model for AuditLogRoleUpdatedChangesRequested.
+  # The payload used to update the role.
+  class AuditLogRoleUpdatedChangesRequested
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAuditLogRoleUpdatedChangesRequestedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAuditLogRoleUpdatedChangesRequestedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAuditLogRoleUpdatedChangesRequestedMetadata::DECODERS
+
+    # @return [String] The updated role name, when provided.
+    attr_reader :role_name
+    # @return [String] The resource the role is scoped to.
+    attr_reader :resource_id
+    # @return [String] The type of resource the role belongs to.
+    attr_reader :resource_type
+    # @return [Array_of_String] The permissions added to the role.
+    attr_reader :permissions_added
+    # @return [Array_of_String] The permissions removed from the role.
+    attr_reader :permissions_removed
+    # @return [String] The updated role description, when provided.
+    attr_reader :description
+    # @return [Hash] Additional metadata stored on the role.
+    attr_reader :metadata
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAuditLogRoleUpdatedChangesRequestedMetadata
-  FIELDS = {
-    role_name: "role_name",
-    resource_id: "resource_id",
-    resource_type: "resource_type",
-    permissions_added: "permissions_added",
-    permissions_removed: "permissions_removed",
-    description: "description",
-    metadata: "metadata",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for AuditLogRoleUpdatedChangesRequested.
-# The payload used to update the role.
-class AuditLogRoleUpdatedChangesRequested
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAuditLogRoleUpdatedChangesRequestedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAuditLogRoleUpdatedChangesRequestedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAuditLogRoleUpdatedChangesRequestedMetadata::DECODERS
-
-  # @return [String] The updated role name, when provided.
-  attr_reader :role_name
-  # @return [String] The resource the role is scoped to.
-  attr_reader :resource_id
-  # @return [String] The type of resource the role belongs to.
-  attr_reader :resource_type
-  # @return [Array_of_String] The permissions added to the role.
-  attr_reader :permissions_added
-  # @return [Array_of_String] The permissions removed from the role.
-  attr_reader :permissions_removed
-  # @return [String] The updated role description, when provided.
-  attr_reader :description
-  # @return [Hash] Additional metadata stored on the role.
-  attr_reader :metadata
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalAuditLogRoleUpdatedMetadata
+    FIELDS = {
+      id: 'id',
+      changes_requested: 'changes_requested'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      changes_requested: lambda do |value|
+        ::OctridevOpenai::AuditLogRoleUpdatedChangesRequested.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for AuditLogRoleUpdated.
+  # The details for events with this `type`.
+  class AuditLogRoleUpdated
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAuditLogRoleUpdatedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAuditLogRoleUpdatedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAuditLogRoleUpdatedMetadata::DECODERS
+
+    # @return [String] The role ID.
+    attr_reader :id
+    # @return [AuditLogRoleUpdatedChangesRequested] The payload used to update the role.
+    attr_reader :changes_requested
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalAuditLogRoleDeletedMetadata
+    FIELDS = {
+      id: 'id'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # API model for AuditLogRoleDeleted.
+  # The details for events with this `type`.
+  class AuditLogRoleDeleted
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAuditLogRoleDeletedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAuditLogRoleDeletedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAuditLogRoleDeletedMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalAuditLogRoleUpdatedMetadata
-  FIELDS = {
-    id: "id",
-    changes_requested: "changes_requested",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    changes_requested: lambda do |value|
-      ::OctridevOpenai::AuditLogRoleUpdatedChangesRequested.from_hash(value)
-    end,
-  }.freeze
-end
+    # @return [String] The role ID.
+    attr_reader :id
 
-# API model for AuditLogRoleUpdated.
-# The details for events with this `type`.
-class AuditLogRoleUpdated
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAuditLogRoleUpdatedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAuditLogRoleUpdatedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAuditLogRoleUpdatedMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [String] The role ID.
-  attr_reader :id
-  # @return [AuditLogRoleUpdatedChangesRequested] The payload used to update the role.
-  attr_reader :changes_requested
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalAuditLogRoleAssignmentCreatedMetadata
+    FIELDS = {
+      id: 'id',
+      principal_id: 'principal_id',
+      principal_type: 'principal_type',
+      resource_id: 'resource_id',
+      resource_type: 'resource_type'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # API model for AuditLogRoleAssignmentCreated.
+  # The details for events with this `type`.
+  class AuditLogRoleAssignmentCreated
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAuditLogRoleAssignmentCreatedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAuditLogRoleAssignmentCreatedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAuditLogRoleAssignmentCreatedMetadata::DECODERS
+
+    # @return [String] The identifier of the role assignment.
+    attr_reader :id
+    # @return [String] The principal (user or group) that received the role.
+    attr_reader :principal_id
+    # @return [String] The type of principal (user or group) that received the role.
+    attr_reader :principal_type
+    # @return [String] The resource the role assignment is scoped to.
+    attr_reader :resource_id
+    # @return [String] The type of resource the role assignment is scoped to.
+    attr_reader :resource_type
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAuditLogRoleDeletedMetadata
-  FIELDS = {
-    id: "id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for AuditLogRoleDeleted.
-# The details for events with this `type`.
-class AuditLogRoleDeleted
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAuditLogRoleDeletedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAuditLogRoleDeletedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAuditLogRoleDeletedMetadata::DECODERS
-
-  # @return [String] The role ID.
-  attr_reader :id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalAuditLogRoleAssignmentDeletedMetadata
+    FIELDS = {
+      id: 'id',
+      principal_id: 'principal_id',
+      principal_type: 'principal_type',
+      resource_id: 'resource_id',
+      resource_type: 'resource_type'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for AuditLogRoleAssignmentDeleted.
+  # The details for events with this `type`.
+  class AuditLogRoleAssignmentDeleted
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAuditLogRoleAssignmentDeletedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAuditLogRoleAssignmentDeletedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAuditLogRoleAssignmentDeletedMetadata::DECODERS
+
+    # @return [String] The identifier of the role assignment.
+    attr_reader :id
+    # @return [String] The principal (user or group) that had the role removed.
+    attr_reader :principal_id
+    # @return [String] The type of principal (user or group) that had the role removed.
+    attr_reader :principal_type
+    # @return [String] The resource the role assignment was scoped to.
+    attr_reader :resource_id
+    # @return [String] The type of resource the role assignment was scoped to.
+    attr_reader :resource_type
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalAuditLogRoleBoundToResourceMetadata
+    FIELDS = {
+      id: 'id',
+      role_id: 'role_id',
+      resource_id: 'resource_id',
+      resource_type: 'resource_type',
+      permissions: 'permissions',
+      workspace_id: 'workspace_id',
+      connector_id: 'connector_id',
+      connector_name: 'connector_name',
+      enabled: 'enabled',
+      source: 'source'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      source: lambda do |value|
+        ::OctridevOpenai::AuditLogRoleBoundToResourceSource.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # API model for AuditLogRoleBoundToResource.
+  # The details for events with this `type`.
+  class AuditLogRoleBoundToResource
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAuditLogRoleBoundToResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAuditLogRoleBoundToResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAuditLogRoleBoundToResourceMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalAuditLogRoleAssignmentCreatedMetadata
-  FIELDS = {
-    id: "id",
-    principal_id: "principal_id",
-    principal_type: "principal_type",
-    resource_id: "resource_id",
-    resource_type: "resource_type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
+    # @return [String] The ID of the resource the role was bound to. ChatGPT workspace connector resources use `<workspace_id>__<connector_id>`.
+    attr_reader :id
+    # @return [String] The ID of the role that was bound to the resource.
+    attr_reader :role_id
+    # @return [String] The ID of the resource the role was bound to.
+    attr_reader :resource_id
+    # @return [String] The type of resource the role was bound to.
+    attr_reader :resource_type
+    # @return [Array_of_String] The permissions granted to the role for the resource.
+    attr_reader :permissions
+    # @return [String] The workspace ID for a ChatGPT workspace connector resource.
+    attr_reader :workspace_id
+    # @return [String] The connector ID for a ChatGPT workspace connector resource.
+    attr_reader :connector_id
+    # @return [String] The connector display name for a ChatGPT workspace connector resource, or the connector ID when the display name could not be resolved.
+    attr_reader :connector_name
+    # @return [Boolean] Whether the connector is enabled for the role.
+    attr_reader :enabled
+    # @return [AuditLogRoleBoundToResourceSource] The connector role mutation path that produced the event.
+    attr_reader :source
 
-# API model for AuditLogRoleAssignmentCreated.
-# The details for events with this `type`.
-class AuditLogRoleAssignmentCreated
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAuditLogRoleAssignmentCreatedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAuditLogRoleAssignmentCreatedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAuditLogRoleAssignmentCreatedMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [String] The identifier of the role assignment.
-  attr_reader :id
-  # @return [String] The principal (user or group) that received the role.
-  attr_reader :principal_id
-  # @return [String] The type of principal (user or group) that received the role.
-  attr_reader :principal_type
-  # @return [String] The resource the role assignment is scoped to.
-  attr_reader :resource_id
-  # @return [String] The type of resource the role assignment is scoped to.
-  attr_reader :resource_type
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAuditLogRoleAssignmentDeletedMetadata
-  FIELDS = {
-    id: "id",
-    principal_id: "principal_id",
-    principal_type: "principal_type",
-    resource_id: "resource_id",
-    resource_type: "resource_type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for AuditLogRoleAssignmentDeleted.
-# The details for events with this `type`.
-class AuditLogRoleAssignmentDeleted
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAuditLogRoleAssignmentDeletedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAuditLogRoleAssignmentDeletedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAuditLogRoleAssignmentDeletedMetadata::DECODERS
-
-  # @return [String] The identifier of the role assignment.
-  attr_reader :id
-  # @return [String] The principal (user or group) that had the role removed.
-  attr_reader :principal_id
-  # @return [String] The type of principal (user or group) that had the role removed.
-  attr_reader :principal_type
-  # @return [String] The resource the role assignment was scoped to.
-  attr_reader :resource_id
-  # @return [String] The type of resource the role assignment was scoped to.
-  attr_reader :resource_type
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalAuditLogRoleUnboundFromResourceMetadata
+    FIELDS = {
+      id: 'id',
+      role_id: 'role_id',
+      resource_id: 'resource_id',
+      resource_type: 'resource_type',
+      permissions: 'permissions',
+      workspace_id: 'workspace_id',
+      connector_id: 'connector_id',
+      connector_name: 'connector_name',
+      enabled: 'enabled',
+      source: 'source'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      source: lambda do |value|
+        ::OctridevOpenai::AuditLogRoleUnboundFromResourceSource.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for AuditLogRoleUnboundFromResource.
+  # The details for events with this `type`.
+  class AuditLogRoleUnboundFromResource
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAuditLogRoleUnboundFromResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAuditLogRoleUnboundFromResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAuditLogRoleUnboundFromResourceMetadata::DECODERS
+
+    # @return [String] The ID of the resource the role was unbound from. ChatGPT workspace connector resources use `<workspace_id>__<connector_id>`.
+    attr_reader :id
+    # @return [String] The ID of the role that was unbound from the resource.
+    attr_reader :role_id
+    # @return [String] The ID of the resource the role was unbound from.
+    attr_reader :resource_id
+    # @return [String] The type of resource the role was unbound from.
+    attr_reader :resource_type
+    # @return [Array_of_String] The permissions remaining for the role after the change.
+    attr_reader :permissions
+    # @return [String] The workspace ID for a ChatGPT workspace connector resource.
+    attr_reader :workspace_id
+    # @return [String] The connector ID for a ChatGPT workspace connector resource.
+    attr_reader :connector_id
+    # @return [String] The connector display name for a ChatGPT workspace connector resource, or the connector ID when the display name could not be resolved.
+    attr_reader :connector_name
+    # @return [Boolean] Whether the connector is enabled for the role.
+    attr_reader :enabled
+    # @return [AuditLogRoleUnboundFromResourceSource] The connector role mutation path that produced the event.
+    attr_reader :source
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalAuditLogServiceAccountCreatedDataMetadata
+    FIELDS = {
+      role: 'role'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # API model for AuditLogServiceAccountCreatedData.
+  # The payload used to create the service account.
+  class AuditLogServiceAccountCreatedData
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAuditLogServiceAccountCreatedDataMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAuditLogServiceAccountCreatedDataMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAuditLogServiceAccountCreatedDataMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalAuditLogRoleBoundToResourceMetadata
-  FIELDS = {
-    id: "id",
-    role_id: "role_id",
-    resource_id: "resource_id",
-    resource_type: "resource_type",
-    permissions: "permissions",
-    workspace_id: "workspace_id",
-    connector_id: "connector_id",
-    connector_name: "connector_name",
-    enabled: "enabled",
-    source: "source",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    source: lambda do |value|
-      ::OctridevOpenai::AuditLogRoleBoundToResourceSource.from_value(value)
-    end,
-  }.freeze
-end
+    # @return [String] The role of the service account. Is either `owner` or `member`.
+    attr_reader :role
 
-# API model for AuditLogRoleBoundToResource.
-# The details for events with this `type`.
-class AuditLogRoleBoundToResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAuditLogRoleBoundToResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAuditLogRoleBoundToResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAuditLogRoleBoundToResourceMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [String] The ID of the resource the role was bound to. ChatGPT workspace connector resources use `<workspace_id>__<connector_id>`.
-  attr_reader :id
-  # @return [String] The ID of the role that was bound to the resource.
-  attr_reader :role_id
-  # @return [String] The ID of the resource the role was bound to.
-  attr_reader :resource_id
-  # @return [String] The type of resource the role was bound to.
-  attr_reader :resource_type
-  # @return [Array_of_String] The permissions granted to the role for the resource.
-  attr_reader :permissions
-  # @return [String] The workspace ID for a ChatGPT workspace connector resource.
-  attr_reader :workspace_id
-  # @return [String] The connector ID for a ChatGPT workspace connector resource.
-  attr_reader :connector_id
-  # @return [String] The connector display name for a ChatGPT workspace connector resource, or the connector ID when the display name could not be resolved.
-  attr_reader :connector_name
-  # @return [Boolean] Whether the connector is enabled for the role.
-  attr_reader :enabled
-  # @return [AuditLogRoleBoundToResourceSource] The connector role mutation path that produced the event.
-  attr_reader :source
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalAuditLogServiceAccountCreatedMetadata
+    FIELDS = {
+      id: 'id',
+      data: 'data'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      data: lambda do |value|
+        ::OctridevOpenai::AuditLogServiceAccountCreatedData.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # API model for AuditLogServiceAccountCreated.
+  # The details for events with this `type`.
+  class AuditLogServiceAccountCreated
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAuditLogServiceAccountCreatedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAuditLogServiceAccountCreatedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAuditLogServiceAccountCreatedMetadata::DECODERS
+
+    # @return [String] The service account ID.
+    attr_reader :id
+    # @return [AuditLogServiceAccountCreatedData] The payload used to create the service account.
+    attr_reader :data
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAuditLogRoleUnboundFromResourceMetadata
-  FIELDS = {
-    id: "id",
-    role_id: "role_id",
-    resource_id: "resource_id",
-    resource_type: "resource_type",
-    permissions: "permissions",
-    workspace_id: "workspace_id",
-    connector_id: "connector_id",
-    connector_name: "connector_name",
-    enabled: "enabled",
-    source: "source",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    source: lambda do |value|
-      ::OctridevOpenai::AuditLogRoleUnboundFromResourceSource.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for AuditLogRoleUnboundFromResource.
-# The details for events with this `type`.
-class AuditLogRoleUnboundFromResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAuditLogRoleUnboundFromResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAuditLogRoleUnboundFromResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAuditLogRoleUnboundFromResourceMetadata::DECODERS
-
-  # @return [String] The ID of the resource the role was unbound from. ChatGPT workspace connector resources use `<workspace_id>__<connector_id>`.
-  attr_reader :id
-  # @return [String] The ID of the role that was unbound from the resource.
-  attr_reader :role_id
-  # @return [String] The ID of the resource the role was unbound from.
-  attr_reader :resource_id
-  # @return [String] The type of resource the role was unbound from.
-  attr_reader :resource_type
-  # @return [Array_of_String] The permissions remaining for the role after the change.
-  attr_reader :permissions
-  # @return [String] The workspace ID for a ChatGPT workspace connector resource.
-  attr_reader :workspace_id
-  # @return [String] The connector ID for a ChatGPT workspace connector resource.
-  attr_reader :connector_id
-  # @return [String] The connector display name for a ChatGPT workspace connector resource, or the connector ID when the display name could not be resolved.
-  attr_reader :connector_name
-  # @return [Boolean] Whether the connector is enabled for the role.
-  attr_reader :enabled
-  # @return [AuditLogRoleUnboundFromResourceSource] The connector role mutation path that produced the event.
-  attr_reader :source
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalAuditLogServiceAccountUpdatedChangesRequestedMetadata
+    FIELDS = {
+      role: 'role'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for AuditLogServiceAccountUpdatedChangesRequested.
+  # The payload used to updated the service account.
+  class AuditLogServiceAccountUpdatedChangesRequested
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAuditLogServiceAccountUpdatedChangesRequestedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAuditLogServiceAccountUpdatedChangesRequestedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAuditLogServiceAccountUpdatedChangesRequestedMetadata::DECODERS
+
+    # @return [String] The role of the service account. Is either `owner` or `member`.
+    attr_reader :role
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalAuditLogServiceAccountUpdatedMetadata
+    FIELDS = {
+      id: 'id',
+      changes_requested: 'changes_requested'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      changes_requested: lambda do |value|
+        ::OctridevOpenai::AuditLogServiceAccountUpdatedChangesRequested.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # API model for AuditLogServiceAccountUpdated.
+  # The details for events with this `type`.
+  class AuditLogServiceAccountUpdated
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAuditLogServiceAccountUpdatedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAuditLogServiceAccountUpdatedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAuditLogServiceAccountUpdatedMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalAuditLogServiceAccountCreatedDataMetadata
-  FIELDS = {
-    role: "role",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
+    # @return [String] The service account ID.
+    attr_reader :id
+    # @return [AuditLogServiceAccountUpdatedChangesRequested] The payload used to updated the service account.
+    attr_reader :changes_requested
 
-# API model for AuditLogServiceAccountCreatedData.
-# The payload used to create the service account.
-class AuditLogServiceAccountCreatedData
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAuditLogServiceAccountCreatedDataMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAuditLogServiceAccountCreatedDataMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAuditLogServiceAccountCreatedDataMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [String] The role of the service account. Is either `owner` or `member`.
-  attr_reader :role
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalAuditLogServiceAccountDeletedMetadata
+    FIELDS = {
+      id: 'id'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # API model for AuditLogServiceAccountDeleted.
+  # The details for events with this `type`.
+  class AuditLogServiceAccountDeleted
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAuditLogServiceAccountDeletedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAuditLogServiceAccountDeletedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAuditLogServiceAccountDeletedMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalAuditLogServiceAccountCreatedMetadata
-  FIELDS = {
-    id: "id",
-    data: "data",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    data: lambda do |value|
-      ::OctridevOpenai::AuditLogServiceAccountCreatedData.from_hash(value)
-    end,
-  }.freeze
-end
+    # @return [String] The service account ID.
+    attr_reader :id
 
-# API model for AuditLogServiceAccountCreated.
-# The details for events with this `type`.
-class AuditLogServiceAccountCreated
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAuditLogServiceAccountCreatedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAuditLogServiceAccountCreatedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAuditLogServiceAccountCreatedMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [String] The service account ID.
-  attr_reader :id
-  # @return [AuditLogServiceAccountCreatedData] The payload used to create the service account.
-  attr_reader :data
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalAuditLogWorkloadIdentityProviderCreatedMetadata
+    FIELDS = {
+      id: 'id',
+      data: 'data'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
   end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAuditLogServiceAccountUpdatedChangesRequestedMetadata
-  FIELDS = {
-    role: "role",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for AuditLogServiceAccountUpdatedChangesRequested.
-# The payload used to updated the service account.
-class AuditLogServiceAccountUpdatedChangesRequested
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAuditLogServiceAccountUpdatedChangesRequestedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAuditLogServiceAccountUpdatedChangesRequestedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAuditLogServiceAccountUpdatedChangesRequestedMetadata::DECODERS
-
-  # @return [String] The role of the service account. Is either `owner` or `member`.
-  attr_reader :role
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAuditLogServiceAccountUpdatedMetadata
-  FIELDS = {
-    id: "id",
-    changes_requested: "changes_requested",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    changes_requested: lambda do |value|
-      ::OctridevOpenai::AuditLogServiceAccountUpdatedChangesRequested.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for AuditLogServiceAccountUpdated.
-# The details for events with this `type`.
-class AuditLogServiceAccountUpdated
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAuditLogServiceAccountUpdatedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAuditLogServiceAccountUpdatedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAuditLogServiceAccountUpdatedMetadata::DECODERS
-
-  # @return [String] The service account ID.
-  attr_reader :id
-  # @return [AuditLogServiceAccountUpdatedChangesRequested] The payload used to updated the service account.
-  attr_reader :changes_requested
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAuditLogServiceAccountDeletedMetadata
-  FIELDS = {
-    id: "id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for AuditLogServiceAccountDeleted.
-# The details for events with this `type`.
-class AuditLogServiceAccountDeleted
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAuditLogServiceAccountDeletedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAuditLogServiceAccountDeletedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAuditLogServiceAccountDeletedMetadata::DECODERS
-
-  # @return [String] The service account ID.
-  attr_reader :id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAuditLogWorkloadIdentityProviderCreatedMetadata
-  FIELDS = {
-    id: "id",
-    data: "data",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
 end

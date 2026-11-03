@@ -5,223 +5,223 @@
 
 # audio domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalVoiceConsentListResourceMetadata
-  FIELDS = {
-    object: "object",
-    data: "data",
-    first_id: "first_id",
-    last_id: "last_id",
-    has_more: "has_more",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    object
-    data
-    has_more
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::VoiceConsentListResourceObject.from_value(value)
-    end,
-    data: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::VoiceConsentResource.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for VoiceConsentListResource.
-# Typed representation of the `VoiceConsentListResource` API schema.
-class VoiceConsentListResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalVoiceConsentListResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalVoiceConsentListResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalVoiceConsentListResourceMetadata::DECODERS
-
-  # @return [VoiceConsentListResourceObject] Required enumerated value serialized in the `object` wire field.
-  attr_reader :object
-  # @return [Array_of_VoiceConsentResource] Required array value serialized in the `data` wire field.
-  attr_reader :data
-  # @return [String] Optional `string` value serialized in the `first_id` wire field.
-  attr_reader :first_id
-  # @return [String] Optional `string` value serialized in the `last_id` wire field.
-  attr_reader :last_id
-  # @return [Boolean] Required `boolean` value serialized in the `has_more` wire field.
-  attr_reader :has_more
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalVoiceConsentListResourceMetadata
+    FIELDS = {
+      object: 'object',
+      data: 'data',
+      first_id: 'first_id',
+      last_id: 'last_id',
+      has_more: 'has_more'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      object
+      data
+      has_more
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::VoiceConsentListResourceObject.from_value(value)
+      end,
+      data: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::VoiceConsentResource.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for VoiceConsentListResource.
+  # Typed representation of the `VoiceConsentListResource` API schema.
+  class VoiceConsentListResource
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalVoiceConsentListResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalVoiceConsentListResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalVoiceConsentListResourceMetadata::DECODERS
+
+    # @return [VoiceConsentListResourceObject] Required enumerated value serialized in the `object` wire field.
+    attr_reader :object
+    # @return [Array_of_VoiceConsentResource] Required array value serialized in the `data` wire field.
+    attr_reader :data
+    # @return [String] Optional `string` value serialized in the `first_id` wire field.
+    attr_reader :first_id
+    # @return [String] Optional `string` value serialized in the `last_id` wire field.
+    attr_reader :last_id
+    # @return [Boolean] Required `boolean` value serialized in the `has_more` wire field.
+    attr_reader :has_more
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the VoiceConsentListResourceObject SDK namespace.
+  module VoiceConsentListResourceObject
+    LIST = 'list'
+    VALUES = ['list'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Defines the VoiceConsentListResourceObject SDK namespace.
-module VoiceConsentListResourceObject
-  LIST = 'list'
-  VALUES = ['list'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalVoiceConsentResourceMetadata
-  FIELDS = {
-    object: "object",
-    id: "id",
-    name: "name",
-    language: "language",
-    created_at: "created_at",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    object
-    id
-    name
-    language
-    created_at
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::VoiceConsentResourceObject.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for VoiceConsentResource.
-# A consent recording used to authorize creation of a custom voice.
-class VoiceConsentResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalVoiceConsentResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalVoiceConsentResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalVoiceConsentResourceMetadata::DECODERS
-
-  # @return [VoiceConsentResourceObject] The object type, which is always `audio.voice_consent`.
-  attr_reader :object
-  # @return [String] The consent recording identifier.
-  attr_reader :id
-  # @return [String] The label provided when the consent recording was uploaded.
-  attr_reader :name
-  # @return [String] The BCP 47 language tag for the consent phrase (for example, `en-US`).
-  attr_reader :language
-  # @return [Integer] The Unix timestamp (in seconds) for when the consent recording was created.
-  attr_reader :created_at
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalVoiceConsentResourceMetadata
+    FIELDS = {
+      object: 'object',
+      id: 'id',
+      name: 'name',
+      language: 'language',
+      created_at: 'created_at'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      object
+      id
+      name
+      language
+      created_at
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::VoiceConsentResourceObject.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for VoiceConsentResource.
+  # A consent recording used to authorize creation of a custom voice.
+  class VoiceConsentResource
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalVoiceConsentResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalVoiceConsentResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalVoiceConsentResourceMetadata::DECODERS
+
+    # @return [VoiceConsentResourceObject] The object type, which is always `audio.voice_consent`.
+    attr_reader :object
+    # @return [String] The consent recording identifier.
+    attr_reader :id
+    # @return [String] The label provided when the consent recording was uploaded.
+    attr_reader :name
+    # @return [String] The BCP 47 language tag for the consent phrase (for example, `en-US`).
+    attr_reader :language
+    # @return [Integer] The Unix timestamp (in seconds) for when the consent recording was created.
+    attr_reader :created_at
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the VoiceConsentResourceObject SDK namespace.
+  module VoiceConsentResourceObject
+    AUDIO_VOICE_CONSENT = 'audio.voice_consent'
+    VALUES = ['audio.voice_consent'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Defines the VoiceConsentResourceObject SDK namespace.
-module VoiceConsentResourceObject
-  AUDIO_VOICE_CONSENT = 'audio.voice_consent'
-  VALUES = ['audio.voice_consent'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalVoiceResourceMetadata
-  FIELDS = {
-    object: "object",
-    id: "id",
-    type: "type",
-    name: "name",
-    created_at: "created_at",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    object
-    id
-    type
-    name
-    created_at
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::VoiceResourceObject.from_value(value)
-    end,
-    type: lambda do |value|
-      ::OctridevOpenai::VoiceResourceType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for VoiceResource.
-# A custom voice that can be used for audio output.
-class VoiceResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalVoiceResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalVoiceResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalVoiceResourceMetadata::DECODERS
-
-  # @return [VoiceResourceObject] The object type, which is always `audio.voice`.
-  attr_reader :object
-  # @return [String] The voice identifier, which can be referenced in API endpoints.
-  attr_reader :id
-  # @return [VoiceResourceType] How the voice was created.
-  attr_reader :type
-  # @return [String] The name of the voice.
-  attr_reader :name
-  # @return [Integer] The Unix timestamp (in seconds) for when the voice was created.
-  attr_reader :created_at
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalVoiceResourceMetadata
+    FIELDS = {
+      object: 'object',
+      id: 'id',
+      type: 'type',
+      name: 'name',
+      created_at: 'created_at'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      object
+      id
+      type
+      name
+      created_at
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::VoiceResourceObject.from_value(value)
+      end,
+      type: lambda do |value|
+        ::OctridevOpenai::VoiceResourceType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for VoiceResource.
+  # A custom voice that can be used for audio output.
+  class VoiceResource
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalVoiceResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalVoiceResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalVoiceResourceMetadata::DECODERS
+
+    # @return [VoiceResourceObject] The object type, which is always `audio.voice`.
+    attr_reader :object
+    # @return [String] The voice identifier, which can be referenced in API endpoints.
+    attr_reader :id
+    # @return [VoiceResourceType] How the voice was created.
+    attr_reader :type
+    # @return [String] The name of the voice.
+    attr_reader :name
+    # @return [Integer] The Unix timestamp (in seconds) for when the voice was created.
+    attr_reader :created_at
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the VoiceResourceObject SDK namespace.
+  module VoiceResourceObject
+    AUDIO_VOICE = 'audio.voice'
+    VALUES = ['audio.voice'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
+  # Defines the VoiceResourceType SDK namespace.
+  module VoiceResourceType
+    AUDIO_SAMPLE = 'audio_sample'
+    VALUES = ['audio_sample'].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
-
-# Defines the VoiceResourceObject SDK namespace.
-module VoiceResourceObject
-  AUDIO_VOICE = 'audio.voice'
-  VALUES = ['audio.voice'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the VoiceResourceType SDK namespace.
-module VoiceResourceType
-  AUDIO_SAMPLE = 'audio_sample'
-  VALUES = ['audio_sample'].freeze
-  def self.from_value(value)
-    value
-  end
-end
 end

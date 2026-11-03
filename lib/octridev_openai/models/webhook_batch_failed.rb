@@ -5,127 +5,126 @@
 
 # webhook_batch_failed domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalWebhookBatchFailedDataMetadata
-  FIELDS = {
-    id: "id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for WebhookBatchFailedData.
-# Event data payload.
-class WebhookBatchFailedData
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalWebhookBatchFailedDataMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalWebhookBatchFailedDataMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalWebhookBatchFailedDataMetadata::DECODERS
-
-  # @return [String] The unique ID of the batch API request.
-  attr_reader :id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalWebhookBatchFailedDataMetadata
+    FIELDS = {
+      id: 'id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for WebhookBatchFailedData.
+  # Event data payload.
+  class WebhookBatchFailedData
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalWebhookBatchFailedDataMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalWebhookBatchFailedDataMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalWebhookBatchFailedDataMetadata::DECODERS
+
+    # @return [String] The unique ID of the batch API request.
+    attr_reader :id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalWebhookBatchFailedMetadata
+    FIELDS = {
+      created_at: 'created_at',
+      id: 'id',
+      data: 'data',
+      object: 'object',
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      created_at
+      id
+      data
+      type
+    ].freeze
+    DECODERS = {
+      data: lambda do |value|
+        ::OctridevOpenai::WebhookBatchFailedData.from_hash(value)
+      end,
+      object: lambda do |value|
+        ::OctridevOpenai::WebhookBatchFailedObject.from_value(value)
+      end,
+      type: lambda do |value|
+        ::OctridevOpenai::WebhookBatchFailedType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # API model for WebhookBatchFailed.
+  # Sent when a batch API request has failed.
+  class WebhookBatchFailed
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalWebhookBatchFailedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalWebhookBatchFailedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalWebhookBatchFailedMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalWebhookBatchFailedMetadata
-  FIELDS = {
-    created_at: "created_at",
-    id: "id",
-    data: "data",
-    object: "object",
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    created_at
-    id
-    data
-    type
-  ].freeze
-  DECODERS = {
-    data: lambda do |value|
-      ::OctridevOpenai::WebhookBatchFailedData.from_hash(value)
-    end,
-    object: lambda do |value|
-      ::OctridevOpenai::WebhookBatchFailedObject.from_value(value)
-    end,
-    type: lambda do |value|
-      ::OctridevOpenai::WebhookBatchFailedType.from_value(value)
-    end,
-  }.freeze
-end
+    # @return [Integer] The Unix timestamp (in seconds) of when the batch API request failed.
+    attr_reader :created_at
+    # @return [String] The unique ID of the event.
+    attr_reader :id
+    # @return [WebhookBatchFailedData] Event data payload.
+    attr_reader :data
+    # @return [WebhookBatchFailedObject] The object of the event. Always `event`.
+    attr_reader :object
+    # @return [WebhookBatchFailedType] The type of the event. Always `batch.failed`.
+    attr_reader :type
 
-# API model for WebhookBatchFailed.
-# Sent when a batch API request has failed.
-class WebhookBatchFailed
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalWebhookBatchFailedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalWebhookBatchFailedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalWebhookBatchFailedMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [Integer] The Unix timestamp (in seconds) of when the batch API request failed.
-  attr_reader :created_at
-  # @return [String] The unique ID of the event.
-  attr_reader :id
-  # @return [WebhookBatchFailedData] Event data payload.
-  attr_reader :data
-  # @return [WebhookBatchFailedObject] The object of the event. Always `event`.
-  attr_reader :object
-  # @return [WebhookBatchFailedType] The type of the event. Always `batch.failed`.
-  attr_reader :type
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the WebhookBatchFailedObject SDK namespace.
+  module WebhookBatchFailedObject
+    EVENT = 'event'
+    VALUES = ['event'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the WebhookBatchFailedType SDK namespace.
+  module WebhookBatchFailedType
+    BATCH_FAILED = 'batch.failed'
+    VALUES = ['batch.failed'].freeze
+    def self.from_value(value)
+      value
+    end
   end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Defines the WebhookBatchFailedObject SDK namespace.
-module WebhookBatchFailedObject
-  EVENT = 'event'
-  VALUES = ['event'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the WebhookBatchFailedType SDK namespace.
-module WebhookBatchFailedType
-  BATCH_FAILED = 'batch.failed'
-  VALUES = ['batch.failed'].freeze
-  def self.from_value(value)
-    value
-  end
-end
 end

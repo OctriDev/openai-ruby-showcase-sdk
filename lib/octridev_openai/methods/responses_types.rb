@@ -12,9 +12,9 @@ module OctridevOpenai
       # Internal model hydration metadata.
       class SdkInternalDeleteResponseResponseMetadata
         FIELDS = {
-          object: "object",
-          deleted: "deleted",
-          id: "id",
+          object: 'object',
+          deleted: 'deleted',
+          id: 'id'
         }.freeze
         REQUIRED_FIELDS = %i[
           object
@@ -24,7 +24,7 @@ module OctridevOpenai
         DECODERS = {
           object: lambda do |value|
             ::OctridevOpenai::Methods::Responses::DeleteResponseResponseObject.from_value(value)
-          end,
+          end
         }.freeze
       end
 
@@ -58,9 +58,9 @@ module OctridevOpenai
       # Internal model hydration metadata.
       class SdkInternalBetaDeleteResponseResponseMetadata
         FIELDS = {
-          object: "object",
-          deleted: "deleted",
-          id: "id",
+          object: 'object',
+          deleted: 'deleted',
+          id: 'id'
         }.freeze
         REQUIRED_FIELDS = %i[
           object
@@ -70,7 +70,7 @@ module OctridevOpenai
         DECODERS = {
           object: lambda do |value|
             ::OctridevOpenai::Methods::Responses::BetaDeleteResponseResponseObject.from_value(value)
-          end,
+          end
         }.freeze
       end
 
@@ -105,7 +105,7 @@ module OctridevOpenai
       module BetaListInputItemsParameter
         ASC = 'asc'
         DESC = 'desc'
-        VALUES = ['asc', 'desc'].freeze
+        VALUES = %w[asc desc].freeze
         def self.from_value(value)
           value
         end
@@ -178,7 +178,7 @@ module OctridevOpenai
       module ListInputItemsParameter
         ASC = 'asc'
         DESC = 'desc'
-        VALUES = ['asc', 'desc'].freeze
+        VALUES = %w[asc desc].freeze
         def self.from_value(value)
           value
         end

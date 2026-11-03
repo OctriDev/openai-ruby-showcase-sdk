@@ -5,673 +5,646 @@
 
 # audit_logs domain models
 module OctridevOpenai
-# API model for AuditLogGroupCreated.
-# The details for events with this `type`.
-class AuditLogGroupCreated
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAuditLogGroupCreatedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAuditLogGroupCreatedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAuditLogGroupCreatedMetadata::DECODERS
-
-  # @return [String] The ID of the group.
-  attr_reader :id
-  # @return [AuditLogGroupCreatedData] Information about the created group.
-  attr_reader :data
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # API model for AuditLogGroupCreated.
+  # The details for events with this `type`.
+  class AuditLogGroupCreated
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAuditLogGroupCreatedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAuditLogGroupCreatedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAuditLogGroupCreatedMetadata::DECODERS
+
+    # @return [String] The ID of the group.
+    attr_reader :id
+    # @return [AuditLogGroupCreatedData] Information about the created group.
+    attr_reader :data
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalAuditLogGroupUpdatedChangesRequestedMetadata
+    FIELDS = {
+      group_name: 'group_name'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
+  end
+
+  # API model for AuditLogGroupUpdatedChangesRequested.
+  # The payload used to update the group.
+  class AuditLogGroupUpdatedChangesRequested
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAuditLogGroupUpdatedChangesRequestedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAuditLogGroupUpdatedChangesRequestedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAuditLogGroupUpdatedChangesRequestedMetadata::DECODERS
+
+    # @return [String] The updated group name.
+    attr_reader :group_name
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalAuditLogGroupUpdatedMetadata
+    FIELDS = {
+      id: 'id',
+      changes_requested: 'changes_requested'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      changes_requested: lambda do |value|
+        ::OctridevOpenai::AuditLogGroupUpdatedChangesRequested.from_hash(value)
+      end
+    }.freeze
+  end
+
+  # API model for AuditLogGroupUpdated.
+  # The details for events with this `type`.
+  class AuditLogGroupUpdated
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAuditLogGroupUpdatedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAuditLogGroupUpdatedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAuditLogGroupUpdatedMetadata::DECODERS
+
+    # @return [String] The ID of the group.
+    attr_reader :id
+    # @return [AuditLogGroupUpdatedChangesRequested] The payload used to update the group.
+    attr_reader :changes_requested
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalAuditLogGroupDeletedMetadata
+    FIELDS = {
+      id: 'id'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
+  end
+
+  # API model for AuditLogGroupDeleted.
+  # The details for events with this `type`.
+  class AuditLogGroupDeleted
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAuditLogGroupDeletedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAuditLogGroupDeletedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAuditLogGroupDeletedMetadata::DECODERS
+
+    # @return [String] The ID of the group.
+    attr_reader :id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalAuditLogScimEnabledMetadata
+    FIELDS = {
+      id: 'id'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
+  end
+
+  # API model for AuditLogScimEnabled.
+  # The details for events with this `type`.
+  class AuditLogScimEnabled
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAuditLogScimEnabledMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAuditLogScimEnabledMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAuditLogScimEnabledMetadata::DECODERS
+
+    # @return [String] The ID of the SCIM was enabled for.
+    attr_reader :id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalAuditLogScimDisabledMetadata
+    FIELDS = {
+      id: 'id'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
+  end
+
+  # API model for AuditLogScimDisabled.
+  # The details for events with this `type`.
+  class AuditLogScimDisabled
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAuditLogScimDisabledMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAuditLogScimDisabledMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAuditLogScimDisabledMetadata::DECODERS
+
+    # @return [String] The ID of the SCIM was disabled for.
+    attr_reader :id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalAuditLogInviteSentDataMetadata
+    FIELDS = {
+      email: 'email',
+      role: 'role'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
+  end
+
+  # API model for AuditLogInviteSentData.
+  # The payload used to create the invite.
+  class AuditLogInviteSentData
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAuditLogInviteSentDataMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAuditLogInviteSentDataMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAuditLogInviteSentDataMetadata::DECODERS
+
+    # @return [String] The email invited to the organization.
+    attr_reader :email
+    # @return [String] The role the email was invited to be. Is either `owner` or `member`.
+    attr_reader :role
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalAuditLogInviteSentMetadata
+    FIELDS = {
+      id: 'id',
+      data: 'data'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      data: lambda do |value|
+        ::OctridevOpenai::AuditLogInviteSentData.from_hash(value)
+      end
+    }.freeze
+  end
+
+  # API model for AuditLogInviteSent.
+  # The details for events with this `type`.
+  class AuditLogInviteSent
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAuditLogInviteSentMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAuditLogInviteSentMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAuditLogInviteSentMetadata::DECODERS
+
+    # @return [String] The ID of the invite.
+    attr_reader :id
+    # @return [AuditLogInviteSentData] The payload used to create the invite.
+    attr_reader :data
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalAuditLogInviteAcceptedMetadata
+    FIELDS = {
+      id: 'id'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
+  end
+
+  # API model for AuditLogInviteAccepted.
+  # The details for events with this `type`.
+  class AuditLogInviteAccepted
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAuditLogInviteAcceptedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAuditLogInviteAcceptedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAuditLogInviteAcceptedMetadata::DECODERS
+
+    # @return [String] The ID of the invite.
+    attr_reader :id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalAuditLogInviteDeletedMetadata
+    FIELDS = {
+      id: 'id'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
+  end
+
+  # API model for AuditLogInviteDeleted.
+  # The details for events with this `type`.
+  class AuditLogInviteDeleted
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAuditLogInviteDeletedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAuditLogInviteDeletedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAuditLogInviteDeletedMetadata::DECODERS
+
+    # @return [String] The ID of the invite.
+    attr_reader :id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalAuditLogIpAllowlistCreatedMetadata
+    FIELDS = {
+      id: 'id',
+      name: 'name',
+      allowed_ips: 'allowed_ips'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
+  end
+
+  # API model for AuditLogIpAllowlistCreated.
+  # The details for events with this `type`.
+  class AuditLogIpAllowlistCreated
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAuditLogIpAllowlistCreatedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAuditLogIpAllowlistCreatedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAuditLogIpAllowlistCreatedMetadata::DECODERS
+
+    # @return [String] The ID of the IP allowlist configuration.
+    attr_reader :id
+    # @return [String] The name of the IP allowlist configuration.
+    attr_reader :name
+    # @return [Array_of_String] The IP addresses or CIDR ranges included in the configuration.
+    attr_reader :allowed_ips
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalAuditLogIpAllowlistUpdatedMetadata
+    FIELDS = {
+      id: 'id',
+      allowed_ips: 'allowed_ips'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
+  end
+
+  # API model for AuditLogIpAllowlistUpdated.
+  # The details for events with this `type`.
+  class AuditLogIpAllowlistUpdated
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAuditLogIpAllowlistUpdatedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAuditLogIpAllowlistUpdatedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAuditLogIpAllowlistUpdatedMetadata::DECODERS
+
+    # @return [String] The ID of the IP allowlist configuration.
+    attr_reader :id
+    # @return [Array_of_String] The updated set of IP addresses or CIDR ranges in the configuration.
+    attr_reader :allowed_ips
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalAuditLogIpAllowlistDeletedMetadata
+    FIELDS = {
+      id: 'id',
+      name: 'name',
+      allowed_ips: 'allowed_ips'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
+  end
+
+  # API model for AuditLogIpAllowlistDeleted.
+  # The details for events with this `type`.
+  class AuditLogIpAllowlistDeleted
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAuditLogIpAllowlistDeletedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAuditLogIpAllowlistDeletedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAuditLogIpAllowlistDeletedMetadata::DECODERS
+
+    # @return [String] The ID of the IP allowlist configuration.
+    attr_reader :id
+    # @return [String] The name of the IP allowlist configuration.
+    attr_reader :name
+    # @return [Array_of_String] The IP addresses or CIDR ranges that were in the configuration.
+    attr_reader :allowed_ips
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalAuditLogIpAllowlistConfigActivatedConfigsItemMetadata
+    FIELDS = {
+      id: 'id',
+      name: 'name'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
+  end
+
+  # API model for AuditLogIpAllowlistConfigActivatedConfigsItem.
+  # Required object value serialized in the `configs[]` wire field.
+  class AuditLogIpAllowlistConfigActivatedConfigsItem
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAuditLogIpAllowlistConfigActivatedConfigsItemMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAuditLogIpAllowlistConfigActivatedConfigsItemMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAuditLogIpAllowlistConfigActivatedConfigsItemMetadata::DECODERS
+
+    # @return [String] The ID of the IP allowlist configuration.
+    attr_reader :id
+    # @return [String] The name of the IP allowlist configuration.
+    attr_reader :name
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalAuditLogIpAllowlistConfigActivatedMetadata
+    FIELDS = {
+      configs: 'configs'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      configs: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::AuditLogIpAllowlistConfigActivatedConfigsItem.from_hash(item) }
+      end
+    }.freeze
+  end
+
+  # API model for AuditLogIpAllowlistConfigActivated.
+  # The details for events with this `type`.
+  class AuditLogIpAllowlistConfigActivated
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAuditLogIpAllowlistConfigActivatedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAuditLogIpAllowlistConfigActivatedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAuditLogIpAllowlistConfigActivatedMetadata::DECODERS
+
+    # @return [Array_of_AuditLogIpAllowlistConfigActivatedConfigsItem] The configurations that were activated.
+    attr_reader :configs
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
+  end
+
+  # Internal model hydration metadata.
+  class SdkInternalAuditLogIpAllowlistConfigDeactivatedConfigsItemMetadata
+    FIELDS = {
+      id: 'id',
+      name: 'name'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
+  end
+
+  # API model for AuditLogIpAllowlistConfigDeactivatedConfigsItem.
+  # Required object value serialized in the `configs[]` wire field.
+  class AuditLogIpAllowlistConfigDeactivatedConfigsItem
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAuditLogIpAllowlistConfigDeactivatedConfigsItemMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAuditLogIpAllowlistConfigDeactivatedConfigsItemMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAuditLogIpAllowlistConfigDeactivatedConfigsItemMetadata::DECODERS
+
+    # @return [String] The ID of the IP allowlist configuration.
+    attr_reader :id
+    # @return [String] The name of the IP allowlist configuration.
+    attr_reader :name
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAuditLogGroupUpdatedChangesRequestedMetadata
-  FIELDS = {
-    group_name: "group_name",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for AuditLogGroupUpdatedChangesRequested.
-# The payload used to update the group.
-class AuditLogGroupUpdatedChangesRequested
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAuditLogGroupUpdatedChangesRequestedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAuditLogGroupUpdatedChangesRequestedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAuditLogGroupUpdatedChangesRequestedMetadata::DECODERS
-
-  # @return [String] The updated group name.
-  attr_reader :group_name
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAuditLogGroupUpdatedMetadata
-  FIELDS = {
-    id: "id",
-    changes_requested: "changes_requested",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    changes_requested: lambda do |value|
-      ::OctridevOpenai::AuditLogGroupUpdatedChangesRequested.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for AuditLogGroupUpdated.
-# The details for events with this `type`.
-class AuditLogGroupUpdated
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAuditLogGroupUpdatedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAuditLogGroupUpdatedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAuditLogGroupUpdatedMetadata::DECODERS
-
-  # @return [String] The ID of the group.
-  attr_reader :id
-  # @return [AuditLogGroupUpdatedChangesRequested] The payload used to update the group.
-  attr_reader :changes_requested
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAuditLogGroupDeletedMetadata
-  FIELDS = {
-    id: "id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for AuditLogGroupDeleted.
-# The details for events with this `type`.
-class AuditLogGroupDeleted
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAuditLogGroupDeletedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAuditLogGroupDeletedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAuditLogGroupDeletedMetadata::DECODERS
-
-  # @return [String] The ID of the group.
-  attr_reader :id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAuditLogScimEnabledMetadata
-  FIELDS = {
-    id: "id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for AuditLogScimEnabled.
-# The details for events with this `type`.
-class AuditLogScimEnabled
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAuditLogScimEnabledMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAuditLogScimEnabledMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAuditLogScimEnabledMetadata::DECODERS
-
-  # @return [String] The ID of the SCIM was enabled for.
-  attr_reader :id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAuditLogScimDisabledMetadata
-  FIELDS = {
-    id: "id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for AuditLogScimDisabled.
-# The details for events with this `type`.
-class AuditLogScimDisabled
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAuditLogScimDisabledMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAuditLogScimDisabledMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAuditLogScimDisabledMetadata::DECODERS
-
-  # @return [String] The ID of the SCIM was disabled for.
-  attr_reader :id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAuditLogInviteSentDataMetadata
-  FIELDS = {
-    email: "email",
-    role: "role",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for AuditLogInviteSentData.
-# The payload used to create the invite.
-class AuditLogInviteSentData
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAuditLogInviteSentDataMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAuditLogInviteSentDataMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAuditLogInviteSentDataMetadata::DECODERS
-
-  # @return [String] The email invited to the organization.
-  attr_reader :email
-  # @return [String] The role the email was invited to be. Is either `owner` or `member`.
-  attr_reader :role
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAuditLogInviteSentMetadata
-  FIELDS = {
-    id: "id",
-    data: "data",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    data: lambda do |value|
-      ::OctridevOpenai::AuditLogInviteSentData.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for AuditLogInviteSent.
-# The details for events with this `type`.
-class AuditLogInviteSent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAuditLogInviteSentMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAuditLogInviteSentMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAuditLogInviteSentMetadata::DECODERS
-
-  # @return [String] The ID of the invite.
-  attr_reader :id
-  # @return [AuditLogInviteSentData] The payload used to create the invite.
-  attr_reader :data
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAuditLogInviteAcceptedMetadata
-  FIELDS = {
-    id: "id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for AuditLogInviteAccepted.
-# The details for events with this `type`.
-class AuditLogInviteAccepted
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAuditLogInviteAcceptedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAuditLogInviteAcceptedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAuditLogInviteAcceptedMetadata::DECODERS
-
-  # @return [String] The ID of the invite.
-  attr_reader :id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAuditLogInviteDeletedMetadata
-  FIELDS = {
-    id: "id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for AuditLogInviteDeleted.
-# The details for events with this `type`.
-class AuditLogInviteDeleted
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAuditLogInviteDeletedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAuditLogInviteDeletedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAuditLogInviteDeletedMetadata::DECODERS
-
-  # @return [String] The ID of the invite.
-  attr_reader :id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAuditLogIpAllowlistCreatedMetadata
-  FIELDS = {
-    id: "id",
-    name: "name",
-    allowed_ips: "allowed_ips",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for AuditLogIpAllowlistCreated.
-# The details for events with this `type`.
-class AuditLogIpAllowlistCreated
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAuditLogIpAllowlistCreatedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAuditLogIpAllowlistCreatedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAuditLogIpAllowlistCreatedMetadata::DECODERS
-
-  # @return [String] The ID of the IP allowlist configuration.
-  attr_reader :id
-  # @return [String] The name of the IP allowlist configuration.
-  attr_reader :name
-  # @return [Array_of_String] The IP addresses or CIDR ranges included in the configuration.
-  attr_reader :allowed_ips
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAuditLogIpAllowlistUpdatedMetadata
-  FIELDS = {
-    id: "id",
-    allowed_ips: "allowed_ips",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for AuditLogIpAllowlistUpdated.
-# The details for events with this `type`.
-class AuditLogIpAllowlistUpdated
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAuditLogIpAllowlistUpdatedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAuditLogIpAllowlistUpdatedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAuditLogIpAllowlistUpdatedMetadata::DECODERS
-
-  # @return [String] The ID of the IP allowlist configuration.
-  attr_reader :id
-  # @return [Array_of_String] The updated set of IP addresses or CIDR ranges in the configuration.
-  attr_reader :allowed_ips
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAuditLogIpAllowlistDeletedMetadata
-  FIELDS = {
-    id: "id",
-    name: "name",
-    allowed_ips: "allowed_ips",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for AuditLogIpAllowlistDeleted.
-# The details for events with this `type`.
-class AuditLogIpAllowlistDeleted
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAuditLogIpAllowlistDeletedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAuditLogIpAllowlistDeletedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAuditLogIpAllowlistDeletedMetadata::DECODERS
-
-  # @return [String] The ID of the IP allowlist configuration.
-  attr_reader :id
-  # @return [String] The name of the IP allowlist configuration.
-  attr_reader :name
-  # @return [Array_of_String] The IP addresses or CIDR ranges that were in the configuration.
-  attr_reader :allowed_ips
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAuditLogIpAllowlistConfigActivatedConfigsItemMetadata
-  FIELDS = {
-    id: "id",
-    name: "name",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for AuditLogIpAllowlistConfigActivatedConfigsItem.
-# Required object value serialized in the `configs[]` wire field.
-class AuditLogIpAllowlistConfigActivatedConfigsItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAuditLogIpAllowlistConfigActivatedConfigsItemMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAuditLogIpAllowlistConfigActivatedConfigsItemMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAuditLogIpAllowlistConfigActivatedConfigsItemMetadata::DECODERS
-
-  # @return [String] The ID of the IP allowlist configuration.
-  attr_reader :id
-  # @return [String] The name of the IP allowlist configuration.
-  attr_reader :name
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAuditLogIpAllowlistConfigActivatedMetadata
-  FIELDS = {
-    configs: "configs",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    configs: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::AuditLogIpAllowlistConfigActivatedConfigsItem.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for AuditLogIpAllowlistConfigActivated.
-# The details for events with this `type`.
-class AuditLogIpAllowlistConfigActivated
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAuditLogIpAllowlistConfigActivatedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAuditLogIpAllowlistConfigActivatedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAuditLogIpAllowlistConfigActivatedMetadata::DECODERS
-
-  # @return [Array_of_AuditLogIpAllowlistConfigActivatedConfigsItem] The configurations that were activated.
-  attr_reader :configs
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalAuditLogIpAllowlistConfigDeactivatedConfigsItemMetadata
-  FIELDS = {
-    id: "id",
-    name: "name",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for AuditLogIpAllowlistConfigDeactivatedConfigsItem.
-# Required object value serialized in the `configs[]` wire field.
-class AuditLogIpAllowlistConfigDeactivatedConfigsItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAuditLogIpAllowlistConfigDeactivatedConfigsItemMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAuditLogIpAllowlistConfigDeactivatedConfigsItemMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAuditLogIpAllowlistConfigDeactivatedConfigsItemMetadata::DECODERS
-
-  # @return [String] The ID of the IP allowlist configuration.
-  attr_reader :id
-  # @return [String] The name of the IP allowlist configuration.
-  attr_reader :name
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
 end

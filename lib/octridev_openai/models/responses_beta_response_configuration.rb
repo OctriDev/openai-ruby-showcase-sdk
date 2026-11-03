@@ -5,232 +5,232 @@
 
 # responses_beta_response_configuration domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalBetaResponseConfigurationUpdateReasoningMetadata
-  FIELDS = {
-    effort: "effort",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    effort: lambda do |value|
-      ::OctridevOpenai::BetaReasoningEffort.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaResponseConfigurationUpdateReasoning.
-# The reasoning configuration applied by this update.
-class BetaResponseConfigurationUpdateReasoning
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaResponseConfigurationUpdateReasoningMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaResponseConfigurationUpdateReasoningMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaResponseConfigurationUpdateReasoningMetadata::DECODERS
-
-  # @return [BetaReasoningEffort] The reasoning effort used for subsequent responses until another configuration update replaces it.
-  attr_reader :effort
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalBetaResponseConfigurationUpdateReasoningMetadata
+    FIELDS = {
+      effort: 'effort'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      effort: lambda do |value|
+        ::OctridevOpenai::BetaReasoningEffort.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for BetaResponseConfigurationUpdateReasoning.
+  # The reasoning configuration applied by this update.
+  class BetaResponseConfigurationUpdateReasoning
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaResponseConfigurationUpdateReasoningMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaResponseConfigurationUpdateReasoningMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaResponseConfigurationUpdateReasoningMetadata::DECODERS
+
+    # @return [BetaReasoningEffort] The reasoning effort used for subsequent responses until another configuration update replaces it.
+    attr_reader :effort
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalBetaResponseConfigurationUpdateMetadata
+    FIELDS = {
+      agent: 'agent',
+      id: 'id',
+      type: 'type',
+      reasoning: 'reasoning'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      type
+    ].freeze
+    DECODERS = {
+      agent: lambda do |value|
+        ::OctridevOpenai::BetaAgentTag.from_hash(value)
+      end,
+      type: lambda do |value|
+        ::OctridevOpenai::BetaResponseConfigurationUpdateType.from_value(value)
+      end,
+      reasoning: lambda do |value|
+        ::OctridevOpenai::BetaResponseConfigurationUpdateReasoning.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # API model for BetaResponseConfigurationUpdate.
+  # A configuration update that applies to subsequent responses until it is replaced by another configuration update.
+  class BetaResponseConfigurationUpdate
+    include BetaItemResource
 
-# Internal model hydration metadata.
-class SdkInternalBetaResponseConfigurationUpdateMetadata
-  FIELDS = {
-    agent: "agent",
-    id: "id",
-    type: "type",
-    reasoning: "reasoning",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    type
-  ].freeze
-  DECODERS = {
-    agent: lambda do |value|
-      ::OctridevOpenai::BetaAgentTag.from_hash(value)
-    end,
-    type: lambda do |value|
-      ::OctridevOpenai::BetaResponseConfigurationUpdateType.from_value(value)
-    end,
-    reasoning: lambda do |value|
-      ::OctridevOpenai::BetaResponseConfigurationUpdateReasoning.from_hash(value)
-    end,
-  }.freeze
-end
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaResponseConfigurationUpdateMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaResponseConfigurationUpdateMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaResponseConfigurationUpdateMetadata::DECODERS
 
-# API model for BetaResponseConfigurationUpdate.
-# A configuration update that applies to subsequent responses until it is replaced by another configuration update.
-class BetaResponseConfigurationUpdate
-  include BetaItemResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaResponseConfigurationUpdateMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaResponseConfigurationUpdateMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaResponseConfigurationUpdateMetadata::DECODERS
+    # @return [BetaAgentTag] The agent that produced this item.
+    attr_reader :agent
+    # @return [String] The unique ID of the configuration update item.
+    attr_reader :id
+    # @return [BetaResponseConfigurationUpdateType] The item type. Always `configuration_update`.
+    attr_reader :type
+    # @return [BetaResponseConfigurationUpdateReasoning] The reasoning configuration applied by this update.
+    attr_reader :reasoning
 
-  # @return [BetaAgentTag] The agent that produced this item.
-  attr_reader :agent
-  # @return [String] The unique ID of the configuration update item.
-  attr_reader :id
-  # @return [BetaResponseConfigurationUpdateType] The item type. Always `configuration_update`.
-  attr_reader :type
-  # @return [BetaResponseConfigurationUpdateReasoning] The reasoning configuration applied by this update.
-  attr_reader :reasoning
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the BetaResponseConfigurationUpdateType SDK namespace.
+  module BetaResponseConfigurationUpdateType
+    CONFIGURATION_UPDATE = 'configuration_update'
+    VALUES = ['configuration_update'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaResponseConfigurationUpdateType', 'enum', "Unknown BetaResponseConfigurationUpdateType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalBetaResponseConfigurationUpdateItemParamReasoningMetadata
+    FIELDS = {
+      effort: 'effort'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      effort: lambda do |value|
+        ::OctridevOpenai::BetaReasoningEffort.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # API model for BetaResponseConfigurationUpdateItemParamReasoning.
+  # Updates to reasoning configuration. Only effort is supported.
+  class BetaResponseConfigurationUpdateItemParamReasoning
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaResponseConfigurationUpdateItemParamReasoningMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaResponseConfigurationUpdateItemParamReasoningMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaResponseConfigurationUpdateItemParamReasoningMetadata::DECODERS
 
-# Defines the BetaResponseConfigurationUpdateType SDK namespace.
-module BetaResponseConfigurationUpdateType
-  CONFIGURATION_UPDATE = 'configuration_update'
-  VALUES = ['configuration_update'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    # @return [BetaReasoningEffort] The reasoning effort to use for subsequent responses until another configuration update replaces it.
+    attr_reader :effort
 
-    raise SdkValidationError.new('BetaResponseConfigurationUpdateType', 'enum', "Unknown BetaResponseConfigurationUpdateType: #{value}")
-  end
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# Internal model hydration metadata.
-class SdkInternalBetaResponseConfigurationUpdateItemParamReasoningMetadata
-  FIELDS = {
-    effort: "effort",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    effort: lambda do |value|
-      ::OctridevOpenai::BetaReasoningEffort.from_hash(value)
-    end,
-  }.freeze
-end
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-# API model for BetaResponseConfigurationUpdateItemParamReasoning.
-# Updates to reasoning configuration. Only effort is supported.
-class BetaResponseConfigurationUpdateItemParamReasoning
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaResponseConfigurationUpdateItemParamReasoningMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaResponseConfigurationUpdateItemParamReasoningMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaResponseConfigurationUpdateItemParamReasoningMetadata::DECODERS
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
 
-  # @return [BetaReasoningEffort] The reasoning effort to use for subsequent responses until another configuration update replaces it.
-  attr_reader :effort
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalBetaResponseConfigurationUpdateItemParamMetadata
+    FIELDS = {
+      agent: 'agent',
+      id: 'id',
+      type: 'type',
+      reasoning: 'reasoning'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      agent: lambda do |value|
+        ::OctridevOpenai::BetaAgentTagParam.from_hash(value)
+      end,
+      type: lambda do |value|
+        ::OctridevOpenai::BetaResponseConfigurationUpdateItemParamType.from_value(value)
+      end,
+      reasoning: lambda do |value|
+        ::OctridevOpenai::BetaResponseConfigurationUpdateItemParamReasoning.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # API model for BetaResponseConfigurationUpdateItemParam.
+  # An update to the conversation's response configuration. The configuration remains in effect for subsequent responses until it is replaced by another configuration update.
+  class BetaResponseConfigurationUpdateItemParam
+    include BetaItem
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaResponseConfigurationUpdateItemParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaResponseConfigurationUpdateItemParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaResponseConfigurationUpdateItemParamMetadata::DECODERS
+
+    # @return [BetaAgentTagParam] Optional API value serialized in the `agent` wire field.
+    attr_reader :agent
+    # @return [String] Optional `string` value serialized in the `id` wire field.
+    attr_reader :id
+    # @return [BetaResponseConfigurationUpdateItemParamType] The item type. Always `configuration_update`.
+    attr_reader :type
+    # @return [BetaResponseConfigurationUpdateItemParamReasoning] Updates to reasoning configuration. Only effort is supported.
+    attr_reader :reasoning
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
+  # Defines the BetaResponseConfigurationUpdateItemParamType SDK namespace.
+  module BetaResponseConfigurationUpdateItemParamType
+    CONFIGURATION_UPDATE = 'configuration_update'
+    VALUES = ['configuration_update'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('BetaResponseConfigurationUpdateItemParamType', 'enum', "Unknown BetaResponseConfigurationUpdateItemParamType: #{value}")
+    end
   end
-end
-
-# Internal model hydration metadata.
-class SdkInternalBetaResponseConfigurationUpdateItemParamMetadata
-  FIELDS = {
-    agent: "agent",
-    id: "id",
-    type: "type",
-    reasoning: "reasoning",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    agent: lambda do |value|
-      ::OctridevOpenai::BetaAgentTagParam.from_hash(value)
-    end,
-    type: lambda do |value|
-      ::OctridevOpenai::BetaResponseConfigurationUpdateItemParamType.from_value(value)
-    end,
-    reasoning: lambda do |value|
-      ::OctridevOpenai::BetaResponseConfigurationUpdateItemParamReasoning.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for BetaResponseConfigurationUpdateItemParam.
-# An update to the conversation's response configuration. The configuration remains in effect for subsequent responses until it is replaced by another configuration update.
-class BetaResponseConfigurationUpdateItemParam
-  include BetaItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaResponseConfigurationUpdateItemParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaResponseConfigurationUpdateItemParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaResponseConfigurationUpdateItemParamMetadata::DECODERS
-
-  # @return [BetaAgentTagParam] Optional API value serialized in the `agent` wire field.
-  attr_reader :agent
-  # @return [String] Optional `string` value serialized in the `id` wire field.
-  attr_reader :id
-  # @return [BetaResponseConfigurationUpdateItemParamType] The item type. Always `configuration_update`.
-  attr_reader :type
-  # @return [BetaResponseConfigurationUpdateItemParamReasoning] Updates to reasoning configuration. Only effort is supported.
-  attr_reader :reasoning
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Defines the BetaResponseConfigurationUpdateItemParamType SDK namespace.
-module BetaResponseConfigurationUpdateItemParamType
-  CONFIGURATION_UPDATE = 'configuration_update'
-  VALUES = ['configuration_update'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('BetaResponseConfigurationUpdateItemParamType', 'enum', "Unknown BetaResponseConfigurationUpdateItemParamType: #{value}")
-  end
-end
 end

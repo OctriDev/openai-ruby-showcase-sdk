@@ -5,682 +5,682 @@
 
 # realtime_realtime_beta_server domain models
 module OctridevOpenai
-# API model for RealtimeBetaServerEventResponseDone.
-# Returned when a Response is done streaming. Always emitted, no matter the final state. The Response object included in the `response.done` event will include all output Items in the Response but will omit the raw audio data.
-class RealtimeBetaServerEventResponseDone
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeBetaServerEventResponseDoneMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseDoneMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeBetaServerEventResponseDoneMetadata::DECODERS
+  # API model for RealtimeBetaServerEventResponseDone.
+  # Returned when a Response is done streaming. Always emitted, no matter the final state. The Response object included in the `response.done` event will include all output Items in the Response but will omit the raw audio data.
+  class RealtimeBetaServerEventResponseDone
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeBetaServerEventResponseDoneMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseDoneMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeBetaServerEventResponseDoneMetadata::DECODERS
 
-  # @return [String] The unique ID of the server event.
-  attr_reader :event_id
-  # @return [RealtimeBetaServerEventResponseDoneType] The event type, must be `response.done`.
-  attr_reader :type
-  # @return [RealtimeBetaResponse] The response resource.
-  attr_reader :response
+    # @return [String] The unique ID of the server event.
+    attr_reader :event_id
+    # @return [RealtimeBetaServerEventResponseDoneType] The event type, must be `response.done`.
+    attr_reader :type
+    # @return [RealtimeBetaResponse] The response resource.
+    attr_reader :response
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the RealtimeBetaServerEventResponseDoneType SDK namespace.
+  module RealtimeBetaServerEventResponseDoneType
+    RESPONSE_DONE = 'response.done'
+    VALUES = ['response.done'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeBetaServerEventResponseFunctionCallArgumentsDeltaMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      response_id: 'response_id',
+      item_id: 'item_id',
+      output_index: 'output_index',
+      call_id: 'call_id',
+      delta: 'delta'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      event_id
+      type
+      response_id
+      item_id
+      output_index
+      call_id
+      delta
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeBetaServerEventResponseFunctionCallArgumentsDeltaType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # API model for RealtimeBetaServerEventResponseFunctionCallArgumentsDelta.
+  # Returned when the model-generated function call arguments are updated.
+  class RealtimeBetaServerEventResponseFunctionCallArgumentsDelta
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeBetaServerEventResponseFunctionCallArgumentsDeltaMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseFunctionCallArgumentsDeltaMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeBetaServerEventResponseFunctionCallArgumentsDeltaMetadata::DECODERS
 
-# Defines the RealtimeBetaServerEventResponseDoneType SDK namespace.
-module RealtimeBetaServerEventResponseDoneType
-  RESPONSE_DONE = 'response.done'
-  VALUES = ['response.done'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    # @return [String] The unique ID of the server event.
+    attr_reader :event_id
+    # @return [RealtimeBetaServerEventResponseFunctionCallArgumentsDeltaType] The event type, must be `response.function_call_arguments.delta`.
+    attr_reader :type
+    # @return [String] The ID of the response.
+    attr_reader :response_id
+    # @return [String] The ID of the function call item.
+    attr_reader :item_id
+    # @return [Integer] The index of the output item in the response.
+    attr_reader :output_index
+    # @return [String] The ID of the function call.
+    attr_reader :call_id
+    # @return [String] The arguments delta as a JSON string.
+    attr_reader :delta
 
-# Internal model hydration metadata.
-class SdkInternalRealtimeBetaServerEventResponseFunctionCallArgumentsDeltaMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    response_id: "response_id",
-    item_id: "item_id",
-    output_index: "output_index",
-    call_id: "call_id",
-    delta: "delta",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    event_id
-    type
-    response_id
-    item_id
-    output_index
-    call_id
-    delta
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeBetaServerEventResponseFunctionCallArgumentsDeltaType.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for RealtimeBetaServerEventResponseFunctionCallArgumentsDelta.
-# Returned when the model-generated function call arguments are updated.
-class RealtimeBetaServerEventResponseFunctionCallArgumentsDelta
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeBetaServerEventResponseFunctionCallArgumentsDeltaMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseFunctionCallArgumentsDeltaMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeBetaServerEventResponseFunctionCallArgumentsDeltaMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [String] The unique ID of the server event.
-  attr_reader :event_id
-  # @return [RealtimeBetaServerEventResponseFunctionCallArgumentsDeltaType] The event type, must be `response.function_call_arguments.delta`.
-  attr_reader :type
-  # @return [String] The ID of the response.
-  attr_reader :response_id
-  # @return [String] The ID of the function call item.
-  attr_reader :item_id
-  # @return [Integer] The index of the output item in the response.
-  attr_reader :output_index
-  # @return [String] The ID of the function call.
-  attr_reader :call_id
-  # @return [String] The arguments delta as a JSON string.
-  attr_reader :delta
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the RealtimeBetaServerEventResponseFunctionCallArgumentsDeltaType SDK namespace.
+  module RealtimeBetaServerEventResponseFunctionCallArgumentsDeltaType
+    RESPONSE_FUNCTION_CALL_ARGUMENTS_DELTA = 'response.function_call_arguments.delta'
+    VALUES = ['response.function_call_arguments.delta'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeBetaServerEventResponseFunctionCallArgumentsDoneMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      response_id: 'response_id',
+      item_id: 'item_id',
+      output_index: 'output_index',
+      call_id: 'call_id',
+      name: 'name',
+      arguments: 'arguments'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      event_id
+      type
+      response_id
+      item_id
+      output_index
+      call_id
+      name
+      arguments
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeBetaServerEventResponseFunctionCallArgumentsDoneType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # API model for RealtimeBetaServerEventResponseFunctionCallArgumentsDone.
+  # Returned when the model-generated function call arguments are done streaming. Also emitted when a Response is interrupted, incomplete, or cancelled.
+  class RealtimeBetaServerEventResponseFunctionCallArgumentsDone
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeBetaServerEventResponseFunctionCallArgumentsDoneMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseFunctionCallArgumentsDoneMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeBetaServerEventResponseFunctionCallArgumentsDoneMetadata::DECODERS
 
-# Defines the RealtimeBetaServerEventResponseFunctionCallArgumentsDeltaType SDK namespace.
-module RealtimeBetaServerEventResponseFunctionCallArgumentsDeltaType
-  RESPONSE_FUNCTION_CALL_ARGUMENTS_DELTA = 'response.function_call_arguments.delta'
-  VALUES = ['response.function_call_arguments.delta'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    # @return [String] The unique ID of the server event.
+    attr_reader :event_id
+    # @return [RealtimeBetaServerEventResponseFunctionCallArgumentsDoneType] The event type, must be `response.function_call_arguments.done`.
+    attr_reader :type
+    # @return [String] The ID of the response.
+    attr_reader :response_id
+    # @return [String] The ID of the function call item.
+    attr_reader :item_id
+    # @return [Integer] The index of the output item in the response.
+    attr_reader :output_index
+    # @return [String] The ID of the function call.
+    attr_reader :call_id
+    # @return [String] The name of the function that was called.
+    attr_reader :name
+    # @return [String] The final arguments as a JSON string.
+    attr_reader :arguments
 
-# Internal model hydration metadata.
-class SdkInternalRealtimeBetaServerEventResponseFunctionCallArgumentsDoneMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    response_id: "response_id",
-    item_id: "item_id",
-    output_index: "output_index",
-    call_id: "call_id",
-    name: "name",
-    arguments: "arguments",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    event_id
-    type
-    response_id
-    item_id
-    output_index
-    call_id
-    name
-    arguments
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeBetaServerEventResponseFunctionCallArgumentsDoneType.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for RealtimeBetaServerEventResponseFunctionCallArgumentsDone.
-# Returned when the model-generated function call arguments are done streaming. Also emitted when a Response is interrupted, incomplete, or cancelled.
-class RealtimeBetaServerEventResponseFunctionCallArgumentsDone
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeBetaServerEventResponseFunctionCallArgumentsDoneMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseFunctionCallArgumentsDoneMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeBetaServerEventResponseFunctionCallArgumentsDoneMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [String] The unique ID of the server event.
-  attr_reader :event_id
-  # @return [RealtimeBetaServerEventResponseFunctionCallArgumentsDoneType] The event type, must be `response.function_call_arguments.done`.
-  attr_reader :type
-  # @return [String] The ID of the response.
-  attr_reader :response_id
-  # @return [String] The ID of the function call item.
-  attr_reader :item_id
-  # @return [Integer] The index of the output item in the response.
-  attr_reader :output_index
-  # @return [String] The ID of the function call.
-  attr_reader :call_id
-  # @return [String] The name of the function that was called.
-  attr_reader :name
-  # @return [String] The final arguments as a JSON string.
-  attr_reader :arguments
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the RealtimeBetaServerEventResponseFunctionCallArgumentsDoneType SDK namespace.
+  module RealtimeBetaServerEventResponseFunctionCallArgumentsDoneType
+    RESPONSE_FUNCTION_CALL_ARGUMENTS_DONE = 'response.function_call_arguments.done'
+    VALUES = ['response.function_call_arguments.done'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeBetaServerEventResponseMCPCallArgumentsDeltaMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      response_id: 'response_id',
+      item_id: 'item_id',
+      output_index: 'output_index',
+      delta: 'delta',
+      obfuscation: 'obfuscation'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      event_id
+      type
+      response_id
+      item_id
+      output_index
+      delta
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeBetaServerEventResponseMCPCallArgumentsDeltaType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # API model for RealtimeBetaServerEventResponseMCPCallArgumentsDelta.
+  # Returned when MCP tool call arguments are updated during response generation.
+  class RealtimeBetaServerEventResponseMCPCallArgumentsDelta
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeBetaServerEventResponseMCPCallArgumentsDeltaMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseMCPCallArgumentsDeltaMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeBetaServerEventResponseMCPCallArgumentsDeltaMetadata::DECODERS
 
-# Defines the RealtimeBetaServerEventResponseFunctionCallArgumentsDoneType SDK namespace.
-module RealtimeBetaServerEventResponseFunctionCallArgumentsDoneType
-  RESPONSE_FUNCTION_CALL_ARGUMENTS_DONE = 'response.function_call_arguments.done'
-  VALUES = ['response.function_call_arguments.done'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    # @return [String] The unique ID of the server event.
+    attr_reader :event_id
+    # @return [RealtimeBetaServerEventResponseMCPCallArgumentsDeltaType] The event type, must be `response.mcp_call_arguments.delta`.
+    attr_reader :type
+    # @return [String] The ID of the response.
+    attr_reader :response_id
+    # @return [String] The ID of the MCP tool call item.
+    attr_reader :item_id
+    # @return [Integer] The index of the output item in the response.
+    attr_reader :output_index
+    # @return [String] The JSON-encoded arguments delta.
+    attr_reader :delta
+    # @return [String] Optional `string` value serialized in the `obfuscation` wire field.
+    attr_reader :obfuscation
 
-# Internal model hydration metadata.
-class SdkInternalRealtimeBetaServerEventResponseMCPCallArgumentsDeltaMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    response_id: "response_id",
-    item_id: "item_id",
-    output_index: "output_index",
-    delta: "delta",
-    obfuscation: "obfuscation",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    event_id
-    type
-    response_id
-    item_id
-    output_index
-    delta
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeBetaServerEventResponseMCPCallArgumentsDeltaType.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for RealtimeBetaServerEventResponseMCPCallArgumentsDelta.
-# Returned when MCP tool call arguments are updated during response generation.
-class RealtimeBetaServerEventResponseMCPCallArgumentsDelta
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeBetaServerEventResponseMCPCallArgumentsDeltaMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseMCPCallArgumentsDeltaMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeBetaServerEventResponseMCPCallArgumentsDeltaMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [String] The unique ID of the server event.
-  attr_reader :event_id
-  # @return [RealtimeBetaServerEventResponseMCPCallArgumentsDeltaType] The event type, must be `response.mcp_call_arguments.delta`.
-  attr_reader :type
-  # @return [String] The ID of the response.
-  attr_reader :response_id
-  # @return [String] The ID of the MCP tool call item.
-  attr_reader :item_id
-  # @return [Integer] The index of the output item in the response.
-  attr_reader :output_index
-  # @return [String] The JSON-encoded arguments delta.
-  attr_reader :delta
-  # @return [String] Optional `string` value serialized in the `obfuscation` wire field.
-  attr_reader :obfuscation
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the RealtimeBetaServerEventResponseMCPCallArgumentsDeltaType SDK namespace.
+  module RealtimeBetaServerEventResponseMCPCallArgumentsDeltaType
+    RESPONSE_MCP_CALL_ARGUMENTS_DELTA = 'response.mcp_call_arguments.delta'
+    VALUES = ['response.mcp_call_arguments.delta'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeBetaServerEventResponseMCPCallArgumentsDoneMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      response_id: 'response_id',
+      item_id: 'item_id',
+      output_index: 'output_index',
+      arguments: 'arguments'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      event_id
+      type
+      response_id
+      item_id
+      output_index
+      arguments
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeBetaServerEventResponseMCPCallArgumentsDoneType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # API model for RealtimeBetaServerEventResponseMCPCallArgumentsDone.
+  # Returned when MCP tool call arguments are finalized during response generation.
+  class RealtimeBetaServerEventResponseMCPCallArgumentsDone
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeBetaServerEventResponseMCPCallArgumentsDoneMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseMCPCallArgumentsDoneMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeBetaServerEventResponseMCPCallArgumentsDoneMetadata::DECODERS
 
-# Defines the RealtimeBetaServerEventResponseMCPCallArgumentsDeltaType SDK namespace.
-module RealtimeBetaServerEventResponseMCPCallArgumentsDeltaType
-  RESPONSE_MCP_CALL_ARGUMENTS_DELTA = 'response.mcp_call_arguments.delta'
-  VALUES = ['response.mcp_call_arguments.delta'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    # @return [String] The unique ID of the server event.
+    attr_reader :event_id
+    # @return [RealtimeBetaServerEventResponseMCPCallArgumentsDoneType] The event type, must be `response.mcp_call_arguments.done`.
+    attr_reader :type
+    # @return [String] The ID of the response.
+    attr_reader :response_id
+    # @return [String] The ID of the MCP tool call item.
+    attr_reader :item_id
+    # @return [Integer] The index of the output item in the response.
+    attr_reader :output_index
+    # @return [String] The final JSON-encoded arguments string.
+    attr_reader :arguments
 
-# Internal model hydration metadata.
-class SdkInternalRealtimeBetaServerEventResponseMCPCallArgumentsDoneMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    response_id: "response_id",
-    item_id: "item_id",
-    output_index: "output_index",
-    arguments: "arguments",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    event_id
-    type
-    response_id
-    item_id
-    output_index
-    arguments
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeBetaServerEventResponseMCPCallArgumentsDoneType.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for RealtimeBetaServerEventResponseMCPCallArgumentsDone.
-# Returned when MCP tool call arguments are finalized during response generation.
-class RealtimeBetaServerEventResponseMCPCallArgumentsDone
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeBetaServerEventResponseMCPCallArgumentsDoneMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseMCPCallArgumentsDoneMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeBetaServerEventResponseMCPCallArgumentsDoneMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [String] The unique ID of the server event.
-  attr_reader :event_id
-  # @return [RealtimeBetaServerEventResponseMCPCallArgumentsDoneType] The event type, must be `response.mcp_call_arguments.done`.
-  attr_reader :type
-  # @return [String] The ID of the response.
-  attr_reader :response_id
-  # @return [String] The ID of the MCP tool call item.
-  attr_reader :item_id
-  # @return [Integer] The index of the output item in the response.
-  attr_reader :output_index
-  # @return [String] The final JSON-encoded arguments string.
-  attr_reader :arguments
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the RealtimeBetaServerEventResponseMCPCallArgumentsDoneType SDK namespace.
+  module RealtimeBetaServerEventResponseMCPCallArgumentsDoneType
+    RESPONSE_MCP_CALL_ARGUMENTS_DONE = 'response.mcp_call_arguments.done'
+    VALUES = ['response.mcp_call_arguments.done'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeBetaServerEventResponseMCPCallCompletedMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      output_index: 'output_index',
+      item_id: 'item_id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      event_id
+      type
+      output_index
+      item_id
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeBetaServerEventResponseMCPCallCompletedType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # API model for RealtimeBetaServerEventResponseMCPCallCompleted.
+  # Returned when an MCP tool call has completed successfully.
+  class RealtimeBetaServerEventResponseMCPCallCompleted
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeBetaServerEventResponseMCPCallCompletedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseMCPCallCompletedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeBetaServerEventResponseMCPCallCompletedMetadata::DECODERS
 
-# Defines the RealtimeBetaServerEventResponseMCPCallArgumentsDoneType SDK namespace.
-module RealtimeBetaServerEventResponseMCPCallArgumentsDoneType
-  RESPONSE_MCP_CALL_ARGUMENTS_DONE = 'response.mcp_call_arguments.done'
-  VALUES = ['response.mcp_call_arguments.done'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    # @return [String] The unique ID of the server event.
+    attr_reader :event_id
+    # @return [RealtimeBetaServerEventResponseMCPCallCompletedType] The event type, must be `response.mcp_call.completed`.
+    attr_reader :type
+    # @return [Integer] The index of the output item in the response.
+    attr_reader :output_index
+    # @return [String] The ID of the MCP tool call item.
+    attr_reader :item_id
 
-# Internal model hydration metadata.
-class SdkInternalRealtimeBetaServerEventResponseMCPCallCompletedMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    output_index: "output_index",
-    item_id: "item_id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    event_id
-    type
-    output_index
-    item_id
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeBetaServerEventResponseMCPCallCompletedType.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for RealtimeBetaServerEventResponseMCPCallCompleted.
-# Returned when an MCP tool call has completed successfully.
-class RealtimeBetaServerEventResponseMCPCallCompleted
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeBetaServerEventResponseMCPCallCompletedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseMCPCallCompletedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeBetaServerEventResponseMCPCallCompletedMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [String] The unique ID of the server event.
-  attr_reader :event_id
-  # @return [RealtimeBetaServerEventResponseMCPCallCompletedType] The event type, must be `response.mcp_call.completed`.
-  attr_reader :type
-  # @return [Integer] The index of the output item in the response.
-  attr_reader :output_index
-  # @return [String] The ID of the MCP tool call item.
-  attr_reader :item_id
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the RealtimeBetaServerEventResponseMCPCallCompletedType SDK namespace.
+  module RealtimeBetaServerEventResponseMCPCallCompletedType
+    RESPONSE_MCP_CALL_COMPLETED = 'response.mcp_call.completed'
+    VALUES = ['response.mcp_call.completed'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeBetaServerEventResponseMCPCallFailedMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      output_index: 'output_index',
+      item_id: 'item_id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      event_id
+      type
+      output_index
+      item_id
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeBetaServerEventResponseMCPCallFailedType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # API model for RealtimeBetaServerEventResponseMCPCallFailed.
+  # Returned when an MCP tool call has failed.
+  class RealtimeBetaServerEventResponseMCPCallFailed
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeBetaServerEventResponseMCPCallFailedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseMCPCallFailedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeBetaServerEventResponseMCPCallFailedMetadata::DECODERS
 
-# Defines the RealtimeBetaServerEventResponseMCPCallCompletedType SDK namespace.
-module RealtimeBetaServerEventResponseMCPCallCompletedType
-  RESPONSE_MCP_CALL_COMPLETED = 'response.mcp_call.completed'
-  VALUES = ['response.mcp_call.completed'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    # @return [String] The unique ID of the server event.
+    attr_reader :event_id
+    # @return [RealtimeBetaServerEventResponseMCPCallFailedType] The event type, must be `response.mcp_call.failed`.
+    attr_reader :type
+    # @return [Integer] The index of the output item in the response.
+    attr_reader :output_index
+    # @return [String] The ID of the MCP tool call item.
+    attr_reader :item_id
 
-# Internal model hydration metadata.
-class SdkInternalRealtimeBetaServerEventResponseMCPCallFailedMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    output_index: "output_index",
-    item_id: "item_id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    event_id
-    type
-    output_index
-    item_id
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeBetaServerEventResponseMCPCallFailedType.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for RealtimeBetaServerEventResponseMCPCallFailed.
-# Returned when an MCP tool call has failed.
-class RealtimeBetaServerEventResponseMCPCallFailed
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeBetaServerEventResponseMCPCallFailedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseMCPCallFailedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeBetaServerEventResponseMCPCallFailedMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [String] The unique ID of the server event.
-  attr_reader :event_id
-  # @return [RealtimeBetaServerEventResponseMCPCallFailedType] The event type, must be `response.mcp_call.failed`.
-  attr_reader :type
-  # @return [Integer] The index of the output item in the response.
-  attr_reader :output_index
-  # @return [String] The ID of the MCP tool call item.
-  attr_reader :item_id
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the RealtimeBetaServerEventResponseMCPCallFailedType SDK namespace.
+  module RealtimeBetaServerEventResponseMCPCallFailedType
+    RESPONSE_MCP_CALL_FAILED = 'response.mcp_call.failed'
+    VALUES = ['response.mcp_call.failed'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeBetaServerEventResponseMCPCallInProgressMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      output_index: 'output_index',
+      item_id: 'item_id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      event_id
+      type
+      output_index
+      item_id
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeBetaServerEventResponseMCPCallInProgressType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # API model for RealtimeBetaServerEventResponseMCPCallInProgress.
+  # Returned when an MCP tool call has started and is in progress.
+  class RealtimeBetaServerEventResponseMCPCallInProgress
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeBetaServerEventResponseMCPCallInProgressMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseMCPCallInProgressMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeBetaServerEventResponseMCPCallInProgressMetadata::DECODERS
 
-# Defines the RealtimeBetaServerEventResponseMCPCallFailedType SDK namespace.
-module RealtimeBetaServerEventResponseMCPCallFailedType
-  RESPONSE_MCP_CALL_FAILED = 'response.mcp_call.failed'
-  VALUES = ['response.mcp_call.failed'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    # @return [String] The unique ID of the server event.
+    attr_reader :event_id
+    # @return [RealtimeBetaServerEventResponseMCPCallInProgressType] The event type, must be `response.mcp_call.in_progress`.
+    attr_reader :type
+    # @return [Integer] The index of the output item in the response.
+    attr_reader :output_index
+    # @return [String] The ID of the MCP tool call item.
+    attr_reader :item_id
 
-# Internal model hydration metadata.
-class SdkInternalRealtimeBetaServerEventResponseMCPCallInProgressMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    output_index: "output_index",
-    item_id: "item_id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    event_id
-    type
-    output_index
-    item_id
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeBetaServerEventResponseMCPCallInProgressType.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for RealtimeBetaServerEventResponseMCPCallInProgress.
-# Returned when an MCP tool call has started and is in progress.
-class RealtimeBetaServerEventResponseMCPCallInProgress
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeBetaServerEventResponseMCPCallInProgressMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseMCPCallInProgressMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeBetaServerEventResponseMCPCallInProgressMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [String] The unique ID of the server event.
-  attr_reader :event_id
-  # @return [RealtimeBetaServerEventResponseMCPCallInProgressType] The event type, must be `response.mcp_call.in_progress`.
-  attr_reader :type
-  # @return [Integer] The index of the output item in the response.
-  attr_reader :output_index
-  # @return [String] The ID of the MCP tool call item.
-  attr_reader :item_id
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the RealtimeBetaServerEventResponseMCPCallInProgressType SDK namespace.
+  module RealtimeBetaServerEventResponseMCPCallInProgressType
+    RESPONSE_MCP_CALL_IN_PROGRESS = 'response.mcp_call.in_progress'
+    VALUES = ['response.mcp_call.in_progress'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeBetaServerEventResponseOutputItemAddedMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      response_id: 'response_id',
+      output_index: 'output_index',
+      item: 'item'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      event_id
+      type
+      response_id
+      output_index
+      item
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeBetaServerEventResponseOutputItemAddedType.from_value(value)
+      end,
+      item: lambda do |value|
+        ::OctridevOpenai::RealtimeConversationItem.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # API model for RealtimeBetaServerEventResponseOutputItemAdded.
+  # Returned when a new Item is created during Response generation.
+  class RealtimeBetaServerEventResponseOutputItemAdded
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeBetaServerEventResponseOutputItemAddedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseOutputItemAddedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeBetaServerEventResponseOutputItemAddedMetadata::DECODERS
 
-# Defines the RealtimeBetaServerEventResponseMCPCallInProgressType SDK namespace.
-module RealtimeBetaServerEventResponseMCPCallInProgressType
-  RESPONSE_MCP_CALL_IN_PROGRESS = 'response.mcp_call.in_progress'
-  VALUES = ['response.mcp_call.in_progress'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    # @return [String] The unique ID of the server event.
+    attr_reader :event_id
+    # @return [RealtimeBetaServerEventResponseOutputItemAddedType] The event type, must be `response.output_item.added`.
+    attr_reader :type
+    # @return [String] The ID of the Response to which the item belongs.
+    attr_reader :response_id
+    # @return [Integer] The index of the output item in the Response.
+    attr_reader :output_index
+    # @return [RealtimeConversationItem] A single item within a Realtime conversation.
+    attr_reader :item
 
-# Internal model hydration metadata.
-class SdkInternalRealtimeBetaServerEventResponseOutputItemAddedMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    response_id: "response_id",
-    output_index: "output_index",
-    item: "item",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    event_id
-    type
-    response_id
-    output_index
-    item
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeBetaServerEventResponseOutputItemAddedType.from_value(value)
-    end,
-    item: lambda do |value|
-      ::OctridevOpenai::RealtimeConversationItem.from_hash(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for RealtimeBetaServerEventResponseOutputItemAdded.
-# Returned when a new Item is created during Response generation.
-class RealtimeBetaServerEventResponseOutputItemAdded
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeBetaServerEventResponseOutputItemAddedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseOutputItemAddedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeBetaServerEventResponseOutputItemAddedMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [String] The unique ID of the server event.
-  attr_reader :event_id
-  # @return [RealtimeBetaServerEventResponseOutputItemAddedType] The event type, must be `response.output_item.added`.
-  attr_reader :type
-  # @return [String] The ID of the Response to which the item belongs.
-  attr_reader :response_id
-  # @return [Integer] The index of the output item in the Response.
-  attr_reader :output_index
-  # @return [RealtimeConversationItem] A single item within a Realtime conversation.
-  attr_reader :item
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the RealtimeBetaServerEventResponseOutputItemAddedType SDK namespace.
+  module RealtimeBetaServerEventResponseOutputItemAddedType
+    RESPONSE_OUTPUT_ITEM_ADDED = 'response.output_item.added'
+    VALUES = ['response.output_item.added'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeBetaServerEventResponseOutputItemDoneMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      response_id: 'response_id',
+      output_index: 'output_index',
+      item: 'item'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      event_id
+      type
+      response_id
+      output_index
+      item
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeBetaServerEventResponseOutputItemDoneType.from_value(value)
+      end,
+      item: lambda do |value|
+        ::OctridevOpenai::RealtimeConversationItem.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
+  # API model for RealtimeBetaServerEventResponseOutputItemDone.
+  # Returned when an Item is done streaming. Also emitted when a Response is interrupted, incomplete, or cancelled.
+  class RealtimeBetaServerEventResponseOutputItemDone
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeBetaServerEventResponseOutputItemDoneMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseOutputItemDoneMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeBetaServerEventResponseOutputItemDoneMetadata::DECODERS
+
+    # @return [String] The unique ID of the server event.
+    attr_reader :event_id
+    # @return [RealtimeBetaServerEventResponseOutputItemDoneType] The event type, must be `response.output_item.done`.
+    attr_reader :type
+    # @return [String] The ID of the Response to which the item belongs.
+    attr_reader :response_id
+    # @return [Integer] The index of the output item in the Response.
+    attr_reader :output_index
+    # @return [RealtimeConversationItem] A single item within a Realtime conversation.
+    attr_reader :item
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
-end
-
-# Defines the RealtimeBetaServerEventResponseOutputItemAddedType SDK namespace.
-module RealtimeBetaServerEventResponseOutputItemAddedType
-  RESPONSE_OUTPUT_ITEM_ADDED = 'response.output_item.added'
-  VALUES = ['response.output_item.added'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeBetaServerEventResponseOutputItemDoneMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    response_id: "response_id",
-    output_index: "output_index",
-    item: "item",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    event_id
-    type
-    response_id
-    output_index
-    item
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeBetaServerEventResponseOutputItemDoneType.from_value(value)
-    end,
-    item: lambda do |value|
-      ::OctridevOpenai::RealtimeConversationItem.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for RealtimeBetaServerEventResponseOutputItemDone.
-# Returned when an Item is done streaming. Also emitted when a Response is interrupted, incomplete, or cancelled.
-class RealtimeBetaServerEventResponseOutputItemDone
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeBetaServerEventResponseOutputItemDoneMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseOutputItemDoneMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeBetaServerEventResponseOutputItemDoneMetadata::DECODERS
-
-  # @return [String] The unique ID of the server event.
-  attr_reader :event_id
-  # @return [RealtimeBetaServerEventResponseOutputItemDoneType] The event type, must be `response.output_item.done`.
-  attr_reader :type
-  # @return [String] The ID of the Response to which the item belongs.
-  attr_reader :response_id
-  # @return [Integer] The index of the output item in the Response.
-  attr_reader :output_index
-  # @return [RealtimeConversationItem] A single item within a Realtime conversation.
-  attr_reader :item
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
 end

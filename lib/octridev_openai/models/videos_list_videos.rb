@@ -5,282 +5,281 @@
 
 # videos domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalVideoListResourceMetadata
-  FIELDS = {
-    object: "object",
-    data: "data",
-    first_id: "first_id",
-    last_id: "last_id",
-    has_more: "has_more",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    object
-    data
-    first_id
-    last_id
-    has_more
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::VideoListResourceObject.from_value(value)
-    end,
-    data: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::VideoResource.from_hash(item) }
-    end,
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    first_id
-    last_id
-  ].freeze
-end
-
-# API model for VideoListResource.
-# Typed representation of the `VideoListResource` API schema.
-class VideoListResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalVideoListResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalVideoListResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalVideoListResourceMetadata::DECODERS
-
-  # @return [VideoListResourceObject] The type of object returned, must be `list`.
-  attr_reader :object
-  # @return [Array_of_VideoResource] A list of items
-  attr_reader :data
-  # @return [String] Required `string` value serialized in the `first_id` wire field.
-  attr_reader :first_id
-  # @return [String] Required `string` value serialized in the `last_id` wire field.
-  attr_reader :last_id
-  # @return [Boolean] Whether there are more items available.
-  attr_reader :has_more
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalVideoListResourceMetadata
+    FIELDS = {
+      object: 'object',
+      data: 'data',
+      first_id: 'first_id',
+      last_id: 'last_id',
+      has_more: 'has_more'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      object
+      data
+      first_id
+      last_id
+      has_more
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::VideoListResourceObject.from_value(value)
+      end,
+      data: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::VideoResource.from_hash(item) }
+      end
+    }.freeze
+    NULLABLE_FIELDS = %i[
+      first_id
+      last_id
+    ].freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalVideoListResourceMetadata::NULLABLE_FIELDS)
+  # API model for VideoListResource.
+  # Typed representation of the `VideoListResource` API schema.
+  class VideoListResource
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalVideoListResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalVideoListResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalVideoListResourceMetadata::DECODERS
+
+    # @return [VideoListResourceObject] The type of object returned, must be `list`.
+    attr_reader :object
+    # @return [Array_of_VideoResource] A list of items
+    attr_reader :data
+    # @return [String] Required `string` value serialized in the `first_id` wire field.
+    attr_reader :first_id
+    # @return [String] Required `string` value serialized in the `last_id` wire field.
+    attr_reader :last_id
+    # @return [Boolean] Whether there are more items available.
+    attr_reader :has_more
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalVideoListResourceMetadata::NULLABLE_FIELDS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the VideoListResourceObject SDK namespace.
+  module VideoListResourceObject
+    LIST = 'list'
+    VALUES = ['list'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Defines the VideoListResourceObject SDK namespace.
-module VideoListResourceObject
-  LIST = 'list'
-  VALUES = ['list'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the VideoModel SDK value decoder.
-module VideoModel
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalVideoReferenceInputParamMetadata
-  FIELDS = {
-    id: "id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for VideoReferenceInputParam.
-# Reference to the completed video.
-class VideoReferenceInputParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalVideoReferenceInputParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalVideoReferenceInputParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalVideoReferenceInputParamMetadata::DECODERS
-
-  # @return [String] The identifier of the completed video.
-  attr_reader :id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the VideoModel SDK value decoder.
+  module VideoModel
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalVideoReferenceInputParamMetadata
+    FIELDS = {
+      id: 'id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # API model for VideoReferenceInputParam.
+  # Reference to the completed video.
+  class VideoReferenceInputParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalVideoReferenceInputParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalVideoReferenceInputParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalVideoReferenceInputParamMetadata::DECODERS
+
+    # @return [String] The identifier of the completed video.
+    attr_reader :id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalVideoResourceMetadata
-  FIELDS = {
-    id: "id",
-    object: "object",
-    model: "model",
-    status: "status",
-    progress: "progress",
-    created_at: "created_at",
-    completed_at: "completed_at",
-    expires_at: "expires_at",
-    prompt: "prompt",
-    size: "size",
-    seconds: "seconds",
-    remixed_from_video_id: "remixed_from_video_id",
-    error: "error",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    object
-    model
-    status
-    progress
-    created_at
-    completed_at
-    expires_at
-    prompt
-    size
-    seconds
-    remixed_from_video_id
-    error
-  ].freeze
-  DECODERS = {
-    object: lambda do |value|
-      ::OctridevOpenai::VideoResourceObject.from_value(value)
-    end,
-    model: lambda do |value|
-      ::OctridevOpenai::VideoModel.from_value(value)
-    end,
-    status: lambda do |value|
-      ::OctridevOpenai::VideoStatus.from_value(value)
-    end,
-    size: lambda do |value|
-      ::OctridevOpenai::VideoSize.from_value(value)
-    end,
-    error: lambda do |value|
-      ::OctridevOpenai::Error2.from_hash(value)
-    end,
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    completed_at
-    expires_at
-    prompt
-    remixed_from_video_id
-    error
-  ].freeze
-end
-
-# API model for VideoResource.
-# Structured information describing a generated video job.
-class VideoResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalVideoResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalVideoResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalVideoResourceMetadata::DECODERS
-
-  # @return [String] Unique identifier for the video job.
-  attr_reader :id
-  # @return [VideoResourceObject] The object type, which is always `video`.
-  attr_reader :object
-  # @return [VideoModel] The video generation model that produced the job.
-  attr_reader :model
-  # @return [VideoStatus] Current lifecycle status of the video job.
-  attr_reader :status
-  # @return [Integer] Approximate completion percentage for the generation task.
-  attr_reader :progress
-  # @return [Integer] Unix timestamp (seconds) for when the job was created.
-  attr_reader :created_at
-  # @return [Integer] Required API value serialized in the `completed_at` wire field.
-  attr_reader :completed_at
-  # @return [Integer] Required API value serialized in the `expires_at` wire field.
-  attr_reader :expires_at
-  # @return [String] Required `string` value serialized in the `prompt` wire field.
-  attr_reader :prompt
-  # @return [VideoSize] The resolution of the generated video.
-  attr_reader :size
-  # @return [String] Duration of the generated clip in seconds. For extensions, this is the stitched total duration.
-  attr_reader :seconds
-  # @return [String] Required `string` value serialized in the `remixed_from_video_id` wire field.
-  attr_reader :remixed_from_video_id
-  # @return [Error2] Required API value serialized in the `error` wire field.
-  attr_reader :error
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalVideoResourceMetadata
+    FIELDS = {
+      id: 'id',
+      object: 'object',
+      model: 'model',
+      status: 'status',
+      progress: 'progress',
+      created_at: 'created_at',
+      completed_at: 'completed_at',
+      expires_at: 'expires_at',
+      prompt: 'prompt',
+      size: 'size',
+      seconds: 'seconds',
+      remixed_from_video_id: 'remixed_from_video_id',
+      error: 'error'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      object
+      model
+      status
+      progress
+      created_at
+      completed_at
+      expires_at
+      prompt
+      size
+      seconds
+      remixed_from_video_id
+      error
+    ].freeze
+    DECODERS = {
+      object: lambda do |value|
+        ::OctridevOpenai::VideoResourceObject.from_value(value)
+      end,
+      model: lambda do |value|
+        ::OctridevOpenai::VideoModel.from_value(value)
+      end,
+      status: lambda do |value|
+        ::OctridevOpenai::VideoStatus.from_value(value)
+      end,
+      size: lambda do |value|
+        ::OctridevOpenai::VideoSize.from_value(value)
+      end,
+      error: lambda do |value|
+        ::OctridevOpenai::Error2.from_hash(value)
+      end
+    }.freeze
+    NULLABLE_FIELDS = %i[
+      completed_at
+      expires_at
+      prompt
+      remixed_from_video_id
+      error
+    ].freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalVideoResourceMetadata::NULLABLE_FIELDS)
+  # API model for VideoResource.
+  # Structured information describing a generated video job.
+  class VideoResource
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalVideoResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalVideoResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalVideoResourceMetadata::DECODERS
+
+    # @return [String] Unique identifier for the video job.
+    attr_reader :id
+    # @return [VideoResourceObject] The object type, which is always `video`.
+    attr_reader :object
+    # @return [VideoModel] The video generation model that produced the job.
+    attr_reader :model
+    # @return [VideoStatus] Current lifecycle status of the video job.
+    attr_reader :status
+    # @return [Integer] Approximate completion percentage for the generation task.
+    attr_reader :progress
+    # @return [Integer] Unix timestamp (seconds) for when the job was created.
+    attr_reader :created_at
+    # @return [Integer] Required API value serialized in the `completed_at` wire field.
+    attr_reader :completed_at
+    # @return [Integer] Required API value serialized in the `expires_at` wire field.
+    attr_reader :expires_at
+    # @return [String] Required `string` value serialized in the `prompt` wire field.
+    attr_reader :prompt
+    # @return [VideoSize] The resolution of the generated video.
+    attr_reader :size
+    # @return [String] Duration of the generated clip in seconds. For extensions, this is the stitched total duration.
+    attr_reader :seconds
+    # @return [String] Required `string` value serialized in the `remixed_from_video_id` wire field.
+    attr_reader :remixed_from_video_id
+    # @return [Error2] Required API value serialized in the `error` wire field.
+    attr_reader :error
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalVideoResourceMetadata::NULLABLE_FIELDS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the VideoResourceObject SDK namespace.
+  module VideoResourceObject
+    VIDEO = 'video'
+    VALUES = ['video'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
+  # Defines the VideoSeconds SDK namespace.
+  module VideoSeconds
+    V_4 = '4'
+    V_8 = '8'
+    V_12 = '12'
+    VALUES = %w[4 8 12].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
 
-# Defines the VideoResourceObject SDK namespace.
-module VideoResourceObject
-  VIDEO = 'video'
-  VALUES = ['video'].freeze
-  def self.from_value(value)
-    value
+  # Defines the VideoSize SDK namespace.
+  module VideoSize
+    V_720_X1280 = '720x1280'
+    V_1280_X720 = '1280x720'
+    V_1024_X1792 = '1024x1792'
+    V_1792_X1024 = '1792x1024'
+    VALUES = %w[720x1280 1280x720 1024x1792 1792x1024].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
 
-# Defines the VideoSeconds SDK namespace.
-module VideoSeconds
-  V_4 = '4'
-  V_8 = '8'
-  V_12 = '12'
-  VALUES = ['4', '8', '12'].freeze
-  def self.from_value(value)
-    value
+  # Defines the VideoStatus SDK namespace.
+  module VideoStatus
+    QUEUED = 'queued'
+    IN_PROGRESS = 'in_progress'
+    COMPLETED = 'completed'
+    FAILED = 'failed'
+    VALUES = %w[queued in_progress completed failed].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
-
-# Defines the VideoSize SDK namespace.
-module VideoSize
-  V_720_X1280 = '720x1280'
-  V_1280_X720 = '1280x720'
-  V_1024_X1792 = '1024x1792'
-  V_1792_X1024 = '1792x1024'
-  VALUES = ['720x1280', '1280x720', '1024x1792', '1792x1024'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the VideoStatus SDK namespace.
-module VideoStatus
-  QUEUED = 'queued'
-  IN_PROGRESS = 'in_progress'
-  COMPLETED = 'completed'
-  FAILED = 'failed'
-  VALUES = ['queued', 'in_progress', 'completed', 'failed'].freeze
-  def self.from_value(value)
-    value
-  end
-end
 end

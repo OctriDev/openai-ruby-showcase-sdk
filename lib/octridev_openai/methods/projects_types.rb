@@ -14,7 +14,7 @@ module OctridevOpenai
         ACTIVE = 'active'
         INACTIVE = 'inactive'
         ANY = 'any'
-        VALUES = ['active', 'inactive', 'any'].freeze
+        VALUES = %w[active inactive any].freeze
         def self.from_value(value)
           value
         end

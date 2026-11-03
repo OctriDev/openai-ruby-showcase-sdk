@@ -5,422 +5,422 @@
 
 # realtime_realtime_beta_server domain models
 module OctridevOpenai
-# Defines the RealtimeBetaServerEventResponseOutputItemDoneType SDK namespace.
-module RealtimeBetaServerEventResponseOutputItemDoneType
-  RESPONSE_OUTPUT_ITEM_DONE = 'response.output_item.done'
-  VALUES = ['response.output_item.done'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeBetaServerEventResponseTextDeltaMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    response_id: "response_id",
-    item_id: "item_id",
-    output_index: "output_index",
-    content_index: "content_index",
-    delta: "delta",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    event_id
-    type
-    response_id
-    item_id
-    output_index
-    content_index
-    delta
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeBetaServerEventResponseTextDeltaType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for RealtimeBetaServerEventResponseTextDelta.
-# Returned when the text value of an "output_text" content part is updated.
-class RealtimeBetaServerEventResponseTextDelta
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeBetaServerEventResponseTextDeltaMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseTextDeltaMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeBetaServerEventResponseTextDeltaMetadata::DECODERS
-
-  # @return [String] The unique ID of the server event.
-  attr_reader :event_id
-  # @return [RealtimeBetaServerEventResponseTextDeltaType] The event type, must be `response.output_text.delta`.
-  attr_reader :type
-  # @return [String] The ID of the response.
-  attr_reader :response_id
-  # @return [String] The ID of the item.
-  attr_reader :item_id
-  # @return [Integer] The index of the output item in the response.
-  attr_reader :output_index
-  # @return [Integer] The index of the content part in the item's content array.
-  attr_reader :content_index
-  # @return [String] The text delta.
-  attr_reader :delta
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the RealtimeBetaServerEventResponseOutputItemDoneType SDK namespace.
+  module RealtimeBetaServerEventResponseOutputItemDoneType
+    RESPONSE_OUTPUT_ITEM_DONE = 'response.output_item.done'
+    VALUES = ['response.output_item.done'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeBetaServerEventResponseTextDeltaMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      response_id: 'response_id',
+      item_id: 'item_id',
+      output_index: 'output_index',
+      content_index: 'content_index',
+      delta: 'delta'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      event_id
+      type
+      response_id
+      item_id
+      output_index
+      content_index
+      delta
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeBetaServerEventResponseTextDeltaType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # API model for RealtimeBetaServerEventResponseTextDelta.
+  # Returned when the text value of an "output_text" content part is updated.
+  class RealtimeBetaServerEventResponseTextDelta
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeBetaServerEventResponseTextDeltaMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseTextDeltaMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeBetaServerEventResponseTextDeltaMetadata::DECODERS
+
+    # @return [String] The unique ID of the server event.
+    attr_reader :event_id
+    # @return [RealtimeBetaServerEventResponseTextDeltaType] The event type, must be `response.output_text.delta`.
+    attr_reader :type
+    # @return [String] The ID of the response.
+    attr_reader :response_id
+    # @return [String] The ID of the item.
+    attr_reader :item_id
+    # @return [Integer] The index of the output item in the response.
+    attr_reader :output_index
+    # @return [Integer] The index of the content part in the item's content array.
+    attr_reader :content_index
+    # @return [String] The text delta.
+    attr_reader :delta
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Defines the RealtimeBetaServerEventResponseTextDeltaType SDK namespace.
-module RealtimeBetaServerEventResponseTextDeltaType
-  RESPONSE_OUTPUT_TEXT_DELTA = 'response.output_text.delta'
-  VALUES = ['response.output_text.delta'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeBetaServerEventResponseTextDoneMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    response_id: "response_id",
-    item_id: "item_id",
-    output_index: "output_index",
-    content_index: "content_index",
-    text: "text",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    event_id
-    type
-    response_id
-    item_id
-    output_index
-    content_index
-    text
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeBetaServerEventResponseTextDoneType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for RealtimeBetaServerEventResponseTextDone.
-# Returned when the text value of an "output_text" content part is done streaming. Also emitted when a Response is interrupted, incomplete, or cancelled.
-class RealtimeBetaServerEventResponseTextDone
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeBetaServerEventResponseTextDoneMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseTextDoneMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeBetaServerEventResponseTextDoneMetadata::DECODERS
-
-  # @return [String] The unique ID of the server event.
-  attr_reader :event_id
-  # @return [RealtimeBetaServerEventResponseTextDoneType] The event type, must be `response.output_text.done`.
-  attr_reader :type
-  # @return [String] The ID of the response.
-  attr_reader :response_id
-  # @return [String] The ID of the item.
-  attr_reader :item_id
-  # @return [Integer] The index of the output item in the response.
-  attr_reader :output_index
-  # @return [Integer] The index of the content part in the item's content array.
-  attr_reader :content_index
-  # @return [String] The final text content.
-  attr_reader :text
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the RealtimeBetaServerEventResponseTextDeltaType SDK namespace.
+  module RealtimeBetaServerEventResponseTextDeltaType
+    RESPONSE_OUTPUT_TEXT_DELTA = 'response.output_text.delta'
+    VALUES = ['response.output_text.delta'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeBetaServerEventResponseTextDoneMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      response_id: 'response_id',
+      item_id: 'item_id',
+      output_index: 'output_index',
+      content_index: 'content_index',
+      text: 'text'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      event_id
+      type
+      response_id
+      item_id
+      output_index
+      content_index
+      text
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeBetaServerEventResponseTextDoneType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # API model for RealtimeBetaServerEventResponseTextDone.
+  # Returned when the text value of an "output_text" content part is done streaming. Also emitted when a Response is interrupted, incomplete, or cancelled.
+  class RealtimeBetaServerEventResponseTextDone
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeBetaServerEventResponseTextDoneMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventResponseTextDoneMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeBetaServerEventResponseTextDoneMetadata::DECODERS
+
+    # @return [String] The unique ID of the server event.
+    attr_reader :event_id
+    # @return [RealtimeBetaServerEventResponseTextDoneType] The event type, must be `response.output_text.done`.
+    attr_reader :type
+    # @return [String] The ID of the response.
+    attr_reader :response_id
+    # @return [String] The ID of the item.
+    attr_reader :item_id
+    # @return [Integer] The index of the output item in the response.
+    attr_reader :output_index
+    # @return [Integer] The index of the content part in the item's content array.
+    attr_reader :content_index
+    # @return [String] The final text content.
+    attr_reader :text
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Defines the RealtimeBetaServerEventResponseTextDoneType SDK namespace.
-module RealtimeBetaServerEventResponseTextDoneType
-  RESPONSE_OUTPUT_TEXT_DONE = 'response.output_text.done'
-  VALUES = ['response.output_text.done'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeBetaServerEventSessionCreatedMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    session: "session",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    event_id
-    type
-    session
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeBetaServerEventSessionCreatedType.from_value(value)
-    end,
-    session: lambda do |value|
-      ::OctridevOpenai::RealtimeSession.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for RealtimeBetaServerEventSessionCreated.
-# Returned when a Session is created. Emitted automatically when a new connection is established as the first server event. This event will contain the default Session configuration.
-class RealtimeBetaServerEventSessionCreated
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeBetaServerEventSessionCreatedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventSessionCreatedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeBetaServerEventSessionCreatedMetadata::DECODERS
-
-  # @return [String] The unique ID of the server event.
-  attr_reader :event_id
-  # @return [RealtimeBetaServerEventSessionCreatedType] The event type, must be `session.created`.
-  attr_reader :type
-  # @return [RealtimeSession] Realtime session object for the beta interface.
-  attr_reader :session
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the RealtimeBetaServerEventResponseTextDoneType SDK namespace.
+  module RealtimeBetaServerEventResponseTextDoneType
+    RESPONSE_OUTPUT_TEXT_DONE = 'response.output_text.done'
+    VALUES = ['response.output_text.done'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeBetaServerEventSessionCreatedMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      session: 'session'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      event_id
+      type
+      session
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeBetaServerEventSessionCreatedType.from_value(value)
+      end,
+      session: lambda do |value|
+        ::OctridevOpenai::RealtimeSession.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # API model for RealtimeBetaServerEventSessionCreated.
+  # Returned when a Session is created. Emitted automatically when a new connection is established as the first server event. This event will contain the default Session configuration.
+  class RealtimeBetaServerEventSessionCreated
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeBetaServerEventSessionCreatedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventSessionCreatedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeBetaServerEventSessionCreatedMetadata::DECODERS
+
+    # @return [String] The unique ID of the server event.
+    attr_reader :event_id
+    # @return [RealtimeBetaServerEventSessionCreatedType] The event type, must be `session.created`.
+    attr_reader :type
+    # @return [RealtimeSession] Realtime session object for the beta interface.
+    attr_reader :session
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Defines the RealtimeBetaServerEventSessionCreatedType SDK namespace.
-module RealtimeBetaServerEventSessionCreatedType
-  SESSION_CREATED = 'session.created'
-  VALUES = ['session.created'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeBetaServerEventSessionUpdatedMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    session: "session",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    event_id
-    type
-    session
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeBetaServerEventSessionUpdatedType.from_value(value)
-    end,
-    session: lambda do |value|
-      ::OctridevOpenai::RealtimeSession.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for RealtimeBetaServerEventSessionUpdated.
-# Returned when a session is updated with a `session.update` event, unless there is an error.
-class RealtimeBetaServerEventSessionUpdated
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeBetaServerEventSessionUpdatedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventSessionUpdatedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeBetaServerEventSessionUpdatedMetadata::DECODERS
-
-  # @return [String] The unique ID of the server event.
-  attr_reader :event_id
-  # @return [RealtimeBetaServerEventSessionUpdatedType] The event type, must be `session.updated`.
-  attr_reader :type
-  # @return [RealtimeSession] Realtime session object for the beta interface.
-  attr_reader :session
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the RealtimeBetaServerEventSessionCreatedType SDK namespace.
+  module RealtimeBetaServerEventSessionCreatedType
+    SESSION_CREATED = 'session.created'
+    VALUES = ['session.created'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeBetaServerEventSessionUpdatedMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      session: 'session'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      event_id
+      type
+      session
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeBetaServerEventSessionUpdatedType.from_value(value)
+      end,
+      session: lambda do |value|
+        ::OctridevOpenai::RealtimeSession.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # API model for RealtimeBetaServerEventSessionUpdated.
+  # Returned when a session is updated with a `session.update` event, unless there is an error.
+  class RealtimeBetaServerEventSessionUpdated
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeBetaServerEventSessionUpdatedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventSessionUpdatedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeBetaServerEventSessionUpdatedMetadata::DECODERS
+
+    # @return [String] The unique ID of the server event.
+    attr_reader :event_id
+    # @return [RealtimeBetaServerEventSessionUpdatedType] The event type, must be `session.updated`.
+    attr_reader :type
+    # @return [RealtimeSession] Realtime session object for the beta interface.
+    attr_reader :session
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Defines the RealtimeBetaServerEventSessionUpdatedType SDK namespace.
-module RealtimeBetaServerEventSessionUpdatedType
-  SESSION_UPDATED = 'session.updated'
-  VALUES = ['session.updated'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeBetaServerEventTranscriptionSessionCreatedMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    session: "session",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    event_id
-    type
-    session
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeBetaServerEventTranscriptionSessionCreatedType.from_value(value)
-    end,
-    session: lambda do |value|
-      ::OctridevOpenai::RealtimeTranscriptionSessionCreateResponse.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for RealtimeBetaServerEventTranscriptionSessionCreated.
-# Returned when a transcription session is created.
-class RealtimeBetaServerEventTranscriptionSessionCreated
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeBetaServerEventTranscriptionSessionCreatedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventTranscriptionSessionCreatedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeBetaServerEventTranscriptionSessionCreatedMetadata::DECODERS
-
-  # @return [String] The unique ID of the server event.
-  attr_reader :event_id
-  # @return [RealtimeBetaServerEventTranscriptionSessionCreatedType] The event type, must be `transcription_session.created`.
-  attr_reader :type
-  # @return [RealtimeTranscriptionSessionCreateResponse] A new Realtime transcription session configuration. When a session is created on the server via REST API, the session object also contains an ephemeral key. Default TTL for keys is 10 minutes. This property is not present when a session is updated via the WebSocket API.
-  attr_reader :session
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the RealtimeBetaServerEventSessionUpdatedType SDK namespace.
+  module RealtimeBetaServerEventSessionUpdatedType
+    SESSION_UPDATED = 'session.updated'
+    VALUES = ['session.updated'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeBetaServerEventTranscriptionSessionCreatedMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      session: 'session'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      event_id
+      type
+      session
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeBetaServerEventTranscriptionSessionCreatedType.from_value(value)
+      end,
+      session: lambda do |value|
+        ::OctridevOpenai::RealtimeTranscriptionSessionCreateResponse.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # API model for RealtimeBetaServerEventTranscriptionSessionCreated.
+  # Returned when a transcription session is created.
+  class RealtimeBetaServerEventTranscriptionSessionCreated
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeBetaServerEventTranscriptionSessionCreatedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventTranscriptionSessionCreatedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeBetaServerEventTranscriptionSessionCreatedMetadata::DECODERS
+
+    # @return [String] The unique ID of the server event.
+    attr_reader :event_id
+    # @return [RealtimeBetaServerEventTranscriptionSessionCreatedType] The event type, must be `transcription_session.created`.
+    attr_reader :type
+    # @return [RealtimeTranscriptionSessionCreateResponse] A new Realtime transcription session configuration. When a session is created on the server via REST API, the session object also contains an ephemeral key. Default TTL for keys is 10 minutes. This property is not present when a session is updated via the WebSocket API.
+    attr_reader :session
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Defines the RealtimeBetaServerEventTranscriptionSessionCreatedType SDK namespace.
-module RealtimeBetaServerEventTranscriptionSessionCreatedType
-  TRANSCRIPTION_SESSION_CREATED = 'transcription_session.created'
-  VALUES = ['transcription_session.created'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeBetaServerEventTranscriptionSessionUpdatedMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    session: "session",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    event_id
-    type
-    session
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeBetaServerEventTranscriptionSessionUpdatedType.from_value(value)
-    end,
-    session: lambda do |value|
-      ::OctridevOpenai::RealtimeTranscriptionSessionCreateResponse.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for RealtimeBetaServerEventTranscriptionSessionUpdated.
-# Returned when a transcription session is updated with a `transcription_session.update` event, unless there is an error.
-class RealtimeBetaServerEventTranscriptionSessionUpdated
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeBetaServerEventTranscriptionSessionUpdatedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventTranscriptionSessionUpdatedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeBetaServerEventTranscriptionSessionUpdatedMetadata::DECODERS
-
-  # @return [String] The unique ID of the server event.
-  attr_reader :event_id
-  # @return [RealtimeBetaServerEventTranscriptionSessionUpdatedType] The event type, must be `transcription_session.updated`.
-  attr_reader :type
-  # @return [RealtimeTranscriptionSessionCreateResponse] A new Realtime transcription session configuration. When a session is created on the server via REST API, the session object also contains an ephemeral key. Default TTL for keys is 10 minutes. This property is not present when a session is updated via the WebSocket API.
-  attr_reader :session
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the RealtimeBetaServerEventTranscriptionSessionCreatedType SDK namespace.
+  module RealtimeBetaServerEventTranscriptionSessionCreatedType
+    TRANSCRIPTION_SESSION_CREATED = 'transcription_session.created'
+    VALUES = ['transcription_session.created'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeBetaServerEventTranscriptionSessionUpdatedMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      session: 'session'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      event_id
+      type
+      session
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeBetaServerEventTranscriptionSessionUpdatedType.from_value(value)
+      end,
+      session: lambda do |value|
+        ::OctridevOpenai::RealtimeTranscriptionSessionCreateResponse.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # API model for RealtimeBetaServerEventTranscriptionSessionUpdated.
+  # Returned when a transcription session is updated with a `transcription_session.update` event, unless there is an error.
+  class RealtimeBetaServerEventTranscriptionSessionUpdated
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeBetaServerEventTranscriptionSessionUpdatedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeBetaServerEventTranscriptionSessionUpdatedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeBetaServerEventTranscriptionSessionUpdatedMetadata::DECODERS
+
+    # @return [String] The unique ID of the server event.
+    attr_reader :event_id
+    # @return [RealtimeBetaServerEventTranscriptionSessionUpdatedType] The event type, must be `transcription_session.updated`.
+    attr_reader :type
+    # @return [RealtimeTranscriptionSessionCreateResponse] A new Realtime transcription session configuration. When a session is created on the server via REST API, the session object also contains an ephemeral key. Default TTL for keys is 10 minutes. This property is not present when a session is updated via the WebSocket API.
+    attr_reader :session
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
+  # Defines the RealtimeBetaServerEventTranscriptionSessionUpdatedType SDK namespace.
+  module RealtimeBetaServerEventTranscriptionSessionUpdatedType
+    TRANSCRIPTION_SESSION_UPDATED = 'transcription_session.updated'
+    VALUES = ['transcription_session.updated'].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
-
-# Defines the RealtimeBetaServerEventTranscriptionSessionUpdatedType SDK namespace.
-module RealtimeBetaServerEventTranscriptionSessionUpdatedType
-  TRANSCRIPTION_SESSION_UPDATED = 'transcription_session.updated'
-  VALUES = ['transcription_session.updated'].freeze
-  def self.from_value(value)
-    value
-  end
-end
 end

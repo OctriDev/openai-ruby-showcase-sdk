@@ -5,44 +5,43 @@
 
 # agent domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalAgentEnvironmentEventMetadata
-  FIELDS = {
-    id: "id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for AgentEnvironmentEvent.
-# Identifies the environment whose lifecycle changed.
-class AgentEnvironmentEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalAgentEnvironmentEventMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalAgentEnvironmentEventMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalAgentEnvironmentEventMetadata::DECODERS
-
-  # @return [String] The ID of the environment.
-  attr_reader :id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalAgentEnvironmentEventMetadata
+    FIELDS = {
+      id: 'id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
+  # API model for AgentEnvironmentEvent.
+  # Identifies the environment whose lifecycle changed.
+  class AgentEnvironmentEvent
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalAgentEnvironmentEventMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalAgentEnvironmentEventMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalAgentEnvironmentEventMetadata::DECODERS
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
+    # @return [String] The ID of the environment.
+    attr_reader :id
 
-  def to_json(*args)
-    to_h.to_json(*args)
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
-end
 end

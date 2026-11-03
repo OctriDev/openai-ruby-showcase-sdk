@@ -5,412 +5,411 @@
 
 # fine_tuning domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalRunGraderResponseMetadataErrorsMetadata
-  FIELDS = {
-    formula_parse_error: "formula_parse_error",
-    sample_parse_error: "sample_parse_error",
-    truncated_observation_error: "truncated_observation_error",
-    unresponsive_reward_error: "unresponsive_reward_error",
-    invalid_variable_error: "invalid_variable_error",
-    other_error: "other_error",
-    python_grader_server_error: "python_grader_server_error",
-    python_grader_server_error_type: "python_grader_server_error_type",
-    python_grader_runtime_error: "python_grader_runtime_error",
-    python_grader_runtime_error_details: "python_grader_runtime_error_details",
-    model_grader_server_error: "model_grader_server_error",
-    model_grader_refusal_error: "model_grader_refusal_error",
-    model_grader_parse_error: "model_grader_parse_error",
-    model_grader_server_error_details: "model_grader_server_error_details",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    formula_parse_error
-    sample_parse_error
-    truncated_observation_error
-    unresponsive_reward_error
-    invalid_variable_error
-    other_error
-    python_grader_server_error
-    python_grader_server_error_type
-    python_grader_runtime_error
-    python_grader_runtime_error_details
-    model_grader_server_error
-    model_grader_refusal_error
-    model_grader_parse_error
-    model_grader_server_error_details
-  ].freeze
-  DECODERS = {
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    python_grader_server_error_type
-    python_grader_runtime_error_details
-    model_grader_server_error_details
-  ].freeze
-end
-
-# API model for RunGraderResponseMetadataErrors.
-# Required object value serialized in the `errors` wire field.
-class RunGraderResponseMetadataErrors
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRunGraderResponseMetadataErrorsMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRunGraderResponseMetadataErrorsMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRunGraderResponseMetadataErrorsMetadata::DECODERS
-
-  # @return [Boolean] Required `boolean` value serialized in the `formula_parse_error` wire field.
-  attr_reader :formula_parse_error
-  # @return [Boolean] Required `boolean` value serialized in the `sample_parse_error` wire field.
-  attr_reader :sample_parse_error
-  # @return [Boolean] Required `boolean` value serialized in the `truncated_observation_error` wire field.
-  attr_reader :truncated_observation_error
-  # @return [Boolean] Required `boolean` value serialized in the `unresponsive_reward_error` wire field.
-  attr_reader :unresponsive_reward_error
-  # @return [Boolean] Required `boolean` value serialized in the `invalid_variable_error` wire field.
-  attr_reader :invalid_variable_error
-  # @return [Boolean] Required `boolean` value serialized in the `other_error` wire field.
-  attr_reader :other_error
-  # @return [Boolean] Required `boolean` value serialized in the `python_grader_server_error` wire field.
-  attr_reader :python_grader_server_error
-  # @return [String] Required `string` value serialized in the `python_grader_server_error_type` wire field.
-  attr_reader :python_grader_server_error_type
-  # @return [Boolean] Required `boolean` value serialized in the `python_grader_runtime_error` wire field.
-  attr_reader :python_grader_runtime_error
-  # @return [String] Required `string` value serialized in the `python_grader_runtime_error_details` wire field.
-  attr_reader :python_grader_runtime_error_details
-  # @return [Boolean] Required `boolean` value serialized in the `model_grader_server_error` wire field.
-  attr_reader :model_grader_server_error
-  # @return [Boolean] Required `boolean` value serialized in the `model_grader_refusal_error` wire field.
-  attr_reader :model_grader_refusal_error
-  # @return [Boolean] Required `boolean` value serialized in the `model_grader_parse_error` wire field.
-  attr_reader :model_grader_parse_error
-  # @return [String] Required `string` value serialized in the `model_grader_server_error_details` wire field.
-  attr_reader :model_grader_server_error_details
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalRunGraderResponseMetadataErrorsMetadata
+    FIELDS = {
+      formula_parse_error: 'formula_parse_error',
+      sample_parse_error: 'sample_parse_error',
+      truncated_observation_error: 'truncated_observation_error',
+      unresponsive_reward_error: 'unresponsive_reward_error',
+      invalid_variable_error: 'invalid_variable_error',
+      other_error: 'other_error',
+      python_grader_server_error: 'python_grader_server_error',
+      python_grader_server_error_type: 'python_grader_server_error_type',
+      python_grader_runtime_error: 'python_grader_runtime_error',
+      python_grader_runtime_error_details: 'python_grader_runtime_error_details',
+      model_grader_server_error: 'model_grader_server_error',
+      model_grader_refusal_error: 'model_grader_refusal_error',
+      model_grader_parse_error: 'model_grader_parse_error',
+      model_grader_server_error_details: 'model_grader_server_error_details'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      formula_parse_error
+      sample_parse_error
+      truncated_observation_error
+      unresponsive_reward_error
+      invalid_variable_error
+      other_error
+      python_grader_server_error
+      python_grader_server_error_type
+      python_grader_runtime_error
+      python_grader_runtime_error_details
+      model_grader_server_error
+      model_grader_refusal_error
+      model_grader_parse_error
+      model_grader_server_error_details
+    ].freeze
+    DECODERS = {}.freeze
+    NULLABLE_FIELDS = %i[
+      python_grader_server_error_type
+      python_grader_runtime_error_details
+      model_grader_server_error_details
+    ].freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalRunGraderResponseMetadataErrorsMetadata::NULLABLE_FIELDS)
+  # API model for RunGraderResponseMetadataErrors.
+  # Required object value serialized in the `errors` wire field.
+  class RunGraderResponseMetadataErrors
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRunGraderResponseMetadataErrorsMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRunGraderResponseMetadataErrorsMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRunGraderResponseMetadataErrorsMetadata::DECODERS
+
+    # @return [Boolean] Required `boolean` value serialized in the `formula_parse_error` wire field.
+    attr_reader :formula_parse_error
+    # @return [Boolean] Required `boolean` value serialized in the `sample_parse_error` wire field.
+    attr_reader :sample_parse_error
+    # @return [Boolean] Required `boolean` value serialized in the `truncated_observation_error` wire field.
+    attr_reader :truncated_observation_error
+    # @return [Boolean] Required `boolean` value serialized in the `unresponsive_reward_error` wire field.
+    attr_reader :unresponsive_reward_error
+    # @return [Boolean] Required `boolean` value serialized in the `invalid_variable_error` wire field.
+    attr_reader :invalid_variable_error
+    # @return [Boolean] Required `boolean` value serialized in the `other_error` wire field.
+    attr_reader :other_error
+    # @return [Boolean] Required `boolean` value serialized in the `python_grader_server_error` wire field.
+    attr_reader :python_grader_server_error
+    # @return [String] Required `string` value serialized in the `python_grader_server_error_type` wire field.
+    attr_reader :python_grader_server_error_type
+    # @return [Boolean] Required `boolean` value serialized in the `python_grader_runtime_error` wire field.
+    attr_reader :python_grader_runtime_error
+    # @return [String] Required `string` value serialized in the `python_grader_runtime_error_details` wire field.
+    attr_reader :python_grader_runtime_error_details
+    # @return [Boolean] Required `boolean` value serialized in the `model_grader_server_error` wire field.
+    attr_reader :model_grader_server_error
+    # @return [Boolean] Required `boolean` value serialized in the `model_grader_refusal_error` wire field.
+    attr_reader :model_grader_refusal_error
+    # @return [Boolean] Required `boolean` value serialized in the `model_grader_parse_error` wire field.
+    attr_reader :model_grader_parse_error
+    # @return [String] Required `string` value serialized in the `model_grader_server_error_details` wire field.
+    attr_reader :model_grader_server_error_details
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalRunGraderResponseMetadataErrorsMetadata::NULLABLE_FIELDS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalRunGraderResponseMetadataTokenUsageMetadata
+    FIELDS = {
+      prompt_tokens: 'prompt_tokens',
+      total_tokens: 'total_tokens',
+      completion_tokens: 'completion_tokens',
+      cached_tokens: 'cached_tokens'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      prompt_tokens
+      total_tokens
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # API model for RunGraderResponseMetadataTokenUsage.
+  # Required object value serialized in the `token_usage` wire field.
+  class RunGraderResponseMetadataTokenUsage
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRunGraderResponseMetadataTokenUsageMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRunGraderResponseMetadataTokenUsageMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRunGraderResponseMetadataTokenUsageMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalRunGraderResponseMetadataTokenUsageMetadata
-  FIELDS = {
-    prompt_tokens: "prompt_tokens",
-    total_tokens: "total_tokens",
-    completion_tokens: "completion_tokens",
-    cached_tokens: "cached_tokens",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    prompt_tokens
-    total_tokens
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
+    # @return [Integer] Required `integer` value serialized in the `prompt_tokens` wire field.
+    attr_reader :prompt_tokens
+    # @return [Integer] Required `integer` value serialized in the `total_tokens` wire field.
+    attr_reader :total_tokens
+    # @return [Integer] Optional `integer` value serialized in the `completion_tokens` wire field.
+    attr_reader :completion_tokens
+    # @return [Integer] Optional `integer` value serialized in the `cached_tokens` wire field.
+    attr_reader :cached_tokens
 
-# API model for RunGraderResponseMetadataTokenUsage.
-# Required object value serialized in the `token_usage` wire field.
-class RunGraderResponseMetadataTokenUsage
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRunGraderResponseMetadataTokenUsageMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRunGraderResponseMetadataTokenUsageMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRunGraderResponseMetadataTokenUsageMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [Integer] Required `integer` value serialized in the `prompt_tokens` wire field.
-  attr_reader :prompt_tokens
-  # @return [Integer] Required `integer` value serialized in the `total_tokens` wire field.
-  attr_reader :total_tokens
-  # @return [Integer] Optional `integer` value serialized in the `completion_tokens` wire field.
-  attr_reader :completion_tokens
-  # @return [Integer] Optional `integer` value serialized in the `cached_tokens` wire field.
-  attr_reader :cached_tokens
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalRunGraderResponseMetadataMetadata
+    FIELDS = {
+      name: 'name',
+      type: 'type',
+      errors: 'errors',
+      execution_time: 'execution_time',
+      scores: 'scores',
+      token_usage: 'token_usage',
+      sampled_model_name: 'sampled_model_name'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      name
+      type
+      errors
+      execution_time
+      scores
+      token_usage
+      sampled_model_name
+    ].freeze
+    DECODERS = {
+      errors: lambda do |value|
+        ::OctridevOpenai::RunGraderResponseMetadataErrors.from_hash(value)
+      end,
+      token_usage: lambda do |value|
+        ::OctridevOpenai::RunGraderResponseMetadataTokenUsage.from_hash(value)
+      end
+    }.freeze
+    NULLABLE_FIELDS = %i[
+      token_usage
+      sampled_model_name
+    ].freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # API model for RunGraderResponseMetadata.
+  # Required object value serialized in the `metadata` wire field.
+  class RunGraderResponseMetadata
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRunGraderResponseMetadataMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRunGraderResponseMetadataMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRunGraderResponseMetadataMetadata::DECODERS
+
+    # @return [String] Required `string` value serialized in the `name` wire field.
+    attr_reader :name
+    # @return [String] Required `string` value serialized in the `type` wire field.
+    attr_reader :type
+    # @return [RunGraderResponseMetadataErrors] Required object value serialized in the `errors` wire field.
+    attr_reader :errors
+    # @return [Float] Required `number` value serialized in the `execution_time` wire field.
+    attr_reader :execution_time
+    # @return [Hash] Required object value serialized in the `scores` wire field.
+    attr_reader :scores
+    # @return [RunGraderResponseMetadataTokenUsage] Required object value serialized in the `token_usage` wire field.
+    attr_reader :token_usage
+    # @return [String] Required `string` value serialized in the `sampled_model_name` wire field.
+    attr_reader :sampled_model_name
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalRunGraderResponseMetadataMetadata::NULLABLE_FIELDS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRunGraderResponseMetadataMetadata
-  FIELDS = {
-    name: "name",
-    type: "type",
-    errors: "errors",
-    execution_time: "execution_time",
-    scores: "scores",
-    token_usage: "token_usage",
-    sampled_model_name: "sampled_model_name",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    name
-    type
-    errors
-    execution_time
-    scores
-    token_usage
-    sampled_model_name
-  ].freeze
-  DECODERS = {
-    errors: lambda do |value|
-      ::OctridevOpenai::RunGraderResponseMetadataErrors.from_hash(value)
-    end,
-    token_usage: lambda do |value|
-      ::OctridevOpenai::RunGraderResponseMetadataTokenUsage.from_hash(value)
-    end,
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    token_usage
-    sampled_model_name
-  ].freeze
-end
-
-# API model for RunGraderResponseMetadata.
-# Required object value serialized in the `metadata` wire field.
-class RunGraderResponseMetadata
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRunGraderResponseMetadataMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRunGraderResponseMetadataMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRunGraderResponseMetadataMetadata::DECODERS
-
-  # @return [String] Required `string` value serialized in the `name` wire field.
-  attr_reader :name
-  # @return [String] Required `string` value serialized in the `type` wire field.
-  attr_reader :type
-  # @return [RunGraderResponseMetadataErrors] Required object value serialized in the `errors` wire field.
-  attr_reader :errors
-  # @return [Float] Required `number` value serialized in the `execution_time` wire field.
-  attr_reader :execution_time
-  # @return [Hash] Required object value serialized in the `scores` wire field.
-  attr_reader :scores
-  # @return [RunGraderResponseMetadataTokenUsage] Required object value serialized in the `token_usage` wire field.
-  attr_reader :token_usage
-  # @return [String] Required `string` value serialized in the `sampled_model_name` wire field.
-  attr_reader :sampled_model_name
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalRunGraderResponseMetadata
+    FIELDS = {
+      reward: 'reward',
+      metadata: 'metadata',
+      sub_rewards: 'sub_rewards',
+      model_grader_token_usage_per_model: 'model_grader_token_usage_per_model'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      reward
+      metadata
+      sub_rewards
+      model_grader_token_usage_per_model
+    ].freeze
+    DECODERS = {
+      metadata: lambda do |value|
+        ::OctridevOpenai::RunGraderResponseMetadata.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalRunGraderResponseMetadataMetadata::NULLABLE_FIELDS)
+  # API model for RunGraderResponse.
+  # Typed representation of the `RunGraderResponse` API schema.
+  class RunGraderResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRunGraderResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRunGraderResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRunGraderResponseMetadata::DECODERS
+
+    # @return [Float] Required `number` value serialized in the `reward` wire field.
+    attr_reader :reward
+    # @return [RunGraderResponseMetadata] Required object value serialized in the `metadata` wire field.
+    attr_reader :metadata
+    # @return [Hash] Required object value serialized in the `sub_rewards` wire field.
+    attr_reader :sub_rewards
+    # @return [Hash] Required object value serialized in the `model_grader_token_usage_per_model` wire field.
+    attr_reader :model_grader_token_usage_per_model
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalValidateGraderRequestMetadata
+    FIELDS = {
+      grader: 'grader'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      grader
+    ].freeze
+    DECODERS = {
+      grader: lambda do |value|
+        ::OctridevOpenai::ValidateGraderRequestGrader.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # API model for ValidateGraderRequest.
+  # Typed representation of the `ValidateGraderRequest` API schema.
+  class ValidateGraderRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalValidateGraderRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalValidateGraderRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalValidateGraderRequestMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalRunGraderResponseMetadata
-  FIELDS = {
-    reward: "reward",
-    metadata: "metadata",
-    sub_rewards: "sub_rewards",
-    model_grader_token_usage_per_model: "model_grader_token_usage_per_model",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    reward
-    metadata
-    sub_rewards
-    model_grader_token_usage_per_model
-  ].freeze
-  DECODERS = {
-    metadata: lambda do |value|
-      ::OctridevOpenai::RunGraderResponseMetadata.from_hash(value)
-    end,
-  }.freeze
-end
+    # @return [ValidateGraderRequestGrader] The grader used for the fine-tuning job.
+    attr_reader :grader
 
-# API model for RunGraderResponse.
-# Typed representation of the `RunGraderResponse` API schema.
-class RunGraderResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRunGraderResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRunGraderResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRunGraderResponseMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [Float] Required `number` value serialized in the `reward` wire field.
-  attr_reader :reward
-  # @return [RunGraderResponseMetadata] Required object value serialized in the `metadata` wire field.
-  attr_reader :metadata
-  # @return [Hash] Required object value serialized in the `sub_rewards` wire field.
-  attr_reader :sub_rewards
-  # @return [Hash] Required object value serialized in the `model_grader_token_usage_per_model` wire field.
-  attr_reader :model_grader_token_usage_per_model
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the ValidateGraderRequestGrader SDK namespace.
+  module ValidateGraderRequestGrader
+    DISCRIMINATOR_MAPPING = {
+      'string_check' => -> { GraderStringCheck },
+      'text_similarity' => -> { GraderTextSimilarity },
+      'python' => -> { GraderPython },
+      'score_model' => -> { GraderScoreModel },
+      'multi' => -> { GraderMulti }
+    }.freeze
+
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('ValidateGraderRequestGrader', 'variant', "Unknown ValidateGraderRequestGrader discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalValidateGraderResponseMetadata
+    FIELDS = {
+      grader: 'grader'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      grader: lambda do |value|
+        ::OctridevOpenai::ValidateGraderResponseGrader.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # API model for ValidateGraderResponse.
+  # Typed representation of the `ValidateGraderResponse` API schema.
+  class ValidateGraderResponse
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalValidateGraderResponseMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalValidateGraderResponseMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalValidateGraderResponseMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalValidateGraderRequestMetadata
-  FIELDS = {
-    grader: "grader",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    grader
-  ].freeze
-  DECODERS = {
-    grader: lambda do |value|
-      ::OctridevOpenai::ValidateGraderRequestGrader.from_hash(value)
-    end,
-  }.freeze
-end
+    # @return [ValidateGraderResponseGrader] The grader used for the fine-tuning job.
+    attr_reader :grader
 
-# API model for ValidateGraderRequest.
-# Typed representation of the `ValidateGraderRequest` API schema.
-class ValidateGraderRequest
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalValidateGraderRequestMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalValidateGraderRequestMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalValidateGraderRequestMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [ValidateGraderRequestGrader] The grader used for the fine-tuning job.
-  attr_reader :grader
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the ValidateGraderResponseGrader SDK namespace.
+  module ValidateGraderResponseGrader
+    DISCRIMINATOR_MAPPING = {
+      'string_check' => -> { GraderStringCheck },
+      'text_similarity' => -> { GraderTextSimilarity },
+      'python' => -> { GraderPython },
+      'score_model' => -> { GraderScoreModel },
+      'multi' => -> { GraderMulti }
+    }.freeze
+
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('ValidateGraderResponseGrader', 'variant', "Unknown ValidateGraderResponseGrader discriminator: #{hash['type'].inspect}")
+    end
   end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Defines the ValidateGraderRequestGrader SDK namespace.
-module ValidateGraderRequestGrader
-  DISCRIMINATOR_MAPPING = {
-    "string_check" => -> { GraderStringCheck },
-    "text_similarity" => -> { GraderTextSimilarity },
-    "python" => -> { GraderPython },
-    "score_model" => -> { GraderScoreModel },
-    "multi" => -> { GraderMulti },
-  }.freeze
-
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('ValidateGraderRequestGrader', 'variant', "Unknown ValidateGraderRequestGrader discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalValidateGraderResponseMetadata
-  FIELDS = {
-    grader: "grader",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    grader: lambda do |value|
-      ::OctridevOpenai::ValidateGraderResponseGrader.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for ValidateGraderResponse.
-# Typed representation of the `ValidateGraderResponse` API schema.
-class ValidateGraderResponse
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalValidateGraderResponseMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalValidateGraderResponseMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalValidateGraderResponseMetadata::DECODERS
-
-  # @return [ValidateGraderResponseGrader] The grader used for the fine-tuning job.
-  attr_reader :grader
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Defines the ValidateGraderResponseGrader SDK namespace.
-module ValidateGraderResponseGrader
-  DISCRIMINATOR_MAPPING = {
-    "string_check" => -> { GraderStringCheck },
-    "text_similarity" => -> { GraderTextSimilarity },
-    "python" => -> { GraderPython },
-    "score_model" => -> { GraderScoreModel },
-    "multi" => -> { GraderMulti },
-  }.freeze
-
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('ValidateGraderResponseGrader', 'variant', "Unknown ValidateGraderResponseGrader discriminator: #{hash["type"].inspect}")
-  end
-end
 end

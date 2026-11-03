@@ -98,39 +98,41 @@ module OctridevOpenai
         request_options: nil,
         &block
       )
-    return enum_for(
-          __method__,
-          config: config,
-          thread_id: thread_id,
-          assistant_id: assistant_id,
-          include: include,
-          model: model,
-          reasoning_effort: reasoning_effort,
-          instructions: instructions,
-          additional_instructions: additional_instructions,
-          additional_messages: additional_messages,
-          tools: tools,
-          metadata: metadata,
-          temperature: temperature,
-          top_p: top_p,
-          max_prompt_tokens: max_prompt_tokens,
-          max_completion_tokens: max_completion_tokens,
-          truncation_strategy: truncation_strategy,
-          tool_choice: tool_choice,
-          parallel_tool_calls: parallel_tool_calls,
-          response_format: response_format,
-          request_options: request_options,
-        ) unless block
+        unless block
+          return enum_for(
+            __method__,
+            config: config,
+            thread_id: thread_id,
+            assistant_id: assistant_id,
+            include: include,
+            model: model,
+            reasoning_effort: reasoning_effort,
+            instructions: instructions,
+            additional_instructions: additional_instructions,
+            additional_messages: additional_messages,
+            tools: tools,
+            metadata: metadata,
+            temperature: temperature,
+            top_p: top_p,
+            max_prompt_tokens: max_prompt_tokens,
+            max_completion_tokens: max_completion_tokens,
+            truncation_strategy: truncation_strategy,
+            tool_choice: tool_choice,
+            parallel_tool_calls: parallel_tool_calls,
+            response_format: response_format,
+            request_options: request_options
+          )
+        end
         SdkClient.stream(
           'POST', [
-            "/threads/",
+            '/threads/',
             SdkClient.encode_path_segment(thread_id),
-            "/runs"
+            '/runs'
           ].join,
           config: config,
           query: {
-          'include[]' => QueryValue.new(include, style: 'form', explode: true),
-        },
+            'include[]' => QueryValue.new(include, style: 'form', explode: true)
+          },
           body: {
             'assistant_id' => assistant_id,
             'model' => model,
@@ -147,16 +149,17 @@ module OctridevOpenai
             'truncation_strategy' => truncation_strategy,
             'tool_choice' => tool_choice,
             'parallel_tool_calls' => parallel_tool_calls,
-            'response_format' => response_format,
+            'response_format' => response_format
           },
           content_type: 'application/json',
           operation_id: 'create_run_stream',
           stream_format: :sse,
-          stream_media_type: "text/event-stream",
+          stream_media_type: 'text/event-stream',
           request_options: request_options,
           errors: { '429' => ::OctridevOpenai::ErrorResponse }
         ).each do |ev|
           break if ev.data == '[DONE]'
+
           decoded = JSON.parse(ev.data)
           block.call(SdkClient.decode_event(decoded, ::OctridevOpenai::AssistantStreamEvent))
         end
@@ -168,19 +171,13 @@ module OctridevOpenai
       #
       # @param thread_id [String] The ID of the thread that was run.
       # @param run_id [String] The ID of the run to retrieve.
-      singleton_class.define_method(:get_run) do |
-        config:,
-        thread_id:,
-        run_id:,
-        request_options: nil
-      |
-
+      singleton_class.define_method(:get_run) do |config:, thread_id:, run_id:, request_options: nil|
         SdkClient.request(
           'GET',
           [
-            "/threads/",
+            '/threads/',
             SdkClient.encode_path_segment(thread_id),
-            "/runs/",
+            '/runs/',
             SdkClient.encode_path_segment(run_id)
           ].join,
           config: config,
@@ -188,7 +185,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'get_run',
           request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '429' => ::OctridevOpenai::ErrorResponse }
         ).result
       end
 
@@ -210,24 +207,23 @@ module OctridevOpenai
         metadata: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
           [
-            "/threads/",
+            '/threads/',
             SdkClient.encode_path_segment(thread_id),
-            "/runs/",
+            '/runs/',
             SdkClient.encode_path_segment(run_id)
           ].join,
           config: config,
           body: {
-            'metadata' => metadata,
+            'metadata' => metadata
           },
           return_type: ::OctridevOpenai::RunObject,
           decoder: :json,
           operation_id: 'modify_run',
           request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '429' => ::OctridevOpenai::ErrorResponse }
         ).result
       end
 
@@ -243,22 +239,21 @@ module OctridevOpenai
         run_id:,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
           [
-            "/threads/",
+            '/threads/',
             SdkClient.encode_path_segment(thread_id),
-            "/runs/",
+            '/runs/',
             SdkClient.encode_path_segment(run_id),
-            "/cancel"
+            '/cancel'
           ].join,
           config: config,
           return_type: ::OctridevOpenai::RunObject,
           decoder: :json,
           operation_id: 'cancel_run',
           request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '429' => ::OctridevOpenai::ErrorResponse }
         ).result
       end
 
@@ -298,15 +293,14 @@ module OctridevOpenai
         include: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
           [
-            "/threads/",
+            '/threads/',
             SdkClient.encode_path_segment(thread_id),
-            "/runs/",
+            '/runs/',
             SdkClient.encode_path_segment(run_id),
-            "/steps"
+            '/steps'
           ].join,
           config: config,
           query: {
@@ -314,17 +308,17 @@ module OctridevOpenai
             'order' => QueryValue.new(order, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
             'before' => QueryValue.new(before, style: 'form', explode: true),
-            'include[]' => QueryValue.new(include, style: 'form', explode: true),
+            'include[]' => QueryValue.new(include, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::ListRunStepsResponse,
           decoder: :json,
           operation_id: 'list_run_steps',
           request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '429' => ::OctridevOpenai::ErrorResponse }
         ).result
       end
 
-    ListRunStepsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      ListRunStepsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists the steps belonging to a run on a thread. Use cursor parameters to page through the steps, and set `order` to control their order by creation time.
       #
@@ -378,10 +372,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.last_id
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -414,10 +411,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListRunStepsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end
@@ -436,34 +435,26 @@ module OctridevOpenai
       #   `step_details.tool_calls*].file_search.results[*].content` to fetch the file
       #   search result content. See the [file search tool documentation for more
       #   information.
-      singleton_class.define_method(:get_run_step) do |
-        config:,
-        thread_id:,
-        run_id:,
-        step_id:,
-        include: NOT_GIVEN,
-        request_options: nil
-      |
-
+      singleton_class.define_method(:get_run_step) do |config:, thread_id:, run_id:, step_id:, include: NOT_GIVEN, request_options: nil|
         SdkClient.request(
           'GET',
           [
-            "/threads/",
+            '/threads/',
             SdkClient.encode_path_segment(thread_id),
-            "/runs/",
+            '/runs/',
             SdkClient.encode_path_segment(run_id),
-            "/steps/",
+            '/steps/',
             SdkClient.encode_path_segment(step_id)
           ].join,
           config: config,
           query: {
-            'include[]' => QueryValue.new(include, style: 'form', explode: true),
+            'include[]' => QueryValue.new(include, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::RunStepObject,
           decoder: :json,
           operation_id: 'get_run_step',
           request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '429' => ::OctridevOpenai::ErrorResponse }
         ).result
       end
 
@@ -486,26 +477,25 @@ module OctridevOpenai
         stream: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
           [
-            "/threads/",
+            '/threads/',
             SdkClient.encode_path_segment(thread_id),
-            "/runs/",
+            '/runs/',
             SdkClient.encode_path_segment(run_id),
-            "/submit_tool_outputs"
+            '/submit_tool_outputs'
           ].join,
           config: config,
           body: {
             'tool_outputs' => tool_outputs,
-            'stream' => stream,
+            'stream' => stream
           },
           return_type: ::OctridevOpenai::RunObject,
           decoder: :json,
           operation_id: 'submit_assistants_tool_outputs_to_run',
           request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '429' => ::OctridevOpenai::ErrorResponse }
         ).result
       end
 
@@ -526,34 +516,37 @@ module OctridevOpenai
         request_options: nil,
         &block
       )
-    return enum_for(
-          __method__,
-          config: config,
-          thread_id: thread_id,
-          run_id: run_id,
-          tool_outputs: tool_outputs,
-          request_options: request_options,
-        ) unless block
+        unless block
+          return enum_for(
+            __method__,
+            config: config,
+            thread_id: thread_id,
+            run_id: run_id,
+            tool_outputs: tool_outputs,
+            request_options: request_options
+          )
+        end
         SdkClient.stream(
           'POST', [
-            "/threads/",
+            '/threads/',
             SdkClient.encode_path_segment(thread_id),
-            "/runs/",
+            '/runs/',
             SdkClient.encode_path_segment(run_id),
-            "/submit_tool_outputs"
+            '/submit_tool_outputs'
           ].join,
           config: config,
           body: {
-            'tool_outputs' => tool_outputs,
+            'tool_outputs' => tool_outputs
           },
           content_type: 'application/json',
           operation_id: 'submit_assistants_tool_outputs_to_run_stream',
           stream_format: :sse,
-          stream_media_type: "text/event-stream",
+          stream_media_type: 'text/event-stream',
           request_options: request_options,
           errors: { '429' => ::OctridevOpenai::ErrorResponse }
         ).each do |ev|
           break if ev.data == '[DONE]'
+
           decoded = JSON.parse(ev.data)
           block.call(SdkClient.decode_event(decoded, ::OctridevOpenai::AssistantStreamEvent))
         end

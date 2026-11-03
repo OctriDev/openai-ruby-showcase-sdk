@@ -5,116 +5,118 @@
 
 # decisions_choice domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalChoiceOptionParamMetadata
-  FIELDS = {
-    value: "value",
-    description: "description",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    value
-  ].freeze
-  DECODERS = {
-    value: lambda do |value|
-      ::OctridevOpenai::ChoiceValueParam.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for ChoiceOptionParam.
-# Typed representation of the `ChoiceOptionParam` API schema.
-class ChoiceOptionParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalChoiceOptionParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalChoiceOptionParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalChoiceOptionParamMetadata::DECODERS
-
-  # @return [ChoiceValueParam] Choice values are typed: a string and a boolean with the same text are distinct.
-  attr_reader :value
-  # @return [String] Optional `string` value serialized in the `description` wire field.
-  attr_reader :description
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalChoiceOptionParamMetadata
+    FIELDS = {
+      value: 'value',
+      description: 'description'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      value
+    ].freeze
+    DECODERS = {
+      value: lambda do |value|
+        ::OctridevOpenai::ChoiceValueParam.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ChoiceOptionParam.
+  # Typed representation of the `ChoiceOptionParam` API schema.
+  class ChoiceOptionParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalChoiceOptionParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalChoiceOptionParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalChoiceOptionParamMetadata::DECODERS
+
+    # @return [ChoiceValueParam] Choice values are typed: a string and a boolean with the same text are distinct.
+    attr_reader :value
+    # @return [String] Optional `string` value serialized in the `description` wire field.
+    attr_reader :description
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalChoiceProbabilityResourceMetadata
+    FIELDS = {
+      value: 'value',
+      probability: 'probability'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      value
+      probability
+    ].freeze
+    DECODERS = {
+      value: lambda do |value|
+        ::OctridevOpenai::ChoiceValueResource.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # API model for ChoiceProbabilityResource.
+  # Typed representation of the `ChoiceProbabilityResource` API schema.
+  class ChoiceProbabilityResource
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalChoiceProbabilityResourceMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalChoiceProbabilityResourceMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalChoiceProbabilityResourceMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalChoiceProbabilityResourceMetadata
-  FIELDS = {
-    value: "value",
-    probability: "probability",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    value
-    probability
-  ].freeze
-  DECODERS = {
-    value: lambda do |value|
-      ::OctridevOpenai::ChoiceValueResource.from_hash(value)
-    end,
-  }.freeze
-end
+    # @return [ChoiceValueResource] Choice values are typed: a string and a boolean with the same text are distinct.
+    attr_reader :value
+    # @return [Float] Required `number` value serialized in the `probability` wire field.
+    attr_reader :probability
 
-# API model for ChoiceProbabilityResource.
-# Typed representation of the `ChoiceProbabilityResource` API schema.
-class ChoiceProbabilityResource
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalChoiceProbabilityResourceMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalChoiceProbabilityResourceMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalChoiceProbabilityResourceMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [ChoiceValueResource] Choice values are typed: a string and a boolean with the same text are distinct.
-  attr_reader :value
-  # @return [Float] Required `number` value serialized in the `probability` wire field.
-  attr_reader :probability
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the ChoiceValueParam SDK namespace.
+  module ChoiceValueParam
+    def self.from_hash(hash)
+      return hash if hash.is_a?(::String)
+      return Boolean.from_value(hash) if [true, false].include?(hash)
+
+      raise "Could not deserialize ChoiceValueParam from #{hash.inspect}"
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
+  # Defines the ChoiceValueResource SDK namespace.
+  module ChoiceValueResource
+    def self.from_hash(hash)
+      return hash if hash.is_a?(::String)
+      return Boolean.from_value(hash) if [true, false].include?(hash)
 
-  def to_json(*args)
-    to_h.to_json(*args)
+      raise "Could not deserialize ChoiceValueResource from #{hash.inspect}"
+    end
   end
-end
-
-# Defines the ChoiceValueParam SDK namespace.
-module ChoiceValueParam
-  def self.from_hash(hash)
-    return hash if hash.is_a?(::String)
-    return Boolean.from_value(hash) if [true, false].include?(hash)
-    raise "Could not deserialize ChoiceValueParam from #{hash.inspect}"
-  end
-end
-
-# Defines the ChoiceValueResource SDK namespace.
-module ChoiceValueResource
-  def self.from_hash(hash)
-    return hash if hash.is_a?(::String)
-    return Boolean.from_value(hash) if [true, false].include?(hash)
-    raise "Could not deserialize ChoiceValueResource from #{hash.inspect}"
-  end
-end
 end

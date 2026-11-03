@@ -5,300 +5,294 @@
 
 # realtime_realtime_translation domain models
 module OctridevOpenai
-# API model for RealtimeTranslationSessionCreateRequest.
-# Realtime translation session configuration. Translation sessions stream source audio in and translated audio plus transcript deltas out continuously.
-class RealtimeTranslationSessionCreateRequest
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeTranslationSessionCreateRequestMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeTranslationSessionCreateRequestMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeTranslationSessionCreateRequestMetadata::DECODERS
+  # API model for RealtimeTranslationSessionCreateRequest.
+  # Realtime translation session configuration. Translation sessions stream source audio in and translated audio plus transcript deltas out continuously.
+  class RealtimeTranslationSessionCreateRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeTranslationSessionCreateRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeTranslationSessionCreateRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeTranslationSessionCreateRequestMetadata::DECODERS
 
-  # @return [String] The Realtime translation model used for this session.
-  attr_reader :model
-  # @return [RealtimeTranslationSessionCreateRequestAudio] Configuration for translation input and output audio.
-  attr_reader :audio
+    # @return [String] The Realtime translation model used for this session.
+    attr_reader :model
+    # @return [RealtimeTranslationSessionCreateRequestAudio] Configuration for translation input and output audio.
+    attr_reader :audio
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeTranslationSessionUpdateRequestAudioInputTranscriptionMetadata
+    FIELDS = {
+      model: 'model'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      model
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # API model for RealtimeTranslationSessionUpdateRequestAudioInputTranscription.
+  # Optional source-language transcription. When configured, the server emits `session.input_transcript.delta` events. Translation itself still runs from the input audio stream.
+  class RealtimeTranslationSessionUpdateRequestAudioInputTranscription
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeTranslationSessionUpdateRequestAudioInputTranscriptionMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeTranslationSessionUpdateRequestAudioInputTranscriptionMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeTranslationSessionUpdateRequestAudioInputTranscriptionMetadata::DECODERS
+
+    # @return [String] The transcription model to use for source transcript deltas.
+    attr_reader :model
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeTranslationSessionUpdateRequestAudioInputTranscriptionMetadata
-  FIELDS = {
-    model: "model",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    model
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for RealtimeTranslationSessionUpdateRequestAudioInputTranscription.
-# Optional source-language transcription. When configured, the server emits `session.input_transcript.delta` events. Translation itself still runs from the input audio stream.
-class RealtimeTranslationSessionUpdateRequestAudioInputTranscription
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeTranslationSessionUpdateRequestAudioInputTranscriptionMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeTranslationSessionUpdateRequestAudioInputTranscriptionMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeTranslationSessionUpdateRequestAudioInputTranscriptionMetadata::DECODERS
-
-  # @return [String] The transcription model to use for source transcript deltas.
-  attr_reader :model
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeTranslationSessionUpdateRequestAudioInputNoiseReductionMetadata
+    FIELDS = {
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::NoiseReductionType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for RealtimeTranslationSessionUpdateRequestAudioInputNoiseReduction.
+  # Optional input noise reduction. Set to `null` to disable it.
+  class RealtimeTranslationSessionUpdateRequestAudioInputNoiseReduction
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeTranslationSessionUpdateRequestAudioInputNoiseReductionMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeTranslationSessionUpdateRequestAudioInputNoiseReductionMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeTranslationSessionUpdateRequestAudioInputNoiseReductionMetadata::DECODERS
+
+    # @return [NoiseReductionType] Type of noise reduction. `near_field` is for close-talking microphones such as headphones, `far_field` is for far-field microphones such as laptop or conference room microphones.
+    attr_reader :type
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeTranslationSessionUpdateRequestAudioInputMetadata
+    FIELDS = {
+      transcription: 'transcription',
+      noise_reduction: 'noise_reduction'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      transcription: lambda do |value|
+        ::OctridevOpenai::RealtimeTranslationSessionUpdateRequestAudioInputTranscription.from_hash(value)
+      end,
+      noise_reduction: lambda do |value|
+        ::OctridevOpenai::RealtimeTranslationSessionUpdateRequestAudioInputNoiseReduction.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # API model for RealtimeTranslationSessionUpdateRequestAudioInput.
+  # Optional object value serialized in the `input` wire field.
+  class RealtimeTranslationSessionUpdateRequestAudioInput
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeTranslationSessionUpdateRequestAudioInputMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeTranslationSessionUpdateRequestAudioInputMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeTranslationSessionUpdateRequestAudioInputMetadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalRealtimeTranslationSessionUpdateRequestAudioInputNoiseReductionMetadata
-  FIELDS = {
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::NoiseReductionType.from_value(value)
-    end,
-  }.freeze
-end
+    # @return [RealtimeTranslationSessionUpdateRequestAudioInputTranscription] Optional source-language transcription. When configured, the server emits `session.input_transcript.delta` events. Translation itself still runs from the input audio stream.
+    attr_reader :transcription
+    # @return [RealtimeTranslationSessionUpdateRequestAudioInputNoiseReduction] Optional input noise reduction. Set to `null` to disable it.
+    attr_reader :noise_reduction
 
-# API model for RealtimeTranslationSessionUpdateRequestAudioInputNoiseReduction.
-# Optional input noise reduction. Set to `null` to disable it.
-class RealtimeTranslationSessionUpdateRequestAudioInputNoiseReduction
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeTranslationSessionUpdateRequestAudioInputNoiseReductionMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeTranslationSessionUpdateRequestAudioInputNoiseReductionMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeTranslationSessionUpdateRequestAudioInputNoiseReductionMetadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [NoiseReductionType] Type of noise reduction. `near_field` is for close-talking microphones such as headphones, `far_field` is for far-field microphones such as laptop or conference room microphones.
-  attr_reader :type
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeTranslationSessionUpdateRequestAudioOutputMetadata
+    FIELDS = {
+      language: 'language'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # API model for RealtimeTranslationSessionUpdateRequestAudioOutput.
+  # Optional object value serialized in the `output` wire field.
+  class RealtimeTranslationSessionUpdateRequestAudioOutput
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeTranslationSessionUpdateRequestAudioOutputMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeTranslationSessionUpdateRequestAudioOutputMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeTranslationSessionUpdateRequestAudioOutputMetadata::DECODERS
+
+    # @return [String] Target language for translated output audio and transcript deltas.
+    attr_reader :language
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeTranslationSessionUpdateRequestAudioInputMetadata
-  FIELDS = {
-    transcription: "transcription",
-    noise_reduction: "noise_reduction",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    transcription: lambda do |value|
-      ::OctridevOpenai::RealtimeTranslationSessionUpdateRequestAudioInputTranscription.from_hash(value)
-    end,
-    noise_reduction: lambda do |value|
-      ::OctridevOpenai::RealtimeTranslationSessionUpdateRequestAudioInputNoiseReduction.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for RealtimeTranslationSessionUpdateRequestAudioInput.
-# Optional object value serialized in the `input` wire field.
-class RealtimeTranslationSessionUpdateRequestAudioInput
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeTranslationSessionUpdateRequestAudioInputMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeTranslationSessionUpdateRequestAudioInputMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeTranslationSessionUpdateRequestAudioInputMetadata::DECODERS
-
-  # @return [RealtimeTranslationSessionUpdateRequestAudioInputTranscription] Optional source-language transcription. When configured, the server emits `session.input_transcript.delta` events. Translation itself still runs from the input audio stream.
-  attr_reader :transcription
-  # @return [RealtimeTranslationSessionUpdateRequestAudioInputNoiseReduction] Optional input noise reduction. Set to `null` to disable it.
-  attr_reader :noise_reduction
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeTranslationSessionUpdateRequestAudioMetadata
+    FIELDS = {
+      input: 'input',
+      output: 'output'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      input: lambda do |value|
+        ::OctridevOpenai::RealtimeTranslationSessionUpdateRequestAudioInput.from_hash(value)
+      end,
+      output: lambda do |value|
+        ::OctridevOpenai::RealtimeTranslationSessionUpdateRequestAudioOutput.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for RealtimeTranslationSessionUpdateRequestAudio.
+  # Configuration for translation input and output audio.
+  class RealtimeTranslationSessionUpdateRequestAudio
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeTranslationSessionUpdateRequestAudioMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeTranslationSessionUpdateRequestAudioMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeTranslationSessionUpdateRequestAudioMetadata::DECODERS
+
+    # @return [RealtimeTranslationSessionUpdateRequestAudioInput] Optional object value serialized in the `input` wire field.
+    attr_reader :input
+    # @return [RealtimeTranslationSessionUpdateRequestAudioOutput] Optional object value serialized in the `output` wire field.
+    attr_reader :output
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeTranslationSessionUpdateRequestMetadata
+    FIELDS = {
+      audio: 'audio'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {
+      audio: lambda do |value|
+        ::OctridevOpenai::RealtimeTranslationSessionUpdateRequestAudio.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
+  # API model for RealtimeTranslationSessionUpdateRequest.
+  # Realtime translation session fields that can be updated with `session.update`.
+  class RealtimeTranslationSessionUpdateRequest
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeTranslationSessionUpdateRequestMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeTranslationSessionUpdateRequestMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeTranslationSessionUpdateRequestMetadata::DECODERS
+
+    # @return [RealtimeTranslationSessionUpdateRequestAudio] Configuration for translation input and output audio.
+    attr_reader :audio
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeTranslationSessionUpdateRequestAudioOutputMetadata
-  FIELDS = {
-    language: "language",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for RealtimeTranslationSessionUpdateRequestAudioOutput.
-# Optional object value serialized in the `output` wire field.
-class RealtimeTranslationSessionUpdateRequestAudioOutput
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeTranslationSessionUpdateRequestAudioOutputMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeTranslationSessionUpdateRequestAudioOutputMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeTranslationSessionUpdateRequestAudioOutputMetadata::DECODERS
-
-  # @return [String] Target language for translated output audio and transcript deltas.
-  attr_reader :language
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeTranslationSessionUpdateRequestAudioMetadata
-  FIELDS = {
-    input: "input",
-    output: "output",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    input: lambda do |value|
-      ::OctridevOpenai::RealtimeTranslationSessionUpdateRequestAudioInput.from_hash(value)
-    end,
-    output: lambda do |value|
-      ::OctridevOpenai::RealtimeTranslationSessionUpdateRequestAudioOutput.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for RealtimeTranslationSessionUpdateRequestAudio.
-# Configuration for translation input and output audio.
-class RealtimeTranslationSessionUpdateRequestAudio
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeTranslationSessionUpdateRequestAudioMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeTranslationSessionUpdateRequestAudioMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeTranslationSessionUpdateRequestAudioMetadata::DECODERS
-
-  # @return [RealtimeTranslationSessionUpdateRequestAudioInput] Optional object value serialized in the `input` wire field.
-  attr_reader :input
-  # @return [RealtimeTranslationSessionUpdateRequestAudioOutput] Optional object value serialized in the `output` wire field.
-  attr_reader :output
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalRealtimeTranslationSessionUpdateRequestMetadata
-  FIELDS = {
-    audio: "audio",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-    audio: lambda do |value|
-      ::OctridevOpenai::RealtimeTranslationSessionUpdateRequestAudio.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for RealtimeTranslationSessionUpdateRequest.
-# Realtime translation session fields that can be updated with `session.update`.
-class RealtimeTranslationSessionUpdateRequest
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeTranslationSessionUpdateRequestMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeTranslationSessionUpdateRequestMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeTranslationSessionUpdateRequestMetadata::DECODERS
-
-  # @return [RealtimeTranslationSessionUpdateRequestAudio] Configuration for translation input and output audio.
-  attr_reader :audio
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
 end

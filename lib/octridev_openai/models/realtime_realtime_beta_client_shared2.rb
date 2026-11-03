@@ -5,66 +5,66 @@
 
 # realtime_realtime_beta_client domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalRealtimeBetaClientEventTranscriptionSessionUpdateMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    session: "session",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    session
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::RealtimeBetaClientEventTranscriptionSessionUpdateType.from_value(value)
-    end,
-    session: lambda do |value|
-      ::OctridevOpenai::RealtimeTranscriptionSessionCreateRequest.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for RealtimeBetaClientEventTranscriptionSessionUpdate.
-# Send this event to update a transcription session.
-class RealtimeBetaClientEventTranscriptionSessionUpdate
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalRealtimeBetaClientEventTranscriptionSessionUpdateMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalRealtimeBetaClientEventTranscriptionSessionUpdateMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalRealtimeBetaClientEventTranscriptionSessionUpdateMetadata::DECODERS
-
-  # @return [String] Optional client-generated ID used to identify this event.
-  attr_reader :event_id
-  # @return [RealtimeBetaClientEventTranscriptionSessionUpdateType] The event type, must be `transcription_session.update`.
-  attr_reader :type
-  # @return [RealtimeTranscriptionSessionCreateRequest] Realtime transcription session object configuration.
-  attr_reader :session
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalRealtimeBetaClientEventTranscriptionSessionUpdateMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      session: 'session'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      session
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::RealtimeBetaClientEventTranscriptionSessionUpdateType.from_value(value)
+      end,
+      session: lambda do |value|
+        ::OctridevOpenai::RealtimeTranscriptionSessionCreateRequest.from_hash(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for RealtimeBetaClientEventTranscriptionSessionUpdate.
+  # Send this event to update a transcription session.
+  class RealtimeBetaClientEventTranscriptionSessionUpdate
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalRealtimeBetaClientEventTranscriptionSessionUpdateMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalRealtimeBetaClientEventTranscriptionSessionUpdateMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalRealtimeBetaClientEventTranscriptionSessionUpdateMetadata::DECODERS
+
+    # @return [String] Optional client-generated ID used to identify this event.
+    attr_reader :event_id
+    # @return [RealtimeBetaClientEventTranscriptionSessionUpdateType] The event type, must be `transcription_session.update`.
+    attr_reader :type
+    # @return [RealtimeTranscriptionSessionCreateRequest] Realtime transcription session object configuration.
+    attr_reader :session
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the RealtimeBetaClientEventTranscriptionSessionUpdateType SDK namespace.
+  module RealtimeBetaClientEventTranscriptionSessionUpdateType
+    TRANSCRIPTION_SESSION_UPDATE = 'transcription_session.update'
+    VALUES = ['transcription_session.update'].freeze
+    def self.from_value(value)
+      value
+    end
   end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Defines the RealtimeBetaClientEventTranscriptionSessionUpdateType SDK namespace.
-module RealtimeBetaClientEventTranscriptionSessionUpdateType
-  TRANSCRIPTION_SESSION_UPDATE = 'transcription_session.update'
-  VALUES = ['transcription_session.update'].freeze
-  def self.from_value(value)
-    value
-  end
-end
 end

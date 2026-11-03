@@ -16,16 +16,15 @@ module OctridevOpenai
         config:,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
-          "/models",
+          '/models',
           config: config,
           return_type: ::OctridevOpenai::ListModelsResponse,
           decoder: :json,
           operation_id: 'list_models',
           request_options: request_options,
-          errors: { '403' => ::OctridevOpenai::PermissionErrorResponse },
+          errors: { '403' => ::OctridevOpenai::PermissionErrorResponse }
         ).result
       end
 
@@ -39,11 +38,10 @@ module OctridevOpenai
         model:,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
           [
-            "/models/",
+            '/models/',
             SdkClient.encode_path_segment(model)
           ].join,
           config: config,
@@ -51,7 +49,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'retrieve_model',
           request_options: request_options,
-          errors: { '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
+          errors: { '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
         ).result
       end
 
@@ -65,11 +63,10 @@ module OctridevOpenai
         model:,
         request_options: nil
       )
-
         SdkClient.request(
           'DELETE',
           [
-            "/models/",
+            '/models/',
             SdkClient.encode_path_segment(model)
           ].join,
           config: config,
@@ -77,7 +74,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_model',
           request_options: request_options,
-          errors: { '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse },
+          errors: { '403' => ::OctridevOpenai::PermissionErrorResponse, '404' => ::OctridevOpenai::ErrorResponse }
         ).result
       end
     end

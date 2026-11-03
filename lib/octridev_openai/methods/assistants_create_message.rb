@@ -38,26 +38,25 @@ module OctridevOpenai
         metadata: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
           [
-            "/threads/",
+            '/threads/',
             SdkClient.encode_path_segment(thread_id),
-            "/messages"
+            '/messages'
           ].join,
           config: config,
           body: {
             'role' => role,
             'content' => content,
             'attachments' => attachments,
-            'metadata' => metadata,
+            'metadata' => metadata
           },
           return_type: ::OctridevOpenai::MessageObject,
           decoder: :json,
           operation_id: 'create_message',
           request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '429' => ::OctridevOpenai::ErrorResponse }
         ).result
       end
 
@@ -68,19 +67,13 @@ module OctridevOpenai
       # @param thread_id [String] The ID of the thread to which this message
       #   belongs.
       # @param message_id [String] The ID of the message to retrieve.
-      singleton_class.define_method(:get_message) do |
-        config:,
-        thread_id:,
-        message_id:,
-        request_options: nil
-      |
-
+      singleton_class.define_method(:get_message) do |config:, thread_id:, message_id:, request_options: nil|
         SdkClient.request(
           'GET',
           [
-            "/threads/",
+            '/threads/',
             SdkClient.encode_path_segment(thread_id),
-            "/messages/",
+            '/messages/',
             SdkClient.encode_path_segment(message_id)
           ].join,
           config: config,
@@ -88,7 +81,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'get_message',
           request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '429' => ::OctridevOpenai::ErrorResponse }
         ).result
       end
 
@@ -111,24 +104,23 @@ module OctridevOpenai
         metadata: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
           [
-            "/threads/",
+            '/threads/',
             SdkClient.encode_path_segment(thread_id),
-            "/messages/",
+            '/messages/',
             SdkClient.encode_path_segment(message_id)
           ].join,
           config: config,
           body: {
-            'metadata' => metadata,
+            'metadata' => metadata
           },
           return_type: ::OctridevOpenai::MessageObject,
           decoder: :json,
           operation_id: 'modify_message',
           request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '429' => ::OctridevOpenai::ErrorResponse }
         ).result
       end
 
@@ -145,13 +137,12 @@ module OctridevOpenai
         message_id:,
         request_options: nil
       )
-
         SdkClient.request(
           'DELETE',
           [
-            "/threads/",
+            '/threads/',
             SdkClient.encode_path_segment(thread_id),
-            "/messages/",
+            '/messages/',
             SdkClient.encode_path_segment(message_id)
           ].join,
           config: config,
@@ -159,7 +150,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_message',
           request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '429' => ::OctridevOpenai::ErrorResponse }
         ).result
       end
 
@@ -189,30 +180,29 @@ module OctridevOpenai
         before: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
           [
-            "/threads/",
+            '/threads/',
             SdkClient.encode_path_segment(thread_id),
-            "/runs"
+            '/runs'
           ].join,
           config: config,
           query: {
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
             'order' => QueryValue.new(order, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
-            'before' => QueryValue.new(before, style: 'form', explode: true),
+            'before' => QueryValue.new(before, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::ListRunsResponse,
           decoder: :json,
           operation_id: 'list_runs',
           request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '429' => ::OctridevOpenai::ErrorResponse }
         ).result
       end
 
-    ListRunsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      ListRunsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Lists runs belonging to a thread. Use `order` to sort runs by creation time and `after` or `before` to navigate through the results. The returned run statuses show whether each run is queued, active, completed, or in another state.
       #
@@ -254,10 +244,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.last_id
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -286,10 +279,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListRunsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end
@@ -387,7 +382,6 @@ module OctridevOpenai
         response_format: NOT_GIVEN,
         request_options: nil
       )
-
         Validation.if_given(tools) { Validation.validate_items('tools', tools, max: 20) }
 
         Validation.if_given(temperature) { Validation.validate_range('temperature', temperature, min: 0, max: 2) }
@@ -405,13 +399,13 @@ module OctridevOpenai
         SdkClient.request(
           'POST',
           [
-            "/threads/",
+            '/threads/',
             SdkClient.encode_path_segment(thread_id),
-            "/runs"
+            '/runs'
           ].join,
           config: config,
           query: {
-            'include[]' => QueryValue.new(include, style: 'form', explode: true),
+            'include[]' => QueryValue.new(include, style: 'form', explode: true)
           },
           body: {
             'assistant_id' => assistant_id,
@@ -430,13 +424,13 @@ module OctridevOpenai
             'truncation_strategy' => truncation_strategy,
             'tool_choice' => tool_choice,
             'parallel_tool_calls' => parallel_tool_calls,
-            'response_format' => response_format,
+            'response_format' => response_format
           },
           return_type: ::OctridevOpenai::RunObject,
           decoder: :json,
           operation_id: 'create_run',
           request_options: request_options,
-          errors: { '429' => ::OctridevOpenai::ErrorResponse },
+          errors: { '429' => ::OctridevOpenai::ErrorResponse }
         ).result
       end
     end

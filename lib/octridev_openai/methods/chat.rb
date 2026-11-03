@@ -12,7 +12,7 @@ module OctridevOpenai
       # Internal model hydration metadata.
       class SdkInternalUpdateChatCompletionMetadata
         FIELDS = {
-          metadata: "metadata",
+          metadata: 'metadata'
         }.freeze
         REQUIRED_FIELDS = %i[
           metadata
@@ -20,7 +20,7 @@ module OctridevOpenai
         DECODERS = {
           metadata: lambda do |value|
             ::OctridevOpenai::Metadata.from_hash(value)
-          end,
+          end
         }.freeze
         NULLABLE_FIELDS = %i[
           metadata
@@ -59,7 +59,7 @@ module OctridevOpenai
       module ListChatCompletionsParameter
         ASC = 'asc'
         DESC = 'desc'
-        VALUES = ['asc', 'desc'].freeze
+        VALUES = %w[asc desc].freeze
         def self.from_value(value)
           value
         end
@@ -69,7 +69,7 @@ module OctridevOpenai
       module GetChatCompletionMessagesParameter
         ASC = 'asc'
         DESC = 'desc'
-        VALUES = ['asc', 'desc'].freeze
+        VALUES = %w[asc desc].freeze
         def self.from_value(value)
           value
         end
@@ -95,27 +95,26 @@ module OctridevOpenai
         order: NOT_GIVEN,
         request_options: nil
       )
-
         SdkClient.request(
           'GET',
-          "/chat/completions",
+          '/chat/completions',
           config: config,
           query: {
             'model' => QueryValue.new(model, style: 'form', explode: true),
             'metadata' => QueryValue.new(metadata, style: 'form', explode: true),
             'after' => QueryValue.new(after, style: 'form', explode: true),
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
-            'order' => QueryValue.new(order, style: 'form', explode: true),
+            'order' => QueryValue.new(order, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::ChatCompletionList,
           decoder: :json,
           operation_id: 'list_chat_completions',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
         ).result
       end
 
-    ListChatCompletionsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      ListChatCompletionsPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # List stored Chat Completions. Only Chat Completions that have been stored with the `store` parameter set to `true` will be returned.
       #
@@ -151,10 +150,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.last_id
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -183,10 +185,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << ListChatCompletionsPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end
@@ -200,17 +204,16 @@ module OctridevOpenai
         body:,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
-          "/chat/completions",
+          '/chat/completions',
           config: config,
           body: body,
           return_type: ::OctridevOpenai::CreateChatCompletionResponse,
           decoder: :json,
           operation_id: 'create_chat_completion',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '401' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '401' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
         ).result
       end
 
@@ -223,24 +226,27 @@ module OctridevOpenai
         request_options: nil,
         &block
       )
-    return enum_for(
-          __method__,
-          config: config,
-          body: body,
-          request_options: request_options,
-        ) unless block
+        unless block
+          return enum_for(
+            __method__,
+            config: config,
+            body: body,
+            request_options: request_options
+          )
+        end
         SdkClient.stream(
-          'POST', "/chat/completions",
+          'POST', '/chat/completions',
           config: config,
           body: body,
           content_type: 'application/json',
           operation_id: 'create_chat_completion_stream',
           stream_format: :sse,
-          stream_media_type: "text/event-stream",
+          stream_media_type: 'text/event-stream',
           request_options: request_options,
           errors: { '400' => ::OctridevOpenai::ErrorResponse, '401' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse, '503' => ::OctridevOpenai::ErrorResponse }
         ).each do |ev|
           break if ev.data == '[DONE]'
+
           decoded = JSON.parse(ev.data)
           block.call(SdkClient.decode_event(decoded, ::OctridevOpenai::CreateChatCompletionStreamResponse))
         end
@@ -249,16 +255,11 @@ module OctridevOpenai
       # Get a stored chat completion. Only Chat Completions that have been created with the `store` parameter set to `true` will be returned.
       #
       # @param completion_id [String] The ID of the chat completion to retrieve.
-      singleton_class.define_method(:get_chat_completion) do |
-        config:,
-        completion_id:,
-        request_options: nil
-      |
-
+      singleton_class.define_method(:get_chat_completion) do |config:, completion_id:, request_options: nil|
         SdkClient.request(
           'GET',
           [
-            "/chat/completions/",
+            '/chat/completions/',
             SdkClient.encode_path_segment(completion_id)
           ].join,
           config: config,
@@ -266,7 +267,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'get_chat_completion',
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
+          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
         ).result
       end
 
@@ -286,22 +287,21 @@ module OctridevOpenai
         metadata:,
         request_options: nil
       )
-
         SdkClient.request(
           'POST',
           [
-            "/chat/completions/",
+            '/chat/completions/',
             SdkClient.encode_path_segment(completion_id)
           ].join,
           config: config,
           body: {
-            'metadata' => metadata,
+            'metadata' => metadata
           },
           return_type: ::OctridevOpenai::CreateChatCompletionResponse,
           decoder: :json,
           operation_id: 'update_chat_completion',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
         ).result
       end
 
@@ -313,11 +313,10 @@ module OctridevOpenai
         completion_id:,
         request_options: nil
       )
-
         SdkClient.request(
           'DELETE',
           [
-            "/chat/completions/",
+            '/chat/completions/',
             SdkClient.encode_path_segment(completion_id)
           ].join,
           config: config,
@@ -325,7 +324,7 @@ module OctridevOpenai
           decoder: :json,
           operation_id: 'delete_chat_completion',
           request_options: request_options,
-          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
+          errors: { '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
         ).result
       end
 
@@ -339,37 +338,29 @@ module OctridevOpenai
       # @param order [GetChatCompletionMessagesParameter] Sort order for messages by
       #   timestamp. Use `asc` for ascending order or `desc` for descending order.
       #   Defaults to `asc`.
-      singleton_class.define_method(:get_chat_completion_messages) do |
-        config:,
-        completion_id:,
-        after: NOT_GIVEN,
-        limit: NOT_GIVEN,
-        order: NOT_GIVEN,
-        request_options: nil
-      |
-
+      singleton_class.define_method(:get_chat_completion_messages) do |config:, completion_id:, after: NOT_GIVEN, limit: NOT_GIVEN, order: NOT_GIVEN, request_options: nil|
         SdkClient.request(
           'GET',
           [
-            "/chat/completions/",
+            '/chat/completions/',
             SdkClient.encode_path_segment(completion_id),
-            "/messages"
+            '/messages'
           ].join,
           config: config,
           query: {
             'after' => QueryValue.new(after, style: 'form', explode: true),
             'limit' => QueryValue.new(limit, style: 'form', explode: true),
-            'order' => QueryValue.new(order, style: 'form', explode: true),
+            'order' => QueryValue.new(order, style: 'form', explode: true)
           },
           return_type: ::OctridevOpenai::ChatCompletionMessageList,
           decoder: :json,
           operation_id: 'get_chat_completion_messages',
           request_options: request_options,
-          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse },
+          errors: { '400' => ::OctridevOpenai::ErrorResponse, '404' => ::OctridevOpenai::ErrorResponse, '429' => ::OctridevOpenai::ErrorResponse, '500' => ::OctridevOpenai::ErrorResponse }
         ).result
       end
 
-    GetChatCompletionMessagesPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
+      GetChatCompletionMessagesPage = ::Struct.new(:data, :items, :has_more, keyword_init: true)
 
       # Get the messages in a stored chat completion. Only Chat Completions that have been created with the `store` parameter set to `true` will be returned.
       #
@@ -402,10 +393,13 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             items.each { |item| y << item }
             break unless page.has_more
+
             next_cursor = page.last_id
             break if next_cursor.nil?
+
             cursor = next_cursor
           end
         end
@@ -432,10 +426,12 @@ module OctridevOpenai
             )
             items = page.data || []
             break if items.empty?
+
             next_cursor = page.last_id
             has_more = page.has_more && !next_cursor.nil?
             y << GetChatCompletionMessagesPage.new(data: page, items: items, has_more: has_more)
             break unless has_more
+
             cursor = next_cursor
           end
         end

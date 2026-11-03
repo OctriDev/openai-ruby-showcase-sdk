@@ -5,50 +5,51 @@
 
 # responses_beta_input domain models
 module OctridevOpenai
-# API model for BetaInputTextContentParam.
-# A text input to the model.
-class BetaInputTextContentParam
-  include BetaFunctionCallOutputItemParamOutputItem
-  include BetaAgentMessageItemParamContentItem
-  include BetaUserMessageItemParamContentItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalBetaInputTextContentParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalBetaInputTextContentParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalBetaInputTextContentParamMetadata::DECODERS
+  # API model for BetaInputTextContentParam.
+  # A text input to the model.
+  class BetaInputTextContentParam
+    include BetaFunctionCallOutputItemParamOutputItem
+    include BetaAgentMessageItemParamContentItem
+    include BetaUserMessageItemParamContentItem
 
-  # @return [BetaInputTextContentParamType] The type of the input item. Always `input_text`.
-  attr_reader :type
-  # @return [String] The text input to the model.
-  attr_reader :text
-  # @return [BetaPromptCacheBreakpointParam] Optional API value serialized in the `prompt_cache_breakpoint` wire field.
-  attr_reader :prompt_cache_breakpoint
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalBetaInputTextContentParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalBetaInputTextContentParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalBetaInputTextContentParamMetadata::DECODERS
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    # @return [BetaInputTextContentParamType] The type of the input item. Always `input_text`.
+    attr_reader :type
+    # @return [String] The text input to the model.
+    attr_reader :text
+    # @return [BetaPromptCacheBreakpointParam] Optional API value serialized in the `prompt_cache_breakpoint` wire field.
+    attr_reader :prompt_cache_breakpoint
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
+  # Defines the BetaInputTextContentParamType SDK namespace.
+  module BetaInputTextContentParamType
+    INPUT_TEXT = 'input_text'
+    VALUES = ['input_text'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+      raise SdkValidationError.new('BetaInputTextContentParamType', 'enum', "Unknown BetaInputTextContentParamType: #{value}")
+    end
   end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Defines the BetaInputTextContentParamType SDK namespace.
-module BetaInputTextContentParamType
-  INPUT_TEXT = 'input_text'
-  VALUES = ['input_text'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('BetaInputTextContentParamType', 'enum', "Unknown BetaInputTextContentParamType: #{value}")
-  end
-end
 end

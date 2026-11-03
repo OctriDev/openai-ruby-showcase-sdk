@@ -5,176 +5,179 @@
 
 # live_live domain models
 module OctridevOpenai
-# API model for LiveNamespaceToolInputParam.
-# Typed representation of the `LiveNamespaceToolInputParam` API schema.
-class LiveNamespaceToolInputParam
-  include LiveResponsesDelegationSettingsInputParamToolsItem
-  include LiveResponsesDelegationSettingsUpdateInputParamToolsItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveNamespaceToolInputParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveNamespaceToolInputParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveNamespaceToolInputParamMetadata::DECODERS
+  # API model for LiveNamespaceToolInputParam.
+  # Typed representation of the `LiveNamespaceToolInputParam` API schema.
+  class LiveNamespaceToolInputParam
+    include LiveResponsesDelegationSettingsInputParamToolsItem
+    include LiveResponsesDelegationSettingsUpdateInputParamToolsItem
 
-  # @return [LiveNamespaceToolInputParamType] Required enumerated value serialized in the `type` wire field.
-  attr_reader :type
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveNamespaceToolInputParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveNamespaceToolInputParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveNamespaceToolInputParamMetadata::DECODERS
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    # @return [LiveNamespaceToolInputParamType] Required enumerated value serialized in the `type` wire field.
+    attr_reader :type
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the LiveNamespaceToolInputParamType SDK namespace.
+  module LiveNamespaceToolInputParamType
+    NAMESPACE = 'namespace'
+    VALUES = ['namespace'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('LiveNamespaceToolInputParamType', 'enum', "Unknown LiveNamespaceToolInputParamType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalLiveProgrammaticToolInputParamMetadata
+    FIELDS = {
+      type: 'type'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LiveProgrammaticToolInputParamType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # API model for LiveProgrammaticToolInputParam.
+  # Typed representation of the `LiveProgrammaticToolInputParam` API schema.
+  class LiveProgrammaticToolInputParam
+    include LiveResponsesDelegationSettingsInputParamToolsItem
+    include LiveResponsesDelegationSettingsUpdateInputParamToolsItem
 
-# Defines the LiveNamespaceToolInputParamType SDK namespace.
-module LiveNamespaceToolInputParamType
-  NAMESPACE = 'namespace'
-  VALUES = ['namespace'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveProgrammaticToolInputParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveProgrammaticToolInputParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveProgrammaticToolInputParamMetadata::DECODERS
 
-    raise SdkValidationError.new('LiveNamespaceToolInputParamType', 'enum', "Unknown LiveNamespaceToolInputParamType: #{value}")
-  end
-end
+    # @return [LiveProgrammaticToolInputParamType] Required enumerated value serialized in the `type` wire field.
+    attr_reader :type
 
-# Internal model hydration metadata.
-class SdkInternalLiveProgrammaticToolInputParamMetadata
-  FIELDS = {
-    type: "type",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LiveProgrammaticToolInputParamType.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for LiveProgrammaticToolInputParam.
-# Typed representation of the `LiveProgrammaticToolInputParam` API schema.
-class LiveProgrammaticToolInputParam
-  include LiveResponsesDelegationSettingsInputParamToolsItem
-  include LiveResponsesDelegationSettingsUpdateInputParamToolsItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveProgrammaticToolInputParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveProgrammaticToolInputParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveProgrammaticToolInputParamMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [LiveProgrammaticToolInputParamType] Required enumerated value serialized in the `type` wire field.
-  attr_reader :type
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the LiveProgrammaticToolInputParamType SDK namespace.
+  module LiveProgrammaticToolInputParamType
+    PROGRAMMATIC_TOOL_CALLING = 'programmatic_tool_calling'
+    VALUES = ['programmatic_tool_calling'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('LiveProgrammaticToolInputParamType', 'enum', "Unknown LiveProgrammaticToolInputParamType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalLiveSkillReferenceParamMetadata
+    FIELDS = {
+      type: 'type',
+      skill_id: 'skill_id',
+      version: 'version'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      skill_id
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LiveSkillReferenceParamType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # API model for LiveSkillReferenceParam.
+  # Typed representation of the `LiveSkillReferenceParam` API schema.
+  class LiveSkillReferenceParam
+    include LiveHostedShellContainerAutoParamSkillsItem
 
-# Defines the LiveProgrammaticToolInputParamType SDK namespace.
-module LiveProgrammaticToolInputParamType
-  PROGRAMMATIC_TOOL_CALLING = 'programmatic_tool_calling'
-  VALUES = ['programmatic_tool_calling'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveSkillReferenceParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveSkillReferenceParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveSkillReferenceParamMetadata::DECODERS
 
-    raise SdkValidationError.new('LiveProgrammaticToolInputParamType', 'enum', "Unknown LiveProgrammaticToolInputParamType: #{value}")
-  end
-end
+    # @return [LiveSkillReferenceParamType] References a skill created with the /v1/skills endpoint.
+    attr_reader :type
+    # @return [String] The ID of the referenced skill.
+    attr_reader :skill_id
+    # @return [String] Optional `string` value serialized in the `version` wire field.
+    attr_reader :version
 
-# Internal model hydration metadata.
-class SdkInternalLiveSkillReferenceParamMetadata
-  FIELDS = {
-    type: "type",
-    skill_id: "skill_id",
-    version: "version",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    skill_id
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LiveSkillReferenceParamType.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for LiveSkillReferenceParam.
-# Typed representation of the `LiveSkillReferenceParam` API schema.
-class LiveSkillReferenceParam
-  include LiveHostedShellContainerAutoParamSkillsItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveSkillReferenceParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveSkillReferenceParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveSkillReferenceParamMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [LiveSkillReferenceParamType] References a skill created with the /v1/skills endpoint.
-  attr_reader :type
-  # @return [String] The ID of the referenced skill.
-  attr_reader :skill_id
-  # @return [String] Optional `string` value serialized in the `version` wire field.
-  attr_reader :version
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the LiveSkillReferenceParamType SDK namespace.
+  module LiveSkillReferenceParamType
+    SKILL_REFERENCE = 'skill_reference'
+    VALUES = ['skill_reference'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('LiveSkillReferenceParamType', 'enum', "Unknown LiveSkillReferenceParamType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the LiveTextVerbosity SDK namespace.
+  module LiveTextVerbosity
+    LOW = 'low'
+    MEDIUM = 'medium'
+    HIGH = 'high'
+    VALUES = %w[low medium high].freeze
+    def self.from_value(value)
+      value
+    end
   end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Defines the LiveSkillReferenceParamType SDK namespace.
-module LiveSkillReferenceParamType
-  SKILL_REFERENCE = 'skill_reference'
-  VALUES = ['skill_reference'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('LiveSkillReferenceParamType', 'enum', "Unknown LiveSkillReferenceParamType: #{value}")
-  end
-end
-
-# Defines the LiveTextVerbosity SDK namespace.
-module LiveTextVerbosity
-  LOW = 'low'
-  MEDIUM = 'medium'
-  HIGH = 'high'
-  VALUES = ['low', 'medium', 'high'].freeze
-  def self.from_value(value)
-    value
-  end
-end
 end

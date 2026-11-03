@@ -5,23 +5,23 @@
 
 # items domain models
 module OctridevOpenai
-# Defines the WidgetMessageItemObject SDK namespace.
-module WidgetMessageItemObject
-  CHATKIT_THREAD_ITEM = 'chatkit.thread_item'
-  VALUES = ['chatkit.thread_item'].freeze
-  def self.from_value(value)
-    value
+  # Defines the WidgetMessageItemObject SDK namespace.
+  module WidgetMessageItemObject
+    CHATKIT_THREAD_ITEM = 'chatkit.thread_item'
+    VALUES = ['chatkit.thread_item'].freeze
+    def self.from_value(value)
+      value
+    end
   end
-end
 
-# Defines the WidgetMessageItemType SDK namespace.
-module WidgetMessageItemType
-  CHATKIT_WIDGET = 'chatkit.widget'
-  VALUES = ['chatkit.widget'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+  # Defines the WidgetMessageItemType SDK namespace.
+  module WidgetMessageItemType
+    CHATKIT_WIDGET = 'chatkit.widget'
+    VALUES = ['chatkit.widget'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-    raise SdkValidationError.new('WidgetMessageItemType', 'enum', "Unknown WidgetMessageItemType: #{value}")
+      raise SdkValidationError.new('WidgetMessageItemType', 'enum', "Unknown WidgetMessageItemType: #{value}")
+    end
   end
-end
 end

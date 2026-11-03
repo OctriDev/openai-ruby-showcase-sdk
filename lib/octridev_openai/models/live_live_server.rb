@@ -5,49 +5,50 @@
 
 # live_live_server domain models
 module OctridevOpenai
-# LiveServerEvent is an allOf type (properties unresolvable)
-# Represented as: LiveServerEvent2
+  # LiveServerEvent is an allOf type (properties unresolvable)
+  # Represented as: LiveServerEvent2
 
-# Defines the LiveServerEvent2 SDK namespace.
-module LiveServerEvent2
-  DISCRIMINATOR_MAPPING = {
-    "session.started" => -> { LiveSessionStarted },
-    "session.updated" => -> { LiveSessionUpdated },
-    "session.input_audio.muted" => -> { LiveInputAudioMuted },
-    "session.input_audio.unmuted" => -> { LiveInputAudioUnmuted },
-    "session.output_audio.fixture.playing" => -> { LiveOutputAudioFixturePlaying },
-    "session.output_audio.fixture.played" => -> { LiveOutputAudioFixturePlayed },
-    "session.instructions.appended" => -> { LiveInstructionsAppended },
-    "session.thinking.appended" => -> { LiveThinkingAppended },
-    "session.commentary.appended" => -> { LiveCommentaryAppended },
-    "session.input_audio.append" => -> { LiveInputAudioAppend },
-    "session.output_audio.delta" => -> { LiveOutputAudioDelta },
-    "session.input_transcript.delta" => -> { LiveInputTranscriptDelta },
-    "session.output_transcript.delta" => -> { LiveOutputTranscriptDelta },
-    "session.delegation.created" => -> { LiveDelegationCreated },
-    "decision.event" => -> { LiveDecisionEvent },
-    "decision.item.created" => -> { LiveDecisionItemCreated },
-    "decision.item.deleted" => -> { LiveDecisionItemDeleted },
-    "response.event" => -> { LiveResponseEvent },
-    "session.usage.updated" => -> { LiveSessionUsageUpdated },
-    "session.closed" => -> { LiveSessionClosed },
-    "error" => -> { LiveErrorEvent },
-    "info" => -> { LiveInfoEvent },
-    "transport.dtmf.received" => -> { LiveTransportDTMFReceived },
-    "transport.dtmf.send" => -> { LiveTransportDTMFSend },
-    "transport.ringing" => -> { LiveTransportRinging },
-    "transport.answered" => -> { LiveTransportAnswered },
-    "transport.failed" => -> { LiveTransportFailed },
-  }.freeze
+  # Defines the LiveServerEvent2 SDK namespace.
+  module LiveServerEvent2
+    DISCRIMINATOR_MAPPING = {
+      'session.started' => -> { LiveSessionStarted },
+      'session.updated' => -> { LiveSessionUpdated },
+      'session.input_audio.muted' => -> { LiveInputAudioMuted },
+      'session.input_audio.unmuted' => -> { LiveInputAudioUnmuted },
+      'session.output_audio.fixture.playing' => -> { LiveOutputAudioFixturePlaying },
+      'session.output_audio.fixture.played' => -> { LiveOutputAudioFixturePlayed },
+      'session.instructions.appended' => -> { LiveInstructionsAppended },
+      'session.thinking.appended' => -> { LiveThinkingAppended },
+      'session.commentary.appended' => -> { LiveCommentaryAppended },
+      'session.input_audio.append' => -> { LiveInputAudioAppend },
+      'session.output_audio.delta' => -> { LiveOutputAudioDelta },
+      'session.input_transcript.delta' => -> { LiveInputTranscriptDelta },
+      'session.output_transcript.delta' => -> { LiveOutputTranscriptDelta },
+      'session.delegation.created' => -> { LiveDelegationCreated },
+      'decision.event' => -> { LiveDecisionEvent },
+      'decision.item.created' => -> { LiveDecisionItemCreated },
+      'decision.item.deleted' => -> { LiveDecisionItemDeleted },
+      'response.event' => -> { LiveResponseEvent },
+      'session.usage.updated' => -> { LiveSessionUsageUpdated },
+      'session.closed' => -> { LiveSessionClosed },
+      'error' => -> { LiveErrorEvent },
+      'info' => -> { LiveInfoEvent },
+      'transport.dtmf.received' => -> { LiveTransportDTMFReceived },
+      'transport.dtmf.send' => -> { LiveTransportDTMFSend },
+      'transport.ringing' => -> { LiveTransportRinging },
+      'transport.answered' => -> { LiveTransportAnswered },
+      'transport.failed' => -> { LiveTransportFailed }
+    }.freeze
 
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
 
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
 
-    raise SdkValidationError.new('LiveServerEvent2', 'variant', "Unknown LiveServerEvent2 discriminator: #{hash["type"].inspect}")
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('LiveServerEvent2', 'variant', "Unknown LiveServerEvent2 discriminator: #{hash['type'].inspect}")
+    end
   end
-end
 end

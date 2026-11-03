@@ -5,49 +5,50 @@
 
 # shared_input domain models
 module OctridevOpenai
-# API model for InputTextContentParam.
-# A text input to the model.
-class InputTextContentParam
-  include FunctionCallOutputItemParamOutputItem
-  include UserMessageItemParamContentItem
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalInputTextContentParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalInputTextContentParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalInputTextContentParamMetadata::DECODERS
+  # API model for InputTextContentParam.
+  # A text input to the model.
+  class InputTextContentParam
+    include FunctionCallOutputItemParamOutputItem
+    include UserMessageItemParamContentItem
 
-  # @return [InputTextContentParamType] The type of the input item. Always `input_text`.
-  attr_reader :type
-  # @return [String] The text input to the model.
-  attr_reader :text
-  # @return [PromptCacheBreakpointParam] Optional API value serialized in the `prompt_cache_breakpoint` wire field.
-  attr_reader :prompt_cache_breakpoint
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalInputTextContentParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalInputTextContentParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalInputTextContentParamMetadata::DECODERS
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    # @return [InputTextContentParamType] The type of the input item. Always `input_text`.
+    attr_reader :type
+    # @return [String] The text input to the model.
+    attr_reader :text
+    # @return [PromptCacheBreakpointParam] Optional API value serialized in the `prompt_cache_breakpoint` wire field.
+    attr_reader :prompt_cache_breakpoint
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
+  # Defines the InputTextContentParamType SDK namespace.
+  module InputTextContentParamType
+    INPUT_TEXT = 'input_text'
+    VALUES = ['input_text'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+      raise SdkValidationError.new('InputTextContentParamType', 'enum', "Unknown InputTextContentParamType: #{value}")
+    end
   end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Defines the InputTextContentParamType SDK namespace.
-module InputTextContentParamType
-  INPUT_TEXT = 'input_text'
-  VALUES = ['input_text'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('InputTextContentParamType', 'enum', "Unknown InputTextContentParamType: #{value}")
-  end
-end
 end

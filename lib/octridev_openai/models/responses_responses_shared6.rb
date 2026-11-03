@@ -5,447 +5,446 @@
 
 # responses_responses domain models
 module OctridevOpenai
-# Internal model hydration metadata.
-class SdkInternalResponsesServerEventVariant51Metadata
-  FIELDS = {
-    type: "type",
-    item_id: "item_id",
-    output_index: "output_index",
-    sequence_number: "sequence_number",
-    stream_id: "stream_id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    item_id
-    output_index
-    sequence_number
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ResponseMCPListToolsCompletedEventType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for ResponsesServerEventVariant51.
-class ResponsesServerEventVariant51
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalResponsesServerEventVariant51Metadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalResponsesServerEventVariant51Metadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalResponsesServerEventVariant51Metadata::DECODERS
-
-  # @return [ResponseMCPListToolsCompletedEventType] The type of the event. Always 'response.mcp_list_tools.completed'.
-  attr_reader :type
-  # @return [String] The ID of the MCP tool call item that produced this output.
-  attr_reader :item_id
-  # @return [Integer] The index of the output item that was processed.
-  attr_reader :output_index
-  # @return [Integer] The sequence number of this event.
-  attr_reader :sequence_number
-  # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
-  attr_reader :stream_id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalResponsesServerEventVariant51Metadata
+    FIELDS = {
+      type: 'type',
+      item_id: 'item_id',
+      output_index: 'output_index',
+      sequence_number: 'sequence_number',
+      stream_id: 'stream_id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      item_id
+      output_index
+      sequence_number
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ResponseMCPListToolsCompletedEventType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ResponsesServerEventVariant51.
+  class ResponsesServerEventVariant51
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalResponsesServerEventVariant51Metadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalResponsesServerEventVariant51Metadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalResponsesServerEventVariant51Metadata::DECODERS
+
+    # @return [ResponseMCPListToolsCompletedEventType] The type of the event. Always 'response.mcp_list_tools.completed'.
+    attr_reader :type
+    # @return [String] The ID of the MCP tool call item that produced this output.
+    attr_reader :item_id
+    # @return [Integer] The index of the output item that was processed.
+    attr_reader :output_index
+    # @return [Integer] The sequence number of this event.
+    attr_reader :sequence_number
+    # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
+    attr_reader :stream_id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalResponsesServerEventVariant52Metadata
+    FIELDS = {
+      type: 'type',
+      item_id: 'item_id',
+      output_index: 'output_index',
+      sequence_number: 'sequence_number',
+      stream_id: 'stream_id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      item_id
+      output_index
+      sequence_number
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ResponseMCPListToolsFailedEventType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # API model for ResponsesServerEventVariant52.
+  class ResponsesServerEventVariant52
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalResponsesServerEventVariant52Metadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalResponsesServerEventVariant52Metadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalResponsesServerEventVariant52Metadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalResponsesServerEventVariant52Metadata
-  FIELDS = {
-    type: "type",
-    item_id: "item_id",
-    output_index: "output_index",
-    sequence_number: "sequence_number",
-    stream_id: "stream_id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    item_id
-    output_index
-    sequence_number
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ResponseMCPListToolsFailedEventType.from_value(value)
-    end,
-  }.freeze
-end
+    # @return [ResponseMCPListToolsFailedEventType] The type of the event. Always 'response.mcp_list_tools.failed'.
+    attr_reader :type
+    # @return [String] The ID of the MCP tool call item that failed.
+    attr_reader :item_id
+    # @return [Integer] The index of the output item that failed.
+    attr_reader :output_index
+    # @return [Integer] The sequence number of this event.
+    attr_reader :sequence_number
+    # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
+    attr_reader :stream_id
 
-# API model for ResponsesServerEventVariant52.
-class ResponsesServerEventVariant52
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalResponsesServerEventVariant52Metadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalResponsesServerEventVariant52Metadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalResponsesServerEventVariant52Metadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [ResponseMCPListToolsFailedEventType] The type of the event. Always 'response.mcp_list_tools.failed'.
-  attr_reader :type
-  # @return [String] The ID of the MCP tool call item that failed.
-  attr_reader :item_id
-  # @return [Integer] The index of the output item that failed.
-  attr_reader :output_index
-  # @return [Integer] The sequence number of this event.
-  attr_reader :sequence_number
-  # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
-  attr_reader :stream_id
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalResponsesServerEventVariant53Metadata
+    FIELDS = {
+      type: 'type',
+      item_id: 'item_id',
+      output_index: 'output_index',
+      sequence_number: 'sequence_number',
+      stream_id: 'stream_id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      item_id
+      output_index
+      sequence_number
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ResponseMCPListToolsInProgressEventType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # API model for ResponsesServerEventVariant53.
+  class ResponsesServerEventVariant53
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalResponsesServerEventVariant53Metadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalResponsesServerEventVariant53Metadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalResponsesServerEventVariant53Metadata::DECODERS
+
+    # @return [ResponseMCPListToolsInProgressEventType] The type of the event. Always 'response.mcp_list_tools.in_progress'.
+    attr_reader :type
+    # @return [String] The ID of the MCP tool call item that is being processed.
+    attr_reader :item_id
+    # @return [Integer] The index of the output item that is being processed.
+    attr_reader :output_index
+    # @return [Integer] The sequence number of this event.
+    attr_reader :sequence_number
+    # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
+    attr_reader :stream_id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalResponsesServerEventVariant53Metadata
-  FIELDS = {
-    type: "type",
-    item_id: "item_id",
-    output_index: "output_index",
-    sequence_number: "sequence_number",
-    stream_id: "stream_id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    item_id
-    output_index
-    sequence_number
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ResponseMCPListToolsInProgressEventType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for ResponsesServerEventVariant53.
-class ResponsesServerEventVariant53
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalResponsesServerEventVariant53Metadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalResponsesServerEventVariant53Metadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalResponsesServerEventVariant53Metadata::DECODERS
-
-  # @return [ResponseMCPListToolsInProgressEventType] The type of the event. Always 'response.mcp_list_tools.in_progress'.
-  attr_reader :type
-  # @return [String] The ID of the MCP tool call item that is being processed.
-  attr_reader :item_id
-  # @return [Integer] The index of the output item that is being processed.
-  attr_reader :output_index
-  # @return [Integer] The sequence number of this event.
-  attr_reader :sequence_number
-  # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
-  attr_reader :stream_id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalResponsesServerEventVariant54Metadata
+    FIELDS = {
+      type: 'type',
+      item_id: 'item_id',
+      output_index: 'output_index',
+      content_index: 'content_index',
+      annotation_index: 'annotation_index',
+      sequence_number: 'sequence_number',
+      annotation: 'annotation',
+      stream_id: 'stream_id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      item_id
+      output_index
+      content_index
+      annotation_index
+      sequence_number
+      annotation
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ResponseOutputTextAnnotationAddedEventType.from_value(value)
+      end,
+      annotation: lambda do |value|
+        ::OctridevOpenai::Annotation.from_hash(value)
+      end
+    }.freeze
+    NULLABLE_FIELDS = %i[
+      annotation
+    ].freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ResponsesServerEventVariant54.
+  class ResponsesServerEventVariant54
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalResponsesServerEventVariant54Metadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalResponsesServerEventVariant54Metadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalResponsesServerEventVariant54Metadata::DECODERS
+
+    # @return [ResponseOutputTextAnnotationAddedEventType] The type of the event. Always 'response.output_text.annotation.added'.
+    attr_reader :type
+    # @return [String] The unique identifier of the item to which the annotation is being added.
+    attr_reader :item_id
+    # @return [Integer] The index of the output item in the response's output array.
+    attr_reader :output_index
+    # @return [Integer] The index of the content part within the output item.
+    attr_reader :content_index
+    # @return [Integer] The index of the annotation within the content part.
+    attr_reader :annotation_index
+    # @return [Integer] The sequence number of this event.
+    attr_reader :sequence_number
+    # @return [Annotation] The annotation object being added. (See annotation schema for details.)
+    attr_reader :annotation
+    # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
+    attr_reader :stream_id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalResponsesServerEventVariant54Metadata::NULLABLE_FIELDS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalResponsesServerEventVariant55Metadata
+    FIELDS = {
+      type: 'type',
+      response: 'response',
+      sequence_number: 'sequence_number',
+      stream_id: 'stream_id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      response
+      sequence_number
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ResponseQueuedEventType.from_value(value)
+      end,
+      response: lambda do |value|
+        ::OctridevOpenai::Response.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # API model for ResponsesServerEventVariant55.
+  class ResponsesServerEventVariant55
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalResponsesServerEventVariant55Metadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalResponsesServerEventVariant55Metadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalResponsesServerEventVariant55Metadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalResponsesServerEventVariant54Metadata
-  FIELDS = {
-    type: "type",
-    item_id: "item_id",
-    output_index: "output_index",
-    content_index: "content_index",
-    annotation_index: "annotation_index",
-    sequence_number: "sequence_number",
-    annotation: "annotation",
-    stream_id: "stream_id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    item_id
-    output_index
-    content_index
-    annotation_index
-    sequence_number
-    annotation
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ResponseOutputTextAnnotationAddedEventType.from_value(value)
-    end,
-    annotation: lambda do |value|
-      ::OctridevOpenai::Annotation.from_hash(value)
-    end,
-  }.freeze
-  NULLABLE_FIELDS = %i[
-    annotation
-  ].freeze
-end
+    # @return [ResponseQueuedEventType] The type of the event. Always 'response.queued'.
+    attr_reader :type
+    # @return [Response] The full response object that is queued.
+    attr_reader :response
+    # @return [Integer] The sequence number for this event.
+    attr_reader :sequence_number
+    # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
+    attr_reader :stream_id
 
-# API model for ResponsesServerEventVariant54.
-class ResponsesServerEventVariant54
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalResponsesServerEventVariant54Metadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalResponsesServerEventVariant54Metadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalResponsesServerEventVariant54Metadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [ResponseOutputTextAnnotationAddedEventType] The type of the event. Always 'response.output_text.annotation.added'.
-  attr_reader :type
-  # @return [String] The unique identifier of the item to which the annotation is being added.
-  attr_reader :item_id
-  # @return [Integer] The index of the output item in the response's output array.
-  attr_reader :output_index
-  # @return [Integer] The index of the content part within the output item.
-  attr_reader :content_index
-  # @return [Integer] The index of the annotation within the content part.
-  attr_reader :annotation_index
-  # @return [Integer] The sequence number of this event.
-  attr_reader :sequence_number
-  # @return [Annotation] The annotation object being added. (See annotation schema for details.)
-  attr_reader :annotation
-  # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
-  attr_reader :stream_id
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS, SdkInternalResponsesServerEventVariant54Metadata::NULLABLE_FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalResponsesServerEventVariant56Metadata
+    FIELDS = {
+      type: 'type',
+      sequence_number: 'sequence_number',
+      output_index: 'output_index',
+      item_id: 'item_id',
+      delta: 'delta',
+      stream_id: 'stream_id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      sequence_number
+      output_index
+      item_id
+      delta
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ResponseCustomToolCallInputDeltaEventType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # API model for ResponsesServerEventVariant56.
+  class ResponsesServerEventVariant56
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalResponsesServerEventVariant56Metadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalResponsesServerEventVariant56Metadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalResponsesServerEventVariant56Metadata::DECODERS
+
+    # @return [ResponseCustomToolCallInputDeltaEventType] The event type identifier.
+    attr_reader :type
+    # @return [Integer] The sequence number of this event.
+    attr_reader :sequence_number
+    # @return [Integer] The index of the output this delta applies to.
+    attr_reader :output_index
+    # @return [String] Unique identifier for the API item associated with this event.
+    attr_reader :item_id
+    # @return [String] The incremental input data (delta) for the custom tool call.
+    attr_reader :delta
+    # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
+    attr_reader :stream_id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalResponsesServerEventVariant55Metadata
-  FIELDS = {
-    type: "type",
-    response: "response",
-    sequence_number: "sequence_number",
-    stream_id: "stream_id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    response
-    sequence_number
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ResponseQueuedEventType.from_value(value)
-    end,
-    response: lambda do |value|
-      ::OctridevOpenai::Response.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for ResponsesServerEventVariant55.
-class ResponsesServerEventVariant55
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalResponsesServerEventVariant55Metadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalResponsesServerEventVariant55Metadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalResponsesServerEventVariant55Metadata::DECODERS
-
-  # @return [ResponseQueuedEventType] The type of the event. Always 'response.queued'.
-  attr_reader :type
-  # @return [Response] The full response object that is queued.
-  attr_reader :response
-  # @return [Integer] The sequence number for this event.
-  attr_reader :sequence_number
-  # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
-  attr_reader :stream_id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalResponsesServerEventVariant57Metadata
+    FIELDS = {
+      type: 'type',
+      sequence_number: 'sequence_number',
+      output_index: 'output_index',
+      item_id: 'item_id',
+      input: 'input',
+      stream_id: 'stream_id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      sequence_number
+      output_index
+      item_id
+      input
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::ResponseCustomToolCallInputDoneEventType.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for ResponsesServerEventVariant57.
+  class ResponsesServerEventVariant57
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalResponsesServerEventVariant57Metadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalResponsesServerEventVariant57Metadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalResponsesServerEventVariant57Metadata::DECODERS
+
+    # @return [ResponseCustomToolCallInputDoneEventType] The event type identifier.
+    attr_reader :type
+    # @return [Integer] The sequence number of this event.
+    attr_reader :sequence_number
+    # @return [Integer] The index of the output this event applies to.
+    attr_reader :output_index
+    # @return [String] Unique identifier for the API item associated with this event.
+    attr_reader :item_id
+    # @return [String] The complete input data for the custom tool call.
+    attr_reader :input
+    # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
+    attr_reader :stream_id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalResponsesServerEventVariant56Metadata
-  FIELDS = {
-    type: "type",
-    sequence_number: "sequence_number",
-    output_index: "output_index",
-    item_id: "item_id",
-    delta: "delta",
-    stream_id: "stream_id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    sequence_number
-    output_index
-    item_id
-    delta
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ResponseCustomToolCallInputDeltaEventType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for ResponsesServerEventVariant56.
-class ResponsesServerEventVariant56
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalResponsesServerEventVariant56Metadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalResponsesServerEventVariant56Metadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalResponsesServerEventVariant56Metadata::DECODERS
-
-  # @return [ResponseCustomToolCallInputDeltaEventType] The event type identifier.
-  attr_reader :type
-  # @return [Integer] The sequence number of this event.
-  attr_reader :sequence_number
-  # @return [Integer] The index of the output this delta applies to.
-  attr_reader :output_index
-  # @return [String] Unique identifier for the API item associated with this event.
-  attr_reader :item_id
-  # @return [String] The incremental input data (delta) for the custom tool call.
-  attr_reader :delta
-  # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
-  attr_reader :stream_id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalResponsesServerEventVariant57Metadata
-  FIELDS = {
-    type: "type",
-    sequence_number: "sequence_number",
-    output_index: "output_index",
-    item_id: "item_id",
-    input: "input",
-    stream_id: "stream_id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    sequence_number
-    output_index
-    item_id
-    input
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::ResponseCustomToolCallInputDoneEventType.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for ResponsesServerEventVariant57.
-class ResponsesServerEventVariant57
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalResponsesServerEventVariant57Metadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalResponsesServerEventVariant57Metadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalResponsesServerEventVariant57Metadata::DECODERS
-
-  # @return [ResponseCustomToolCallInputDoneEventType] The event type identifier.
-  attr_reader :type
-  # @return [Integer] The sequence number of this event.
-  attr_reader :sequence_number
-  # @return [Integer] The index of the output this event applies to.
-  attr_reader :output_index
-  # @return [String] Unique identifier for the API item associated with this event.
-  attr_reader :item_id
-  # @return [String] The complete input data for the custom tool call.
-  attr_reader :input
-  # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
-  attr_reader :stream_id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
-  end
-
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
-  end
-
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
-
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Defines the ResponsesServerEvent SDK namespace.
-module ResponsesServerEvent
-  DISCRIMINATOR_MAPPING = {
-    "error" => -> { ResponseWsError },
-    "response.steer.accepted" => -> { ResponseSteerAcceptedEvent },
-    "response.steer.pending" => -> { ResponseSteerPendingEvent },
-    "response.steer.failed" => -> { ResponseSteerFailedEvent },
-  }.freeze
-  UNDECIDED_VARIANTS = (
-    [
+  # Defines the ResponsesServerEvent SDK namespace.
+  module ResponsesServerEvent
+    DISCRIMINATOR_MAPPING = {
+      'error' => -> { ResponseWsError },
+      'response.steer.accepted' => -> { ResponseSteerAcceptedEvent },
+      'response.steer.pending' => -> { ResponseSteerPendingEvent },
+      'response.steer.failed' => -> { ResponseSteerFailedEvent }
+    }.freeze
+    UNDECIDED_VARIANTS = [
       -> { ResponsesServerEventVariant0 },
       -> { ResponsesServerEventVariant1 },
       -> { ResponsesServerEventVariant2 },
@@ -500,58 +499,56 @@ module ResponsesServerEvent
       -> { ResponsesServerEventVariant56 },
       -> { ResponseWsError },
       -> { ResponseSteerAcceptedEvent },
-      -> { ResponseSteerFailedEvent },
-    ]
-  ).freeze
+      -> { ResponseSteerFailedEvent }
+    ].freeze
 
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
 
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
 
-    raise SdkValidationError.new('ResponsesServerEvent', 'variant', "Unknown ResponsesServerEvent discriminator: #{hash["type"].inspect}")
-  end
-end
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
 
-# Internal model hydration metadata.
-class SdkInternalResponsesWebSocketStreamEventMetadata
-  FIELDS = {
-    stream_id: "stream_id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for ResponsesWebSocketStreamEvent.
-# Typed representation of the `ResponsesWebSocketStreamEvent` API schema.
-class ResponsesWebSocketStreamEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalResponsesWebSocketStreamEventMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalResponsesWebSocketStreamEventMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalResponsesWebSocketStreamEventMetadata::DECODERS
-
-  # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
-  attr_reader :stream_id
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+      raise SdkValidationError.new('ResponsesServerEvent', 'variant', "Unknown ResponsesServerEvent discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalResponsesWebSocketStreamEventMetadata
+    FIELDS = {
+      stream_id: 'stream_id'
+    }.freeze
+    REQUIRED_FIELDS = %i[].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
-  end
+  # API model for ResponsesWebSocketStreamEvent.
+  # Typed representation of the `ResponsesWebSocketStreamEvent` API schema.
+  class ResponsesWebSocketStreamEvent
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalResponsesWebSocketStreamEventMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalResponsesWebSocketStreamEventMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalResponsesWebSocketStreamEventMetadata::DECODERS
 
-  def to_json(*args)
-    to_h.to_json(*args)
+    # @return [String] The WebSocket lane that emitted this event. This field is present when the originating `response.create` event supplied a `stream_id`.
+    attr_reader :stream_id
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
-end
 end

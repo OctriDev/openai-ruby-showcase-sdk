@@ -5,663 +5,669 @@
 
 # live_live_decision domain models
 module OctridevOpenai
-# API model for LiveDecisionItemCreateParam.
-# Append an input item for future decisions without starting an evaluation or changing Live voice context.
-class LiveDecisionItemCreateParam
-  include LiveClientEvent
-  include LiveForkClientEvent
-  include LiveSidebandClientEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveDecisionItemCreateParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveDecisionItemCreateParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveDecisionItemCreateParamMetadata::DECODERS
+  # API model for LiveDecisionItemCreateParam.
+  # Append an input item for future decisions without starting an evaluation or changing Live voice context.
+  class LiveDecisionItemCreateParam
+    include LiveClientEvent
+    include LiveForkClientEvent
+    include LiveSidebandClientEvent
 
-  # @return [String] Optional API value serialized in the `event_id` wire field.
-  attr_reader :event_id
-  # @return [LiveDecisionItemCreateParamType] Required enumerated value serialized in the `type` wire field.
-  attr_reader :type
-  # @return [LiveDecisionInputItemParam] Required object value serialized in the `item` wire field.
-  attr_reader :item
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveDecisionItemCreateParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveDecisionItemCreateParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveDecisionItemCreateParamMetadata::DECODERS
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    # @return [String] Optional API value serialized in the `event_id` wire field.
+    attr_reader :event_id
+    # @return [LiveDecisionItemCreateParamType] Required enumerated value serialized in the `type` wire field.
+    attr_reader :type
+    # @return [LiveDecisionInputItemParam] Required object value serialized in the `item` wire field.
+    attr_reader :item
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the LiveDecisionItemCreateParamType SDK namespace.
+  module LiveDecisionItemCreateParamType
+    DECISION_ITEM_CREATE = 'decision.item.create'
+    VALUES = ['decision.item.create'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('LiveDecisionItemCreateParamType', 'enum', "Unknown LiveDecisionItemCreateParamType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalLiveDecisionItemDeletedMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      client_event_id: 'client_event_id',
+      type: 'type',
+      item_id: 'item_id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      event_id
+      type
+      item_id
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LiveDecisionItemDeletedType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # API model for LiveDecisionItemDeleted.
+  # An input item was removed from future decisions.
+  class LiveDecisionItemDeleted
+    include LiveSidebandServerEvent
+    include LiveServerEvent2
 
-# Defines the LiveDecisionItemCreateParamType SDK namespace.
-module LiveDecisionItemCreateParamType
-  DECISION_ITEM_CREATE = 'decision.item.create'
-  VALUES = ['decision.item.create'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveDecisionItemDeletedMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveDecisionItemDeletedMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveDecisionItemDeletedMetadata::DECODERS
 
-    raise SdkValidationError.new('LiveDecisionItemCreateParamType', 'enum', "Unknown LiveDecisionItemCreateParamType: #{value}")
-  end
-end
+    # @return [String] The unique ID of the Live server event.
+    attr_reader :event_id
+    # @return [String] The event_id of the client command associated with this server event, when supplied.
+    attr_reader :client_event_id
+    # @return [LiveDecisionItemDeletedType] Required enumerated value serialized in the `type` wire field.
+    attr_reader :type
+    # @return [String] Required `string` value serialized in the `item_id` wire field.
+    attr_reader :item_id
 
-# Internal model hydration metadata.
-class SdkInternalLiveDecisionItemDeletedMetadata
-  FIELDS = {
-    event_id: "event_id",
-    client_event_id: "client_event_id",
-    type: "type",
-    item_id: "item_id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    event_id
-    type
-    item_id
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LiveDecisionItemDeletedType.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for LiveDecisionItemDeleted.
-# An input item was removed from future decisions.
-class LiveDecisionItemDeleted
-  include LiveSidebandServerEvent
-  include LiveServerEvent2
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveDecisionItemDeletedMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveDecisionItemDeletedMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveDecisionItemDeletedMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [String] The unique ID of the Live server event.
-  attr_reader :event_id
-  # @return [String] The event_id of the client command associated with this server event, when supplied.
-  attr_reader :client_event_id
-  # @return [LiveDecisionItemDeletedType] Required enumerated value serialized in the `type` wire field.
-  attr_reader :type
-  # @return [String] Required `string` value serialized in the `item_id` wire field.
-  attr_reader :item_id
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the LiveDecisionItemDeletedType SDK namespace.
+  module LiveDecisionItemDeletedType
+    DECISION_ITEM_DELETED = 'decision.item.deleted'
+    VALUES = ['decision.item.deleted'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('LiveDecisionItemDeletedType', 'enum', "Unknown LiveDecisionItemDeletedType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalLiveDecisionItemDeleteParamMetadata
+    FIELDS = {
+      event_id: 'event_id',
+      type: 'type',
+      item_id: 'item_id'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      item_id
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LiveDecisionItemDeleteParamType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # API model for LiveDecisionItemDeleteParam.
+  # Delete an input item from future decisions without starting an evaluation or changing Live voice context.
+  class LiveDecisionItemDeleteParam
+    include LiveClientEvent
+    include LiveForkClientEvent
+    include LiveSidebandClientEvent
 
-# Defines the LiveDecisionItemDeletedType SDK namespace.
-module LiveDecisionItemDeletedType
-  DECISION_ITEM_DELETED = 'decision.item.deleted'
-  VALUES = ['decision.item.deleted'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveDecisionItemDeleteParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveDecisionItemDeleteParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveDecisionItemDeleteParamMetadata::DECODERS
 
-    raise SdkValidationError.new('LiveDecisionItemDeletedType', 'enum', "Unknown LiveDecisionItemDeletedType: #{value}")
-  end
-end
+    # @return [String] Optional API value serialized in the `event_id` wire field.
+    attr_reader :event_id
+    # @return [LiveDecisionItemDeleteParamType] Required enumerated value serialized in the `type` wire field.
+    attr_reader :type
+    # @return [String] Required `string` value serialized in the `item_id` wire field.
+    attr_reader :item_id
 
-# Internal model hydration metadata.
-class SdkInternalLiveDecisionItemDeleteParamMetadata
-  FIELDS = {
-    event_id: "event_id",
-    type: "type",
-    item_id: "item_id",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    item_id
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LiveDecisionItemDeleteParamType.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for LiveDecisionItemDeleteParam.
-# Delete an input item from future decisions without starting an evaluation or changing Live voice context.
-class LiveDecisionItemDeleteParam
-  include LiveClientEvent
-  include LiveForkClientEvent
-  include LiveSidebandClientEvent
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveDecisionItemDeleteParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveDecisionItemDeleteParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveDecisionItemDeleteParamMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [String] Optional API value serialized in the `event_id` wire field.
-  attr_reader :event_id
-  # @return [LiveDecisionItemDeleteParamType] Required enumerated value serialized in the `type` wire field.
-  attr_reader :type
-  # @return [String] Required `string` value serialized in the `item_id` wire field.
-  attr_reader :item_id
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the LiveDecisionItemDeleteParamType SDK namespace.
+  module LiveDecisionItemDeleteParamType
+    DECISION_ITEM_DELETE = 'decision.item.delete'
+    VALUES = ['decision.item.delete'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('LiveDecisionItemDeleteParamType', 'enum', "Unknown LiveDecisionItemDeleteParamType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalLiveDecisionPredicateQuestionParamMetadata
+    FIELDS = {
+      type: 'type',
+      name: 'name',
+      instructions: 'instructions'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      instructions
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LiveDecisionPredicateQuestionParamType.from_value(value)
+      end
+    }.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # API model for LiveDecisionPredicateQuestionParam.
+  # Typed representation of the `LiveDecisionPredicateQuestionParam` API schema.
+  class LiveDecisionPredicateQuestionParam
+    include LiveDecisionQuestion
 
-# Defines the LiveDecisionItemDeleteParamType SDK namespace.
-module LiveDecisionItemDeleteParamType
-  DECISION_ITEM_DELETE = 'decision.item.delete'
-  VALUES = ['decision.item.delete'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveDecisionPredicateQuestionParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveDecisionPredicateQuestionParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveDecisionPredicateQuestionParamMetadata::DECODERS
 
-    raise SdkValidationError.new('LiveDecisionItemDeleteParamType', 'enum', "Unknown LiveDecisionItemDeleteParamType: #{value}")
-  end
-end
+    # @return [LiveDecisionPredicateQuestionParamType] Required enumerated value serialized in the `type` wire field.
+    attr_reader :type
+    # @return [String] Optional `string` value serialized in the `name` wire field.
+    attr_reader :name
+    # @return [String] Required `string` value serialized in the `instructions` wire field.
+    attr_reader :instructions
 
-# Internal model hydration metadata.
-class SdkInternalLiveDecisionPredicateQuestionParamMetadata
-  FIELDS = {
-    type: "type",
-    name: "name",
-    instructions: "instructions",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    instructions
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LiveDecisionPredicateQuestionParamType.from_value(value)
-    end,
-  }.freeze
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# API model for LiveDecisionPredicateQuestionParam.
-# Typed representation of the `LiveDecisionPredicateQuestionParam` API schema.
-class LiveDecisionPredicateQuestionParam
-  include LiveDecisionQuestion
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveDecisionPredicateQuestionParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveDecisionPredicateQuestionParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveDecisionPredicateQuestionParamMetadata::DECODERS
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  # @return [LiveDecisionPredicateQuestionParamType] Required enumerated value serialized in the `type` wire field.
-  attr_reader :type
-  # @return [String] Optional `string` value serialized in the `name` wire field.
-  attr_reader :name
-  # @return [String] Required `string` value serialized in the `instructions` wire field.
-  attr_reader :instructions
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the LiveDecisionPredicateQuestionParamType SDK namespace.
+  module LiveDecisionPredicateQuestionParamType
+    PREDICATE = 'predicate'
+    VALUES = ['predicate'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('LiveDecisionPredicateQuestionParamType', 'enum', "Unknown LiveDecisionPredicateQuestionParamType: #{value}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the LiveDecisionQuestion SDK namespace.
+  module LiveDecisionQuestion
+    DISCRIMINATOR_MAPPING = {
+      'choice' => -> { LiveDecisionChoiceQuestionParam },
+      'predicate' => -> { LiveDecisionPredicateQuestionParam },
+      'score' => -> { LiveDecisionScoreQuestionParam }
+    }.freeze
+
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('LiveDecisionQuestion', 'variant', "Unknown LiveDecisionQuestion discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Defines the LiveDecisionPredicateQuestionParamType SDK namespace.
-module LiveDecisionPredicateQuestionParamType
-  PREDICATE = 'predicate'
-  VALUES = ['predicate'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('LiveDecisionPredicateQuestionParamType', 'enum', "Unknown LiveDecisionPredicateQuestionParamType: #{value}")
-  end
-end
-
-# Defines the LiveDecisionQuestion SDK namespace.
-module LiveDecisionQuestion
-  DISCRIMINATOR_MAPPING = {
-    "choice" => -> { LiveDecisionChoiceQuestionParam },
-    "predicate" => -> { LiveDecisionPredicateQuestionParam },
-    "score" => -> { LiveDecisionScoreQuestionParam },
-  }.freeze
-
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
-
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('LiveDecisionQuestion', 'variant', "Unknown LiveDecisionQuestion discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalLiveDecisionQuestionsInputParamMetadata
-  FIELDS = {
-    questions: "questions",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    questions
-  ].freeze
-  DECODERS = {
-    questions: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::LiveDecisionQuestion.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for LiveDecisionQuestionsInputParam.
-# Questions evaluated using the current transcript and the session's shared Decision items.
-class LiveDecisionQuestionsInputParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveDecisionQuestionsInputParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveDecisionQuestionsInputParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveDecisionQuestionsInputParamMetadata::DECODERS
-
-  # @return [Array_of_LiveDecisionQuestion] Native Decision API questions evaluated together, in order.
-  attr_reader :questions
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalLiveDecisionQuestionsInputParamMetadata
+    FIELDS = {
+      questions: 'questions'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      questions
+    ].freeze
+    DECODERS = {
+      questions: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::LiveDecisionQuestion.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for LiveDecisionQuestionsInputParam.
+  # Questions evaluated using the current transcript and the session's shared Decision items.
+  class LiveDecisionQuestionsInputParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveDecisionQuestionsInputParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveDecisionQuestionsInputParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveDecisionQuestionsInputParamMetadata::DECODERS
+
+    # @return [Array_of_LiveDecisionQuestion] Native Decision API questions evaluated together, in order.
+    attr_reader :questions
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalLiveDecisionQuestionsInputParam2Metadata
+    FIELDS = {
+      questions: 'questions'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      questions
+    ].freeze
+    DECODERS = {
+      questions: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::QuestionParam.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # API model for LiveDecisionQuestionsInputParam2.
+  # Questions evaluated using the current transcript and the session's shared Decision items.
+  class LiveDecisionQuestionsInputParam2
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveDecisionQuestionsInputParam2Metadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveDecisionQuestionsInputParam2Metadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveDecisionQuestionsInputParam2Metadata::DECODERS
 
-# Internal model hydration metadata.
-class SdkInternalLiveDecisionQuestionsInputParam2Metadata
-  FIELDS = {
-    questions: "questions",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    questions
-  ].freeze
-  DECODERS = {
-    questions: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::QuestionParam.from_hash(item) }
-    end,
-  }.freeze
-end
+    # @return [Array_of_QuestionParam] Native Decision API questions evaluated together, in order.
+    attr_reader :questions
 
-# API model for LiveDecisionQuestionsInputParam2.
-# Questions evaluated using the current transcript and the session's shared Decision items.
-class LiveDecisionQuestionsInputParam2
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveDecisionQuestionsInputParam2Metadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveDecisionQuestionsInputParam2Metadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveDecisionQuestionsInputParam2Metadata::DECODERS
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-  # @return [Array_of_QuestionParam] Native Decision API questions evaluated together, in order.
-  attr_reader :questions
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Internal model hydration metadata.
+  class SdkInternalLiveDecisionScoreLevelParamMetadata
+    FIELDS = {
+      label: 'label',
+      description: 'description'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      label
+    ].freeze
+    DECODERS = {}.freeze
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # API model for LiveDecisionScoreLevelParam.
+  # Typed representation of the `LiveDecisionScoreLevelParam` API schema.
+  class LiveDecisionScoreLevelParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveDecisionScoreLevelParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveDecisionScoreLevelParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveDecisionScoreLevelParamMetadata::DECODERS
+
+    # @return [String] Required `string` value serialized in the `label` wire field.
+    attr_reader :label
+    # @return [String] Optional `string` value serialized in the `description` wire field.
+    attr_reader :description
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalLiveDecisionScoreLevelParamMetadata
-  FIELDS = {
-    label: "label",
-    description: "description",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    label
-  ].freeze
-  DECODERS = {
-  }.freeze
-end
-
-# API model for LiveDecisionScoreLevelParam.
-# Typed representation of the `LiveDecisionScoreLevelParam` API schema.
-class LiveDecisionScoreLevelParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveDecisionScoreLevelParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveDecisionScoreLevelParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveDecisionScoreLevelParamMetadata::DECODERS
-
-  # @return [String] Required `string` value serialized in the `label` wire field.
-  attr_reader :label
-  # @return [String] Optional `string` value serialized in the `description` wire field.
-  attr_reader :description
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalLiveDecisionScoreQuestionParamMetadata
+    FIELDS = {
+      type: 'type',
+      name: 'name',
+      instructions: 'instructions',
+      levels: 'levels'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      instructions
+      levels
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LiveDecisionScoreQuestionParamType.from_value(value)
+      end,
+      levels: lambda do |value|
+        value&.map { |item| ::OctridevOpenai::LiveDecisionScoreLevelParam.from_hash(item) }
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for LiveDecisionScoreQuestionParam.
+  # Typed representation of the `LiveDecisionScoreQuestionParam` API schema.
+  class LiveDecisionScoreQuestionParam
+    include LiveDecisionQuestion
+
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveDecisionScoreQuestionParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveDecisionScoreQuestionParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveDecisionScoreQuestionParamMetadata::DECODERS
+
+    # @return [LiveDecisionScoreQuestionParamType] Required enumerated value serialized in the `type` wire field.
+    attr_reader :type
+    # @return [String] Optional `string` value serialized in the `name` wire field.
+    attr_reader :name
+    # @return [String] Required `string` value serialized in the `instructions` wire field.
+    attr_reader :instructions
+    # @return [Array_of_LiveDecisionScoreLevelParam] Required array value serialized in the `levels` wire field.
+    attr_reader :levels
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the LiveDecisionScoreQuestionParamType SDK namespace.
+  module LiveDecisionScoreQuestionParamType
+    SCORE = 'score'
+    VALUES = ['score'].freeze
+    def self.from_value(value)
+      return value if VALUES.include?(value)
+
+      raise SdkValidationError.new('LiveDecisionScoreQuestionParamType', 'enum', "Unknown LiveDecisionScoreQuestionParamType: #{value}")
+    end
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalLiveDecisionScoreQuestionParamMetadata
-  FIELDS = {
-    type: "type",
-    name: "name",
-    instructions: "instructions",
-    levels: "levels",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    instructions
-    levels
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LiveDecisionScoreQuestionParamType.from_value(value)
-    end,
-    levels: lambda do |value|
-      value&.map { |item| ::OctridevOpenai::LiveDecisionScoreLevelParam.from_hash(item) }
-    end,
-  }.freeze
-end
-
-# API model for LiveDecisionScoreQuestionParam.
-# Typed representation of the `LiveDecisionScoreQuestionParam` API schema.
-class LiveDecisionScoreQuestionParam
-  include LiveDecisionQuestion
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveDecisionScoreQuestionParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveDecisionScoreQuestionParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveDecisionScoreQuestionParamMetadata::DECODERS
-
-  # @return [LiveDecisionScoreQuestionParamType] Required enumerated value serialized in the `type` wire field.
-  attr_reader :type
-  # @return [String] Optional `string` value serialized in the `name` wire field.
-  attr_reader :name
-  # @return [String] Required `string` value serialized in the `instructions` wire field.
-  attr_reader :instructions
-  # @return [Array_of_LiveDecisionScoreLevelParam] Required array value serialized in the `levels` wire field.
-  attr_reader :levels
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Internal model hydration metadata.
+  class SdkInternalLiveDecisionStoredInputItemParamMetadata
+    FIELDS = {
+      id: 'id',
+      type: 'type',
+      role: 'role',
+      content: 'content'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      id
+      role
+      content
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LiveDecisionStoredInputItemParamType.from_value(value)
+      end,
+      role: lambda do |value|
+        ::OctridevOpenai::LiveDecisionStoredInputItemParamRole.from_value(value)
+      end
+    }.freeze
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # API model for LiveDecisionStoredInputItemParam.
+  # Typed representation of the `LiveDecisionStoredInputItemParam` API schema.
+  class LiveDecisionStoredInputItemParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveDecisionStoredInputItemParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveDecisionStoredInputItemParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveDecisionStoredInputItemParamMetadata::DECODERS
+
+    # @return [String] The ID of the stored Decision input item.
+    attr_reader :id
+    # @return [LiveDecisionStoredInputItemParamType] Optional enumerated value serialized in the `type` wire field.
+    attr_reader :type
+    # @return [LiveDecisionStoredInputItemParamRole] The message role. Always `user`.
+    attr_reader :role
+    # @return [Object] Required API value serialized in the `content` wire field.
+    attr_reader :content
+
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
+
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
+
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
+
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the LiveDecisionStoredInputItemParamRole SDK namespace.
+  module LiveDecisionStoredInputItemParamRole
+    USER = 'user'
+    VALUES = ['user'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
-
-# Defines the LiveDecisionScoreQuestionParamType SDK namespace.
-module LiveDecisionScoreQuestionParamType
-  SCORE = 'score'
-  VALUES = ['score'].freeze
-  def self.from_value(value)
-    return value if VALUES.include?(value)
-
-    raise SdkValidationError.new('LiveDecisionScoreQuestionParamType', 'enum', "Unknown LiveDecisionScoreQuestionParamType: #{value}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalLiveDecisionStoredInputItemParamMetadata
-  FIELDS = {
-    id: "id",
-    type: "type",
-    role: "role",
-    content: "content",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    id
-    role
-    content
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LiveDecisionStoredInputItemParamType.from_value(value)
-    end,
-    role: lambda do |value|
-      ::OctridevOpenai::LiveDecisionStoredInputItemParamRole.from_value(value)
-    end,
-  }.freeze
-end
-
-# API model for LiveDecisionStoredInputItemParam.
-# Typed representation of the `LiveDecisionStoredInputItemParam` API schema.
-class LiveDecisionStoredInputItemParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveDecisionStoredInputItemParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveDecisionStoredInputItemParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveDecisionStoredInputItemParamMetadata::DECODERS
-
-  # @return [String] The ID of the stored Decision input item.
-  attr_reader :id
-  # @return [LiveDecisionStoredInputItemParamType] Optional enumerated value serialized in the `type` wire field.
-  attr_reader :type
-  # @return [LiveDecisionStoredInputItemParamRole] The message role. Always `user`.
-  attr_reader :role
-  # @return [Object] Required API value serialized in the `content` wire field.
-  attr_reader :content
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+  # Defines the LiveDecisionStoredInputItemParamType SDK namespace.
+  module LiveDecisionStoredInputItemParamType
+    MESSAGE = 'message'
+    VALUES = ['message'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the LiveDecisionStoredInputItemParamContentItem SDK namespace.
+  module LiveDecisionStoredInputItemParamContentItem
+    DISCRIMINATOR_MAPPING = {
+      'input_text' => -> { LiveDecisionInputTextParam },
+      'input_image' => -> { LiveDecisionInputImageParam }
+    }.freeze
+
+    def self.from_hash(hash)
+      return hash unless hash.is_a?(::Hash)
+
+      type = DISCRIMINATOR_MAPPING[hash['type']]&.call
+      return type.from_hash(hash) if type
+
+      return SdkUnknownMember.new(hash) if hash['type'].is_a?(::String)
+
+      raise SdkValidationError.new('LiveDecisionStoredInputItemParamContentItem', 'variant', "Unknown LiveDecisionStoredInputItemParamContentItem discriminator: #{hash['type'].inspect}")
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Internal model hydration metadata.
+  class SdkInternalLiveDecisionTriggerInputParamMetadata
+    FIELDS = {
+      type: 'type',
+      event_type: 'event_type',
+      decisions: 'decisions'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      event_type
+      decisions
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LiveDecisionTriggerInputParamType.from_value(value)
+      end,
+      event_type: lambda do |value|
+        ::OctridevOpenai::LiveDecisionTriggerInputParamEventType.from_value(value)
+      end,
+      decisions: lambda do |value|
+        ::OctridevOpenai::LiveDecisionQuestionsInputParam.from_hash(value)
+      end
+    }.freeze
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
-  end
-end
+  # API model for LiveDecisionTriggerInputParam.
+  # Typed representation of the `LiveDecisionTriggerInputParam` API schema.
+  class LiveDecisionTriggerInputParam
+    CONSTRUCTION_SURFACE = :named
+    FIELDS = SdkInternalLiveDecisionTriggerInputParamMetadata::FIELDS
+    REQUIRED_FIELDS = SdkInternalLiveDecisionTriggerInputParamMetadata::REQUIRED_FIELDS
+    DECODERS = SdkInternalLiveDecisionTriggerInputParamMetadata::DECODERS
 
-# Defines the LiveDecisionStoredInputItemParamRole SDK namespace.
-module LiveDecisionStoredInputItemParamRole
-  USER = 'user'
-  VALUES = ['user'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    # @return [LiveDecisionTriggerInputParamType] Required enumerated value serialized in the `type` wire field.
+    attr_reader :type
+    # @return [LiveDecisionTriggerInputParamEventType] Required enumerated value serialized in the `event_type` wire field.
+    attr_reader :event_type
+    # @return [LiveDecisionQuestionsInputParam] Questions evaluated using the current transcript and the session's shared Decision items.
+    attr_reader :decisions
 
-# Defines the LiveDecisionStoredInputItemParamType SDK namespace.
-module LiveDecisionStoredInputItemParamType
-  MESSAGE = 'message'
-  VALUES = ['message'].freeze
-  def self.from_value(value)
-    value
-  end
-end
+    def initialize(**attributes)
+      SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
+      freeze
+    end
 
-# Defines the LiveDecisionStoredInputItemParamContentItem SDK namespace.
-module LiveDecisionStoredInputItemParamContentItem
-  DISCRIMINATOR_MAPPING = {
-    "input_text" => -> { LiveDecisionInputTextParam },
-    "input_image" => -> { LiveDecisionInputImageParam },
-  }.freeze
+    def self.from_hash(data)
+      SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+    end
 
-  def self.from_hash(hash)
-    return hash unless hash.is_a?(::Hash)
-    type = DISCRIMINATOR_MAPPING[hash["type"]]&.call
-    return type.from_hash(hash) if type
+    def to_h
+      SdkModel.to_h(self, FIELDS)
+    end
 
-    return SdkUnknownMember.new(hash) if hash["type"].is_a?(::String)
-
-    raise SdkValidationError.new('LiveDecisionStoredInputItemParamContentItem', 'variant', "Unknown LiveDecisionStoredInputItemParamContentItem discriminator: #{hash["type"].inspect}")
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalLiveDecisionTriggerInputParamMetadata
-  FIELDS = {
-    type: "type",
-    event_type: "event_type",
-    decisions: "decisions",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    event_type
-    decisions
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LiveDecisionTriggerInputParamType.from_value(value)
-    end,
-    event_type: lambda do |value|
-      ::OctridevOpenai::LiveDecisionTriggerInputParamEventType.from_value(value)
-    end,
-    decisions: lambda do |value|
-      ::OctridevOpenai::LiveDecisionQuestionsInputParam.from_hash(value)
-    end,
-  }.freeze
-end
-
-# API model for LiveDecisionTriggerInputParam.
-# Typed representation of the `LiveDecisionTriggerInputParam` API schema.
-class LiveDecisionTriggerInputParam
-  CONSTRUCTION_SURFACE = :named
-  FIELDS = SdkInternalLiveDecisionTriggerInputParamMetadata::FIELDS
-  REQUIRED_FIELDS = SdkInternalLiveDecisionTriggerInputParamMetadata::REQUIRED_FIELDS
-  DECODERS = SdkInternalLiveDecisionTriggerInputParamMetadata::DECODERS
-
-  # @return [LiveDecisionTriggerInputParamType] Required enumerated value serialized in the `type` wire field.
-  attr_reader :type
-  # @return [LiveDecisionTriggerInputParamEventType] Required enumerated value serialized in the `event_type` wire field.
-  attr_reader :event_type
-  # @return [LiveDecisionQuestionsInputParam] Questions evaluated using the current transcript and the session's shared Decision items.
-  attr_reader :decisions
-
-  def initialize(**attributes)
-    SdkModel.assign(self, attributes, FIELDS, REQUIRED_FIELDS)
-    freeze
+    def to_json(*args)
+      to_h.to_json(*args)
+    end
   end
 
-  def self.from_hash(data)
-    SdkModel.from_hash(self, data, FIELDS, REQUIRED_FIELDS, DECODERS)
+  # Defines the LiveDecisionTriggerInputParamEventType SDK namespace.
+  module LiveDecisionTriggerInputParamEventType
+    SESSION_INPUT_TRANSCRIPT_DELTA = 'session.input_transcript.delta'
+    SESSION_OUTPUT_TRANSCRIPT_DELTA = 'session.output_transcript.delta'
+    VALUES = ['session.input_transcript.delta', 'session.output_transcript.delta'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_h
-    SdkModel.to_h(self, FIELDS)
+  # Defines the LiveDecisionTriggerInputParamType SDK namespace.
+  module LiveDecisionTriggerInputParamType
+    DECISIONS = 'decisions'
+    VALUES = ['decisions'].freeze
+    def self.from_value(value)
+      value
+    end
   end
 
-  def to_json(*args)
-    to_h.to_json(*args)
+  # Internal model hydration metadata.
+  class SdkInternalLiveDecisionTriggerInputParam2Metadata
+    FIELDS = {
+      type: 'type',
+      event_type: 'event_type',
+      decisions: 'decisions'
+    }.freeze
+    REQUIRED_FIELDS = %i[
+      type
+      event_type
+      decisions
+    ].freeze
+    DECODERS = {
+      type: lambda do |value|
+        ::OctridevOpenai::LiveDecisionTriggerInputParam2Type.from_value(value)
+      end,
+      event_type: lambda do |value|
+        ::OctridevOpenai::LiveDecisionTriggerInputParam2EventType.from_value(value)
+      end,
+      decisions: lambda do |value|
+        ::OctridevOpenai::LiveDecisionQuestionsInputParam2.from_hash(value)
+      end
+    }.freeze
   end
-end
-
-# Defines the LiveDecisionTriggerInputParamEventType SDK namespace.
-module LiveDecisionTriggerInputParamEventType
-  SESSION_INPUT_TRANSCRIPT_DELTA = 'session.input_transcript.delta'
-  SESSION_OUTPUT_TRANSCRIPT_DELTA = 'session.output_transcript.delta'
-  VALUES = ['session.input_transcript.delta', 'session.output_transcript.delta'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Defines the LiveDecisionTriggerInputParamType SDK namespace.
-module LiveDecisionTriggerInputParamType
-  DECISIONS = 'decisions'
-  VALUES = ['decisions'].freeze
-  def self.from_value(value)
-    value
-  end
-end
-
-# Internal model hydration metadata.
-class SdkInternalLiveDecisionTriggerInputParam2Metadata
-  FIELDS = {
-    type: "type",
-    event_type: "event_type",
-    decisions: "decisions",
-  }.freeze
-  REQUIRED_FIELDS = %i[
-    type
-    event_type
-    decisions
-  ].freeze
-  DECODERS = {
-    type: lambda do |value|
-      ::OctridevOpenai::LiveDecisionTriggerInputParam2Type.from_value(value)
-    end,
-    event_type: lambda do |value|
-      ::OctridevOpenai::LiveDecisionTriggerInputParam2EventType.from_value(value)
-    end,
-    decisions: lambda do |value|
-      ::OctridevOpenai::LiveDecisionQuestionsInputParam2.from_hash(value)
-    end,
-  }.freeze
-end
 end
